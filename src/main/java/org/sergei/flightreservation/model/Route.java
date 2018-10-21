@@ -1,6 +1,7 @@
 package org.sergei.flightreservation.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
@@ -8,7 +9,10 @@ import java.util.List;
 
 @Entity
 @Table(name = "route")
-public class Route {
+public class Route implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "route_seq")
     @SequenceGenerator(name = "route_seq", sequenceName = "route_seq", allocationSize = 1)

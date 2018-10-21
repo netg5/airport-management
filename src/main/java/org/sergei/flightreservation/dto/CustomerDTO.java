@@ -1,6 +1,6 @@
 package org.sergei.flightreservation.dto;
 
-public class Customer {
+public class CustomerDTO {
     private Long customerId;
 
     private String firstName;
@@ -9,7 +9,7 @@ public class Customer {
 
     private Integer age;
 
-    public Customer() {
+    public CustomerDTO() {
     }
 
     public Long getCustomerId() {

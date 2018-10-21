@@ -1,10 +1,14 @@
 package org.sergei.flightreservation.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "aircraft")
-public class Aircraft {
+public class Aircraft implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "aircraft_seq")
     @SequenceGenerator(name = "aircraft_seq", sequenceName = "aircraft_seq", allocationSize = 1)
