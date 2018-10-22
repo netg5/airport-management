@@ -21,13 +21,9 @@ public class Reservation implements Serializable {
     @Column(name = "reservation_date")
     private LocalDateTime reservationDate;
 
-    @OneToMany(
-            fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
+    @ManyToOne(optional = false)
     @JoinColumn(name = "customer_id")
-    private List<Customer> customers = new LinkedList<>();
+    private Customer customer;
 
     @OneToMany(
             fetch = FetchType.LAZY,
@@ -40,9 +36,9 @@ public class Reservation implements Serializable {
     public Reservation() {
     }
 
-    public Reservation(LocalDateTime reservationDate, List<Customer> customers, List<Route> routes) {
+    public Reservation(LocalDateTime reservationDate, Customer customer, List<Route> routes) {
         this.reservationDate = reservationDate;
-        this.customers = customers;
+        this.customer = customer;
         this.routes = routes;
     }
 
@@ -62,12 +58,12 @@ public class Reservation implements Serializable {
         this.reservationDate = reservationDate;
     }
 
-    public List<Customer> getCustomers() {
-        return customers;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setCustomers(List<Customer> customers) {
-        this.customers = customers;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public List<Route> getRoutes() {

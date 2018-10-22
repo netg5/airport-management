@@ -27,14 +27,19 @@ public class Aircraft implements Serializable {
     @Column(name = "max_passengers")
     private Integer maxPassengers;
 
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "route_id")
+    private Route route;
+
     public Aircraft() {
     }
 
-    public Aircraft(String model, String aircraftName, Double aircraftWeight, Integer maxPassengers) {
+    public Aircraft(String model, String aircraftName, Double aircraftWeight, Integer maxPassengers, Route route) {
         this.model = model;
         this.aircraftName = aircraftName;
         this.aircraftWeight = aircraftWeight;
         this.maxPassengers = maxPassengers;
+        this.route = route;
     }
 
     public Long getAircraftId() {
@@ -75,5 +80,13 @@ public class Aircraft implements Serializable {
 
     public void setMaxPassengers(Integer maxPassengers) {
         this.maxPassengers = maxPassengers;
+    }
+
+    public Route getRoute() {
+        return route;
+    }
+
+    public void setRoute(Route route) {
+        this.route = route;
     }
 }
