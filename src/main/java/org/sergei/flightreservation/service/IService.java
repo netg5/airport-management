@@ -1,6 +1,5 @@
 package org.sergei.flightreservation.service;
 
-import java.io.Serializable;
 import java.util.List;
 
 public interface IService<T> {
@@ -8,9 +7,9 @@ public interface IService<T> {
 
     List<T> findAll();
 
-    void save(T entity);
+    T save(T entity);
 
-    void update(T entity);
+    T update(Long aLong, T entity);
 
-    void delete(T entity);
+    T delete(Long aLong);
 }

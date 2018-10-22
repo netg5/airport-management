@@ -35,17 +35,26 @@ public class CustomerService implements IService<CustomerDTO> {
     }
 
     @Override
-    public void save(CustomerDTO entity) {
-
+    public CustomerDTO save(CustomerDTO customerDTO) {
+        Customer customer = modelMapper.map(customerDTO, Customer.class);
+        customerDAO.save(customer);
+        return customerDTO;
     }
 
     @Override
-    public void update(CustomerDTO entity) {
+    public CustomerDTO update(Long customerId, CustomerDTO customerDTO) {
+        customerDTO.setCustomerId(customerId);
 
+        Customer customer = modelMapper.map(customerDTO, Customer.class);
+        customerDAO.update(customer);
+
+        return customerDTO;
     }
 
     @Override
-    public void delete(CustomerDTO entity) {
-
+    public CustomerDTO delete(Long customerId) {
+        Customer customer = customerDAO.findOne(customerId);
+        customerDAO.delete(customer);
+        return modelMapper.map(customer, CustomerDTO.class);
     }
 }
