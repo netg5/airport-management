@@ -32,13 +32,13 @@ public class AircraftRESTController {
     }
 
     @PutMapping(value = "/{aircraftId}", consumes = {"application/json", "application/xml"})
-    public ResponseEntity<AircraftDTO> updateCustomer(@PathVariable("aircraftId") Long aircraftId,
+    public ResponseEntity<AircraftDTO> updateAircraft(@PathVariable("aircraftId") Long aircraftId,
                                                       @RequestBody AircraftDTO customerDTO) {
         return new ResponseEntity<>(aircraftService.update(aircraftId, customerDTO), HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/{aircraftId}")
-    public ResponseEntity<AircraftDTO> deleteCustomer(@PathVariable("aircraftId") Long aircraftId) {
+    public ResponseEntity<AircraftDTO> deleteAircraft(@PathVariable("aircraftId") Long aircraftId) {
         return new ResponseEntity<>(aircraftService.delete(aircraftId), HttpStatus.OK);
     }
 }
