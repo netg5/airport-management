@@ -23,8 +23,8 @@ public class CustomerService implements IService<CustomerDTO> {
     }
 
     @Override
-    public CustomerDTO findOne(Long aLong) {
-        Customer customer = new Customer();
+    public CustomerDTO findOne(Long customerId) {
+        Customer customer = customerDAO.findOne(customerId);
         return modelMapper.map(customer, CustomerDTO.class);
     }
 
