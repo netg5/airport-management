@@ -1,7 +1,7 @@
 package org.sergei.flightreservation.exceptions;
 
-import org.sergei.rest.dto.ApiErrorDTO;
-import org.sergei.rest.dto.ErrorDetailsDTO;
+import org.sergei.flightreservation.dto.ApiErrorDTO;
+import org.sergei.flightreservation.dto.ErrorDetailsDTO;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,24 +34,6 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
                                                                                     WebRequest request) {
         ErrorDetailsDTO errorDetailsDTO = new ErrorDetailsDTO(new Date(), e.getMessage(), request.getDescription(false));
         return new ResponseEntity<>(errorDetailsDTO, HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(FileNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ResponseBody
-    protected final ResponseEntity<ErrorDetailsDTO> handleFileNotFoundException(FileNotFoundException e,
-                                                                                WebRequest request) {
-        ErrorDetailsDTO errorDetailsDTO = new ErrorDetailsDTO(new Date(), e.getMessage(), request.getDescription(false));
-        return new ResponseEntity<>(errorDetailsDTO, HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(FileStorageException.class)
-    @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
-    @ResponseBody
-    protected final ResponseEntity<ErrorDetailsDTO> handleTooLongFileNameException(FileStorageException e,
-                                                                                   WebRequest request) {
-        ErrorDetailsDTO errorDetailsDTO = new ErrorDetailsDTO(new Date(), e.getMessage(), request.getDescription(false));
-        return new ResponseEntity<>(errorDetailsDTO, HttpStatus.NOT_ACCEPTABLE);
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
