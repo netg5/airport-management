@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.sergei.flightreservation.dao.RouteDAO;
 import org.sergei.flightreservation.dto.RouteDTO;
 import org.sergei.flightreservation.model.Route;
+import org.sergei.flightreservation.utils.ObjectMapperUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,8 +30,8 @@ public class RouteService implements IService<RouteDTO> {
 
     @Override
     public List<RouteDTO> findAll() {
-        // TODO
-        return null;
+        List<Route> routeList = routeDAO.findAll();
+        return ObjectMapperUtils.mapAll(routeList, RouteDTO.class);
     }
 
     @Override

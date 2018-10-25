@@ -1,0 +1,1 @@
+INSERT INTO flight_reservation.route(arrival_time, departure_time, distance, place, price) VALUES('2018-10-25', 2500, 'New York', 500)

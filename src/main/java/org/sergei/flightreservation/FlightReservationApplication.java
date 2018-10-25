@@ -20,7 +20,7 @@ public class FlightReservationApplication {
         @GetMapping
         @ResponseBody
         public String welcome() {
-            return "Flight reservation app";
+            return "Flights";
         }
     }
 }
