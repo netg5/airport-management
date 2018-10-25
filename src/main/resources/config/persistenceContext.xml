@@ -17,8 +17,8 @@
 
         <property name="hibernateProperties">
             <props>
-                <prop key="hibernate.hbm2ddl.auto">${spring.jpa.hibernate.ddl-auto}</prop>
-                <prop key="hibernate.show_sql">${spring.jpa.show-sql}</prop>
+                <prop key="hibernate.hbm2ddl.auto">${spring.jpa.properties.hibernate.hbm2ddl.auto}</prop>
+                <prop key="hibernate.show_sql">${spring.jpa.properties.hibernate.show_sql}</prop>
                 <prop key="hibernate.dialect">${spring.jpa.properties.hibernate.dialect}</prop>
             </props>
         </property>

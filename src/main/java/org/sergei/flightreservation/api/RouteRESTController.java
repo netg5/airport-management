@@ -5,9 +5,7 @@ import org.sergei.flightreservation.service.RouteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,5 +20,25 @@ public class RouteRESTController {
     public ResponseEntity<List<RouteDTO>> getAllRoutes() {
         return new ResponseEntity<>(routeService.findAll(), HttpStatus.OK);
     }
-    // TODO: Implement all methods needed
+
+    @GetMapping("/{routeId}")
+    public ResponseEntity<RouteDTO> getRouteById(@PathVariable("routeId") Long routeId) {
+        return new ResponseEntity<>(routeService.findOne(routeId), HttpStatus.OK);
+    }
+
+    @PostMapping(consumes = {"application/json", "application/xml"})
+    public ResponseEntity<RouteDTO> saveRoute(@RequestBody RouteDTO routeDTO) {
+        return new ResponseEntity<>(routeService.save(routeDTO), HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/{routeId}", consumes = {"application/json", "application/xml"})
+    public ResponseEntity<RouteDTO> updateCustomer(@PathVariable("routeId") Long routeId,
+                                                   @RequestBody RouteDTO routeDTO) {
+        return new ResponseEntity<>(routeService.update(routeId, routeDTO), HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/{routeId}")
+    public ResponseEntity<RouteDTO> deleteCustomer(@PathVariable("routeId") Long routeId) {
+        return new ResponseEntity<>(routeService.delete(routeId), HttpStatus.OK);
+    }
 }
