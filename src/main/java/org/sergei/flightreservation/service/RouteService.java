@@ -35,20 +35,26 @@ public class RouteService implements IService<RouteDTO> {
     }
 
     @Override
-    public RouteDTO save(RouteDTO entity) {
-        // TODO
-        return null;
+    public RouteDTO save(RouteDTO routeDTO) {
+        Route route = modelMapper.map(routeDTO, Route.class);
+        routeDAO.save(route);
+        return routeDTO;
     }
 
     @Override
-    public RouteDTO update(Long aLong, RouteDTO entity) {
-        // TODO
-        return null;
+    public RouteDTO update(Long routeId, RouteDTO routeDTO) {
+        routeDTO.setRouteId(routeId);
+
+        Route route = modelMapper.map(routeDTO, Route.class);
+        routeDAO.save(route);
+
+        return routeDTO;
     }
 
     @Override
-    public RouteDTO delete(Long aLong) {
-        // TODO
-        return null;
+    public RouteDTO delete(Long routeId) {
+        Route route = routeDAO.findOne(routeId);
+        routeDAO.delete(route);
+        return modelMapper.map(route, RouteDTO.class);
     }
 }

@@ -30,7 +30,7 @@ public class Reservation implements Serializable {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    @JoinColumn(name = "route_id")
+    @JoinColumn(name = "reservation_id")
     private List<Route> routes = new LinkedList<>();
 
     public Reservation() {
