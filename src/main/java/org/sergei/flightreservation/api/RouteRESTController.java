@@ -32,8 +32,8 @@ public class RouteRESTController {
     }
 
     @PutMapping(value = "/{routeId}", consumes = {"application/json", "application/xml"})
-    public ResponseEntity<RouteDTO> updateCustomer(@PathVariable("routeId") Long routeId,
-                                                   @RequestBody RouteDTO routeDTO) {
+    public ResponseEntity<RouteDTO> updateRoute(@PathVariable("routeId") Long routeId,
+                                                @RequestBody RouteDTO routeDTO) {
         return new ResponseEntity<>(routeService.update(routeId, routeDTO), HttpStatus.OK);
     }
 
