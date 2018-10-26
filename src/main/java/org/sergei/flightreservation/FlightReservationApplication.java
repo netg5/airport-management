@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @SpringBootApplication
-@ImportResource("classpath:config/applicationContext.xml")
 public class FlightReservationApplication {
 
     public static void main(String[] args) {

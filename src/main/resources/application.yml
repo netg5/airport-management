@@ -4,7 +4,7 @@ spring:
     url: jdbc:mysql://localhost:3306/flight_reservation?allowPublicKeyRetrieval=true&useSSL=false
     username: flight
     password: flight
-    data: classpth:data.sql
+    data: classpath:schema.sql
   jpa:
     properties:
       hibernate:
@@ -13,6 +13,7 @@ spring:
           auto: update
         generate-ddl: true
         dialect: org.hibernate.dialect.MySQL57InnoDBDialect
-  tokenstore:
-    datasource:
-      url: http://localhost:3306/flight_reservation_oauth?allowPublicKeyRetrieval=true&useSSL=false
+security:
+  oauth2:
+    jdbc:
+      tokenstore-url: jdbc:mysql://localhost:3306/flight_reservation_oauth?allowPublicKeyRetrieval=true&useSSL=false
