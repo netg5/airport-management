@@ -12,4 +12,4 @@ Customer makes a reservation of the specific route as well as aircraft due to th
 * Spring Boot 2
 * ModelMapper
 
-##### TODO: Flight reservation, Front-end (REST client)
+##### TODO: Functionality to reserve flight, Front-end (REST client)
