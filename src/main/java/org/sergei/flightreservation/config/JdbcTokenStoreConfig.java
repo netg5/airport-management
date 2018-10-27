@@ -43,7 +43,7 @@ public class JdbcTokenStoreConfig {
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(Objects.requireNonNull(env.getProperty("spring.datasource.driver-class-name")));
-        dataSource.setUrl(env.getProperty("security.oauth2.jdbc.tokenstore-url"));
+        dataSource.setUrl(env.getProperty("spring.datasource.url"));
         dataSource.setUsername(env.getProperty("spring.datasource.username"));
         dataSource.setPassword(env.getProperty("spring.datasource.password"));
         return dataSource;

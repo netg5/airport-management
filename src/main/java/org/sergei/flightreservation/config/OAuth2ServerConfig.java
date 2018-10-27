@@ -1,9 +1,9 @@
 package org.sergei.flightreservation.config;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.ImportResource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -12,6 +12,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
+
 @Configuration
 @EnableAuthorizationServer
 public class OAuth2ServerConfig extends AuthorizationServerConfigurerAdapter {
@@ -31,18 +32,16 @@ public class OAuth2ServerConfig extends AuthorizationServerConfigurerAdapter {
     }
 
     @Override
-    public void configure(ClientDetailsServiceConfigurer clients)
-            throws Exception {
+    public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.jdbc(jdbcTokenStoreConfig.dataSource())
-                .withClient("sampleClientId")
+                .withClient("trusted-client")
                 .authorizedGrantTypes("implicit")
-                .scopes("read")
+                .scopes("create, read, write")
                 .autoApprove(true)
                 .and()
                 .withClient("clientIdPassword")
-                .secret("secret")
-                .authorizedGrantTypes(
-                        "password", "authorization_code", "refresh_token")
+                .secret("trusted-client-secret")
+                .authorizedGrantTypes("password", "authorization_code", "refresh_token", "access_token")
                 .scopes("read");
     }
 

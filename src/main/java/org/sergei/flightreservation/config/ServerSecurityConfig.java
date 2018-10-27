@@ -11,23 +11,21 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class ServerSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth)
-            throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
                 .withUser("admin").password("123456").roles("USER");
     }
 
     @Override
     @Bean
-    public AuthenticationManager authenticationManagerBean()
-            throws Exception {
+    public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/login").permitAll()
+                .antMatchers("/oauth/token").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().permitAll();
