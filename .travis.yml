@@ -12,8 +12,5 @@ jdk:
 services:
 - mysql
 
-dist:
-  precise
-
 before_install:
 - chmod +x mvnw
