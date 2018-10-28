@@ -46,7 +46,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .authorizedGrantTypes("password", "authorization_code", "refresh_token", "client_credentials")
                 .autoApprove(true)
                 .and()
-                .withClient("clientIdPassword")
+                .withClient("admin")
                 .accessTokenValiditySeconds(259200)
                 .refreshTokenValiditySeconds(2500000);
     }
