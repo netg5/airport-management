@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -17,14 +18,14 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableAuthorizationServer
-public class OAuth2ServerConfig extends AuthorizationServerConfigurerAdapter {
+public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
     private final DataSource dataSource;
     private final AuthenticationManager authenticationManager;
 
     @Autowired
-    public OAuth2ServerConfig(DataSource dataSource,
-                              @Qualifier("authenticationManagerBean") AuthenticationManager authenticationManager) {
+    public AuthorizationServerConfig(DataSource dataSource,
+                                     @Qualifier("authenticationManagerBean") AuthenticationManager authenticationManager) {
         this.dataSource = dataSource;
         this.authenticationManager = authenticationManager;
     }
@@ -40,14 +41,14 @@ public class OAuth2ServerConfig extends AuthorizationServerConfigurerAdapter {
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.jdbc(dataSource)
                 .withClient("trusted-client")
-                .authorizedGrantTypes("implicit")
-                .scopes("create, read, write")
+                .secret("trusted-client-secret")
+                .scopes("read, write, trust")
+                .authorizedGrantTypes("password", "authorization_code", "refresh_token", "client_credentials")
                 .autoApprove(true)
                 .and()
                 .withClient("clientIdPassword")
-                .secret("trusted-client-secret")
-                .authorizedGrantTypes("password", "authorization_code", "refresh_token", "access_token")
-                .scopes("read");
+                .accessTokenValiditySeconds(259200)
+                .refreshTokenValiditySeconds(2500000);
     }
 
     @Override
@@ -57,8 +58,15 @@ public class OAuth2ServerConfig extends AuthorizationServerConfigurerAdapter {
                 .authenticationManager(authenticationManager);
     }
 
+    // All tokens are stored into the database
     @Bean
     public TokenStore tokenStore() {
         return new JdbcTokenStore(dataSource);
+    }
+
+    // Password encoder
+    @Bean
+    public BCryptPasswordEncoder encoder() {
+        return new BCryptPasswordEncoder();
     }
 }
