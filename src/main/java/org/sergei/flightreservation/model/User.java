@@ -2,6 +2,7 @@ package org.sergei.flightreservation.model;
 
 import javax.persistence.*;
 
+@Deprecated
 @Entity
 @Table(name = "user")
 public class User {
