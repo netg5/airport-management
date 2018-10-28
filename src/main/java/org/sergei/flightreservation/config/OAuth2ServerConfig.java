@@ -13,16 +13,21 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
+import javax.sql.DataSource;
+
 @Configuration
 @EnableAuthorizationServer
 public class OAuth2ServerConfig extends AuthorizationServerConfigurerAdapter {
 
-    @Autowired
-    @Qualifier("authenticationManagerBean")
-    private AuthenticationManager authenticationManager;
+    private final DataSource dataSource;
+    private final AuthenticationManager authenticationManager;
 
     @Autowired
-    private JdbcTokenStoreConfig jdbcTokenStoreConfig;
+    public OAuth2ServerConfig(DataSource dataSource,
+                              @Qualifier("authenticationManagerBean") AuthenticationManager authenticationManager) {
+        this.dataSource = dataSource;
+        this.authenticationManager = authenticationManager;
+    }
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) {
@@ -33,7 +38,7 @@ public class OAuth2ServerConfig extends AuthorizationServerConfigurerAdapter {
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.jdbc(jdbcTokenStoreConfig.dataSource())
+        clients.jdbc(dataSource)
                 .withClient("trusted-client")
                 .authorizedGrantTypes("implicit")
                 .scopes("create, read, write")
@@ -54,6 +59,6 @@ public class OAuth2ServerConfig extends AuthorizationServerConfigurerAdapter {
 
     @Bean
     public TokenStore tokenStore() {
-        return new JdbcTokenStore(jdbcTokenStoreConfig.dataSource());
+        return new JdbcTokenStore(dataSource);
     }
 }
