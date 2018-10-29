@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Sergei Visotsky, 2018
+ */
+
 package org.sergei.flightreservation.utils;
 
 import org.modelmapper.ModelMapper;

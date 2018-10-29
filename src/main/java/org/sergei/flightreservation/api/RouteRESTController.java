@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Sergei Visotsky, 2018
+ */
+
 package org.sergei.flightreservation.api;
 
 import org.sergei.flightreservation.dto.RouteDTO;
