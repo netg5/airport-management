@@ -30,6 +30,12 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         this.authenticationManager = authenticationManager;
     }
 
+    // All tokens are stored into the database
+    @Bean
+    public TokenStore tokenStore() {
+        return new JdbcTokenStore(dataSource);
+    }
+
     @Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) {
         oauthServer
@@ -39,7 +45,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.jdbc(dataSource)
+        clients/*.inMemory()*/
+                .jdbc(dataSource)
                 .withClient("trusted-client")
                 .secret("trusted-client-secret")
                 .scopes("read, write, trust")
@@ -58,15 +65,4 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .authenticationManager(authenticationManager);
     }
 
-    // All tokens are stored into the database
-    @Bean
-    public TokenStore tokenStore() {
-        return new JdbcTokenStore(dataSource);
-    }
-
-    // Password encoder
-    @Bean
-    public BCryptPasswordEncoder encoder() {
-        return new BCryptPasswordEncoder();
-    }
 }
