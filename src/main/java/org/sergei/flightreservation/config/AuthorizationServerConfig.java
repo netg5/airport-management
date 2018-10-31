@@ -20,8 +20,8 @@ import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
 import javax.sql.DataSource;
 
-@Configuration
-@EnableAuthorizationServer
+//@Configuration
+//@EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
     private final DataSource dataSource;
@@ -35,7 +35,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     }
 
     // All tokens are stored into the database
-    @Bean
+//    @Bean
     public TokenStore tokenStore() {
         return new JdbcTokenStore(dataSource);
     }
