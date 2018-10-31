@@ -5,7 +5,7 @@
 package org.sergei.flightreservation.service;
 
 import org.modelmapper.ModelMapper;
-import org.sergei.flightreservation.dao.IGenericDAO;
+import org.sergei.flightreservation.dao.GenericJpaDAO;
 import org.sergei.flightreservation.dto.CustomerDTO;
 import org.sergei.flightreservation.model.Customer;
 import org.sergei.flightreservation.utils.ObjectMapperUtils;
@@ -20,10 +20,10 @@ public class CustomerService implements IService<CustomerDTO> {
     @Autowired
     private ModelMapper modelMapper;
 
-    private IGenericDAO<Customer> genericDAO;
+    private GenericJpaDAO<Customer> genericDAO;
 
     @Autowired
-    public void setGenericDAO(IGenericDAO<Customer> genericDAO) {
+    public void setGenericDAO(GenericJpaDAO<Customer> genericDAO) {
         this.genericDAO = genericDAO;
         genericDAO.setPersistentClass(Customer.class);
     }

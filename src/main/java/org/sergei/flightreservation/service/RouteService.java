@@ -5,7 +5,7 @@
 package org.sergei.flightreservation.service;
 
 import org.modelmapper.ModelMapper;
-import org.sergei.flightreservation.dao.IGenericDAO;
+import org.sergei.flightreservation.dao.GenericJpaDAO;
 import org.sergei.flightreservation.dto.RouteDTO;
 import org.sergei.flightreservation.model.Route;
 import org.sergei.flightreservation.utils.ObjectMapperUtils;
@@ -19,10 +19,10 @@ public class RouteService implements IService<RouteDTO> {
 
     @Autowired
     private ModelMapper modelMapper;
-    private IGenericDAO<Route> genericDAO;
+    private GenericJpaDAO<Route> genericDAO;
 
     @Autowired
-    public void setGenericDAO(IGenericDAO<Route> genericDAO) {
+    public void setGenericDAO(GenericJpaDAO<Route> genericDAO) {
         this.genericDAO = genericDAO;
         genericDAO.setPersistentClass(Route.class);
     }

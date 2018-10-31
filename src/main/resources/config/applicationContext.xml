@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ /*
-  ~  * Copyright (c) Sergei Visotsky, 2018
-  ~  */
+  ~ Copyright (c) Sergei Visotsky, 2018
   -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
