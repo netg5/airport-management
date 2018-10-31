@@ -1,8 +1,8 @@
 /*
- * Copyright (c) Sergei Visotsky, 2018
+ * Copyright (c) 2018 Sergei Visotsky
  */
 
-package org.sergei.flightreservation.dao;
+package org.sergei.flightreservation.dao.generic;
 
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;

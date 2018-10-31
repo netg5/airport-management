@@ -5,7 +5,7 @@
 package org.sergei.flightreservation.service;
 
 import org.modelmapper.ModelMapper;
-import org.sergei.flightreservation.dao.GenericJpaDAO;
+import org.sergei.flightreservation.dao.generic.GenericJpaDAO;
 import org.sergei.flightreservation.dto.AircraftDTO;
 import org.sergei.flightreservation.model.Aircraft;
 import org.sergei.flightreservation.utils.ObjectMapperUtils;

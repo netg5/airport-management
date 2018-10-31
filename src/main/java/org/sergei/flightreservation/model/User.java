@@ -5,11 +5,11 @@
 package org.sergei.flightreservation.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
-@Deprecated
 @Entity
 @Table(name = "user")
-public class User {
+public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
     @SequenceGenerator(name = "user_seq", sequenceName = "user_seq", allocationSize = 1)

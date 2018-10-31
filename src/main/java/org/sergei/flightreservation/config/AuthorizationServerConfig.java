@@ -52,8 +52,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients/*.inMemory()*/
-                .jdbc(dataSource)
+//        clients.jdbc(dataSource);
+        clients.inMemory()
                 .withClient("trusted-client")
                 .secret("trusted-client-secret")
                 .scopes("read, write, trust")

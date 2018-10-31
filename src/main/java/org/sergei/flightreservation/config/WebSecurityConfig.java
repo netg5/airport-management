@@ -4,6 +4,8 @@
 
 package org.sergei.flightreservation.config;
 
+import org.sergei.flightreservation.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,10 +24,12 @@ import org.springframework.web.filter.CorsFilter;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private UserService userService;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("admin").password("123456").roles("OAUTH_CLIENT");
+        auth.userDetailsService(userService).passwordEncoder(encoder());
     }
 
     @Bean
