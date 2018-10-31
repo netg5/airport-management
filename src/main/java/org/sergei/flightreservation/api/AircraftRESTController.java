@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * @author Sergei Visotsky, 2018
+ */
 @RestController
 @RequestMapping(value = "/api/v1/aircraft", produces = {"application/json", "application/xml"})
 public class AircraftRESTController {

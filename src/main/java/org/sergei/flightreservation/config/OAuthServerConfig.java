@@ -13,13 +13,13 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 
-//@Configuration
-//@EnableResourceServer
+@Configuration
+@EnableResourceServer
 public class OAuthServerConfig extends ResourceServerConfigurerAdapter {
 
     private static final String RESOURCE_ID = "resource_id";
 
-//    @Autowired
+    @Autowired
     private TokenStore tokenStore;
 
     @Override

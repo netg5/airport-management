@@ -6,6 +6,9 @@ package org.sergei.flightreservation.service;
 
 import java.util.List;
 
+/**
+ * @author Sergei Visotsky, 2018
+ */
 public interface IService<T> {
     T findOne(Long aLong);
 

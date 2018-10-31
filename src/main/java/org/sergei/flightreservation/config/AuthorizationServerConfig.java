@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -20,22 +20,25 @@ import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
 import javax.sql.DataSource;
 
-//@Configuration
-//@EnableAuthorizationServer
+@Configuration
+@EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
     private final DataSource dataSource;
     private final AuthenticationManager authenticationManager;
+//    private final UserDetailsService userDetailsService;
 
     @Autowired
     public AuthorizationServerConfig(DataSource dataSource,
-                                     @Qualifier("authenticationManagerBean") AuthenticationManager authenticationManager) {
+                                     @Qualifier("authenticationManagerBean") AuthenticationManager authenticationManager/*,
+                                     UserDetailsService userDetailsService*/) {
         this.dataSource = dataSource;
         this.authenticationManager = authenticationManager;
+//        this.userDetailsService = userDetailsService;
     }
 
     // All tokens are stored into the database
-//    @Bean
+    @Bean
     public TokenStore tokenStore() {
         return new JdbcTokenStore(dataSource);
     }
@@ -67,6 +70,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         endpoints
                 .tokenStore(tokenStore())
                 .authenticationManager(authenticationManager);
+//                .userDetailsService(userDetailsService);
     }
 
 }

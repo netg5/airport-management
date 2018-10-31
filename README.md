@@ -13,7 +13,7 @@ Customer makes a reservation of the specific route as well as aircraft due to th
 * ModelMapper
 
 ## TODO 
-* oAuth2 using JWT
+* oAuth2
 * Functionality to reserve flight
 * Swagger UI
 * Front-end (REST client)

@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * @author Sergei Visotsky, 2018
+ */
 @Service
 public class AircraftService implements IService<AircraftDTO> {
 
