@@ -54,7 +54,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 //        clients.jdbc(dataSource);
         clients.inMemory()
                 .withClient("trusted-client")
-                .secret(passwordEncoder.encode("trusted-client-secret"))
+                .secret(/*passwordEncoder.encode(*/"trusted-client-secret"/*)*/)
                 .authorizedGrantTypes("password", "refresh_token", "client_credentials")
                 .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
                 .scopes("read, write, trust")

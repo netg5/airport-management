@@ -4,7 +4,6 @@
 
 package org.sergei.flightreservation.config;
 
-import org.sergei.flightreservation.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,7 +39,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 //        auth.userDetailsService(userService).passwordEncoder(encoder());
-        auth.inMemoryAuthentication().withUser("admin").password("123456").roles("ADMIN", "USER");
+        auth
+                .inMemoryAuthentication()
+                .withUser("admin")
+                .password("123456")
+                .roles("ADMIN", "USER");
     }
 
     @Bean
@@ -92,7 +95,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .anonymous().disable()
                 .authorizeRequests()
-                .antMatchers("/**").permitAll();
+                .antMatchers("/**").permitAll()
+                .antMatchers("/api/**").authenticated()
+                .antMatchers("/api/**").hasRole("USER")
+                .anyRequest().authenticated()
+                /*.and()
+                .httpBasic()
+                .realmName("CRM_REALM")*/;
     }
 
     @Bean
