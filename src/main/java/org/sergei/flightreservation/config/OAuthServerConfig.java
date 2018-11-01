@@ -24,7 +24,6 @@ public class OAuthServerConfig extends ResourceServerConfigurerAdapter {
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) {
-//        resources.resourceId(RESOURCE_ID).stateless(false);
         resources
                 .tokenStore(tokenStore)
                 .resourceId(RESOURCE_ID);
@@ -34,8 +33,9 @@ public class OAuthServerConfig extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http
                 .anonymous().disable()
-                .authorizeRequests()
-                .antMatchers("/api/**").authenticated()
+                .requestMatchers().antMatchers("/api/**")
+                .and().authorizeRequests()
+                .antMatchers("/api/**").access("hasRole('ROLE ADMIN') or hasRole('USER')")
                 .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
     }
 }

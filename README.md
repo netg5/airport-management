@@ -16,4 +16,5 @@ Customer makes a reservation of the specific route as well as aircraft due to th
 * oAuth2
 * Functionality to reserve flight
 * Swagger UI
+* Run into the Docker container
 * Front-end (REST client)

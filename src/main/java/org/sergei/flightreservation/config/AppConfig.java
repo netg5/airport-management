@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @EnableAutoConfiguration
-public class ApplicationContext {
+public class AppConfig {
 
     @Bean
     public ModelMapper modelMapper() {
