@@ -13,3 +13,5 @@ spring:
           auto: update
         generate-ddl: true
         dialect: org.hibernate.dialect.MySQL57InnoDBDialect
+server:
+  port: 8085

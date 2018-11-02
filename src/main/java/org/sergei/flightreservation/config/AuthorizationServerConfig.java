@@ -14,6 +14,7 @@ import org.springframework.security.oauth2.config.annotation.configurers.ClientD
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
+import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.approval.UserApprovalHandler;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 
@@ -27,6 +28,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     private final UserApprovalHandler userApprovalHandler;
 
+    // In case of storing data into DB should be removed
     @Autowired
     private TokenStore tokenStore;
 
@@ -54,7 +56,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 //        clients.jdbc(dataSource);
         clients.inMemory()
                 .withClient("trusted-client")
-                .secret(/*passwordEncoder.encode(*/"trusted-client-secret"/*)*/)
+                .secret(passwordEncoder.encode("trusted-client-secret"))
                 .authorizedGrantTypes("password", "refresh_token", "client_credentials")
                 .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
                 .scopes("read, write, trust")
@@ -69,5 +71,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .userApprovalHandler(userApprovalHandler)
                 .authenticationManager(authenticationManager);
 //                .userDetailsService(userService);
+    }
+
+    @Override
+    public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
+        oauthServer.realm("CRM_REALM");
     }
 }
