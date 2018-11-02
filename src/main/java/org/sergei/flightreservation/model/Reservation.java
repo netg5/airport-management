@@ -29,6 +29,10 @@ public class Reservation implements Serializable {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
+    @ManyToOne
+    @JoinColumn(name = "route_id")
+    private Route route;
+
     @OneToMany(
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
@@ -40,9 +44,10 @@ public class Reservation implements Serializable {
     public Reservation() {
     }
 
-    public Reservation(LocalDateTime reservationDate, Customer customer, List<Route> routes) {
+    public Reservation(LocalDateTime reservationDate, Customer customer, Route route, List<Route> routes) {
         this.reservationDate = reservationDate;
         this.customer = customer;
+        this.route = route;
         this.routes = routes;
     }
 
@@ -68,6 +73,14 @@ public class Reservation implements Serializable {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public Route getRoute() {
+        return route;
+    }
+
+    public void setRoute(Route route) {
+        this.route = route;
     }
 
     public List<Route> getRoutes() {

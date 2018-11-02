@@ -17,7 +17,7 @@ import java.util.List;
  * @author Sergei Visotsky, 2018
  */
 @RestController
-@RequestMapping(value = "/api/v1/aircraft", produces = {"application/json", "application/xml"})
+@RequestMapping(value = "/api/v1/aircraft", produces = "application/json")
 public class AircraftRESTController {
 
     @Autowired
@@ -33,12 +33,12 @@ public class AircraftRESTController {
         return new ResponseEntity<>(aircraftService.findOne(aircraftId), HttpStatus.OK);
     }
 
-    @PostMapping(consumes = {"application/json", "application/xml"})
+    @PostMapping(consumes = "application/json")
     public ResponseEntity<AircraftDTO> saveAircraft(@RequestBody AircraftDTO aircraftDTO) {
         return new ResponseEntity<>(aircraftService.save(aircraftDTO), HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/{aircraftId}", consumes = {"application/json", "application/xml"})
+    @PutMapping(value = "/{aircraftId}", consumes = "application/json")
     public ResponseEntity<AircraftDTO> updateAircraft(@PathVariable("aircraftId") Long aircraftId,
                                                       @RequestBody AircraftDTO customerDTO) {
         return new ResponseEntity<>(aircraftService.update(aircraftId, customerDTO), HttpStatus.OK);

@@ -17,7 +17,7 @@ import java.util.List;
  * @author Sergei Visotsky, 2018
  */
 @RestController
-@RequestMapping(value = "/api/v1/routes", produces = {"application/json", "application/xml"})
+@RequestMapping(value = "/api/v1/routes", produces = "application/json")
 public class RouteRESTController {
 
     @Autowired
@@ -33,12 +33,12 @@ public class RouteRESTController {
         return new ResponseEntity<>(routeService.findOne(routeId), HttpStatus.OK);
     }
 
-    @PostMapping(consumes = {"application/json", "application/xml"})
+    @PostMapping(consumes = "application/json")
     public ResponseEntity<RouteDTO> saveRoute(@RequestBody RouteDTO routeDTO) {
         return new ResponseEntity<>(routeService.save(routeDTO), HttpStatus.OK);
     }
 
-    @PutMapping(value = "/{routeId}", consumes = {"application/json", "application/xml"})
+    @PutMapping(value = "/{routeId}", consumes = "application/json")
     public ResponseEntity<RouteDTO> updateRoute(@PathVariable("routeId") Long routeId,
                                                 @RequestBody RouteDTO routeDTO) {
         return new ResponseEntity<>(routeService.update(routeId, routeDTO), HttpStatus.OK);

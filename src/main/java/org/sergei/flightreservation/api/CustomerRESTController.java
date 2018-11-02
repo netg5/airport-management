@@ -17,7 +17,7 @@ import java.util.List;
  * @author Sergei Visotsky, 2018
  */
 @RestController
-@RequestMapping(value = "/api/v1/customers", produces = {"application/json", "application/xml"})
+@RequestMapping(value = "/api/v1/customers", produces = "application/json")
 public class CustomerRESTController {
 
     @Autowired
@@ -33,12 +33,12 @@ public class CustomerRESTController {
         return new ResponseEntity<>(customerService.findOne(customerId), HttpStatus.OK);
     }
 
-    @PostMapping(consumes = {"application/json", "application/xml"})
+    @PostMapping(consumes = "application/json")
     public ResponseEntity<CustomerDTO> saveCustomer(@RequestBody CustomerDTO customerDTO) {
         return new ResponseEntity<>(customerService.save(customerDTO), HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/{customerId}", consumes = {"application/json", "application/xml"})
+    @PutMapping(value = "/{customerId}", consumes = "application/json")
     public ResponseEntity<CustomerDTO> updateCustomer(@PathVariable("customerId") Long customerId,
                                                       @RequestBody CustomerDTO customerDTO) {
         return new ResponseEntity<>(customerService.update(customerId, customerDTO), HttpStatus.OK);
