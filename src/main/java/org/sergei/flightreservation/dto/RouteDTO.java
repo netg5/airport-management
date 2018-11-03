@@ -6,7 +6,6 @@ package org.sergei.flightreservation.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -19,20 +18,22 @@ public class RouteDTO {
     private LocalDateTime arrivalTime;
     private BigDecimal price;
     private String place;
-    private List<AircraftDTO> aircraftDTOList = new LinkedList<>();
+    private Long aircraftId;
+//    private List<AircraftDTO> aircraftDTOList = new LinkedList<>();
 
     public RouteDTO() {
     }
 
     public RouteDTO(Long routeId, Double distance, LocalDateTime departureTime,
-                    LocalDateTime arrivalTime, BigDecimal price, String place, List<AircraftDTO> aircraftDTOList) {
+                    LocalDateTime arrivalTime, BigDecimal price, String place, List<AircraftDTO> aircraftDTOList, Long aircraftId) {
         this.routeId = routeId;
         this.distance = distance;
         this.departureTime = departureTime;
         this.arrivalTime = arrivalTime;
         this.price = price;
         this.place = place;
-        this.aircraftDTOList = aircraftDTOList;
+//        this.aircraftDTOList = aircraftDTOList;
+        this.aircraftId = aircraftId;
     }
 
     public Long getRouteId() {
@@ -83,11 +84,19 @@ public class RouteDTO {
         this.place = place;
     }
 
-    public List<AircraftDTO> getAircraftDTOList() {
+    public Long getAircraftId() {
+        return aircraftId;
+    }
+
+    public void setAircraftId(Long aircraftId) {
+        this.aircraftId = aircraftId;
+    }
+
+    /*public List<AircraftDTO> getAircraftDTOList() {
         return aircraftDTOList;
     }
 
     public void setAircraftDTOList(List<AircraftDTO> aircraftDTOList) {
         this.aircraftDTOList = aircraftDTOList;
-    }
+    }*/
 }

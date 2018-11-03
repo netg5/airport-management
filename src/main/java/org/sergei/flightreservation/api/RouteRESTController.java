@@ -5,6 +5,7 @@
 package org.sergei.flightreservation.api;
 
 import org.sergei.flightreservation.dto.RouteDTO;
+import org.sergei.flightreservation.dto.RouteExtendedDTO;
 import org.sergei.flightreservation.service.RouteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,7 +25,7 @@ public class RouteRESTController {
     private RouteService routeService;
 
     @GetMapping
-    public ResponseEntity<List<RouteDTO>> getAllRoutes() {
+    public ResponseEntity<List<RouteExtendedDTO>> getAllRoutes() {
         return new ResponseEntity<>(routeService.findAll(), HttpStatus.OK);
     }
 
@@ -45,7 +46,7 @@ public class RouteRESTController {
     }
 
     @DeleteMapping(value = "/{routeId}")
-    public ResponseEntity<RouteDTO> deleteCustomer(@PathVariable("routeId") Long routeId) {
-        return new ResponseEntity<>(routeService.delete(routeId), HttpStatus.OK);
+    public ResponseEntity<RouteDTO> deleteRoute(@PathVariable("routeId") Long routeId) {
+        return new ResponseEntity<>(routeService.delete(routeId), HttpStatus.NO_CONTENT);
     }
 }

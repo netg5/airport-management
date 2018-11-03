@@ -20,7 +20,7 @@ import java.util.List;
  * @author Sergei Visotsky, 2018
  */
 @Service
-public class ReservationService implements IService<FlightReservationDTO> {
+public class ReservationService {
 
     private final ModelMapper modelMapper;
     private final CustomerService customerService;
@@ -40,17 +40,14 @@ public class ReservationService implements IService<FlightReservationDTO> {
         genericDAO.setPersistentClass(FlightReservation.class);
     }
 
-    @Override
     public FlightReservationDTO findOne(Long reservationId) {
         return null;
     }
 
-    @Override
     public List<FlightReservationDTO> findAll() {
         return null;
     }
 
-    @Override
     public FlightReservationDTO save(FlightReservationDTO flightReservationDTO) {
         return null;
     }
@@ -71,12 +68,10 @@ public class ReservationService implements IService<FlightReservationDTO> {
         return flightReservationDTO;
     }
 
-    @Override
     public FlightReservationDTO update(Long reservationId, FlightReservationDTO flightReservationDTO) {
         return null;
     }
 
-    @Override
     public FlightReservationDTO delete(Long reservationId) {
         return null;
     }

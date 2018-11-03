@@ -18,7 +18,7 @@ import java.util.List;
  * @author Sergei Visotsky, 2018
  */
 @Service
-public class AircraftService implements IService<AircraftDTO> {
+public class AircraftService {
 
     @Autowired
     private ModelMapper modelMapper;
@@ -31,26 +31,22 @@ public class AircraftService implements IService<AircraftDTO> {
         genericDAO.setPersistentClass(Aircraft.class);
     }
 
-    @Override
     public AircraftDTO findOne(Long aircraftId) {
         Aircraft aircraft = genericDAO.findOne(aircraftId);
         return modelMapper.map(aircraft, AircraftDTO.class);
     }
 
-    @Override
     public List<AircraftDTO> findAll() {
         List<Aircraft> aircraftList = genericDAO.findAll();
         return ObjectMapperUtils.mapAll(aircraftList, AircraftDTO.class);
     }
 
-    @Override
     public AircraftDTO save(AircraftDTO aircraftDTO) {
         Aircraft aircraft = modelMapper.map(aircraftDTO, Aircraft.class);
         genericDAO.save(aircraft);
         return aircraftDTO;
     }
 
-    @Override
     public AircraftDTO update(Long aircraftId, AircraftDTO aircraftDTO) {
         aircraftDTO.setAircraftId(aircraftId);
 
@@ -60,7 +56,6 @@ public class AircraftService implements IService<AircraftDTO> {
         return aircraftDTO;
     }
 
-    @Override
     public AircraftDTO delete(Long aircraftId) {
         Aircraft aircraft = genericDAO.findOne(aircraftId);
         genericDAO.delete(aircraft);

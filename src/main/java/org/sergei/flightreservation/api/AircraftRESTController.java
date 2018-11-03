@@ -46,6 +46,6 @@ public class AircraftRESTController {
 
     @DeleteMapping(value = "/{aircraftId}")
     public ResponseEntity<AircraftDTO> deleteAircraft(@PathVariable("aircraftId") Long aircraftId) {
-        return new ResponseEntity<>(aircraftService.delete(aircraftId), HttpStatus.OK);
+        return new ResponseEntity<>(aircraftService.delete(aircraftId), HttpStatus.NO_CONTENT);
     }
 }

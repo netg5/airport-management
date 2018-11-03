@@ -18,7 +18,7 @@ import java.util.List;
  * @author Sergei Visotsky, 2018
  */
 @Service
-public class CustomerService implements IService<CustomerDTO> {
+public class CustomerService {
 
     @Autowired
     private ModelMapper modelMapper;
@@ -31,26 +31,22 @@ public class CustomerService implements IService<CustomerDTO> {
         genericDAO.setPersistentClass(Customer.class);
     }
 
-    @Override
     public CustomerDTO findOne(Long customerId) {
         Customer customer = genericDAO.findOne(customerId);
         return modelMapper.map(customer, CustomerDTO.class);
     }
 
-    @Override
     public List<CustomerDTO> findAll() {
         List<Customer> customerList = genericDAO.findAll();
         return ObjectMapperUtils.mapAll(customerList, CustomerDTO.class);
     }
 
-    @Override
     public CustomerDTO save(CustomerDTO customerDTO) {
         Customer customer = modelMapper.map(customerDTO, Customer.class);
         genericDAO.save(customer);
         return customerDTO;
     }
 
-    @Override
     public CustomerDTO update(Long customerId, CustomerDTO customerDTO) {
         customerDTO.setCustomerId(customerId);
 
@@ -60,7 +56,6 @@ public class CustomerService implements IService<CustomerDTO> {
         return customerDTO;
     }
 
-    @Override
     public CustomerDTO delete(Long customerId) {
         Customer customer = genericDAO.findOne(customerId);
         genericDAO.delete(customer);
