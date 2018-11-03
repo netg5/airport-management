@@ -6,6 +6,9 @@ package org.sergei.flightreservation.dto;
 
 import org.springframework.http.HttpStatus;
 
+/**
+ * @author Sergei Visotsky, 2018
+ */
 public class ApiErrorDTO {
     private HttpStatus status;
     private String message;

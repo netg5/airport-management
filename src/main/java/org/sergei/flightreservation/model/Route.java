@@ -11,6 +11,9 @@ import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * @author Sergei Visotsky, 2018
+ */
 @Entity
 @Table(name = "route")
 public class Route implements Serializable {

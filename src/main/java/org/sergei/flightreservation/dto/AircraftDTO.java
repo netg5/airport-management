@@ -4,6 +4,9 @@
 
 package org.sergei.flightreservation.dto;
 
+/**
+ * @author Sergei Visotsky, 2018
+ */
 public class AircraftDTO {
     private Long aircraftId;
     private String model;

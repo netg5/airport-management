@@ -6,6 +6,9 @@ package org.sergei.flightreservation.dto;
 
 import java.util.Date;
 
+/**
+ * @author Sergei Visotsky, 2018
+ */
 public class ErrorDetailsDTO {
     private Date timestamp;
     private String message;

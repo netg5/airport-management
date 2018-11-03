@@ -15,10 +15,15 @@ public class FlightReservationApplication {
 
     @Controller
     class WelcomeEntry {
-        @GetMapping
+        @GetMapping("/")
         @ResponseBody
         public String welcome() {
             return "Flights";
+        }
+
+        @GetMapping("/docs")
+        public String docsRedirect() {
+            return "redirect:swagger-ui.html";
         }
     }
 }

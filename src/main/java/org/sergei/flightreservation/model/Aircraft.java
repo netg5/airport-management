@@ -7,6 +7,9 @@ package org.sergei.flightreservation.model;
 import javax.persistence.*;
 import java.io.Serializable;
 
+/**
+ * @author Sergei Visotsky, 2018
+ */
 @Entity
 @Table(name = "aircraft")
 public class Aircraft implements Serializable {

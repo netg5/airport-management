@@ -10,6 +10,9 @@ import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * @author Sergei Visotsky, 2018
+ */
 @Entity
 @Table(name = "flight_reservation")
 public class FlightReservation implements Serializable {
