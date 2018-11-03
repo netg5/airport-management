@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Sergei Visotsky, 2018
+ * Copyright (c) 2018 Sergei Visotsky
  */
 
 package org.sergei.flightreservation.config;
@@ -34,7 +34,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         http
                 .anonymous().disable()
                 .authorizeRequests()
-                .antMatchers("/api/**").access("hasRole('ROLE ADMIN') or hasRole('USER')")
+                .antMatchers("/api").permitAll() // Permit all for dev purposes
+//                .antMatchers("/api/**").access("hasRole('ROLE ADMIN') or hasRole('USER')")
                 .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
     }
 }
