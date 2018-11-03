@@ -1,5 +1,5 @@
-# flight-flightReservation
-[![Build Status](https://travis-ci.com/sergeivisotsky/flight-flightReservation.svg?branch=master)](https://travis-ci.com/sergeivisotsky/flight-flightReservation)
+# flight-reservation
+[![Build Status](https://travis-ci.com/sergeivisotsky/flight-reservation.svg?branch=master)](https://travis-ci.com/sergeivisotsky/flight-reservation)
 
 Application to reserve flights.
 Information about aircrafts, customers and routes is stored into the database.
