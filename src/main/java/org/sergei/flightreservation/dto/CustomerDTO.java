@@ -4,7 +4,7 @@
 
 package org.sergei.flightreservation.dto;
 
-import org.sergei.flightreservation.model.Reservation;
+import org.sergei.flightreservation.model.FlightReservation;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -15,17 +15,17 @@ public class CustomerDTO {
     private String lastName;
     private Integer age;
 
-    private List<Reservation> reservationList = new LinkedList<>();
+    private List<FlightReservation> flightReservationList = new LinkedList<>();
 
     public CustomerDTO() {
     }
 
-    public CustomerDTO(Long customerId, String firstName, String lastName, Integer age, List<Reservation> reservationList) {
+    public CustomerDTO(Long customerId, String firstName, String lastName, Integer age, List<FlightReservation> flightReservationList) {
         this.customerId = customerId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
-        this.reservationList = reservationList;
+        this.flightReservationList = flightReservationList;
     }
 
     public Long getCustomerId() {
@@ -60,11 +60,11 @@ public class CustomerDTO {
         this.age = age;
     }
 
-    public List<Reservation> getReservationList() {
-        return reservationList;
+    public List<FlightReservation> getFlightReservationList() {
+        return flightReservationList;
     }
 
-    public void setReservationList(List<Reservation> reservationList) {
-        this.reservationList = reservationList;
+    public void setFlightReservationList(List<FlightReservation> flightReservationList) {
+        this.flightReservationList = flightReservationList;
     }
 }

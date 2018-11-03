@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.sergei</groupId>
-    <artifactId>flight-reservation</artifactId>
+    <artifactId>flight-flightReservation</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <name>flight-reservation</name>
+    <name>flight-flightReservation</name>
     <description>Application to reserve flights using RESTful API</description>
 
     <parent>

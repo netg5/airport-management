@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 /**
  * @author Sergei Visotsky, 2018
  */
-public class ReservationDTO {
+public class FlightReservationDTO {
     private Long reservationId;
     private Long customerId;
     private Long routeId;
@@ -18,11 +18,11 @@ public class ReservationDTO {
     private RouteDTO routeDTO;
 //    private List<Route> routeList = new LinkedList<>();
 
-    public ReservationDTO() {
+    public FlightReservationDTO() {
     }
 
-    public ReservationDTO(Long reservationId, Long customerId, Long routeId,
-                          LocalDateTime reservationDate, RouteDTO routeDTO, CustomerDTO customerDTO) {
+    public FlightReservationDTO(Long reservationId, Long customerId, Long routeId,
+                                LocalDateTime reservationDate, RouteDTO routeDTO, CustomerDTO customerDTO) {
         this.reservationId = reservationId;
         this.customerId = customerId;
         this.reservationDate = reservationDate;

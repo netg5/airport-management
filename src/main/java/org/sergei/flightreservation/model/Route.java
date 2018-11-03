@@ -23,40 +23,46 @@ public class Route implements Serializable {
     @Column(name = "route_id")
     private Long routeId;
 
-    @Column(name = "distance")
+    @Column(name = "distance", nullable = false)
     private Double distance;
 
-    @Column(name = "departure_time")
+    @Column(name = "departure_time", nullable = false)
     private LocalDateTime departureTime;
 
-    @Column(name = "arrival_time")
+    @Column(name = "arrival_time", nullable = false)
     private LocalDateTime arrivalTime;
 
-    @Column(name = "price")
+    @Column(name = "price", nullable = false)
     private BigDecimal price;
 
-    @Column(name = "place")
+    @Column(name = "place", nullable = false)
     private String place;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "aircraft_id")
+    private Aircraft aircraft;
 
     @OneToMany(
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    @JoinColumn(name = "aircraft_id")
-    private List<Aircraft> aircraftList = new LinkedList<>();
+    @JoinColumn(name = "reservation_id")
+    private List<FlightReservation> flightReservationList = new LinkedList<>();
 
     public Route() {
     }
 
     public Route(Double distance, LocalDateTime departureTime,
-                 LocalDateTime arrivalTime, BigDecimal price, String place, List<Aircraft> aircraftList) {
+                 LocalDateTime arrivalTime, BigDecimal price, String place,
+                 Aircraft aircraft, List<FlightReservation> flightReservationList) {
         this.distance = distance;
         this.departureTime = departureTime;
         this.arrivalTime = arrivalTime;
         this.price = price;
         this.place = place;
-        this.aircraftList = aircraftList;
+        this.aircraft = aircraft;
+        this.flightReservationList = flightReservationList;
     }
 
     public Long getRouteId() {
@@ -107,11 +113,19 @@ public class Route implements Serializable {
         this.place = place;
     }
 
-    public List<Aircraft> getAircraftList() {
-        return aircraftList;
+    public Aircraft getAircraft() {
+        return aircraft;
     }
 
-    public void setAircraftList(List<Aircraft> aircraftList) {
-        this.aircraftList = aircraftList;
+    public void setAircraft(Aircraft aircraft) {
+        this.aircraft = aircraft;
+    }
+
+    public List<FlightReservation> getFlightReservationList() {
+        return flightReservationList;
+    }
+
+    public void setFlightReservationList(List<FlightReservation> flightReservationList) {
+        this.flightReservationList = flightReservationList;
     }
 }

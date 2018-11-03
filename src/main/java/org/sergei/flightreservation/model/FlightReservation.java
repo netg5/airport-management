@@ -11,44 +11,35 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Entity
-@Table(name = "reservation")
-public class Reservation implements Serializable {
+@Table(name = "flight_reservation")
+public class FlightReservation implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "reservation_seq")
-    @SequenceGenerator(name = "reservation_seq", sequenceName = "reservation_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "flight_reservation_seq")
+    @SequenceGenerator(name = "flight_reservation_seq", sequenceName = "flight_reservation_seq", allocationSize = 1)
     @Column(name = "reservation_id")
     private Long reservationId;
 
-    @Column(name = "reservation_date")
+    @Column(name = "reservation_date", nullable = false)
     private LocalDateTime reservationDate;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "customer_id")
+    @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
     @ManyToOne
-    @JoinColumn(name = "route_id")
+    @JoinColumn(name = "route_id", nullable = false)
     private Route route;
 
-    @OneToMany(
-            fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    @JoinColumn(name = "reservation_id")
-    private List<Route> routes = new LinkedList<>();
-
-    public Reservation() {
+    public FlightReservation() {
     }
 
-    public Reservation(LocalDateTime reservationDate, Customer customer, Route route, List<Route> routes) {
+    public FlightReservation(LocalDateTime reservationDate, Customer customer, Route route) {
         this.reservationDate = reservationDate;
         this.customer = customer;
         this.route = route;
-        this.routes = routes;
     }
 
     public Long getReservationId() {
@@ -81,13 +72,5 @@ public class Reservation implements Serializable {
 
     public void setRoute(Route route) {
         this.route = route;
-    }
-
-    public List<Route> getRoutes() {
-        return routes;
-    }
-
-    public void setRoutes(List<Route> routes) {
-        this.routes = routes;
     }
 }

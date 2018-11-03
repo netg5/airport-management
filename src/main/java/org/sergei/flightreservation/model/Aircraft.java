@@ -19,19 +19,19 @@ public class Aircraft implements Serializable {
     @Column(name = "aircraft_id")
     private Long aircraftId;
 
-    @Column(name = "model")
+    @Column(name = "model", nullable = false)
     private String model;
 
-    @Column(name = "aircraft_name")
+    @Column(name = "aircraft_name", nullable = false)
     private String aircraftName;
 
-    @Column(name = "weight")
+    @Column(name = "weight", nullable = false)
     private Double aircraftWeight;
 
-    @Column(name = "max_passengers")
+    @Column(name = "max_passengers", nullable = false)
     private Integer maxPassengers;
 
-    @ManyToOne(optional = false)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "route_id")
     private Route route;
 

@@ -1,9 +1,9 @@
-# flight-reservation
-[![Build Status](https://travis-ci.com/sergeivisotsky/flight-reservation.svg?branch=master)](https://travis-ci.com/sergeivisotsky/flight-reservation)
+# flight-flightReservation
+[![Build Status](https://travis-ci.com/sergeivisotsky/flight-flightReservation.svg?branch=master)](https://travis-ci.com/sergeivisotsky/flight-flightReservation)
 
 Application to reserve flights.
 Information about aircrafts, customers and routes is stored into the database.
-Customer makes a reservation of the specific route as well as aircraft due to the route and aircraft are connected with each other by `One-to-Many` relationship.
+Customer makes a flightReservation of the specific route as well as aircraft due to the route and aircraft are connected with each other by `One-to-Many` relationship.
 
 ## Technologies
 * Java 8

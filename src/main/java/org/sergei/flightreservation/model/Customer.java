@@ -21,13 +21,13 @@ public class Customer implements Serializable {
     @Column(name = "customer_id")
     private Long customerId;
 
-    @Column(name = "first_name")
+    @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @Column(name = "last_name")
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(name = "age")
+    @Column(name = "age", nullable = false)
     private Integer age;
 
     @OneToMany(
@@ -36,16 +36,16 @@ public class Customer implements Serializable {
             orphanRemoval = true
     )
     @JoinColumn(name = "reservation_id")
-    private List<Reservation> reservations = new LinkedList<>();
+    private List<FlightReservation> flightReservations = new LinkedList<>();
 
     public Customer() {
     }
 
-    public Customer(String firstName, String lastName, Integer age, List<Reservation> reservations) {
+    public Customer(String firstName, String lastName, Integer age, List<FlightReservation> flightReservations) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
-        this.reservations = reservations;
+        this.flightReservations = flightReservations;
     }
 
     public Long getCustomerId() {
@@ -80,11 +80,11 @@ public class Customer implements Serializable {
         this.age = age;
     }
 
-    public List<Reservation> getReservations() {
-        return reservations;
+    public List<FlightReservation> getFlightReservations() {
+        return flightReservations;
     }
 
-    public void setReservations(List<Reservation> reservations) {
-        this.reservations = reservations;
+    public void setFlightReservations(List<FlightReservation> flightReservations) {
+        this.flightReservations = flightReservations;
     }
 }
