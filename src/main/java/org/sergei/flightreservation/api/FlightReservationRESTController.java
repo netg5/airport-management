@@ -26,7 +26,7 @@ public class FlightReservationRESTController {
 
     @GetMapping("/customers/{customerId}/reservation")
     public ResponseEntity<List<FlightReservationExtendedDTO>> getAllForCustomer(@PathVariable("customerId") Long customerId) {
-        return new ResponseEntity<>(flightReservationService.getAllForCustomer(customerId), HttpStatus.CREATED);
+        return new ResponseEntity<>(flightReservationService.getAllReservationsForCustomer(customerId), HttpStatus.OK);
     }
 
     @PostMapping(value = "/customers/{customerId}/reservation", consumes = "application/json")

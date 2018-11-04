@@ -4,24 +4,33 @@
 
 package org.sergei.flightreservation.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * @author Sergei Visotsky, 2018
  */
 public class FlightReservationExtendedDTO extends FlightReservationDTO {
-    private RouteExtendedDTO routeExtendedDTOList;
+
+    @JsonIgnore
+    @Override
+    public Long getRouteId() {
+        return super.getRouteId();
+    }
+
+    private RouteExtendedDTO routeExtendedDTO;
 
     public FlightReservationExtendedDTO() {
     }
 
-    public FlightReservationExtendedDTO(RouteExtendedDTO routeExtendedDTOList) {
-        this.routeExtendedDTOList = routeExtendedDTOList;
+    public FlightReservationExtendedDTO(RouteExtendedDTO routeExtendedDTO) {
+        this.routeExtendedDTO = routeExtendedDTO;
     }
 
-    public RouteExtendedDTO getRouteExtendedDTOList() {
-        return routeExtendedDTOList;
+    public RouteExtendedDTO getRouteExtendedDTO() {
+        return routeExtendedDTO;
     }
 
-    public void setRouteExtendedDTOList(RouteExtendedDTO routeExtendedDTOList) {
-        this.routeExtendedDTOList = routeExtendedDTOList;
+    public void setRouteExtendedDTO(RouteExtendedDTO routeExtendedDTO) {
+        this.routeExtendedDTO = routeExtendedDTO;
     }
 }
