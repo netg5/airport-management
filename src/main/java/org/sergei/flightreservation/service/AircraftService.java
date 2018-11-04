@@ -5,7 +5,7 @@
 package org.sergei.flightreservation.service;
 
 import org.modelmapper.ModelMapper;
-import org.sergei.flightreservation.dao.generic.GenericJpaDAO;
+import org.sergei.flightreservation.dao.AircraftDAO;
 import org.sergei.flightreservation.dto.AircraftDTO;
 import org.sergei.flightreservation.model.Aircraft;
 import org.sergei.flightreservation.utils.ObjectMapperUtils;
@@ -20,30 +20,28 @@ import java.util.List;
 @Service
 public class AircraftService {
 
-    @Autowired
-    private ModelMapper modelMapper;
-
-    private GenericJpaDAO<Aircraft> genericDAO;
+    private final ModelMapper modelMapper;
+    private final AircraftDAO aircraftDAO;
 
     @Autowired
-    public void setGenericDAO(GenericJpaDAO<Aircraft> genericDAO) {
-        this.genericDAO = genericDAO;
-        genericDAO.setPersistentClass(Aircraft.class);
+    public AircraftService(ModelMapper modelMapper, AircraftDAO aircraftDAO) {
+        this.modelMapper = modelMapper;
+        this.aircraftDAO = aircraftDAO;
     }
 
     public AircraftDTO findOne(Long aircraftId) {
-        Aircraft aircraft = genericDAO.findOne(aircraftId);
+        Aircraft aircraft = aircraftDAO.findOne(aircraftId);
         return modelMapper.map(aircraft, AircraftDTO.class);
     }
 
     public List<AircraftDTO> findAll() {
-        List<Aircraft> aircraftList = genericDAO.findAll();
+        List<Aircraft> aircraftList = aircraftDAO.findAll();
         return ObjectMapperUtils.mapAll(aircraftList, AircraftDTO.class);
     }
 
     public AircraftDTO save(AircraftDTO aircraftDTO) {
         Aircraft aircraft = modelMapper.map(aircraftDTO, Aircraft.class);
-        genericDAO.save(aircraft);
+        aircraftDAO.save(aircraft);
         return aircraftDTO;
     }
 
@@ -51,14 +49,14 @@ public class AircraftService {
         aircraftDTO.setAircraftId(aircraftId);
 
         Aircraft aircraft = modelMapper.map(aircraftDTO, Aircraft.class);
-        genericDAO.update(aircraft);
+        aircraftDAO.update(aircraft);
 
         return aircraftDTO;
     }
 
     public AircraftDTO delete(Long aircraftId) {
-        Aircraft aircraft = genericDAO.findOne(aircraftId);
-        genericDAO.delete(aircraft);
+        Aircraft aircraft = aircraftDAO.findOne(aircraftId);
+        aircraftDAO.delete(aircraft);
         return modelMapper.map(aircraft, AircraftDTO.class);
     }
 }

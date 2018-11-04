@@ -5,7 +5,7 @@
 package org.sergei.flightreservation.service;
 
 import org.modelmapper.ModelMapper;
-import org.sergei.flightreservation.dao.generic.GenericJpaDAO;
+import org.sergei.flightreservation.dao.CustomerDAO;
 import org.sergei.flightreservation.dto.CustomerDTO;
 import org.sergei.flightreservation.model.Customer;
 import org.sergei.flightreservation.utils.ObjectMapperUtils;
@@ -20,30 +20,28 @@ import java.util.List;
 @Service
 public class CustomerService {
 
-    @Autowired
-    private ModelMapper modelMapper;
-
-    private GenericJpaDAO<Customer> genericDAO;
+    private final ModelMapper modelMapper;
+    private final CustomerDAO customerDAO;
 
     @Autowired
-    public void setGenericDAO(GenericJpaDAO<Customer> genericDAO) {
-        this.genericDAO = genericDAO;
-        genericDAO.setPersistentClass(Customer.class);
+    public CustomerService(ModelMapper modelMapper, CustomerDAO customerDAO) {
+        this.modelMapper = modelMapper;
+        this.customerDAO = customerDAO;
     }
 
     public CustomerDTO findOne(Long customerId) {
-        Customer customer = genericDAO.findOne(customerId);
+        Customer customer = customerDAO.findOne(customerId);
         return modelMapper.map(customer, CustomerDTO.class);
     }
 
     public List<CustomerDTO> findAll() {
-        List<Customer> customerList = genericDAO.findAll();
+        List<Customer> customerList = customerDAO.findAll();
         return ObjectMapperUtils.mapAll(customerList, CustomerDTO.class);
     }
 
     public CustomerDTO save(CustomerDTO customerDTO) {
         Customer customer = modelMapper.map(customerDTO, Customer.class);
-        genericDAO.save(customer);
+        customerDAO.save(customer);
         return customerDTO;
     }
 
@@ -51,14 +49,14 @@ public class CustomerService {
         customerDTO.setCustomerId(customerId);
 
         Customer customer = modelMapper.map(customerDTO, Customer.class);
-        genericDAO.update(customer);
+        customerDAO.update(customer);
 
         return customerDTO;
     }
 
     public CustomerDTO delete(Long customerId) {
-        Customer customer = genericDAO.findOne(customerId);
-        genericDAO.delete(customer);
+        Customer customer = customerDAO.findOne(customerId);
+        customerDAO.delete(customer);
         return modelMapper.map(customer, CustomerDTO.class);
     }
 }

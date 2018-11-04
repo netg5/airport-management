@@ -6,7 +6,7 @@ package org.sergei.flightreservation.service;
 
 import org.modelmapper.ModelMapper;
 import org.sergei.flightreservation.dao.AircraftDAO;
-import org.sergei.flightreservation.dao.generic.GenericJpaDAO;
+import org.sergei.flightreservation.dao.RouteDAO;
 import org.sergei.flightreservation.dto.AircraftDTO;
 import org.sergei.flightreservation.dto.RouteDTO;
 import org.sergei.flightreservation.dto.RouteExtendedDTO;
@@ -27,23 +27,17 @@ public class RouteService {
 
     private final ModelMapper modelMapper;
     private final AircraftDAO aircraftDAO;
-
-    private GenericJpaDAO<Route> genericDAO;
+    private RouteDAO routeDAO;
 
     @Autowired
-    public RouteService(ModelMapper modelMapper, AircraftDAO aircraftDAO) {
+    public RouteService(ModelMapper modelMapper, AircraftDAO aircraftDAO, RouteDAO routeDAO) {
         this.modelMapper = modelMapper;
         this.aircraftDAO = aircraftDAO;
-    }
-
-    @Autowired
-    public void setGenericDAO(GenericJpaDAO<Route> genericDAO) {
-        this.genericDAO = genericDAO;
-        genericDAO.setPersistentClass(Route.class);
+        this.routeDAO = routeDAO;
     }
 
     public RouteExtendedDTO findOne(Long routeId) {
-        Route route = genericDAO.findOne(routeId);
+        Route route = routeDAO.findOne(routeId);
         RouteExtendedDTO routeExtendedDTO = modelMapper.map(route, RouteExtendedDTO.class);
         Aircraft aircraft = aircraftDAO.findOne(route.getAircraft().getAircraftId());
         AircraftDTO aircraftDTO = modelMapper.map(aircraft, AircraftDTO.class);
@@ -52,7 +46,7 @@ public class RouteService {
     }
 
     public List<RouteExtendedDTO> findAll() {
-        List<Route> routeList = genericDAO.findAll();
+        List<Route> routeList = routeDAO.findAll();
         List<RouteExtendedDTO> routeExtendedDTOList = ObjectMapperUtils.mapAll(routeList, RouteExtendedDTO.class);
 
         int counter = 0;
@@ -73,7 +67,7 @@ public class RouteService {
             throw new ResourceNotFoundException("Aorcraft with this ID not found");
         }
         route.setAircraft(aircraft);
-        genericDAO.save(route);
+        routeDAO.save(route);
         return routeDTO;
     }
 
@@ -81,14 +75,14 @@ public class RouteService {
         routeDTO.setRouteId(routeId);
 
         Route route = modelMapper.map(routeDTO, Route.class);
-        genericDAO.save(route);
+        routeDAO.save(route);
 
         return routeDTO;
     }
 
     public RouteDTO delete(Long routeId) {
-        Route route = genericDAO.findOne(routeId);
-        genericDAO.delete(route);
+        Route route = routeDAO.findOne(routeId);
+        routeDAO.delete(route);
         return modelMapper.map(route, RouteDTO.class);
     }
 }
