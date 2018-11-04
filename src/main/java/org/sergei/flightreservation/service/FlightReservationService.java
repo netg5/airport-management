@@ -47,6 +47,13 @@ public class FlightReservationService {
         this.aircraftDAO = aircraftDAO;
     }
 
+    /**
+     * Method to get flight reservation for the customer by reservation ID
+     *
+     * @param customerId    gets customer ID as a parameter
+     * @param reservationId gets flight reservation ID as a parameter
+     * @return Flight reservation extended DTO
+     */
     public FlightReservationExtendedDTO getOneForCustomerById(Long customerId, Long reservationId) {
         Customer customer = customerDAO.findOne(customerId);
         if (customer == null) {
@@ -138,5 +145,17 @@ public class FlightReservationService {
         FlightReservation flightReservation = modelMapper.map(flightReservationDTO, FlightReservation.class);
         flightReservationDAO.save(flightReservation);
         return flightReservationDTO;
+    }
+
+    /**
+     * Delete reservation by ID
+     *
+     * @param reservationId get reservation ID to be deleted
+     * @return deleted reservation DTO
+     */
+    public FlightReservationExtendedDTO delete(Long reservationId) {
+        FlightReservation flightReservation = flightReservationDAO.findOne(reservationId);
+        flightReservationDAO.delete(flightReservation);
+        return modelMapper.map(flightReservation, FlightReservationExtendedDTO.class);
     }
 }

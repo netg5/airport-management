@@ -4,11 +4,6 @@
 
 package org.sergei.flightreservation.dto;
 
-import org.sergei.flightreservation.model.FlightReservation;
-
-import java.util.LinkedList;
-import java.util.List;
-
 /**
  * @author Sergei Visotsky, 2018
  */
