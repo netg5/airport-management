@@ -10,6 +10,7 @@ Customer makes a flightReservation of the specific route as well as aircraft due
 * Apache Tomcat 9+
 * Apache Maven
 * Spring Boot 2
+* Swagger
 * ModelMapper
 
 ## TODO 
