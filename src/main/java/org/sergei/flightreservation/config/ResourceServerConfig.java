@@ -34,8 +34,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         http
                 .anonymous().disable()
                 .authorizeRequests()
-                .antMatchers("/api").permitAll() // Permit all for dev purposes
-//                .antMatchers("/api/**").access("hasRole('ROLE ADMIN') or hasRole('USER')")
+//                .antMatchers("/api").permitAll() // Permit all for dev purposes
+                .antMatchers("/api/**").access("hasRole('ROLE ADMIN') or hasRole('USER')")
                 .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
     }
 }

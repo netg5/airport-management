@@ -109,9 +109,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anonymous().disable()
                 .authorizeRequests()
                 .antMatchers("/**").permitAll()
-                .antMatchers("/api").permitAll() // Permit all for dev purposes
-//                .antMatchers("/api/**").authenticated()
-//                .antMatchers("/api/**").hasRole("USER")
+//                .antMatchers("/api").permitAll() // Permit all for dev purposes
+                .antMatchers("/api/**").authenticated()
+                .antMatchers("/api/**").hasRole("USER")
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic()

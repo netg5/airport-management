@@ -58,10 +58,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 //        clients.jdbc(dataSource);
         clients.inMemory()
                 .withClient("trusted-client")
-                .secret(/*passwordEncoder.encode(*/"trusted-client-secret"/*)*/)
-                .authorizedGrantTypes("password", "refresh_token", "client_credentials")
+                .secret(passwordEncoder.encode("trusted-client-secret"))
+                .authorizedGrantTypes("password", "refresh_token")
                 .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
-                .scopes("read, write, trust")
+                .scopes("read", "write", "trust")
                 .accessTokenValiditySeconds(259200)
                 .refreshTokenValiditySeconds(2500000);
     }
