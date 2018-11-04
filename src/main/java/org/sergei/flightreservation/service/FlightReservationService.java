@@ -148,6 +148,14 @@ public class FlightReservationService {
         return flightReservationDTO;
     }
 
+    /**
+     * Method to update reservation details
+     *
+     * @param customerId           gets as a parameter customer ID
+     * @param reservationId        get as a parameter reservation ID
+     * @param flightReservationDTO get as a parameter Flight reservation DTO
+     * @return flight reservation DTO
+     */
     public FlightReservationDTO updateReservationForCustomer(Long customerId,
                                                              Long reservationId,
                                                              FlightReservationDTO flightReservationDTO) {

@@ -29,22 +29,46 @@ public class AircraftService {
         this.aircraftDAO = aircraftDAO;
     }
 
+    /**
+     * Find aircraft by ID
+     *
+     * @param aircraftId gets aircraft ID as parameter
+     * @return aircraft DTO
+     */
     public AircraftDTO findOne(Long aircraftId) {
         Aircraft aircraft = aircraftDAO.findOne(aircraftId);
         return modelMapper.map(aircraft, AircraftDTO.class);
     }
 
+    /**
+     * Find all aircrafts
+     *
+     * @return list of Aircraft DTO
+     */
     public List<AircraftDTO> findAll() {
         List<Aircraft> aircraftList = aircraftDAO.findAll();
         return ObjectMapperUtils.mapAll(aircraftList, AircraftDTO.class);
     }
 
+    /**
+     * Save aircraft
+     *
+     * @param aircraftDTO get aircraft DTO as a parameter
+     * @return Aircraft DTO
+     */
     public AircraftDTO save(AircraftDTO aircraftDTO) {
         Aircraft aircraft = modelMapper.map(aircraftDTO, Aircraft.class);
         aircraftDAO.save(aircraft);
         return aircraftDTO;
     }
 
+    /**
+     * Update aicraft by ID
+     *
+     * @param aircraftId  get aircraft ID as a parameter
+     * @param aircraftDTO get aircraft DTO as a parameter
+     * @return aircraft DTO
+     */
     public AircraftDTO update(Long aircraftId, AircraftDTO aircraftDTO) {
         aircraftDTO.setAircraftId(aircraftId);
 
@@ -54,6 +78,12 @@ public class AircraftService {
         return aircraftDTO;
     }
 
+    /**
+     * Delete aircraft by ID
+     *
+     * @param aircraftId get aircraft ID as a parameter
+     * @return aircraft DTO as a response
+     */
     public AircraftDTO delete(Long aircraftId) {
         Aircraft aircraft = aircraftDAO.findOne(aircraftId);
         aircraftDAO.delete(aircraft);

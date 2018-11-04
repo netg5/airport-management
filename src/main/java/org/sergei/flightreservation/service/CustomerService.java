@@ -29,22 +29,46 @@ public class CustomerService {
         this.customerDAO = customerDAO;
     }
 
+    /**
+     * Find customer by ID
+     *
+     * @param customerId get customer ID as a parameter
+     * @return customer DTO
+     */
     public CustomerDTO findOne(Long customerId) {
         Customer customer = customerDAO.findOne(customerId);
         return modelMapper.map(customer, CustomerDTO.class);
     }
 
+    /**
+     * Find all customers
+     *
+     * @return list with customer DTO
+     */
     public List<CustomerDTO> findAll() {
         List<Customer> customerList = customerDAO.findAll();
         return ObjectMapperUtils.mapAll(customerList, CustomerDTO.class);
     }
 
+    /**
+     * Save customer
+     *
+     * @param customerDTO gets customer DTO as a parameter
+     * @return customer DTO as a response
+     */
     public CustomerDTO save(CustomerDTO customerDTO) {
         Customer customer = modelMapper.map(customerDTO, Customer.class);
         customerDAO.save(customer);
         return customerDTO;
     }
 
+    /**
+     * Method to update customer details
+     *
+     * @param customerId  gets customer ID as a parameter
+     * @param customerDTO gets customer DO as a prameter
+     * @return customer DTO as a response
+     */
     public CustomerDTO update(Long customerId, CustomerDTO customerDTO) {
         customerDTO.setCustomerId(customerId);
 
@@ -54,6 +78,12 @@ public class CustomerService {
         return customerDTO;
     }
 
+    /**
+     * Delete customer
+     *
+     * @param customerId get customer ID as a parameter
+     * @return customer DTO as a response
+     */
     public CustomerDTO delete(Long customerId) {
         Customer customer = customerDAO.findOne(customerId);
         customerDAO.delete(customer);
