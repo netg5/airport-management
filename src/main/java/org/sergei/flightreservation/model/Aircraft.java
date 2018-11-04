@@ -34,10 +34,6 @@ public class Aircraft implements Serializable {
     @Column(name = "max_passengers", nullable = false)
     private Integer maxPassengers;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "route_id")
-    private Route route;
-
     public Aircraft() {
     }
 
@@ -46,7 +42,7 @@ public class Aircraft implements Serializable {
         this.aircraftName = aircraftName;
         this.aircraftWeight = aircraftWeight;
         this.maxPassengers = maxPassengers;
-        this.route = route;
+//        this.route = route;
     }
 
     public Long getAircraftId() {
@@ -87,13 +83,5 @@ public class Aircraft implements Serializable {
 
     public void setMaxPassengers(Integer maxPassengers) {
         this.maxPassengers = maxPassengers;
-    }
-
-    public Route getRoute() {
-        return route;
-    }
-
-    public void setRoute(Route route) {
-        this.route = route;
     }
 }

@@ -4,27 +4,33 @@
 
 package org.sergei.flightreservation.dto;
 
-import java.util.LinkedList;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * @author Sergei Visotsky, 2018
  */
 public class RouteExtendedDTO extends RouteDTO {
-    private List<AircraftDTO> aircraftDTOList = new LinkedList<>();
+
+    @JsonIgnore
+    @Override
+    public Long getAircraftId() {
+        return super.getAircraftId();
+    }
+
+    private AircraftDTO aircraftDTO;
 
     public RouteExtendedDTO() {
     }
 
-    public RouteExtendedDTO(List<AircraftDTO> aircraftDTOList) {
-        this.aircraftDTOList = aircraftDTOList;
+    public RouteExtendedDTO(AircraftDTO aircraftDTO) {
+        this.aircraftDTO = aircraftDTO;
     }
 
-    public List<AircraftDTO> getAircraftDTOList() {
-        return aircraftDTOList;
+    public AircraftDTO getAircraftDTO() {
+        return aircraftDTO;
     }
 
-    public void setAircraftDTOList(List<AircraftDTO> aircraftDTOList) {
-        this.aircraftDTOList = aircraftDTOList;
+    public void setAircraftDTO(AircraftDTO aircraftDTO) {
+        this.aircraftDTO = aircraftDTO;
     }
 }

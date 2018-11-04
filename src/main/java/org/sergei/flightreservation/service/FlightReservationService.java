@@ -20,7 +20,7 @@ import java.util.List;
  * @author Sergei Visotsky, 2018
  */
 @Service
-public class ReservationService {
+public class FlightReservationService {
 
     private final ModelMapper modelMapper;
     private final CustomerService customerService;
@@ -28,7 +28,7 @@ public class ReservationService {
     private GenericJpaDAO<FlightReservation> genericDAO;
 
     @Autowired
-    public ReservationService(ModelMapper modelMapper, CustomerService customerService, RouteService routeService) {
+    public FlightReservationService(ModelMapper modelMapper, CustomerService customerService, RouteService routeService) {
         this.modelMapper = modelMapper;
         this.customerService = customerService;
         this.routeService = routeService;
