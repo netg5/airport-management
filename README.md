@@ -10,11 +10,10 @@ Customer makes a flightReservation of the specific route as well as aircraft due
 * Apache Tomcat 9+
 * Apache Maven
 * Spring Boot 2
-* Swagger
+* Swagger UI
 * ModelMapper
 
 ## TODO 
 * oAuth2
-* Swagger UI
 * Run into the Docker container
 * Front-end (REST client)
