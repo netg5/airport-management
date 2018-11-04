@@ -4,7 +4,6 @@
 
 package org.sergei.flightreservation.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.modelmapper.ModelMapper;
 import org.sergei.flightreservation.dao.AircraftDAO;
 import org.sergei.flightreservation.dao.generic.GenericJpaDAO;

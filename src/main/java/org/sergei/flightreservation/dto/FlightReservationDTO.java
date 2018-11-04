@@ -14,9 +14,8 @@ public class FlightReservationDTO {
     private Long customerId;
     private Long routeId;
     private LocalDateTime reservationDate;
-    private CustomerDTO customerDTO;
-    private RouteDTO routeDTO;
-//    private List<Route> routeList = new LinkedList<>();
+//    private CustomerDTO customerDTO;
+//    private RouteDTO routeDTO;
 
     public FlightReservationDTO() {
     }
@@ -26,10 +25,9 @@ public class FlightReservationDTO {
         this.reservationId = reservationId;
         this.customerId = customerId;
         this.reservationDate = reservationDate;
-//        this.routeList = routeList;
         this.routeId = routeId;
-        this.customerDTO = customerDTO;
-        this.routeDTO = routeDTO;
+//        this.customerDTO = customerDTO;
+//        this.routeDTO = routeDTO;
     }
 
     public Long getReservationId() {
@@ -63,7 +61,7 @@ public class FlightReservationDTO {
     public void setReservationDate(LocalDateTime reservationDate) {
         this.reservationDate = reservationDate;
     }
-
+/*
     public RouteDTO getRouteDTO() {
         return routeDTO;
     }
@@ -78,5 +76,5 @@ public class FlightReservationDTO {
 
     public void setCustomerDTO(CustomerDTO customerDTO) {
         this.customerDTO = customerDTO;
-    }
+    }*/
 }

@@ -11,13 +11,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 public class RouteExtendedDTO extends RouteDTO {
 
+    private AircraftDTO aircraftDTO;
+
     @JsonIgnore
     @Override
     public Long getAircraftId() {
         return super.getAircraftId();
     }
-
-    private AircraftDTO aircraftDTO;
 
     public RouteExtendedDTO() {
     }

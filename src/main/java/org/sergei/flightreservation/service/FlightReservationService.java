@@ -5,16 +5,16 @@
 package org.sergei.flightreservation.service;
 
 import org.modelmapper.ModelMapper;
+import org.sergei.flightreservation.dao.CustomerDAO;
+import org.sergei.flightreservation.dao.RouteDAO;
 import org.sergei.flightreservation.dao.generic.GenericJpaDAO;
-import org.sergei.flightreservation.dto.CustomerDTO;
 import org.sergei.flightreservation.dto.FlightReservationDTO;
-import org.sergei.flightreservation.dto.RouteDTO;
 import org.sergei.flightreservation.exceptions.ResourceNotFoundException;
+import org.sergei.flightreservation.model.Customer;
 import org.sergei.flightreservation.model.FlightReservation;
+import org.sergei.flightreservation.model.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @author Sergei Visotsky, 2018
@@ -23,15 +23,15 @@ import java.util.List;
 public class FlightReservationService {
 
     private final ModelMapper modelMapper;
-    private final CustomerService customerService;
-    private final RouteService routeService;
+    private final CustomerDAO customerDAO;
+    private final RouteDAO routeDAO;
     private GenericJpaDAO<FlightReservation> genericDAO;
 
     @Autowired
-    public FlightReservationService(ModelMapper modelMapper, CustomerService customerService, RouteService routeService) {
+    public FlightReservationService(ModelMapper modelMapper, CustomerDAO customerDAO, RouteDAO routeDAO) {
         this.modelMapper = modelMapper;
-        this.customerService = customerService;
-        this.routeService = routeService;
+        this.customerDAO = customerDAO;
+        this.routeDAO = routeDAO;
     }
 
     @Autowired
@@ -40,39 +40,19 @@ public class FlightReservationService {
         genericDAO.setPersistentClass(FlightReservation.class);
     }
 
-    public FlightReservationDTO findOne(Long reservationId) {
-        return null;
-    }
-
-    public List<FlightReservationDTO> findAll() {
-        return null;
-    }
-
-    public FlightReservationDTO save(FlightReservationDTO flightReservationDTO) {
-        return null;
-    }
-
     public FlightReservationDTO saveForCustomer(Long customerId, FlightReservationDTO flightReservationDTO) {
-        CustomerDTO customerDTO = customerService.findOne(customerId);
-        if (customerDTO == null) {
+        Customer customer = customerDAO.findOne(customerId);
+        if (customer == null) {
             throw new ResourceNotFoundException("Customer with this ID not found");
         }
-        RouteDTO routeDTO = routeService.findOne(flightReservationDTO.getRouteId());
-        if (routeDTO == null) {
+        Route route = routeDAO.findOne(flightReservationDTO.getRouteId());
+        if (route == null) {
             throw new ResourceNotFoundException("Route with this ID not found");
         }
-        flightReservationDTO.setCustomerDTO(customerDTO);
-        flightReservationDTO.setRouteDTO(routeDTO);
+        flightReservationDTO.setCustomerId(customer.getCustomerId());
+        flightReservationDTO.setRouteId(route.getRouteId());
         FlightReservation flightReservation = modelMapper.map(flightReservationDTO, FlightReservation.class);
         genericDAO.save(flightReservation);
         return flightReservationDTO;
-    }
-
-    public FlightReservationDTO update(Long reservationId, FlightReservationDTO flightReservationDTO) {
-        return null;
-    }
-
-    public FlightReservationDTO delete(Long reservationId) {
-        return null;
     }
 }
