@@ -9,12 +9,16 @@ import org.sergei.flightreservation.dao.CustomerDAO;
 import org.sergei.flightreservation.dao.FlightReservationDAO;
 import org.sergei.flightreservation.dao.RouteDAO;
 import org.sergei.flightreservation.dto.FlightReservationDTO;
+import org.sergei.flightreservation.dto.FlightReservationExtendedDTO;
 import org.sergei.flightreservation.exceptions.ResourceNotFoundException;
 import org.sergei.flightreservation.model.Customer;
 import org.sergei.flightreservation.model.FlightReservation;
 import org.sergei.flightreservation.model.Route;
+import org.sergei.flightreservation.utils.ObjectMapperUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author Sergei Visotsky, 2018
@@ -35,6 +39,13 @@ public class FlightReservationService {
         this.customerDAO = customerDAO;
         this.routeDAO = routeDAO;
         this.flightReservationDAO = flightReservationDAO;
+    }
+
+    public List<FlightReservationExtendedDTO> getAllForCustomer(Long customerId) {
+        List<FlightReservation> flightReservation = flightReservationDAO.findAllForCustomer(customerId);
+        List<FlightReservationExtendedDTO> flightReservationDTOList = ObjectMapperUtils.mapAll(flightReservation, FlightReservationExtendedDTO.class);
+//        Route route = routeDAO.findOne(flightReservation.get(1).getReservationId());
+        return flightReservationDTOList;
     }
 
     public FlightReservationDTO saveForCustomer(Long customerId, FlightReservationDTO flightReservationDTO) {
