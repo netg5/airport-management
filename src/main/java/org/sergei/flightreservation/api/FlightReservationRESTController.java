@@ -27,22 +27,39 @@ public class FlightReservationRESTController {
     @GetMapping("/{customerId}/reservation/{reservationId}")
     public ResponseEntity<FlightReservationExtendedDTO> getOneForCustomer(@PathVariable("customerId") Long customerId,
                                                                           @PathVariable("reservationId") Long reservationId) {
-        return new ResponseEntity<>(flightReservationService.getOneForCustomerById(customerId, reservationId), HttpStatus.OK);
+        return new ResponseEntity<>(
+                flightReservationService.getOneForCustomerById(customerId, reservationId),
+                HttpStatus.OK);
     }
 
     @GetMapping("/{customerId}/reservation")
     public ResponseEntity<List<FlightReservationExtendedDTO>> getAllForCustomer(@PathVariable("customerId") Long customerId) {
-        return new ResponseEntity<>(flightReservationService.getAllReservationsForCustomer(customerId), HttpStatus.OK);
+        return new ResponseEntity<>(
+                flightReservationService.getAllReservationsForCustomer(customerId),
+                HttpStatus.OK);
     }
 
     @PostMapping(value = "/{customerId}/reservation", consumes = "application/json")
     public ResponseEntity<FlightReservationDTO> createReservation(@PathVariable("customerId") Long customerId,
                                                                   @RequestBody FlightReservationDTO flightReservationDTO) {
-        return new ResponseEntity<>(flightReservationService.createReservationForCustomer(customerId, flightReservationDTO), HttpStatus.CREATED);
+        return new ResponseEntity<>(
+                flightReservationService.createReservationForCustomer(customerId, flightReservationDTO),
+                HttpStatus.CREATED);
+    }
+
+    @PutMapping(value = "/{customerId}/reservation/{reservationId}", consumes = "application/json")
+    public ResponseEntity<FlightReservationDTO> updateReservation(@PathVariable("customerId") Long customerId,
+                                                                  @PathVariable("reservationId") Long reservationId,
+                                                                  @RequestBody FlightReservationDTO flightReservationDTO) {
+        return new ResponseEntity<>(
+                flightReservationService.updateReservationForCustomer(customerId, reservationId, flightReservationDTO),
+                HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("/reservation/{reservationId}")
     public ResponseEntity<FlightReservationExtendedDTO> deleteReservation(@PathVariable("reservationId") Long reservationId) {
-        return new ResponseEntity<>(flightReservationService.delete(reservationId), HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(
+                flightReservationService.delete(reservationId),
+                HttpStatus.NO_CONTENT);
     }
 }

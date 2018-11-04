@@ -126,7 +126,8 @@ public class FlightReservationService {
      * @param flightReservationDTO get flight reservation DTO from controller
      * @return flight reservation DTO as a response
      */
-    public FlightReservationDTO createReservationForCustomer(Long customerId, FlightReservationDTO flightReservationDTO) {
+    public FlightReservationDTO createReservationForCustomer(Long customerId,
+                                                             FlightReservationDTO flightReservationDTO) {
         // Find customer by ID
         Customer customer = customerDAO.findOne(customerId);
         if (customer == null) {
@@ -144,6 +145,24 @@ public class FlightReservationService {
         flightReservationDTO.setRouteId(route.getRouteId());
         FlightReservation flightReservation = modelMapper.map(flightReservationDTO, FlightReservation.class);
         flightReservationDAO.save(flightReservation);
+        return flightReservationDTO;
+    }
+
+    public FlightReservationDTO updateReservationForCustomer(Long customerId,
+                                                             Long reservationId,
+                                                             FlightReservationDTO flightReservationDTO) {
+        // Find customer by ID
+        Customer customer = customerDAO.findOne(customerId);
+        if (customer == null) {
+            throw new ResourceNotFoundException("Customer with this ID not found");
+        }
+
+        flightReservationDTO.setCustomerId(customer.getCustomerId());
+        flightReservationDTO.setReservationId(reservationId);
+
+        FlightReservation flightReservation = modelMapper.map(flightReservationDTO, FlightReservation.class);
+        flightReservationDAO.update(flightReservation);
+
         return flightReservationDTO;
     }
 

@@ -75,7 +75,7 @@ public class RouteService {
         routeDTO.setRouteId(routeId);
 
         Route route = modelMapper.map(routeDTO, Route.class);
-        routeDAO.save(route);
+        routeDAO.update(route);
 
         return routeDTO;
     }
