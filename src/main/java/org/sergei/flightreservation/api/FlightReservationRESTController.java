@@ -24,6 +24,12 @@ public class FlightReservationRESTController {
     @Autowired
     private FlightReservationService flightReservationService;
 
+    @GetMapping("/customers/{customerId}/reservation/{reservationId}")
+    public ResponseEntity<FlightReservationExtendedDTO> getOneForCustomer(@PathVariable("customerId") Long customerId,
+                                                                          @PathVariable("reservationId") Long reservationId) {
+        return new ResponseEntity<>(flightReservationService.getOneForCustomerById(customerId, reservationId), HttpStatus.OK);
+    }
+
     @GetMapping("/customers/{customerId}/reservation")
     public ResponseEntity<List<FlightReservationExtendedDTO>> getAllForCustomer(@PathVariable("customerId") Long customerId) {
         return new ResponseEntity<>(flightReservationService.getAllReservationsForCustomer(customerId), HttpStatus.OK);
@@ -32,6 +38,6 @@ public class FlightReservationRESTController {
     @PostMapping(value = "/customers/{customerId}/reservation", consumes = "application/json")
     public ResponseEntity<FlightReservationDTO> createReservation(@PathVariable("customerId") Long customerId,
                                                                   @RequestBody FlightReservationDTO flightReservationDTO) {
-        return new ResponseEntity<>(flightReservationService.saveForCustomer(customerId, flightReservationDTO), HttpStatus.CREATED);
+        return new ResponseEntity<>(flightReservationService.createReservationForCustomer(customerId, flightReservationDTO), HttpStatus.CREATED);
     }
 }

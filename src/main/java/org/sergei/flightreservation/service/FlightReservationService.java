@@ -9,7 +9,10 @@ import org.sergei.flightreservation.dao.AircraftDAO;
 import org.sergei.flightreservation.dao.CustomerDAO;
 import org.sergei.flightreservation.dao.FlightReservationDAO;
 import org.sergei.flightreservation.dao.RouteDAO;
-import org.sergei.flightreservation.dto.*;
+import org.sergei.flightreservation.dto.AircraftDTO;
+import org.sergei.flightreservation.dto.FlightReservationDTO;
+import org.sergei.flightreservation.dto.FlightReservationExtendedDTO;
+import org.sergei.flightreservation.dto.RouteExtendedDTO;
 import org.sergei.flightreservation.exceptions.ResourceNotFoundException;
 import org.sergei.flightreservation.model.Aircraft;
 import org.sergei.flightreservation.model.Customer;
@@ -44,8 +47,33 @@ public class FlightReservationService {
         this.aircraftDAO = aircraftDAO;
     }
 
+    public FlightReservationExtendedDTO getOneForCustomerById(Long customerId, Long reservationId) {
+        Customer customer = customerDAO.findOne(customerId);
+        if (customer == null) {
+            throw new ResourceNotFoundException("Customer with this ID not found");
+        }
+
+        FlightReservation flightReservation = flightReservationDAO.findOneForCustomer(customerId, reservationId);
+        FlightReservationExtendedDTO flightReservationExtendedDTO =
+                modelMapper.map(flightReservation, FlightReservationExtendedDTO.class);
+        flightReservationExtendedDTO.setCustomerId(customer.getCustomerId());
+
+        // Find route by ID
+        Route route = routeDAO.findOne(flightReservation.getRoute().getRouteId());
+        RouteExtendedDTO routeExtendedDTO = modelMapper.map(route, RouteExtendedDTO.class);
+
+        // Find aircraft by ID taken from the entity
+        Aircraft aircraft = aircraftDAO.findOne(route.getAircraft().getAircraftId());
+
+        // Set aircraft DTO to the flight reservation extended DTO
+        routeExtendedDTO.setAircraftDTO(modelMapper.map(aircraft, AircraftDTO.class));
+        flightReservationExtendedDTO.setRouteExtendedDTO(routeExtendedDTO);
+
+        return flightReservationExtendedDTO;
+    }
+
     /**
-     * MEthod to get all flight reservations for the customer
+     * Method to get all flight reservations for the customer
      *
      * @param customerId gets customer ID
      * @return extended flight reservation DTO
@@ -56,7 +84,6 @@ public class FlightReservationService {
         if (customer == null) {
             throw new ResourceNotFoundException("Customer with this ID not found");
         }
-        CustomerDTO customerDTO = modelMapper.map(customer, CustomerDTO.class);
 
         // Find all flight reservation for the customer
         List<FlightReservation> flightReservation = flightReservationDAO.findAllForCustomer(customerId);
@@ -66,7 +93,7 @@ public class FlightReservationService {
         // For each DTO set customer ID, route extended DTO
         for (FlightReservationExtendedDTO flightReservationExtendedDTO : flightReservationExtendedDTOList) {
             // Set customer ID in DTO response
-            flightReservationExtendedDTO.setCustomerId(customerDTO.getCustomerId());
+            flightReservationExtendedDTO.setCustomerId(customer.getCustomerId());
 
             // Find route by ID
             Route route = routeDAO.findOne(flightReservation.get(counter).getRoute().getRouteId());
@@ -75,7 +102,7 @@ public class FlightReservationService {
             // Find aircraft by ID taken from the entity
             Aircraft aircraft = aircraftDAO.findOne(route.getAircraft().getAircraftId());
 
-            // Set aicraft DTO to the flight reservation extended DTO
+            // Set aircraft DTO to the flight reservation extended DTO
             routeExtendedDTO.setAircraftDTO(modelMapper.map(aircraft, AircraftDTO.class));
             flightReservationExtendedDTO.setRouteExtendedDTO(routeExtendedDTO);
             counter++;
@@ -92,7 +119,7 @@ public class FlightReservationService {
      * @param flightReservationDTO get flight reservation DTO from controller
      * @return flight reservation DTO as a response
      */
-    public FlightReservationDTO saveForCustomer(Long customerId, FlightReservationDTO flightReservationDTO) {
+    public FlightReservationDTO createReservationForCustomer(Long customerId, FlightReservationDTO flightReservationDTO) {
         // Find customer by ID
         Customer customer = customerDAO.findOne(customerId);
         if (customer == null) {

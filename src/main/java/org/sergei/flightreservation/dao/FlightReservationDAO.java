@@ -21,6 +21,13 @@ public class FlightReservationDAO extends AbstractJpaDAO<FlightReservation> {
         setPersistentClass(FlightReservation.class);
     }
 
+    public FlightReservation findOneForCustomer(Long customerId, Long reservationId) {
+        Query query = entityManager.createQuery("SELECT f FROM FlightReservation f WHERE f.customer.customerId = :customerId AND f.reservationId = :reservationId");
+        query.setParameter("customerId", customerId);
+        query.setParameter("reservationId", reservationId);
+        return (FlightReservation) query.getSingleResult();
+    }
+
     public List<FlightReservation> findAllForCustomer(Long customerId) {
         Query query = entityManager.createQuery("SELECT f FROM FlightReservation f WHERE f.customer.customerId = :customerId");
         query.setParameter("customerId", customerId);
