@@ -8,7 +8,7 @@ import org.springframework.security.oauth2.provider.expression.OAuth2MethodSecur
 
 /**
  * @author Sergei Visotsky, 2018
- *
+ * <p>
  * This class needs so that it was able to delegate roles fot the API resources.
  * For example allow admin to delete any resource only
  */

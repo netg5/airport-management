@@ -15,7 +15,6 @@ import javax.sql.DataSource;
  * @author Sergei Visotsky, 2018
  */
 @Configuration
-//@PropertySource("classpath:application.yml")
 public class JdbcTokenStoreConfig {
 
     @Value("classpath:oauth_schema.sql")

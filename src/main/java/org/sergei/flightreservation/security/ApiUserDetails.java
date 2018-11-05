@@ -12,8 +12,10 @@ import java.util.List;
 
 /**
  * @author Sergei Visotsky, 2018
+ * <p>
+ * This class creates a set of GrantedAuthority instances that represent roles that the user has in the system.
  */
-public class ApiUserDetails implements org.springframework.security.core.userdetails.UserDetails {
+public class ApiUserDetails implements UserDetails {
 
     private static final long serialVersionUID = 1L;
     private Collection<? extends GrantedAuthority> authorities;
@@ -26,6 +28,12 @@ public class ApiUserDetails implements org.springframework.security.core.userdet
         this.authorities = translateRoles(user.getUserRoles());
     }
 
+    /**
+     * Method to set 'ROLE_' prefix for each role for a particular user taken from the database
+     *
+     * @param userRoles Takes a list of user roles from constructor as a parameter
+     * @return a collection of authorities
+     */
     private Collection<? extends GrantedAuthority> translateRoles(List<UserRoles> userRoles) {
         List<GrantedAuthority> authorities = new ArrayList<>();
         for (UserRoles role : userRoles) {
