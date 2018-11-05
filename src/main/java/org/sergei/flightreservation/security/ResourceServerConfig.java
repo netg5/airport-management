@@ -12,6 +12,8 @@ import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHand
 
 /**
  * @author Sergei Visotsky, 2018
+ * <p>
+ * Enables a Spring Security that authenticates requests via an incoming OAuth2 token
  */
 @Configuration
 @EnableResourceServer
