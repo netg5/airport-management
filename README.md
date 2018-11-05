@@ -13,6 +13,11 @@ Customer makes a flightReservation of the specific route as well as aircraft due
 * Swagger UI
 * ModelMapper
 
+## oAuth 2 authentication
+This application uses oAuth 2 with JWT encryption.
+To generate .jks file `keytool -genkeypair -alias jwt -keyalg RSA -keypass secretKey -keystore jwt.jks -storepass secretKey` command should be performed.
+`secretKey` is a password in this case.
+
 ## TODO 
 * Run into the Docker container
 * Front-end (REST client)
