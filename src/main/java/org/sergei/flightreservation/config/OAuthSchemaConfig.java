@@ -14,7 +14,7 @@ import javax.sql.DataSource;
  * @author Sergei Visotsky, 2018
  */
 @Configuration
-public class JdbcTokenStoreConfig {
+public class OAuthSchemaConfig {
 
     @Value("classpath:oauth_schema.sql")
     private Resource schemaScript;
