@@ -6,13 +6,9 @@ package org.sergei.flightreservation.service;
 
 import org.sergei.flightreservation.dao.UserDAO;
 import org.sergei.flightreservation.model.User;
-import org.sergei.flightreservation.model.UserRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.PostConstruct;
-import java.util.Arrays;
 
 /**
  * @author Sergei Visotsky, 2018

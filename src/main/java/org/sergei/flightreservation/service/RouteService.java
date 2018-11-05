@@ -36,15 +36,31 @@ public class RouteService {
         this.routeDAO = routeDAO;
     }
 
+    /**
+     * Method to find one route
+     *
+     * @param routeId as an input argument from controller
+     * @return route extended DTO
+     */
     public RouteExtendedDTO findOne(Long routeId) {
+        // Find route and map into the extended DTO
         Route route = routeDAO.findOne(routeId);
         RouteExtendedDTO routeExtendedDTO = modelMapper.map(route, RouteExtendedDTO.class);
+
+        // Find aircraft map it into the aircraft DTO
         Aircraft aircraft = aircraftDAO.findOne(route.getAircraft().getAircraftId());
         AircraftDTO aircraftDTO = modelMapper.map(aircraft, AircraftDTO.class);
+
+        // Set to the route extended DTO
         routeExtendedDTO.setAircraftDTO(aircraftDTO);
         return routeExtendedDTO;
     }
 
+    /**
+     * Find all routes
+     *
+     * @return list of route extended DTO
+     */
     public List<RouteExtendedDTO> findAll() {
         List<Route> routeList = routeDAO.findAll();
         List<RouteExtendedDTO> routeExtendedDTOList = ObjectMapperUtils.mapAll(routeList, RouteExtendedDTO.class);
@@ -60,8 +76,16 @@ public class RouteService {
         return routeExtendedDTOList;
     }
 
+    /**
+     * Save route
+     *
+     * @param routeDTO gets route DTO as an input argument
+     * @return route DTO as a response
+     */
     public RouteDTO save(RouteDTO routeDTO) {
         Route route = modelMapper.map(routeDTO, Route.class);
+
+        // Find aircraft required in request body
         Aircraft aircraft = aircraftDAO.findOne(routeDTO.getAircraftId());
         if (aircraft == null) {
             throw new ResourceNotFoundException("Aorcraft with this ID not found");
@@ -71,6 +95,13 @@ public class RouteService {
         return routeDTO;
     }
 
+    /**
+     * Update route data
+     *
+     * @param routeId  get route ID as an input argument
+     * @param routeDTO Route DTO with updated data
+     * @return Route DTO as a response
+     */
     public RouteDTO update(Long routeId, RouteDTO routeDTO) {
         routeDTO.setRouteId(routeId);
 
@@ -80,6 +111,11 @@ public class RouteService {
         return routeDTO;
     }
 
+    /**
+     * Delete route by ID
+     * @param routeId gets route ID as an input argument
+     * @return Route DTO asa response
+     */
     public RouteDTO delete(Long routeId) {
         Route route = routeDAO.findOne(routeId);
         routeDAO.delete(route);
