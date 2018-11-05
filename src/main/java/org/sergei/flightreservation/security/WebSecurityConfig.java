@@ -2,7 +2,7 @@
  * Copyright (c) 2018 Sergei Visotsky
  */
 
-package org.sergei.flightreservation.config;
+package org.sergei.flightreservation.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -23,10 +23,12 @@ import org.springframework.security.oauth2.provider.approval.TokenApprovalStore;
 import org.springframework.security.oauth2.provider.approval.TokenStoreUserApprovalHandler;
 import org.springframework.security.oauth2.provider.request.DefaultOAuth2RequestFactory;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
+import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+
+import javax.sql.DataSource;
 
 /**
  * @author Sergei Visotsky, 2018
@@ -36,23 +38,28 @@ import org.springframework.web.filter.CorsFilter;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-//    @Autowired
-//    private UserService userService;
+    private final DataSource dataSource;
+    private final ClientDetailsService clientDetailsService;
+    private final ApiUserDetailsService apiUserDetailsService;
 
     @Autowired
-    private ClientDetailsService clientDetailsService;
+    public WebSecurityConfig(DataSource dataSource,
+                             ClientDetailsService clientDetailsService,
+                             ApiUserDetailsService apiUserDetailsService) {
+        this.dataSource = dataSource;
+        this.clientDetailsService = clientDetailsService;
+        this.apiUserDetailsService = apiUserDetailsService;
+    }
 
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
-
+    // All users are stored into the database
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(userService).passwordEncoder(encoder());
-        auth
+        auth.userDetailsService(apiUserDetailsService).passwordEncoder(encoder());
+        /*auth
                 .inMemoryAuthentication()
                 .withUser("admin")
                 .password(passwordEncoder.encode("123456"))
-                .roles("ADMIN", "USER");
+                .roles("ADMIN", "USER");*/
     }
 
     @Bean
@@ -61,23 +68,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-    /*@Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(userService);
-        authenticationProvider.setPasswordEncoder(encoder());
-        return authenticationProvider;
-    }*/
-
-    // Password encoder
-    @Bean
-    public BCryptPasswordEncoder encoder() {
-        return new BCryptPasswordEncoder();
-    }
+    /* @Bean
+	public TokenStore tokenStore() {
+		return new InMemoryTokenStore();
+	} */
 
     @Bean
-    public TokenStore tokenStore() {
-        return new InMemoryTokenStore();
+    public JdbcTokenStore tokenStore() {
+        return new JdbcTokenStore(dataSource);
     }
 
     @Bean
@@ -92,10 +90,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     @Autowired
-    public ApprovalStore approvalStore(TokenStore tokenStore) {
+    public ApprovalStore approvalStore(TokenStore tokenStore) throws Exception {
         TokenApprovalStore store = new TokenApprovalStore();
         store.setTokenStore(tokenStore);
         return store;
+    }
+
+    // Password encoder
+    @Bean
+    public BCryptPasswordEncoder encoder() {
+        return new BCryptPasswordEncoder();
     }
 
     @Override
@@ -109,13 +113,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anonymous().disable()
                 .authorizeRequests()
                 .antMatchers("/**").permitAll()
-//                .antMatchers("/api").permitAll() // Permit all for dev purposes
+                .antMatchers("/signup/**").permitAll()
                 .antMatchers("/api/**").authenticated()
                 .antMatchers("/api/**").hasRole("USER")
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic()
-                .realmName("CRM_REALM");
+                .realmName("API_REALM");
     }
 
     @Bean

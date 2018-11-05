@@ -6,6 +6,8 @@ package org.sergei.flightreservation.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author Sergei Visotsky, 2018
@@ -25,16 +27,20 @@ public class User implements Serializable {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "email")
-    private String email;
+    @Column(name = "roles")
+    @OneToMany(
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL
+    )
+    private List<UserRoles> userRoles = new LinkedList<>();
 
     public User() {
     }
 
-    public User(String username, String password, String email) {
+    public User(String username, String password, List<UserRoles> userRoles) {
         this.username = username;
         this.password = password;
-        this.email = email;
+        this.userRoles = userRoles;
     }
 
     public Long getUserId() {
@@ -61,11 +67,11 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public String getEmail() {
-        return email;
+    public List<UserRoles> getUserRoles() {
+        return userRoles;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUserRoles(List<UserRoles> userRoles) {
+        this.userRoles = userRoles;
     }
 }

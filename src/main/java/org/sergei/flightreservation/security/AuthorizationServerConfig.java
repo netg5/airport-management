@@ -2,7 +2,7 @@
  * Copyright (c) 2018 Sergei Visotsky
  */
 
-package org.sergei.flightreservation.config;
+package org.sergei.flightreservation.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,6 +17,8 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.provider.approval.UserApprovalHandler;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 
+import javax.sql.DataSource;
+
 /**
  * @author Sergei Visotsky, 2018
  */
@@ -24,59 +26,49 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
-    //    private final DataSource dataSource;
+    private final DataSource dataSource;
     private final AuthenticationManager authenticationManager;
-//    private final UserService userService;
-
     private final UserApprovalHandler userApprovalHandler;
-
-    // In case of storing data into DB should be removed
-    @Autowired
-    private TokenStore tokenStore;
+    private final TokenStore tokenStore;
+    private final ApiUserDetailsService apiUserDetailsService;
 
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
-
-    @Autowired
-    public AuthorizationServerConfig(/*DataSource dataSource,*/
-            @Qualifier("authenticationManagerBean") AuthenticationManager authenticationManager,
-            /*UserService userService*/UserApprovalHandler userApprovalHandler) {
-//        this.dataSource = dataSource;
+    public AuthorizationServerConfig(DataSource dataSource, UserApprovalHandler userApprovalHandler,
+                                     @Qualifier("authenticationManagerBean") AuthenticationManager authenticationManager,
+                                     TokenStore tokenStore, BCryptPasswordEncoder passwordEncoder,
+                                     ApiUserDetailsService apiUserDetailsService) {
+        this.dataSource = dataSource;
         this.authenticationManager = authenticationManager;
-//        this.userService = userService;
         this.userApprovalHandler = userApprovalHandler;
+        this.tokenStore = tokenStore;
+        this.apiUserDetailsService = apiUserDetailsService;
     }
 
-    // All tokens are stored into the database
-    /*@Bean
-    public JdbcTokenStore tokenStore() {
-        return new JdbcTokenStore(dataSource);
-    }*/
-
+    // All the clients are stored into the database
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-//        clients.jdbc(dataSource);
-        clients.inMemory()
+        clients.jdbc(dataSource);
+        /*clients.inMemory()
                 .withClient("trusted-client")
                 .secret(passwordEncoder.encode("trusted-client-secret"))
                 .authorizedGrantTypes("password", "refresh_token")
                 .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
                 .scopes("read", "write", "trust")
                 .accessTokenValiditySeconds(259200)
-                .refreshTokenValiditySeconds(2500000);
+                .refreshTokenValiditySeconds(2500000);*/
     }
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints
-                .tokenStore(/*tokenStore()*/ tokenStore)
+                .tokenStore(tokenStore)
                 .userApprovalHandler(userApprovalHandler)
-                .authenticationManager(authenticationManager);
-//                .userDetailsService(userService);
+                .authenticationManager(authenticationManager)
+                .userDetailsService(apiUserDetailsService);
     }
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) {
-        oauthServer.realm("CRM_REALM");
+        oauthServer.realm("API_REALM");
     }
 }
