@@ -31,19 +31,19 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private final AuthenticationManager authenticationManager;
     private final UserApprovalHandler userApprovalHandler;
     private final TokenStore tokenStore;
-//    private final JwtAccessTokenConverter jwtTokenEnhancer;
+    private final JwtAccessTokenConverter jwtTokenEnhancer;
     private final ApiUserDetailsService apiUserDetailsService;
 
     @Autowired
     public AuthorizationServerConfig(DataSource dataSource, UserApprovalHandler userApprovalHandler,
                                      @Qualifier("authenticationManagerBean") AuthenticationManager authenticationManager,
-                                     TokenStore tokenStore, /*JwtAccessTokenConverter jwtTokenEnhancer,*/
+                                     TokenStore tokenStore, JwtAccessTokenConverter jwtTokenEnhancer,
                                      ApiUserDetailsService apiUserDetailsService) {
         this.dataSource = dataSource;
         this.authenticationManager = authenticationManager;
         this.userApprovalHandler = userApprovalHandler;
         this.tokenStore = tokenStore;
-//        this.jwtTokenEnhancer = jwtTokenEnhancer;
+        this.jwtTokenEnhancer = jwtTokenEnhancer;
         this.apiUserDetailsService = apiUserDetailsService;
     }
 
@@ -65,7 +65,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints
                 .tokenStore(tokenStore)
-//                .tokenEnhancer(jwtTokenEnhancer)
+                .tokenEnhancer(jwtTokenEnhancer)
                 .userApprovalHandler(userApprovalHandler)
                 .authenticationManager(authenticationManager)
                 .userDetailsService(apiUserDetailsService);

@@ -24,15 +24,12 @@ import org.springframework.security.oauth2.provider.approval.TokenApprovalStore;
 import org.springframework.security.oauth2.provider.approval.TokenStoreUserApprovalHandler;
 import org.springframework.security.oauth2.provider.request.DefaultOAuth2RequestFactory;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-
-import javax.sql.DataSource;
 
 /**
  * @author Sergei Visotsky, 2018
@@ -42,15 +39,12 @@ import javax.sql.DataSource;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final DataSource dataSource;
     private final ClientDetailsService clientDetailsService;
     private final ApiUserDetailsService apiUserDetailsService;
 
     @Autowired
-    public WebSecurityConfig(DataSource dataSource,
-                             ClientDetailsService clientDetailsService,
+    public WebSecurityConfig(ClientDetailsService clientDetailsService,
                              ApiUserDetailsService apiUserDetailsService) {
-        this.dataSource = dataSource;
         this.clientDetailsService = clientDetailsService;
         this.apiUserDetailsService = apiUserDetailsService;
     }
@@ -78,28 +72,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return new InMemoryTokenStore();
 	} */
 
-    // In case of database client storage
+    // In case of JWT TokenStore
     @Bean
-    public JdbcTokenStore tokenStore() {
-        return new JdbcTokenStore(dataSource);
-    }
-
-    /*@Bean
     public TokenStore tokenStore() {
         return new JwtTokenStore(jwtTokenEnhancer());
     }
 
     @Bean
     protected JwtAccessTokenConverter jwtTokenEnhancer() {
-	    KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("jwt.jks"), "secretKey".toCharArray());
-	    JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-	    converter.setKeyPair(keyStoreKeyFactory.getKeyPair("jwt"));
+        KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("jwt.jks"), "secretKey".toCharArray());
 
-        *//*JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        converter.setSigningKey("Demo-Key-1");*//*
+        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+        converter.setKeyPair(keyStoreKeyFactory.getKeyPair("jwt"));
 
         return converter;
-    }*/
+    }
 
     @Bean
     @Autowired

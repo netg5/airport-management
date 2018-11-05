@@ -13,6 +13,8 @@ import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * @author Sergei Visotsky, 2018
+ * <p>
+ * Endpoint to see encrypted password
  */
 @ApiIgnore
 @RestController
