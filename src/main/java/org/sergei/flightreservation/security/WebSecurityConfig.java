@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -24,6 +25,9 @@ import org.springframework.security.oauth2.provider.approval.TokenStoreUserAppro
 import org.springframework.security.oauth2.provider.request.DefaultOAuth2RequestFactory;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -68,15 +72,34 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
+    // In case of in-memory client storage
     /* @Bean
 	public TokenStore tokenStore() {
 		return new InMemoryTokenStore();
 	} */
 
+    // In case of database client storage
     @Bean
     public JdbcTokenStore tokenStore() {
         return new JdbcTokenStore(dataSource);
     }
+
+    /*@Bean
+    public TokenStore tokenStore() {
+        return new JwtTokenStore(jwtTokenEnhancer());
+    }
+
+    @Bean
+    protected JwtAccessTokenConverter jwtTokenEnhancer() {
+	    KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("jwt.jks"), "secretKey".toCharArray());
+	    JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+	    converter.setKeyPair(keyStoreKeyFactory.getKeyPair("jwt"));
+
+        *//*JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+        converter.setSigningKey("Demo-Key-1");*//*
+
+        return converter;
+    }*/
 
     @Bean
     @Autowired

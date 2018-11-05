@@ -16,6 +16,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.approval.UserApprovalHandler;
 import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 
 import javax.sql.DataSource;
 
@@ -30,17 +31,19 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private final AuthenticationManager authenticationManager;
     private final UserApprovalHandler userApprovalHandler;
     private final TokenStore tokenStore;
+//    private final JwtAccessTokenConverter jwtTokenEnhancer;
     private final ApiUserDetailsService apiUserDetailsService;
 
     @Autowired
     public AuthorizationServerConfig(DataSource dataSource, UserApprovalHandler userApprovalHandler,
                                      @Qualifier("authenticationManagerBean") AuthenticationManager authenticationManager,
-                                     TokenStore tokenStore, BCryptPasswordEncoder passwordEncoder,
+                                     TokenStore tokenStore, /*JwtAccessTokenConverter jwtTokenEnhancer,*/
                                      ApiUserDetailsService apiUserDetailsService) {
         this.dataSource = dataSource;
         this.authenticationManager = authenticationManager;
         this.userApprovalHandler = userApprovalHandler;
         this.tokenStore = tokenStore;
+//        this.jwtTokenEnhancer = jwtTokenEnhancer;
         this.apiUserDetailsService = apiUserDetailsService;
     }
 
@@ -62,6 +65,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints
                 .tokenStore(tokenStore)
+//                .tokenEnhancer(jwtTokenEnhancer)
                 .userApprovalHandler(userApprovalHandler)
                 .authenticationManager(authenticationManager)
                 .userDetailsService(apiUserDetailsService);

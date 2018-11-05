@@ -46,7 +46,7 @@ public class CustomerRESTController {
     }
 
     @DeleteMapping(value = "/{customerId}")
-//    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<CustomerDTO> deleteCustomer(@PathVariable("customerId") Long customerId) {
         return new ResponseEntity<>(customerService.delete(customerId), HttpStatus.NO_CONTENT);
     }
