@@ -9,11 +9,19 @@ import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.Contact;
+import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger.web.SecurityConfiguration;
+import springfox.documentation.swagger.web.SecurityConfigurationBuilder;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import static org.springframework.security.oauth2.provider.token.AccessTokenConverter.CLIENT_ID;
 
 /**
  * @author Sergei Visotsky, 2018
@@ -22,9 +30,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SwaggerConfig {
 
-    /*@Value("${config.oauth2.accessTokenUri}")
-    private String authServer;
-    private static final String CLIENT_SECRET = "client_secret";*/
+    private static final String AUTH_SERVER = "http://localhost:8085/flight/oauth/token";
+    private static final String CLIENT_SECRET = "client_secret";
 
     @Bean
     public Docket api() {
@@ -33,15 +40,15 @@ public class SwaggerConfig {
                 .apis(RequestHandlerSelectors.basePackage("org.sergei.flightreservation.api"))
                 .paths(PathSelectors.any())
                 .build()
-                /*.securitySchemes(Collections.singletonList(securitySchema()))
-                .securityContexts(Collections.singletonList(securityContext()))*/
+                .securitySchemes(Collections.singletonList(securitySchema()))
+                .securityContexts(Collections.singletonList(securityContext()))
                 .apiInfo(apiInfo());
     }
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Flight reservation REST API")
-                .description("Methods offered by this REST API")
+                .title("Flight reservation REST methods")
+                .description("Methods needed to retrieve, add and modify data")
                 .version("1.0")
                 .license("Apache 2.0")
                 .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
@@ -49,7 +56,7 @@ public class SwaggerConfig {
                 .build();
     }
 
-    /*@Bean
+    @Bean
     public SecurityConfiguration security() {
         return SecurityConfigurationBuilder.builder()
                 .clientId(CLIENT_ID)
@@ -66,7 +73,7 @@ public class SwaggerConfig {
         authorizationScopeList.add(new AuthorizationScope("write", "write all"));
 
         List<GrantType> grantTypes = new ArrayList<>();
-        GrantType grantType = new ResourceOwnerPasswordCredentialsGrant(authServer);
+        GrantType grantType = new ResourceOwnerPasswordCredentialsGrant(AUTH_SERVER);
         grantTypes.add(grantType);
 
         return new OAuth("oauth2schema", authorizationScopeList, grantTypes);
@@ -88,5 +95,5 @@ public class SwaggerConfig {
                 .securityReferences(defaultAuth())
                 .forPaths(PathSelectors.ant("/api/**"))
                 .build();
-    }*/
+    }
 }
