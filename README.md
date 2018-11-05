@@ -14,6 +14,6 @@ Customer makes a flightReservation of the specific route as well as aircraft due
 * ModelMapper
 
 ## TODO 
-* oAuth2
+* JWT access tokens in oAuth 2
 * Run into the Docker container
 * Front-end (REST client)
