@@ -4,12 +4,15 @@
 
 package org.sergei.flightreservation.dao.generic;
 
+import org.springframework.stereotype.Repository;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.List;
 
+@Repository
 @Transactional
 @SuppressWarnings("unchecked")
 public abstract class AbstractJpaDAO<T extends Serializable> implements IAbstractJpaDAO<T> {
