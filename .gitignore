@@ -1,4 +1,3 @@
-/logs/
 /target/
 !.mvn/wrapper/maven-wrapper.jar
 
@@ -16,6 +15,8 @@
 *.iws
 *.iml
 *.ipr
+
+*.log
 
 ### NetBeans ###
 /nbproject/private/
