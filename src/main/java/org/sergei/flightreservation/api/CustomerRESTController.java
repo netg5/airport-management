@@ -4,6 +4,7 @@
 
 package org.sergei.flightreservation.api;
 
+import io.swagger.annotations.ApiOperation;
 import org.sergei.flightreservation.dto.CustomerDTO;
 import org.sergei.flightreservation.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,27 +25,32 @@ public class CustomerRESTController {
     @Autowired
     private CustomerService customerService;
 
+    @ApiOperation("Get all customers")
     @GetMapping
     public ResponseEntity<List<CustomerDTO>> getAllCustomers() {
         return new ResponseEntity<>(customerService.findAll(), HttpStatus.OK);
     }
 
+    @ApiOperation("Get customer by ID")
     @GetMapping("/{customerId}")
     public ResponseEntity<CustomerDTO> getCustomerById(@PathVariable("customerId") Long customerId) {
         return new ResponseEntity<>(customerService.findOne(customerId), HttpStatus.OK);
     }
 
+    @ApiOperation("Save customer")
     @PostMapping(consumes = "application/json")
     public ResponseEntity<CustomerDTO> saveCustomer(@RequestBody CustomerDTO customerDTO) {
         return new ResponseEntity<>(customerService.save(customerDTO), HttpStatus.CREATED);
     }
 
+    @ApiOperation("Update customer data")
     @PutMapping(value = "/{customerId}", consumes = "application/json")
     public ResponseEntity<CustomerDTO> updateCustomer(@PathVariable("customerId") Long customerId,
                                                       @RequestBody CustomerDTO customerDTO) {
         return new ResponseEntity<>(customerService.update(customerId, customerDTO), HttpStatus.OK);
     }
 
+    @ApiOperation("Delete customer data")
     @DeleteMapping(value = "/{customerId}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<CustomerDTO> deleteCustomer(@PathVariable("customerId") Long customerId) {

@@ -1,4 +1,8 @@
+server:
+  port: 8085
 spring:
+  application:
+    name: flight-reservation
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/flight_reservation?allowPublicKeyRetrieval=true&useSSL=false
@@ -8,10 +12,8 @@ spring:
   jpa:
     properties:
       hibernate:
-        show_sql: true
-        hbm2ddl:
-          auto: update
-        generate-ddl: true
-        dialect: org.hibernate.dialect.MySQL57InnoDBDialect
-server:
-  port: 8085
+      show_sql: true
+      hbm2ddl:
+      auto: update
+      generate-ddl: true
+      dialect: org.hibernate.dialect.MySQL57InnoDBDialect
