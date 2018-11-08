@@ -9,7 +9,7 @@
 	<packaging>jar</packaging>
 
 	<name>zuul-gateway</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Zuul gateway application</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
