@@ -25,5 +25,7 @@ To generate .jks file `keytool -genkeypair -alias jwt -keyalg RSA -keypass secre
 `secretKey` is a password in this case.
 
 ## TODO
+* Configure Eureka Server
+* Configure Zuul Gateway
 * Run into the Docker container
 * Front-end (REST client)
