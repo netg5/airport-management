@@ -123,7 +123,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anonymous().disable()
                 .authorizeRequests()
                 .antMatchers("/**").permitAll()
-                .antMatchers("/signup/**").permitAll()
+                .antMatchers("/users/**").permitAll()
                 .antMatchers("/api/**").authenticated()
                 .antMatchers("/api/**").hasRole("USER")
                 .anyRequest().authenticated()

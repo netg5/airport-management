@@ -39,14 +39,14 @@ public class AircraftRESTController {
 
     @ApiOperation("Save aircraft")
     @PostMapping(consumes = "application/json")
-    @PreAuthorize("hasAnyAuthority('ROLE ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<AircraftDTO> saveAircraft(@RequestBody AircraftDTO aircraftDTO) {
         return new ResponseEntity<>(aircraftService.save(aircraftDTO), HttpStatus.CREATED);
     }
 
     @ApiOperation("Update aircraft data")
     @PutMapping(value = "/{aircraftId}", consumes = "application/json")
-    @PreAuthorize("hasAnyAuthority('ROLE ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<AircraftDTO> updateAircraft(@PathVariable("aircraftId") Long aircraftId,
                                                       @RequestBody AircraftDTO customerDTO) {
         return new ResponseEntity<>(aircraftService.update(aircraftId, customerDTO), HttpStatus.OK);
@@ -54,7 +54,7 @@ public class AircraftRESTController {
 
     @ApiOperation("Delete aircraft")
     @DeleteMapping(value = "/{aircraftId}")
-    @PreAuthorize("hasAnyAuthority('ROLE ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<AircraftDTO> deleteAircraft(@PathVariable("aircraftId") Long aircraftId) {
         return new ResponseEntity<>(aircraftService.delete(aircraftId), HttpStatus.NO_CONTENT);
     }

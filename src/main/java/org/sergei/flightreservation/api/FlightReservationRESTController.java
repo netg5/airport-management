@@ -25,7 +25,7 @@ public class FlightReservationRESTController {
     @Autowired
     private FlightReservationService flightReservationService;
 
-    @ApiOperation("Get one reservationby ID for the customer")
+    @ApiOperation("Get one reservation by ID for the customer")
     @GetMapping("/{customerId}/reservation/{reservationId}")
     public ResponseEntity<FlightReservationExtendedDTO> getOneForCustomer(@PathVariable("customerId") Long customerId,
                                                                           @PathVariable("reservationId") Long reservationId) {

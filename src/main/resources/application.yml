@@ -12,8 +12,8 @@ spring:
   jpa:
     properties:
       hibernate:
-      show_sql: true
-      hbm2ddl:
-      auto: update
-      generate-ddl: true
-      dialect: org.hibernate.dialect.MySQL57InnoDBDialect
+        dialect: org.hibernate.dialect.MySQL57InnoDBDialect
+        show_sql: true
+        hbm2ddl:
+          auto: update
+        generate-ddl: true

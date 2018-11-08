@@ -40,14 +40,14 @@ public class RouteRESTController {
 
     @ApiOperation("Save route")
     @PostMapping(consumes = "application/json")
-    @PreAuthorize("hasAnyAuthority('ROLE ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<RouteDTO> saveRoute(@RequestBody RouteDTO routeDTO) {
         return new ResponseEntity<>(routeService.save(routeDTO), HttpStatus.OK);
     }
 
     @ApiOperation("Update route information")
     @PutMapping(value = "/{routeId}", consumes = "application/json")
-    @PreAuthorize("hasAnyAuthority('ROLE ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<RouteDTO> updateRoute(@PathVariable("routeId") Long routeId,
                                                 @RequestBody RouteDTO routeDTO) {
         return new ResponseEntity<>(routeService.update(routeId, routeDTO), HttpStatus.OK);
@@ -55,7 +55,7 @@ public class RouteRESTController {
 
     @ApiOperation("Method to delete route")
     @DeleteMapping("/{routeId}")
-    @PreAuthorize("hasAnyAuthority('ROLE ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<RouteDTO> deleteRoute(@PathVariable("routeId") Long routeId) {
         return new ResponseEntity<>(routeService.delete(routeId), HttpStatus.NO_CONTENT);
     }
