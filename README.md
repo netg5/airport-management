@@ -13,6 +13,11 @@ Customer makes a flightReservation of the specific route as well as aircraft due
 * Swagger UI
 * ModelMapper
 
+## Microservices
+* eureka-service - microservice registry where the list of all microservices can be seen
+* zuul-gateway - entry point of the all microservices (Not configured properly now)
+* flight-service - main microservice which allows to reserve flight
+
 ## oAuth 2 authentication
 This application uses oAuth 2 with JWT encryption.
 To generate .jks file `keytool -genkeypair -alias jwt -keyalg RSA -keypass secretKey -keystore jwt.jks -storepass secretKey` command should be performed.
