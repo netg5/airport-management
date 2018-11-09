@@ -5,12 +5,14 @@
 package org.sergei.flightreservation.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * @author Sergei Visotsky, 2018
  */
 public class RouteExtendedDTO extends RouteDTO {
 
+    @JsonProperty("aircraft")
     private AircraftDTO aircraftDTO;
 
     @JsonIgnore

@@ -19,7 +19,7 @@ import java.util.List;
  * @author Sergei Visotsky, 2018
  */
 @RestController
-@RequestMapping(value = "/api/v1/aircraft", produces = "application/json")
+@RequestMapping(value = "/api/v1/aircrafts", produces = "application/json")
 public class AircraftRESTController {
 
     @Autowired

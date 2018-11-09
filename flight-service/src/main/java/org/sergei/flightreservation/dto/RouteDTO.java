@@ -19,20 +19,18 @@ public class RouteDTO {
     private BigDecimal price;
     private String place;
     private Long aircraftId;
-//    private List<AircraftDTO> aircraftDTOList = new LinkedList<>();
 
-    public RouteDTO() {
+    RouteDTO() {
     }
 
     public RouteDTO(Long routeId, Double distance, LocalDateTime departureTime,
-                    LocalDateTime arrivalTime, BigDecimal price, String place, List<AircraftDTO> aircraftDTOList, Long aircraftId) {
+                    LocalDateTime arrivalTime, BigDecimal price, String place, Long aircraftId) {
         this.routeId = routeId;
         this.distance = distance;
         this.departureTime = departureTime;
         this.arrivalTime = arrivalTime;
         this.price = price;
         this.place = place;
-//        this.aircraftDTOList = aircraftDTOList;
         this.aircraftId = aircraftId;
     }
 
@@ -91,12 +89,4 @@ public class RouteDTO {
     public void setAircraftId(Long aircraftId) {
         this.aircraftId = aircraftId;
     }
-
-    /*public List<AircraftDTO> getAircraftDTOList() {
-        return aircraftDTOList;
-    }
-
-    public void setAircraftDTOList(List<AircraftDTO> aircraftDTOList) {
-        this.aircraftDTOList = aircraftDTOList;
-    }*/
 }
