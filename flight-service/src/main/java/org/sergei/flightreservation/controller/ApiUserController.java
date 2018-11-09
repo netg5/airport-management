@@ -18,6 +18,7 @@ import java.util.List;
  */
 @ApiIgnore
 @RestController
+@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 @RequestMapping(value = "/users", produces = "application/json")
 public class ApiUserController {
 
@@ -25,7 +26,6 @@ public class ApiUserController {
     private ApiUserService apiUserService;
 
     @GetMapping
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<List<User>> getAllUsers() {
         return new ResponseEntity<>(apiUserService.getAllUsers(), HttpStatus.OK);
     }
