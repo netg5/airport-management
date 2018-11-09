@@ -90,6 +90,9 @@ public class AircraftService {
      */
     public AircraftDTO delete(Long aircraftId) {
         Aircraft aircraft = aircraftDAO.findOne(aircraftId);
+        if (aircraft == null) {
+            throw new ResourceNotFoundException("Aicraft with this ID not found");
+        }
         aircraftDAO.delete(aircraft);
         return modelMapper.map(aircraft, AircraftDTO.class);
     }

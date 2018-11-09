@@ -122,6 +122,9 @@ public class RouteService {
      */
     public RouteDTO delete(Long routeId) {
         Route route = routeDAO.findOne(routeId);
+        if (route == null) {
+            throw new ResourceNotFoundException("Route with this ID not found");
+        }
         routeDAO.delete(route);
         return modelMapper.map(route, RouteDTO.class);
     }

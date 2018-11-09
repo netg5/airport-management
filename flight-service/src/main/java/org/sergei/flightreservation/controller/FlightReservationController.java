@@ -4,8 +4,7 @@
 
 package org.sergei.flightreservation.controller;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.sergei.flightreservation.dto.FlightReservationDTO;
 import org.sergei.flightreservation.dto.FlightReservationExtendedDTO;
 import org.sergei.flightreservation.service.FlightReservationService;
@@ -19,7 +18,12 @@ import java.util.List;
 /**
  * @author Sergei Visotsky, 2018
  */
-@Api(value = "/api/v1/customers/{customerId}/reservation/", description = "Flight reservation API methods")
+@Api(
+        value = "/api/v1/customers/{customerId}/reservation/",
+        description = "Flight reservation API methods",
+        produces = "application/json",
+        protocols = "application/json"
+)
 @RestController
 @RequestMapping(value = "/api/v1/customers", produces = "application/json")
 public class FlightReservationController {
@@ -28,8 +32,15 @@ public class FlightReservationController {
     private FlightReservationService flightReservationService;
 
     @ApiOperation("Get one reservation by ID for the customer")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(code = 404, message = "Invalid customer or reservation ID")
+            }
+    )
     @GetMapping("/{customerId}/reservation/{reservationId}")
-    public ResponseEntity<FlightReservationExtendedDTO> getOneForCustomer(@PathVariable("customerId") Long customerId,
+    public ResponseEntity<FlightReservationExtendedDTO> getOneForCustomer(@ApiParam(value = "Customer ID whoķ made a reservation", required = true)
+                                                                          @PathVariable("customerId") Long customerId,
+                                                                          @ApiParam(value = "Reservation ID which which was made", required = true)
                                                                           @PathVariable("reservationId") Long reservationId) {
         return new ResponseEntity<>(
                 flightReservationService.getOneForCustomerById(customerId, reservationId),
@@ -37,16 +48,29 @@ public class FlightReservationController {
     }
 
     @ApiOperation("Get all reservations for customer")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(code = 404, message = "Invalid customer ID")
+            }
+    )
     @GetMapping("/{customerId}/reservation")
-    public ResponseEntity<List<FlightReservationExtendedDTO>> getAllForCustomer(@PathVariable("customerId") Long customerId) {
+    public ResponseEntity<List<FlightReservationExtendedDTO>> getAllForCustomer(@ApiParam(value = "Customer ID whose reservations should be found", required = true)
+                                                                                @PathVariable("customerId") Long customerId) {
         return new ResponseEntity<>(
                 flightReservationService.getAllReservationsForCustomer(customerId),
                 HttpStatus.OK);
     }
 
     @ApiOperation("Create reservation for customer")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(code = 404, message = "Invalid customer ID")
+            }
+    )
     @PostMapping(value = "/{customerId}/reservation", consumes = "application/json")
-    public ResponseEntity<FlightReservationDTO> createReservation(@PathVariable("customerId") Long customerId,
+    public ResponseEntity<FlightReservationDTO> createReservation(@ApiParam(value = "Customer ID for whom reservation should be created", required = true)
+                                                                  @PathVariable("customerId") Long customerId,
+                                                                  @ApiParam(value = "Created reservation", required = true)
                                                                   @RequestBody FlightReservationDTO flightReservationDTO) {
         return new ResponseEntity<>(
                 flightReservationService.createReservationForCustomer(customerId, flightReservationDTO),
@@ -54,9 +78,17 @@ public class FlightReservationController {
     }
 
     @ApiOperation("Update reservation by customer ID")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(code = 404, message = "Invalid customer or reservation ID")
+            }
+    )
     @PutMapping(value = "/{customerId}/reservation/{reservationId}", consumes = "application/json")
-    public ResponseEntity<FlightReservationDTO> updateReservation(@PathVariable("customerId") Long customerId,
+    public ResponseEntity<FlightReservationDTO> updateReservation(@ApiParam(value = "Customer ID who made reservation", required = true)
+                                                                  @PathVariable("customerId") Long customerId,
+                                                                  @ApiParam(value = "Reservation ID which should be updated", required = true)
                                                                   @PathVariable("reservationId") Long reservationId,
+                                                                  @ApiParam(value = "Saved flight reservation", required = true)
                                                                   @RequestBody FlightReservationDTO flightReservationDTO) {
         return new ResponseEntity<>(
                 flightReservationService.updateReservationForCustomer(customerId, reservationId, flightReservationDTO),
@@ -64,8 +96,14 @@ public class FlightReservationController {
     }
 
     @ApiOperation("Delete reservation")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(code = 404, message = "Invalid reservation ID")
+            }
+    )
     @DeleteMapping("/reservation/{reservationId}")
-    public ResponseEntity<FlightReservationExtendedDTO> deleteReservation(@PathVariable("reservationId") Long reservationId) {
+    public ResponseEntity<FlightReservationExtendedDTO> deleteReservation(@ApiParam(value = "Reservation ID which should be deleted", required = true)
+                                                                          @PathVariable("reservationId") Long reservationId) {
         return new ResponseEntity<>(
                 flightReservationService.delete(reservationId),
                 HttpStatus.NO_CONTENT);

@@ -90,6 +90,9 @@ public class CustomerService {
      */
     public CustomerDTO delete(Long customerId) {
         Customer customer = customerDAO.findOne(customerId);
+        if (customer == null) {
+            throw new ResourceNotFoundException("Customer with this ID not found");
+        }
         customerDAO.delete(customer);
         return modelMapper.map(customer, CustomerDTO.class);
     }
