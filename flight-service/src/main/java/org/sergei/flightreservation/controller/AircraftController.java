@@ -2,7 +2,7 @@
  * Copyright (c) Sergei Visotsky, 2018
  */
 
-package org.sergei.flightreservation.api;
+package org.sergei.flightreservation.controller;
 
 import io.swagger.annotations.ApiOperation;
 import org.sergei.flightreservation.dto.AircraftDTO;
@@ -20,7 +20,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "/api/v1/aircrafts", produces = "application/json")
-public class AircraftRESTController {
+public class AircraftController {
 
     @Autowired
     private AircraftService aircraftService;

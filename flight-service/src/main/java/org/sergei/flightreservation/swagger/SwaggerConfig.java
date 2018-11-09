@@ -37,7 +37,7 @@ public class SwaggerConfig {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("org.sergei.flightreservation.api"))
+                .apis(RequestHandlerSelectors.basePackage("org.sergei.flightreservation.controller"))
                 .paths(PathSelectors.any())
                 .build()
                 .securitySchemes(Collections.singletonList(securitySchema()))
@@ -93,7 +93,7 @@ public class SwaggerConfig {
         return SecurityContext
                 .builder()
                 .securityReferences(defaultAuth())
-                .forPaths(PathSelectors.ant("/api/**"))
+                .forPaths(PathSelectors.ant("/controller/**"))
                 .build();
     }
 }

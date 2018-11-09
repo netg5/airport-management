@@ -1,4 +1,4 @@
-package org.sergei.flightreservation.api;
+package org.sergei.flightreservation.controller;
 
 import org.sergei.flightreservation.model.User;
 import org.sergei.flightreservation.model.UserRoles;
@@ -19,7 +19,7 @@ import java.util.List;
 @ApiIgnore
 @RestController
 @RequestMapping(value = "/users", produces = "application/json")
-public class ApiUserRESTController {
+public class ApiUserController {
 
     @Autowired
     private ApiUserService apiUserService;
