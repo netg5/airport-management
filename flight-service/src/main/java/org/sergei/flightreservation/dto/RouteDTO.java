@@ -4,13 +4,16 @@
 
 package org.sergei.flightreservation.dto;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * @author Sergei Visotsky, 2018
  */
+@ApiModel(value = "Route", description = "Route meta data model")
 public class RouteDTO {
     private Long routeId;
     private Double distance;
@@ -38,6 +41,7 @@ public class RouteDTO {
         return routeId;
     }
 
+    @ApiModelProperty(hidden = true, readOnly = true)
     public void setRouteId(Long routeId) {
         this.routeId = routeId;
     }

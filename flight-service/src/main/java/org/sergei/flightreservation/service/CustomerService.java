@@ -7,6 +7,7 @@ package org.sergei.flightreservation.service;
 import org.modelmapper.ModelMapper;
 import org.sergei.flightreservation.dao.CustomerDAO;
 import org.sergei.flightreservation.dto.CustomerDTO;
+import org.sergei.flightreservation.exceptions.ResourceNotFoundException;
 import org.sergei.flightreservation.model.Customer;
 import org.sergei.flightreservation.utils.ObjectMapperUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,9 @@ public class CustomerService {
      */
     public CustomerDTO findOne(Long customerId) {
         Customer customer = customerDAO.findOne(customerId);
+        if (customer == null) {
+            throw new ResourceNotFoundException("Customer with this ID not found");
+        }
         return modelMapper.map(customer, CustomerDTO.class);
     }
 

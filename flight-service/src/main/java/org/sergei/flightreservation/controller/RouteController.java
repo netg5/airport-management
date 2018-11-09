@@ -4,6 +4,7 @@
 
 package org.sergei.flightreservation.controller;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.sergei.flightreservation.dto.RouteDTO;
 import org.sergei.flightreservation.dto.RouteExtendedDTO;
@@ -19,6 +20,7 @@ import java.util.List;
 /**
  * @author Sergei Visotsky, 2018
  */
+@Api(value = "/api/v1/routes", description = "Route API methods")
 @RestController
 @RequestMapping(value = "/api/v1/routes", produces = "application/json")
 public class RouteController {

@@ -4,6 +4,7 @@
 
 package org.sergei.flightreservation.controller;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.sergei.flightreservation.dto.CustomerDTO;
 import org.sergei.flightreservation.service.CustomerService;
@@ -18,6 +19,7 @@ import java.util.List;
 /**
  * @author Sergei Visotsky, 2018
  */
+@Api(value = "/api/v1/customers", description = "Customer API methods")
 @RestController
 @RequestMapping(value = "/api/v1/customers", produces = "application/json")
 public class CustomerController {

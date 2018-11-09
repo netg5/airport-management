@@ -4,11 +4,15 @@
 
 package org.sergei.flightreservation.dto;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.time.LocalDateTime;
 
 /**
  * @author Sergei Visotsky, 2018
  */
+@ApiModel(value = "FlightReservation", description = "Flight reservation meta data model")
 public class FlightReservationDTO {
     private Long reservationId;
     private Long customerId;
@@ -30,6 +34,7 @@ public class FlightReservationDTO {
         return reservationId;
     }
 
+    @ApiModelProperty(hidden = true, readOnly = true)
     public void setReservationId(Long reservationId) {
         this.reservationId = reservationId;
     }

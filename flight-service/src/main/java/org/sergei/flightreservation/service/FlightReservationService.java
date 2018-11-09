@@ -61,6 +61,9 @@ public class FlightReservationService {
         }
 
         FlightReservation flightReservation = flightReservationDAO.findOneForCustomer(customerId, reservationId);
+        if (flightReservation == null) {
+            throw new ResourceNotFoundException("Flight reservation with this ID not found");
+        }
         FlightReservationExtendedDTO flightReservationExtendedDTO =
                 modelMapper.map(flightReservation, FlightReservationExtendedDTO.class);
         flightReservationExtendedDTO.setCustomerId(customer.getCustomerId());

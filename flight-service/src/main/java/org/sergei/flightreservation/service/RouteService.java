@@ -45,6 +45,9 @@ public class RouteService {
     public RouteExtendedDTO findOne(Long routeId) {
         // Find route and map into the extended DTO
         Route route = routeDAO.findOne(routeId);
+        if (route == null) {
+            throw new ResourceNotFoundException("Route with this ID not found");
+        }
         RouteExtendedDTO routeExtendedDTO = modelMapper.map(route, RouteExtendedDTO.class);
 
         // Find aircraft map it into the aircraft DTO
@@ -113,6 +116,7 @@ public class RouteService {
 
     /**
      * Delete route by ID
+     *
      * @param routeId gets route ID as an input argument
      * @return Route DTO asa response
      */

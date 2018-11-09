@@ -7,6 +7,7 @@ package org.sergei.flightreservation.service;
 import org.modelmapper.ModelMapper;
 import org.sergei.flightreservation.dao.AircraftDAO;
 import org.sergei.flightreservation.dto.AircraftDTO;
+import org.sergei.flightreservation.exceptions.ResourceNotFoundException;
 import org.sergei.flightreservation.model.Aircraft;
 import org.sergei.flightreservation.utils.ObjectMapperUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,9 @@ public class AircraftService {
      */
     public AircraftDTO findOne(Long aircraftId) {
         Aircraft aircraft = aircraftDAO.findOne(aircraftId);
+        if (aircraft == null) {
+            throw new ResourceNotFoundException("Aircraft with this ID not found");
+        }
         return modelMapper.map(aircraft, AircraftDTO.class);
     }
 

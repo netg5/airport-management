@@ -4,9 +4,13 @@
 
 package org.sergei.flightreservation.dto;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * @author Sergei Visotsky, 2018
  */
+@ApiModel(value = "Aircraft", description = "Aircraft model")
 public class AircraftDTO {
     private Long aircraftId;
     private String model;
@@ -29,6 +33,7 @@ public class AircraftDTO {
         return aircraftId;
     }
 
+    @ApiModelProperty(hidden = true, readOnly = true)
     public void setAircraftId(Long aircraftId) {
         this.aircraftId = aircraftId;
     }
