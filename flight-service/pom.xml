@@ -83,15 +83,6 @@
             <artifactId>jackson-databind</artifactId>
             <version>${com.fasterxml.jackson-version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.dataformat</groupId>
-            <artifactId>jackson-dataformat-xml</artifactId>
-            <version>${com.fasterxml.jackson-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.xml.bind</groupId>
-            <artifactId>jaxb-api</artifactId>
-        </dependency>
 
         <!--To DTO and from DTO serialization-->
         <dependency>

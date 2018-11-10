@@ -22,4 +22,5 @@ management:
 zuul:
   routes:
     flight-reservation:
-      serviceId: flight-reservation
+      path: /flight-api/**
+      service-id: flight-reservation
