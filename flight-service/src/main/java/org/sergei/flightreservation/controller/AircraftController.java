@@ -22,7 +22,7 @@ import java.util.List;
         value = "/api/v1/aircrafts",
         description = "Aircraft API methods",
         produces = "application/json",
-        protocols = "application/json"
+        consumes = "application/json"
 )
 @RestController
 @RequestMapping(value = "/api/v1/aircrafts", produces = "application/json")
