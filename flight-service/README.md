@@ -6,9 +6,8 @@ Customer makes a flightReservation of the specific route as well as aircraft due
 
 ## Technologies
 * Java 8
-* Apache Tomcat 9+
-* Apache Maven
 * Spring Boot 2
+* Apache Maven
 * Swagger UI
 * ModelMapper
 
