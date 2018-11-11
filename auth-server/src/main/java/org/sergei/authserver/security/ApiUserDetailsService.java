@@ -1,8 +1,7 @@
-package org.sergei.flightreservation.security;
+package org.sergei.authserver.security;
 
-import org.sergei.flightreservation.dao.UserDAO;
-import org.sergei.flightreservation.exceptions.ResourceNotFoundException;
-import org.sergei.flightreservation.model.User;
+import org.sergei.authserver.model.User;
+import org.sergei.authserver.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,14 +15,11 @@ import org.springframework.stereotype.Service;
 public class ApiUserDetailsService implements UserDetailsService {
 
     @Autowired
-    private UserDAO userDAO;
+    private UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userDAO.findByUserName(username);
-        if (user == null) {
-            throw new ResourceNotFoundException("User with this username not found");
-        }
+        User user = userRepository.findByUserName(username);
         return new ApiUserDetails(user);
     }
 }

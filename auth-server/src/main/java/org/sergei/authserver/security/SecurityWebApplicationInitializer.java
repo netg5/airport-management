@@ -2,7 +2,7 @@
  * Copyright (c) 2018 Sergei Visotsky
  */
 
-package org.sergei.flightreservation.security;
+package org.sergei.authserver.security;
 
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 

@@ -2,7 +2,7 @@
  * Copyright (c) 2018 Sergei Visotsky
  */
 
-package org.sergei.flightreservation.security;
+package org.sergei.authserver.security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -24,7 +24,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         http
                 .anonymous().disable()
                 .authorizeRequests()
-                .antMatchers("/api/**").access("hasRole('ROLE ADMIN') or hasRole('USER')")
+                .antMatchers("/**").access("hasRole('ROLE ADMIN') or hasRole('USER')")
                 .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
     }
 }

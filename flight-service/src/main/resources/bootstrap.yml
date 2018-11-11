@@ -23,3 +23,5 @@ eureka:
       default-url: http://localhost:8761/eureka/
   instance:
     prefer-ip-address: true
+auth-server:
+  url: http://localhost:8084

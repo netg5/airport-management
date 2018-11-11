@@ -2,7 +2,7 @@
  * Copyright (c) 2018 Sergei Visotsky
  */
 
-package org.sergei.flightreservation.security;
+package org.sergei.authserver.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -12,12 +12,12 @@ import org.springframework.core.annotation.Order;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.approval.ApprovalStore;
 import org.springframework.security.oauth2.provider.approval.TokenApprovalStore;
@@ -36,7 +36,7 @@ import org.springframework.web.filter.CorsFilter;
  */
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableOAuth2Client
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final ClientDetailsService clientDetailsService;
@@ -53,11 +53,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(apiUserDetailsService).passwordEncoder(encoder());
-        /*auth
-                .inMemoryAuthentication()
-                .withUser("admin")
-                .password(passwordEncoder.encode("123456"))
-                .roles("ADMIN", "USER");*/
     }
 
     @Bean
@@ -65,12 +60,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
-
-    // In case of in-memory client storage
-    /* @Bean
-	public TokenStore tokenStore() {
-		return new InMemoryTokenStore();
-	} */
 
     // In case of JWT TokenStore
     @Bean
@@ -80,7 +69,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     protected JwtAccessTokenConverter jwtTokenEnhancer() {
-        KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("certificate/jwt.jks"), "secretKey".toCharArray());
+        KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("jwt.jks"), "secretKey".toCharArray());
 
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         converter.setKeyPair(keyStoreKeyFactory.getKeyPair("jwt"));
@@ -122,10 +111,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .anonymous().disable()
                 .authorizeRequests()
-                .antMatchers("/**").permitAll()
-                .antMatchers("/users/**").permitAll()
-                .antMatchers("/api/**").authenticated()
-                .antMatchers("/api/**").hasRole("USER")
+                .antMatchers("/**").hasRole("USER")
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic()
