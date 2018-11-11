@@ -11,6 +11,6 @@
 * To run docker container command `docker run -it --rm -p 8085:8085 flight-service` should be performed
 
 ## TODO
-* Configure Eureka Server
+* Make SSO between services using central auth-server
 * Configure Zuul Gateway
 * Front-end (REST client)
