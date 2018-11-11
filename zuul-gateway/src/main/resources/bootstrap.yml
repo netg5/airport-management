@@ -29,3 +29,9 @@ zuul:
     flight-reservation:
       path: /flight-api/**
       service-id: flight-reservation
+security:
+  oauth2:
+    sso:
+      login-path: /login
+    client:
+      access-token-uri: http;//localhost:8084/oauth/token
