@@ -21,6 +21,11 @@ management:
         include: "*"
 zuul:
   routes:
+    auth-server:
+      sensitive-header:
+      path: /auth-server/**
+      strip-prefix: false
+      service-id: auth-server
     flight-reservation:
       path: /flight-api/**
       service-id: flight-reservation

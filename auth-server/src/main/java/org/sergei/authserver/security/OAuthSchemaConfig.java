@@ -1,4 +1,4 @@
-package org.sergei.flightreservation.config;
+package org.sergei.authserver.security;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

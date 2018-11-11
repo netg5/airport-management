@@ -9,6 +9,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>auth-server</module>
         <module>eureka-service</module>
         <module>zuul-gateway</module>
         <module>flight-service</module>

@@ -1,7 +1,7 @@
-package org.sergei.flightreservation.security;
+package org.sergei.authserver.security;
 
-import org.sergei.flightreservation.model.User;
-import org.sergei.flightreservation.model.UserRoles;
+import org.sergei.authserver.model.User;
+import org.sergei.authserver.model.UserRoles;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,4 +1,4 @@
-package org.sergei.flightreservation.model;
+package org.sergei.authserver.model;
 
 import javax.persistence.*;
 import java.io.Serializable;

@@ -25,14 +25,14 @@ import java.util.Random;
 @RestController
 public class ServiceEndpoints {
 
-    @Autowired
+    /*@Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping(value = "/encryption", produces = "text/plain")
     public String getEncryptedPassword(@RequestParam("password") String password) {
         return passwordEncoder.encode(password);
-    }
+    }*/
 
     @GetMapping(value = "/greeting", produces = "application/json")
     public ResponseEntity<DemoDTO> demoGreeting() {

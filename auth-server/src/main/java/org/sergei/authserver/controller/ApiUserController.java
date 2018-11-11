@@ -1,14 +1,13 @@
-package org.sergei.flightreservation.controller;
+package org.sergei.authserver.controller;
 
-import org.sergei.flightreservation.model.User;
-import org.sergei.flightreservation.model.UserRoles;
-import org.sergei.flightreservation.service.ApiUserService;
+import org.sergei.authserver.model.User;
+import org.sergei.authserver.model.UserRoles;
+import org.sergei.authserver.service.ApiUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.Collections;
 import java.util.List;
@@ -16,7 +15,6 @@ import java.util.List;
 /**
  * @author Sergei Visotsky, 2018
  */
-@ApiIgnore
 @RestController
 @PreAuthorize("hasAuthority('ROLE_ADMIN')")
 @RequestMapping(value = "/users", produces = "application/json")
