@@ -23,15 +23,21 @@ zuul:
   routes:
     auth-server:
       sensitive-header:
-      path: /auth-server/**
+      path: /auth/**
       strip-prefix: false
       service-id: auth-server
     flight-reservation:
       path: /flight-api/**
       service-id: flight-reservation
-security:
-  oauth2:
-    sso:
-      login-path: /login
-    client:
-      access-token-uri: http;//localhost:8084/oauth/token
+#security:
+#  oauth2:
+#    sso:
+#      login-path: /login
+#    client:
+#      access-token-uri: http;//localhost:8084/oauth/token
+#      user-authorization-uri: /auth-server/oauth/authorize
+#      client-id: trusted-client
+#      client-secret: trusted-client-secret
+#    resource:
+#      jwt:
+#        keyValue: "secretKey"
