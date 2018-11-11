@@ -10,9 +10,9 @@
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>debug</level>
         </filter>
-        <file>../logs/zuul-gateway.log</file>
+        <file>./logs/zuul-gateway.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>../logs/zuul-gateway.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>./logs/zuul-gateway.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>30</maxHistory>
         </rollingPolicy>
         <encoder>
