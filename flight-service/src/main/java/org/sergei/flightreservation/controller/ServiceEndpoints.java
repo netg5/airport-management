@@ -19,20 +19,11 @@ import java.util.Random;
 /**
  * @author Sergei Visotsky, 2018
  * <p>
- * Endpoint to see encrypted password
+ * REST controller with service endpoints
  */
 @ApiIgnore
 @RestController
 public class ServiceEndpoints {
-
-    /*@Autowired
-    private BCryptPasswordEncoder passwordEncoder;
-
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    @GetMapping(value = "/encryption", produces = "text/plain")
-    public String getEncryptedPassword(@RequestParam("password") String password) {
-        return passwordEncoder.encode(password);
-    }*/
 
     @GetMapping(value = "/greeting", produces = "application/json")
     public ResponseEntity<DemoDTO> demoGreeting() {

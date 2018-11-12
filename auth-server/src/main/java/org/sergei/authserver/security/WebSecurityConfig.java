@@ -89,7 +89,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     @Autowired
-    public ApprovalStore approvalStore(TokenStore tokenStore) throws Exception {
+    public ApprovalStore approvalStore(TokenStore tokenStore) {
         TokenApprovalStore store = new TokenApprovalStore();
         store.setTokenStore(tokenStore);
         return store;
