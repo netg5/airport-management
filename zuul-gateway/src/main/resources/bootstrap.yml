@@ -24,7 +24,6 @@ zuul:
     auth-server:
       sensitive-header:
       path: /auth/**
-      strip-prefix: false
       service-id: auth-server
     flight-reservation:
       path: /flight-api/**

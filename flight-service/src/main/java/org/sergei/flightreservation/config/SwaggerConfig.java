@@ -2,7 +2,7 @@
  * Copyright (c) Sergei Visotsky, 2018
  */
 
-package org.sergei.flightreservation.swagger;
+package org.sergei.flightreservation.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

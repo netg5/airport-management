@@ -5,7 +5,7 @@ spring:
     name: auth-server
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://78.154.129.139:3306/flight_reservation_oauth?allowPublicKeyRetrieval=true&useSSL=false
+    url: jdbc:mysql://78.154.129.139:3306/flight_reservation?allowPublicKeyRetrieval=true&useSSL=false
     username: flight
     password: flight
     initialization-mode: embedded
