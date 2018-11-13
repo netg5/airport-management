@@ -1,4 +1,4 @@
-package com.baeldung.spring.cloud.bootstrap.gateway.filter;
+package org.sergei.zuulgateway.filter;
 
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
@@ -11,13 +11,16 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpSession;
 
+/**
+ * @author Sergei Visotsky, 2018
+ */
 @Component
 public class SessionSavingZuulPreFilter extends ZuulFilter {
 
-    private Logger log = LoggerFactory.getLogger(this.getClass());
+    private static final Logger LOGGER = LoggerFactory.getLogger(SessionSavingZuulPreFilter.class);
 
     @Autowired
-    private SessionRepository repository;
+    private SessionRepository sessionRepository;
 
     @Override
     public boolean shouldFilter() {
@@ -28,10 +31,10 @@ public class SessionSavingZuulPreFilter extends ZuulFilter {
     public Object run() {
         RequestContext context = RequestContext.getCurrentContext();
         HttpSession httpSession = context.getRequest().getSession();
-        Session session = repository.getSession(httpSession.getId());
+        Session session = sessionRepository.getSession(httpSession.getId());
 
         context.addZuulRequestHeader("Cookie", "SESSION=" + httpSession.getId());
-        log.info("ZuulPreFilter session proxy: {}", session.getId());
+        LOGGER.info("ZuulPreFilter session proxy: {}", session.getId());
         return null;
     }
 
