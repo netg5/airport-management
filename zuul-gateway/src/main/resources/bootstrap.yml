@@ -17,6 +17,9 @@ spring:
         hbm2ddl:
           auto: update
         generate-ddl: true
+  redis:
+    host: localhost
+    port: 6379
 eureka:
   instance:
     prefer-ip-address: true
@@ -38,3 +41,7 @@ zuul:
     flight-reservation:
       path: /flight-api/**
       service-id: flight-reservation
+      sensitive-headers: Set-Cookie, Authorization
+    discovery:
+      path: /eureka/**
+      url: http://localhost:8061

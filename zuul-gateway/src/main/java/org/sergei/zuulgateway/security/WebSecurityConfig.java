@@ -112,6 +112,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anonymous().disable()
                 .authorizeRequests()
                 .antMatchers("/flight-api/**").hasRole("USER")
+//                .antMatchers("/eureka/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic()

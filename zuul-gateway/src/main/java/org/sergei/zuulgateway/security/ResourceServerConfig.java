@@ -25,6 +25,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .anonymous().disable()
                 .authorizeRequests()
                 .antMatchers("/flight-api/**").access("hasRole('ROLE ADMIN') or hasRole('USER')")
+//                .antMatchers("/eureka/**").access("hasRole('ROLE ADMIN')")
                 .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
     }
 }

@@ -20,7 +20,7 @@
         </encoder>
     </appender>
 
-    <logger name="org.sergei.flightreservation" level="info"/>
+    <logger name="org.sergei.flightservice" level="info"/>
 
     <root level="info">
         <appender-ref ref="file"/>
