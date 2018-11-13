@@ -22,7 +22,7 @@ public class ApiUserDetails implements UserDetails {
     private String password;
     private String username;
 
-    ApiUserDetails(User user) {
+    public ApiUserDetails(User user) {
         this.username = user.getUsername();
         this.password = user.getPassword();
         this.authorities = translateRoles(user.getUserRoles());

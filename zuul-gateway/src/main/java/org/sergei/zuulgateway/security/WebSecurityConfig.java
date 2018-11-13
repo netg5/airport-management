@@ -4,6 +4,7 @@
 
 package org.sergei.zuulgateway.security;
 
+import org.sergei.zuulgateway.service.ApiUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

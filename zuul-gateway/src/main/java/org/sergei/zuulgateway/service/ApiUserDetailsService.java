@@ -1,7 +1,8 @@
-package org.sergei.zuulgateway.security;
+package org.sergei.zuulgateway.service;
 
 import org.sergei.zuulgateway.model.User;
 import org.sergei.zuulgateway.repository.UserRepository;
+import org.sergei.zuulgateway.security.ApiUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
