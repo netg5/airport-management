@@ -3,6 +3,20 @@ server:
 spring:
   application:
     name: zuul-gateway
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/flight_reservation_oauth?allowPublicKeyRetrieval=true&useSSL=false
+    username: flight
+    password: flight
+    initialization-mode: embedded
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL57InnoDBDialect
+        show_sql: true
+        hbm2ddl:
+          auto: update
+        generate-ddl: true
 eureka:
   instance:
     prefer-ip-address: true
@@ -21,22 +35,6 @@ management:
         include: "*"
 zuul:
   routes:
-    auth-server:
-      sensitive-header:
-      path: /auth/**
-      service-id: auth-server
     flight-reservation:
       path: /flight-api/**
       service-id: flight-reservation
-#security:
-#  oauth2:
-#    sso:
-#      login-path: /login
-#    client:
-#      access-token-uri: http;//localhost:8084/oauth/token
-#      user-authorization-uri: /auth-server/oauth/authorize
-#      client-id: trusted-client
-#      client-secret: trusted-client-secret
-#    resource:
-#      jwt:
-#        keyValue: "secretKey"
