@@ -11,5 +11,5 @@ eureka:
     fetch-registry: false
     healthcheck:
       enabled: true
-    service-url:
-      default-zone: http://localhost:8761/eureka
+    serviceUrl:
+      defaulZone: http://localhost:8761/eureka
