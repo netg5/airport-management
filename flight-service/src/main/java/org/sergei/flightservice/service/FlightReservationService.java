@@ -5,10 +5,6 @@
 package org.sergei.flightservice.service;
 
 import org.modelmapper.ModelMapper;
-import org.sergei.flightservice.dao.AircraftDAO;
-import org.sergei.flightservice.dao.CustomerDAO;
-import org.sergei.flightservice.dao.FlightReservationDAO;
-import org.sergei.flightservice.dao.RouteDAO;
 import org.sergei.flightservice.dto.AircraftDTO;
 import org.sergei.flightservice.dto.FlightReservationDTO;
 import org.sergei.flightservice.dto.FlightReservationExtendedDTO;
@@ -18,6 +14,10 @@ import org.sergei.flightservice.model.Aircraft;
 import org.sergei.flightservice.model.Customer;
 import org.sergei.flightservice.model.FlightReservation;
 import org.sergei.flightservice.model.Route;
+import org.sergei.flightservice.repository.AircraftRepository;
+import org.sergei.flightservice.repository.CustomerRepository;
+import org.sergei.flightservice.repository.FlightReservationRepository;
+import org.sergei.flightservice.repository.RouteRepository;
 import org.sergei.flightservice.utils.ObjectMapperUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,20 +31,20 @@ import java.util.List;
 public class FlightReservationService {
 
     private final ModelMapper modelMapper;
-    private final CustomerDAO customerDAO;
-    private final RouteDAO routeDAO;
-    private FlightReservationDAO flightReservationDAO;
-    private final AircraftDAO aircraftDAO;
+    private final CustomerRepository customerRepository;
+    private final RouteRepository routeRepository;
+    private FlightReservationRepository flightReservationRepository;
+    private final AircraftRepository aircraftRepository;
 
     @Autowired
     public FlightReservationService(ModelMapper modelMapper,
-                                    CustomerDAO customerDAO, RouteDAO routeDAO,
-                                    FlightReservationDAO flightReservationDAO, AircraftDAO aircraftDAO) {
+                                    CustomerRepository customerRepository, RouteRepository routeRepository,
+                                    FlightReservationRepository flightReservationRepository, AircraftRepository aircraftRepository) {
         this.modelMapper = modelMapper;
-        this.customerDAO = customerDAO;
-        this.routeDAO = routeDAO;
-        this.flightReservationDAO = flightReservationDAO;
-        this.aircraftDAO = aircraftDAO;
+        this.customerRepository = customerRepository;
+        this.routeRepository = routeRepository;
+        this.flightReservationRepository = flightReservationRepository;
+        this.aircraftRepository = aircraftRepository;
     }
 
     /**
@@ -55,25 +55,30 @@ public class FlightReservationService {
      * @return Flight reservation extended DTO
      */
     public FlightReservationExtendedDTO getOneForCustomerById(Long customerId, Long reservationId) {
-        Customer customer = customerDAO.findOne(customerId);
-        if (customer == null) {
-            throw new ResourceNotFoundException("Customer with this ID not found");
-        }
+        Customer customer = customerRepository.findById(customerId).orElseThrow(() ->
+                new ResourceNotFoundException("Customer with this ID not found")
+        );
 
-        FlightReservation flightReservation = flightReservationDAO.findOneForCustomer(customerId, reservationId);
-        if (flightReservation == null) {
-            throw new ResourceNotFoundException("Flight reservation with this ID not found");
-        }
+        FlightReservation flightReservation = flightReservationRepository.findOneForCustomer(customerId, reservationId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Reservation with this ID not found")
+                );
         FlightReservationExtendedDTO flightReservationExtendedDTO =
                 modelMapper.map(flightReservation, FlightReservationExtendedDTO.class);
         flightReservationExtendedDTO.setCustomerId(customer.getCustomerId());
 
         // Find route by ID
-        Route route = routeDAO.findOne(flightReservation.getRoute().getRouteId());
+        Route route = routeRepository.findById(flightReservation.getRoute().getRouteId())
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Route with this ID not found")
+                );
         RouteExtendedDTO routeExtendedDTO = modelMapper.map(route, RouteExtendedDTO.class);
 
         // Find aircraft by ID taken from the entity
-        Aircraft aircraft = aircraftDAO.findOne(route.getAircraft().getAircraftId());
+        Aircraft aircraft = aircraftRepository.findById(route.getAircraft().getAircraftId())
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Aircraft with this ID not found")
+                );
 
         // Set aircraft DTO to the flight reservation extended DTO
         routeExtendedDTO.setAircraftDTO(modelMapper.map(aircraft, AircraftDTO.class));
@@ -90,13 +95,16 @@ public class FlightReservationService {
      */
     public List<FlightReservationExtendedDTO> getAllReservationsForCustomer(Long customerId) {
         // Find customer
-        Customer customer = customerDAO.findOne(customerId);
-        if (customer == null) {
-            throw new ResourceNotFoundException("Customer with this ID not found");
-        }
+        Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Customer with this ID not found")
+                );
 
         // Find all flight reservation for the customer
-        List<FlightReservation> flightReservation = flightReservationDAO.findAllForCustomer(customerId);
+        List<FlightReservation> flightReservation = flightReservationRepository.findAllForCustomer(customerId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Reservation with this ID not found")
+                );
         List<FlightReservationExtendedDTO> flightReservationExtendedDTOList =
                 ObjectMapperUtils.mapAll(flightReservation, FlightReservationExtendedDTO.class);
         int counter = 0;
@@ -106,11 +114,17 @@ public class FlightReservationService {
             flightReservationExtendedDTO.setCustomerId(customer.getCustomerId());
 
             // Find route by ID
-            Route route = routeDAO.findOne(flightReservation.get(counter).getRoute().getRouteId());
+            Route route = routeRepository.findById(flightReservation.get(counter).getRoute().getRouteId())
+                    .orElseThrow(() ->
+                            new ResourceNotFoundException("Route with this ID not found")
+                    );
             RouteExtendedDTO routeExtendedDTO = modelMapper.map(route, RouteExtendedDTO.class);
 
             // Find aircraft by ID taken from the entity
-            Aircraft aircraft = aircraftDAO.findOne(route.getAircraft().getAircraftId());
+            Aircraft aircraft = aircraftRepository.findById(route.getAircraft().getAircraftId())
+                    .orElseThrow(() ->
+                            new ResourceNotFoundException("Aircraft with this ID not found")
+                    );
 
             // Set aircraft DTO to the flight reservation extended DTO
             routeExtendedDTO.setAircraftDTO(modelMapper.map(aircraft, AircraftDTO.class));
@@ -132,22 +146,22 @@ public class FlightReservationService {
     public FlightReservationDTO createReservationForCustomer(Long customerId,
                                                              FlightReservationDTO flightReservationDTO) {
         // Find customer by ID
-        Customer customer = customerDAO.findOne(customerId);
-        if (customer == null) {
-            throw new ResourceNotFoundException("Customer with this ID not found");
-        }
+        Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Customer with this ID not found")
+                );
 
         // Find route by route ID
-        Route route = routeDAO.findOne(flightReservationDTO.getRouteId());
-        if (route == null) {
-            throw new ResourceNotFoundException("Route with this ID not found");
-        }
+        Route route = routeRepository.findById(flightReservationDTO.getRouteId())
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Route with this ID not found")
+                );
 
         // Set customer ID and route into the flight reservation DTO
         flightReservationDTO.setCustomerId(customer.getCustomerId());
         flightReservationDTO.setRouteId(route.getRouteId());
         FlightReservation flightReservation = modelMapper.map(flightReservationDTO, FlightReservation.class);
-        flightReservationDAO.save(flightReservation);
+        flightReservationRepository.save(flightReservation);
         return flightReservationDTO;
     }
 
@@ -162,17 +176,22 @@ public class FlightReservationService {
     public FlightReservationDTO updateReservationForCustomer(Long customerId,
                                                              Long reservationId,
                                                              FlightReservationDTO flightReservationDTO) {
-        // Find customer by ID
-        Customer customer = customerDAO.findOne(customerId);
-        if (customer == null) {
-            throw new ResourceNotFoundException("Customer with this ID not found");
-        }
-
-        flightReservationDTO.setCustomerId(customer.getCustomerId());
-        flightReservationDTO.setReservationId(reservationId);
-
-        FlightReservation flightReservation = modelMapper.map(flightReservationDTO, FlightReservation.class);
-        flightReservationDAO.update(flightReservation);
+        FlightReservation flightReservation = flightReservationRepository.findOneForCustomer(customerId, reservationId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Customer or reservation with this ID not found")
+                );
+        flightReservation.setCustomer(
+                customerRepository.findById(customerId)
+                        .orElseThrow(() ->
+                                new ResourceNotFoundException("Customer with this ID not found")
+                        ));
+        flightReservation.setRoute(
+                routeRepository.findById(flightReservationDTO.getRouteId())
+                        .orElseThrow(() ->
+                                new ResourceNotFoundException("Route with this ID not found")
+                        ));
+        flightReservation.setReservationDate(flightReservationDTO.getReservationDate());
+        flightReservationRepository.save(flightReservation);
 
         return flightReservationDTO;
     }
@@ -184,8 +203,11 @@ public class FlightReservationService {
      * @return deleted reservation DTO
      */
     public FlightReservationExtendedDTO delete(Long reservationId) {
-        FlightReservation flightReservation = flightReservationDAO.findOne(reservationId);
-        flightReservationDAO.delete(flightReservation);
+        FlightReservation flightReservation = flightReservationRepository.findById(reservationId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Reservation with this ID not found")
+                );
+        flightReservationRepository.delete(flightReservation);
         return modelMapper.map(flightReservation, FlightReservationExtendedDTO.class);
     }
 }

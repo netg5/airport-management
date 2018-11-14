@@ -5,10 +5,10 @@
 package org.sergei.flightservice.service;
 
 import org.modelmapper.ModelMapper;
-import org.sergei.flightservice.dao.AircraftDAO;
 import org.sergei.flightservice.dto.AircraftDTO;
 import org.sergei.flightservice.exceptions.ResourceNotFoundException;
 import org.sergei.flightservice.model.Aircraft;
+import org.sergei.flightservice.repository.AircraftRepository;
 import org.sergei.flightservice.utils.ObjectMapperUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,12 +22,12 @@ import java.util.List;
 public class AircraftService {
 
     private final ModelMapper modelMapper;
-    private final AircraftDAO aircraftDAO;
+    private final AircraftRepository aircraftRepository;
 
     @Autowired
-    public AircraftService(ModelMapper modelMapper, AircraftDAO aircraftDAO) {
+    public AircraftService(ModelMapper modelMapper, AircraftRepository aircraftRepository) {
         this.modelMapper = modelMapper;
-        this.aircraftDAO = aircraftDAO;
+        this.aircraftRepository = aircraftRepository;
     }
 
     /**
@@ -37,10 +37,10 @@ public class AircraftService {
      * @return aircraft DTO
      */
     public AircraftDTO findOne(Long aircraftId) {
-        Aircraft aircraft = aircraftDAO.findOne(aircraftId);
-        if (aircraft == null) {
-            throw new ResourceNotFoundException("Aircraft with this ID not found");
-        }
+        Aircraft aircraft = aircraftRepository.findById(aircraftId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Aicraft with this ID not found")
+                );
         return modelMapper.map(aircraft, AircraftDTO.class);
     }
 
@@ -50,7 +50,7 @@ public class AircraftService {
      * @return list of Aircraft DTO
      */
     public List<AircraftDTO> findAll() {
-        List<Aircraft> aircraftList = aircraftDAO.findAll();
+        List<Aircraft> aircraftList = aircraftRepository.findAll();
         return ObjectMapperUtils.mapAll(aircraftList, AircraftDTO.class);
     }
 
@@ -62,7 +62,7 @@ public class AircraftService {
      */
     public AircraftDTO save(AircraftDTO aircraftDTO) {
         Aircraft aircraft = modelMapper.map(aircraftDTO, Aircraft.class);
-        aircraftDAO.save(aircraft);
+        aircraftRepository.save(aircraft);
         return aircraftDTO;
     }
 
@@ -77,7 +77,7 @@ public class AircraftService {
         aircraftDTO.setAircraftId(aircraftId);
 
         Aircraft aircraft = modelMapper.map(aircraftDTO, Aircraft.class);
-        aircraftDAO.update(aircraft);
+        aircraftRepository.save(aircraft);
 
         return aircraftDTO;
     }
@@ -89,11 +89,11 @@ public class AircraftService {
      * @return aircraft DTO as a response
      */
     public AircraftDTO delete(Long aircraftId) {
-        Aircraft aircraft = aircraftDAO.findOne(aircraftId);
-        if (aircraft == null) {
-            throw new ResourceNotFoundException("Aicraft with this ID not found");
-        }
-        aircraftDAO.delete(aircraft);
+        Aircraft aircraft = aircraftRepository.findById(aircraftId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Aicraft with this ID not found")
+                );
+        aircraftRepository.delete(aircraft);
         return modelMapper.map(aircraft, AircraftDTO.class);
     }
 }
