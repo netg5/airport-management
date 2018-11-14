@@ -1,4 +1,4 @@
-package org.sergei.flightservice.config;
+package org.sergei.flightservice.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
