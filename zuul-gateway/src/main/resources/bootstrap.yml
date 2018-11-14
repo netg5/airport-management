@@ -3,25 +3,6 @@ server:
 spring:
   application:
     name: zuul-gateway
-  main:
-    allow-bean-definition-overriding: true
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/flight_reservation_oauth?allowPublicKeyRetrieval=true&useSSL=false
-    username: flight
-    password: flight
-    initialization-mode: embedded
-  jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL57InnoDBDialect
-        show_sql: true
-        hbm2ddl:
-          auto: update
-        generate-ddl: true
-#  redis:
-#    host: localhost
-#    port: 6379
 eureka:
   instance:
     prefer-ip-address: true
@@ -30,20 +11,13 @@ eureka:
     fetch-registry: true
     serviceUrl:
       defaulZone: http://localhost:8761/eureka
-management:
-  endpoint:
-    routes:
-      enabled: true
-  endpoints:
-    web:
-      exposure:
-        include: "*"
 zuul:
   routes:
+    auth-service:
+      path: /auth/**
+      service-id: auth-service
+      stripPrefix: false
+      sensitiveHeaders: true
     flight-reservation:
       path: /flight-api/**
       service-id: flight-reservation-service
-      sensitive-headers: Set-Cookie, Authorization
-#    discovery:
-#      path: /eureka/**
-#      url: http://localhost:8061
