@@ -10,6 +10,9 @@
 * To build docker image command `docker build -t flight-service .` should be performed
 * To run docker container command `docker run -it --rm -p 8085:8085 flight-service` should be performed
 
+## FIXME
+* Authorization between Zuul gateway and other services
+
 ## TODO
 * Make SSO between services using central auth-server
 * Configure Zuul Gateway
