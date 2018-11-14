@@ -60,6 +60,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints
                 .tokenStore(tokenStore)
+                .reuseRefreshTokens(false)
                 .tokenEnhancer(jwtTokenEnhancer)
                 .userApprovalHandler(userApprovalHandler)
                 .authenticationManager(authenticationManager)

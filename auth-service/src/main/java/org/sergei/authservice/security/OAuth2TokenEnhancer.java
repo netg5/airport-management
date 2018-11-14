@@ -20,8 +20,6 @@ import java.util.Map;
 @Component
 public class OAuth2TokenEnhancer implements TokenEnhancer {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(OAuth2TokenEnhancer.class);
-
     @Autowired
     private ApiUserService apiUserService;
 
@@ -34,7 +32,6 @@ public class OAuth2TokenEnhancer implements TokenEnhancer {
         final Map<String, Object> additionalInfo = new HashMap<>();
         additionalInfo.put("username", user.getUsername());
         ((DefaultOAuth2AccessToken) oAuth2AccessToken).setAdditionalInformation(additionalInfo);
-        LOGGER.info("User details retrieved");
         return oAuth2AccessToken;
     }
 }

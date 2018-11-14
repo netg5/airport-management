@@ -17,8 +17,7 @@ public class GatewaySecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/**")
-                .permitAll();
+                .antMatchers("/**").permitAll();
     }
 
     // Allowing all the request to pass
