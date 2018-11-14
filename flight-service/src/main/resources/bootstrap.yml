@@ -2,10 +2,10 @@ server:
   port: 8085
 spring:
   application:
-    name: flight-reservation
+    name: flight-reservation-service
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://78.154.129.139:3306/flight_reservation?allowPublicKeyRetrieval=true&useSSL=false
+    url: jdbc:mysql://localhost:3306/flight_reservation?allowPublicKeyRetrieval=true&useSSL=false
     username: flight
     password: flight
     initialization-mode: embedded
@@ -17,9 +17,15 @@ spring:
         hbm2ddl:
           auto: update
         generate-ddl: true
+#  redis:
+#    host: localhost
+#    port: 8089
 eureka:
   client:
-    service-url:
-      default-url: http://localhost:8761/eureka/
+    fetch-registry: true
+    serviceUrl:
+      defaulZone: http://localhost:8761/eureka/
   instance:
     prefer-ip-address: true
+auth-server:
+  url: http://localhost:8084
