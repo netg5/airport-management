@@ -76,7 +76,17 @@ public class AircraftService {
     public AircraftDTO update(Long aircraftId, AircraftDTO aircraftDTO) {
         aircraftDTO.setAircraftId(aircraftId);
 
-        Aircraft aircraft = modelMapper.map(aircraftDTO, Aircraft.class);
+        Aircraft aircraft = aircraftRepository.findById(aircraftId)
+                .orElseThrow(
+                        () -> new ResourceNotFoundException("Aircraft with this ID not found")
+                );
+
+        aircraft.setAircraftId(aircraftId);
+        aircraft.setAircraftName(aircraftDTO.getAircraftName());
+        aircraft.setModel(aircraftDTO.getModel());
+        aircraft.setAircraftWeight(aircraftDTO.getAircraftWeight());
+        aircraft.setMaxPassengers(aircraftDTO.getMaxPassengers());
+
         aircraftRepository.save(aircraft);
 
         return aircraftDTO;
