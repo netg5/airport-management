@@ -4,7 +4,7 @@
 ## Services
 * auth-service - microservice responsible for authentication and authorization
 * eureka-service - microservice registry where the list of all microservices can be seen
-* zuul-gateway - entry point of the all microservices (Not configured properly now)
+* zuul-gateway - entry point of the all microservices
 * flight-service - main microservice which allows to reserve flight
 
 ## Docker commands
