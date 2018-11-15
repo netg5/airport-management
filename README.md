@@ -38,6 +38,7 @@ In case if access token is expired refresh token should be used to renew access 
 * ContentOptions: `grant_type=refresh_token&grant_type=REFRESH_TOKEN`
 
 ## TODO
+* Make Swagger available through the gateway
 * Write tests for the RESTful service
 * Move config to the separate service
 * Front-end (REST client)
