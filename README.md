@@ -35,7 +35,7 @@ The next step is get an access to the resources. Example for the flight-api: `ht
 In case if access token is expired refresh token should be used to renew access token.
 * URL: `http://localhost:8762/auth-api/oauth/token`
 * Content-Type: `application/x-www-form-urlencoded`
-* ContentOptions: `grant_type=refresh_token&grant_type=REFRESH_TOKEN`
+* ContentOptions: `grant_type=refresh_token&refresh_token=REFRESH_TOKEN`
 
 ## TODO
 * Make Swagger available through the gateway
