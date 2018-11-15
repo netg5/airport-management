@@ -39,6 +39,7 @@ In case if access token is expired refresh token should be used to renew access 
 
 ## TODO
 * Make Swagger available through the gateway
+* Split flight-service into the multiple microservices
 * Write tests for the RESTful service
 * Move config to the separate service
 * Front-end (REST client)
