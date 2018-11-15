@@ -29,4 +29,4 @@ eureka:
 security:
   oauth2:
     resource:
-      user-info-uri: http://localhost:8084/auth-api/users/authenticateō
+      user-info-uri: http://localhost:8084/auth-api/users/authenticate
