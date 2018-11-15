@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.Collections;
 import java.util.List;
 
@@ -16,12 +17,17 @@ import java.util.List;
  * @author Sergei Visotsky, 2018
  */
 @RestController
-@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+//@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 @RequestMapping(value = "/users", produces = "application/json")
 public class ApiUserController {
 
     @Autowired
     private ApiUserService apiUserService;
+
+    @GetMapping("/authenticate")
+    public ResponseEntity<Principal> authenticateUser(Principal user) {
+        return ResponseEntity.ok(user);
+    }
 
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {

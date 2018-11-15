@@ -15,13 +15,13 @@ import java.util.List;
  * @author Sergei Visotsky, 2018
  */
 @Api(
-        value = "/api/v1/customers/{customerId}/reservation/",
+        value = "/flight-api/v1/customers/{customerId}/reservation/",
         description = "Flight reservation API methods",
         produces = "application/json",
         consumes = "application/json"
 )
 @RestController
-@RequestMapping(value = "/api/v1/customers", produces = "application/json")
+@RequestMapping(value = "/v1/customers", produces = "application/json")
 public class FlightReservationController {
 
     @Autowired

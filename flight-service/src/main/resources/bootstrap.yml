@@ -1,5 +1,7 @@
 server:
   port: 8085
+  servlet:
+    context-path: /flight-api
 spring:
   application:
     name: flight-reservation-service
@@ -25,7 +27,6 @@ eureka:
   instance:
     prefer-ip-address: true
 security:
-  basic:
-    enabled: false
-  user:
-    password: none
+  oauth2:
+    resource:
+      user-info-uri: http://localhost:8084/auth-api/users/authenticateō

@@ -16,13 +16,13 @@ import java.util.List;
  * @author Sergei Visotsky, 2018
  */
 @Api(
-        value = "/api/v1/routes",
+        value = "/flight-api/v1/routes",
         description = "Route API methods",
         produces = "application/json",
         consumes = "application/json"
 )
 @RestController
-@RequestMapping(value = "/api/v1/routes", produces = "application/json")
+@RequestMapping(value = "/v1/routes", produces = "application/json")
 public class RouteController {
 
     @Autowired

@@ -1,7 +1,3 @@
-/*
- * Copyright (c) 2018 Sergei Visotsky
- */
-
 package org.sergei.authservice.security;
 
 import org.sergei.authservice.service.ApiUserDetailsService;
