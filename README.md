@@ -11,4 +11,5 @@
 * To run docker container command `docker run -it --rm -p 8085:8085 flight-service` should be performed
 
 ## TODO
+* Write tests for the RESTful service
 * Front-end (REST client)
