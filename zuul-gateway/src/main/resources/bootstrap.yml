@@ -14,7 +14,7 @@ eureka:
 zuul:
   routes:
     auth-service:
-      path: /auth/**
+      path: /auth-api/**
       service-id: auth-service
       stripPrefix: false
       sensitiveHeaders: true

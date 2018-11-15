@@ -1,7 +1,5 @@
 package org.sergei.authservice.model;
 
-import org.sergei.authservice.model.User;
-import org.sergei.authservice.model.UserRoles;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

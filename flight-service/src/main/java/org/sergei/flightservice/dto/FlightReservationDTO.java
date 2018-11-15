@@ -1,7 +1,3 @@
-/*
- * Copyright (c) 2018 Sergei Visotsky
- */
-
 package org.sergei.flightservice.dto;
 
 import io.swagger.annotations.ApiModel;

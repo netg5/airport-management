@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Sergei Visotsky, 2018
- */
-
 package org.sergei.flightservice.utils;
 
 import org.modelmapper.ModelMapper;
@@ -11,6 +7,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * @author Sergei Visotsky, 2018
+ */
 public class ObjectMapperUtils {
     private static ModelMapper modelMapper;
 

@@ -1,7 +1,3 @@
-/*
- * Copyright (c) 2018 Sergei Visotsky
- */
-
 package org.sergei.flightservice.service;
 
 import org.modelmapper.ModelMapper;

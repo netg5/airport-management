@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Sergei Visotsky, 2018
- */
-
 package org.sergei.authservice.exceptions;
 
 import org.sergei.authservice.model.ApiError;

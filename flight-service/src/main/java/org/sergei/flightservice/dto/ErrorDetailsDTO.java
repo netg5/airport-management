@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Sergei Visotsky, 2018
- */
-
 package org.sergei.flightservice.dto;
 
 import java.util.Date;

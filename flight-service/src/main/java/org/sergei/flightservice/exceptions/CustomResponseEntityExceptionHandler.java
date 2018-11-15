@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Sergei Visotsky, 2018
- */
-
 package org.sergei.flightservice.exceptions;
 
 import org.sergei.flightservice.dto.ApiErrorDTO;
