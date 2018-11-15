@@ -26,7 +26,7 @@ import static org.springframework.security.oauth2.provider.token.AccessTokenConv
 @EnableSwagger2
 public class SwaggerConfig {
 
-    private static final String AUTH_SERVER = "http://localhost:8762/oauth/token";
+    private static final String AUTH_SERVER = "http://localhost:8762/auth-api/oauth/token";
     private static final String CLIENT_SECRET = "client_secret";
 
     @Bean
