@@ -31,7 +31,7 @@ _response_
 As there is used JWT access and refresh tokens are pretty long.
 
 <br/>The next step is get an access to the resources. Example for the flight-api: `http://localhost:8762/flight-api/v1/customers?access_token=ACCESS_TOKEN`
-<br/><br/> In case if access token is expired refresh token should be used to renew access token.
+<br/>In case if access token is expired refresh token should be used to renew access token.
 * URL: `http://localhost:8762/auth-api/oauth/token`
 * Content-Type: `application/x-www-form-urlencoded`
 * ContentOptions: `grant_type=refresh_token&grant_type=REFRESH_TOKEN`
