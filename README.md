@@ -12,4 +12,5 @@
 
 ## TODO
 * Write tests for the RESTful service
+* Move config to the separate microservice
 * Front-end (REST client)
