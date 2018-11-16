@@ -9,9 +9,6 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-/**
- * @author Sergei Visotsky, 2018
- */
 @Component
 @Scope(scopeName = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class ServiceDefinitionsContext {

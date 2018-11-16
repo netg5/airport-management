@@ -13,9 +13,6 @@ import springfox.documentation.swagger.web.SwaggerResourcesProvider;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author Sergei Visotsky, 2018
- */
 @Configuration
 public class SwaggerUIConfiguration {
 

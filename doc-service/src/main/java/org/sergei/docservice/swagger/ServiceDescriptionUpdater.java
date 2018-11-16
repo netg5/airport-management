@@ -17,9 +17,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-/**
- * @author Sergei Visotsky, 2018
- */
 @Component
 public class ServiceDescriptionUpdater {
 

@@ -6,9 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- * @author Sergei Visotsky, 2018
- */
 @RestController
 public class ServiceDefinitionController {
 
