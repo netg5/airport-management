@@ -18,6 +18,10 @@ zuul:
       service-id: auth-service
       stripPrefix: false
       sensitiveHeaders: true
+    doc-service:
+      path: /docs/**
+      stripPrefix: false
+      sensitiveHeaders: true
     flight-reservation-service:
       path: /flight-api/**
       service-id: flight-reservation-service

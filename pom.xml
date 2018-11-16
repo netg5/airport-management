@@ -9,6 +9,8 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>test-resource</module>
+        <module>doc-service</module>
         <module>auth-service</module>
         <module>eureka-service</module>
         <module>zuul-gateway</module>
