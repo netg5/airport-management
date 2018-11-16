@@ -34,7 +34,7 @@ public class FlightReservationController {
             }
     )
     @GetMapping("/{customerId}/reservation/{reservationId}")
-    public ResponseEntity<FlightReservationExtendedDTO> getOneForCustomer(@ApiParam(value = "Customer ID whoķ made a reservation", required = true)
+    public ResponseEntity<FlightReservationExtendedDTO> getOneForCustomer(@ApiParam(value = "Customer ID who made a reservation", required = true)
                                                                           @PathVariable("customerId") Long customerId,
                                                                           @ApiParam(value = "Reservation ID which which was made", required = true)
                                                                           @PathVariable("reservationId") Long reservationId) {

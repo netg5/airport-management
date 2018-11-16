@@ -46,13 +46,14 @@ public class ServiceDescriptionUpdater {
         LOGGER.debug("Starting Service Definition Context refresh");
 
         discoveryClient.getServices().forEach(serviceId -> {
-            LOGGER.debug("Attempting service definition refresh for Service : {} ", serviceId);
+            LOGGER.debug("Attempting service definition refresh for Service: {} ", serviceId);
             List<ServiceInstance> serviceInstances = discoveryClient.getInstances(serviceId);
             if (serviceInstances == null || serviceInstances.isEmpty()) { //Should not be the case kept for failsafe
-                LOGGER.info("No instances available for service : {} ", serviceId);
+                LOGGER.info("No instances available for service: {} ", serviceId);
             } else {
                 ServiceInstance instance = serviceInstances.get(0);
                 String swaggerURL = getSwaggerURL(instance);
+                LOGGER.info("Attempting to get Swagger definition from URI: {}", swaggerURL);
 
                 Optional<Object> jsonData = getSwaggerDefinitionForAPI(serviceId, swaggerURL);
 
@@ -60,10 +61,10 @@ public class ServiceDescriptionUpdater {
                     String content = getJSON(serviceId, jsonData.get());
                     definitionContext.addServiceDefinition(serviceId, content);
                 } else {
-                    LOGGER.error("Skipping service id : {} Error : Could not get Swagegr definition from API ", serviceId);
+                    LOGGER.error("Skipping service id: {} Error: Could not get Swagger definition from API ", serviceId);
                 }
 
-                LOGGER.info("Service Definition Context Refreshed at :  {}", LocalDate.now());
+                LOGGER.info("Service Definition Context Refreshed at:  {}", LocalDate.now());
             }
         });
     }
@@ -74,12 +75,12 @@ public class ServiceDescriptionUpdater {
     }
 
     private Optional<Object> getSwaggerDefinitionForAPI(String serviceName, String url) {
-        LOGGER.debug("Accessing the SwaggerDefinition JSON for Service : {} : URL : {} ", serviceName, url);
+        LOGGER.debug("Accessing the SwaggerDefinition JSON for Service: {}: URL: {} ", serviceName, url);
         try {
             Object jsonData = restTemplate.getForObject(url, Object.class);
             return Optional.of(Objects.requireNonNull(jsonData));
         } catch (RestClientException ex) {
-            LOGGER.error("Error while getting service definition for service : {} Error : {} ", serviceName, ex.getMessage());
+            LOGGER.error("Error while getting service definition for service: {} Error: {} ", serviceName, ex.getMessage());
             return Optional.empty();
         }
 
@@ -89,7 +90,7 @@ public class ServiceDescriptionUpdater {
         try {
             return new ObjectMapper().writeValueAsString(jsonData);
         } catch (JsonProcessingException e) {
-            LOGGER.error("Error : {} ", e.getMessage());
+            LOGGER.error("Error: {} ", e.getMessage());
             return "";
         }
     }

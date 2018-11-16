@@ -30,7 +30,7 @@ public class SwaggerUIConfiguration {
     @Primary
     @Bean
     @Lazy
-    public SwaggerResourcesProvider swaggerResourcesProvider(InMemorySwaggerResourcesProvider defaultResourcesProvider, RestTemplate temp) {
+    public SwaggerResourcesProvider swaggerResourcesProvider(InMemorySwaggerResourcesProvider defaultResourcesProvider) {
         return () -> {
             List<SwaggerResource> resources = new ArrayList<>(defaultResourcesProvider.get());
             resources.clear();

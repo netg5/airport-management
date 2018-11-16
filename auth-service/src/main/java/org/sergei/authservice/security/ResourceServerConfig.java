@@ -9,7 +9,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 /**
  * @author Sergei Visotsky, 2018
  * <pre>
- * Enables a Spring Security that authenticates requests via an incoming OAuth2 token
+ *    Enables a Spring Security that authenticates requests via an incoming OAuth2 token
  * </pre>
  */
 @Configuration
