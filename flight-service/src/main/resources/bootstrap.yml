@@ -1,5 +1,5 @@
 server:
-  port: 8085
+  port: 8083
   servlet:
     context-path: /flight-api
 spring:
@@ -29,4 +29,4 @@ eureka:
 security:
   oauth2:
     resource:
-      user-info-uri: http://localhost:8084/auth-api/users/authenticate
+      user-info-uri: http://localhost:8082/auth-api/users/authenticate

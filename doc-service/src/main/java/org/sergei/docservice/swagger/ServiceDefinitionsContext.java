@@ -19,10 +19,10 @@ public class ServiceDefinitionsContext {
     private final ConcurrentHashMap<String, String> serviceDescriptions;
 
     private ServiceDefinitionsContext() {
-        serviceDescriptions = new ConcurrentHashMap<String, String>();
+        serviceDescriptions = new ConcurrentHashMap<>();
     }
 
-    public void addServiceDefinition(String serviceName, String serviceDescription) {
+    void addServiceDefinition(String serviceName, String serviceDescription) {
         serviceDescriptions.put(serviceName, serviceDescription);
     }
 
@@ -30,7 +30,7 @@ public class ServiceDefinitionsContext {
         return this.serviceDescriptions.get(serviceId);
     }
 
-    public List<SwaggerResource> getSwaggerDefinitions() {
+    List<SwaggerResource> getSwaggerDefinitions() {
         return serviceDescriptions.entrySet().stream().map(serviceDefinition -> {
             SwaggerResource resource = new SwaggerResource();
             resource.setLocation("/service/" + serviceDefinition.getKey());

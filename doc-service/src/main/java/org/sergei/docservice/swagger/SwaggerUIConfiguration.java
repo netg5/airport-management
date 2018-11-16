@@ -23,7 +23,7 @@ public class SwaggerUIConfiguration {
     private ServiceDefinitionsContext definitionContext;
 
     @Bean
-    public RestTemplate configureTempalte() {
+    public RestTemplate configureTemplate() {
         return new RestTemplate();
     }
 
