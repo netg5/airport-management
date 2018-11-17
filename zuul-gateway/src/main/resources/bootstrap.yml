@@ -13,13 +13,17 @@ eureka:
       defaulZone: http://localhost:8761/eureka
 zuul:
   routes:
-    auth-service:
-      path: /auth-api/**
-      service-id: auth-service
-      stripPrefix: false
+    service-resource:
+      path: /service-api/**
+      service-id: service-resource
       sensitiveHeaders: true
     doc-service:
       path: /docs/**
+      stripPrefix: false
+      sensitiveHeaders: true
+    auth-service:
+      path: /auth-api/**
+      service-id: auth-service
       stripPrefix: false
       sensitiveHeaders: true
     flight-reservation-service:

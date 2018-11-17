@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.sergei</groupId>
-	<artifactId>test-resource</artifactId>
+	<artifactId>service-resource</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>test-resource</name>
-	<description>Demo project for Spring Boot</description>
+	<name>service-resource</name>
+	<description>Service resource microservice</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>

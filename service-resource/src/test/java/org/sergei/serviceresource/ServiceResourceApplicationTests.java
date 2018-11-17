@@ -1,4 +1,4 @@
-package org.sergei.testresource;
+package org.sergei.serviceresource;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class TestResourceApplicationTests {
+public class ServiceResourceApplicationTests {
 
 	@Test
 	public void contextLoads() {

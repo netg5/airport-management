@@ -2,7 +2,7 @@ server:
   port: 8084
 spring:
   application:
-    name: test-resource
+    name: service-resource
 eureka:
   client:
     fetch-registry: true
