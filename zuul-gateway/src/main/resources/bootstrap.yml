@@ -19,6 +19,7 @@ zuul:
       sensitiveHeaders: true
     doc-service:
       path: /docs/**
+      service-id: doc-service
       stripPrefix: false
       sensitiveHeaders: true
     auth-service:
