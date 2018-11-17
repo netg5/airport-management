@@ -10,9 +10,9 @@
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>debug</level>
         </filter>
-        <file>./logs/doc-service.log</file>
+        <file>./logs/zipkin-service.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>./logs/doc-service.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>./logs/zipkin-service.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>30</maxHistory>
         </rollingPolicy>
         <encoder>
@@ -20,7 +20,7 @@
         </encoder>
     </appender>
 
-    <logger name="org.sergei.docservice" level="info"/>
+    <logger name="org.sergei.zipkinservice" level="info"/>
 
     <root level="info">
         <appender-ref ref="file"/>
