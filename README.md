@@ -37,8 +37,12 @@ In case if access token is expired refresh token should be used to renew access 
 * Content-Type: `application/x-www-form-urlencoded`
 * ContentOptions: `grant_type=refresh_token&refresh_token=REFRESH_TOKEN`
 
+## FIXME
+* Swagger availability without authorization
+* Method availability for a specific role
+
 ## TODO
-* Make Swagger available through the gateway
+* Make Swagger available through the gateway for all microservices
 * Configure Zipkin service
 * Split flight-service into the multiple microservices
 * Write tests for the RESTful service
