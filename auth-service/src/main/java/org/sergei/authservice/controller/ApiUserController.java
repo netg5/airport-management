@@ -17,7 +17,7 @@ import java.util.List;
  * @author Sergei Visotsky, 2018
  */
 @RestController
-//@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 @RequestMapping(value = "/users", produces = "application/json")
 public class ApiUserController {
 
