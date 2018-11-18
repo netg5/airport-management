@@ -17,6 +17,8 @@ import java.util.List;
 @Service
 public class AircraftService {
 
+    private static final String AIRCRAFT_NOT_FOUND = "Aircraft with this ID not found";
+
     private final ModelMapper modelMapper;
     private final AircraftRepository aircraftRepository;
 
@@ -35,7 +37,7 @@ public class AircraftService {
     public AircraftDTO findOne(Long aircraftId) {
         Aircraft aircraft = aircraftRepository.findById(aircraftId)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Aicraft with this ID not found")
+                        new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
                 );
         return modelMapper.map(aircraft, AircraftDTO.class);
     }
@@ -74,7 +76,7 @@ public class AircraftService {
 
         Aircraft aircraft = aircraftRepository.findById(aircraftId)
                 .orElseThrow(
-                        () -> new ResourceNotFoundException("Aircraft with this ID not found")
+                        () -> new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
                 );
 
         aircraft.setAircraftId(aircraftId);
@@ -97,7 +99,7 @@ public class AircraftService {
     public AircraftDTO delete(Long aircraftId) {
         Aircraft aircraft = aircraftRepository.findById(aircraftId)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Aicraft with this ID not found")
+                        new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
                 );
         aircraftRepository.delete(aircraft);
         return modelMapper.map(aircraft, AircraftDTO.class);

@@ -17,7 +17,6 @@ import java.util.List;
  */
 @Api(
         value = "/flight-api/v1/routes",
-        description = "Route API methods",
         produces = "application/json",
         consumes = "application/json"
 )

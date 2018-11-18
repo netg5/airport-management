@@ -21,6 +21,9 @@ import java.util.List;
 @Service
 public class RouteService {
 
+    private static final String ROUTE_NOT_FOUND = "Route with this ID not found";
+    private static final String AIRCRAFT_NOT_FOUND = "Aircraft with this ID not found";
+
     private final ModelMapper modelMapper;
     private final AircraftRepository aircraftRepository;
     private RouteRepository routeRepository;
@@ -43,14 +46,14 @@ public class RouteService {
         // Find route and map into the extended DTO
         Route route = routeRepository.findById(routeId)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Route with this ID not found")
+                        new ResourceNotFoundException(ROUTE_NOT_FOUND)
                 );
         RouteExtendedDTO routeExtendedDTO = modelMapper.map(route, RouteExtendedDTO.class);
 
         // Find aircraft map it into the aircraft DTO
         Aircraft aircraft = aircraftRepository.findById(route.getAircraft().getAircraftId())
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Aircraft with this ID not found")
+                        new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
                 );
         AircraftDTO aircraftDTO = modelMapper.map(aircraft, AircraftDTO.class);
 
@@ -72,7 +75,7 @@ public class RouteService {
         for (RouteExtendedDTO routeExtendedDTO : routeExtendedDTOList) {
             Aircraft aircraft = aircraftRepository.findById(routeList.get(counter).getAircraft().getAircraftId())
                     .orElseThrow(() ->
-                            new ResourceNotFoundException("Aircraft with this ID not found")
+                            new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
                     );
             AircraftDTO aircraftDTO = modelMapper.map(aircraft, AircraftDTO.class);
             routeExtendedDTO.setAircraftDTO(aircraftDTO);
@@ -94,7 +97,7 @@ public class RouteService {
         // Find aircraft required in request body
         Aircraft aircraft = aircraftRepository.findById(routeDTO.getAircraftId())
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Aircraft with this ID not found")
+                        new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
                 );
         route.setAircraft(aircraft);
         routeRepository.save(route);
@@ -113,7 +116,7 @@ public class RouteService {
 
         Route route = routeRepository.findById(routeId)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Route with this ID not found")
+                        new ResourceNotFoundException(ROUTE_NOT_FOUND)
                 );
         route.setDistance(routeDTO.getDistance());
         route.setDepartureTime(routeDTO.getDepartureTime());
@@ -124,7 +127,7 @@ public class RouteService {
         route.setAircraft(
                 aircraftRepository.findById(routeDTO.getAircraftId())
                         .orElseThrow(() ->
-                                new ResourceNotFoundException("Aircraft with this ID not found")
+                                new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
                         )
         );
         routeRepository.save(route);
@@ -141,7 +144,7 @@ public class RouteService {
     public RouteDTO delete(Long routeId) {
         Route route = routeRepository.findById(routeId)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Route with this ID not found")
+                        new ResourceNotFoundException(ROUTE_NOT_FOUND)
                 );
         routeRepository.delete(route);
         return modelMapper.map(route, RouteDTO.class);

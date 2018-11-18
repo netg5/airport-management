@@ -33,15 +33,15 @@ public class ApiUserDetails implements UserDetails {
      * @return a collection of authorities
      */
     private Collection<? extends GrantedAuthority> translateRoles(List<UserRoles> userRoles) {
-        List<GrantedAuthority> authorities = new ArrayList<>();
+        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         for (UserRoles role : userRoles) {
             String name = role.getRoleName().toUpperCase();
             if (!name.startsWith("ROLE_")) {
                 name = "ROLE_" + name;
             }
-            authorities.add(new SimpleGrantedAuthority(name));
+            grantedAuthorities.add(new SimpleGrantedAuthority(name));
         }
-        return authorities;
+        return grantedAuthorities;
     }
 
     @Override

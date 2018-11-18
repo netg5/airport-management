@@ -1,5 +1,7 @@
 package org.sergei.zuulgateway.filter;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -15,6 +17,8 @@ import java.io.IOException;
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class CORSFilter implements Filter {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(CORSFilter.class);
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
@@ -37,11 +41,11 @@ public class CORSFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) {
-
+        LOGGER.info("This method does not need to be implemented");
     }
 
     @Override
     public void destroy() {
-
+        LOGGER.info("This method does not need to be implemented");
     }
 }

@@ -19,7 +19,7 @@ public class FlightReservationDTO {
     }
 
     public FlightReservationDTO(Long reservationId, Long customerId, Long routeId,
-                                LocalDateTime reservationDate, RouteDTO routeDTO, CustomerDTO customerDTO) {
+                                LocalDateTime reservationDate) {
         this.reservationId = reservationId;
         this.customerId = customerId;
         this.reservationDate = reservationDate;
@@ -30,7 +30,7 @@ public class FlightReservationDTO {
         return reservationId;
     }
 
-    @ApiModelProperty(hidden = true, readOnly = true)
+    @ApiModelProperty(hidden = true)
     public void setReservationId(Long reservationId) {
         this.reservationId = reservationId;
     }

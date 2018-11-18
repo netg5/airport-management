@@ -16,7 +16,6 @@ import java.util.List;
  */
 @Api(
         value = "/flight-api/v1/customers/{customerId}/reservations/",
-        description = "Flight reservation API methods",
         produces = "application/json",
         consumes = "application/json"
 )

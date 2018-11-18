@@ -2,8 +2,6 @@ package org.sergei.authservice.security;
 
 import org.sergei.authservice.model.User;
 import org.sergei.authservice.service.ApiUserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;

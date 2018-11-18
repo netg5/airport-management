@@ -37,7 +37,7 @@ public class RouteDTO {
         return routeId;
     }
 
-    @ApiModelProperty(hidden = true, readOnly = true)
+    @ApiModelProperty(hidden = true)
     public void setRouteId(Long routeId) {
         this.routeId = routeId;
     }

@@ -33,12 +33,11 @@ public class Aircraft implements Serializable {
     public Aircraft() {
     }
 
-    public Aircraft(String model, String aircraftName, Double aircraftWeight, Integer maxPassengers, Route route) {
+    public Aircraft(String model, String aircraftName, Double aircraftWeight, Integer maxPassengers) {
         this.model = model;
         this.aircraftName = aircraftName;
         this.aircraftWeight = aircraftWeight;
         this.maxPassengers = maxPassengers;
-//        this.route = route;
     }
 
     public Long getAircraftId() {

@@ -26,6 +26,11 @@ import java.util.List;
 @Service
 public class FlightReservationService {
 
+    private static final String CUSTOMER_NOT_FOUND = "Customer with this ID not found";
+    private static final String ROUTE_NOT_FOUND = "Route with this ID not found";
+    private static final String AIRCRAFT_NOT_FOUND = "Aircraft with this ID not found";
+    private static final String RESERVATION_NOT_FOUND = "Reservation with this ID not found";
+
     private final ModelMapper modelMapper;
     private final CustomerRepository customerRepository;
     private final RouteRepository routeRepository;
@@ -52,12 +57,12 @@ public class FlightReservationService {
      */
     public FlightReservationExtendedDTO getOneForCustomerById(Long customerId, Long reservationId) {
         Customer customer = customerRepository.findById(customerId).orElseThrow(() ->
-                new ResourceNotFoundException("Customer with this ID not found")
+                new ResourceNotFoundException(CUSTOMER_NOT_FOUND)
         );
 
         FlightReservation flightReservation = flightReservationRepository.findOneForCustomer(customerId, reservationId)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Reservation with this ID not found")
+                        new ResourceNotFoundException(RESERVATION_NOT_FOUND)
                 );
         FlightReservationExtendedDTO flightReservationExtendedDTO =
                 modelMapper.map(flightReservation, FlightReservationExtendedDTO.class);
@@ -66,14 +71,14 @@ public class FlightReservationService {
         // Find route by ID
         Route route = routeRepository.findById(flightReservation.getRoute().getRouteId())
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Route with this ID not found")
+                        new ResourceNotFoundException(ROUTE_NOT_FOUND)
                 );
         RouteExtendedDTO routeExtendedDTO = modelMapper.map(route, RouteExtendedDTO.class);
 
         // Find aircraft by ID taken from the entity
         Aircraft aircraft = aircraftRepository.findById(route.getAircraft().getAircraftId())
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Aircraft with this ID not found")
+                        new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
                 );
 
         // Set aircraft DTO to the flight reservation extended DTO
@@ -93,13 +98,13 @@ public class FlightReservationService {
         // Find customer
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Customer with this ID not found")
+                        new ResourceNotFoundException(CUSTOMER_NOT_FOUND)
                 );
 
         // Find all flight reservation for the customer
         List<FlightReservation> flightReservation = flightReservationRepository.findAllForCustomer(customerId)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Reservation with this ID not found")
+                        new ResourceNotFoundException(RESERVATION_NOT_FOUND)
                 );
         List<FlightReservationExtendedDTO> flightReservationExtendedDTOList =
                 ObjectMapperUtils.mapAll(flightReservation, FlightReservationExtendedDTO.class);
@@ -112,14 +117,14 @@ public class FlightReservationService {
             // Find route by ID
             Route route = routeRepository.findById(flightReservation.get(counter).getRoute().getRouteId())
                     .orElseThrow(() ->
-                            new ResourceNotFoundException("Route with this ID not found")
+                            new ResourceNotFoundException(ROUTE_NOT_FOUND)
                     );
             RouteExtendedDTO routeExtendedDTO = modelMapper.map(route, RouteExtendedDTO.class);
 
             // Find aircraft by ID taken from the entity
             Aircraft aircraft = aircraftRepository.findById(route.getAircraft().getAircraftId())
                     .orElseThrow(() ->
-                            new ResourceNotFoundException("Aircraft with this ID not found")
+                            new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
                     );
 
             // Set aircraft DTO to the flight reservation extended DTO
@@ -144,13 +149,13 @@ public class FlightReservationService {
         // Find customer by ID
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Customer with this ID not found")
+                        new ResourceNotFoundException(CUSTOMER_NOT_FOUND)
                 );
 
         // Find route by route ID
         Route route = routeRepository.findById(flightReservationDTO.getRouteId())
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Route with this ID not found")
+                        new ResourceNotFoundException(ROUTE_NOT_FOUND)
                 );
 
         // Set customer ID and route into the flight reservation DTO
@@ -179,12 +184,12 @@ public class FlightReservationService {
         flightReservation.setCustomer(
                 customerRepository.findById(customerId)
                         .orElseThrow(() ->
-                                new ResourceNotFoundException("Customer with this ID not found")
+                                new ResourceNotFoundException(CUSTOMER_NOT_FOUND)
                         ));
         flightReservation.setRoute(
                 routeRepository.findById(flightReservationDTO.getRouteId())
                         .orElseThrow(() ->
-                                new ResourceNotFoundException("Route with this ID not found")
+                                new ResourceNotFoundException(ROUTE_NOT_FOUND)
                         ));
         flightReservation.setReservationDate(flightReservationDTO.getReservationDate());
         flightReservationRepository.save(flightReservation);
@@ -201,7 +206,7 @@ public class FlightReservationService {
     public FlightReservationExtendedDTO delete(Long reservationId) {
         FlightReservation flightReservation = flightReservationRepository.findById(reservationId)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Reservation with this ID not found")
+                        new ResourceNotFoundException(RESERVATION_NOT_FOUND)
                 );
         flightReservationRepository.delete(flightReservation);
         return modelMapper.map(flightReservation, FlightReservationExtendedDTO.class);

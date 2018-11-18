@@ -17,6 +17,8 @@ import java.util.List;
 @Service
 public class CustomerService {
 
+    private static final String CUSTOMER_NOT_FOUND = "Customer with this ID not found";
+
     private final ModelMapper modelMapper;
     private final CustomerRepository customerRepository;
 
@@ -35,7 +37,7 @@ public class CustomerService {
     public CustomerDTO findOne(Long customerId) {
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Customer with this ID not found")
+                        new ResourceNotFoundException(CUSTOMER_NOT_FOUND)
                 );
         return modelMapper.map(customer, CustomerDTO.class);
     }
@@ -74,7 +76,7 @@ public class CustomerService {
 
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Customer with this ID not found")
+                        new ResourceNotFoundException(CUSTOMER_NOT_FOUND)
                 );
         customer.setFirstName(customerDTO.getFirstName());
         customer.setLastName(customerDTO.getLastName());
@@ -94,7 +96,7 @@ public class CustomerService {
     public CustomerDTO delete(Long customerId) {
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Customer with this ID not found")
+                        new ResourceNotFoundException(CUSTOMER_NOT_FOUND)
                 );
         customerRepository.delete(customer);
         return modelMapper.map(customer, CustomerDTO.class);

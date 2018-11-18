@@ -16,9 +16,6 @@ import java.util.List;
 @Configuration
 public class SwaggerUIConfiguration {
 
-    @Autowired
-    private ServiceDefinitionsContext definitionContext;
-
     @Bean
     public RestTemplate configureTemplate() {
         return new RestTemplate();
@@ -27,7 +24,9 @@ public class SwaggerUIConfiguration {
     @Primary
     @Bean
     @Lazy
-    public SwaggerResourcesProvider swaggerResourcesProvider(InMemorySwaggerResourcesProvider defaultResourcesProvider) {
+    @Autowired
+    public SwaggerResourcesProvider swaggerResourcesProvider(ServiceDefinitionsContext definitionContext,
+                                                             InMemorySwaggerResourcesProvider defaultResourcesProvider) {
         return () -> {
             List<SwaggerResource> resources = new ArrayList<>(defaultResourcesProvider.get());
             resources.clear();

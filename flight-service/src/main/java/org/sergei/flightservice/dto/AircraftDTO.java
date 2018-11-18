@@ -29,7 +29,7 @@ public class AircraftDTO {
         return aircraftId;
     }
 
-    @ApiModelProperty(hidden = true, readOnly = true)
+    @ApiModelProperty(hidden = true)
     public void setAircraftId(Long aircraftId) {
         this.aircraftId = aircraftId;
     }
