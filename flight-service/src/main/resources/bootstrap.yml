@@ -30,3 +30,4 @@ security:
   oauth2:
     resource:
       user-info-uri: http://localhost:8082/auth-api/users/authenticate
+    accessTokenUri: http://localhost:8080/auth-api/oauth/token
