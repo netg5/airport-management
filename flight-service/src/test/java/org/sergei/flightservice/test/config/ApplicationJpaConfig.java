@@ -1,8 +1,8 @@
 package org.sergei.flightservice.test.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -14,11 +14,10 @@ import java.util.Objects;
 /**
  * @author Sergei Visotsky, 2018
  */
-@Configuration
+@TestConfiguration
 @PropertySource("classpath:application.properties")
 @EnableTransactionManagement
 public class ApplicationJpaConfig {
-
     @Autowired
     private Environment env;
 
