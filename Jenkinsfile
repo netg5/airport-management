@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Sonarqube operations') {
             steps {
-                bat 'mvn sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.login=10cfd6490bd968bebb9cf8515facef6fdec73e68'
+                bat 'mvn sonar:sonar'
             }
         }
         stage('Testing Stage') {
