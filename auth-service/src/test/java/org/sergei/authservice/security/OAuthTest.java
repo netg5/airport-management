@@ -1,6 +1,8 @@
 package org.sergei.authservice.security;
 
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -8,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.json.JacksonJsonParser;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.web.FilterChainProxy;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -24,10 +27,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
 /**
  * @author Sergei Visotsky, 2018
  */
+@Ignore
 @RunWith(SpringRunner.class)
 @WebAppConfiguration
 @SpringBootTest
@@ -36,7 +39,7 @@ public class OAuthTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(OAuthTest.class);
 
     @Autowired
-    private WebApplicationContext wac;
+    private WebApplicationContext webApplicationContext;
 
     @Autowired
     private FilterChainProxy springSecurityFilterChain;
@@ -45,7 +48,7 @@ public class OAuthTest {
 
     @Before
     public void setup() {
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac)
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext)
                 .addFilter(springSecurityFilterChain).build();
     }
 
@@ -64,6 +67,11 @@ public class OAuthTest {
                 .header("Authorization", "Bearer " + accessToken)
                 .param("id", "1"))
                 .andExpect(status().isForbidden());
+    }
+
+    @Test
+    public void obtainAccessToken() throws Exception {
+        Assert.assertEquals(obtainAccessToken("admin", "123456"), HttpStatus.OK);
     }
 
     private String obtainAccessToken(String username, String password) throws Exception {
