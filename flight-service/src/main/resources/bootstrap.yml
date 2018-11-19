@@ -19,6 +19,8 @@ spring:
         hbm2ddl:
           auto: update
         generate-ddl: true
+  getaway:
+    port: 8080
 eureka:
   client:
     fetch-registry: true

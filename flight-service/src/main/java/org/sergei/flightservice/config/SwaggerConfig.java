@@ -1,5 +1,7 @@
 package org.sergei.flightservice.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,16 +29,21 @@ import static org.springframework.security.oauth2.provider.token.AccessTokenConv
 @EnableSwagger2
 public class SwaggerConfig {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(SwaggerConfig.class);
+
     @Value("${security.oauth2.accessTokenUri}")
     private String authServer;
-    @Value("${server.port}")
+
+    @Value("${spring.getaway.port}")
     private int port;
+
     private static final String CLIENT_SECRET = "client_secret";
 
     @Bean
     public Docket api() {
+        LOGGER.debug("Server port id: {}", port);
         return new Docket(DocumentationType.SWAGGER_2)
-                .host("http://localhost:" + port)
+                .host("localhost:" + port)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("org.sergei.flightservice.controller"))
                 .paths(PathSelectors.any())
@@ -74,6 +81,7 @@ public class SwaggerConfig {
         authorizationScopeList.add(new AuthorizationScope("write", "write all"));
 
         List<GrantType> grantTypes = new ArrayList<>();
+        LOGGER.debug("OAuth2 token URI id: {}", authServer);
         GrantType grantType = new ResourceOwnerPasswordCredentialsGrant(authServer);
         grantTypes.add(grantType);
 
