@@ -45,12 +45,12 @@ public class ServiceDescriptionUpdater {
         discoveryClient.getServices().forEach(serviceId -> {
             LOGGER.debug("Attempting service definition refresh for Service: {} ", serviceId);
             List<ServiceInstance> serviceInstances = discoveryClient.getInstances(serviceId);
-            if (serviceInstances == null || serviceInstances.isEmpty()) { //Should not be the case kept for failsafe
+            if (serviceInstances == null || serviceInstances.isEmpty()) { // Should not be the case kept for failsafe
                 LOGGER.info("No instances available for service: {} ", serviceId);
             } else {
                 ServiceInstance instance = serviceInstances.get(0);
                 String swaggerURL = getSwaggerURL(instance);
-                LOGGER.info("Attempting to get Swagger definition from URI: {}", swaggerURL);
+                LOGGER.info("Attempting to get Swagger definition from URL: {}", swaggerURL);
 
                 Optional<Object> jsonData = getSwaggerDefinitionForAPI(serviceId, swaggerURL);
 
