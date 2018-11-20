@@ -4,32 +4,11 @@ server:
     context-path: /flight-api
 spring:
   application:
-    name: flight-reservation-service
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/flight_reservation?allowPublicKeyRetrieval=true&useSSL=false
-    username: flight
-    password: flight
-    initialization-mode: embedded
-  jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL57InnoDBDialect
-        show_sql: true
-        hbm2ddl:
-          auto: update
-        generate-ddl: true
-  getaway:
-    port: 8080
-eureka:
-  client:
-    fetch-registry: true
-    serviceUrl:
-      defaulZone: http://localhost:8761/eureka/
-  instance:
-    prefer-ip-address: true
-security:
-  oauth2:
-    resource:
-      user-info-uri: http://localhost:8082/auth-api/users/authenticate
-    accessTokenUri: http://localhost:8080/auth-api/oauth/token
+    name: flight-service
+  cloud:
+    config:
+      uri: http://localhost:8079
+      enabled: true
+      discovery:
+        enabled: true
+        service-id: config-service

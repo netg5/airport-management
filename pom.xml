@@ -9,6 +9,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>config-service</module>
         <module>service-resource</module>
         <module>doc-service</module>
         <module>auth-service</module>

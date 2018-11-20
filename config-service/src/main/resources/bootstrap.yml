@@ -1,0 +1,26 @@
+server:
+  port: 8079
+spring:
+  application:
+    name: config-service
+  config:
+    name: config-service
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/sergeivisotsky/flight-reservation-config
+          clone-on-start: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    serviceUrl:
+      defaulZone: http://localhost:8761/eureka
