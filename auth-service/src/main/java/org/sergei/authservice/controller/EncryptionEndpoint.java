@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Sergei Visotsky, 2018
  */
 @RestController
-public class ServiceEndpoints {
+public class EncryptionEndpoint {
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;

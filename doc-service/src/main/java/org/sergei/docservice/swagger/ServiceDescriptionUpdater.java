@@ -43,7 +43,7 @@ public class ServiceDescriptionUpdater {
         LOGGER.debug("Starting Service Definition Context refresh");
 
         discoveryClient.getServices().forEach(serviceId -> {
-            LOGGER.debug("Attempting service definition refresh for Service: {} ", serviceId);
+            LOGGER.debug("Attempting service definition refresh for service: {} ", serviceId);
             List<ServiceInstance> serviceInstances = discoveryClient.getInstances(serviceId);
             if (serviceInstances == null || serviceInstances.isEmpty()) { // Should not be the case kept for failsafe
                 LOGGER.info("No instances available for service: {} ", serviceId);
@@ -68,7 +68,7 @@ public class ServiceDescriptionUpdater {
 
     private String getSwaggerURL(ServiceInstance instance) {
         String swaggerURL = instance.getMetadata().get(KEY_SWAGGER_URL);
-        return swaggerURL != null ? instance.getUri() + swaggerURL : instance.getUri() + DEFAULT_SWAGGER_URL;
+        return swaggerURL != null ? instance.getUri().getPath() + swaggerURL : instance.getUri() + DEFAULT_SWAGGER_URL;
     }
 
     private Optional<Object> getSwaggerDefinitionForAPI(String serviceName, String url) {
