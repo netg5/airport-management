@@ -23,7 +23,6 @@ import java.util.Objects;
 /**
  * @author Sergei Visotsky, 2018
  */
-@Ignore
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @EnableAutoConfiguration(exclude = {SecurityAutoConfiguration.class, WebSecurityConfigurerAdapter.class})

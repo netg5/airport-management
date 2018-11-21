@@ -15,7 +15,7 @@ import java.util.Objects;
  * @author Sergei Visotsky, 2018
  */
 @TestConfiguration
-@PropertySource("classpath:application.properties")
+@PropertySource("classpath:application-test.properties")
 @EnableTransactionManagement
 public class ApplicationJpaConfig {
     @Autowired
