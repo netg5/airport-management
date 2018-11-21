@@ -3,32 +3,10 @@ server:
 spring:
   application:
     name: zuul-gateway
-eureka:
-  instance:
-    prefer-ip-address: true
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    serviceUrl:
-      defaulZone: http://localhost:8761/eureka
-zuul:
-  routes:
-    service-resource:
-      path: /service-api/**
-      service-id: service-resource
-      sensitiveHeaders: true
-    doc-service:
-      path: /docs/**
-      service-id: doc-service
-      stripPrefix: false
-      sensitiveHeaders: true
-    auth-service:
-      path: /auth-api/**
-      service-id: auth-service
-      stripPrefix: false
-      sensitiveHeaders: true
-    flight-reservation-service:
-      path: /flight-api/**
-      service-id: flight-reservation-service
-      stripPrefix: false
-      sensitiveHeaders: true
+  cloud:
+    config:
+      uri: http://localhost:8079
+      enabled: true
+      discovery:
+        enabled: true
+        service-id: zuul-gateway
