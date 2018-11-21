@@ -6,11 +6,11 @@ pipeline {
     }
 
     stages {
-        stage('Sonarqube operations') {
+        /*stage('Sonarqube operations') {
             steps {
                 bat 'mvn sonar:sonar'
             }
-        }
+        }*/
         stage('Testing Stage') {
             steps {
                 bat 'mvn test'
