@@ -31,9 +31,6 @@ import java.util.Objects;
 public class CustomerRepositoryTest {
 
     @Autowired
-    private TestEntityManager testEntityManager;
-
-    @Autowired
     @Qualifier("customerRepository")
     private CustomerRepository customerRepository;
 
