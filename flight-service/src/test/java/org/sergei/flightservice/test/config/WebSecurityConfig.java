@@ -11,7 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Bean
+    /*@Bean
     public ObjectPostProcessor objectPostProcessor() {
         return new ObjectPostProcessor() {
             @Override
@@ -19,5 +19,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 return null;
             }
         };
-    }
+    }*/
 }
