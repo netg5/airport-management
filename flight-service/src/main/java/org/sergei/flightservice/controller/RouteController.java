@@ -5,10 +5,14 @@ import org.sergei.flightservice.dto.RouteDTO;
 import org.sergei.flightservice.dto.RouteExtendedDTO;
 import org.sergei.flightservice.service.RouteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.Resources;
+import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
 
@@ -29,8 +33,18 @@ public class RouteController {
 
     @ApiOperation("Get all existing routes")
     @GetMapping
-    public ResponseEntity<List<RouteExtendedDTO>> getAllRoutes() {
-        return new ResponseEntity<>(routeService.findAll(), HttpStatus.OK);
+    public ResponseEntity<Resources<RouteExtendedDTO>> getAllRoutes() {
+        List<RouteExtendedDTO> routes = routeService.findAll();
+        routes.forEach(route -> {
+            Link link = ControllerLinkBuilder.linkTo(
+                    ControllerLinkBuilder.methodOn(RouteController.class)
+                            .getRouteById(route.getRouteId())).withSelfRel();
+            route.add(link);
+        });
+        Resources<RouteExtendedDTO> resources = new Resources<>(routes);
+        String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
+        resources.add(new Link(uriString, "self"));
+        return new ResponseEntity<>(resources, HttpStatus.OK);
     }
 
     @ApiOperation("Get route by ID")
@@ -42,7 +56,10 @@ public class RouteController {
     @GetMapping("/{routeId}")
     public ResponseEntity<RouteDTO> getRouteById(@ApiParam(value = "Route ID which should be found", required = true)
                                                  @PathVariable("routeId") Long routeId) {
-        return new ResponseEntity<>(routeService.findOne(routeId), HttpStatus.OK);
+        RouteDTO routeDTO = routeService.findOne(routeId);
+        Link link = ControllerLinkBuilder.linkTo(RouteController.class).withSelfRel();
+        routeDTO.add(link);
+        return new ResponseEntity<>(routeDTO, HttpStatus.OK);
     }
 
     @ApiOperation(value = "Save route", notes = "Operation allowed for ADMIN only")

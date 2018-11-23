@@ -2,12 +2,13 @@ package org.sergei.flightservice.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.hateoas.ResourceSupport;
 
 /**
  * @author Sergei Visotsky, 2018
  */
 @ApiModel(value = "Aircraft", description = "Aircraft model")
-public class AircraftDTO {
+public class AircraftDTO extends ResourceSupport {
     private Long aircraftId;
     private String model;
     private String aircraftName;
