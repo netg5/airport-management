@@ -37,8 +37,8 @@ public class CustomerController {
     )
     @GetMapping
     public ResponseEntity<Resources<CustomerDTO>> getAllCustomers() {
-        final List<CustomerDTO> customerDTOList = customerService.findAll();
-        final Resources<CustomerDTO> resources = new Resources<>(customerDTOList);
+        final List<CustomerDTO> customerList = customerService.findAll();
+        final Resources<CustomerDTO> resources = new Resources<>(customerList);
         final String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
         resources.add(new Link(uriString, "self"));
         return new ResponseEntity<>(resources, HttpStatus.OK);
