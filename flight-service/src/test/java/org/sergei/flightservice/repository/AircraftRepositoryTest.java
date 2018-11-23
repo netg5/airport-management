@@ -1,6 +1,7 @@
 package org.sergei.flightservice.repository;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sergei.flightservice.model.Aircraft;
@@ -43,6 +44,7 @@ public class AircraftRepositoryTest {
         Assert.assertTrue(aircraftList.isEmpty());
     }
 
+    @Ignore
     @Test
     public void saveAircraft_thenGetOk() {
         Aircraft aircraft = new Aircraft("T_50", "TestName", 2000.0, 3000);
