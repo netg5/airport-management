@@ -10,7 +10,7 @@ import org.springframework.hateoas.ResourceSupport;
  * @author Sergei Visotsky, 2018
  */
 @ApiModel(value = "Customer", description = "Customer model")
-public class CustomerDTO extends ResourceSupport {
+public class CustomerDTO {
     private Long customerId;
     private String firstName;
     private String lastName;

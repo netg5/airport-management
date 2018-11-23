@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
  * @author Sergei Visotsky, 2018
  */
 @ApiModel(value = "Route", description = "Route meta data model")
-public class RouteDTO extends ResourceSupport {
+public class RouteDTO {
     private Long routeId;
     private Double distance;
     private LocalDateTime departureTime;

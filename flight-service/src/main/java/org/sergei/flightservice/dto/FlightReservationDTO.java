@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
  * @author Sergei Visotsky, 2018
  */
 @ApiModel(value = "FlightReservation", description = "Flight reservation meta data model")
-public class FlightReservationDTO extends ResourceSupport {
+public class FlightReservationDTO {
     private Long reservationId;
     private Long customerId;
     private Long routeId;

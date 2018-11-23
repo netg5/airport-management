@@ -5,13 +5,9 @@ import org.sergei.flightservice.dto.FlightReservationDTO;
 import org.sergei.flightservice.dto.FlightReservationExtendedDTO;
 import org.sergei.flightservice.service.FlightReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.Link;
-import org.springframework.hateoas.Resources;
-import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
 
@@ -37,21 +33,9 @@ public class FlightReservationController {
             }
     )
     @GetMapping("/{customerId}/reservations")
-    public ResponseEntity<Resources<FlightReservationExtendedDTO>> getAllForCustomer(@ApiParam(value = "Customer ID whose reservations should be found", required = true)
-                                                                                     @PathVariable("customerId") Long customerId) {
-        List<FlightReservationExtendedDTO> flightReservations =
-                flightReservationService.getAllReservationsForCustomer(customerId);
-        flightReservations.forEach(flightReservation -> {
-            Link link = ControllerLinkBuilder.linkTo(
-                    ControllerLinkBuilder.methodOn(FlightReservationController.class)
-                            .getOneForCustomer(flightReservation.getCustomerId(),
-                                    flightReservation.getReservationId())).withSelfRel();
-            flightReservation.add(link);
-        });
-        Resources<FlightReservationExtendedDTO> resources = new Resources<>(flightReservations);
-        String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
-        resources.add(new Link(uriString, "self"));
-        return new ResponseEntity<>(resources, HttpStatus.OK);
+    public ResponseEntity<List<FlightReservationExtendedDTO>> getAllForCustomer(@ApiParam(value = "Customer ID whose reservations should be found", required = true)
+                                                                                @PathVariable("customerId") Long customerId) {
+        return new ResponseEntity<>(flightReservationService.getAllReservationsForCustomer(customerId), HttpStatus.OK);
     }
 
     @ApiOperation("Get one reservation by ID for the customer")
@@ -65,11 +49,7 @@ public class FlightReservationController {
                                                                           @PathVariable("customerId") Long customerId,
                                                                           @ApiParam(value = "Reservation ID which which was made", required = true)
                                                                           @PathVariable("reservationId") Long reservationId) {
-        FlightReservationExtendedDTO flightReservationExtendedDTO =
-                flightReservationService.getOneForCustomerById(customerId, reservationId);
-        Link link = ControllerLinkBuilder.linkTo(FlightReservationController.class).withSelfRel();
-        flightReservationExtendedDTO.add(link);
-        return new ResponseEntity<>(flightReservationExtendedDTO, HttpStatus.OK);
+        return new ResponseEntity<>(flightReservationService.getOneForCustomerById(customerId, reservationId), HttpStatus.OK);
     }
 
     @ApiOperation("Create reservation for customer")
