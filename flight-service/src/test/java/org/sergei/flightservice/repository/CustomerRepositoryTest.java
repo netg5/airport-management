@@ -31,6 +31,7 @@ import java.util.Objects;
 /**
  * @author Sergei Visotsky, 2018
  */
+@Ignore
 @RunWith(SpringRunner.class)
 @DataJpaTest(properties =
         {
@@ -62,7 +63,6 @@ public class CustomerRepositoryTest {
         Assert.assertTrue(customerList.isEmpty());
     }
 
-    @Ignore
     @Test
     public void saveCustomer_thenGetOk() {
         Customer customer = new Customer("John", "Smith", 20, Collections.emptyList());
