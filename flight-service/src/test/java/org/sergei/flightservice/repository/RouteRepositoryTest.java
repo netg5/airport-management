@@ -68,7 +68,6 @@ public class RouteRepositoryTest {
         Assert.assertEquals(Objects.requireNonNull(foundRoute).getPrice(), route.getPrice());
     }
 
-    @Ignore
     @Test
     public void saveRoute_deleteRoute_thenGetOk() {
         Aircraft aircraft = new Aircraft("T_50", "TestName", 2000.0, 3000);
