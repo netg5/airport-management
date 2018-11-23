@@ -5,6 +5,7 @@ import org.sergei.flightservice.dto.CustomerDTO;
 import org.sergei.flightservice.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
+import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,9 +47,13 @@ public class CustomerController {
 
     @ApiOperation("Get customer by ID")
     @GetMapping("/{customerId}")
-    public ResponseEntity<CustomerDTO> getCustomerById(@ApiParam(value = "Customer ID which should be found", required = true)
-                                                       @PathVariable("customerId") Long customerId) {
-        return new ResponseEntity<>(customerService.findOne(customerId), HttpStatus.OK);
+    public ResponseEntity<Resource<CustomerDTO>> getCustomerById(@ApiParam(value = "Customer ID which should be found", required = true)
+                                                                 @PathVariable("customerId") Long customerId) {
+        CustomerDTO customerDTO = customerService.findOne(customerId);
+        final Resource<CustomerDTO> resource = new Resource<>(customerDTO);
+        final String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
+        resource.add(new Link(uriString, "self"));
+        return new ResponseEntity<>(resource, HttpStatus.OK);
     }
 
     @ApiOperation("Save customer")
