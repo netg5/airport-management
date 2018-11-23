@@ -1,13 +1,9 @@
 package org.sergei.flightservice.repository;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.sergei.flightservice.model.Aircraft;
 import org.sergei.flightservice.model.Customer;
-import org.sergei.flightservice.model.FlightReservation;
-import org.sergei.flightservice.model.Route;
 import org.sergei.flightservice.test.config.WebSecurityConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +20,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
