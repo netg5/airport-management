@@ -3,6 +3,11 @@ package org.sergei.flightservice.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.sergei.flightservice.controller.CustomerController;
+import org.sergei.flightservice.controller.FlightReservationController;
+
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 /**
  * @author Sergei Visotsky, 2018
@@ -22,6 +27,9 @@ public class CustomerDTO {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
+
+        linkTo(CustomerController.class).withRel("customers");
+        linkTo(methodOn(FlightReservationController.class).getAllForCustomer(customerId)).withRel("reservations");
     }
 
     public Long getCustomerId() {

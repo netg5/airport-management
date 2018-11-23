@@ -4,10 +4,13 @@ import io.swagger.annotations.*;
 import org.sergei.flightservice.dto.CustomerDTO;
 import org.sergei.flightservice.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
 
@@ -33,8 +36,12 @@ public class CustomerController {
             }
     )
     @GetMapping
-    public ResponseEntity<List<CustomerDTO>> getAllCustomers() {
-        return new ResponseEntity<>(customerService.findAll(), HttpStatus.OK);
+    public ResponseEntity<Resources<CustomerDTO>> getAllCustomers() {
+        final List<CustomerDTO> customerList = customerService.findAll();
+        final Resources<CustomerDTO> resources = new Resources<>(customerList);
+        final String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
+        resources.add(new Link(uriString, "self"));
+        return new ResponseEntity<>(resources, HttpStatus.OK);
     }
 
     @ApiOperation("Get customer by ID")
