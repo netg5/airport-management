@@ -18,7 +18,7 @@ public class CustomerDTO {
     public CustomerDTO() {
     }
 
-    public CustomerDTO(final Customer customer, Long customerId, String firstName, String lastName, Integer age) {
+    public CustomerDTO(Long customerId, String firstName, String lastName, Integer age) {
         this.customerId = customerId;
         this.firstName = firstName;
         this.lastName = lastName;
