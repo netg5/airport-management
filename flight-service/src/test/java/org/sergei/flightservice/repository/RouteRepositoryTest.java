@@ -1,10 +1,9 @@
 package org.sergei.flightservice.repository;
 
-import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sergei.flightservice.model.Aircraft;
+import org.sergei.flightservice.model.Customer;
 import org.sergei.flightservice.model.Route;
 import org.sergei.flightservice.test.config.WebSecurityConfig;
 import org.slf4j.Logger;
@@ -25,6 +24,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import static junit.framework.TestCase.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
+
 /**
  * @author Sergei Visotsky, 2018
  */
@@ -41,8 +44,6 @@ import java.util.Objects;
 @ActiveProfiles("test")
 public class RouteRepositoryTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RouteRepositoryTest.class);
-
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private static final LocalDateTime DEPARTURE_TIME = LocalDateTime.parse("2018-09-09 09:24:00", FORMATTER);
     private static final LocalDateTime ARRIVAL_TIME = LocalDateTime.parse("2018-09-09 09:24:00", FORMATTER);
@@ -55,29 +56,31 @@ public class RouteRepositoryTest {
     @Test
     public void assertThatIsEmpty() {
         List<Route> routeList = routeRepository.findAll();
-        Assert.assertTrue(routeList.isEmpty());
+        assertTrue(routeList.isEmpty());
     }
 
     @Test
     public void saveRoute_thenGetOk() {
         Aircraft aircraft = new Aircraft("T_50", "TestName", 2000.0, 3000);
         Route route = new Route(250.03, DEPARTURE_TIME, ARRIVAL_TIME, PRICE, "Riga", aircraft, Collections.emptyList());
-        route.setRouteId(1L);
         routeRepository.save(route);
-        Route foundRoute = routeRepository.findById(1L).orElse(null);
-        Assert.assertEquals(Objects.requireNonNull(foundRoute).getPrice(), route.getPrice());
+        Iterable<Route> foundAll = routeRepository.findAll();
+        assertThat(foundAll).hasSize(1);
+        route.setRouteId(1L);
+        assertThat(foundAll).contains(route);
     }
 
     @Test
     public void saveRoute_deleteRoute_thenGetOk() {
         Aircraft aircraft = new Aircraft("T_50", "TestName", 2000.0, 3000);
-        Route route = new Route(250.03, DEPARTURE_TIME, ARRIVAL_TIME, PRICE, "Riga", aircraft, Collections.emptyList());
+        Route route = new Route(250.03, DEPARTURE_TIME, ARRIVAL_TIME, PRICE, "Riga", aircraft, null);
         routeRepository.save(route);
-        Route foundRoute = routeRepository.findById(1L).orElse(null);
-        LOGGER.debug("Test route ID: {}", Objects.requireNonNull(foundRoute).getRouteId());
-        Assert.assertEquals(Objects.requireNonNull(foundRoute).getPrice(), route.getPrice());
-        routeRepository.delete(foundRoute);
-        List<Route> routeList = routeRepository.findAll();
-        Assert.assertTrue(routeList.isEmpty());
+        Iterable<Route> foundAll = routeRepository.findAll();
+        assertThat(foundAll).hasSize(1);
+        route.setRouteId(1L);
+        assertThat(foundAll).contains(route);
+        routeRepository.delete(route);
+        Iterable<Route> routeList = routeRepository.findAll();
+        assertThat(routeList).hasSize(0);
     }
 }

@@ -1,6 +1,5 @@
 package org.sergei.flightservice.repository;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sergei.flightservice.model.Aircraft;
@@ -16,6 +15,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 import java.util.Objects;
+
+import static junit.framework.TestCase.assertTrue;
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author Sergei Visotsky, 2018
@@ -40,15 +43,17 @@ public class AircraftRepositoryTest {
     @Test
     public void assertThatIsEmpty() {
         List<Aircraft> aircraftList = aircraftRepository.findAll();
-        Assert.assertTrue(aircraftList.isEmpty());
+        assertTrue(aircraftList.isEmpty());
     }
 
     @Test
     public void saveAircraft_thenGetOk() {
         Aircraft aircraft = new Aircraft("T_50", "TestName", 2000.0, 3000);
         aircraftRepository.save(aircraft);
-        Aircraft foundAircraft = aircraftRepository.findById(1L).orElse(null);
-        Assert.assertEquals(Objects.requireNonNull(foundAircraft).getAircraftId(), aircraft.getAircraftId());
+        Iterable<Aircraft> foundAll = aircraftRepository.findAll();
+        assertThat(foundAll).hasSize(1);
+        aircraft.setAircraftId(1L);
+        assertThat(foundAll).contains(aircraft);
     }
 
     @Test
@@ -56,9 +61,9 @@ public class AircraftRepositoryTest {
         Aircraft aircraft = new Aircraft("T_50", "TestName", 2000.0, 3000);
         aircraftRepository.save(aircraft);
         Aircraft foundAircraft = aircraftRepository.findById(1L).orElse(null);
-        Assert.assertEquals(Objects.requireNonNull(foundAircraft).getAircraftName(), aircraft.getAircraftName());
+        assertEquals(Objects.requireNonNull(foundAircraft).getAircraftName(), aircraft.getAircraftName());
         aircraftRepository.delete(foundAircraft);
         List<Aircraft> aircraftList = aircraftRepository.findAll();
-        Assert.assertTrue(aircraftList.isEmpty());
+        assertTrue(aircraftList.isEmpty());
     }
 }

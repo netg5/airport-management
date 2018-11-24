@@ -3,6 +3,7 @@ package org.sergei.flightservice.repository;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.sergei.flightservice.model.Aircraft;
 import org.sergei.flightservice.model.Customer;
 import org.sergei.flightservice.test.config.WebSecurityConfig;
 import org.slf4j.Logger;
@@ -23,6 +24,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import static junit.framework.TestCase.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
+
 /**
  * @author Sergei Visotsky, 2018
  */
@@ -39,8 +44,6 @@ import java.util.Objects;
 @ActiveProfiles("test")
 public class CustomerRepositoryTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RouteRepositoryTest.class);
-
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private static final LocalDateTime DATE_TIME = LocalDateTime.parse("2018-09-09 09:24:00", FORMATTER);
     private static final LocalDateTime DEPARTURE_TIME = LocalDateTime.parse("2018-09-09 09:24:00", FORMATTER);
@@ -54,22 +57,17 @@ public class CustomerRepositoryTest {
     @Test
     public void assertThatIsEmpty() {
         List<Customer> customerList = customerRepository.findAll();
-        Assert.assertTrue(customerList.isEmpty());
+        assertTrue(customerList.isEmpty());
     }
 
     @Test
     public void saveCustomer_thenGetOk() {
         Customer customer = new Customer("John", "Smith", 20, Collections.emptyList());
-        /*Aircraft aircraft = new Aircraft("T_50", "TestName", 2000.0, 3000);
-        Route route = new Route(250.03, DEPARTURE_TIME, ARRIVAL_TIME, PRICE, "Riga", aircraft, Collections.emptyList());
-        FlightReservation reservation = new FlightReservation(DATE_TIME, customer, route);
-        List<FlightReservation> flightReservationList = new LinkedList<>();
-        flightReservationList.add(reservation);
-        customer.setFlightReservations(flightReservationList);*/
         customerRepository.save(customer);
-        Customer foundCustomer = customerRepository.findById(1L).orElse(null);
-        LOGGER.debug("Customer first name: {}", customer.getFirstName());
-        Assert.assertEquals(Objects.requireNonNull(foundCustomer).getFirstName(), customer.getFirstName());
+        Iterable<Customer> foundAll = customerRepository.findAll();
+        assertThat(foundAll).hasSize(1);
+        customer.setCustomerId(1L);
+        assertThat(foundAll).contains(customer);
     }
 
     @Test
@@ -77,9 +75,9 @@ public class CustomerRepositoryTest {
         Customer customer = new Customer("John", "Smith", 20, Collections.emptyList());
         customerRepository.save(customer);
         Customer foundCustomer = customerRepository.findById(1L).orElse(null);
-        Assert.assertEquals(Objects.requireNonNull(foundCustomer).getFirstName(), customer.getFirstName());
+        assertEquals(Objects.requireNonNull(foundCustomer).getFirstName(), customer.getFirstName());
         customerRepository.delete(foundCustomer);
         List<Customer> customerList = customerRepository.findAll();
-        Assert.assertTrue(customerList.isEmpty());
+        assertTrue(customerList.isEmpty());
     }
 }
