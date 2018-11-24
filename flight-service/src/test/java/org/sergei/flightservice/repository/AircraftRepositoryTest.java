@@ -46,10 +46,9 @@ public class AircraftRepositoryTest {
     @Test
     public void saveAircraft_thenGetOk() {
         Aircraft aircraft = new Aircraft("T_50", "TestName", 2000.0, 3000);
-        aircraft.setAircraftId(1L);
         aircraftRepository.save(aircraft);
         Aircraft foundAircraft = aircraftRepository.findById(1L).orElse(null);
-        Assert.assertEquals(Objects.requireNonNull(foundAircraft).getAircraftName(), aircraft.getAircraftName());
+        Assert.assertEquals(Objects.requireNonNull(foundAircraft).getAircraftId(), aircraft.getAircraftId());
     }
 
     @Test
