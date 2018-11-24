@@ -43,7 +43,6 @@ In case if access token is expired refresh token should be used to renew access 
 * Method availability for a specific role
 
 ## TODO
-* Implement HATEOAS
 * Implement Hystrix fallback methods
 * Make Swagger available through the gateway for all microservices
 * Configure Zipkin service
