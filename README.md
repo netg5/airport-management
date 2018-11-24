@@ -43,9 +43,9 @@ In case if access token is expired refresh token should be used to renew access 
 * Method availability for a specific role
 
 ## TODO
+* Write tests for the RESTful service
 * Implement Hystrix fallback methods
+* Add ticket service
 * Make Swagger available through the gateway for all microservices
 * Configure Zipkin service
-* Split flight-service into the multiple microservices
-* Write tests for the RESTful service
 * Front-end (REST client)

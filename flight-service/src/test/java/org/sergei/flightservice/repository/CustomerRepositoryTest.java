@@ -1,14 +1,9 @@
 package org.sergei.flightservice.repository;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.sergei.flightservice.model.Aircraft;
 import org.sergei.flightservice.model.Customer;
-import org.sergei.flightservice.model.Route;
 import org.sergei.flightservice.test.config.WebSecurityConfig;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -18,16 +13,11 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
 
 /**
  * @author Sergei Visotsky, 2018
@@ -44,12 +34,6 @@ import static org.junit.Assert.assertEquals;
 @EntityScan(basePackages = "org.sergei.flightservice.model")
 @ActiveProfiles("test")
 public class CustomerRepositoryTest {
-
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    private static final LocalDateTime DATE_TIME = LocalDateTime.parse("2018-09-09 09:24:00", FORMATTER);
-    private static final LocalDateTime DEPARTURE_TIME = LocalDateTime.parse("2018-09-09 09:24:00", FORMATTER);
-    private static final LocalDateTime ARRIVAL_TIME = LocalDateTime.parse("2018-09-09 09:24:00", FORMATTER);
-    private static final BigDecimal PRICE = new BigDecimal(25000);
 
     @Autowired
     @Qualifier("customerRepository")
