@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sergei.flightservice.model.Aircraft;
 import org.sergei.flightservice.model.Customer;
+import org.sergei.flightservice.model.Route;
 import org.sergei.flightservice.test.config.WebSecurityConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -74,10 +75,12 @@ public class CustomerRepositoryTest {
     public void saveCustomer_deleteCustomer_thenGetOk() {
         Customer customer = new Customer("John", "Smith", 20, Collections.emptyList());
         customerRepository.save(customer);
-        Customer foundCustomer = customerRepository.findById(1L).orElse(null);
-        assertEquals(Objects.requireNonNull(foundCustomer).getFirstName(), customer.getFirstName());
-        customerRepository.delete(foundCustomer);
-        List<Customer> customerList = customerRepository.findAll();
-        assertTrue(customerList.isEmpty());
+        Iterable<Customer> foundAll = customerRepository.findAll();
+        assertThat(foundAll).hasSize(1);
+        customer.setCustomerId(1L);
+        assertThat(foundAll).contains(customer);
+        customerRepository.delete(customer);
+        Iterable<Customer> customerList = customerRepository.findAll();
+        assertThat(customerList).hasSize(0);
     }
 }
