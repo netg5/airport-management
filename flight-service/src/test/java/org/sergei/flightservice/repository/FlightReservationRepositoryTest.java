@@ -1,6 +1,6 @@
 package org.sergei.flightservice.repository;
 
-import org.assertj.core.api.Assertions;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sergei.flightservice.model.Aircraft;
