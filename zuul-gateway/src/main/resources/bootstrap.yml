@@ -9,4 +9,4 @@ spring:
       enabled: true
       discovery:
         enabled: true
-        service-id: zuul-gateway
+        service-id: config-service
