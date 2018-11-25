@@ -59,7 +59,7 @@ public class CustomerControllerTest {
                 .andExpect(jsonPath("$..lastName").value(containsInAnyOrder("Test last name")));
     }
 
-    private String getAccessToken(String username, String password) throws Exception {
+    /*private String getAccessToken(String username, String password) throws Exception {
         String authorization = "Basic "
                 + new String(Base64Utils.encode("clientapp:123456".getBytes()));
         String contentType = MediaType.APPLICATION_JSON + ";charset=UTF-8";
@@ -84,5 +84,5 @@ public class CustomerControllerTest {
                 .andExpect(jsonPath("$.scope", equalTo("read write")))
                 .andReturn().getResponse().getContentAsString();
         return content.substring(17, 53);
-    }
+    }*/
 }
