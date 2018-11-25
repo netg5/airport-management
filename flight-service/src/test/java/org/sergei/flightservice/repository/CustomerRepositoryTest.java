@@ -20,6 +20,8 @@ import static junit.framework.TestCase.assertTrue;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
+ * Test for {@link CustomerRepository}
+ *
  * @author Sergei Visotsky, 2018
  */
 @RunWith(SpringRunner.class)

@@ -20,6 +20,8 @@ import static junit.framework.TestCase.assertTrue;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 /**
+ * Test for {@link AircraftRepository}
+ *
  * @author Sergei Visotsky, 2018
  */
 @RunWith(SpringRunner.class)

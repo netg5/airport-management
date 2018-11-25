@@ -30,6 +30,8 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 
 /**
+ * Test for {@link FlightReservationRepository}
+ *
  * @author Sergei Visotsky, 2018
  */
 @Ignore

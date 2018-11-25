@@ -5,6 +5,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 /**
  * @author Sergei Visotsky, 2018
+ *
+ * <pre>
+ *     Security config for test cases
+ * </pre>
  */
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
