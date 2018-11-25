@@ -9,8 +9,9 @@ import java.util.Random;
 
 /**
  * @author Sergei Visotsky, 2018
- * <p>
- * REST controller with service endpoints
+ * <pre>
+ *    REST controller with service endpoints
+ * </pre>
  */
 @RestController
 public class ServiceEndpoints {
