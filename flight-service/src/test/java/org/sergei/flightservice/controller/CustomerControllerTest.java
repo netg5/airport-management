@@ -26,12 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @Ignore
 @RunWith(SpringRunner.class)
-@SpringBootTest(properties =
-        {
-                "spring.cloud.config.enabled=false",
-                "spring.cloud.config.discovery.enabled=false"
-        }
-)
+@SpringBootTest(properties = {"spring.cloud.config.enabled=false", "spring.cloud.config.discovery.enabled=false"})
 @AutoConfigureMockMvc
 @ContextConfiguration(classes = {WebSecurityConfig.class})
 //@EnableJpaRepositories(basePackages = "org.sergei.flightservice.repository")

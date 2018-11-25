@@ -23,12 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Sergei Visotsky, 2018
  */
 @RunWith(SpringRunner.class)
-@DataJpaTest(properties =
-        {
-                "spring.cloud.config.enabled=false",
-                "spring.cloud.config.discovery.enabled=false"
-        }
-)
+@DataJpaTest(properties = {"spring.cloud.config.enabled=false", "spring.cloud.config.discovery.enabled=false"})
 @ContextConfiguration(classes = {WebSecurityConfig.class})
 @EnableJpaRepositories(basePackages = "org.sergei.flightservice.repository")
 @EntityScan(basePackages = "org.sergei.flightservice.model")
