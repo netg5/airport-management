@@ -4,12 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.sergei</groupId>
-    <artifactId>flight-service</artifactId>
+    <artifactId>ticket-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>flight-service</name>
-    <description>Application to reserve flights using RESTful API</description>
+    <name>ticket-service</name>
+    <description>Ticket microservice</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -177,6 +177,5 @@
             </snapshots>
         </repository>
     </repositories>
-
 
 </project>
