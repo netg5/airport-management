@@ -1,6 +1,7 @@
 package org.sergei.flightservice.controller;
 
 import org.json.JSONObject;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sergei.flightservice.test.config.WebSecurityConfig;
@@ -24,6 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  *
  * @author Sergei Visotsky, 2018
  */
+@Ignore
 @RunWith(SpringRunner.class)
 @SpringBootTest(properties = {"spring.cloud.config.enabled=false", "spring.cloud.config.discovery.enabled=false"})
 @AutoConfigureMockMvc
@@ -39,7 +41,7 @@ public class CustomerControllerTest {
     private CustomerService customerService;*/
 
     @Autowired
-    private MockMvc mockMvc;
+    private MockMvc mvc;
 
     @Test
     public void getAllCustomers() throws Exception {
@@ -50,9 +52,10 @@ public class CustomerControllerTest {
                 .put("firstName", "firstName")
                 .put("lastName", "lastName")
                 .put("age", "age");
-        mockMvc.perform(get("http://localhost:8083/flight-api/v1/customers")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-                .content(jsonObject.toString()))
+        mvc.perform(
+                get("http://localhost:8083/flight-api/v1/customers")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                        .content(jsonObject.toString()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(4))
                 .andExpect(jsonPath("$..firstName").value(containsInAnyOrder("TestName")))
