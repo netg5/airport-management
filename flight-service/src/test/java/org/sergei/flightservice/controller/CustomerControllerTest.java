@@ -51,7 +51,7 @@ public class CustomerControllerTest {
     public void getAllCustomers() throws Exception {
 //        CustomerDTO firstCustomer = new CustomerDTO(1L, "TestName", "Test last name", 45);
 //        customerService.save(firstCustomer);
-        String accessToken = getAccessToken("admin", "123456");
+        String accessToken = obtainAccessToken("admin", "123456");
         LOGGER.debug("Access token is: {}", accessToken);
         JSONObject jsonObject = new JSONObject()
                 .put("customerId", "customerId")
@@ -67,7 +67,7 @@ public class CustomerControllerTest {
                 .andExpect(jsonPath("$..lastName").value(containsInAnyOrder("Test last name")));
     }
 
-    private String getAccessToken(String username, String password) throws Exception {
+    private String obtainAccessToken(String username, String password) throws Exception {
         return mockMvc.perform(
                 post("http://localhost:8080/auth-api/oauth/token")
                         .with(csrf())
