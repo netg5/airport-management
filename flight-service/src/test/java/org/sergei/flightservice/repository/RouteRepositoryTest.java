@@ -33,7 +33,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ContextConfiguration(classes = {WebSecurityConfig.class})
 @EnableJpaRepositories(basePackages = "org.sergei.flightservice.repository")
 @EntityScan(basePackages = "org.sergei.flightservice.model")
-@ActiveProfiles("test")
 public class RouteRepositoryTest {
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");

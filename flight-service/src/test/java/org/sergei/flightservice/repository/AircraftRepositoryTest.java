@@ -29,7 +29,6 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 @ContextConfiguration(classes = {WebSecurityConfig.class})
 @EnableJpaRepositories(basePackages = "org.sergei.flightservice.repository")
 @EntityScan(basePackages = "org.sergei.flightservice.model")
-@ActiveProfiles("test")
 public class AircraftRepositoryTest {
 
     @Autowired
