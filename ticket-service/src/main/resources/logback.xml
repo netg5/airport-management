@@ -10,9 +10,9 @@
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>debug</level>
         </filter>
-        <file>./logs/flight-service.log</file>
+        <file>./logs/ticket-service.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>./logs/flight-service.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>./logs/ticket-service.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>30</maxHistory>
         </rollingPolicy>
         <encoder>
@@ -20,7 +20,7 @@
         </encoder>
     </appender>
 
-    <logger name="org.sergei.flightservice" level="info"/>
+    <logger name="org.sergei.ticketservice" level="info"/>
 
     <root level="info">
         <appender-ref ref="file"/>

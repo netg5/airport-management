@@ -17,6 +17,7 @@
         <module>zipkin-service</module>
         <module>zuul-gateway</module>
         <module>flight-service</module>
+        <module>ticket-service</module>
     </modules>
 
 </project>
