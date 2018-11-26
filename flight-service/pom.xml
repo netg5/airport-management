@@ -62,6 +62,8 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-config</artifactId>
         </dependency>
+
+        <!-- Testing -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -84,6 +86,8 @@
             <version>3.11.1</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- JSON and expressions -->
         <dependency>
             <groupId>com.jayway.jsonpath</groupId>
             <artifactId>json-path</artifactId>
@@ -97,7 +101,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!--Database connector driver-->
+        <!-- Database connector driver -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
