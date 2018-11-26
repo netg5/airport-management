@@ -20,6 +20,8 @@ import static junit.framework.TestCase.assertTrue;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 /**
+ * Test for {@link AircraftRepository}
+ *
  * @author Sergei Visotsky, 2018
  */
 @RunWith(SpringRunner.class)
@@ -27,7 +29,6 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 @ContextConfiguration(classes = {WebSecurityConfig.class})
 @EnableJpaRepositories(basePackages = "org.sergei.flightservice.repository")
 @EntityScan(basePackages = "org.sergei.flightservice.model")
-@ActiveProfiles("test")
 public class AircraftRepositoryTest {
 
     @Autowired
