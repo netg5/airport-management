@@ -1,6 +1,7 @@
 package org.sergei.flightservice.repository;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sergei.flightservice.model.Aircraft;
@@ -20,6 +21,7 @@ import java.util.Objects;
 /**
  * @author Sergei Visotsky, 2018
  */
+@Ignore
 @RunWith(SpringRunner.class)
 @DataJpaTest(properties =
         {
