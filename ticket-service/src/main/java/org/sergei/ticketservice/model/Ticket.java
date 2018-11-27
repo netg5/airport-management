@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
@@ -20,9 +21,7 @@ import javax.persistence.Table;
 @Table(name = "ticket_view")
 public class Ticket {
 
-    @Column(name = "customer_id")
-    private Long customerId;
-
+    @Id
     @Column(name = "first_name")
     private String fistName;
 
