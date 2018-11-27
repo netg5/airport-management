@@ -1,5 +1,6 @@
 package org.sergei.ticketservice.model;
 
+import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,7 @@ import javax.persistence.Table;
 /**
  * @author Sergei Visotsky, 2018
  */
+@ApiModel(value = "Ticket", description = "Ticket model")
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor

@@ -1,5 +1,8 @@
 package org.sergei.ticketservice.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.sergei.ticketservice.model.Ticket;
 import org.sergei.ticketservice.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @author Sergei Visotsky, 2018
  */
+@Api(
+        value = "/ticket-api/v1/tickets",
+        produces = "application/json"
+)
 @RestController
 @RequestMapping(value = "/v1/tickets", produces = "application/json")
 public class TicketController {
@@ -20,8 +27,10 @@ public class TicketController {
     @Autowired
     private TicketService ticketService;
 
+    @ApiOperation("Get ticket for customer by ID")
     @GetMapping
-    public ResponseEntity<Ticket> getForCustomer(@RequestParam("customerId") Long customerId) {
+    public ResponseEntity<Ticket> getForCustomer(@ApiParam(value = "Customer ID whoose ticket should be found", required = true)
+                                                 @RequestParam("customerId") Long customerId) {
         return new ResponseEntity<>(ticketService.findAllForCustomer(customerId), HttpStatus.OK);
     }
 }
