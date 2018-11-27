@@ -4,7 +4,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.sergei.ticketservice.model.Ticket;
-import org.sergei.ticketservice.service.TicketService;
+import org.sergei.ticketservice.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,12 +25,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class TicketController {
 
     @Autowired
-    private TicketService ticketService;
+    private TicketRepository ticketRepository;
 
     @ApiOperation("Get ticket for customer by ID")
     @GetMapping
     public ResponseEntity<Ticket> getForCustomer(@ApiParam(value = "Customer ID whose ticket should be found", required = true)
                                                  @RequestParam("customerId") Long customerId) {
-        return new ResponseEntity<>(ticketService.findAllForCustomer(customerId), HttpStatus.OK);
+        return new ResponseEntity<>(ticketRepository.findOneForCustomer(customerId), HttpStatus.OK);
     }
 }

@@ -15,11 +15,11 @@ import javax.persistence.Table;
  * @author Sergei Visotsky, 2018
  */
 @ApiModel(value = "Ticket", description = "Ticket model")
-@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@Entity
 @Table(name = "ticket_view")
 public class Ticket {
 
