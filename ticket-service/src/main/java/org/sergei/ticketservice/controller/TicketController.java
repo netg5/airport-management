@@ -29,7 +29,7 @@ public class TicketController {
 
     @ApiOperation("Get ticket for customer by ID")
     @GetMapping
-    public ResponseEntity<Ticket> getForCustomer(@ApiParam(value = "Customer ID whoose ticket should be found", required = true)
+    public ResponseEntity<Ticket> getForCustomer(@ApiParam(value = "Customer ID whose ticket should be found", required = true)
                                                  @RequestParam("customerId") Long customerId) {
         return new ResponseEntity<>(ticketService.findAllForCustomer(customerId), HttpStatus.OK);
     }
