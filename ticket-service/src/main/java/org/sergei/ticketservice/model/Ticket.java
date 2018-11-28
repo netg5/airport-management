@@ -15,7 +15,7 @@ import javax.persistence.Table;
  * @author Sergei Visotsky, 2018
  *
  * <pre>
- *     Takes date from ticket_view from MySQL server
+ *     Takes date from ticket_view located in MySQL server
  * </pre>
  */
 @ApiModel(value = "Ticket", description = "Ticket model")
