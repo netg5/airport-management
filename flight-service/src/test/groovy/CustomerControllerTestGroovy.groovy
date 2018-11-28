@@ -15,8 +15,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @Ignore
-@WebMvcTest(controllers = [CustomerController])
-@ContextConfiguration(classes = { WebSecurityConfig.class })
+@WebMvcTest(controllers = CustomerController)
+@ContextConfiguration(classes = WebSecurityConfig.class)
 class CustomerControllerTestGroovy extends Specification {
 
     @Autowired
