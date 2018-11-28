@@ -39,6 +39,7 @@ In case if access token is expired refresh token should be used to renew access 
 * ContentOptions: `grant_type=refresh_token&refresh_token=REFRESH_TOKEN`
 
 ## FIXME
+* Response in ticket service - all ticket views are with the same content
 * Authorization in Swagger UI
 * Method availability for a specific role
 
