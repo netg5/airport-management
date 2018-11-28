@@ -14,6 +14,6 @@ import java.util.List;
 @Repository
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
-    @Query(value = "SELECT * FROM ticket_view WHERE customer_id = :customerId", nativeQuery = true)
-    List<Ticket> findAllForCustomer(@Param("customerId") Long customerId);
+//    @Query("SELECT t FROM Ticket t WHERE t.customerId = :customerId")
+    List<Ticket> findAllByCustomerId(Long customerId);
 }
