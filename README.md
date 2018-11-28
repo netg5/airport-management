@@ -44,6 +44,7 @@ In case if access token is expired refresh token should be used to renew access 
 * Method availability for a specific role
 
 ## TODO
+* Migrate for to the Gradle as the main build tool
 * Write tests for the RESTful service
 * Implement Hystrix fallback methods
 * Add ticket service
