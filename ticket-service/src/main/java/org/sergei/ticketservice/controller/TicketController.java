@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * @author Sergei Visotsky, 2018
  */
@@ -29,8 +31,8 @@ public class TicketController {
 
     @ApiOperation("Get ticket for customer by ID")
     @GetMapping
-    public ResponseEntity<Ticket> getForCustomer(@ApiParam(value = "Customer ID whose ticket should be found", required = true)
+    public ResponseEntity<List<Ticket>> getAllForCustomer(@ApiParam(value = "Customer ID whose ticket should be found", required = true)
                                                  @RequestParam("customerId") Long customerId) {
-        return new ResponseEntity<>(ticketRepository.findOneForCustomer(customerId), HttpStatus.OK);
+        return new ResponseEntity<>(ticketRepository.findAllForCustomer(customerId), HttpStatus.OK);
     }
 }

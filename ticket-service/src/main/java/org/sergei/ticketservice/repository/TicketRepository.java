@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @author Sergei Visotsky, 2018
  */
@@ -13,5 +15,5 @@ import org.springframework.stereotype.Repository;
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
     @Query(value = "SELECT * FROM ticket_view WHERE customer_id = :customerId", nativeQuery = true)
-    Ticket findOneForCustomer(@Param("customerId") Long customerId);
+    List<Ticket> findAllForCustomer(@Param("customerId") Long customerId);
 }
