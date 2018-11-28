@@ -1,7 +1,6 @@
 package org.sergei.flightservice.controller;
 
 import org.json.JSONObject;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sergei.flightservice.test.config.WebSecurityConfig;
@@ -25,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  *
  * @author Sergei Visotsky, 2018
  */
-@Ignore
+//@Ignore
 @RunWith(SpringRunner.class)
 @SpringBootTest(properties = {"spring.cloud.config.enabled=false", "spring.cloud.config.discovery.enabled=false"})
 @AutoConfigureMockMvc
