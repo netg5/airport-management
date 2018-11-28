@@ -17,6 +17,8 @@ import java.util.List;
 import static junit.framework.TestCase.assertTrue;
 
 /**
+ * Test for {@link TicketRepository}
+ *
  * @author Sergei Visotsky, 2018
  */
 @RunWith(SpringRunner.class)
