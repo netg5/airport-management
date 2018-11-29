@@ -4,6 +4,7 @@ import org.sergei.ticketservice.model.Ticket;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.NamedNativeQuery;
 import java.util.List;
 
 /**
@@ -11,7 +12,5 @@ import java.util.List;
  */
 @Repository
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
-
-    //    @Query("SELECT t FROM Ticket t WHERE t.customerId = :customerId")
     List<Ticket> findAllByCustomerId(Long customerId);
 }
