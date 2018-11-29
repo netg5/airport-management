@@ -1,12 +1,14 @@
 server:
-  port: 8084
+  port: 8087
 spring:
   application:
     name: zipkin-service
+  main:
+    allow-bean-definition-overriding: true
 eureka:
   client:
     fetch-registry: true
-    serviceUrl:
+    service-url:
       defaulZone: http://localhost:8761/eureka/
   instance:
     prefer-ip-address: true
