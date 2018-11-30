@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Immutable;
+import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -47,7 +48,7 @@ import java.io.Serializable;
 @Entity
 @Immutable
 @Table(name = "ticket_view")
-public class Ticket implements Serializable {
+public class Ticket extends ResourceSupport implements Serializable {
 
     private static final long serialVersionUID = 1L;
 /*
