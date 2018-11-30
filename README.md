@@ -39,14 +39,14 @@ In case if access token is expired refresh token should be used to renew access 
 * ContentOptions: `grant_type=refresh_token&refresh_token=REFRESH_TOKEN`
 
 ## FIXME
-* Response in ticket service - all ticket views are with the same content
-* Authorization in Swagger UI
-* Method availability for a specific role
+1. Response in ticket service - all ticket views are with the same content
+2. Test cases for controllers in flight-service
+3. Method availability for a specific role
+4. Authorization in Swagger UI
 
 ## TODO
-* Write tests for the RESTful service
-* Implement Hystrix fallback methods
-* Add ticket service
-* Make Swagger available through the gateway for all microservices
-* Configure Zipkin service
-* Front-end (REST client)
+1. Write tests for the RESTful service
+2. Configure Zipkin service
+3. Make Swagger available through the gateway for all microservices
+4. Implement Hystrix fallback methods
+5. Front-end (REST client)
