@@ -37,7 +37,9 @@ class CustomerControllerTestGroovy extends Specification {
         customerRepository.save() >> new Customer("John", "Smith", 25, Collections.emptyList())
 
         when:
-        def results = mvc.perform(get('/v1/customers').contentType(MediaType.APPLICATION_JSON).content(toJson(request)))
+        def results = mvc.perform(get('/v1/customers')
+                .contentType(MediaType.APPLICATION_JSON).content(toJson(request)))
+                .andReturn().response
 
         then:
         results.andExpect(status().isOk())
