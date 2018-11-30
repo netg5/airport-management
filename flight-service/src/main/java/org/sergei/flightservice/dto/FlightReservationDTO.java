@@ -2,6 +2,7 @@ package org.sergei.flightservice.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.hateoas.ResourceSupport;
 
 import java.time.LocalDateTime;
 
@@ -9,7 +10,7 @@ import java.time.LocalDateTime;
  * @author Sergei Visotsky, 2018
  */
 @ApiModel(value = "FlightReservation", description = "Flight reservation meta data model")
-public class FlightReservationDTO {
+public class FlightReservationDTO extends ResourceSupport {
     private Long reservationId;
     private Long customerId;
     private Long routeId;

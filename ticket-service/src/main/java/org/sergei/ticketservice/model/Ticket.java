@@ -5,8 +5,13 @@ import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Immutable;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.io.Serializable;
 
 /**
  * @author Sergei Visotsky, 2018
@@ -19,7 +24,7 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@SqlResultSetMapping(
+/*@SqlResultSetMapping(
         name = "ticketDetailsView",
         entities = @EntityResult(
                 entityClass = Ticket.class,
@@ -38,18 +43,20 @@ import javax.persistence.*;
         name = "findAllByCustomerId",
         query = "SELECT * FROM ticket_view t WHERE t.customer_id = :customerId",
         resultSetMapping = "ticketDetailsView"
-)
+)*/
 @Entity
-//@Immutable
+@Immutable
 @Table(name = "ticket_view")
-public class Ticket {
+public class Ticket implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 /*
     @Id
     private Long ticketId;*/
 
     @JsonIgnore
     @Id
-    @Column(name = "customer_id")
+    @Column(name = "customer_id", updatable = false, nullable = false)
     private Long customerId;
 
     @Column(name = "first_name")

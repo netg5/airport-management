@@ -4,12 +4,13 @@ package org.sergei.flightservice.dto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.sergei.flightservice.model.Customer;
+import org.springframework.hateoas.ResourceSupport;
 
 /**
  * @author Sergei Visotsky, 2018
  */
 @ApiModel(value = "Customer", description = "Customer model")
-public class CustomerDTO {
+public class CustomerDTO extends ResourceSupport {
     private Long customerId;
     private String firstName;
     private String lastName;

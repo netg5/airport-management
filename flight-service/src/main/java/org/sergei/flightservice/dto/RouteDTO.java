@@ -2,6 +2,7 @@ package org.sergei.flightservice.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.hateoas.ResourceSupport;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -10,7 +11,7 @@ import java.time.LocalDateTime;
  * @author Sergei Visotsky, 2018
  */
 @ApiModel(value = "Route", description = "Route meta data model")
-public class RouteDTO {
+public class RouteDTO extends ResourceSupport {
     private Long routeId;
     private Double distance;
     private LocalDateTime departureTime;

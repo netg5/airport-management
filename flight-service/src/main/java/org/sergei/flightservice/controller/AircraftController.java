@@ -4,10 +4,14 @@ import io.swagger.annotations.*;
 import org.sergei.flightservice.dto.AircraftDTO;
 import org.sergei.flightservice.service.AircraftService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.Resources;
+import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
 
@@ -28,8 +32,18 @@ public class AircraftController {
 
     @ApiOperation(value = "Get all existing aircrafts")
     @GetMapping
-    public ResponseEntity<List<AircraftDTO>> getAllAircraft() {
-        return new ResponseEntity<>(aircraftService.findAll(), HttpStatus.OK);
+    public ResponseEntity<Resources<AircraftDTO>> getAllAircraft() {
+        List<AircraftDTO> aircrafts = aircraftService.findAll();
+        aircrafts.forEach(aircraft -> {
+            Link link = ControllerLinkBuilder.linkTo(
+                    ControllerLinkBuilder.methodOn(AircraftController.class)
+                            .getAircraftById(aircraft.getAircraftId())).withSelfRel();
+            aircraft.add(link);
+        });
+        Resources<AircraftDTO> resources = new Resources<>(aircrafts);
+        String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
+        resources.add(new Link(uriString, "self"));
+        return new ResponseEntity<>(resources, HttpStatus.OK);
     }
 
     @ApiOperation("Get aircraft by ID")
@@ -41,7 +55,10 @@ public class AircraftController {
     @GetMapping("/{aircraftId}")
     public ResponseEntity<AircraftDTO> getAircraftById(@ApiParam(value = "Aircraft ID which should be found", required = true)
                                                        @PathVariable("aircraftId") Long aircraftId) {
-        return new ResponseEntity<>(aircraftService.findOne(aircraftId), HttpStatus.OK);
+        AircraftDTO aircraftDTO = aircraftService.findOne(aircraftId);
+        Link link = ControllerLinkBuilder.linkTo(AircraftController.class).withSelfRel();
+        aircraftDTO.add(link);
+        return new ResponseEntity<>(aircraftDTO, HttpStatus.OK);
     }
 
     @ApiOperation(value = "Save aircraft", notes = "Operation allowed for ADMIN only")
