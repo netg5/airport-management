@@ -8,27 +8,27 @@ pipeline {
     stages {
         /*stage('Sonarqube operations') {
             steps {
-                bat 'mvn sonar:sonar'
+                sh 'mvn sonar:sonar'
             }
         }*/
         stage('Testing Stage') {
             steps {
-                bat 'mvn test'
+                sh 'mvn test'
             }
         }
         stage('Install Stage') {
             steps {
-                bat 'mvn install'
+                sh 'mvn install'
             }
         }
         stage('Compile Stage') {
             steps {
-                bat 'mvn compile'
+                sh 'mvn compile'
             }
         }
         stage('Package Stage') {
             steps {
-                bat 'mvn package'
+                sh 'mvn package'
             }
         }
     }
