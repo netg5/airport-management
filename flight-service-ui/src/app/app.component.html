@@ -1,8 +1,0 @@
-<h1>Blog Posts</h1>
-<div *ngIf="undefined === restItems">Loading...</div>
-<div *ngIf="undefined !== restItems">
-  <ul>
-    <li *ngFor="let post of restItems['content']" [innerHTML]="post.title">
-    </li>
-  </ul>
-</div>
