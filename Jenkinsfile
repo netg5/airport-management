@@ -19,7 +19,7 @@ pipeline {
         }
         stage('Testing') {
             steps {
-                echo '-=- execution with tests -=-'
+                echo '-=- execute unit tests -=-'
                 sh 'mvn test'
             }
         }
