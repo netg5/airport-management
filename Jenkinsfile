@@ -13,21 +13,25 @@ pipeline {
         }*/
         stage('Compilation') {
             steps {
+                echo '-=- compiling project -=-'
                 sh 'mvn clean compile'
             }
         }
         stage('Testing') {
             steps {
+                echo '-=- execution with tests -=-'
                 sh 'mvn test'
             }
         }
         stage('Installation') {
             steps {
+                echo '-=- installing project -=-'
                 sh 'mvn clean install -DskipTests'
             }
         }
         stage('Packaging') {
             steps {
+                echo '-=- packaging project -=-'
                 sh 'mvn package -DskipTests'
             }
         }
