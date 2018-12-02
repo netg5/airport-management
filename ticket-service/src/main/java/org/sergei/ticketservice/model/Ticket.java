@@ -3,8 +3,9 @@ package org.sergei.ticketservice.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.Immutable;
 import org.springframework.hateoas.ResourceSupport;
 
@@ -23,9 +24,10 @@ import java.io.Serializable;
  * </pre>
  */
 @ApiModel(value = "Ticket", description = "Ticket model")
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 /*@SqlResultSetMapping(
         name = "ticketDetailsView",
         entities = @EntityResult(
