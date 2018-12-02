@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.sergei.ticketservice.model.Ticket;
 import org.sergei.ticketservice.repository.TicketRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resources;
@@ -29,6 +31,8 @@ import java.util.List;
 @RequestMapping(value = "/v1/tickets", produces = "application/json")
 public class TicketController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(TicketController.class);
+
     @Autowired
     private TicketRepository ticketRepository;
 
@@ -37,6 +41,10 @@ public class TicketController {
     public ResponseEntity<Resources<Ticket>> getAllForCustomer(@ApiParam(value = "Customer ID whose ticket should be found", required = true)
                                                                @RequestParam("customerId") Long customerId) {
         List<Ticket> ticketList = ticketRepository.findAllByCustomerId(customerId);
+        ticketList.forEach(
+                ticket ->
+                        LOGGER.info(ticket.getAircraftName())
+        );
         Resources<Ticket> resources = new Resources<>(ticketList);
         String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
         resources.add(new Link(uriString, "self"));

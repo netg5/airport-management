@@ -51,8 +51,8 @@ import java.io.Serializable;
 public class Ticket extends ResourceSupport implements Serializable {
 
     private static final long serialVersionUID = 1L;
-/*
-    @Id
+
+    /*@Id
     private Long ticketId;*/
 
     @JsonIgnore
