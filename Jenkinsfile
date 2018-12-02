@@ -11,24 +11,24 @@ pipeline {
                 sh 'mvn sonar:sonar'
             }
         }*/
-        stage('Testing Stage') {
+        stage('Compilation') {
             steps {
-                sh 'mvn -X test'
+                sh 'mvn clean compile'
             }
         }
-        stage('Install Stage') {
+        stage('Testing') {
             steps {
-                sh 'mvn install'
+                sh 'mvn test'
             }
         }
-        stage('Compile Stage') {
+        stage('Installation') {
             steps {
-                sh 'mvn compile'
+                sh 'mvn clean install -DskipTests'
             }
         }
-        stage('Package Stage') {
+        stage('Packaging') {
             steps {
-                sh 'mvn package'
+                sh 'mvn package -DskipTests'
             }
         }
     }
