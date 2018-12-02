@@ -1,10 +1,7 @@
-server:
-  port: 8080
 spring:
-  application:
-    name: zuul-gateway
   cloud:
     config:
+      name: zuul-gateway
       uri: http://localhost:8079
       enabled: true
       discovery:

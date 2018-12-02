@@ -1,12 +1,7 @@
-server:
-  port: 8083
-  servlet:
-    context-path: /flight-api
 spring:
-  application:
-    name: flight-service
   cloud:
     config:
+      name: flight-service
       uri: http://localhost:8079
       enabled: true
       discovery:

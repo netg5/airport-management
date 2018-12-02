@@ -1,12 +1,7 @@
-server:
-  port: 8085
-  servlet:
-    context-path: /docs
 spring:
-  application:
-    name: doc-service
   cloud:
     config:
+      name: doc-service
       uri: http://localhost:8079
       enabled: true
       discovery:

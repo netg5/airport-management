@@ -1,12 +1,7 @@
-server:
-  port: 8086
-  servlet:
-    context-path: /ticket-api
 spring:
-  application:
-    name: ticket-service
   cloud:
     config:
+      name: ticket-service
       uri: http://localhost:8079
       enabled: true
       discovery:

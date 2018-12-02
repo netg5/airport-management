@@ -1,12 +1,7 @@
-server:
-  port: 8082
-  servlet:
-    context-path: /auth-api
 spring:
-  application:
-    name: auth-service
   cloud:
     config:
+      name: auth-service
       uri: http://localhost:8079
       enabled: true
       discovery:
