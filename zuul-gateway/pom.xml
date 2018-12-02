@@ -45,13 +45,6 @@
             <artifactId>springfox-swagger-ui</artifactId>
             <version>${io.swagger-version}</version>
         </dependency>
-
-        <!--Database connector driver-->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <scope>runtime</scope>
-        </dependency>
     </dependencies>
 
 </project>
