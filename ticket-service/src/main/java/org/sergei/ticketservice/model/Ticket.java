@@ -15,7 +15,8 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
- * @author Sergei Visotsky, 2018
+ * @author Sergei Visotsky
+ * @since 11/27/2018
  *
  * <pre>
  *     Takes date from ticket_view located in MySQL server

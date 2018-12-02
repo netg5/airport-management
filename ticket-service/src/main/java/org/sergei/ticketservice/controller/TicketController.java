@@ -21,7 +21,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.util.List;
 
 /**
- * @author Sergei Visotsky, 2018
+ * @author Sergei Visotsky
+ * @since 11/27/2018
  */
 @Api(
         value = "/ticket-api/v1/tickets",

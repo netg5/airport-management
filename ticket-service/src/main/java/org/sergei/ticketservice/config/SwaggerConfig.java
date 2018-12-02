@@ -23,7 +23,8 @@ import java.util.List;
 import static org.springframework.security.oauth2.provider.token.AccessTokenConverter.CLIENT_ID;
 
 /**
- * @author Sergei Visotsky, 2018
+ * @author Sergei Visotsky
+ * @since 11/27/2018
  */
 @Configuration
 @EnableSwagger2
