@@ -1,12 +1,9 @@
 package org.sergei.flightservice.controller;
 
 import org.json.JSONObject;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sergei.flightservice.test.config.WebSecurityConfig;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,7 +22,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  *
  * @author Sergei Visotsky, 2018
  */
-@Ignore
 @RunWith(SpringRunner.class)
 @SpringBootTest(properties = {"spring.cloud.config.enabled=false", "spring.cloud.config.discovery.enabled=false"})
 @AutoConfigureMockMvc
@@ -34,14 +30,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 //@EntityScan(basePackages = "org.sergei.flightservice.model")
 public class CustomerControllerTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CustomerControllerTest.class);
-
     /*@Autowired
     @Qualifier("customerService")
     private CustomerService customerService;*/
 
     @Autowired
     private MockMvc mvc;
+
+    @Test
+    public void endpointAccessibilityTest() throws Exception {
+        mvc.perform(
+                get("/v1/customers")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)).andExpect(status().isOk());
+    }
 
     @Test
     public void getAllCustomers() throws Exception {
@@ -53,7 +54,7 @@ public class CustomerControllerTest {
                 .put("lastName", "lastName")
                 .put("age", "age");
         mvc.perform(
-                get("http://localhost:8083/flight-api/v1/customers")
+                get("/v1/customers")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .content(jsonObject.toString()))
                 .andExpect(status().isOk())

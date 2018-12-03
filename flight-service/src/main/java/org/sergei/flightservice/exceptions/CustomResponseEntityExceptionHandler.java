@@ -21,15 +21,6 @@ import java.util.Date;
 @RestController
 public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(RecordNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ResponseBody
-    protected final ResponseEntity<ErrorDetailsDTO> handleNoRecordFoundException(RecordNotFoundException e,
-                                                                                 WebRequest request) {
-        ErrorDetailsDTO errorDetails = new ErrorDetailsDTO(new Date(), e.getMessage(), request.getDescription(false));
-        return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
-    }
-
     @ExceptionHandler(ResourceNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
