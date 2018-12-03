@@ -6,11 +6,6 @@ pipeline {
     }
 
     stages {
-        /*stage('Sonarqube operations') {
-            steps {
-                sh 'mvn sonar:sonar'
-            }
-        }*/
         stage('Compilation') {
             steps {
                 echo '-=- compiling project -=-'
