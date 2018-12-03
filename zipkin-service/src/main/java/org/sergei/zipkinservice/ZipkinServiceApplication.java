@@ -7,6 +7,7 @@ import zipkin2.server.internal.EnableZipkinServer;
 
 @SpringBootApplication
 @EnableDiscoveryClient
+@EnableZipkinServer
 public class ZipkinServiceApplication {
 
     public static void main(String[] args) {

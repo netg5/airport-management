@@ -1,6 +1,6 @@
 FROM java:8
 
-ADD ./target/test-resources-0.0.1-SNAPSHOT.jar /app/
-CMD ["java", "-Xmx200m", "-jar", "/app/test-resources-0.0.1-SNAPSHOT.jar"]
+ADD ./target/service-resource-1.0.0.jar /app/
+CMD ["java", "-Xmx200m", "-jar", "/app/service-resource-1.0.0.jar"]
 
 EXPOSE 8084
