@@ -20,7 +20,7 @@ import java.io.Serializable;
  * @since 11/27/2018
  *
  * <pre>
- *     Takes date from ticket_view located in MySQL server
+ *     Takes data from ticket_view located in MySQL server
  * </pre>
  */
 @ApiModel(value = "Ticket", description = "Ticket model")
@@ -28,26 +28,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Getter
 @Setter
-/*@SqlResultSetMapping(
-        name = "ticketDetailsView",
-        entities = @EntityResult(
-                entityClass = Ticket.class,
-                fields = {
-                        @FieldResult(name = "fistName", column = "first_name"),
-                        @FieldResult(name = "lastName", column = "last_name"),
-                        @FieldResult(name = "routeId", column = "route_id"),
-                        @FieldResult(name = "place", column = "place"),
-                        @FieldResult(name = "distance", column = "distance"),
-                        @FieldResult(name = "price", column = "price"),
-                        @FieldResult(name = "aircraftName", column = "aircraft_name")
-                }
-        )
-)
-@NamedNativeQuery(
-        name = "findAllByCustomerId",
-        query = "SELECT * FROM ticket_view t WHERE t.customer_id = :customerId",
-        resultSetMapping = "ticketDetailsView"
-)*/
 @Entity
 @Immutable
 @Table(name = "ticket_view")
@@ -55,11 +35,7 @@ public class Ticket extends ResourceSupport implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    /*@Id
-    private Long ticketId;*/
-
     @JsonIgnore
-    @Id
     @Column(name = "customer_id", updatable = false, nullable = false)
     private Long customerId;
 
@@ -69,6 +45,7 @@ public class Ticket extends ResourceSupport implements Serializable {
     @Column(name = "last_name")
     private String lastName;
 
+    @Id
     @Column(name = "route_id")
     private Long routeId;
 
