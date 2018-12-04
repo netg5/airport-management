@@ -4,9 +4,12 @@
 ## Services
 * config-service - microserivce which makes calls to tht repository where all configurations are stored - [https://github.com/sergeivisotsky/flight-reservation-config](https://github.com/sergeivisotsky/flight-reservation-config)
 * auth-service - microservice responsible for authentication and authorization
-* eureka-service - microservice registry where the list of all microservices can be seen
+* eureka-service - microservice registry where of all microservices can be observed
+* doc-service - Swagger documentation service
+* zipkin-service - trace of microservices
 * zuul-gateway - entry point of the all microservices
 * flight-service - main microservice which allows to reserve flight
+* ticket-service - service where all customer tickets can be seen
 
 ## Docker commands
 * To build docker image command `docker build -t flight-service .` should be performed
