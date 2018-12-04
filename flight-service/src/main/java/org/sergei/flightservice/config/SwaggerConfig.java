@@ -2,6 +2,7 @@ package org.sergei.flightservice.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -30,19 +31,19 @@ public class SwaggerConfig {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SwaggerConfig.class);
 
-    //    @Value("${security.oauth2.accessTokenUri}")
-    private static final String AUTH_SERVER = "http://localhost:8080/auth-api/oauth/token";
+    @Value("${security.oauth2.accessTokenUri}")
+    private String authServer;
 
-    //    @Value("${spring.getaway.port}")
-    private static final int PORT = 8080;
+    @Value("${spring.getaway.port}")
+    private int port;
 
     private static final String CLIENT_SECRET = "client_secret";
 
     @Bean
     public Docket api() {
-        LOGGER.debug("Server port id: {}", PORT);
+        LOGGER.debug("Server port id: {}", port);
         return new Docket(DocumentationType.SWAGGER_2)
-                .host("localhost:" + PORT)
+                .host("localhost:" + port)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("org.sergei.flightservice.controller"))
                 .paths(PathSelectors.any())
@@ -80,8 +81,8 @@ public class SwaggerConfig {
         authorizationScopeList.add(new AuthorizationScope("write", "write all"));
 
         List<GrantType> grantTypes = new ArrayList<>();
-        LOGGER.debug("OAuth2 token URI is: {}", AUTH_SERVER);
-        GrantType grantType = new ResourceOwnerPasswordCredentialsGrant(AUTH_SERVER);
+        LOGGER.debug("OAuth2 token URI is: {}", authServer);
+        GrantType grantType = new ResourceOwnerPasswordCredentialsGrant(authServer);
         grantTypes.add(grantType);
 
         return new OAuth("oauth2schema", authorizationScopeList, grantTypes);
