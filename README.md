@@ -14,7 +14,7 @@
 
 ## Authentication
 To access any resource authentication should be performed. I this case access token should be obtained.
-* URL: `http://localhost:8762/auth-api/oauth/token`
+* URL: `http://localhost:8080/auth-api/oauth/token`
 * Content-Type: `application/x-www-form-urlencoded`
 * ContentOptions: `username=USERNAME&password=PASSWORD&grant_type=GRANT_TYPE`
 
@@ -31,10 +31,10 @@ _response_
 ```
 As there is used JWT access and refresh tokens are pretty long.
 
-The next step is get an access to the resources. Example for the flight-api: `http://localhost:8762/flight-api/v1/customers?access_token=ACCESS_TOKEN`
+The next step is get an access to the resources. Example for the flight-api: `http://localhost:8080/flight-api/v1/customers?access_token=ACCESS_TOKEN`
 
 In case if access token is expired refresh token should be used to renew access token.
-* URL: `http://localhost:8762/auth-api/oauth/token`
+* URL: `http://localhost:8080/auth-api/oauth/token`
 * Content-Type: `application/x-www-form-urlencoded`
 * ContentOptions: `grant_type=refresh_token&refresh_token=REFRESH_TOKEN`
 
