@@ -4,13 +4,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sergei.flightservice.model.Aircraft;
 import org.sergei.flightservice.model.Route;
-import org.sergei.flightservice.test.config.WebSecurityConfig;
+import org.sergei.flightservice.test.config.SecurityConfigutationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -30,7 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 @RunWith(SpringRunner.class)
 @DataJpaTest(properties = {"spring.cloud.config.enabled=false", "spring.cloud.config.discovery.enabled=false"})
-@ContextConfiguration(classes = {WebSecurityConfig.class})
+@ContextConfiguration(classes = {SecurityConfigutationTest.class})
 @EnableJpaRepositories(basePackages = "org.sergei.flightservice.repository")
 @EntityScan(basePackages = "org.sergei.flightservice.model")
 public class RouteRepositoryTest {

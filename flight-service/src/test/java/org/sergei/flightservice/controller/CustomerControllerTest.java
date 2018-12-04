@@ -4,8 +4,9 @@ import org.json.JSONObject;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.sergei.flightservice.test.config.TestAppConfig;
-import org.sergei.flightservice.test.config.WebSecurityConfig;
+import org.sergei.flightservice.FlightServiceApplication;
+import org.sergei.flightservice.test.config.AppConfigTest;
+import org.sergei.flightservice.test.config.SecurityConfigutationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,9 +28,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @Ignore
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = CustomerController.class, properties = {"spring.cloud.config.enabled=false", "spring.cloud.config.discovery.enabled=false"})
+@SpringBootTest(classes = FlightServiceApplication.class, properties = {"spring.cloud.config.enabled=false", "spring.cloud.config.discovery.enabled=false"})
 @AutoConfigureMockMvc
-@ContextConfiguration(classes = {TestAppConfig.class, WebSecurityConfig.class})
+@ContextConfiguration(classes = {AppConfigTest.class, SecurityConfigutationTest.class})
 //@EnableJpaRepositories(basePackages = "org.sergei.flightservice.repository")
 //@EntityScan(basePackages = "org.sergei.flightservice.model")
 public class CustomerControllerTest {
