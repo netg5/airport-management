@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author Sergei Visotsky
  * @since 11/24/2018
  */
-@Test
+@Ignore
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = FlightServiceApplication.class, properties = {"spring.cloud.config.enabled=false", "spring.cloud.config.discovery.enabled=false"})
 @AutoConfigureMockMvc
