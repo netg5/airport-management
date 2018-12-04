@@ -29,7 +29,7 @@ public class ServiceEndpointTest {
     public void getGreeting() throws Exception {
         JSONObject jsonObject = new JSONObject()
                 .put("content", "content");
-        mockMvc.perform(get("http://localhost:8084/greeting")
+        mockMvc.perform(get("/greeting")
                 .contentType("application/json")
                 .content(jsonObject.toString()))
                 .andExpect(status().isOk())

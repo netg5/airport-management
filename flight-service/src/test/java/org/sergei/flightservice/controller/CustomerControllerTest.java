@@ -1,10 +1,14 @@
 package org.sergei.flightservice.controller;
 
 import org.json.JSONObject;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.sergei.flightservice.service.CustomerService;
+import org.sergei.flightservice.test.config.TestAppConfig;
 import org.sergei.flightservice.test.config.WebSecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -20,19 +24,21 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * Test for {@link CustomerController}
  *
- * @author Sergei Visotsky, 2018
+ * @author Sergei Visotsky
+ * @since 11/24/2018
  */
+@Ignore
 @RunWith(SpringRunner.class)
 @SpringBootTest(properties = {"spring.cloud.config.enabled=false", "spring.cloud.config.discovery.enabled=false"})
 @AutoConfigureMockMvc
-@ContextConfiguration(classes = {WebSecurityConfig.class})
+@ContextConfiguration(classes = {TestAppConfig.class, WebSecurityConfig.class})
 //@EnableJpaRepositories(basePackages = "org.sergei.flightservice.repository")
 //@EntityScan(basePackages = "org.sergei.flightservice.model")
 public class CustomerControllerTest {
 
-    /*@Autowired
+    @Autowired
     @Qualifier("customerService")
-    private CustomerService customerService;*/
+    private CustomerService customerService;
 
     @Autowired
     private MockMvc mvc;
