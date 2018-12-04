@@ -13,12 +13,12 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class TestAppConfig {
-    /*private AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
+    private AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
 
     @Bean
     public void registerCustomerService() {
         ctx.register(CustomerController.class);
         ctx.register(CustomerService.class);
         ctx.register(CustomerRepository.class);
-    }*/
+    }
 }
