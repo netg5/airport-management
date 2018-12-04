@@ -3,7 +3,8 @@ package org.sergei.ticketservice.model;
 import java.util.Date;
 
 /**
- * @author Sergei Visotsky, 2018
+ * @author Sergei Visotsky
+ * @since 11/4/2018
  */
 public class ErrorDetails {
     private Date timestamp;
