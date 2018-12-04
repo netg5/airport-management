@@ -1,6 +1,5 @@
 package org.sergei.flightservice.exceptions;
 
-import org.sergei.flightservice.dto.ApiErrorDTO;
 import org.sergei.flightservice.dto.ErrorDetailsDTO;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -35,10 +34,8 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     @Override
     protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers,
                                                              HttpStatus status, WebRequest request) {
-        String message = "Internal server error";
-        ApiErrorDTO apiErrorDTO = new ApiErrorDTO(HttpStatus.INTERNAL_SERVER_ERROR, ex.getLocalizedMessage(), message);
-
-        return new ResponseEntity<>(apiErrorDTO, new HttpHeaders(), apiErrorDTO.getStatus());
+        ErrorDetailsDTO errorDetails = new ErrorDetailsDTO(new Date(), ex.getMessage(), request.getDescription(false));
+        return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ResponseStatus(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
@@ -48,9 +45,8 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
                                                                      HttpHeaders headers, HttpStatus status,
                                                                      WebRequest request) {
         String message = "Media type is not supported";
-        ApiErrorDTO apiErrorDTO = new ApiErrorDTO(HttpStatus.UNSUPPORTED_MEDIA_TYPE, ex.getLocalizedMessage(), message);
-
-        return new ResponseEntity<>(apiErrorDTO, new HttpHeaders(), apiErrorDTO.getStatus());
+        ErrorDetailsDTO errorDetails = new ErrorDetailsDTO(new Date(), ex.getMessage(), request.getDescription(false));
+        return new ResponseEntity<>(errorDetails, HttpStatus.UNSUPPORTED_MEDIA_TYPE);
     }
 
     @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
@@ -59,10 +55,8 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     protected ResponseEntity<Object> handleHttpMediaTypeNotAcceptable(HttpMediaTypeNotAcceptableException ex,
                                                                       HttpHeaders headers, HttpStatus status,
                                                                       WebRequest request) {
-        String message = "Media type is not acceptable";
-        ApiErrorDTO apiErrorDTO = new ApiErrorDTO(HttpStatus.NOT_ACCEPTABLE, ex.getLocalizedMessage(), message);
-
-        return new ResponseEntity<>(apiErrorDTO, new HttpHeaders(), apiErrorDTO.getStatus());
+        ErrorDetailsDTO errorDetails = new ErrorDetailsDTO(new Date(), ex.getMessage(), request.getDescription(false));
+        return new ResponseEntity<>(errorDetails, HttpStatus.NOT_ACCEPTABLE);
     }
 
     @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
@@ -71,9 +65,7 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
                                                                   HttpHeaders headers, HttpStatus status,
                                                                   WebRequest request) {
-        String message = "Method argument is not valid";
-        ApiErrorDTO apiErrorDTO = new ApiErrorDTO(HttpStatus.NOT_ACCEPTABLE, ex.getLocalizedMessage(), message);
-
-        return new ResponseEntity<>(apiErrorDTO, new HttpHeaders(), apiErrorDTO.getStatus());
+        ErrorDetailsDTO errorDetails = new ErrorDetailsDTO(new Date(), ex.getMessage(), request.getDescription(false));
+        return new ResponseEntity<>(errorDetails, HttpStatus.NOT_ACCEPTABLE);
     }
 }
