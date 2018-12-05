@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author Sergei Visotsky
@@ -14,8 +13,9 @@ import java.util.Optional;
  */
 @Repository
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
-    List<Ticket> findAllByCustomerId(Long customerId);
 
-    @Query("SELECT tv FROM Ticket tv WHERE tv.customerId = ?1 AND tv.place = ?2 OR tv.distance = ?3")
-    Optional<Ticket> findByCustomerIdPlace(Long customerId, String place, Double distance);
+    @Query("SELECT t FROM Ticket t WHERE t.customerId = ?1 " +
+            "AND (?2 IS NULL OR t.place = ?2) " +
+            "AND (?3 IS NULL OR t.distance = ?3)")
+    List<Ticket> findByCustomerIdPlaceOrDistance(Long customerId, String place, Double distance);
 }
