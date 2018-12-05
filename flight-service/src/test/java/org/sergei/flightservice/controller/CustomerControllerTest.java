@@ -11,14 +11,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.oauth2.common.util.JacksonJsonParser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * Test for {@link CustomerController}
@@ -48,8 +53,10 @@ public class CustomerControllerTest {
 
     @Test
     public void endpointAccessibilityTest() throws Exception {
+        String accessToken = obtainAccessToken("admin", "123456");
         mvc.perform(
                 get("/v1/customers")
+                        .header("Authorization", "Bearer " + accessToken)
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)).andExpect(status().isOk());
     }
 
@@ -70,5 +77,27 @@ public class CustomerControllerTest {
                 .andExpect(jsonPath("$.length()").value(4))
                 .andExpect(jsonPath("$..firstName").value(containsInAnyOrder("TestName")))
                 .andExpect(jsonPath("$..lastName").value(containsInAnyOrder("Test last name")));
+    }
+
+    private String obtainAccessToken(String username, String password) throws Exception {
+
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("grant_type", "password");
+//        params.add("client_id", "trusted-client");
+        params.add("username", username);
+        params.add("password", password);
+
+        ResultActions result = mvc.perform(
+                post("http://localhost:8080/auth-api/oauth/token")
+                        .params(params)
+                        .with(httpBasic("trusted-client", "trusted-client-secret"))
+                        .accept(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
+
+        String resultString = result.andReturn().getResponse().getContentAsString();
+
+        JacksonJsonParser jsonParser = new JacksonJsonParser();
+        return jsonParser.parseMap(resultString).get("access_token").toString();
     }
 }
