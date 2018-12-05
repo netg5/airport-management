@@ -1,10 +1,5 @@
 package org.sergei.flightservice.test.config;
 
-import org.sergei.flightservice.controller.CustomerController;
-import org.sergei.flightservice.repository.CustomerRepository;
-import org.sergei.flightservice.service.CustomerService;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
