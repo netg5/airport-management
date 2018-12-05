@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sergei.flightservice.FlightServiceApplication;
 import org.sergei.flightservice.test.config.AppConfigTest;
+import org.sergei.flightservice.test.config.ResourceServerConfiguration;
 import org.sergei.flightservice.test.config.WebSecurityConfigTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -40,7 +41,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         "spring.getaway.port=8080"
 })
 @AutoConfigureMockMvc
-@ContextConfiguration(classes = {AppConfigTest.class, WebSecurityConfigTest.class})
+@ContextConfiguration(classes = {AppConfigTest.class, ResourceServerConfiguration.class, WebSecurityConfigTest.class})
 //@EnableJpaRepositories(basePackages = "org.sergei.flightservice.repository")
 //@EntityScan(basePackages = "org.sergei.flightservice.model")
 public class CustomerControllerTest {
@@ -56,7 +57,7 @@ public class CustomerControllerTest {
         String accessToken = obtainAccessToken("admin", "123456");
         mvc.perform(
                 get("/v1/customers")
-                        .header("Authorization", "Bearer " + accessToken)
+//                        .header("Authorization", "Bearer " + accessToken)
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)).andExpect(status().isOk());
     }
 
