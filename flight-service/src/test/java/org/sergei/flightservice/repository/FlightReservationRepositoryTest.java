@@ -7,7 +7,7 @@ import org.sergei.flightservice.model.Aircraft;
 import org.sergei.flightservice.model.Customer;
 import org.sergei.flightservice.model.FlightReservation;
 import org.sergei.flightservice.model.Route;
-import org.sergei.flightservice.test.config.ResourceServerConfiguration;
+import org.sergei.flightservice.test.config.WebSecurityConfigTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -36,7 +36,7 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 @Ignore
 @RunWith(SpringRunner.class)
 @DataJpaTest(properties = {"spring.cloud.config.enabled=false", "spring.cloud.config.discovery.enabled=false"})
-@ContextConfiguration(classes = {ResourceServerConfiguration.class})
+@ContextConfiguration(classes = {WebSecurityConfigTest.class})
 @EnableJpaRepositories(basePackages = "org.sergei.flightservice.repository")
 @EntityScan(basePackages = "org.sergei.flightservice.model")
 @SuppressWarnings("all")
