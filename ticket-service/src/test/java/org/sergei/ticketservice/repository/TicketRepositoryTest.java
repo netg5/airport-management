@@ -48,4 +48,8 @@ public class TicketRepositoryTest {
         List<Ticket> ticketList = ticketRepository.findByCustomerIdPlaceOrDistance(1L, "New-York", 562.0);
         assertEquals(1, ticketList.size());
     }
+
+    public void setupDataSet() {
+
+    }
 }
