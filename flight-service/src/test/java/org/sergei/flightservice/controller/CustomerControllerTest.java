@@ -23,6 +23,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Collections;
 
+import static org.hamcrest.core.Is.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -72,6 +73,7 @@ public class CustomerControllerTest {
                 get(BASE_URL)
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("href", is(BASE_URL)))
                 .andExpect(jsonPath("$.length()").value(4))
                 .andExpect(jsonPath("$.customerId").isNotEmpty())
                 .andExpect(jsonPath("$..firstName").value("John"))
