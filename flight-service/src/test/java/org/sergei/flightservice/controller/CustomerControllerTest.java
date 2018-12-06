@@ -4,15 +4,16 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sergei.flightservice.FlightServiceApplication;
-import org.sergei.flightservice.dto.CustomerDTO;
 import org.sergei.flightservice.model.Customer;
-import org.sergei.flightservice.service.CustomerService;
+import org.sergei.flightservice.repository.CustomerRepository;
 import org.sergei.flightservice.test.config.AppConfigTest;
 import org.sergei.flightservice.test.config.ResourceServerConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -44,14 +45,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 })
 @AutoConfigureMockMvc
 @ContextConfiguration(classes = {AppConfigTest.class, ResourceServerConfiguration.class})
-//@EnableJpaRepositories(basePackages = "org.sergei.flightservice.repository")
-//@EntityScan(basePackages = "org.sergei.flightservice.model")
+@EnableJpaRepositories(basePackages = "org.sergei.flightservice.repository")
+@EntityScan(basePackages = "org.sergei.flightservice.model")
 public class CustomerControllerTest {
 
     private static final String BASE_URL = "/v1/customers";
 
     @MockBean
-    private CustomerService customerService;
+    private CustomerRepository customerRepository;
 
     @Autowired
     private MockMvc mvc;
@@ -68,7 +69,7 @@ public class CustomerControllerTest {
     @Ignore
     @Test
     public void getAllCustomers() throws Exception {
-        given(customerService.findAll()).willReturn((List<CustomerDTO>) customer);
+        given(customerRepository.findAll()).willReturn((List<Customer>) customer);
         final ResultActions result = mvc.perform(get(BASE_URL));
         result.andExpect(status().isOk());
         result

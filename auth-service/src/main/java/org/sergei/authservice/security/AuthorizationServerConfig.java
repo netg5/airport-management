@@ -1,6 +1,8 @@
 package org.sergei.authservice.security;
 
 import org.sergei.authservice.service.ApiUserDetailsService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +25,8 @@ import javax.sql.DataSource;
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(AuthorizationServerConfig.class);
 
     private final DataSource dataSource;
     private final AuthenticationManager authenticationManager;
@@ -49,6 +53,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     // All the clients are stored into the database
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+        LOGGER.debug("User management with encoded password");
         clients.jdbc(dataSource).passwordEncoder(passwordEncoder);
     }
 

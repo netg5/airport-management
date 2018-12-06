@@ -2,6 +2,8 @@ package org.sergei.authservice.security;
 
 import org.sergei.authservice.model.User;
 import org.sergei.authservice.service.ApiUserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
@@ -18,6 +20,8 @@ import java.util.Map;
 @Component
 public class OAuth2TokenEnhancer implements TokenEnhancer {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(AuthorizationServerConfig.class);
+
     @Autowired
     private ApiUserService apiUserService;
 
@@ -27,6 +31,7 @@ public class OAuth2TokenEnhancer implements TokenEnhancer {
         String username = oAuth2Authentication.getName();
 
         User user = apiUserService.findByUsername(username);
+        LOGGER.debug("Found user is: {}", user.toString());
         final Map<String, Object> additionalInfo = new HashMap<>();
         additionalInfo.put("username", user.getUsername());
         ((DefaultOAuth2AccessToken) oAuth2AccessToken).setAdditionalInformation(additionalInfo);
