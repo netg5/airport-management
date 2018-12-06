@@ -1,6 +1,5 @@
 package org.sergei.flightservice.service;
 
-import org.modelmapper.ModelMapper;
 import org.sergei.flightservice.exceptions.ResourceNotFoundException;
 import org.sergei.flightservice.model.Aircraft;
 import org.sergei.flightservice.repository.AircraftRepository;
@@ -16,13 +15,10 @@ import java.util.List;
 public class AircraftService {
 
     private static final String AIRCRAFT_NOT_FOUND = "Aircraft with this ID not found";
-
-    private final ModelMapper modelMapper;
     private final AircraftRepository aircraftRepository;
 
     @Autowired
-    public AircraftService(ModelMapper modelMapper, AircraftRepository aircraftRepository) {
-        this.modelMapper = modelMapper;
+    public AircraftService(AircraftRepository aircraftRepository) {
         this.aircraftRepository = aircraftRepository;
     }
 
