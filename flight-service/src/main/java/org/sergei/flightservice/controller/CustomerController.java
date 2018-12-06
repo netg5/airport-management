@@ -1,7 +1,7 @@
 package org.sergei.flightservice.controller;
 
 import io.swagger.annotations.*;
-import org.sergei.flightservice.dto.CustomerDTO;
+import org.sergei.flightservice.model.Customer;
 import org.sergei.flightservice.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
@@ -37,19 +37,19 @@ public class CustomerController {
             }
     )
     @GetMapping
-    public ResponseEntity<Resources<CustomerDTO>> getAllCustomers() {
-        List<CustomerDTO> customerDTOList = customerService.findAll();
-        customerDTOList.forEach(customerDTO -> {
+    public ResponseEntity<Resources<Customer>> getAllCustomers() {
+        List<Customer> customerList = customerService.findAll();
+        customerList.forEach(customer -> {
             Link link = ControllerLinkBuilder.linkTo(
                     ControllerLinkBuilder.methodOn(CustomerController.class)
-                            .getCustomerById(customerDTO.getCustomerId())).withSelfRel();
+                            .getCustomerById(customer.getCustomerId())).withSelfRel();
             Link reservationsLink = ControllerLinkBuilder.linkTo(
                     ControllerLinkBuilder.methodOn(FlightReservationController.class)
-                            .getAllForCustomer(customerDTO.getCustomerId())).withRel("reservations");
-            customerDTO.add(link);
-            customerDTO.add(reservationsLink);
+                            .getAllForCustomer(customer.getCustomerId())).withRel("reservations");
+            customer.add(link);
+            customer.add(reservationsLink);
         });
-        Resources<CustomerDTO> resources = new Resources<>(customerDTOList);
+        Resources<Customer> resources = new Resources<>(customerList);
         String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
         resources.add(new Link(uriString, "self"));
         return new ResponseEntity<>(resources, HttpStatus.OK);
@@ -57,23 +57,23 @@ public class CustomerController {
 
     @ApiOperation("Get customer by ID")
     @GetMapping("/{customerId}")
-    public ResponseEntity<CustomerDTO> getCustomerById(@ApiParam(value = "Customer ID which should be found", required = true)
-                                                       @PathVariable("customerId") Long customerId) {
-        CustomerDTO customerDTO = customerService.findOne(customerId);
+    public ResponseEntity<Customer> getCustomerById(@ApiParam(value = "Customer ID which should be found", required = true)
+                                                    @PathVariable("customerId") Long customerId) {
+        Customer customer = customerService.findOne(customerId);
         Link link = ControllerLinkBuilder.linkTo(CustomerController.class).withSelfRel();
         Link reservationsLink = ControllerLinkBuilder.linkTo(
                 ControllerLinkBuilder.methodOn(FlightReservationController.class)
                         .getAllForCustomer(customerId)).withRel("reservations");
-        customerDTO.add(link);
-        customerDTO.add(reservationsLink);
-        return new ResponseEntity<>(customerDTO, HttpStatus.OK);
+        customer.add(link);
+        customer.add(reservationsLink);
+        return new ResponseEntity<>(customer, HttpStatus.OK);
     }
 
     @ApiOperation("Save customer")
     @PostMapping(consumes = "application/json")
-    public ResponseEntity<CustomerDTO> saveCustomer(@ApiParam(value = "Saved customer", required = true)
-                                                    @RequestBody CustomerDTO customerDTO) {
-        return new ResponseEntity<>(customerService.save(customerDTO), HttpStatus.CREATED);
+    public ResponseEntity<Customer> saveCustomer(@ApiParam(value = "Saved customer", required = true)
+                                                 @RequestBody Customer customer) {
+        return new ResponseEntity<>(customerService.save(customer), HttpStatus.CREATED);
     }
 
     @ApiOperation("Update customer data")
@@ -83,11 +83,11 @@ public class CustomerController {
             }
     )
     @PutMapping(value = "/{customerId}", consumes = "application/json")
-    public ResponseEntity<CustomerDTO> updateCustomer(@ApiParam(value = "Customer ID which should be updated", required = true)
-                                                      @PathVariable("customerId") Long customerId,
-                                                      @ApiParam(value = "Updated customer", required = true)
-                                                      @RequestBody CustomerDTO customerDTO) {
-        return new ResponseEntity<>(customerService.update(customerId, customerDTO), HttpStatus.OK);
+    public ResponseEntity<Customer> updateCustomer(@ApiParam(value = "Customer ID which should be updated", required = true)
+                                                   @PathVariable("customerId") Long customerId,
+                                                   @ApiParam(value = "Updated customer", required = true)
+                                                   @RequestBody Customer customer) {
+        return new ResponseEntity<>(customerService.update(customerId, customer), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Delete customer data", notes = "Operation allowed for ADMIN only")
@@ -98,8 +98,8 @@ public class CustomerController {
     )
     @DeleteMapping(value = "/{customerId}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<CustomerDTO> deleteCustomer(@ApiParam(value = "Customer ID which should be deleted", required = true)
-                                                      @PathVariable("customerId") Long customerId) {
+    public ResponseEntity<Customer> deleteCustomer(@ApiParam(value = "Customer ID which should be deleted", required = true)
+                                                   @PathVariable("customerId") Long customerId) {
         return new ResponseEntity<>(customerService.delete(customerId), HttpStatus.NO_CONTENT);
     }
 }

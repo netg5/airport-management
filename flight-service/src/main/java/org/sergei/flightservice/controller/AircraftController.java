@@ -1,7 +1,7 @@
 package org.sergei.flightservice.controller;
 
 import io.swagger.annotations.*;
-import org.sergei.flightservice.dto.AircraftDTO;
+import org.sergei.flightservice.model.Aircraft;
 import org.sergei.flightservice.service.AircraftService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
@@ -32,15 +32,15 @@ public class AircraftController {
 
     @ApiOperation(value = "Get all existing aircrafts")
     @GetMapping
-    public ResponseEntity<Resources<AircraftDTO>> getAllAircraft() {
-        List<AircraftDTO> aircrafts = aircraftService.findAll();
+    public ResponseEntity<Resources<Aircraft>> getAllAircraft() {
+        List<Aircraft> aircrafts = aircraftService.findAll();
         aircrafts.forEach(aircraft -> {
             Link link = ControllerLinkBuilder.linkTo(
                     ControllerLinkBuilder.methodOn(AircraftController.class)
                             .getAircraftById(aircraft.getAircraftId())).withSelfRel();
             aircraft.add(link);
         });
-        Resources<AircraftDTO> resources = new Resources<>(aircrafts);
+        Resources<Aircraft> resources = new Resources<>(aircrafts);
         String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
         resources.add(new Link(uriString, "self"));
         return new ResponseEntity<>(resources, HttpStatus.OK);
@@ -53,20 +53,20 @@ public class AircraftController {
             }
     )
     @GetMapping("/{aircraftId}")
-    public ResponseEntity<AircraftDTO> getAircraftById(@ApiParam(value = "Aircraft ID which should be found", required = true)
-                                                       @PathVariable("aircraftId") Long aircraftId) {
-        AircraftDTO aircraftDTO = aircraftService.findOne(aircraftId);
+    public ResponseEntity<Aircraft> getAircraftById(@ApiParam(value = "Aircraft ID which should be found", required = true)
+                                                    @PathVariable("aircraftId") Long aircraftId) {
+        Aircraft aircraft = aircraftService.findOne(aircraftId);
         Link link = ControllerLinkBuilder.linkTo(AircraftController.class).withSelfRel();
-        aircraftDTO.add(link);
-        return new ResponseEntity<>(aircraftDTO, HttpStatus.OK);
+        aircraft.add(link);
+        return new ResponseEntity<>(aircraft, HttpStatus.OK);
     }
 
     @ApiOperation(value = "Save aircraft", notes = "Operation allowed for ADMIN only")
     @PostMapping(consumes = "application/json")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<AircraftDTO> saveAircraft(@ApiParam(value = "Aircraft which should be saved", required = true)
-                                                    @RequestBody AircraftDTO aircraftDTO) {
-        return new ResponseEntity<>(aircraftService.save(aircraftDTO), HttpStatus.CREATED);
+    public ResponseEntity<Aircraft> saveAircraft(@ApiParam(value = "Aircraft which should be saved", required = true)
+                                                 @RequestBody Aircraft aircraft) {
+        return new ResponseEntity<>(aircraftService.save(aircraft), HttpStatus.CREATED);
     }
 
     @ApiOperation(value = "Update aircraft data", notes = "Operation allowed for ADMIN only")
@@ -77,11 +77,11 @@ public class AircraftController {
     )
     @PutMapping(value = "/{aircraftId}", consumes = "application/json")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<AircraftDTO> updateAircraft(@ApiParam(value = "Aircraft ID which should be updated", required = true)
-                                                      @PathVariable("aircraftId") Long aircraftId,
-                                                      @ApiParam(value = "Update aircracft", required = true)
-                                                      @RequestBody AircraftDTO customerDTO) {
-        return new ResponseEntity<>(aircraftService.update(aircraftId, customerDTO), HttpStatus.OK);
+    public ResponseEntity<Aircraft> updateAircraft(@ApiParam(value = "Aircraft ID which should be updated", required = true)
+                                                   @PathVariable("aircraftId") Long aircraftId,
+                                                   @ApiParam(value = "Update aircracft", required = true)
+                                                   @RequestBody Aircraft aircraft) {
+        return new ResponseEntity<>(aircraftService.update(aircraftId, aircraft), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Delete aircraft", notes = "Operation allowed for ADMIN only")
@@ -92,8 +92,8 @@ public class AircraftController {
     )
     @DeleteMapping(value = "/{aircraftId}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<AircraftDTO> deleteAircraft(@ApiParam(value = "Aircraft ID which should be deleted", required = true)
-                                                      @PathVariable("aircraftId") Long aircraftId) {
+    public ResponseEntity<Aircraft> deleteAircraft(@ApiParam(value = "Aircraft ID which should be deleted", required = true)
+                                                   @PathVariable("aircraftId") Long aircraftId) {
         return new ResponseEntity<>(aircraftService.delete(aircraftId), HttpStatus.NO_CONTENT);
     }
 }

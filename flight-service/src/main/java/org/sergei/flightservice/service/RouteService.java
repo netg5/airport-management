@@ -1,7 +1,6 @@
 package org.sergei.flightservice.service;
 
 import org.modelmapper.ModelMapper;
-import org.sergei.flightservice.dto.AircraftDTO;
 import org.sergei.flightservice.dto.RouteDTO;
 import org.sergei.flightservice.dto.RouteExtendedDTO;
 import org.sergei.flightservice.exceptions.ResourceNotFoundException;
@@ -55,10 +54,9 @@ public class RouteService {
                 .orElseThrow(() ->
                         new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
                 );
-        AircraftDTO aircraftDTO = modelMapper.map(aircraft, AircraftDTO.class);
 
         // Set to the route extended DTO
-        routeExtendedDTO.setAircraftDTO(aircraftDTO);
+        routeExtendedDTO.setAircraft(aircraft);
         return routeExtendedDTO;
     }
 
@@ -77,8 +75,7 @@ public class RouteService {
                     .orElseThrow(() ->
                             new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
                     );
-            AircraftDTO aircraftDTO = modelMapper.map(aircraft, AircraftDTO.class);
-            routeExtendedDTO.setAircraftDTO(aircraftDTO);
+            routeExtendedDTO.setAircraft(aircraft);
             counter++;
         }
 

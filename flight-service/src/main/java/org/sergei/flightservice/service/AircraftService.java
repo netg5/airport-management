@@ -1,11 +1,9 @@
 package org.sergei.flightservice.service;
 
 import org.modelmapper.ModelMapper;
-import org.sergei.flightservice.dto.AircraftDTO;
 import org.sergei.flightservice.exceptions.ResourceNotFoundException;
 import org.sergei.flightservice.model.Aircraft;
 import org.sergei.flightservice.repository.AircraftRepository;
-import org.sergei.flightservice.utils.ObjectMapperUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,12 +32,11 @@ public class AircraftService {
      * @param aircraftId gets aircraft ID as parameter
      * @return aircraft DTO
      */
-    public AircraftDTO findOne(Long aircraftId) {
-        Aircraft aircraft = aircraftRepository.findById(aircraftId)
+    public Aircraft findOne(Long aircraftId) {
+        return aircraftRepository.findById(aircraftId)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
                 );
-        return modelMapper.map(aircraft, AircraftDTO.class);
     }
 
     /**
@@ -47,47 +44,45 @@ public class AircraftService {
      *
      * @return list of Aircraft DTO
      */
-    public List<AircraftDTO> findAll() {
-        List<Aircraft> aircraftList = aircraftRepository.findAll();
-        return ObjectMapperUtils.mapAll(aircraftList, AircraftDTO.class);
+    public List<Aircraft> findAll() {
+        return aircraftRepository.findAll();
     }
 
     /**
      * Save aircraft
      *
-     * @param aircraftDTO get aircraft DTO as a parameter
+     * @param aircraft get aircraft DTO as a parameter
      * @return Aircraft DTO
      */
-    public AircraftDTO save(AircraftDTO aircraftDTO) {
-        Aircraft aircraft = modelMapper.map(aircraftDTO, Aircraft.class);
+    public Aircraft save(Aircraft aircraft) {
         aircraftRepository.save(aircraft);
-        return aircraftDTO;
+        return aircraft;
     }
 
     /**
      * Update aicraft by ID
      *
-     * @param aircraftId  get aircraft ID as a parameter
-     * @param aircraftDTO get aircraft DTO as a parameter
+     * @param aircraftId get aircraft ID as a parameter
+     * @param aircraft   get aircraft DTO as a parameter
      * @return aircraft DTO
      */
-    public AircraftDTO update(Long aircraftId, AircraftDTO aircraftDTO) {
-        aircraftDTO.setAircraftId(aircraftId);
+    public Aircraft update(Long aircraftId, Aircraft aircraft) {
+        aircraft.setAircraftId(aircraftId);
 
-        Aircraft aircraft = aircraftRepository.findById(aircraftId)
+        Aircraft foundAircraft = aircraftRepository.findById(aircraftId)
                 .orElseThrow(
                         () -> new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
                 );
 
-        aircraft.setAircraftId(aircraftId);
-        aircraft.setAircraftName(aircraftDTO.getAircraftName());
-        aircraft.setModel(aircraftDTO.getModel());
-        aircraft.setAircraftWeight(aircraftDTO.getAircraftWeight());
-        aircraft.setMaxPassengers(aircraftDTO.getMaxPassengers());
+        foundAircraft.setAircraftId(aircraftId);
+        foundAircraft.setAircraftName(aircraft.getAircraftName());
+        foundAircraft.setModel(aircraft.getModel());
+        foundAircraft.setAircraftWeight(aircraft.getAircraftWeight());
+        foundAircraft.setMaxPassengers(aircraft.getMaxPassengers());
 
-        aircraftRepository.save(aircraft);
+        aircraftRepository.save(foundAircraft);
 
-        return aircraftDTO;
+        return aircraft;
     }
 
     /**
@@ -96,12 +91,12 @@ public class AircraftService {
      * @param aircraftId get aircraft ID as a parameter
      * @return aircraft DTO as a response
      */
-    public AircraftDTO delete(Long aircraftId) {
+    public Aircraft delete(Long aircraftId) {
         Aircraft aircraft = aircraftRepository.findById(aircraftId)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
                 );
         aircraftRepository.delete(aircraft);
-        return modelMapper.map(aircraft, AircraftDTO.class);
+        return aircraft;
     }
 }

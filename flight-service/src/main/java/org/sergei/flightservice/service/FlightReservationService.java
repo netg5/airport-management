@@ -1,7 +1,6 @@
 package org.sergei.flightservice.service;
 
 import org.modelmapper.ModelMapper;
-import org.sergei.flightservice.dto.AircraftDTO;
 import org.sergei.flightservice.dto.FlightReservationDTO;
 import org.sergei.flightservice.dto.FlightReservationExtendedDTO;
 import org.sergei.flightservice.dto.RouteExtendedDTO;
@@ -82,7 +81,7 @@ public class FlightReservationService {
                 );
 
         // Set aircraft DTO to the flight reservation extended DTO
-        routeExtendedDTO.setAircraftDTO(modelMapper.map(aircraft, AircraftDTO.class));
+        routeExtendedDTO.setAircraft(aircraft);
         flightReservationExtendedDTO.setRouteExtendedDTO(routeExtendedDTO);
 
         return flightReservationExtendedDTO;
@@ -128,7 +127,7 @@ public class FlightReservationService {
                     );
 
             // Set aircraft DTO to the flight reservation extended DTO
-            routeExtendedDTO.setAircraftDTO(modelMapper.map(aircraft, AircraftDTO.class));
+            routeExtendedDTO.setAircraft(aircraft);
             flightReservationExtendedDTO.setRouteExtendedDTO(routeExtendedDTO);
             counter++;
         }

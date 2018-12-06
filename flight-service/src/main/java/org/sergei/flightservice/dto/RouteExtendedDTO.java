@@ -3,6 +3,7 @@ package org.sergei.flightservice.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
+import org.sergei.flightservice.model.Aircraft;
 
 /**
  * @author Sergei Visotsky, 2018
@@ -11,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 public class RouteExtendedDTO extends RouteDTO {
 
     @JsonProperty("aircraft")
-    private AircraftDTO aircraftDTO;
+    private Aircraft aircraft;
 
     @JsonIgnore
     @Override
@@ -22,15 +23,15 @@ public class RouteExtendedDTO extends RouteDTO {
     public RouteExtendedDTO() {
     }
 
-    public RouteExtendedDTO(AircraftDTO aircraftDTO) {
-        this.aircraftDTO = aircraftDTO;
+    public RouteExtendedDTO(Aircraft aircraft) {
+        this.aircraft = aircraft;
     }
 
-    public AircraftDTO getAircraftDTO() {
-        return aircraftDTO;
+    public Aircraft getAircraft() {
+        return aircraft;
     }
 
-    public void setAircraftDTO(AircraftDTO aircraftDTO) {
-        this.aircraftDTO = aircraftDTO;
+    public void setAircraft(Aircraft aircraft) {
+        this.aircraft = aircraft;
     }
 }

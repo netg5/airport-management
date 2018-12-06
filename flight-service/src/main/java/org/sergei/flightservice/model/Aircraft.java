@@ -1,14 +1,18 @@
 package org.sergei.flightservice.model;
 
+import io.swagger.annotations.ApiModel;
+import org.springframework.hateoas.ResourceSupport;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
 /**
  * @author Sergei Visotsky, 2018
  */
+@ApiModel(value = "Aircraft", description = "Aircraft model")
 @Entity
 @Table(name = "aircraft")
-public class Aircraft implements Serializable {
+public class Aircraft extends ResourceSupport implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

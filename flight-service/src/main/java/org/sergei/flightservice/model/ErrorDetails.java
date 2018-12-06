@@ -1,16 +1,16 @@
-package org.sergei.flightservice.dto;
+package org.sergei.flightservice.model;
 
 import java.util.Date;
 
 /**
  * @author Sergei Visotsky, 2018
  */
-public class ErrorDetailsDTO {
+public class ErrorDetails {
     private Date timestamp;
     private String message;
     private String details;
 
-    public ErrorDetailsDTO(Date timestamp, String message, String details) {
+    public ErrorDetails(Date timestamp, String message, String details) {
         this.timestamp = timestamp;
         this.message = message;
         this.details = details;

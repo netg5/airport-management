@@ -1,11 +1,8 @@
 package org.sergei.flightservice.service;
 
-import org.modelmapper.ModelMapper;
-import org.sergei.flightservice.dto.CustomerDTO;
 import org.sergei.flightservice.exceptions.ResourceNotFoundException;
 import org.sergei.flightservice.model.Customer;
 import org.sergei.flightservice.repository.CustomerRepository;
-import org.sergei.flightservice.utils.ObjectMapperUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,12 +16,10 @@ public class CustomerService {
 
     private static final String CUSTOMER_NOT_FOUND = "Customer with this ID not found";
 
-    private final ModelMapper modelMapper;
     private final CustomerRepository customerRepository;
 
     @Autowired
-    public CustomerService(ModelMapper modelMapper, CustomerRepository customerRepository) {
-        this.modelMapper = modelMapper;
+    public CustomerService(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
     }
 
@@ -32,59 +27,56 @@ public class CustomerService {
      * Find customer by ID
      *
      * @param customerId get customer ID as a parameter
-     * @return customer DTO
+     * @return customer
      */
-    public CustomerDTO findOne(Long customerId) {
-        Customer customer = customerRepository.findById(customerId)
+    public Customer findOne(Long customerId) {
+        return customerRepository.findById(customerId)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(CUSTOMER_NOT_FOUND)
                 );
-        return modelMapper.map(customer, CustomerDTO.class);
     }
 
     /**
      * Find all customers
      *
-     * @return list with customer DTO
+     * @return list of customers
      */
-    public List<CustomerDTO> findAll() {
-        List<Customer> customerList = customerRepository.findAll();
-        return ObjectMapperUtils.mapAll(customerList, CustomerDTO.class);
+    public List<Customer> findAll() {
+        return customerRepository.findAll();
     }
 
     /**
      * Save customer
      *
-     * @param customerDTO gets customer DTO as a parameter
+     * @param customer gets customer DTO as a parameter
      * @return customer DTO as a response
      */
-    public CustomerDTO save(CustomerDTO customerDTO) {
-        Customer customer = modelMapper.map(customerDTO, Customer.class);
+    public Customer save(Customer customer) {
         customerRepository.save(customer);
-        return customerDTO;
+        return customer;
     }
 
     /**
      * Method to update customer details
      *
-     * @param customerId  gets customer ID as a parameter
-     * @param customerDTO gets customer DO as a prameter
+     * @param customerId gets customer ID as a parameter
+     * @param customer   gets customer DO as a prameter
      * @return customer DTO as a response
      */
-    public CustomerDTO update(Long customerId, CustomerDTO customerDTO) {
-        customerDTO.setCustomerId(customerId);
+    public Customer update(Long customerId, Customer customer) {
+        customer.setCustomerId(customerId);
 
-        Customer customer = customerRepository.findById(customerId)
+        Customer foundCustomer = customerRepository.findById(customerId)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(CUSTOMER_NOT_FOUND)
                 );
-        customer.setFirstName(customerDTO.getFirstName());
-        customer.setLastName(customerDTO.getLastName());
-        customer.setAge(customerDTO.getAge());
+        foundCustomer.setFirstName(foundCustomer.getFirstName());
+        foundCustomer.setLastName(foundCustomer.getLastName());
+        foundCustomer.setAge(foundCustomer.getAge());
 
-        customerRepository.save(customer);
+        customerRepository.save(foundCustomer);
 
-        return customerDTO;
+        return foundCustomer;
     }
 
     /**
@@ -93,12 +85,12 @@ public class CustomerService {
      * @param customerId get customer ID as a parameter
      * @return customer DTO as a response
      */
-    public CustomerDTO delete(Long customerId) {
+    public Customer delete(Long customerId) {
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(CUSTOMER_NOT_FOUND)
                 );
         customerRepository.delete(customer);
-        return modelMapper.map(customer, CustomerDTO.class);
+        return customer;
     }
 }

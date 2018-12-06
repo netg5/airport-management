@@ -4,7 +4,6 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sergei.flightservice.FlightServiceApplication;
-import org.sergei.flightservice.dto.CustomerDTO;
 import org.sergei.flightservice.model.Customer;
 import org.sergei.flightservice.service.CustomerService;
 import org.sergei.flightservice.test.config.AppConfigTest;
@@ -70,7 +69,7 @@ public class CustomerControllerTest {
     @Ignore
     @Test
     public void getAllCustomers() throws Exception {
-        given(customerService.findAll()).willReturn((List<CustomerDTO>) customer);
+        given(customerService.findAll()).willReturn((List<Customer>) customer);
         final ResultActions result = mvc.perform(get(BASE_URL));
         result.andExpect(status().isOk());
         result
