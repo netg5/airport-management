@@ -4,8 +4,9 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sergei.flightservice.FlightServiceApplication;
+import org.sergei.flightservice.dto.CustomerDTO;
 import org.sergei.flightservice.model.Customer;
-import org.sergei.flightservice.repository.CustomerRepository;
+import org.sergei.flightservice.service.CustomerService;
 import org.sergei.flightservice.test.config.AppConfigTest;
 import org.sergei.flightservice.test.config.ResourceServerConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,7 @@ public class CustomerControllerTest {
     private static final String BASE_URL = "/v1/customers";
 
     @MockBean
-    private CustomerRepository customerRepository;
+    private CustomerService customerService;
 
     @Autowired
     private MockMvc mvc;
@@ -60,7 +61,7 @@ public class CustomerControllerTest {
     private Customer customer;
 
     @Test
-    public void endpointAccessibilityTest() throws Exception {
+    public void getAllCustomers_thenReturnOk() throws Exception {
         mvc.perform(
                 get(BASE_URL)
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)).andExpect(status().isOk());
@@ -69,11 +70,11 @@ public class CustomerControllerTest {
     @Ignore
     @Test
     public void getAllCustomers() throws Exception {
-        given(customerRepository.findAll()).willReturn((List<Customer>) customer);
+        given(customerService.findAll()).willReturn((List<CustomerDTO>) customer);
         final ResultActions result = mvc.perform(get(BASE_URL));
         result.andExpect(status().isOk());
         result
-                .andExpect((ResultMatcher) jsonPath("links[0].rel", is("self")));
+                .andExpect((ResultMatcher) jsonPath("links_.rel", is("self")));
     }
 
     private void setupCustomer() {
