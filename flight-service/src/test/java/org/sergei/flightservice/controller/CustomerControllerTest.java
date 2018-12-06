@@ -17,6 +17,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -34,12 +35,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @since 11/24/2018
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = FlightServiceApplication.class, properties = {
-        "spring.cloud.config.enabled=false",
-        "spring.cloud.config.discovery.enabled=false",
-        "security.oauth2.accessTokenUri=http://localhost:8080/auth-api/oauth/token",
-        "spring.getaway.port=8080"
-})
+@SpringBootTest(classes = FlightServiceApplication.class)
+@TestPropertySource(locations = "classpath:application-test.properties")
 @AutoConfigureMockMvc
 @ContextConfiguration(classes = {AppConfigTest.class, ResourceServerConfiguration.class})
 @EnableJpaRepositories(basePackages = "org.sergei.flightservice.repository")
