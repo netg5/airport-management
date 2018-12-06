@@ -1,11 +1,12 @@
 package org.sergei.flightservice.controller;
 
+import org.json.JSONObject;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sergei.flightservice.FlightServiceApplication;
 import org.sergei.flightservice.model.Customer;
-import org.sergei.flightservice.service.CustomerService;
+import org.sergei.flightservice.repository.CustomerRepository;
 import org.sergei.flightservice.test.config.AppConfigTest;
 import org.sergei.flightservice.test.config.ResourceServerConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,15 +19,11 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.ResultMatcher;
 
 import java.util.Collections;
-import java.util.List;
 
-import static org.assertj.core.internal.bytebuddy.matcher.ElementMatchers.is;
-import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -52,12 +49,10 @@ public class CustomerControllerTest {
     private static final String BASE_URL = "/v1/customers";
 
     @MockBean
-    private CustomerService customerService;
+    private CustomerRepository customerRepository;
 
     @Autowired
     private MockMvc mvc;
-
-    private Customer customer;
 
     @Test
     public void getAllCustomers_thenReturnOk() throws Exception {
@@ -69,19 +64,58 @@ public class CustomerControllerTest {
     @Ignore
     @Test
     public void getAllCustomers() throws Exception {
-        given(customerService.findAll()).willReturn((List<Customer>) customer);
-        final ResultActions result = mvc.perform(get(BASE_URL));
-        result.andExpect(status().isOk());
-        result
-                .andExpect((ResultMatcher) jsonPath("links_.rel", is("self")));
+        Long customerId = 1L;
+        String firstName = "John";
+        String lastName = "Smith";
+        int age = 20;
+
+        setupCustomer(customerId, firstName, lastName, age);
+
+        mvc.perform(
+                get(BASE_URL)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(4))
+                .andExpect(jsonPath("$.customerId").isNotEmpty())
+                .andExpect(jsonPath("$..firstName").value("John"))
+                .andExpect(jsonPath("$..lastName").value("Smith"))
+                .andExpect(jsonPath("$..age").value(20));
     }
 
-    private void setupCustomer() {
-        customer = new Customer();
-        customer.setCustomerId(1L);
-        customer.setFirstName("John");
-        customer.setLastName("Smith");
-        customer.setAge(20);
+    @Test
+    public void postCustomer_thenGetCreated() throws Exception {
+//        customerRepository.save(customer);\
+        Long customerId = 1L;
+        String firstName = "John";
+        String lastName = "Smith";
+        int age = 20;
+
+        JSONObject jsonObject = new JSONObject()
+                .put("customerId", customerId)
+                .put("firstName", firstName)
+                .put("lastName", lastName)
+                .put("age", age);
+
+        mvc.perform(
+                post(BASE_URL)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                        .content(jsonObject.toString()))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.customerId").isNotEmpty())
+                .andExpect(jsonPath("$.firstName").value("John"))
+                .andExpect(jsonPath("$.lastName").value("Smith"))
+                .andExpect(jsonPath("$.age").value(20));
+    }
+
+    private Customer setupCustomer(Long customerId, String firstName, String lastName, int age) {
+        Customer customer = new Customer();
+
+        customer.setCustomerId(customerId);
+        customer.setFirstName(firstName);
+        customer.setLastName(lastName);
+        customer.setAge(age);
         customer.setFlightReservations(Collections.emptyList());
+
+        return customer;
     }
 }
