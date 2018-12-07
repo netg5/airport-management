@@ -9,14 +9,13 @@ import org.sergei.flightservice.model.Aircraft;
 /**
  * @author Sergei Visotsky, 2018
  */
-@JsonRootName("route")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonRootName("route")
 public class RouteExtendedDTO extends RouteDTO {
 
     @JsonProperty("aircraft")
-    @Getter(onMethod = @__(@JsonIgnore))
     private Aircraft aircraft;
 }
