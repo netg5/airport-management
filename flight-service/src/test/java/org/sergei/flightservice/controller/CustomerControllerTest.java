@@ -44,7 +44,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @EntityScan(basePackages = "org.sergei.flightservice.model")
 public class CustomerControllerTest {
 
-    private static final String BASE_URL = "/v1/customers";
+    private static final String BASE_URL = "/customers";
 
     @MockBean
     private CustomerRepository customerRepository;
