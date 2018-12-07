@@ -2,6 +2,10 @@ package org.sergei.flightservice.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
@@ -13,6 +17,10 @@ import java.util.List;
  * @author Sergei Visotsky, 2018
  */
 @ApiModel(value = "Customer", description = "Customer model")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "customer")
 public class Customer extends ResourceSupport implements Serializable {
@@ -34,7 +42,7 @@ public class Customer extends ResourceSupport implements Serializable {
     @Column(name = "age", nullable = false)
     private Integer age;
 
-    @JsonIgnore
+    @Getter(onMethod = @__(@JsonIgnore))
     @OneToMany(
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
@@ -42,54 +50,4 @@ public class Customer extends ResourceSupport implements Serializable {
     )
     @JoinColumn(name = "reservation_id")
     private List<FlightReservation> flightReservations = new LinkedList<>();
-
-    public Customer() {
-    }
-
-    public Customer(String firstName, String lastName, Integer age, List<FlightReservation> flightReservations) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.age = age;
-        this.flightReservations = flightReservations;
-    }
-
-    public Long getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
-    public List<FlightReservation> getFlightReservations() {
-        return flightReservations;
-    }
-
-    public void setFlightReservations(List<FlightReservation> flightReservations) {
-        this.flightReservations = flightReservations;
-    }
 }

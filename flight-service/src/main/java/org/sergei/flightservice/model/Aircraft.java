@@ -1,6 +1,7 @@
 package org.sergei.flightservice.model;
 
 import io.swagger.annotations.ApiModel;
+import lombok.*;
 import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
@@ -10,6 +11,10 @@ import java.io.Serializable;
  * @author Sergei Visotsky, 2018
  */
 @ApiModel(value = "Aircraft", description = "Aircraft model")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "aircraft")
 public class Aircraft extends ResourceSupport implements Serializable {
@@ -33,54 +38,4 @@ public class Aircraft extends ResourceSupport implements Serializable {
 
     @Column(name = "max_passengers", nullable = false)
     private Integer maxPassengers;
-
-    public Aircraft() {
-    }
-
-    public Aircraft(String model, String aircraftName, Double aircraftWeight, Integer maxPassengers) {
-        this.model = model;
-        this.aircraftName = aircraftName;
-        this.aircraftWeight = aircraftWeight;
-        this.maxPassengers = maxPassengers;
-    }
-
-    public Long getAircraftId() {
-        return aircraftId;
-    }
-
-    public void setAircraftId(Long aircraftId) {
-        this.aircraftId = aircraftId;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public String getAircraftName() {
-        return aircraftName;
-    }
-
-    public void setAircraftName(String aircraftName) {
-        this.aircraftName = aircraftName;
-    }
-
-    public Double getAircraftWeight() {
-        return aircraftWeight;
-    }
-
-    public void setAircraftWeight(Double aircraftWeight) {
-        this.aircraftWeight = aircraftWeight;
-    }
-
-    public Integer getMaxPassengers() {
-        return maxPassengers;
-    }
-
-    public void setMaxPassengers(Integer maxPassengers) {
-        this.maxPassengers = maxPassengers;
-    }
 }

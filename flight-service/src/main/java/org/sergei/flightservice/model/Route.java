@@ -1,5 +1,9 @@
 package org.sergei.flightservice.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -10,6 +14,9 @@ import java.util.List;
 /**
  * @author Sergei Visotsky, 2018
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "route")
 public class Route implements Serializable {
@@ -48,83 +55,4 @@ public class Route implements Serializable {
     )
     @JoinColumn(name = "reservation_id")
     private List<FlightReservation> flightReservationList = new LinkedList<>();
-
-    public Route() {
-    }
-
-    public Route(Double distance, LocalDateTime departureTime,
-                 LocalDateTime arrivalTime, BigDecimal price, String place,
-                 Aircraft aircraft, List<FlightReservation> flightReservationList) {
-        this.distance = distance;
-        this.departureTime = departureTime;
-        this.arrivalTime = arrivalTime;
-        this.price = price;
-        this.place = place;
-        this.aircraft = aircraft;
-        this.flightReservationList = flightReservationList;
-    }
-
-    public Long getRouteId() {
-        return routeId;
-    }
-
-    public void setRouteId(Long routeId) {
-        this.routeId = routeId;
-    }
-
-    public Double getDistance() {
-        return distance;
-    }
-
-    public void setDistance(Double distance) {
-        this.distance = distance;
-    }
-
-    public LocalDateTime getDepartureTime() {
-        return departureTime;
-    }
-
-    public void setDepartureTime(LocalDateTime departureTime) {
-        this.departureTime = departureTime;
-    }
-
-    public LocalDateTime getArrivalTime() {
-        return arrivalTime;
-    }
-
-    public void setArrivalTime(LocalDateTime arrivalTime) {
-        this.arrivalTime = arrivalTime;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public String getPlace() {
-        return place;
-    }
-
-    public void setPlace(String place) {
-        this.place = place;
-    }
-
-    public Aircraft getAircraft() {
-        return aircraft;
-    }
-
-    public void setAircraft(Aircraft aircraft) {
-        this.aircraft = aircraft;
-    }
-
-    public List<FlightReservation> getFlightReservationList() {
-        return flightReservationList;
-    }
-
-    public void setFlightReservationList(List<FlightReservation> flightReservationList) {
-        this.flightReservationList = flightReservationList;
-    }
 }
