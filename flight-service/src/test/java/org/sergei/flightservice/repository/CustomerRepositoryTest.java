@@ -44,7 +44,7 @@ public class CustomerRepositoryTest {
 
     @Test
     public void saveCustomer_thenGetOk() {
-        Customer customer = new Customer(1L, "John", "Smith", 20, Collections.emptyList());
+        Customer customer = new Customer("John", "Smith", 20, Collections.emptyList());
         customerRepository.save(customer);
         Iterable<Customer> foundAll = customerRepository.findAll();
         assertThat(foundAll).hasSize(1);
@@ -54,7 +54,7 @@ public class CustomerRepositoryTest {
 
     @Test
     public void saveCustomer_deleteCustomer_thenGetOk() {
-        Customer customer = new Customer(1L, "John", "Smith", 20, Collections.emptyList());
+        Customer customer = new Customer("John", "Smith", 20, Collections.emptyList());
         customerRepository.save(customer);
         Iterable<Customer> foundAll = customerRepository.findAll();
         assertThat(foundAll).hasSize(1);

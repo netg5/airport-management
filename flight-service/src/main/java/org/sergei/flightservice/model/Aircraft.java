@@ -1,7 +1,10 @@
 package org.sergei.flightservice.model;
 
 import io.swagger.annotations.ApiModel;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
@@ -14,7 +17,6 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "aircraft")
 public class Aircraft extends ResourceSupport implements Serializable {
@@ -38,4 +40,11 @@ public class Aircraft extends ResourceSupport implements Serializable {
 
     @Column(name = "max_passengers", nullable = false)
     private Integer maxPassengers;
+
+    public Aircraft(String model, String aircraftName, Double aircraftWeight, Integer maxPassengers) {
+        this.model = model;
+        this.aircraftName = aircraftName;
+        this.aircraftWeight = aircraftWeight;
+        this.maxPassengers = maxPassengers;
+    }
 }

@@ -1,8 +1,9 @@
 package org.sergei.flightservice.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,9 +12,9 @@ import java.time.LocalDateTime;
 /**
  * @author Sergei Visotsky, 2018
  */
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "flight_reservation")
 public class FlightReservation implements Serializable {
@@ -36,4 +37,10 @@ public class FlightReservation implements Serializable {
     @ManyToOne
     @JoinColumn(name = "route_id", nullable = false)
     private Route route;
+
+    public FlightReservation(LocalDateTime reservationDate, Customer customer, Route route) {
+        this.reservationDate = reservationDate;
+        this.customer = customer;
+        this.route = route;
+    }
 }

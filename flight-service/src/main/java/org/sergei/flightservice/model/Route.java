@@ -1,8 +1,8 @@
 package org.sergei.flightservice.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,9 +14,9 @@ import java.util.List;
 /**
  * @author Sergei Visotsky, 2018
  */
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "route")
 public class Route implements Serializable {
@@ -55,4 +55,15 @@ public class Route implements Serializable {
     )
     @JoinColumn(name = "reservation_id")
     private List<FlightReservation> flightReservationList = new LinkedList<>();
+
+    public Route(Double distance, LocalDateTime departureTime, LocalDateTime arrivalTime, BigDecimal price,
+                 String place, Aircraft aircraft, List<FlightReservation> flightReservationList) {
+        this.distance = distance;
+        this.departureTime = departureTime;
+        this.arrivalTime = arrivalTime;
+        this.price = price;
+        this.place = place;
+        this.aircraft = aircraft;
+        this.flightReservationList = flightReservationList;
+    }
 }

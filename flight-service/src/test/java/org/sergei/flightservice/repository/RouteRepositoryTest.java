@@ -53,24 +53,24 @@ public class RouteRepositoryTest {
 
     @Test
     public void saveRoute_thenGetOk() {
-        Aircraft aircraft = new Aircraft(1L, "T_50", "TestName", 2000.0, 3000);
-        Route route = new Route(1L, 250.03, DEPARTURE_TIME, ARRIVAL_TIME, PRICE, "Riga", aircraft, Collections.emptyList());
+        Aircraft aircraft = new Aircraft("T_50", "TestName", 2000.0, 3000);
+        Route route = new Route(250.03, DEPARTURE_TIME, ARRIVAL_TIME, PRICE, "Riga", aircraft, Collections.emptyList());
         routeRepository.save(route);
-        Iterable<Route> foundAll = routeRepository.findAll();
-        assertThat(foundAll).hasSize(1);
-        route.setRouteId(1L);
-        assertThat(foundAll).contains(route);
+        Iterable<Route> allFound = routeRepository.findAll();
+        assertThat(allFound).hasSize(1);
+//        route.setRouteId(1L);
+        assertThat(allFound).contains(route);
     }
 
     @Test
     public void saveRoute_deleteRoute_thenGetOk() {
-        Aircraft aircraft = new Aircraft(1L, "T_50", "TestName", 2000.0, 3000);
-        Route route = new Route(1L, 250.03, DEPARTURE_TIME, ARRIVAL_TIME, PRICE, "Riga", aircraft, null);
+        Aircraft aircraft = new Aircraft( "T_50", "TestName", 2000.0, 3000);
+        Route route = new Route(250.03, DEPARTURE_TIME, ARRIVAL_TIME, PRICE, "Riga", aircraft, null);
         routeRepository.save(route);
-        Iterable<Route> foundAll = routeRepository.findAll();
-        assertThat(foundAll).hasSize(1);
-        route.setRouteId(1L);
-        assertThat(foundAll).contains(route);
+        Iterable<Route> allFound = routeRepository.findAll();
+        assertThat(allFound).hasSize(1);
+//        route.setRouteId(1L);
+        assertThat(allFound).contains(route);
         routeRepository.delete(route);
         Iterable<Route> routeList = routeRepository.findAll();
         assertThat(routeList).hasSize(0);

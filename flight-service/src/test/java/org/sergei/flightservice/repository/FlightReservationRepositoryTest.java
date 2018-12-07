@@ -73,13 +73,13 @@ public class FlightReservationRepositoryTest {
 
     @Test
     public void saveReservation_thenGetOk() {
-        Customer customer = new Customer(1L, "John", "Smith", 20, Collections.emptyList());
+        Customer customer = new Customer("John", "Smith", 20, Collections.emptyList());
         customerRepository.save(customer);
-        Aircraft aircraft = new Aircraft(1L, "T_50", "TestName", 2000.0, 3000);
+        Aircraft aircraft = new Aircraft("T_50", "TestName", 2000.0, 3000);
         aircraftRepository.save(aircraft);
-        Route route = new Route(1L, 250.03, DEPARTURE_TIME, ARRIVAL_TIME, PRICE, "Riga", aircraft, Collections.emptyList());
+        Route route = new Route(250.03, DEPARTURE_TIME, ARRIVAL_TIME, PRICE, "Riga", aircraft, Collections.emptyList());
         routeRepository.save(route);
-        FlightReservation flightReservation = new FlightReservation(1L, DEPARTURE_TIME, customer, route);
+        FlightReservation flightReservation = new FlightReservation(DEPARTURE_TIME, customer, route);
         flightReservationRepository.save(flightReservation);
         Iterable<FlightReservation> foundAll = flightReservationRepository.findAll();
         assertThat(foundAll).hasSize(1);
@@ -89,13 +89,13 @@ public class FlightReservationRepositoryTest {
 
     @Test
     public void findOneForCustomer_thenGetOk() {
-        Customer customer = new Customer(1L, "John", "Smith", 20, Collections.emptyList());
+        Customer customer = new Customer("John", "Smith", 20, Collections.emptyList());
         customerRepository.save(customer);
-        Aircraft aircraft = new Aircraft(1L, "T_50", "TestName", 2000.0, 3000);
+        Aircraft aircraft = new Aircraft( "T_50", "TestName", 2000.0, 3000);
         aircraftRepository.save(aircraft);
-        Route route = new Route(1L, 250.03, DEPARTURE_TIME, ARRIVAL_TIME, PRICE, "Riga", aircraft, Collections.emptyList());
+        Route route = new Route(250.03, DEPARTURE_TIME, ARRIVAL_TIME, PRICE, "Riga", aircraft, Collections.emptyList());
         routeRepository.save(route);
-        FlightReservation flightReservation = new FlightReservation(1L, DEPARTURE_TIME, customer, route);
+        FlightReservation flightReservation = new FlightReservation(DEPARTURE_TIME, customer, route);
         flightReservationRepository.save(flightReservation);
         Optional<FlightReservation> foundReservation =
                 flightReservationRepository.findOneForCustomer(
@@ -107,13 +107,13 @@ public class FlightReservationRepositoryTest {
 
     @Test
     public void getAllForCustomer_thenGetOk() {
-        Customer customer = new Customer(1L, "John", "Smith", 20, Collections.emptyList());
+        Customer customer = new Customer("John", "Smith", 20, Collections.emptyList());
         customerRepository.save(customer);
-        Aircraft aircraft = new Aircraft(1L, "T_50", "TestName", 2000.0, 3000);
+        Aircraft aircraft = new Aircraft("T_50", "TestName", 2000.0, 3000);
         aircraftRepository.save(aircraft);
-        Route route = new Route(1L, 250.03, DEPARTURE_TIME, ARRIVAL_TIME, PRICE, "Riga", aircraft, Collections.emptyList());
+        Route route = new Route(250.03, DEPARTURE_TIME, ARRIVAL_TIME, PRICE, "Riga", aircraft, Collections.emptyList());
         routeRepository.save(route);
-        FlightReservation flightReservation = new FlightReservation(1L, DEPARTURE_TIME, customer, route);
+        FlightReservation flightReservation = new FlightReservation( DEPARTURE_TIME, customer, route);
         flightReservationRepository.save(flightReservation);
         Optional<List<FlightReservation>> foundReservations =
                 flightReservationRepository.findAllForCustomer(customer.getCustomerId());

@@ -44,7 +44,7 @@ public class AircraftRepositoryTest {
 
     @Test
     public void saveAircraft_thenGetOk() {
-        Aircraft aircraft = new Aircraft(1L, "T_50", "TestName", 2000.0, 3000);
+        Aircraft aircraft = new Aircraft("T_50", "TestName", 2000.0, 3000);
         aircraftRepository.save(aircraft);
         Iterable<Aircraft> foundAll = aircraftRepository.findAll();
         assertThat(foundAll).hasSize(1);
@@ -54,7 +54,7 @@ public class AircraftRepositoryTest {
 
     @Test
     public void saveAircraft_deleteAircraft_thenGetOk() {
-        Aircraft aircraft = new Aircraft(1L, "T_50", "TestName", 2000.0, 3000);
+        Aircraft aircraft = new Aircraft("T_50", "TestName", 2000.0, 3000);
         aircraftRepository.save(aircraft);
         Iterable<Aircraft> foundAll = aircraftRepository.findAll();
         Assertions.assertThat(foundAll).hasSize(1);

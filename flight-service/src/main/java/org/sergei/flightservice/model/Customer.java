@@ -20,7 +20,6 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "customer")
 public class Customer extends ResourceSupport implements Serializable {
@@ -50,4 +49,11 @@ public class Customer extends ResourceSupport implements Serializable {
     )
     @JoinColumn(name = "reservation_id")
     private List<FlightReservation> flightReservations = new LinkedList<>();
+
+    public Customer(String firstName, String lastName, Integer age, List<FlightReservation> flightReservations) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.flightReservations = flightReservations;
+    }
 }
