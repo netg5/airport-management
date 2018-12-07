@@ -19,12 +19,12 @@ import java.util.List;
  * @author Sergei Visotsky, 2018
  */
 @Api(
-        value = "/flight-api/v1/customers",
+        value = "/flight-api/customers",
         produces = "application/json",
         consumes = "application/json"
 )
 @RestController
-@RequestMapping(value = "/v1/customers", produces = "application/json")
+@RequestMapping(value = "/customers", produces = "application/json")
 public class CustomerController {
 
     @Autowired

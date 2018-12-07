@@ -23,11 +23,11 @@ import java.util.List;
  * @since 11/27/2018
  */
 @Api(
-        value = "/ticket-api/v1/tickets",
+        value = "/ticket-api/tickets",
         produces = "application/json"
 )
 @RestController
-@RequestMapping(value = "/v1/tickets", produces = "application/json")
+@RequestMapping(value = "/tickets", produces = "application/json")
 public class TicketController {
 
     @Autowired
