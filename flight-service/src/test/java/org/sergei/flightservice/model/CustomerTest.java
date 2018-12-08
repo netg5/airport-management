@@ -1,5 +1,6 @@
 package org.sergei.flightservice.model;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sergei.flightservice.test.config.WebSecurityConfigTest;
@@ -15,6 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @author Sergei Visotsky
  * @since 12/8/2018
  */
+@Ignore
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @TestPropertySource(locations = "classpath:application-test.properties")
