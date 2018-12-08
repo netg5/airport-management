@@ -18,7 +18,6 @@ import java.util.List;
  */
 @Service
 public class AircraftService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(AircraftService.class);
     private static final String AIRCRAFT_NOT_FOUND = "Aircraft with this ID not found";
     private final ModelMapper modelMapper;
     private final AircraftRepository aircraftRepository;
@@ -40,7 +39,6 @@ public class AircraftService {
                 .orElseThrow(() ->
                         new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
                 );
-        LOGGER.debug("Aircraft ID is: {}", aircraft.getAircraftId());
         return modelMapper.map(aircraft, AircraftDTO.class);
     }
 
@@ -51,7 +49,6 @@ public class AircraftService {
      */
     public List<AircraftDTO> findAll() {
         List<Aircraft> aircraftList = aircraftRepository.findAll();
-        aircraftList.forEach(aircraft -> LOGGER.debug("Aircraft name is: {}", aircraft.getAircraftName()));
         return ObjectMapperUtils.mapAll(aircraftList, AircraftDTO.class);
     }
 

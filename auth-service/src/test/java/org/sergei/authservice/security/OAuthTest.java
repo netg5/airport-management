@@ -61,7 +61,7 @@ public class OAuthTest {
 
     @Test
     public void obtainAccessToken() throws Exception {
-        Assert.assertEquals(getAccessToken("admin", "123456"), HttpStatus.OK);
+        Assert.assertEquals(HttpStatus.OK, getAccessToken("admin", "123456"));
     }
 
     private String getAccessToken(String username, String password) throws Exception {

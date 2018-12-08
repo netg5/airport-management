@@ -31,7 +31,7 @@ public class OAuth2TokenEnhancer implements TokenEnhancer {
         String username = oAuth2Authentication.getName();
 
         User user = apiUserService.findByUsername(username);
-        LOGGER.debug("Found user is: {}", user.toString());
+        LOGGER.debug("Found user is: {}", user.getUsername());
         final Map<String, Object> additionalInfo = new HashMap<>();
         additionalInfo.put("username", user.getUsername());
         ((DefaultOAuth2AccessToken) oAuth2AccessToken).setAdditionalInformation(additionalInfo);
