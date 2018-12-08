@@ -1,6 +1,7 @@
 package org.sergei.flightservice.service;
 
 import org.modelmapper.ModelMapper;
+import org.sergei.flightservice.dto.AircraftDTO;
 import org.sergei.flightservice.dto.FlightReservationDTO;
 import org.sergei.flightservice.dto.FlightReservationExtendedDTO;
 import org.sergei.flightservice.dto.RouteExtendedDTO;
@@ -74,14 +75,16 @@ public class FlightReservationService {
                 );
         RouteExtendedDTO routeExtendedDTO = modelMapper.map(route, RouteExtendedDTO.class);
 
-        // Find aircraft by ID taken from the entity
+        // Find aircraftDTO by ID taken from the entity
         Aircraft aircraft = aircraftRepository.findById(route.getAircraft().getAircraftId())
                 .orElseThrow(() ->
                         new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
                 );
 
+        AircraftDTO aircraftDTO = modelMapper.map(aircraft, AircraftDTO.class);
+
         // Set aircraft DTO to the flight reservation extended DTO
-        routeExtendedDTO.setAircraft(aircraft);
+        routeExtendedDTO.setAircraftDTO(aircraftDTO);
         flightReservationExtendedDTO.setRouteExtendedDTO(routeExtendedDTO);
 
         return flightReservationExtendedDTO;
@@ -120,14 +123,16 @@ public class FlightReservationService {
                     );
             RouteExtendedDTO routeExtendedDTO = modelMapper.map(route, RouteExtendedDTO.class);
 
-            // Find aircraft by ID taken from the entity
+            // Find aircraftDTO by ID taken from the entity
             Aircraft aircraft = aircraftRepository.findById(route.getAircraft().getAircraftId())
                     .orElseThrow(() ->
                             new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
                     );
 
-            // Set aircraft DTO to the flight reservation extended DTO
-            routeExtendedDTO.setAircraft(aircraft);
+            AircraftDTO aircraftDTO = modelMapper.map(aircraft, AircraftDTO.class);
+
+            // Set aircraftDTO DTO to the flight reservation extended DTO
+            routeExtendedDTO.setAircraftDTO(aircraftDTO);
             flightReservationExtendedDTO.setRouteExtendedDTO(routeExtendedDTO);
             counter++;
         }

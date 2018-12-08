@@ -6,6 +6,7 @@ pipeline {
     }
 
     stages {
+
         stage('Compilation') {
             steps {
                 echo '-=- compiling project -=-'
@@ -28,6 +29,12 @@ pipeline {
             steps {
                 echo '-=- packaging project -=-'
                 sh 'mvn package -DskipTests'
+            }
+        }
+        stage('Code inspection & quality gate') {
+            steps {
+                echo '-=- run code inspection & check quality gate -=-'
+                sh 'mvn sonar:sonar'
             }
         }
     }

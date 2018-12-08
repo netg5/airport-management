@@ -19,7 +19,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Entity
 @Table(name = "aircraft")
-public class Aircraft extends ResourceSupport implements Serializable {
+public class Aircraft implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

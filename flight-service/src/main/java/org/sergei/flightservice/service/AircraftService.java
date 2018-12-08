@@ -1,8 +1,13 @@
 package org.sergei.flightservice.service;
 
+import org.modelmapper.ModelMapper;
+import org.sergei.flightservice.dto.AircraftDTO;
 import org.sergei.flightservice.exceptions.ResourceNotFoundException;
 import org.sergei.flightservice.model.Aircraft;
 import org.sergei.flightservice.repository.AircraftRepository;
+import org.sergei.flightservice.utils.ObjectMapperUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,26 +18,30 @@ import java.util.List;
  */
 @Service
 public class AircraftService {
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(AircraftService.class);
     private static final String AIRCRAFT_NOT_FOUND = "Aircraft with this ID not found";
+    private final ModelMapper modelMapper;
     private final AircraftRepository aircraftRepository;
 
     @Autowired
-    public AircraftService(AircraftRepository aircraftRepository) {
+    public AircraftService(ModelMapper modelMapper, AircraftRepository aircraftRepository) {
+        this.modelMapper = modelMapper;
         this.aircraftRepository = aircraftRepository;
     }
 
     /**
-     * Find aircraft by ID
+     * Find aircraftDTO by ID
      *
-     * @param aircraftId gets aircraft ID as parameter
-     * @return aircraft DTO
+     * @param aircraftId gets aircraftDTO ID as parameter
+     * @return aircraftDTO DTO
      */
-    public Aircraft findOne(Long aircraftId) {
-        return aircraftRepository.findById(aircraftId)
+    public AircraftDTO findOne(Long aircraftId) {
+        Aircraft aircraft = aircraftRepository.findById(aircraftId)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
                 );
+        LOGGER.debug("Aircraft ID is: {}", aircraft.getAircraftId());
+        return modelMapper.map(aircraft, AircraftDTO.class);
     }
 
     /**
@@ -40,59 +49,62 @@ public class AircraftService {
      *
      * @return list of Aircraft DTO
      */
-    public List<Aircraft> findAll() {
-        return aircraftRepository.findAll();
+    public List<AircraftDTO> findAll() {
+        List<Aircraft> aircraftList = aircraftRepository.findAll();
+        aircraftList.forEach(aircraft -> LOGGER.debug("Aircraft name is: {}", aircraft.getAircraftName()));
+        return ObjectMapperUtils.mapAll(aircraftList, AircraftDTO.class);
     }
 
     /**
-     * Save aircraft
+     * Save aircraftDTO
      *
-     * @param aircraft get aircraft DTO as a parameter
+     * @param aircraftDTO get aircraftDTO DTO as a parameter
      * @return Aircraft DTO
      */
-    public Aircraft save(Aircraft aircraft) {
+    public AircraftDTO save(AircraftDTO aircraftDTO) {
+        Aircraft aircraft = modelMapper.map(aircraftDTO, Aircraft.class);
         aircraftRepository.save(aircraft);
-        return aircraft;
+        return aircraftDTO;
     }
 
     /**
      * Update aicraft by ID
      *
-     * @param aircraftId get aircraft ID as a parameter
-     * @param aircraft   get aircraft DTO as a parameter
-     * @return aircraft DTO
+     * @param aircraftId  get aircraftDTO ID as a parameter
+     * @param aircraftDTO get aircraftDTO DTO as a parameter
+     * @return aircraftDTO DTO
      */
-    public Aircraft update(Long aircraftId, Aircraft aircraft) {
-        aircraft.setAircraftId(aircraftId);
+    public AircraftDTO update(Long aircraftId, AircraftDTO aircraftDTO) {
+        aircraftDTO.setAircraftId(aircraftId);
 
-        Aircraft foundAircraft = aircraftRepository.findById(aircraftId)
+        Aircraft aircraft = aircraftRepository.findById(aircraftId)
                 .orElseThrow(
                         () -> new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
                 );
 
-        foundAircraft.setAircraftId(aircraftId);
-        foundAircraft.setAircraftName(aircraft.getAircraftName());
-        foundAircraft.setModel(aircraft.getModel());
-        foundAircraft.setAircraftWeight(aircraft.getAircraftWeight());
-        foundAircraft.setMaxPassengers(aircraft.getMaxPassengers());
+        aircraft.setAircraftId(aircraftId);
+        aircraft.setAircraftName(aircraftDTO.getAircraftName());
+        aircraft.setModel(aircraftDTO.getModel());
+        aircraft.setAircraftWeight(aircraftDTO.getAircraftWeight());
+        aircraft.setMaxPassengers(aircraftDTO.getMaxPassengers());
 
-        aircraftRepository.save(foundAircraft);
+        aircraftRepository.save(aircraft);
 
-        return aircraft;
+        return aircraftDTO;
     }
 
     /**
-     * Delete aircraft by ID
+     * Delete aircraftDTO by ID
      *
-     * @param aircraftId get aircraft ID as a parameter
-     * @return aircraft DTO as a response
+     * @param aircraftId get aircraftDTO ID as a parameter
+     * @return aircraftDTO DTO as a response
      */
-    public Aircraft delete(Long aircraftId) {
+    public AircraftDTO delete(Long aircraftId) {
         Aircraft aircraft = aircraftRepository.findById(aircraftId)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
                 );
         aircraftRepository.delete(aircraft);
-        return aircraft;
+        return modelMapper.map(aircraft, AircraftDTO.class);
     }
 }

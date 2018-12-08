@@ -38,7 +38,7 @@ public class FlightReservationController {
     )
     @GetMapping("/{customerId}/reservations")
     public ResponseEntity<Resources<FlightReservationExtendedDTO>> getAllForCustomer(@ApiParam(value = "Customer ID whose reservations should be found", required = true)
-                                                                                @PathVariable("customerId") Long customerId) {
+                                                                                     @PathVariable("customerId") Long customerId) {
         List<FlightReservationExtendedDTO> flightReservations =
                 flightReservationService.getAllReservationsForCustomer(customerId);
         flightReservations.forEach(flightReservation -> {

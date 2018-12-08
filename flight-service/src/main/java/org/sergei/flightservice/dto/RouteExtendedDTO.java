@@ -19,5 +19,5 @@ import org.sergei.flightservice.model.Aircraft;
 public class RouteExtendedDTO extends RouteDTO {
 
     @JsonProperty("aircraft")
-    private Aircraft aircraft;
+    private AircraftDTO aircraftDTO;
 }

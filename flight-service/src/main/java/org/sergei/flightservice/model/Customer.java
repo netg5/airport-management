@@ -2,11 +2,9 @@ package org.sergei.flightservice.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -22,7 +20,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "customer")
-public class Customer extends ResourceSupport implements Serializable {
+public class Customer implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -41,7 +39,6 @@ public class Customer extends ResourceSupport implements Serializable {
     @Column(name = "age", nullable = false)
     private Integer age;
 
-    @Getter(onMethod = @__(@JsonIgnore))
     @OneToMany(
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,

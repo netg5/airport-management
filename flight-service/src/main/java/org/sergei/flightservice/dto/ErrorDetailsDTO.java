@@ -1,4 +1,4 @@
-package org.sergei.flightservice.model;
+package org.sergei.flightservice.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,7 +14,7 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ErrorDetails {
+public class ErrorDetailsDTO {
     private Date timestamp;
     private String message;
     private String details;

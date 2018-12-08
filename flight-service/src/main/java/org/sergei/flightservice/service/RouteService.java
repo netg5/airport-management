@@ -1,6 +1,7 @@
 package org.sergei.flightservice.service;
 
 import org.modelmapper.ModelMapper;
+import org.sergei.flightservice.dto.AircraftDTO;
 import org.sergei.flightservice.dto.RouteDTO;
 import org.sergei.flightservice.dto.RouteExtendedDTO;
 import org.sergei.flightservice.exceptions.ResourceNotFoundException;
@@ -49,14 +50,16 @@ public class RouteService {
                 );
         RouteExtendedDTO routeExtendedDTO = modelMapper.map(route, RouteExtendedDTO.class);
 
-        // Find aircraft map it into the aircraft DTO
+        // Find aircraftDTO map it into the aircraftDTO DTO
         Aircraft aircraft = aircraftRepository.findById(route.getAircraft().getAircraftId())
                 .orElseThrow(() ->
                         new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
                 );
 
+        AircraftDTO aircraftDTO = modelMapper.map(aircraft, AircraftDTO.class);
+
         // Set to the route extended DTO
-        routeExtendedDTO.setAircraft(aircraft);
+        routeExtendedDTO.setAircraftDTO(aircraftDTO);
         return routeExtendedDTO;
     }
 
@@ -75,7 +78,9 @@ public class RouteService {
                     .orElseThrow(() ->
                             new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
                     );
-            routeExtendedDTO.setAircraft(aircraft);
+
+            AircraftDTO aircraftDTO = modelMapper.map(aircraft, AircraftDTO.class);
+            routeExtendedDTO.setAircraftDTO(aircraftDTO);
             counter++;
         }
 
@@ -91,7 +96,7 @@ public class RouteService {
     public RouteDTO save(RouteDTO routeDTO) {
         Route route = modelMapper.map(routeDTO, Route.class);
 
-        // Find aircraft required in request body
+        // Find aircraftDTO required in request body
         Aircraft aircraft = aircraftRepository.findById(routeDTO.getAircraftId())
                 .orElseThrow(() ->
                         new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
