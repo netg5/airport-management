@@ -6,8 +6,6 @@ import org.sergei.flightservice.exceptions.ResourceNotFoundException;
 import org.sergei.flightservice.model.Aircraft;
 import org.sergei.flightservice.repository.AircraftRepository;
 import org.sergei.flightservice.utils.ObjectMapperUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
