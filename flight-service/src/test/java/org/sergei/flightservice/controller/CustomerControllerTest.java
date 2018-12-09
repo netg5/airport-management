@@ -59,6 +59,7 @@ public class CustomerControllerTest {
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)).andExpect(status().isOk());
     }
 
+    @Ignore
     @Test
     public void getAllCustomers() throws Exception {
         Long customerId = 1L;
