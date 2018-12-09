@@ -40,8 +40,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestPropertySource(locations = "classpath:application-test.properties")
 @AutoConfigureMockMvc
 @ContextConfiguration(classes = {AppConfigTest.class, ResourceServerConfiguration.class})
-@EnableJpaRepositories(basePackages = "org.sergei.flightservice.repository")
-@EntityScan(basePackages = "org.sergei.flightservice.model")
+//@EnableJpaRepositories(basePackages = "org.sergei.flightservice.repository")
+//@EntityScan(basePackages = "org.sergei.flightservice.model")
 public class CustomerControllerTest {
 
     private static final String BASE_URL = "/customers";
@@ -73,12 +73,12 @@ public class CustomerControllerTest {
                 get(BASE_URL)
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("href", is(BASE_URL)))
-                .andExpect(jsonPath("$.length()").value(4))
-                .andExpect(jsonPath("$.customerId").isNotEmpty())
-                .andExpect(jsonPath("$..firstName").value("John"))
-                .andExpect(jsonPath("$..lastName").value("Smith"))
-                .andExpect(jsonPath("$..age").value(20));
+//                .andExpect(jsonPath("href", is(BASE_URL)))
+//                .andExpect(jsonPath("$.length()").value(4))
+                .andExpect(jsonPath("$._embedded.customerDTOList[0].customerId").value(1L))
+                .andExpect(jsonPath("$._embedded.customerDTOList[0].firstName").value("John"))
+                .andExpect(jsonPath("$._embedded.customerDTOList[0].lastName").value("Smith"))
+                .andExpect(jsonPath("$._embedded.customerDTOList[0].age").value(20));
     }
 
     @Test
