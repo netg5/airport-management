@@ -1,4 +1,4 @@
-package org.sergei.ticketservice.test.config;
+package org.sergei.ticketservice.testconfig;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
