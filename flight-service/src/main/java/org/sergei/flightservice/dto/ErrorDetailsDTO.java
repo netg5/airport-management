@@ -1,17 +1,15 @@
 package org.sergei.flightservice.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.Date;
 
 /**
  * @author Sergei Visotsky, 2018
  */
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class ErrorDetailsDTO {

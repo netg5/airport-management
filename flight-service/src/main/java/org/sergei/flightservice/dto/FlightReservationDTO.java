@@ -1,7 +1,10 @@
 package org.sergei.flightservice.dto;
 
 import io.swagger.annotations.ApiModel;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.springframework.hateoas.ResourceSupport;
 
 import java.time.LocalDateTime;
@@ -10,8 +13,8 @@ import java.time.LocalDateTime;
  * @author Sergei Visotsky, 2018
  */
 @ApiModel(value = "FlightReservation", description = "Flight reservation meta data model")
-@Getter
-@Setter
+@Data
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class FlightReservationDTO extends ResourceSupport {
