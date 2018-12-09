@@ -10,7 +10,6 @@ import java.io.Serializable;
 /**
  * @author Sergei Visotsky, 2018
  */
-@ApiModel(value = "Aircraft", description = "Aircraft model")
 @Data
 @NoArgsConstructor
 @Entity

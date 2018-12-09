@@ -12,7 +12,6 @@ import java.util.List;
 /**
  * @author Sergei Visotsky, 2018
  */
-@ApiModel(value = "Customer", description = "Customer model")
 @Data
 @NoArgsConstructor
 @Entity
