@@ -1,9 +1,8 @@
 package org.sergei.flightservice.model;
 
 import io.swagger.annotations.ApiModel;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,8 +13,7 @@ import java.util.List;
  * @author Sergei Visotsky, 2018
  */
 @ApiModel(value = "Customer", description = "Customer model")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @Entity
 @Table(name = "customer")

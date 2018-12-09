@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
 
+
+
 /**
  * @author Sergei Visotsky
  * @since 11/27/2018
@@ -20,10 +22,11 @@ import java.io.Serializable;
  *     Takes data from ticket_view located in MySQL server
  * </pre>
  */
+
 @ApiModel(value = "Ticket", description = "Ticket model")
 @Data
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Immutable
 @Table(name = "ticket_view")

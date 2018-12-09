@@ -1,5 +1,6 @@
 package org.sergei.flightservice.model;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,8 +15,7 @@ import java.util.List;
 /**
  * @author Sergei Visotsky, 2018
  */
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @Entity
 @Table(name = "route")
