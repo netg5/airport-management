@@ -7,7 +7,7 @@ import org.sergei.flightservice.model.Aircraft;
 import org.sergei.flightservice.model.Customer;
 import org.sergei.flightservice.model.FlightReservation;
 import org.sergei.flightservice.model.Route;
-import org.sergei.flightservice.test.config.WebSecurityConfigTest;
+import org.sergei.flightservice.testconfig.WebSecurityConfigTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.domain.EntityScan;

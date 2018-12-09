@@ -7,8 +7,8 @@ import org.junit.runner.RunWith;
 import org.sergei.flightservice.FlightServiceApplication;
 import org.sergei.flightservice.model.Customer;
 import org.sergei.flightservice.repository.CustomerRepository;
-import org.sergei.flightservice.test.config.AppConfigTest;
-import org.sergei.flightservice.test.config.ResourceServerConfiguration;
+import org.sergei.flightservice.testconfig.AppConfigTest;
+import org.sergei.flightservice.testconfig.ResourceServerConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -59,7 +59,6 @@ public class CustomerControllerTest {
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)).andExpect(status().isOk());
     }
 
-    @Ignore
     @Test
     public void getAllCustomers() throws Exception {
         Long customerId = 1L;

@@ -1,4 +1,4 @@
-package org.sergei.flightservice.test.config;
+package org.sergei.flightservice.testconfig;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;

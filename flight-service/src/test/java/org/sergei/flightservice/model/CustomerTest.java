@@ -3,7 +3,7 @@ package org.sergei.flightservice.model;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.sergei.flightservice.test.config.WebSecurityConfigTest;
+import org.sergei.flightservice.testconfig.WebSecurityConfigTest;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ContextConfiguration;
