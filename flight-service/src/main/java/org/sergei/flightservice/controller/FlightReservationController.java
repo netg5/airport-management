@@ -45,7 +45,7 @@ public class FlightReservationController {
             Link link = ControllerLinkBuilder.linkTo(
                     ControllerLinkBuilder.methodOn(FlightReservationController.class)
                             .getOneForCustomer(flightReservation.getCustomerId(),
-                                    flightReservation.getReservationId())).withSelfRel();
+                                    flightReservation.getReservationId())).withRel("reservation");
             flightReservation.add(link);
         });
         Resources<FlightReservationExtendedDTO> resources = new Resources<>(flightReservations);
@@ -67,8 +67,11 @@ public class FlightReservationController {
                                                                           @PathVariable("reservationId") Long reservationId) {
         FlightReservationExtendedDTO flightReservationExtendedDTO =
                 flightReservationService.getOneForCustomerById(customerId, reservationId);
-        Link link = ControllerLinkBuilder.linkTo(FlightReservationController.class).withSelfRel();
+        Link link = ControllerLinkBuilder.linkTo(
+                ControllerLinkBuilder.methodOn(CustomerController.class).getCustomerById(customerId)).withRel("customer");
         flightReservationExtendedDTO.add(link);
+        String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
+        flightReservationExtendedDTO.add(new Link(uriString, "self"));
         return new ResponseEntity<>(flightReservationExtendedDTO, HttpStatus.OK);
     }
 

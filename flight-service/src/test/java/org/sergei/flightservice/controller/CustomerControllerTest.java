@@ -72,7 +72,7 @@ public class CustomerControllerTest {
 
         Customer customer = setupCustomer(customerId, firstName, lastName, age);
 
-//        LOGGER.info("Customer first name is: {}", customer.getFirstName()); // Throws NullPointerException
+        LOGGER.info("Customer first name is: {}", customer.getFirstName()); // Throws NullPointerException
 
         mvc.perform(
                 get(BASE_URL)
