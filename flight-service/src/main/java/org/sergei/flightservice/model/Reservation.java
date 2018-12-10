@@ -13,14 +13,14 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "flight_reservation")
-public class FlightReservation implements Serializable {
+@Table(name = "reservation")
+public class Reservation implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "flight_reservation_seq")
-    @SequenceGenerator(name = "flight_reservation_seq", sequenceName = "flight_reservation_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "reservation_seq")
+    @SequenceGenerator(name = "reservation_seq", sequenceName = "reservation_seq", allocationSize = 1)
     @Column(name = "reservation_id")
     private Long reservationId;
 
@@ -35,7 +35,7 @@ public class FlightReservation implements Serializable {
     @JoinColumn(name = "route_id", nullable = false)
     private Route route;
 
-    public FlightReservation(LocalDateTime reservationDate, Customer customer, Route route) {
+    public Reservation(LocalDateTime reservationDate, Customer customer, Route route) {
         this.reservationDate = reservationDate;
         this.customer = customer;
         this.route = route;

@@ -52,16 +52,16 @@ public class Route implements Serializable {
             orphanRemoval = true
     )
     @JoinColumn(name = "reservation_id")
-    private List<FlightReservation> flightReservationList = new LinkedList<>();
+    private List<Reservation> reservationList = new LinkedList<>();
 
     public Route(Double distance, LocalDateTime departureTime, LocalDateTime arrivalTime, BigDecimal price,
-                 String place, Aircraft aircraft, List<FlightReservation> flightReservationList) {
+                 String place, Aircraft aircraft, List<Reservation> reservationList) {
         this.distance = distance;
         this.departureTime = departureTime;
         this.arrivalTime = arrivalTime;
         this.price = price;
         this.place = place;
         this.aircraft = aircraft;
-        this.flightReservationList = flightReservationList;
+        this.reservationList = reservationList;
     }
 }

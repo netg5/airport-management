@@ -44,7 +44,7 @@ public class CustomerController {
                     ControllerLinkBuilder.methodOn(CustomerController.class)
                             .getCustomerById(customer.getCustomerId())).withSelfRel();
             Link reservationsLink = ControllerLinkBuilder.linkTo(
-                    ControllerLinkBuilder.methodOn(FlightReservationController.class)
+                    ControllerLinkBuilder.methodOn(ReservationController.class)
                             .getAllForCustomer(customer.getCustomerId())).withRel("reservations");
             customer.add(link);
             customer.add(reservationsLink);
@@ -62,7 +62,7 @@ public class CustomerController {
         CustomerDTO customer = customerService.findOne(customerId);
         Link link = ControllerLinkBuilder.linkTo(CustomerController.class).withSelfRel();
         Link reservationsLink = ControllerLinkBuilder.linkTo(
-                ControllerLinkBuilder.methodOn(FlightReservationController.class)
+                ControllerLinkBuilder.methodOn(ReservationController.class)
                         .getAllForCustomer(customerId)).withRel("reservations");
         customer.add(link);
         customer.add(reservationsLink);

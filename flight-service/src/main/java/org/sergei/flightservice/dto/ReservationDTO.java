@@ -12,12 +12,12 @@ import java.time.LocalDateTime;
 /**
  * @author Sergei Visotsky, 2018
  */
-@ApiModel(value = "FlightReservation", description = "Flight reservation meta data model")
+@ApiModel(value = "Reservation", description = "Flight reservation meta data model")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class FlightReservationDTO extends ResourceSupport {
+public class ReservationDTO extends ResourceSupport {
     private Long reservationId;
     private Long customerId;
     private Long routeId;

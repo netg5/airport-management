@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sergei.flightservice.model.Aircraft;
 import org.sergei.flightservice.model.Customer;
-import org.sergei.flightservice.model.FlightReservation;
+import org.sergei.flightservice.model.Reservation;
 import org.sergei.flightservice.model.Route;
 import org.sergei.flightservice.testconfig.WebSecurityConfigTest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 
 /**
- * Test for {@link FlightReservationRepository}
+ * Test for {@link ReservationRepository}
  *
  * @author Sergei Visotsky, 2018
  */
@@ -42,7 +42,7 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 @EnableJpaRepositories(basePackages = "org.sergei.flightservice.repository")
 @EntityScan(basePackages = "org.sergei.flightservice.model")
 @SuppressWarnings("all")
-public class FlightReservationRepositoryTest {
+public class ReservationRepositoryTest {
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private static final LocalDateTime DEPARTURE_TIME = LocalDateTime.parse("2018-09-09 09:24:00", FORMATTER);
@@ -50,8 +50,8 @@ public class FlightReservationRepositoryTest {
     private static final BigDecimal PRICE = new BigDecimal(25000);
 
     @Autowired
-    @Qualifier("flightReservationRepository")
-    private FlightReservationRepository flightReservationRepository;
+    @Qualifier("reservationRepository")
+    private ReservationRepository reservationRepository;
 
     @Autowired
     @Qualifier("customerRepository")
@@ -67,8 +67,8 @@ public class FlightReservationRepositoryTest {
 
     @Test
     public void assertThatIsEmpty() {
-        List<FlightReservation> flightReservationList = flightReservationRepository.findAll();
-        assertTrue(flightReservationList.isEmpty());
+        List<Reservation> reservationList = reservationRepository.findAll();
+        assertTrue(reservationList.isEmpty());
     }
 
     @Test
@@ -79,12 +79,12 @@ public class FlightReservationRepositoryTest {
         aircraftRepository.save(aircraft);
         Route route = new Route(250.03, DEPARTURE_TIME, ARRIVAL_TIME, PRICE, "Riga", aircraft, Collections.emptyList());
         routeRepository.save(route);
-        FlightReservation flightReservation = new FlightReservation(DEPARTURE_TIME, customer, route);
-        flightReservationRepository.save(flightReservation);
-        Iterable<FlightReservation> foundAll = flightReservationRepository.findAll();
+        Reservation reservation = new Reservation(DEPARTURE_TIME, customer, route);
+        reservationRepository.save(reservation);
+        Iterable<Reservation> foundAll = reservationRepository.findAll();
         assertThat(foundAll).hasSize(1);
         customer.setCustomerId(1L);
-        assertThat(foundAll).contains(flightReservation);
+        assertThat(foundAll).contains(reservation);
     }
 
     @Test
@@ -95,14 +95,14 @@ public class FlightReservationRepositoryTest {
         aircraftRepository.save(aircraft);
         Route route = new Route(250.03, DEPARTURE_TIME, ARRIVAL_TIME, PRICE, "Riga", aircraft, Collections.emptyList());
         routeRepository.save(route);
-        FlightReservation flightReservation = new FlightReservation(DEPARTURE_TIME, customer, route);
-        flightReservationRepository.save(flightReservation);
-        Optional<FlightReservation> foundReservation =
-                flightReservationRepository.findOneForCustomer(
-                        customer.getCustomerId(), flightReservation.getReservationId());
-        assertEquals(flightReservation.getReservationId(), foundReservation.get().getReservationId());
+        Reservation reservation = new Reservation(DEPARTURE_TIME, customer, route);
+        reservationRepository.save(reservation);
+        Optional<Reservation> foundReservation =
+                reservationRepository.findOneForCustomer(
+                        customer.getCustomerId(), reservation.getReservationId());
+        assertEquals(reservation.getReservationId(), foundReservation.get().getReservationId());
         assertEquals(customer.getCustomerId(), foundReservation.get().getCustomer().getCustomerId());
-        assertThat(foundReservation).contains(flightReservation);
+        assertThat(foundReservation).contains(reservation);
     }
 
     @Test
@@ -113,10 +113,10 @@ public class FlightReservationRepositoryTest {
         aircraftRepository.save(aircraft);
         Route route = new Route(250.03, DEPARTURE_TIME, ARRIVAL_TIME, PRICE, "Riga", aircraft, Collections.emptyList());
         routeRepository.save(route);
-        FlightReservation flightReservation = new FlightReservation( DEPARTURE_TIME, customer, route);
-        flightReservationRepository.save(flightReservation);
-        Optional<List<FlightReservation>> foundReservations =
-                flightReservationRepository.findAllForCustomer(customer.getCustomerId());
+        Reservation reservation = new Reservation( DEPARTURE_TIME, customer, route);
+        reservationRepository.save(reservation);
+        Optional<List<Reservation>> foundReservations =
+                reservationRepository.findAllForCustomer(customer.getCustomerId());
         assertEquals(foundReservations.get().size(), 1);
     }
 }

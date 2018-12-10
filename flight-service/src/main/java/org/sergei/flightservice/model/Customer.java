@@ -40,12 +40,12 @@ public class Customer implements Serializable {
             orphanRemoval = true
     )
     @JoinColumn(name = "reservation_id")
-    private List<FlightReservation> flightReservations = new LinkedList<>();
+    private List<Reservation> reservations = new LinkedList<>();
 
-    public Customer(String firstName, String lastName, Integer age, List<FlightReservation> flightReservations) {
+    public Customer(String firstName, String lastName, Integer age, List<Reservation> reservations) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
-        this.flightReservations = flightReservations;
+        this.reservations = reservations;
     }
 }

@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @JsonRootName("flightReservation")
 @JsonIgnoreProperties("routeId")
-public class FlightReservationExtendedDTO extends FlightReservationDTO {
+public class ReservationExtendedDTO extends ReservationDTO {
 
     @JsonProperty("allReservedRoutes")
     private RouteExtendedDTO routeExtendedDTO;

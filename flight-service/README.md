@@ -2,7 +2,7 @@
 
 Application to reserve flights.
 Information about aircrafts, customers and routes is stored into the database.
-Customer makes a flightReservation of the specific route as well as aircraft due to the route and aircraft are connected with each other by `One-to-Many` relationship.
+Customer makes a flight reservation of the specific route as well as aircraft due to the route and aircraft are connected with each other by `One-to-Many` relationship.
 
 ## Technologies
 * Java 8

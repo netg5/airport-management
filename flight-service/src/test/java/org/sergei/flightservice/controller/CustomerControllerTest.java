@@ -118,7 +118,7 @@ public class CustomerControllerTest {
         customer.setFirstName(firstName);
         customer.setLastName(lastName);
         customer.setAge(age);
-        customer.setFlightReservations(Collections.emptyList());
+        customer.setReservations(Collections.emptyList());
 
         return customerRepository.save(customer);
     }
