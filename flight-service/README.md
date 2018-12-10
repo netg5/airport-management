@@ -10,9 +10,3 @@ Customer makes a flight reservation of the specific route as well as aircraft du
 * Apache Maven
 * Swagger UI
 * ModelMapper
-
-## oAuth 2 authentication
-This application uses oAuth 2 with JWT encryption.
-To generate .jks file `keytool -genkeypair -alias jwt -keyalg RSA -keypass secretKey -keystore jwt.jks -storepass secretKey` command should be performed.
-<br/>
-`secretKey` is a password in this case.
