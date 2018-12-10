@@ -15,7 +15,7 @@ import java.util.List;
  * @author Sergei Visotsky, 2018
  */
 @Service
-public class CustomerService {
+public class CustomerService implements IService<CustomerDTO> {
 
     private static final String CUSTOMER_NOT_FOUND = "Customer with this ID not found";
     private final ModelMapper modelMapper;
@@ -33,6 +33,7 @@ public class CustomerService {
      * @param customerId get customer ID as a parameter
      * @return customer
      */
+    @Override
     public CustomerDTO findOne(Long customerId) {
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() ->
@@ -46,6 +47,7 @@ public class CustomerService {
      *
      * @return list of customers
      */
+    @Override
     public List<CustomerDTO> findAll() {
         List<Customer> customerList = customerRepository.findAll();
         return ObjectMapperUtils.mapAll(customerList, CustomerDTO.class);
@@ -57,6 +59,7 @@ public class CustomerService {
      * @param customerDTO gets customerDTO DTO as a parameter
      * @return customerDTO DTO as a response
      */
+    @Override
     public CustomerDTO save(CustomerDTO customerDTO) {
         Customer customer = modelMapper.map(customerDTO, Customer.class);
         customerRepository.save(customer);
@@ -70,6 +73,7 @@ public class CustomerService {
      * @param customerDTO gets customerDTO DO as a prameter
      * @return customerDTO DTO as a response
      */
+    @Override
     public CustomerDTO update(Long customerId, CustomerDTO customerDTO) {
         customerDTO.setCustomerId(customerId);
 
@@ -92,6 +96,7 @@ public class CustomerService {
      * @param customerId get customer ID as a parameter
      * @return customer DTO as a response
      */
+    @Override
     public CustomerDTO delete(Long customerId) {
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() ->

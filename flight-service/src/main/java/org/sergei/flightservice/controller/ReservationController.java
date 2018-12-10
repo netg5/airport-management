@@ -40,7 +40,7 @@ public class ReservationController {
     public ResponseEntity<Resources<ReservationExtendedDTO>> getAllForCustomer(@ApiParam(value = "Customer ID whose reservations should be found", required = true)
                                                                                @PathVariable("customerId") Long customerId) {
         List<ReservationExtendedDTO> flightReservations =
-                reservationService.getAllReservationsForCustomer(customerId);
+                reservationService.findAllForCustomer(customerId);
         flightReservations.forEach(flightReservation -> {
             Link link = ControllerLinkBuilder.linkTo(
                     ControllerLinkBuilder.methodOn(ReservationController.class)
@@ -66,7 +66,7 @@ public class ReservationController {
                                                                     @ApiParam(value = "Reservation ID which which was made", required = true)
                                                                     @PathVariable("reservationId") Long reservationId) {
         ReservationExtendedDTO flightReservationExtendedDTO =
-                reservationService.getOneForCustomerById(customerId, reservationId);
+                reservationService.findOneForCustomer(customerId, reservationId);
         Link link = ControllerLinkBuilder.linkTo(
                 ControllerLinkBuilder.methodOn(CustomerController.class).getCustomerById(customerId)).withRel("customer");
         flightReservationExtendedDTO.add(link);
@@ -87,7 +87,7 @@ public class ReservationController {
                                                             @ApiParam(value = "Created reservation", required = true)
                                                             @RequestBody ReservationDTO reservationDTO) {
         return new ResponseEntity<>(
-                reservationService.createReservation(customerId, reservationDTO),
+                reservationService.saveReservation(customerId, reservationDTO),
                 HttpStatus.CREATED);
     }
 

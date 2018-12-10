@@ -19,7 +19,7 @@ import java.util.List;
  * @author Sergei Visotsky, 2018
  */
 @Service
-public class RouteService {
+public class RouteService implements IRouteService<RouteDTO, RouteExtendedDTO> {
 
     private static final String ROUTE_NOT_FOUND = "Route with this ID not found";
     private static final String AIRCRAFT_NOT_FOUND = "Aircraft with this ID not found";
@@ -42,7 +42,8 @@ public class RouteService {
      * @param routeId as an input argument from controller
      * @return route extended DTO
      */
-    public RouteExtendedDTO findOne(Long routeId) {
+    @Override
+    public RouteExtendedDTO findOneRoute(Long routeId) {
         // Find route and map into the extended DTO
         Route route = routeRepository.findById(routeId)
                 .orElseThrow(() ->
@@ -68,7 +69,8 @@ public class RouteService {
      *
      * @return list of route extended DTO
      */
-    public List<RouteExtendedDTO> findAll() {
+    @Override
+    public List<RouteExtendedDTO> findAllRoutes() {
         List<Route> routeList = routeRepository.findAll();
         List<RouteExtendedDTO> routeExtendedDTOList = ObjectMapperUtils.mapAll(routeList, RouteExtendedDTO.class);
 
@@ -93,6 +95,7 @@ public class RouteService {
      * @param routeDTO gets route DTO as an input argument
      * @return route DTO as a response
      */
+    @Override
     public RouteDTO save(RouteDTO routeDTO) {
         Route route = modelMapper.map(routeDTO, Route.class);
 
@@ -113,6 +116,7 @@ public class RouteService {
      * @param routeDTO Route DTO with updated data
      * @return Route DTO as a response
      */
+    @Override
     public RouteDTO update(Long routeId, RouteDTO routeDTO) {
         routeDTO.setRouteId(routeId);
 
@@ -143,6 +147,7 @@ public class RouteService {
      * @param routeId gets route ID as an input argument
      * @return Route DTO asa response
      */
+    @Override
     public RouteDTO delete(Long routeId) {
         Route route = routeRepository.findById(routeId)
                 .orElseThrow(() ->
@@ -150,5 +155,15 @@ public class RouteService {
                 );
         routeRepository.delete(route);
         return modelMapper.map(route, RouteDTO.class);
+    }
+
+    @Override
+    public RouteDTO findOne(Long aLong) {
+        return null;
+    }
+
+    @Override
+    public List<RouteDTO> findAll() {
+        return null;
     }
 }

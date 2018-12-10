@@ -34,7 +34,7 @@ public class RouteController {
     @ApiOperation("Get all existing routes")
     @GetMapping
     public ResponseEntity<Resources<RouteExtendedDTO>> getAllRoutes() {
-        List<RouteExtendedDTO> routes = routeService.findAll();
+        List<RouteExtendedDTO> routes = routeService.findAllRoutes();
         routes.forEach(route -> {
             Link link = ControllerLinkBuilder.linkTo(
                     ControllerLinkBuilder.methodOn(RouteController.class)

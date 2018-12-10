@@ -15,7 +15,7 @@ import java.util.List;
  * @author Sergei Visotsky, 2018
  */
 @Service
-public class AircraftService {
+public class AircraftService implements IService<AircraftDTO> {
     private static final String AIRCRAFT_NOT_FOUND = "Aircraft with this ID not found";
     private final ModelMapper modelMapper;
     private final AircraftRepository aircraftRepository;
@@ -32,6 +32,7 @@ public class AircraftService {
      * @param aircraftId gets aircraftDTO ID as parameter
      * @return aircraftDTO DTO
      */
+    @Override
     public AircraftDTO findOne(Long aircraftId) {
         Aircraft aircraft = aircraftRepository.findById(aircraftId)
                 .orElseThrow(() ->
@@ -45,6 +46,7 @@ public class AircraftService {
      *
      * @return list of Aircraft DTO
      */
+    @Override
     public List<AircraftDTO> findAll() {
         List<Aircraft> aircraftList = aircraftRepository.findAll();
         return ObjectMapperUtils.mapAll(aircraftList, AircraftDTO.class);
@@ -56,6 +58,7 @@ public class AircraftService {
      * @param aircraftDTO get aircraftDTO DTO as a parameter
      * @return Aircraft DTO
      */
+    @Override
     public AircraftDTO save(AircraftDTO aircraftDTO) {
         Aircraft aircraft = modelMapper.map(aircraftDTO, Aircraft.class);
         aircraftRepository.save(aircraft);
@@ -69,6 +72,7 @@ public class AircraftService {
      * @param aircraftDTO get aircraftDTO DTO as a parameter
      * @return aircraftDTO DTO
      */
+    @Override
     public AircraftDTO update(Long aircraftId, AircraftDTO aircraftDTO) {
         aircraftDTO.setAircraftId(aircraftId);
 
@@ -94,6 +98,7 @@ public class AircraftService {
      * @param aircraftId get aircraftDTO ID as a parameter
      * @return aircraftDTO DTO as a response
      */
+    @Override
     public AircraftDTO delete(Long aircraftId) {
         Aircraft aircraft = aircraftRepository.findById(aircraftId)
                 .orElseThrow(() ->

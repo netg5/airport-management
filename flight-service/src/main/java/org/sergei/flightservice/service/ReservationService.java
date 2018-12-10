@@ -24,7 +24,7 @@ import java.util.List;
  * @author Sergei Visotsky, 2018
  */
 @Service
-public class ReservationService {
+public class ReservationService implements IReservationService<ReservationExtendedDTO, ReservationDTO> {
 
     private static final String CUSTOMER_NOT_FOUND = "Customer with this ID not found";
     private static final String ROUTE_NOT_FOUND = "Route with this ID not found";
@@ -55,7 +55,8 @@ public class ReservationService {
      * @param reservationId gets flight reservation ID as a parameter
      * @return Flight reservation extended DTO
      */
-    public ReservationExtendedDTO getOneForCustomerById(Long customerId, Long reservationId) {
+    @Override
+    public ReservationExtendedDTO findOneForCustomer(Long customerId, Long reservationId) {
         Customer customer = customerRepository.findById(customerId).orElseThrow(() ->
                 new ResourceNotFoundException(CUSTOMER_NOT_FOUND)
         );
@@ -96,7 +97,8 @@ public class ReservationService {
      * @param customerId gets customer ID
      * @return extended flight reservation DTO
      */
-    public List<ReservationExtendedDTO> getAllReservationsForCustomer(Long customerId) {
+    @Override
+    public List<ReservationExtendedDTO> findAllForCustomer(Long customerId) {
         // Find customer
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() ->
@@ -142,14 +144,15 @@ public class ReservationService {
     }
 
     /**
-     * Method to create reservation for customer
+     * Method to save reservation for customer
      *
-     * @param customerId           Gets customer ID
+     * @param customerId     Gets customer ID
      * @param reservationDTO get flight reservation DTO from controller
      * @return flight reservation DTO as a response
      */
-    public ReservationDTO createReservation(Long customerId,
-                                            ReservationDTO reservationDTO) {
+    @Override
+    public ReservationDTO saveReservation(Long customerId,
+                                          ReservationDTO reservationDTO) {
         // Find customer by ID
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() ->
@@ -173,11 +176,12 @@ public class ReservationService {
     /**
      * Method to update reservation details
      *
-     * @param customerId           gets as a parameter customer ID
-     * @param reservationId        get as a parameter reservation ID
+     * @param customerId     gets as a parameter customer ID
+     * @param reservationId  get as a parameter reservation ID
      * @param reservationDTO get as a parameter Flight reservation DTO
      * @return flight reservation DTO
      */
+    @Override
     public ReservationDTO updateReservation(Long customerId,
                                             Long reservationId,
                                             ReservationDTO reservationDTO) {
@@ -207,6 +211,7 @@ public class ReservationService {
      * @param reservationId get reservation ID to be deleted
      * @return deleted reservation DTO
      */
+    @Override
     public ReservationExtendedDTO delete(Long reservationId) {
         Reservation reservation = reservationRepository.findById(reservationId)
                 .orElseThrow(() ->
@@ -214,5 +219,25 @@ public class ReservationService {
                 );
         reservationRepository.delete(reservation);
         return modelMapper.map(reservation, ReservationExtendedDTO.class);
+    }
+
+    @Override
+    public Object findOne(Long aLong) {
+        return null;
+    }
+
+    @Override
+    public List findAll() {
+        return null;
+    }
+
+    @Override
+    public Object save(Object entityDTO) {
+        return null;
+    }
+
+    @Override
+    public Object update(Long aLong, Object entityDTO) {
+        return null;
     }
 }
