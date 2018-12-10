@@ -1,6 +1,13 @@
 # flight-reservation
 [![Build Status](https://travis-ci.com/sergeivisotsky/flight-reservation.svg?branch=master)](https://travis-ci.com/sergeivisotsky/flight-reservation)
 
+## Technologies
+* Java 8
+* Spring Boot 2
+* Apache Maven
+* Swagger UI
+* ModelMapper
+
 ## Services
 * config-service - microserivce which makes calls to tht repository where all configurations are stored - [https://github.com/sergeivisotsky/flight-reservation-config](https://github.com/sergeivisotsky/flight-reservation-config)
 * auth-service - microservice responsible for authentication and authorization
