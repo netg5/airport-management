@@ -56,7 +56,7 @@ public class RouteController {
     @GetMapping("/{routeId}")
     public ResponseEntity<RouteDTO> getRouteById(@ApiParam(value = "Route ID which should be found", required = true)
                                                  @PathVariable("routeId") Long routeId) {
-        RouteDTO routeDTO = routeService.findOne(routeId);
+        RouteDTO routeDTO = routeService.findOneRoute(routeId);
         return new ResponseEntity<>(setLinks(routeDTO), HttpStatus.OK);
     }
 
