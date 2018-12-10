@@ -60,12 +60,15 @@ public class CustomerController {
     public ResponseEntity<CustomerDTO> getCustomerById(@ApiParam(value = "Customer ID which should be found", required = true)
                                                        @PathVariable("customerId") Long customerId) {
         CustomerDTO customer = customerService.findOne(customerId);
-        Link link = ControllerLinkBuilder.linkTo(CustomerController.class).withSelfRel();
+        Link selfLink = ControllerLinkBuilder.linkTo(
+                ControllerLinkBuilder.methodOn(CustomerController.class).getCustomerById(customerId)).withSelfRel();
         Link reservationsLink = ControllerLinkBuilder.linkTo(
                 ControllerLinkBuilder.methodOn(ReservationController.class)
                         .getAllForCustomer(customerId)).withRel("reservations");
-        customer.add(link);
+        Link link = ControllerLinkBuilder.linkTo(CustomerController.class).withRel("allCustomers");
+        customer.add(selfLink);
         customer.add(reservationsLink);
+        customer.add(link);
         return new ResponseEntity<>(customer, HttpStatus.OK);
     }
 
