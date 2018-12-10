@@ -1,6 +1,8 @@
 package org.sergei.authservice.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,6 +13,7 @@ import java.util.List;
  * @author Sergei Visotsky, 2018
  */
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "user")

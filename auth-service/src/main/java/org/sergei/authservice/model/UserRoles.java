@@ -1,6 +1,7 @@
 package org.sergei.authservice.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -9,6 +10,7 @@ import java.io.Serializable;
  * @author Sergei Visotsky, 2018
  */
 @Data
+@NoArgsConstructor
 @Entity
 @Table(name = "user_roles")
 public class UserRoles implements Serializable {
