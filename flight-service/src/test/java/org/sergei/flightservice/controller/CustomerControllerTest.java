@@ -9,6 +9,8 @@ import org.sergei.flightservice.model.Customer;
 import org.sergei.flightservice.repository.CustomerRepository;
 import org.sergei.flightservice.testconfig.AppConfigTest;
 import org.sergei.flightservice.testconfig.ResourceServerConfiguration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -23,7 +25,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Collections;
 
-import static org.hamcrest.core.Is.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -40,17 +41,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestPropertySource(locations = "classpath:application-test.properties")
 @AutoConfigureMockMvc
 @ContextConfiguration(classes = {AppConfigTest.class, ResourceServerConfiguration.class})
-//@EnableJpaRepositories(basePackages = "org.sergei.flightservice.repository")
-//@EntityScan(basePackages = "org.sergei.flightservice.model")
+@EnableJpaRepositories(basePackages = "org.sergei.flightservice.repository")
+@EntityScan(basePackages = "org.sergei.flightservice.model")
 public class CustomerControllerTest {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(CustomerControllerTest.class);
 
     private static final String BASE_URL = "/customers";
 
-    @MockBean
-    private CustomerRepository customerRepository;
-
     @Autowired
     private MockMvc mvc;
+
+    @MockBean
+    private CustomerRepository customerRepository;
 
     @Test
     public void getAllCustomers_thenReturnOk() throws Exception {
@@ -67,7 +70,9 @@ public class CustomerControllerTest {
         String lastName = "Smith";
         int age = 20;
 
-        setupCustomer(customerId, firstName, lastName, age);
+        Customer customer = setupCustomer(customerId, firstName, lastName, age);
+
+//        LOGGER.info("Customer first name is: {}", customer.getFirstName()); // Throws NullPointerException
 
         mvc.perform(
                 get(BASE_URL)
@@ -83,7 +88,7 @@ public class CustomerControllerTest {
 
     @Test
     public void postCustomer_thenGetCreated() throws Exception {
-//        customerRepository.save(customer);\
+//        customerRepository.save(customer);
         Long customerId = 1L;
         String firstName = "John";
         String lastName = "Smith";
@@ -115,6 +120,6 @@ public class CustomerControllerTest {
         customer.setAge(age);
         customer.setFlightReservations(Collections.emptyList());
 
-        return customer;
+        return customerRepository.save(customer);
     }
 }
