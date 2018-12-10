@@ -56,9 +56,7 @@ public class AircraftController {
     public ResponseEntity<AircraftDTO> getAircraftById(@ApiParam(value = "Aircraft ID which should be found", required = true)
                                                        @PathVariable("aircraftId") Long aircraftId) {
         AircraftDTO aircraftDTO = aircraftService.findOne(aircraftId);
-        Link link = ControllerLinkBuilder.linkTo(AircraftController.class).withSelfRel();
-        aircraftDTO.add(link);
-        return new ResponseEntity<>(aircraftDTO, HttpStatus.OK);
+        return new ResponseEntity<>(setLinks(aircraftDTO), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Save aircraft", notes = "Operation allowed for ADMIN only")
@@ -81,7 +79,8 @@ public class AircraftController {
                                                       @PathVariable("aircraftId") Long aircraftId,
                                                       @ApiParam(value = "Update aircracft", required = true)
                                                       @RequestBody AircraftDTO aircraftDTO) {
-        return new ResponseEntity<>(aircraftService.update(aircraftId, aircraftDTO), HttpStatus.OK);
+        AircraftDTO aircraft = aircraftService.update(aircraftId, aircraftDTO);
+        return new ResponseEntity<>(setLinks(aircraft), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Delete aircraft", notes = "Operation allowed for ADMIN only")
@@ -95,5 +94,20 @@ public class AircraftController {
     public ResponseEntity<AircraftDTO> deleteAircraft(@ApiParam(value = "Aircraft ID which should be deleted", required = true)
                                                       @PathVariable("aircraftId") Long aircraftId) {
         return new ResponseEntity<>(aircraftService.delete(aircraftId), HttpStatus.NO_CONTENT);
+    }
+
+    /**
+     * Method to set HATEOAS links for aircraft
+     *
+     * @param aircraftDTO get DTO to setup links
+     * @return DTO with links
+     */
+    private AircraftDTO setLinks(AircraftDTO aircraftDTO) {
+        Link selfLink = ControllerLinkBuilder.linkTo(
+                ControllerLinkBuilder.methodOn(AircraftController.class).getAircraftById(aircraftDTO.getAircraftId())).withSelfRel();
+        Link link = ControllerLinkBuilder.linkTo(AircraftController.class).withRel("allAircrafts");
+        aircraftDTO.add(selfLink);
+        aircraftDTO.add(link);
+        return aircraftDTO;
     }
 }

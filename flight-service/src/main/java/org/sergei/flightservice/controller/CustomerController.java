@@ -60,16 +60,7 @@ public class CustomerController {
     public ResponseEntity<CustomerDTO> getCustomerById(@ApiParam(value = "Customer ID which should be found", required = true)
                                                        @PathVariable("customerId") Long customerId) {
         CustomerDTO customer = customerService.findOne(customerId);
-        Link selfLink = ControllerLinkBuilder.linkTo(
-                ControllerLinkBuilder.methodOn(CustomerController.class).getCustomerById(customerId)).withSelfRel();
-        Link reservationsLink = ControllerLinkBuilder.linkTo(
-                ControllerLinkBuilder.methodOn(ReservationController.class)
-                        .getAllForCustomer(customerId)).withRel("reservations");
-        Link link = ControllerLinkBuilder.linkTo(CustomerController.class).withRel("allCustomers");
-        customer.add(selfLink);
-        customer.add(reservationsLink);
-        customer.add(link);
-        return new ResponseEntity<>(customer, HttpStatus.OK);
+        return new ResponseEntity<>(setLinks(customer), HttpStatus.OK);
     }
 
     @ApiOperation("Save customer")
@@ -90,7 +81,8 @@ public class CustomerController {
                                                       @PathVariable("customerId") Long customerId,
                                                       @ApiParam(value = "Updated customer", required = true)
                                                       @RequestBody CustomerDTO customerDTO) {
-        return new ResponseEntity<>(customerService.update(customerId, customerDTO), HttpStatus.OK);
+        CustomerDTO customer = customerService.update(customerId, customerDTO);
+        return new ResponseEntity<>(setLinks(customer), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Delete customer data", notes = "Operation allowed for ADMIN only")
@@ -104,5 +96,24 @@ public class CustomerController {
     public ResponseEntity<CustomerDTO> deleteCustomer(@ApiParam(value = "Customer ID which should be deleted", required = true)
                                                       @PathVariable("customerId") Long customerId) {
         return new ResponseEntity<>(customerService.delete(customerId), HttpStatus.NO_CONTENT);
+    }
+
+    /**
+     * Method to set HATEOAS links for customer
+     *
+     * @param customerDTO get customer DTO to setup links
+     * @return customer DTO with links;
+     */
+    private CustomerDTO setLinks(CustomerDTO customerDTO) {
+        Link selfLink = ControllerLinkBuilder.linkTo(
+                ControllerLinkBuilder.methodOn(CustomerController.class).getCustomerById(customerDTO.getCustomerId())).withSelfRel();
+        Link reservationsLink = ControllerLinkBuilder.linkTo(
+                ControllerLinkBuilder.methodOn(ReservationController.class)
+                        .getAllForCustomer(customerDTO.getCustomerId())).withRel("reservations");
+        Link link = ControllerLinkBuilder.linkTo(CustomerController.class).withRel("allCustomers");
+        customerDTO.add(selfLink);
+        customerDTO.add(reservationsLink);
+        customerDTO.add(link);
+        return customerDTO;
     }
 }

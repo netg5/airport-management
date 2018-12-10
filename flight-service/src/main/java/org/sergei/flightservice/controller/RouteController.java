@@ -57,9 +57,7 @@ public class RouteController {
     public ResponseEntity<RouteDTO> getRouteById(@ApiParam(value = "Route ID which should be found", required = true)
                                                  @PathVariable("routeId") Long routeId) {
         RouteDTO routeDTO = routeService.findOne(routeId);
-        Link link = ControllerLinkBuilder.linkTo(RouteController.class).withSelfRel();
-        routeDTO.add(link);
-        return new ResponseEntity<>(routeDTO, HttpStatus.OK);
+        return new ResponseEntity<>(setLinks(routeDTO), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Save route", notes = "Operation allowed for ADMIN only")
@@ -82,7 +80,8 @@ public class RouteController {
                                                 @PathVariable("routeId") Long routeId,
                                                 @ApiParam(value = "Saved route", required = true)
                                                 @RequestBody RouteDTO routeDTO) {
-        return new ResponseEntity<>(routeService.update(routeId, routeDTO), HttpStatus.OK);
+        RouteDTO route = routeService.update(routeId, routeDTO);
+        return new ResponseEntity<>(setLinks(routeDTO), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Method to delete route", notes = "Operation allowed for ADMIN only")
@@ -96,5 +95,20 @@ public class RouteController {
     public ResponseEntity<RouteDTO> deleteRoute(@ApiParam(value = "Route ID which should be deleted", required = true)
                                                 @PathVariable("routeId") Long routeId) {
         return new ResponseEntity<>(routeService.delete(routeId), HttpStatus.NO_CONTENT);
+    }
+
+    /**
+     * Method to set HATEOAS links for customer
+     *
+     * @param routeDTO get route DTO to set links
+     * @return DTO with links added
+     */
+    private RouteDTO setLinks(RouteDTO routeDTO) {
+        Link link = ControllerLinkBuilder.linkTo(RouteController.class).withRel("allRoutes");
+        Link selfLink = ControllerLinkBuilder.linkTo(
+                ControllerLinkBuilder.methodOn(RouteController.class).getRouteById(routeDTO.getRouteId())).withSelfRel();
+        routeDTO.add(selfLink);
+        routeDTO.add(link);
+        return routeDTO;
     }
 }
