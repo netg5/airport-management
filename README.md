@@ -55,7 +55,8 @@ In case if access token is expired refresh token should be used to renew access 
 
 ## TODO
 1. Write tests for the RESTful service
-2. Configure Zipkin service
-3. Make Swagger available through the gateway for all microservices
-4. Implement Hystrix fallback methods
-5. Front-end (REST client)
+2. Implement patch methods for all REST controllers
+3. Configure Zipkin service
+4. Make Swagger available through the gateway for all microservices
+5. Implement Hystrix fallback methods
+6. Front-end (REST client)
