@@ -92,27 +92,6 @@ public class CustomerService implements IService<CustomerDTO> {
     }
 
     /**
-     * TODO: Patch specific field for the customer
-     * FIXME: Updates all pojo setting other fields to be null
-     *
-     * @param customerId customer ID which fild should be updated
-     * @param params     List of params that should be updated
-     * @return patched customer DTO
-     */
-    public CustomerDTO patchCustomer(Long customerId, Map<String, Object> params) {
-        Customer customer = customerRepository.findById(customerId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(CUSTOMER_NOT_FOUND)
-                );
-        customer.setFirstName(String.valueOf(params.get("firstName")));
-        customer.setLastName(String.valueOf(params.get("lastName")));
-        customer.setAge(Integer.valueOf(String.valueOf(params.get("age"))));
-        customerRepository.save(customer);
-
-        return modelMapper.map(customer, CustomerDTO.class);
-    }
-
-    /**
      * Delete customer
      *
      * @param customerId get customer ID as a parameter

@@ -87,17 +87,6 @@ public class CustomerController {
         return new ResponseEntity<>(setLinks(customer), HttpStatus.OK);
     }
 
-    // TODO: Patch one field of the customer
-    @ApiIgnore
-    @ApiOperation("Update one field for a customer")
-    @PatchMapping(value = "/{customerId}", consumes = "application/json")
-    public ResponseEntity<CustomerDTO> patchCustomer(@ApiParam(value = "Customer ID which should be updated", required = true)
-                                                     @PathVariable("customerId") Long customerId,
-                                                     @RequestBody Map<String, Object> params) {
-        CustomerDTO customerDTO = customerService.patchCustomer(customerId, params);
-        return new ResponseEntity<>(customerDTO, HttpStatus.OK);
-    }
-
     @ApiOperation(value = "Delete customer data", notes = "Operation allowed for ADMIN only")
     @ApiResponses(
             value = {
