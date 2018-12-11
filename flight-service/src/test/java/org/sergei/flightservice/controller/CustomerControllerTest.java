@@ -149,7 +149,7 @@ public class CustomerControllerTest {
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .content(jsonObject.toString()))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.customerId").isNotEmpty())
+                .andExpect(jsonPath("$.customerId").value(customerId))
                 .andExpect(jsonPath("$.firstName").value(firstName))
                 .andExpect(jsonPath("$.lastName").value(lastName))
                 .andExpect(jsonPath("$.age").value(age));
@@ -168,7 +168,7 @@ public class CustomerControllerTest {
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .content(putJsonObject.toString()))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.customerId").isNotEmpty())
+                .andExpect(jsonPath("$.customerId").value(customerId))
                 .andExpect(jsonPath("$.firstName").value(putFirstName))
                 .andExpect(jsonPath("$.lastName").value(putLastName))
                 .andExpect(jsonPath("$.age").value(putAge));
