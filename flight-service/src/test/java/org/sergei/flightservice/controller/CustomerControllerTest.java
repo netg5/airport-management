@@ -1,7 +1,6 @@
 package org.sergei.flightservice.controller;
 
 import org.json.JSONObject;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sergei.flightservice.FlightServiceApplication;
@@ -15,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
@@ -52,7 +50,7 @@ public class CustomerControllerTest {
     @Autowired
     private MockMvc mvc;
 
-    @MockBean
+    @Autowired
     private CustomerRepository customerRepository;
 
     @Test
@@ -62,28 +60,25 @@ public class CustomerControllerTest {
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)).andExpect(status().isOk());
     }
 
-    @Ignore
+    //    @Ignore
     @Test
     public void getAllCustomers() throws Exception {
         Long customerId = 1L;
         String firstName = "John";
         String lastName = "Smith";
         int age = 20;
-
-        Customer customer = setupCustomer(customerId, firstName, lastName, age);
-
-        LOGGER.info("Customer first name is: {}", customer.getFirstName()); // Throws NullPointerException
+        setupCustomer(customerId, firstName, lastName, age);
 
         mvc.perform(
                 get(BASE_URL)
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isOk())
-//                .andExpect(jsonPath("href", is(BASE_URL)))
-//                .andExpect(jsonPath("$.length()").value(4))
                 .andExpect(jsonPath("$._embedded.customerDTOList[0].customerId").value(1L))
                 .andExpect(jsonPath("$._embedded.customerDTOList[0].firstName").value("John"))
                 .andExpect(jsonPath("$._embedded.customerDTOList[0].lastName").value("Smith"))
-                .andExpect(jsonPath("$._embedded.customerDTOList[0].age").value(20));
+                .andExpect(jsonPath("$._embedded.customerDTOList[0].age").value(20))
+                .andExpect(jsonPath("$._embedded.customerDTOList[0]._links.self.href").value("http://localhost/customers/" + customerId))
+                .andExpect(jsonPath("$._embedded.customerDTOList[0]._links.reservations.href").value("http://localhost/customers/" + customerId + "/reservations"));
     }
 
     @Test
