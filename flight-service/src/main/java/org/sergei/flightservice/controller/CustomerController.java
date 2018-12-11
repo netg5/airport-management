@@ -8,10 +8,8 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resources;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import springfox.documentation.annotations.ApiIgnore;
@@ -89,6 +87,7 @@ public class CustomerController {
         return new ResponseEntity<>(setLinks(customer), HttpStatus.OK);
     }
 
+    // TODO: Patch one field of the customer
     @ApiIgnore
     @ApiOperation("Update one field for a customer")
     @PatchMapping(value = "/{customerId}", consumes = "application/json")
