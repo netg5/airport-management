@@ -8,12 +8,16 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resources;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Sergei Visotsky, 2018
@@ -83,6 +87,16 @@ public class CustomerController {
                                                       @RequestBody CustomerDTO customerDTO) {
         CustomerDTO customer = customerService.update(customerId, customerDTO);
         return new ResponseEntity<>(setLinks(customer), HttpStatus.OK);
+    }
+
+    @ApiIgnore
+    @ApiOperation("Update one field for a customer")
+    @PatchMapping(value = "/{customerId}", consumes = "application/json")
+    public ResponseEntity<CustomerDTO> patchCustomer(@ApiParam(value = "Customer ID which should be updated", required = true)
+                                                     @PathVariable("customerId") Long customerId,
+                                                     @RequestBody Map<String, Object> params) {
+        CustomerDTO customerDTO = customerService.patchCustomer(customerId, params);
+        return new ResponseEntity<>(customerDTO, HttpStatus.OK);
     }
 
     @ApiOperation(value = "Delete customer data", notes = "Operation allowed for ADMIN only")
