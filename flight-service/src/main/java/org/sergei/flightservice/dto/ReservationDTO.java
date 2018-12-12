@@ -1,5 +1,6 @@
 package org.sergei.flightservice.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,5 +22,7 @@ public class ReservationDTO extends ResourceSupport {
     private Long reservationId;
     private Long customerId;
     private Long routeId;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime reservationDate;
 }

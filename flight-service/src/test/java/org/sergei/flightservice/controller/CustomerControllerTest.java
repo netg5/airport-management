@@ -42,8 +42,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @EntityScan(basePackages = "org.sergei.flightservice.model")
 public class CustomerControllerTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CustomerControllerTest.class);
-
     private static final String BASE_URL = "/customers";
 
     @Autowired
@@ -54,13 +52,6 @@ public class CustomerControllerTest {
 
     @Test
     public void getAllCustomers_thenReturnOk() throws Exception {
-        mvc.perform(
-                get(BASE_URL)
-                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)).andExpect(status().isOk());
-    }
-
-    @Test
-    public void getAllCustomers() throws Exception {
         final Long customerId = 1L;
         final String firstName = "John";
         final String lastName = "Smith";
@@ -72,11 +63,12 @@ public class CustomerControllerTest {
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.customerDTOList[0].customerId").isNotEmpty())
-                .andExpect(jsonPath("$._embedded.customerDTOList[0].firstName").value("John"))
-                .andExpect(jsonPath("$._embedded.customerDTOList[0].lastName").value("Smith"))
-                .andExpect(jsonPath("$._embedded.customerDTOList[0].age").value(20))
+                .andExpect(jsonPath("$._embedded.customerDTOList[0].firstName").value(firstName))
+                .andExpect(jsonPath("$._embedded.customerDTOList[0].lastName").value(lastName))
+                .andExpect(jsonPath("$._embedded.customerDTOList[0].age").value(age))
                 .andExpect(jsonPath("$._embedded.customerDTOList[0]._links.self.href").value("http://localhost/customers/2"))
-                .andExpect(jsonPath("$._embedded.customerDTOList[0]._links.reservations.href").value("http://localhost/customers/2/reservations"));
+                .andExpect(jsonPath("$._embedded.customerDTOList[0]._links.reservations.href").value("http://localhost/customers/2/reservations"))
+                .andExpect(jsonPath("$._links.self.href").value("http://localhost/customers"));
     }
 
     @Test
@@ -93,9 +85,9 @@ public class CustomerControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.customerId").isNotEmpty())
                 .andExpect(jsonPath("$.customerId").isNotEmpty())
-                .andExpect(jsonPath("$.firstName").value("John"))
-                .andExpect(jsonPath("$.lastName").value("Smith"))
-                .andExpect(jsonPath("$.age").value(20))
+                .andExpect(jsonPath("$.firstName").value(firstName))
+                .andExpect(jsonPath("$.lastName").value(lastName))
+                .andExpect(jsonPath("$.age").value(age))
                 .andExpect(jsonPath("$._links.self.href").value("http://localhost/customers/2"))
                 .andExpect(jsonPath("$._links.reservations.href").value("http://localhost/customers/2/reservations"))
                 .andExpect(jsonPath("$._links.allCustomers.href").value("http://localhost/customers"));
@@ -120,9 +112,9 @@ public class CustomerControllerTest {
                         .content(jsonObject.toString()))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.customerId").isNotEmpty())
-                .andExpect(jsonPath("$.firstName").value("John"))
-                .andExpect(jsonPath("$.lastName").value("Smith"))
-                .andExpect(jsonPath("$.age").value(20));
+                .andExpect(jsonPath("$.firstName").value(firstName))
+                .andExpect(jsonPath("$.lastName").value(lastName))
+                .andExpect(jsonPath("$.age").value(age));
     }
 
     @Test
