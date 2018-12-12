@@ -8,8 +8,6 @@ import org.sergei.flightservice.model.Customer;
 import org.sergei.flightservice.repository.CustomerRepository;
 import org.sergei.flightservice.testconfig.AppConfigTest;
 import org.sergei.flightservice.testconfig.ResourceServerConfiguration;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -180,8 +178,7 @@ public class CustomerControllerTest {
                 .andExpect(jsonPath("$.lastName").value(lastName))
                 .andExpect(jsonPath("$.age").value(age));
 
-        mvc.perform(
-                delete(BASE_URL + "/" + customerId))
+        mvc.perform(delete(BASE_URL + "/" + customerId))
                 .andExpect(status().isNoContent());
     }
 
