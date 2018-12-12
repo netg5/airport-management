@@ -151,7 +151,7 @@ public class AircraftControllerTest {
                 .put("aircraftWeight", putAircraftWeight)
                 .put("maxPassengers", putMaxPassengers);
         mvc.perform(
-                put(BASE_URL + "/" + aircraftId)
+                put(BASE_URL + "/2")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .content(putJsonObject.toString()))
                 .andExpect(status().isOk())
@@ -188,7 +188,7 @@ public class AircraftControllerTest {
                 .andExpect(jsonPath("$.maxPassengers").value(maxPassengers));
 
         mvc.perform(
-                delete(BASE_URL + "/2"))
+                delete(BASE_URL + "/" + aircraftId))
                 .andExpect(status().isNoContent());
     }
 
