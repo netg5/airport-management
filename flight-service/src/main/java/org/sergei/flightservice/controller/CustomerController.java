@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 import java.util.Map;
@@ -87,15 +86,18 @@ public class CustomerController {
         return new ResponseEntity<>(setLinks(customer), HttpStatus.OK);
     }
 
-    // TODO: Patch one field of the customer
-    @ApiIgnore
     @ApiOperation("Update one field for a customer")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(code = 404, message = "Invalid customer ID")
+            }
+    )
     @PatchMapping(value = "/{customerId}", consumes = "application/json")
     public ResponseEntity<CustomerDTO> patchCustomer(@ApiParam(value = "Customer ID which should be updated", required = true)
                                                      @PathVariable("customerId") Long customerId,
                                                      @RequestBody Map<String, Object> params) {
-        CustomerDTO customerDTO = customerService.patchCustomer(customerId, params);
-        return new ResponseEntity<>(customerDTO, HttpStatus.OK);
+        CustomerDTO customerDTO = customerService.patch(customerId, params);
+        return new ResponseEntity<>(setLinks(customerDTO), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Delete customer data", notes = "Operation allowed for ADMIN only")

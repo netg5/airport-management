@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Sergei Visotsky, 2018
@@ -90,6 +91,34 @@ public class AircraftService implements IService<AircraftDTO> {
         aircraftRepository.save(aircraft);
 
         return aircraftDTO;
+    }
+
+    /**
+     * Method to update one field of the aircraft
+     *
+     * @param aircraftId ID for aircraft that should be updated
+     * @param params     list of params that should be updated
+     * @return updated aircraft
+     */
+    @Override
+    public AircraftDTO patch(Long aircraftId, Map<String, Object> params) {
+        Aircraft aircraft = aircraftRepository.findById(aircraftId)
+                .orElseThrow(
+                        () -> new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
+                );
+        if (params.get("model") != null) {
+            aircraft.setModel(String.valueOf(params.get("model")));
+        }
+        if (params.get("aircraftName") != null) {
+            aircraft.setAircraftName(String.valueOf(params.get("aircraftName")));
+        }
+        if (params.get("aircraftWeight") != null) {
+            aircraft.setAircraftWeight(Double.valueOf(String.valueOf(params.get("aircraftWeight"))));
+        }
+        if (params.get("maxPassengers") != null) {
+            aircraft.setMaxPassengers(Integer.valueOf(String.valueOf(params.get("maxPassengers"))));
+        }
+        return modelMapper.map(aircraft, AircraftDTO.class);
     }
 
     /**

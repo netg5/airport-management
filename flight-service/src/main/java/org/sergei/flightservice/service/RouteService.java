@@ -13,7 +13,10 @@ import org.sergei.flightservice.utils.ObjectMapperUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Sergei Visotsky, 2018
@@ -139,6 +142,43 @@ public class RouteService implements IRouteService<RouteDTO, RouteExtendedDTO> {
         routeRepository.save(route);
 
         return routeDTO;
+    }
+
+    /**
+     * Method to update one field of the route
+     *
+     * @param routeId ID of the route which should be updated
+     * @param params  list of params that should be updated
+     * @return updated route
+     */
+    @Override
+    public RouteDTO patch(Long routeId, Map<String, Object> params) {
+        Route route = routeRepository.findById(routeId)
+                .orElseThrow(
+                        () -> new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
+                );
+        if (params.get("distance") != null) {
+            route.setDistance(Double.valueOf(String.valueOf(params.get("distance"))));
+        }
+        if (params.get("departureTime") != null) {
+            route.setDepartureTime(LocalDateTime.parse(String.valueOf(params.get("departureTime"))));
+        }
+        if (params.get("arrivalTime") != null) {
+            route.setArrivalTime(LocalDateTime.parse(String.valueOf(params.get("arrivalTime"))));
+        }
+        if (params.get("price") != null) {
+            route.setPrice(BigDecimal.valueOf(Long.parseLong(String.valueOf(params.get("price")))));
+        }
+        if (params.get("place") != null) {
+            route.setPlace(String.valueOf(params.get("place")));
+        }
+        if (params.get("aircraftId") != null) {
+            route.setAircraft(aircraftRepository.findById(Long.valueOf(String.valueOf(params.get("aircraftId"))))
+                    .orElseThrow(() ->
+                            new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
+                    ));
+        }
+        return modelMapper.map(route, RouteDTO.class);
     }
 
     /**

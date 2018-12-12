@@ -6,7 +6,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sergei.flightservice.FlightServiceApplication;
 import org.sergei.flightservice.model.Aircraft;
-import org.sergei.flightservice.model.Route;
 import org.sergei.flightservice.repository.AircraftRepository;
 import org.sergei.flightservice.repository.RouteRepository;
 import org.sergei.flightservice.testconfig.AppConfigTest;
@@ -23,9 +22,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -167,6 +163,55 @@ public class AircraftControllerTest {
         LOGGER.info("Aircraft ID: {}", aircraftId);
         mvc.perform(
                 put(BASE_URL + "/" + aircraftId)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                        .content(putJsonObject.toString()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.aircraftId").isNotEmpty())
+                .andExpect(jsonPath("$.model").value(putModel))
+                .andExpect(jsonPath("$.aircraftName").value(putAircraft))
+                .andExpect(jsonPath("$.aircraftWeight").value(putAircraftWeight))
+                .andExpect(jsonPath("$.maxPassengers").value(putMaxPassengers));
+    }
+
+    @Test
+    public void postAircraft_thenPatchAircraft_thenGetOk() throws Exception {
+        final Long aircraftId = 1L;
+        final String model = "747-400";
+        final String aircraftName = "Boeing";
+        final Double aircraftWeight = 30000.0;
+        final Integer maxPassengers = 2300;
+
+        JSONObject jsonObject = new JSONObject()
+                .put("aircraftId", aircraftId)
+                .put("model", model)
+                .put("aircraftName", aircraftName)
+                .put("aircraftWeight", aircraftWeight)
+                .put("maxPassengers", maxPassengers);
+        mvc.perform(
+                post(BASE_URL)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                        .content(jsonObject.toString()))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.aircraftId").isNotEmpty())
+                .andExpect(jsonPath("$.model").value(model))
+                .andExpect(jsonPath("$.aircraftName").value(aircraftName))
+                .andExpect(jsonPath("$.aircraftWeight").value(aircraftWeight))
+                .andExpect(jsonPath("$.maxPassengers").value(maxPassengers));
+
+        final String putModel = "747-400";
+        final String putAircraft = "Boeing";
+        final Double putAircraftWeight = 30000.0;
+        final Integer putMaxPassengers = 2300;
+        JSONObject putJsonObject = new JSONObject()
+                .put("aircraftId", aircraftId)
+                .put("model", putModel)
+                .put("aircraftName", putAircraft)
+                .put("aircraftWeight", putAircraftWeight)
+                .put("maxPassengers", putMaxPassengers);
+
+        LOGGER.info("Aircraft ID: {}", aircraftId);
+        mvc.perform(
+                patch(BASE_URL + "/" + aircraftId)
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .content(putJsonObject.toString()))
                 .andExpect(status().isOk())

@@ -18,7 +18,9 @@ import org.sergei.flightservice.utils.ObjectMapperUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Sergei Visotsky, 2018
@@ -206,6 +208,38 @@ public class ReservationService implements IReservationService<ReservationExtend
     }
 
     /**
+     * Method to update one field of the reservation
+     *
+     * @param reservationId ID of the reservation that should be updates
+     * @param params list of params that should be updated
+     * @return rupdated reservation
+     */
+    @Override
+    public ReservationDTO patchReservation(Long reservationId, Map<String, Object> params) {
+        Reservation reservation = reservationRepository.findById(reservationId)
+                .orElseThrow(
+                        () -> new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
+                );
+        if (params.get("customerId") != null) {
+            reservation.setCustomer(customerRepository.findById(Long.valueOf(String.valueOf(params.get("customerId"))))
+                    .orElseThrow(() ->
+                            new ResourceNotFoundException(CUSTOMER_NOT_FOUND)
+                    )
+            );
+        }
+        if (params.get("routeId") != null) {
+            reservation.setRoute(routeRepository.findById(Long.valueOf(String.valueOf(params.get("routeId"))))
+                    .orElseThrow(() ->
+                            new ResourceNotFoundException(ROUTE_NOT_FOUND)
+                    ));
+        }
+        if (params.get("reservationDate") != null) {
+            reservation.setReservationDate(LocalDateTime.parse(String.valueOf(params.get("reservationDate"))));
+        }
+        return null;
+    }
+
+    /**
      * Delete reservation by ID
      *
      * @param reservationId get reservation ID to be deleted
@@ -238,6 +272,11 @@ public class ReservationService implements IReservationService<ReservationExtend
 
     @Override
     public Object update(Long aLong, Object entityDTO) {
+        return null;
+    }
+
+    @Override
+    public Object patch(Long aLong, Map params) {
         return null;
     }
 }

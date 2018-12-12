@@ -10,10 +10,12 @@ import org.springframework.hateoas.Resources;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Sergei Visotsky, 2018
@@ -107,6 +109,22 @@ public class ReservationController {
         return new ResponseEntity<>(
                 reservationService.updateReservation(customerId, reservationId, reservationDTO),
                 HttpStatus.ACCEPTED);
+    }
+
+    @ApiOperation(value = "Update one field for the reservation", notes = "Operation allowed for ADMIN only")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(code = 404, message = "Invalid reservation ID")
+            }
+    )
+    @PutMapping(value = "/{reservationId}", consumes = "application/json")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<ReservationDTO> patchRoute(@ApiParam(value = "Reservation ID which should be updated", required = true)
+                                                     @PathVariable("reservationId") Long reservationId,
+                                                     @RequestBody Map<String, Object> params) {
+
+        ReservationDTO reservationDTO = reservationService.patchReservation(reservationId, params);
+        return new ResponseEntity<>(reservationDTO, HttpStatus.OK);
     }
 
     @ApiOperation("Delete reservation")

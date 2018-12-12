@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Sergei Visotsky, 2018
@@ -49,7 +50,7 @@ public class AircraftController {
     @ApiOperation("Get aircraftDTO by ID")
     @ApiResponses(
             value = {
-                    @ApiResponse(code = 404, message = "Invalid aircraftDTO ID")
+                    @ApiResponse(code = 404, message = "Invalid aircraft ID")
             }
     )
     @GetMapping("/{aircraftId}")
@@ -70,7 +71,7 @@ public class AircraftController {
     @ApiOperation(value = "Update aircraft data", notes = "Operation allowed for ADMIN only")
     @ApiResponses(
             value = {
-                    @ApiResponse(code = 404, message = "Invalid aircraftDTO ID")
+                    @ApiResponse(code = 404, message = "Invalid aircraft ID")
             }
     )
     @PutMapping(value = "/{aircraftId}", consumes = "application/json")
@@ -83,10 +84,26 @@ public class AircraftController {
         return new ResponseEntity<>(setLinks(aircraft), HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Update one field of the aircraft", notes = "Operation allowed for ADMIN only")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(code = 404, message = "Invalid aircraft ID")
+            }
+    )
+    @PatchMapping(value = "/{aircraftId}", consumes = "application/json")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<AircraftDTO> patchAircraft(@ApiParam(value = "Aircraft ID which should be updated", required = true)
+                                                     @PathVariable("aircraftId") Long aircraftId,
+                                                     @RequestBody Map<String, Object> params) {
+
+        AircraftDTO aircraftDTO = aircraftService.patch(aircraftId, params);
+        return new ResponseEntity<>(setLinks(aircraftDTO), HttpStatus.OK);
+    }
+
     @ApiOperation(value = "Delete aircraft", notes = "Operation allowed for ADMIN only")
     @ApiResponses(
             value = {
-                    @ApiResponse(code = 404, message = "Invalid aircraftDTO ID")
+                    @ApiResponse(code = 404, message = "Invalid aircraft ID")
             }
     )
     @DeleteMapping(value = "/{aircraftId}")

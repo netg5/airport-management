@@ -157,6 +157,47 @@ public class CustomerControllerTest {
     }
 
     @Test
+    public void postCustomer_thenPatchCustomer_thenGetOk() throws Exception {
+        final long customerId = 1L;
+        final String firstName = "John";
+        final String lastName = "Smith";
+        final int age = 20;
+
+        JSONObject jsonObject = new JSONObject()
+                .put("customerId", customerId)
+                .put("firstName", firstName)
+                .put("lastName", lastName)
+                .put("age", age);
+        mvc.perform(
+                post(BASE_URL)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                        .content(jsonObject.toString()))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.customerId").isNotEmpty())
+                .andExpect(jsonPath("$.firstName").value(firstName))
+                .andExpect(jsonPath("$.lastName").value(lastName))
+                .andExpect(jsonPath("$.age").value(age));
+
+        final String patchFirstName = "JohnP";
+        final String patchLastName = "SmithP";
+        final int patchAge = 21;
+
+        JSONObject putJsonObject = new JSONObject()
+                .put("firstName", patchFirstName)
+                .put("lastName", patchLastName)
+                .put("age", patchAge);
+        mvc.perform(
+                patch(BASE_URL + "/1")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                        .content(putJsonObject.toString()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.customerId").isNotEmpty())
+                .andExpect(jsonPath("$.firstName").value(patchFirstName))
+                .andExpect(jsonPath("$.lastName").value(patchLastName))
+                .andExpect(jsonPath("$.age").value(patchAge));
+    }
+
+    @Test
     public void postCustomer_thenDelete_thenGetNoContent() throws Exception {
         final long customerId = 1L;
         final String firstName = "John";

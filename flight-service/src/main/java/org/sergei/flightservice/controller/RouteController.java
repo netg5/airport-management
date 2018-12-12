@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Sergei Visotsky, 2018
@@ -82,6 +83,22 @@ public class RouteController {
                                                 @RequestBody RouteDTO routeDTO) {
         RouteDTO route = routeService.update(routeId, routeDTO);
         return new ResponseEntity<>(setLinks(route), HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "Update one field for the route", notes = "Operation allowed for ADMIN only")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(code = 404, message = "Invalid route ID")
+            }
+    )
+    @PatchMapping(value = "/{routeId}", consumes = "application/json")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<RouteDTO> patchRoute(@ApiParam(value = "Route ID which should be updated", required = true)
+                                               @PathVariable("routeId") Long routeId,
+                                               @RequestBody Map<String, Object> params) {
+
+        RouteDTO routeDTO = routeService.patch(routeId, params);
+        return new ResponseEntity<>(setLinks(routeDTO), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Method to delete route", notes = "Operation allowed for ADMIN only")
