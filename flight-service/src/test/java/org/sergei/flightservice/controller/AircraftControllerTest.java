@@ -188,7 +188,7 @@ public class AircraftControllerTest {
                 .andExpect(jsonPath("$.maxPassengers").value(maxPassengers));
 
         mvc.perform(
-                delete(BASE_URL + "/" + aircraftId))
+                delete(BASE_URL + "/2"))
                 .andExpect(status().isNoContent());
     }
 
