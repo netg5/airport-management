@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RouteDTO extends ResourceSupport {
+
     private Long routeId;
     private Double distance;
 

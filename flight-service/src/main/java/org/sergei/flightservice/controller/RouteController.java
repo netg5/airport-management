@@ -81,7 +81,7 @@ public class RouteController {
                                                 @ApiParam(value = "Saved route", required = true)
                                                 @RequestBody RouteDTO routeDTO) {
         RouteDTO route = routeService.update(routeId, routeDTO);
-        return new ResponseEntity<>(setLinks(routeDTO), HttpStatus.OK);
+        return new ResponseEntity<>(setLinks(route), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Method to delete route", notes = "Operation allowed for ADMIN only")

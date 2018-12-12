@@ -139,7 +139,7 @@ public class CustomerControllerTest {
                 .andExpect(jsonPath("$.lastName").value(lastName))
                 .andExpect(jsonPath("$.age").value(age));
 
-        /*final String putFirstName = "JohnP";
+        final String putFirstName = "JohnP";
         final String putLastName = "SmithP";
         final int putAge = 21;
 
@@ -155,7 +155,7 @@ public class CustomerControllerTest {
                 .andExpect(jsonPath("$.customerId").isNotEmpty())
                 .andExpect(jsonPath("$.firstName").value(putFirstName))
                 .andExpect(jsonPath("$.lastName").value(putLastName))
-                .andExpect(jsonPath("$.age").value(putAge));*/
+                .andExpect(jsonPath("$.age").value(putAge));
     }
 
     @Test
