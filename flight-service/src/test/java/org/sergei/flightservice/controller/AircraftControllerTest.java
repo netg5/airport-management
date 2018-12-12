@@ -8,6 +8,8 @@ import org.sergei.flightservice.model.Aircraft;
 import org.sergei.flightservice.repository.AircraftRepository;
 import org.sergei.flightservice.testconfig.AppConfigTest;
 import org.sergei.flightservice.testconfig.ResourceServerConfiguration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -37,6 +39,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @EnableJpaRepositories(basePackages = "org.sergei.flightservice.repository")
 @EntityScan(basePackages = "org.sergei.flightservice.model")
 public class AircraftControllerTest {
+    private static final Logger LOGGER = LoggerFactory.getLogger(AircraftControllerTest.class);
+
     private static final String BASE_URL = "/aircrafts";
 
     @Autowired
@@ -116,7 +120,7 @@ public class AircraftControllerTest {
     }
 
     @Test
-    public void postAircraft_thenPutAircraft_thenGetCreated() throws Exception {
+    public void postAircraft_thenPutAircraft_thenGetOk() throws Exception {
         final Long aircraftId = 1L;
         final String model = "747-400";
         final String aircraftName = "Boeing";
@@ -150,8 +154,10 @@ public class AircraftControllerTest {
                 .put("aircraftName", putAircraft)
                 .put("aircraftWeight", putAircraftWeight)
                 .put("maxPassengers", putMaxPassengers);
+
+        LOGGER.info("Aircraft ID: {}", aircraftId);
         mvc.perform(
-                put(BASE_URL + "/2")
+                put(BASE_URL + "/" + aircraftId)
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .content(putJsonObject.toString()))
                 .andExpect(status().isOk())
@@ -186,7 +192,7 @@ public class AircraftControllerTest {
                 .andExpect(jsonPath("$.aircraftName").value(aircraftName))
                 .andExpect(jsonPath("$.aircraftWeight").value(aircraftWeight))
                 .andExpect(jsonPath("$.maxPassengers").value(maxPassengers));
-
+        LOGGER.info("Aircraft ID: {}", aircraftId);
         mvc.perform(
                 delete(BASE_URL + "/" + aircraftId))
                 .andExpect(status().isNoContent());
