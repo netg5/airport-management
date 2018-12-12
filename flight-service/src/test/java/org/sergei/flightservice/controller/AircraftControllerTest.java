@@ -5,7 +5,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sergei.flightservice.FlightServiceApplication;
 import org.sergei.flightservice.model.Aircraft;
-import org.sergei.flightservice.model.Route;
 import org.sergei.flightservice.repository.AircraftRepository;
 import org.sergei.flightservice.repository.RouteRepository;
 import org.sergei.flightservice.testconfig.AppConfigTest;
@@ -22,9 +21,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -178,31 +174,16 @@ public class AircraftControllerTest {
 
     @Test
     public void postAircraft_thenDelete_thenGetNoContent() throws Exception {
-        final long aircraftId = 10L;
+        final long aircraftId = 1L;
         final String model = "747-400";
         final String aircraftName = "Boeing";
         final Double aircraftWeight = 30000.0;
         final Integer maxPassengers = 2300;
 
-        JSONObject jsonObject = new JSONObject()
-                .put("aircraftId", aircraftId)
-                .put("model", model)
-                .put("aircraftName", aircraftName)
-                .put("aircraftWeight", aircraftWeight)
-                .put("maxPassengers", maxPassengers);
-        mvc.perform(
-                post(BASE_URL)
-                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-                        .content(jsonObject.toString()))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.aircraftId").isNotEmpty())
-                .andExpect(jsonPath("$.model").value(model))
-                .andExpect(jsonPath("$.aircraftName").value(aircraftName))
-                .andExpect(jsonPath("$.aircraftWeight").value(aircraftWeight))
-                .andExpect(jsonPath("$.maxPassengers").value(maxPassengers));
-        LOGGER.info("Aircraft ID: {}", aircraftId);
+        Aircraft aircraft = setupAircraft(aircraftId, model, aircraftName, aircraftWeight, maxPassengers);
+        final Long aircraftIdAfter = aircraft.getAircraftId();
 
-        mvc.perform(delete(BASE_URL + "/" + aircraftId))
+        mvc.perform(delete(BASE_URL + "/" + aircraftIdAfter))
                 .andExpect(status().isNoContent());
     }
 
