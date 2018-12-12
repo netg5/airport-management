@@ -194,7 +194,7 @@ public class AircraftControllerTest {
                 .andExpect(jsonPath("$.maxPassengers").value(maxPassengers));
         LOGGER.info("Aircraft ID: {}", aircraftId);
 
-        mvc.perform(delete(BASE_URL + "/1"))
+        mvc.perform(delete(BASE_URL + "/" + aircraftId))
                 .andExpect(status().isNoContent());
     }
 
