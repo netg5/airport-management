@@ -5,7 +5,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sergei.flightservice.FlightServiceApplication;
 import org.sergei.flightservice.model.Aircraft;
+import org.sergei.flightservice.model.Route;
 import org.sergei.flightservice.repository.AircraftRepository;
+import org.sergei.flightservice.repository.RouteRepository;
 import org.sergei.flightservice.testconfig.AppConfigTest;
 import org.sergei.flightservice.testconfig.ResourceServerConfiguration;
 import org.slf4j.Logger;
@@ -20,6 +22,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -48,6 +53,9 @@ public class AircraftControllerTest {
 
     @Autowired
     private AircraftRepository aircraftRepository;
+
+    @Autowired
+    private RouteRepository routeRepository;
 
     @Test
     public void getAllAircrafts_thenReturnOk() throws Exception {
@@ -170,7 +178,7 @@ public class AircraftControllerTest {
 
     @Test
     public void postAircraft_thenDelete_thenGetNoContent() throws Exception {
-        final long aircraftId = 1L;
+        final long aircraftId = 10L;
         final String model = "747-400";
         final String aircraftName = "Boeing";
         final Double aircraftWeight = 30000.0;
