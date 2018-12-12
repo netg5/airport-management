@@ -90,7 +90,7 @@ public class AircraftController {
                     @ApiResponse(code = 404, message = "Invalid aircraft ID")
             }
     )
-    @PatchMapping(value = "/{aircraftId}", consumes = "application/json")
+    @PatchMapping(value = "/{aircraftId}/patch", consumes = "application/json")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<AircraftDTO> patchAircraft(@ApiParam(value = "Aircraft ID which should be updated", required = true)
                                                      @PathVariable("aircraftId") Long aircraftId,

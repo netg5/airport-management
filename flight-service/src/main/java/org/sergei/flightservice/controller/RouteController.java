@@ -91,7 +91,7 @@ public class RouteController {
                     @ApiResponse(code = 404, message = "Invalid route ID")
             }
     )
-    @PatchMapping(value = "/{routeId}", consumes = "application/json")
+    @PatchMapping(value = "/{routeId}/patch", consumes = "application/json")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<RouteDTO> patchRoute(@ApiParam(value = "Route ID which should be updated", required = true)
                                                @PathVariable("routeId") Long routeId,

@@ -211,7 +211,7 @@ public class AircraftControllerTest {
 
         LOGGER.info("Aircraft ID: {}", aircraftId);
         mvc.perform(
-                patch(BASE_URL + "/" + aircraftId)
+                patch(BASE_URL + "/" + aircraftId + "/patch")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .content(putJsonObject.toString()))
                 .andExpect(status().isOk())

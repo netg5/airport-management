@@ -117,11 +117,11 @@ public class ReservationController {
                     @ApiResponse(code = 404, message = "Invalid reservation ID")
             }
     )
-    @PutMapping(value = "/{reservationId}", consumes = "application/json")
+    @PutMapping(value = "/{reservationId}/patch", consumes = "application/json")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<ReservationDTO> patchRoute(@ApiParam(value = "Reservation ID which should be updated", required = true)
-                                                     @PathVariable("reservationId") Long reservationId,
-                                                     @RequestBody Map<String, Object> params) {
+    public ResponseEntity<ReservationDTO> patchReservation(@ApiParam(value = "Reservation ID which should be updated", required = true)
+                                                           @PathVariable("reservationId") Long reservationId,
+                                                           @RequestBody Map<String, Object> params) {
 
         ReservationDTO reservationDTO = reservationService.patchReservation(reservationId, params);
         return new ResponseEntity<>(reservationDTO, HttpStatus.OK);

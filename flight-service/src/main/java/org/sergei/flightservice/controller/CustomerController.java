@@ -92,7 +92,7 @@ public class CustomerController {
                     @ApiResponse(code = 404, message = "Invalid customer ID")
             }
     )
-    @PatchMapping(value = "/{customerId}", consumes = "application/json")
+    @PatchMapping(value = "/{customerId}/patch", consumes = "application/json")
     public ResponseEntity<CustomerDTO> patchCustomer(@ApiParam(value = "Customer ID which should be updated", required = true)
                                                      @PathVariable("customerId") Long customerId,
                                                      @RequestBody Map<String, Object> params) {
