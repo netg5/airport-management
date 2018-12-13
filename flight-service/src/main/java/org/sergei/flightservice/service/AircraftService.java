@@ -62,8 +62,8 @@ public class AircraftService implements IService<AircraftDTO> {
     @Override
     public AircraftDTO save(AircraftDTO aircraftDTO) {
         Aircraft aircraft = modelMapper.map(aircraftDTO, Aircraft.class);
-        aircraftRepository.save(aircraft);
-        return aircraftDTO;
+        Aircraft savedAircraft = aircraftRepository.save(aircraft);
+        return modelMapper.map(savedAircraft, AircraftDTO.class);
     }
 
     /**

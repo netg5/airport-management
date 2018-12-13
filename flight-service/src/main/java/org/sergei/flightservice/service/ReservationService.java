@@ -171,8 +171,8 @@ public class ReservationService implements IReservationService<ReservationExtend
         reservationDTO.setCustomerId(customer.getCustomerId());
         reservationDTO.setRouteId(route.getRouteId());
         Reservation reservation = modelMapper.map(reservationDTO, Reservation.class);
-        reservationRepository.save(reservation);
-        return reservationDTO;
+        Reservation savedReservation = reservationRepository.save(reservation);
+        return modelMapper.map(savedReservation, ReservationDTO.class);
     }
 
     /**
@@ -211,7 +211,7 @@ public class ReservationService implements IReservationService<ReservationExtend
      * Method to update one field of the reservation
      *
      * @param reservationId ID of the reservation that should be updates
-     * @param params list of params that should be updated
+     * @param params        list of params that should be updated
      * @return rupdated reservation
      */
     @Override

@@ -108,8 +108,8 @@ public class RouteService implements IRouteService<RouteDTO, RouteExtendedDTO> {
                         new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
                 );
         route.setAircraft(aircraft);
-        routeRepository.save(route);
-        return routeDTO;
+        Route savedRoute = routeRepository.save(route);
+        return modelMapper.map(savedRoute, RouteDTO.class);
     }
 
     /**

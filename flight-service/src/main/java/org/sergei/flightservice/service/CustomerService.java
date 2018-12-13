@@ -63,15 +63,15 @@ public class CustomerService implements IService<CustomerDTO> {
     @Override
     public CustomerDTO save(CustomerDTO customerDTO) {
         Customer customer = modelMapper.map(customerDTO, Customer.class);
-        customerRepository.save(customer);
-        return customerDTO;
+        Customer savedCustomer = customerRepository.save(customer);
+        return modelMapper.map(savedCustomer, CustomerDTO.class);
     }
 
     /**
      * Method to update customerDTO details
      *
      * @param customerId  gets customerDTO ID as a parameter
-     * @param customerDTO gets customerDTO DO as a prameter
+     * @param customerDTO gets customerDTO DO as a parameter
      * @return customerDTO DTO as a response
      */
     @Override
