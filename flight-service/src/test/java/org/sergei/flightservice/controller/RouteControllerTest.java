@@ -143,8 +143,8 @@ public class RouteControllerTest {
     public void postRoute_thenGetCreated() throws Exception {
         final Long routeId = 1L;
         final Double distance = 3600.0;
-        final String departureTime = "2018-09-28T22:00";
-        final String arrivalTime = "2018-09-28T22:00";
+        final String departureTime = "2018-09-28 22:00";
+        final String arrivalTime = "2018-09-28 22:00";
         final BigDecimal price = BigDecimal.valueOf(450.0);
         final String place = "New-York";
 
