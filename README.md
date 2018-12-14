@@ -13,7 +13,6 @@
 * auth-service - microservice responsible for authentication and authorization
 * eureka-service - microservice registry where of all microservices can be observed
 * doc-service - Swagger documentation service
-* zipkin-service - trace of microservices
 * zuul-gateway - entry point of the all microservices
 * flight-service - main microservice which allows to reserve flight
 * ticket-service - service where all customer tickets can be seen
