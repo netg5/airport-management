@@ -70,8 +70,8 @@ public class CustomerService implements IService<CustomerDTO> {
     /**
      * Method to update customerDTO details
      *
-     * @param customerId  gets customerDTO ID as a parameter
-     * @param customerDTO gets customerDTO DO as a parameter
+     * @param customerId  gets customer ID as a parameter
+     * @param customerDTO gets customerDTO DTO as a parameter
      * @return customerDTO DTO as a response
      */
     @Override

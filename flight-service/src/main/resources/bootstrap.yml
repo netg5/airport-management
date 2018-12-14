@@ -7,10 +7,3 @@ spring:
       discovery:
         enabled: true
         service-id: config-service
-#  zipkin:
-#    service:
-#      name: flight-service
-#    baseUrl: http://localhost:8087
-#    sleuth:
-#      sampler:
-#        percentage: 1.0

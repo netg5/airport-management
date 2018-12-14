@@ -28,8 +28,12 @@ import java.util.Map;
 @RequestMapping(value = "/aircrafts", produces = "application/json")
 public class AircraftController {
 
+    private final AircraftService aircraftService;
+
     @Autowired
-    private AircraftService aircraftService;
+    public AircraftController(AircraftService aircraftService) {
+        this.aircraftService = aircraftService;
+    }
 
     @ApiOperation(value = "Get all existing aircrafts")
     @GetMapping
