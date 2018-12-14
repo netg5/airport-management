@@ -117,7 +117,7 @@ public class ReservationController {
                     @ApiResponse(code = 404, message = "Invalid reservation ID")
             }
     )
-    @PutMapping(value = "/{reservationId}/patch", consumes = "application/json")
+    @PutMapping(value = "/{customerId}/reservations/{reservationId}/patch", consumes = "application/json")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<ReservationDTO> patchReservation(@ApiParam(value = "Reservation ID which should be updated", required = true)
                                                            @PathVariable("reservationId") Long reservationId,
@@ -133,7 +133,7 @@ public class ReservationController {
                     @ApiResponse(code = 404, message = "Invalid reservation ID")
             }
     )
-    @DeleteMapping("/reservations/{reservationId}")
+    @DeleteMapping("/{customerId}/reservations/{reservationId}")
     public ResponseEntity<ReservationExtendedDTO> deleteReservation(@ApiParam(value = "Reservation ID which should be deleted", required = true)
                                                                     @PathVariable("reservationId") Long reservationId) {
         return new ResponseEntity<>(

@@ -56,12 +56,11 @@ public class AircraftControllerTest {
 
     @Test
     public void getAllAircrafts_thenReturnOk() throws Exception {
-        final Long aircraftId = 1L;
         final String model = "747-400";
         final String aircraftName = "Boeing";
         final Double aircraftWeight = 30000.0;
         final Integer maxPassengers = 2300;
-        setupAircraft(aircraftId, model, aircraftName, aircraftWeight, maxPassengers);
+        setupAircraft(model, aircraftName, aircraftWeight, maxPassengers);
 
         mvc.perform(
                 get(BASE_URL)
@@ -78,12 +77,11 @@ public class AircraftControllerTest {
 
     @Test
     public void getAircraftById_thenReturnOk() throws Exception {
-        final Long aircraftId = 1L;
         final String model = "747-400";
         final String aircraftName = "Boeing";
         final Double aircraftWeight = 30000.0;
         final Integer maxPassengers = 2300;
-        setupAircraft(aircraftId, model, aircraftName, aircraftWeight, maxPassengers);
+        setupAircraft(model, aircraftName, aircraftWeight, maxPassengers);
 
         mvc.perform(
                 get(BASE_URL + "/1")
@@ -100,14 +98,12 @@ public class AircraftControllerTest {
 
     @Test
     public void postAircraft_thenGetCreated() throws Exception {
-        final Long aircraftId = 1L;
         final String model = "747-400";
         final String aircraftName = "Boeing";
         final Double aircraftWeight = 30000.0;
         final Integer maxPassengers = 2300;
 
         JSONObject jsonObject = new JSONObject()
-                .put("aircraftId", aircraftId)
                 .put("model", model)
                 .put("aircraftName", aircraftName)
                 .put("aircraftWeight", aircraftWeight)
@@ -126,14 +122,12 @@ public class AircraftControllerTest {
 
     @Test
     public void postAircraft_thenPutAircraft_thenGetOk() throws Exception {
-        final Long aircraftId = 1L;
         final String model = "747-400";
         final String aircraftName = "Boeing";
         final Double aircraftWeight = 30000.0;
         final Integer maxPassengers = 2300;
 
         JSONObject jsonObject = new JSONObject()
-                .put("aircraftId", aircraftId)
                 .put("model", model)
                 .put("aircraftName", aircraftName)
                 .put("aircraftWeight", aircraftWeight)
@@ -154,15 +148,13 @@ public class AircraftControllerTest {
         final Double putAircraftWeight = 30000.0;
         final Integer putMaxPassengers = 2300;
         JSONObject putJsonObject = new JSONObject()
-                .put("aircraftId", aircraftId)
                 .put("model", putModel)
                 .put("aircraftName", putAircraft)
                 .put("aircraftWeight", putAircraftWeight)
                 .put("maxPassengers", putMaxPassengers);
 
-        LOGGER.info("Aircraft ID: {}", aircraftId);
         mvc.perform(
-                put(BASE_URL + "/" + aircraftId)
+                put(BASE_URL + "/1")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .content(putJsonObject.toString()))
                 .andExpect(status().isOk())
@@ -175,14 +167,12 @@ public class AircraftControllerTest {
 
     @Test
     public void postAircraft_thenPatchAircraft_thenGetOk() throws Exception {
-        final Long aircraftId = 1L;
         final String model = "747-400";
         final String aircraftName = "Boeing";
         final Double aircraftWeight = 30000.0;
         final Integer maxPassengers = 2300;
 
         JSONObject jsonObject = new JSONObject()
-                .put("aircraftId", aircraftId)
                 .put("model", model)
                 .put("aircraftName", aircraftName)
                 .put("aircraftWeight", aircraftWeight)
@@ -203,15 +193,13 @@ public class AircraftControllerTest {
         final Double putAircraftWeight = 30000.0;
         final Integer putMaxPassengers = 2300;
         JSONObject putJsonObject = new JSONObject()
-                .put("aircraftId", aircraftId)
                 .put("model", putModel)
                 .put("aircraftName", putAircraft)
                 .put("aircraftWeight", putAircraftWeight)
                 .put("maxPassengers", putMaxPassengers);
 
-        LOGGER.info("Aircraft ID: {}", aircraftId);
         mvc.perform(
-                patch(BASE_URL + "/" + aircraftId + "/patch")
+                patch(BASE_URL + "/1/patch")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .content(putJsonObject.toString()))
                 .andExpect(status().isOk())
@@ -253,10 +241,9 @@ public class AircraftControllerTest {
                 .andExpect(status().isNoContent());
     }
 
-    private Aircraft setupAircraft(Long aircraftId, String model, String aircraftName,
+    private Aircraft setupAircraft(String model, String aircraftName,
                                    Double aircraftWeight, Integer maxPassengers) {
         Aircraft aircraft = new Aircraft();
-        aircraft.setAircraftId(aircraftId);
         aircraft.setModel(model);
         aircraft.setAircraftName(aircraftName);
         aircraft.setAircraftWeight(aircraftWeight);

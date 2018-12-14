@@ -50,11 +50,10 @@ public class CustomerControllerTest {
 
     @Test
     public void getAllCustomers_thenReturnOk() throws Exception {
-        final Long customerId = 1L;
         final String firstName = "John";
         final String lastName = "Smith";
         final int age = 20;
-        setupCustomer(customerId, firstName, lastName, age);
+        setupCustomer(firstName, lastName, age);
 
         mvc.perform(
                 get(BASE_URL)
@@ -71,17 +70,15 @@ public class CustomerControllerTest {
 
     @Test
     public void getCustomerById_thenGetOk() throws Exception {
-        final Long customerId = 1L;
         final String firstName = "John";
         final String lastName = "Smith";
         final int age = 20;
-        setupCustomer(customerId, firstName, lastName, age);
+        setupCustomer(firstName, lastName, age);
 
         mvc.perform(
                 get(BASE_URL + "/2")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.customerId").isNotEmpty())
                 .andExpect(jsonPath("$.customerId").isNotEmpty())
                 .andExpect(jsonPath("$.firstName").value(firstName))
                 .andExpect(jsonPath("$.lastName").value(lastName))
@@ -117,13 +114,11 @@ public class CustomerControllerTest {
 
     @Test
     public void postCustomer_thenPutCustomer_thenGetOk() throws Exception {
-        final long customerId = 1L;
         final String firstName = "John";
         final String lastName = "Smith";
         final int age = 20;
 
         JSONObject jsonObject = new JSONObject()
-                .put("customerId", customerId)
                 .put("firstName", firstName)
                 .put("lastName", lastName)
                 .put("age", age);
@@ -158,13 +153,11 @@ public class CustomerControllerTest {
 
     @Test
     public void postCustomer_thenPatchCustomer_thenGetOk() throws Exception {
-        final long customerId = 1L;
         final String firstName = "John";
         final String lastName = "Smith";
         final int age = 20;
 
         JSONObject jsonObject = new JSONObject()
-                .put("customerId", customerId)
                 .put("firstName", firstName)
                 .put("lastName", lastName)
                 .put("age", age);
@@ -199,13 +192,11 @@ public class CustomerControllerTest {
 
     @Test
     public void postCustomer_thenDelete_thenGetNoContent() throws Exception {
-        final long customerId = 1L;
         final String firstName = "John";
         final String lastName = "Smith";
         final int age = 20;
 
         JSONObject jsonObject = new JSONObject()
-                .put("customerId", customerId)
                 .put("firstName", firstName)
                 .put("lastName", lastName)
                 .put("age", age);
@@ -219,14 +210,13 @@ public class CustomerControllerTest {
                 .andExpect(jsonPath("$.lastName").value(lastName))
                 .andExpect(jsonPath("$.age").value(age));
 
-        mvc.perform(delete(BASE_URL + "/" + customerId))
+        mvc.perform(delete(BASE_URL + "/1"))
                 .andExpect(status().isNoContent());
     }
 
-    private Customer setupCustomer(Long customerId, String firstName, String lastName, int age) {
+    private Customer setupCustomer(String firstName, String lastName, int age) {
         Customer customer = new Customer();
 
-        customer.setCustomerId(customerId);
         customer.setFirstName(firstName);
         customer.setLastName(lastName);
         customer.setAge(age);

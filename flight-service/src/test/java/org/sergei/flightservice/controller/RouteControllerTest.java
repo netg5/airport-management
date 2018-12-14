@@ -61,20 +61,18 @@ public class RouteControllerTest {
 
     @Test
     public void getAllRoutes_thenReturnOk() throws Exception {
-        final Long aircraftId = 1L;
         final String model = "747-400";
         final String aircraftName = "Boeing";
         final Double aircraftWeight = 30000.0;
         final Integer maxPassengers = 2300;
-        Aircraft aircraft = setupAircraft(aircraftId, model, aircraftName, aircraftWeight, maxPassengers);
+        Aircraft aircraft = new Aircraft(model, aircraftName, aircraftWeight, maxPassengers);
 
-        final Long routeId = 1L;
         final Double distance = 3600.0;
-        final LocalDateTime departureTime = LocalDateTime.parse("2018-09-28T22:00");
-        final LocalDateTime arrivalTime = LocalDateTime.parse("2018-09-28T22:00");
+        final LocalDateTime departureTime = LocalDateTime.parse("2018-09-28T22:00:00");
+        final LocalDateTime arrivalTime = LocalDateTime.parse("2018-09-28T22:00:00");
         final BigDecimal price = BigDecimal.valueOf(450.0);
         final String place = "New-York";
-        Route route = setupRoute(routeId, distance, departureTime, arrivalTime, price, place, aircraft);
+        Route route = setupRoute(distance, departureTime, arrivalTime, price, place, aircraft);
 
         LOGGER.info("Departure time variable: {}", departureTime);
         LOGGER.info("Departure time is (object): {}", route.getDepartureTime());
@@ -85,8 +83,8 @@ public class RouteControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].routeId").isNotEmpty())
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].distance").value(distance))
-                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].departureTime").value("2018-09-28 22:00"))
-                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].arrivalTime").value("2018-09-28 22:00"))
+                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].departureTime").value("2018-09-28T22:00:00"))
+                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].arrivalTime").value("2018-09-28T22:00:00"))
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].price").value(price))
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].place").value(place))
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0]._links.self.href").value("http://localhost/routes/1"))
@@ -100,20 +98,18 @@ public class RouteControllerTest {
 
     @Test
     public void getRouteById_thenReturnOk() throws Exception {
-        final Long aircraftId = 1L;
         final String model = "747-400";
         final String aircraftName = "Boeing";
         final Double aircraftWeight = 30000.0;
         final Integer maxPassengers = 2300;
-        Aircraft aircraft = setupAircraft(aircraftId, model, aircraftName, aircraftWeight, maxPassengers);
+        Aircraft aircraft = new Aircraft(model, aircraftName, aircraftWeight, maxPassengers);
 
-        final Long routeId = 1L;
         final Double distance = 3600.0;
-        final LocalDateTime departureTime = LocalDateTime.parse("2018-09-28T22:00");
-        final LocalDateTime arrivalTime = LocalDateTime.parse("2018-09-28T22:00");
+        final LocalDateTime departureTime = LocalDateTime.parse("2018-09-28T22:00:00");
+        final LocalDateTime arrivalTime = LocalDateTime.parse("2018-09-28T22:00:00");
         final BigDecimal price = BigDecimal.valueOf(450.0);
         final String place = "New-York";
-        Route route = setupRoute(routeId, distance, departureTime, arrivalTime, price, place, aircraft);
+        Route route = setupRoute(distance, departureTime, arrivalTime, price, place, aircraft);
 
         LOGGER.info("Departure time variable: {}", departureTime);
         LOGGER.info("Departure time is (object): {}", route.getDepartureTime());
@@ -124,8 +120,8 @@ public class RouteControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.routeId").isNotEmpty())
                 .andExpect(jsonPath("$.distance").value(distance))
-                .andExpect(jsonPath("$.departureTime").value("2018-09-28 22:00"))
-                .andExpect(jsonPath("$.arrivalTime").value("2018-09-28 22:00"))
+                .andExpect(jsonPath("$.departureTime").value("2018-09-28T22:00:00"))
+                .andExpect(jsonPath("$.arrivalTime").value("2018-09-28T22:00:00"))
                 .andExpect(jsonPath("$.price").value(price))
                 .andExpect(jsonPath("$.place").value(place))
                 .andExpect(jsonPath("$._links.self.href").value("http://localhost/routes/1"))
@@ -204,10 +200,20 @@ public class RouteControllerTest {
                 .andExpect(status().isNoContent());
     }
 
-    private Route setupRoute(Long routeId, Double distance, LocalDateTime departureTime,
-                             LocalDateTime arrivalTime, BigDecimal price, String place, Aircraft aircraft) {
+    private Aircraft setupAircraft(String model, String aircraftName,
+                                   Double aircraftWeight, Integer maxPassengers) {
+        Aircraft aircraft = new Aircraft();
+        aircraft.setModel(model);
+        aircraft.setAircraftName(aircraftName);
+        aircraft.setAircraftWeight(aircraftWeight);
+        aircraft.setMaxPassengers(maxPassengers);
+        return aircraftRepository.save(aircraft);
+    }
+
+    private Route setupRoute(Double distance, LocalDateTime departureTime,
+                             LocalDateTime arrivalTime, BigDecimal price,
+                             String place, Aircraft aircraft) {
         Route route = new Route();
-        route.setRouteId(routeId);
         route.setDistance(distance);
         route.setDepartureTime(departureTime);
         route.setArrivalTime(arrivalTime);
@@ -215,16 +221,5 @@ public class RouteControllerTest {
         route.setPlace(place);
         route.setAircraft(aircraft);
         return routeRepository.save(route);
-    }
-
-    private Aircraft setupAircraft(Long aircraftId, String model, String aircraftName,
-                                   Double aircraftWeight, Integer maxPassengers) {
-        Aircraft aircraft = new Aircraft();
-        aircraft.setAircraftId(aircraftId);
-        aircraft.setModel(model);
-        aircraft.setAircraftName(aircraftName);
-        aircraft.setAircraftWeight(aircraftWeight);
-        aircraft.setMaxPassengers(maxPassengers);
-        return aircraftRepository.save(aircraft);
     }
 }
