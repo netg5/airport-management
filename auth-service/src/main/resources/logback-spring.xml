@@ -1,5 +1,7 @@
 <configuration debug="true">
 
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+
     <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %c{1}:%L %logger{36} - %msg%n</pattern>
@@ -10,9 +12,9 @@
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>debug</level>
         </filter>
-        <file>./logs/zuul-gateway.log</file>
+        <file>./logs/auth-service.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>./logs/zuul-gateway.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>./logs/auth-service.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>30</maxHistory>
         </rollingPolicy>
         <encoder>
@@ -20,7 +22,7 @@
         </encoder>
     </appender>
 
-    <logger name="org.sergei.zuulgateway" level="info, debug"/>
+    <logger name="org.sergei.authservice" level="info, debug"/>
 
     <root level="info, debug">
         <appender-ref ref="file"/>
