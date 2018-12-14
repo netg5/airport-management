@@ -1,6 +1,5 @@
 package org.sergei.flightservice.config;
 
-import brave.sampler.Sampler;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,11 +12,6 @@ import org.springframework.web.filter.CorsFilter;
  */
 @Configuration
 public class AppConfig {
-
-    @Bean
-    public Sampler defaultSampler() {
-        return Sampler.ALWAYS_SAMPLE;
-    }
 
     @Bean
     public ModelMapper modelMapper() {
