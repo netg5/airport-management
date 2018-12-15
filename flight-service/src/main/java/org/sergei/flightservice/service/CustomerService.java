@@ -21,12 +21,10 @@ import java.util.Map;
 public class CustomerService implements IService<CustomerDTO> {
 
     private static final String CUSTOMER_NOT_FOUND = "Customer with this ID not found";
-    private final ModelMapper modelMapper;
     private final CustomerRepository customerRepository;
 
     @Autowired
-    public CustomerService(ModelMapper modelMapper, CustomerRepository customerRepository) {
-        this.modelMapper = modelMapper;
+    public CustomerService(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
     }
 
@@ -42,7 +40,7 @@ public class CustomerService implements IService<CustomerDTO> {
                 .orElseThrow(() ->
                         new ResourceNotFoundException(CUSTOMER_NOT_FOUND)
                 );
-        return modelMapper.map(customer, CustomerDTO.class);
+        return ObjectMapperUtils.map(customer, CustomerDTO.class);
     }
 
     /**
@@ -77,9 +75,9 @@ public class CustomerService implements IService<CustomerDTO> {
      */
     @Override
     public CustomerDTO save(CustomerDTO customerDTO) {
-        Customer customer = modelMapper.map(customerDTO, Customer.class);
+        Customer customer = ObjectMapperUtils.map(customerDTO, Customer.class);
         Customer savedCustomer = customerRepository.save(customer);
-        return modelMapper.map(savedCustomer, CustomerDTO.class);
+        return ObjectMapperUtils.map(savedCustomer, CustomerDTO.class);
     }
 
     /**
@@ -130,7 +128,7 @@ public class CustomerService implements IService<CustomerDTO> {
         }
         customerRepository.save(customer);
 
-        return modelMapper.map(customer, CustomerDTO.class);
+        return ObjectMapperUtils.map(customer, CustomerDTO.class);
     }
 
     /**
@@ -146,6 +144,6 @@ public class CustomerService implements IService<CustomerDTO> {
                         new ResourceNotFoundException(CUSTOMER_NOT_FOUND)
                 );
         customerRepository.delete(customer);
-        return modelMapper.map(customer, CustomerDTO.class);
+        return ObjectMapperUtils.map(customer, CustomerDTO.class);
     }
 }

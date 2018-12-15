@@ -1,6 +1,5 @@
 package org.sergei.flightservice.service;
 
-import org.modelmapper.ModelMapper;
 import org.sergei.flightservice.dto.AircraftDTO;
 import org.sergei.flightservice.dto.ReservationDTO;
 import org.sergei.flightservice.dto.ReservationExtendedDTO;
@@ -35,17 +34,14 @@ public class ReservationService implements IReservationService<ReservationExtend
     private static final String AIRCRAFT_NOT_FOUND = "Aircraft with this ID not found";
     private static final String RESERVATION_NOT_FOUND = "Reservation with this ID not found";
 
-    private final ModelMapper modelMapper;
     private final CustomerRepository customerRepository;
     private final RouteRepository routeRepository;
     private ReservationRepository reservationRepository;
     private final AircraftRepository aircraftRepository;
 
     @Autowired
-    public ReservationService(ModelMapper modelMapper,
-                              CustomerRepository customerRepository, RouteRepository routeRepository,
+    public ReservationService(CustomerRepository customerRepository, RouteRepository routeRepository,
                               ReservationRepository reservationRepository, AircraftRepository aircraftRepository) {
-        this.modelMapper = modelMapper;
         this.customerRepository = customerRepository;
         this.routeRepository = routeRepository;
         this.reservationRepository = reservationRepository;
@@ -70,7 +66,7 @@ public class ReservationService implements IReservationService<ReservationExtend
                         new ResourceNotFoundException(RESERVATION_NOT_FOUND)
                 );
         ReservationExtendedDTO flightReservationExtendedDTO =
-                modelMapper.map(reservation, ReservationExtendedDTO.class);
+                ObjectMapperUtils.map(reservation, ReservationExtendedDTO.class);
         flightReservationExtendedDTO.setCustomerId(customer.getCustomerId());
 
         // Find route by ID
@@ -78,7 +74,7 @@ public class ReservationService implements IReservationService<ReservationExtend
                 .orElseThrow(() ->
                         new ResourceNotFoundException(ROUTE_NOT_FOUND)
                 );
-        RouteExtendedDTO routeExtendedDTO = modelMapper.map(route, RouteExtendedDTO.class);
+        RouteExtendedDTO routeExtendedDTO = ObjectMapperUtils.map(route, RouteExtendedDTO.class);
 
         // Find aircraftDTO by ID taken from the entity
         Aircraft aircraft = aircraftRepository.findById(route.getAircraft().getAircraftId())
@@ -86,7 +82,7 @@ public class ReservationService implements IReservationService<ReservationExtend
                         new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
                 );
 
-        AircraftDTO aircraftDTO = modelMapper.map(aircraft, AircraftDTO.class);
+        AircraftDTO aircraftDTO = ObjectMapperUtils.map(aircraft, AircraftDTO.class);
 
         // Set aircraft DTO to the flight reservation extended DTO
         routeExtendedDTO.setAircraftDTO(aircraftDTO);
@@ -127,7 +123,7 @@ public class ReservationService implements IReservationService<ReservationExtend
                     .orElseThrow(() ->
                             new ResourceNotFoundException(ROUTE_NOT_FOUND)
                     );
-            RouteExtendedDTO routeExtendedDTO = modelMapper.map(route, RouteExtendedDTO.class);
+            RouteExtendedDTO routeExtendedDTO = ObjectMapperUtils.map(route, RouteExtendedDTO.class);
 
             // Find aircraftDTO by ID taken from the entity
             Aircraft aircraft = aircraftRepository.findById(route.getAircraft().getAircraftId())
@@ -135,7 +131,7 @@ public class ReservationService implements IReservationService<ReservationExtend
                             new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
                     );
 
-            AircraftDTO aircraftDTO = modelMapper.map(aircraft, AircraftDTO.class);
+            AircraftDTO aircraftDTO = ObjectMapperUtils.map(aircraft, AircraftDTO.class);
 
             // Set aircraftDTO DTO to the flight reservation extended DTO
             routeExtendedDTO.setAircraftDTO(aircraftDTO);
@@ -181,7 +177,7 @@ public class ReservationService implements IReservationService<ReservationExtend
                     .orElseThrow(() ->
                             new ResourceNotFoundException(ROUTE_NOT_FOUND)
                     );
-            RouteExtendedDTO routeExtendedDTO = modelMapper.map(route, RouteExtendedDTO.class);
+            RouteExtendedDTO routeExtendedDTO = ObjectMapperUtils.map(route, RouteExtendedDTO.class);
 
             // Find aircraftDTO by ID taken from the entity
             Aircraft aircraft = aircraftRepository.findById(route.getAircraft().getAircraftId())
@@ -189,7 +185,7 @@ public class ReservationService implements IReservationService<ReservationExtend
                             new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
                     );
 
-            AircraftDTO aircraftDTO = modelMapper.map(aircraft, AircraftDTO.class);
+            AircraftDTO aircraftDTO = ObjectMapperUtils.map(aircraft, AircraftDTO.class);
 
             // Set aircraftDTO DTO to the flight reservation extended DTO
             routeExtendedDTO.setAircraftDTO(aircraftDTO);
@@ -226,9 +222,9 @@ public class ReservationService implements IReservationService<ReservationExtend
         // Set customer ID and route into the flight reservation DTO
         reservationDTO.setCustomerId(customer.getCustomerId());
         reservationDTO.setRouteId(route.getRouteId());
-        Reservation reservation = modelMapper.map(reservationDTO, Reservation.class);
+        Reservation reservation = ObjectMapperUtils.map(reservationDTO, Reservation.class);
         Reservation savedReservation = reservationRepository.save(reservation);
-        return modelMapper.map(savedReservation, ReservationDTO.class);
+        return ObjectMapperUtils.map(savedReservation, ReservationDTO.class);
     }
 
     /**
@@ -308,7 +304,7 @@ public class ReservationService implements IReservationService<ReservationExtend
                         new ResourceNotFoundException(RESERVATION_NOT_FOUND)
                 );
         reservationRepository.delete(reservation);
-        return modelMapper.map(reservation, ReservationExtendedDTO.class);
+        return ObjectMapperUtils.map(reservation, ReservationExtendedDTO.class);
     }
 
     @Override

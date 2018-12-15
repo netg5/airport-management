@@ -20,12 +20,10 @@ import java.util.Map;
 @Service
 public class AircraftService implements IService<AircraftDTO> {
     private static final String AIRCRAFT_NOT_FOUND = "Aircraft with this ID not found";
-    private final ModelMapper modelMapper;
     private final AircraftRepository aircraftRepository;
 
     @Autowired
-    public AircraftService(ModelMapper modelMapper, AircraftRepository aircraftRepository) {
-        this.modelMapper = modelMapper;
+    public AircraftService(AircraftRepository aircraftRepository) {
         this.aircraftRepository = aircraftRepository;
     }
 
@@ -41,7 +39,7 @@ public class AircraftService implements IService<AircraftDTO> {
                 .orElseThrow(() ->
                         new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
                 );
-        return modelMapper.map(aircraft, AircraftDTO.class);
+        return ObjectMapperUtils.map(aircraft, AircraftDTO.class);
     }
 
     /**
@@ -69,9 +67,9 @@ public class AircraftService implements IService<AircraftDTO> {
      */
     @Override
     public AircraftDTO save(AircraftDTO aircraftDTO) {
-        Aircraft aircraft = modelMapper.map(aircraftDTO, Aircraft.class);
+        Aircraft aircraft = ObjectMapperUtils.map(aircraftDTO, Aircraft.class);
         Aircraft savedAircraft = aircraftRepository.save(aircraft);
-        return modelMapper.map(savedAircraft, AircraftDTO.class);
+        return ObjectMapperUtils.map(savedAircraft, AircraftDTO.class);
     }
 
     /**
@@ -126,7 +124,7 @@ public class AircraftService implements IService<AircraftDTO> {
         if (params.get("maxPassengers") != null) {
             aircraft.setMaxPassengers(Integer.valueOf(String.valueOf(params.get("maxPassengers"))));
         }
-        return modelMapper.map(aircraft, AircraftDTO.class);
+        return ObjectMapperUtils.map(aircraft, AircraftDTO.class);
     }
 
     /**
@@ -142,6 +140,6 @@ public class AircraftService implements IService<AircraftDTO> {
                         new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
                 );
         aircraftRepository.delete(aircraft);
-        return modelMapper.map(aircraft, AircraftDTO.class);
+        return ObjectMapperUtils.map(aircraft, AircraftDTO.class);
     }
 }

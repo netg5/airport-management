@@ -1,6 +1,5 @@
 package org.sergei.flightservice.service;
 
-import org.modelmapper.ModelMapper;
 import org.sergei.flightservice.dto.AircraftDTO;
 import org.sergei.flightservice.dto.RouteDTO;
 import org.sergei.flightservice.dto.RouteExtendedDTO;
@@ -29,14 +28,11 @@ public class RouteService implements IRouteService<RouteDTO, RouteExtendedDTO> {
     private static final String ROUTE_NOT_FOUND = "Route with this ID not found";
     private static final String AIRCRAFT_NOT_FOUND = "Aircraft with this ID not found";
 
-    private final ModelMapper modelMapper;
     private final AircraftRepository aircraftRepository;
     private RouteRepository routeRepository;
 
     @Autowired
-    public RouteService(ModelMapper modelMapper,
-                        AircraftRepository aircraftRepository, RouteRepository routeRepository) {
-        this.modelMapper = modelMapper;
+    public RouteService(AircraftRepository aircraftRepository, RouteRepository routeRepository) {
         this.aircraftRepository = aircraftRepository;
         this.routeRepository = routeRepository;
     }
@@ -54,7 +50,7 @@ public class RouteService implements IRouteService<RouteDTO, RouteExtendedDTO> {
                 .orElseThrow(() ->
                         new ResourceNotFoundException(ROUTE_NOT_FOUND)
                 );
-        RouteExtendedDTO routeExtendedDTO = modelMapper.map(route, RouteExtendedDTO.class);
+        RouteExtendedDTO routeExtendedDTO = ObjectMapperUtils.map(route, RouteExtendedDTO.class);
 
         // Find aircraftDTO map it into the aircraftDTO DTO
         Aircraft aircraft = aircraftRepository.findById(route.getAircraft().getAircraftId())
@@ -62,7 +58,7 @@ public class RouteService implements IRouteService<RouteDTO, RouteExtendedDTO> {
                         new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
                 );
 
-        AircraftDTO aircraftDTO = modelMapper.map(aircraft, AircraftDTO.class);
+        AircraftDTO aircraftDTO = ObjectMapperUtils.map(aircraft, AircraftDTO.class);
 
         // Set to the route extended DTO
         routeExtendedDTO.setAircraftDTO(aircraftDTO);
@@ -86,7 +82,7 @@ public class RouteService implements IRouteService<RouteDTO, RouteExtendedDTO> {
                             new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
                     );
 
-            AircraftDTO aircraftDTO = modelMapper.map(aircraft, AircraftDTO.class);
+            AircraftDTO aircraftDTO = ObjectMapperUtils.map(aircraft, AircraftDTO.class);
             routeExtendedDTO.setAircraftDTO(aircraftDTO);
             counter++;
         }
@@ -112,7 +108,7 @@ public class RouteService implements IRouteService<RouteDTO, RouteExtendedDTO> {
                             new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
                     );
 
-            AircraftDTO aircraftDTO = modelMapper.map(aircraft, AircraftDTO.class);
+            AircraftDTO aircraftDTO = ObjectMapperUtils.map(aircraft, AircraftDTO.class);
             routeExtendedDTO.setAircraftDTO(aircraftDTO);
             counter++;
         }
@@ -127,7 +123,7 @@ public class RouteService implements IRouteService<RouteDTO, RouteExtendedDTO> {
      */
     @Override
     public RouteDTO save(RouteDTO routeDTO) {
-        Route route = modelMapper.map(routeDTO, Route.class);
+        Route route = ObjectMapperUtils.map(routeDTO, Route.class);
 
         // Find aircraftDTO required in request body
         Aircraft aircraft = aircraftRepository.findById(routeDTO.getAircraftId())
@@ -136,7 +132,7 @@ public class RouteService implements IRouteService<RouteDTO, RouteExtendedDTO> {
                 );
         route.setAircraft(aircraft);
         Route savedRoute = routeRepository.save(route);
-        return modelMapper.map(savedRoute, RouteDTO.class);
+        return ObjectMapperUtils.map(savedRoute, RouteDTO.class);
     }
 
     /**
@@ -205,7 +201,7 @@ public class RouteService implements IRouteService<RouteDTO, RouteExtendedDTO> {
                             new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
                     ));
         }
-        return modelMapper.map(route, RouteDTO.class);
+        return ObjectMapperUtils.map(route, RouteDTO.class);
     }
 
     /**
@@ -221,7 +217,7 @@ public class RouteService implements IRouteService<RouteDTO, RouteExtendedDTO> {
                         new ResourceNotFoundException(ROUTE_NOT_FOUND)
                 );
         routeRepository.delete(route);
-        return modelMapper.map(route, RouteDTO.class);
+        return ObjectMapperUtils.map(route, RouteDTO.class);
     }
 
     @Override
