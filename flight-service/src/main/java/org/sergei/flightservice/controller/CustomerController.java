@@ -49,8 +49,11 @@ public class CustomerController {
             Link reservationsLink = ControllerLinkBuilder.linkTo(
                     ControllerLinkBuilder.methodOn(ReservationController.class)
                             .getAllForCustomer(customer.getCustomerId())).withRel("reservations");
+            Link ticketsLink = new Link(
+                    "http://127.0.0.1:8080/ticket-api/tickets?customerId=" + customer.getCustomerId()).withRel("tickets");
             customer.add(link);
             customer.add(reservationsLink);
+            customer.add(ticketsLink);
         });
         Resources<CustomerDTO> resources = new Resources<>(customerList);
         String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
@@ -79,8 +82,11 @@ public class CustomerController {
             Link reservationsLink = ControllerLinkBuilder.linkTo(
                     ControllerLinkBuilder.methodOn(ReservationController.class)
                             .getAllForCustomer(customer.getCustomerId())).withRel("reservations");
+            Link ticketsLink = new Link(
+                    "http://127.0.0.1:8080/ticket-api/tickets?customerId=" + customer.getCustomerId()).withRel("tickets");
             customer.add(link);
             customer.add(reservationsLink);
+            customer.add(ticketsLink);
         });
         Resources<CustomerDTO> resources = new Resources<>(customerList);
         String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
@@ -157,9 +163,12 @@ public class CustomerController {
         Link reservationsLink = ControllerLinkBuilder.linkTo(
                 ControllerLinkBuilder.methodOn(ReservationController.class)
                         .getAllForCustomer(customerDTO.getCustomerId())).withRel("reservations");
+        Link ticketsLink = new Link(
+                "http://127.0.0.1:8080/ticket-api/tickets?customerId=" + customerDTO.getCustomerId()).withRel("tickets");
         Link link = ControllerLinkBuilder.linkTo(CustomerController.class).withRel("allCustomers");
         customerDTO.add(selfLink);
         customerDTO.add(reservationsLink);
+        customerDTO.add(ticketsLink);
         customerDTO.add(link);
         return customerDTO;
     }

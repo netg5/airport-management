@@ -1,6 +1,5 @@
 package org.sergei.flightservice.service;
 
-import org.modelmapper.ModelMapper;
 import org.sergei.flightservice.dto.CustomerDTO;
 import org.sergei.flightservice.exceptions.ResourceNotFoundException;
 import org.sergei.flightservice.model.Customer;

@@ -1,6 +1,5 @@
 package org.sergei.flightservice.model;
 
-import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
