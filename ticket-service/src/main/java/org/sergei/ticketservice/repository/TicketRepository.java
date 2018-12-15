@@ -16,11 +16,28 @@ import java.util.List;
 @Repository
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
+    /**
+     * Find ticket by customer ID, place or/and distance
+     *
+     * @param customerId whose ticket should be found
+     * @param place      by which ticket should be found for a customer
+     * @param distance   distance by which ticket should be found
+     * @return list of the found tickets
+     */
     @Query("SELECT t FROM Ticket t WHERE t.customerId = ?1 " +
             "AND (?2 IS NULL OR t.place = ?2) " +
             "AND (?3 IS NULL OR t.distance = ?3)")
     List<Ticket> findByCustomerIdPlaceOrDistance(Long customerId, String place, Double distance);
 
+    /**
+     * Find ticket by customer ID, place or/and distance with pagination
+     *
+     * @param customerId whose ticket should be found
+     * @param place      by which ticket should be found for a customer
+     * @param distance   distance by which ticket should be found
+     * @param pageable   page number and element quantity per page
+     * @return list of found tickets
+     */
     @Query("SELECT t FROM Ticket t WHERE t.customerId = ?1 " +
             "AND (?2 IS NULL OR t.place = ?2) " +
             "AND (?3 IS NULL OR t.distance = ?3)")
