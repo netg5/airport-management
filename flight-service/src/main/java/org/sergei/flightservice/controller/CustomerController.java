@@ -4,6 +4,7 @@ import io.swagger.annotations.*;
 import org.sergei.flightservice.dto.CustomerDTO;
 import org.sergei.flightservice.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resources;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
@@ -39,7 +40,38 @@ public class CustomerController {
     )
     @GetMapping
     public ResponseEntity<Resources<CustomerDTO>> getAllCustomers() {
+
         List<CustomerDTO> customerList = customerService.findAll();
+        customerList.forEach(customer -> {
+            Link link = ControllerLinkBuilder.linkTo(
+                    ControllerLinkBuilder.methodOn(CustomerController.class)
+                            .getCustomerById(customer.getCustomerId())).withSelfRel();
+            Link reservationsLink = ControllerLinkBuilder.linkTo(
+                    ControllerLinkBuilder.methodOn(ReservationController.class)
+                            .getAllForCustomer(customer.getCustomerId())).withRel("reservations");
+            customer.add(link);
+            customer.add(reservationsLink);
+        });
+        Resources<CustomerDTO> resources = new Resources<>(customerList);
+        String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
+        resources.add(new Link(uriString, "self"));
+        return new ResponseEntity<>(resources, HttpStatus.OK);
+    }
+
+    @ApiOperation("Get all customers paginated")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(code = 404, message = "Invalid customer ID")
+            }
+    )
+    @GetMapping(params = {"page", "size"})
+    public ResponseEntity<Resources<CustomerDTO>> getAllCustomersPaginated(@ApiParam(value = "Number of page", required = true)
+                                                                           @RequestParam(value = "page") int page,
+                                                                           @ApiParam(value = "Number of elements per page", required = true)
+                                                                           @RequestParam(value = "size") int size) {
+
+        Page<CustomerDTO> customerList = customerService.findAllPaginated(page, size);
+
         customerList.forEach(customer -> {
             Link link = ControllerLinkBuilder.linkTo(
                     ControllerLinkBuilder.methodOn(CustomerController.class)

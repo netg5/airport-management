@@ -1,6 +1,6 @@
 package org.sergei.flightservice.service;
 
-import org.sergei.flightservice.dto.ReservationDTO;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.Map;
@@ -13,6 +13,8 @@ public interface IReservationService<E, T> extends IService {
     E findOneForCustomer(Long aLong, Long aLong2);
 
     List<E> findAllForCustomer(Long customerId);
+
+    Page<E> findAllForCustomerPaginated(Long customerId, int page, int size);
 
     T saveReservation(Long aLong, T entityDTO);
 

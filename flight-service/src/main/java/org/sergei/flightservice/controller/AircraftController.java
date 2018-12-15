@@ -4,6 +4,7 @@ import io.swagger.annotations.*;
 import org.sergei.flightservice.dto.AircraftDTO;
 import org.sergei.flightservice.service.AircraftService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resources;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
@@ -39,6 +40,25 @@ public class AircraftController {
     @GetMapping
     public ResponseEntity<Resources<AircraftDTO>> getAllAircraft() {
         List<AircraftDTO> aircrafts = aircraftService.findAll();
+        aircrafts.forEach(aircraft -> {
+            Link link = ControllerLinkBuilder.linkTo(
+                    ControllerLinkBuilder.methodOn(AircraftController.class)
+                            .getAircraftById(aircraft.getAircraftId())).withSelfRel();
+            aircraft.add(link);
+        });
+        Resources<AircraftDTO> resources = new Resources<>(aircrafts);
+        String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
+        resources.add(new Link(uriString, "self"));
+        return new ResponseEntity<>(resources, HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "Get all existing aircrafts paginated")
+    @GetMapping(params = {"page", "size"})
+    public ResponseEntity<Resources<AircraftDTO>> getAllAircraftPaginated(@ApiParam(value = "Number of page", required = true)
+                                                                          @RequestParam("page") int page,
+                                                                          @ApiParam(value = "Number of elements per page", required = true)
+                                                                          @RequestParam("size") int size) {
+        Page<AircraftDTO> aircrafts = aircraftService.findAllPaginated(page, size);
         aircrafts.forEach(aircraft -> {
             Link link = ControllerLinkBuilder.linkTo(
                     ControllerLinkBuilder.methodOn(AircraftController.class)

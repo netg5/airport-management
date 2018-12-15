@@ -5,6 +5,7 @@ import org.sergei.flightservice.dto.RouteDTO;
 import org.sergei.flightservice.dto.RouteExtendedDTO;
 import org.sergei.flightservice.service.RouteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resources;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
@@ -36,6 +37,25 @@ public class RouteController {
     @GetMapping
     public ResponseEntity<Resources<RouteExtendedDTO>> getAllRoutes() {
         List<RouteExtendedDTO> routes = routeService.findAllRoutes();
+        routes.forEach(route -> {
+            Link link = ControllerLinkBuilder.linkTo(
+                    ControllerLinkBuilder.methodOn(RouteController.class)
+                            .getRouteById(route.getRouteId())).withSelfRel();
+            route.add(link);
+        });
+        Resources<RouteExtendedDTO> resources = new Resources<>(routes);
+        String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
+        resources.add(new Link(uriString, "self"));
+        return new ResponseEntity<>(resources, HttpStatus.OK);
+    }
+
+    @ApiOperation("Get all existing routes paginated")
+    @GetMapping(params = {"page", "size"})
+    public ResponseEntity<Resources<RouteExtendedDTO>> getAllRoutesPaginated(@ApiParam(value = "Number of page", required = true)
+                                                                             @RequestParam("page") int page,
+                                                                             @ApiParam(value = "Number of elements per page", required = true)
+                                                                             @RequestParam("size") int size) {
+        Page<RouteExtendedDTO> routes = routeService.findAllRoutesPaginated(page, size);
         routes.forEach(route -> {
             Link link = ControllerLinkBuilder.linkTo(
                     ControllerLinkBuilder.methodOn(RouteController.class)

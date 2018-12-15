@@ -7,6 +7,8 @@ import org.sergei.flightservice.model.Customer;
 import org.sergei.flightservice.repository.CustomerRepository;
 import org.sergei.flightservice.utils.ObjectMapperUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -52,6 +54,19 @@ public class CustomerService implements IService<CustomerDTO> {
     public List<CustomerDTO> findAll() {
         List<Customer> customerList = customerRepository.findAll();
         return ObjectMapperUtils.mapAll(customerList, CustomerDTO.class);
+    }
+
+    /**
+     * Find all customers with pagination
+     *
+     * @param page how many pages to show
+     * @param size how much entites in one page
+     * @return list with entities
+     */
+    @Override
+    public Page<CustomerDTO> findAllPaginated(int page, int size) {
+        Page<Customer> customerList = customerRepository.findAll(PageRequest.of(page, size));
+        return ObjectMapperUtils.mapAllPages(customerList, CustomerDTO.class);
     }
 
     /**

@@ -11,6 +11,8 @@ import org.sergei.flightservice.repository.AircraftRepository;
 import org.sergei.flightservice.repository.RouteRepository;
 import org.sergei.flightservice.utils.ObjectMapperUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -89,6 +91,31 @@ public class RouteService implements IRouteService<RouteDTO, RouteExtendedDTO> {
             counter++;
         }
 
+        return routeExtendedDTOList;
+    }
+
+    /**
+     * Find paginated routes
+     *
+     * @param page number of pages shown
+     * @param size number of elements on the page
+     * @return list of entities
+     */
+    @Override
+    public Page<RouteExtendedDTO> findAllRoutesPaginated(int page, int size) {
+        Page<Route> routePage = routeRepository.findAll(PageRequest.of(page, size));
+        Page<RouteExtendedDTO> routeExtendedDTOList = ObjectMapperUtils.mapAllPages(routePage, RouteExtendedDTO.class);
+        int counter = 0;
+        for (RouteExtendedDTO routeExtendedDTO : routeExtendedDTOList) {
+            Aircraft aircraft = aircraftRepository.findById(routePage.getContent().get(counter).getAircraft().getAircraftId())
+                    .orElseThrow(() ->
+                            new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
+                    );
+
+            AircraftDTO aircraftDTO = modelMapper.map(aircraft, AircraftDTO.class);
+            routeExtendedDTO.setAircraftDTO(aircraftDTO);
+            counter++;
+        }
         return routeExtendedDTOList;
     }
 
@@ -204,6 +231,11 @@ public class RouteService implements IRouteService<RouteDTO, RouteExtendedDTO> {
 
     @Override
     public List<RouteDTO> findAll() {
+        return null;
+    }
+
+    @Override
+    public Page<RouteDTO> findAllPaginated(int page, int size) {
         return null;
     }
 }

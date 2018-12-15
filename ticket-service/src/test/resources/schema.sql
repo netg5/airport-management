@@ -1,4 +1,4 @@
-CREATE TABLE `customer`
+CREATE TABLE customer
 (
   `customer_id` bigint(20)   NOT NULL,
   `age`         int(11)      NOT NULL,
@@ -7,12 +7,12 @@ CREATE TABLE `customer`
   PRIMARY KEY (`customer_id`)
 );
 
-CREATE TABLE `customer_seq`
+CREATE TABLE customer_seq
 (
   `next_val` bigint(20) DEFAULT NULL
 );
 
-CREATE TABLE `aircraft`
+CREATE TABLE aircraft
 (
   `aircraft_id`    bigint(20)   NOT NULL,
   `aircraft_name`  varchar(255) NOT NULL,
@@ -22,12 +22,12 @@ CREATE TABLE `aircraft`
   PRIMARY KEY (`aircraft_id`)
 );
 
-CREATE TABLE `aircraft_seq`
+CREATE TABLE aircraft_seq
 (
   `next_val` bigint(20) DEFAULT NULL
 );
 
-CREATE TABLE `route`
+CREATE TABLE route
 (
   `route_id`       bigint(20)     NOT NULL,
   `arrival_time`   datetime       NOT NULL,
@@ -41,12 +41,12 @@ CREATE TABLE `route`
   CONSTRAINT `FKhmxsignt10g676bwrwd04kyb0` FOREIGN KEY (`aircraft_id`) REFERENCES `aircraft` (`aircraft_id`)
 );
 
-CREATE TABLE `route_seq`
+CREATE TABLE route_seq
 (
   `next_val` bigint(20) DEFAULT NULL
 );
 
-CREATE TABLE `reservation`
+CREATE TABLE reservation
 (
   `reservation_id`   bigint(20)  NOT NULL,
   `reservation_date` datetime(6) NOT NULL,
@@ -59,7 +59,7 @@ CREATE TABLE `reservation`
   CONSTRAINT `FKcbe3ghgonsviponovpalraxnp` FOREIGN KEY (`route_id`) REFERENCES `route` (`route_id`) ON DELETE CASCADE
 );
 
-CREATE TABLE `reservation_seq`
+CREATE TABLE reservation_seq
 (
   `next_val` bigint(20) DEFAULT NULL
 );

@@ -1,5 +1,8 @@
 package org.sergei.flightservice.service;
 
+import org.sergei.flightservice.dto.CustomerDTO;
+import org.springframework.data.domain.Page;
+
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +14,8 @@ public interface IService<E> {
     E findOne(Long aLong);
 
     List<E> findAll();
+
+    Page<E> findAllPaginated(int page, int size);
 
     E save(E entityDTO);
 

@@ -5,12 +5,12 @@ import org.sergei.flightservice.dto.ReservationDTO;
 import org.sergei.flightservice.dto.ReservationExtendedDTO;
 import org.sergei.flightservice.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resources;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -43,6 +43,34 @@ public class ReservationController {
                                                                                @PathVariable("customerId") Long customerId) {
         List<ReservationExtendedDTO> flightReservations =
                 reservationService.findAllForCustomer(customerId);
+        flightReservations.forEach(flightReservation -> {
+            Link link = ControllerLinkBuilder.linkTo(
+                    ControllerLinkBuilder.methodOn(ReservationController.class)
+                            .getOneForCustomer(flightReservation.getCustomerId(),
+                                    flightReservation.getReservationId())).withRel("reservation");
+            flightReservation.add(link);
+        });
+        Resources<ReservationExtendedDTO> resources = new Resources<>(flightReservations);
+        String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
+        resources.add(new Link(uriString, "self"));
+        return new ResponseEntity<>(resources, HttpStatus.OK);
+    }
+
+    @ApiOperation("Get all reservations for customer")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(code = 404, message = "Invalid customer ID")
+            }
+    )
+    @GetMapping(value = "/{customerId}/reservations", params = {"page", "size"})
+    public ResponseEntity<Resources<ReservationExtendedDTO>> getAllForCustomerPaginated(@ApiParam(value = "Customer ID whose reservations should be found", required = true)
+                                                                                        @PathVariable("customerId") Long customerId,
+                                                                                        @ApiParam(value = "Number of page", required = true)
+                                                                                        @RequestParam("page") int page,
+                                                                                        @ApiParam(value = "Number of elements per page", required = true)
+                                                                                        @RequestParam("size") int size) {
+        Page<ReservationExtendedDTO> flightReservations =
+                reservationService.findAllForCustomerPaginated(customerId, page, size);
         flightReservations.forEach(flightReservation -> {
             Link link = ControllerLinkBuilder.linkTo(
                     ControllerLinkBuilder.methodOn(ReservationController.class)
@@ -118,7 +146,6 @@ public class ReservationController {
             }
     )
     @PutMapping(value = "/{customerId}/reservations/{reservationId}/patch", consumes = "application/json")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<ReservationDTO> patchReservation(@ApiParam(value = "Reservation ID which should be updated", required = true)
                                                            @PathVariable("reservationId") Long reservationId,
                                                            @RequestBody Map<String, Object> params) {

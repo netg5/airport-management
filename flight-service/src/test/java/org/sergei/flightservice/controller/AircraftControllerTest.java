@@ -8,7 +8,6 @@ import org.sergei.flightservice.FlightServiceApplication;
 import org.sergei.flightservice.model.Aircraft;
 import org.sergei.flightservice.repository.AircraftRepository;
 import org.sergei.flightservice.repository.RouteRepository;
-import org.sergei.flightservice.testconfig.AppConfigTest;
 import org.sergei.flightservice.testconfig.ResourceServerConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = FlightServiceApplication.class)
 @TestPropertySource(locations = "classpath:application-test.properties")
 @AutoConfigureMockMvc
-@ContextConfiguration(classes = {AppConfigTest.class, ResourceServerConfiguration.class})
+@ContextConfiguration(classes = {ResourceServerConfiguration.class})
 @EnableJpaRepositories(basePackages = "org.sergei.flightservice.repository")
 @EntityScan(basePackages = "org.sergei.flightservice.model")
 public class AircraftControllerTest {

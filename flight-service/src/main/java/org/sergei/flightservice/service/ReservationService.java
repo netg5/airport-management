@@ -16,6 +16,8 @@ import org.sergei.flightservice.repository.ReservationRepository;
 import org.sergei.flightservice.repository.RouteRepository;
 import org.sergei.flightservice.utils.ObjectMapperUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -122,6 +124,60 @@ public class ReservationService implements IReservationService<ReservationExtend
 
             // Find route by ID
             Route route = routeRepository.findById(reservation.get(counter).getRoute().getRouteId())
+                    .orElseThrow(() ->
+                            new ResourceNotFoundException(ROUTE_NOT_FOUND)
+                    );
+            RouteExtendedDTO routeExtendedDTO = modelMapper.map(route, RouteExtendedDTO.class);
+
+            // Find aircraftDTO by ID taken from the entity
+            Aircraft aircraft = aircraftRepository.findById(route.getAircraft().getAircraftId())
+                    .orElseThrow(() ->
+                            new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
+                    );
+
+            AircraftDTO aircraftDTO = modelMapper.map(aircraft, AircraftDTO.class);
+
+            // Set aircraftDTO DTO to the flight reservation extended DTO
+            routeExtendedDTO.setAircraftDTO(aircraftDTO);
+            flightReservationExtendedDTO.setRouteExtendedDTO(routeExtendedDTO);
+            counter++;
+        }
+
+        // Returns extended flight reservation DTO
+        return flightReservationExtendedDTOList;
+    }
+
+
+    /**
+     * Find all reservation for customer paginated
+     *
+     * @param page page number
+     * @param size number of elements ont he page
+     * @return list of found entities
+     */
+    @Override
+    public Page<ReservationExtendedDTO> findAllForCustomerPaginated(Long customerId, int page, int size) {
+        // Find customer
+        Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(CUSTOMER_NOT_FOUND)
+                );
+
+        // Find all flight reservation for the customer
+        Page<Reservation> reservation = reservationRepository.findAllForCustomerPaginated(customerId, PageRequest.of(page, size))
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(RESERVATION_NOT_FOUND)
+                );
+        Page<ReservationExtendedDTO> flightReservationExtendedDTOList =
+                ObjectMapperUtils.mapAllPages(reservation, ReservationExtendedDTO.class);
+        int counter = 0;
+        // For each DTO set customer ID, route extended DTO
+        for (ReservationExtendedDTO flightReservationExtendedDTO : flightReservationExtendedDTOList) {
+            // Set customer ID in DTO response
+            flightReservationExtendedDTO.setCustomerId(customer.getCustomerId());
+
+            // Find route by ID
+            Route route = routeRepository.findById(reservation.getContent().get(counter).getRoute().getRouteId())
                     .orElseThrow(() ->
                             new ResourceNotFoundException(ROUTE_NOT_FOUND)
                     );
@@ -262,6 +318,11 @@ public class ReservationService implements IReservationService<ReservationExtend
 
     @Override
     public List findAll() {
+        return null;
+    }
+
+    @Override
+    public Page<ReservationExtendedDTO> findAllPaginated(int page, int size) {
         return null;
     }
 

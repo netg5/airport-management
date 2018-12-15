@@ -7,6 +7,8 @@ import org.sergei.flightservice.model.Aircraft;
 import org.sergei.flightservice.repository.AircraftRepository;
 import org.sergei.flightservice.utils.ObjectMapperUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -51,6 +53,12 @@ public class AircraftService implements IService<AircraftDTO> {
     public List<AircraftDTO> findAll() {
         List<Aircraft> aircraftList = aircraftRepository.findAll();
         return ObjectMapperUtils.mapAll(aircraftList, AircraftDTO.class);
+    }
+
+    @Override
+    public Page<AircraftDTO> findAllPaginated(int page, int size) {
+        Page<Aircraft> aircraftList = aircraftRepository.findAll(PageRequest.of(page, size));
+        return ObjectMapperUtils.mapAllPages(aircraftList, AircraftDTO.class);
     }
 
     /**
