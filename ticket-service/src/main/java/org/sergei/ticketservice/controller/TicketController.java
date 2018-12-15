@@ -66,7 +66,7 @@ public class TicketController {
         Resources<Ticket> resources = new Resources<>(ticketList);
         String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
         resources.add(new Link(uriString, "self"));
-        resources.add(new Link("http://127.0.0.1git :8080/flight-api/customers/" + customerId, "customer"));
+        resources.add(new Link("http://127.0.0.1:8080/flight-api/customers/" + customerId, "customer"));
         return new ResponseEntity<>(resources, HttpStatus.OK);
     }
 }
