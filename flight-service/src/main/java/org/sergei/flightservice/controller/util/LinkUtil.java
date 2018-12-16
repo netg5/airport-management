@@ -1,4 +1,4 @@
-package org.sergei.flightservice.controller.utils;
+package org.sergei.flightservice.controller.util;
 
 import org.sergei.flightservice.controller.AircraftController;
 import org.sergei.flightservice.controller.CustomerController;
@@ -9,13 +9,12 @@ import org.sergei.flightservice.dto.CustomerDTO;
 import org.sergei.flightservice.dto.RouteDTO;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
-import org.springframework.stereotype.Component;
 
 /**
  * @author Sergei Visotsky
  * @since 12/16/2018
  */
-public final class LinkSetters {
+public final class LinkUtil {
 
     /**
      * Method to set HATEOAS links for customer

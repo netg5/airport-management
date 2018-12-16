@@ -4,7 +4,7 @@ import org.sergei.flightservice.dto.AircraftDTO;
 import org.sergei.flightservice.exceptions.ResourceNotFoundException;
 import org.sergei.flightservice.model.Aircraft;
 import org.sergei.flightservice.repository.AircraftRepository;
-import org.sergei.flightservice.utils.ObjectMapperUtils;
+import org.sergei.flightservice.util.ObjectMapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -38,7 +38,7 @@ public class AircraftService implements IService<AircraftDTO> {
                 .orElseThrow(() ->
                         new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
                 );
-        return ObjectMapperUtils.map(aircraft, AircraftDTO.class);
+        return ObjectMapperUtil.map(aircraft, AircraftDTO.class);
     }
 
     /**
@@ -49,13 +49,13 @@ public class AircraftService implements IService<AircraftDTO> {
     @Override
     public List<AircraftDTO> findAll() {
         List<Aircraft> aircraftList = aircraftRepository.findAll();
-        return ObjectMapperUtils.mapAll(aircraftList, AircraftDTO.class);
+        return ObjectMapperUtil.mapAll(aircraftList, AircraftDTO.class);
     }
 
     @Override
     public Page<AircraftDTO> findAllPaginated(int page, int size) {
         Page<Aircraft> aircraftList = aircraftRepository.findAll(PageRequest.of(page, size));
-        return ObjectMapperUtils.mapAllPages(aircraftList, AircraftDTO.class);
+        return ObjectMapperUtil.mapAllPages(aircraftList, AircraftDTO.class);
     }
 
     /**
@@ -66,9 +66,9 @@ public class AircraftService implements IService<AircraftDTO> {
      */
     @Override
     public AircraftDTO save(AircraftDTO aircraftDTO) {
-        Aircraft aircraft = ObjectMapperUtils.map(aircraftDTO, Aircraft.class);
+        Aircraft aircraft = ObjectMapperUtil.map(aircraftDTO, Aircraft.class);
         Aircraft savedAircraft = aircraftRepository.save(aircraft);
-        return ObjectMapperUtils.map(savedAircraft, AircraftDTO.class);
+        return ObjectMapperUtil.map(savedAircraft, AircraftDTO.class);
     }
 
     /**
@@ -123,7 +123,7 @@ public class AircraftService implements IService<AircraftDTO> {
         if (params.get("maxPassengers") != null) {
             aircraft.setMaxPassengers(Integer.valueOf(String.valueOf(params.get("maxPassengers"))));
         }
-        return ObjectMapperUtils.map(aircraft, AircraftDTO.class);
+        return ObjectMapperUtil.map(aircraft, AircraftDTO.class);
     }
 
     /**
@@ -139,6 +139,6 @@ public class AircraftService implements IService<AircraftDTO> {
                         new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
                 );
         aircraftRepository.delete(aircraft);
-        return ObjectMapperUtils.map(aircraft, AircraftDTO.class);
+        return ObjectMapperUtil.map(aircraft, AircraftDTO.class);
     }
 }

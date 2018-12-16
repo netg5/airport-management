@@ -1,4 +1,4 @@
-package org.sergei.flightservice.utils;
+package org.sergei.flightservice.util;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
  *
  * @author Sergei Visotsky, 2018
  */
-public final class ObjectMapperUtils {
+public final class ObjectMapperUtil {
     private static ModelMapper modelMapper;
 
     /**
@@ -29,7 +29,7 @@ public final class ObjectMapperUtils {
     /**
      * Hide from public usage.
      */
-    private ObjectMapperUtils() {
+    private ObjectMapperUtil() {
     }
 
     /**

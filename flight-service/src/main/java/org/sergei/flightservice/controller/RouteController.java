@@ -18,7 +18,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.util.List;
 import java.util.Map;
 
-import static org.sergei.flightservice.controller.utils.LinkSetters.setLinksForRoute;
+import static org.sergei.flightservice.controller.util.LinkUtil.setLinksForRoute;
 
 /**
  * @author Sergei Visotsky, 2018
