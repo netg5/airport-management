@@ -1,6 +1,7 @@
 package org.sergei.flightservice.controller;
 
 import io.swagger.annotations.*;
+import org.sergei.flightservice.controller.utils.LinkSetters;
 import org.sergei.flightservice.dto.CustomerDTO;
 import org.sergei.flightservice.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.util.List;
 import java.util.Map;
 
+import static org.sergei.flightservice.controller.utils.LinkSetters.setLinksForCustomer;
+
 /**
  * @author Sergei Visotsky, 2018
  */
@@ -29,8 +32,12 @@ import java.util.Map;
 @RequestMapping(value = "/customers", produces = "application/json")
 public class CustomerController {
 
+    private final CustomerService customerService;
+
     @Autowired
-    private CustomerService customerService;
+    public CustomerController(CustomerService customerService) {
+        this.customerService = customerService;
+    }
 
     @ApiOperation("Get all customers")
     @ApiResponses(
@@ -99,7 +106,7 @@ public class CustomerController {
     public ResponseEntity<CustomerDTO> getCustomerById(@ApiParam(value = "Customer ID which should be found", required = true)
                                                        @PathVariable("customerId") Long customerId) {
         CustomerDTO customer = customerService.findOne(customerId);
-        return new ResponseEntity<>(setLinks(customer), HttpStatus.OK);
+        return new ResponseEntity<>(setLinksForCustomer(customer), HttpStatus.OK);
     }
 
     @ApiOperation("Save customer")
@@ -121,7 +128,7 @@ public class CustomerController {
                                                       @ApiParam(value = "Updated customer", required = true)
                                                       @RequestBody CustomerDTO customerDTO) {
         CustomerDTO customer = customerService.update(customerId, customerDTO);
-        return new ResponseEntity<>(setLinks(customer), HttpStatus.OK);
+        return new ResponseEntity<>(setLinksForCustomer(customer), HttpStatus.OK);
     }
 
     @ApiOperation("Update one field for a customer")
@@ -135,7 +142,7 @@ public class CustomerController {
                                                      @PathVariable("customerId") Long customerId,
                                                      @RequestBody Map<String, Object> params) {
         CustomerDTO customerDTO = customerService.patch(customerId, params);
-        return new ResponseEntity<>(setLinks(customerDTO), HttpStatus.OK);
+        return new ResponseEntity<>(setLinksForCustomer(customerDTO), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Delete customer data", notes = "Operation allowed for ADMIN only")
@@ -149,27 +156,5 @@ public class CustomerController {
     public ResponseEntity<CustomerDTO> deleteCustomer(@ApiParam(value = "Customer ID which should be deleted", required = true)
                                                       @PathVariable("customerId") Long customerId) {
         return new ResponseEntity<>(customerService.delete(customerId), HttpStatus.NO_CONTENT);
-    }
-
-    /**
-     * Method to set HATEOAS links for customer
-     *
-     * @param customerDTO get customer DTO to setup links
-     * @return customer DTO with links;
-     */
-    private CustomerDTO setLinks(CustomerDTO customerDTO) {
-        Link selfLink = ControllerLinkBuilder.linkTo(
-                ControllerLinkBuilder.methodOn(CustomerController.class).getCustomerById(customerDTO.getCustomerId())).withSelfRel();
-        Link reservationsLink = ControllerLinkBuilder.linkTo(
-                ControllerLinkBuilder.methodOn(ReservationController.class)
-                        .getAllForCustomer(customerDTO.getCustomerId())).withRel("reservations");
-        Link ticketsLink = new Link(
-                "http://127.0.0.1:8080/ticket-api/tickets?customerId=" + customerDTO.getCustomerId()).withRel("tickets");
-        Link link = ControllerLinkBuilder.linkTo(CustomerController.class).withRel("allCustomers");
-        customerDTO.add(selfLink);
-        customerDTO.add(reservationsLink);
-        customerDTO.add(ticketsLink);
-        customerDTO.add(link);
-        return customerDTO;
     }
 }

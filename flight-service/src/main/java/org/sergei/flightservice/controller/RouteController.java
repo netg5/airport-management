@@ -18,6 +18,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.util.List;
 import java.util.Map;
 
+import static org.sergei.flightservice.controller.utils.LinkSetters.setLinksForRoute;
+
 /**
  * @author Sergei Visotsky, 2018
  */
@@ -78,7 +80,7 @@ public class RouteController {
     public ResponseEntity<RouteDTO> getRouteById(@ApiParam(value = "Route ID which should be found", required = true)
                                                  @PathVariable("routeId") Long routeId) {
         RouteDTO routeDTO = routeService.findOneRoute(routeId);
-        return new ResponseEntity<>(setLinks(routeDTO), HttpStatus.OK);
+        return new ResponseEntity<>(setLinksForRoute(routeDTO), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Save route", notes = "Operation allowed for ADMIN only")
@@ -102,7 +104,7 @@ public class RouteController {
                                                 @ApiParam(value = "Saved route", required = true)
                                                 @RequestBody RouteDTO routeDTO) {
         RouteDTO route = routeService.update(routeId, routeDTO);
-        return new ResponseEntity<>(setLinks(route), HttpStatus.OK);
+        return new ResponseEntity<>(setLinksForRoute(route), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Update one field for the route", notes = "Operation allowed for ADMIN only")
@@ -118,7 +120,7 @@ public class RouteController {
                                                @RequestBody Map<String, Object> params) {
 
         RouteDTO routeDTO = routeService.patch(routeId, params);
-        return new ResponseEntity<>(setLinks(routeDTO), HttpStatus.OK);
+        return new ResponseEntity<>(setLinksForRoute(routeDTO), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Method to delete route", notes = "Operation allowed for ADMIN only")
@@ -132,20 +134,5 @@ public class RouteController {
     public ResponseEntity<RouteDTO> deleteRoute(@ApiParam(value = "Route ID which should be deleted", required = true)
                                                 @PathVariable("routeId") Long routeId) {
         return new ResponseEntity<>(routeService.delete(routeId), HttpStatus.NO_CONTENT);
-    }
-
-    /**
-     * Method to set HATEOAS links for customer
-     *
-     * @param routeDTO get route DTO to set links
-     * @return DTO with links added
-     */
-    private RouteDTO setLinks(RouteDTO routeDTO) {
-        Link link = ControllerLinkBuilder.linkTo(RouteController.class).withRel("allRoutes");
-        Link selfLink = ControllerLinkBuilder.linkTo(
-                ControllerLinkBuilder.methodOn(RouteController.class).getRouteById(routeDTO.getRouteId())).withSelfRel();
-        routeDTO.add(selfLink);
-        routeDTO.add(link);
-        return routeDTO;
     }
 }

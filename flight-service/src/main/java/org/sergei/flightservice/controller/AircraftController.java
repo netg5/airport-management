@@ -17,6 +17,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.util.List;
 import java.util.Map;
 
+import static org.sergei.flightservice.controller.utils.LinkSetters.setLinksForAircraft;
+
 /**
  * @author Sergei Visotsky, 2018
  */
@@ -81,7 +83,7 @@ public class AircraftController {
     public ResponseEntity<AircraftDTO> getAircraftById(@ApiParam(value = "Aircraft ID which should be found", required = true)
                                                        @PathVariable("aircraftId") Long aircraftId) {
         AircraftDTO aircraftDTO = aircraftService.findOne(aircraftId);
-        return new ResponseEntity<>(setLinks(aircraftDTO), HttpStatus.OK);
+        return new ResponseEntity<>(setLinksForAircraft(aircraftDTO), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Save aircraft", notes = "Operation allowed for ADMIN only")
@@ -105,7 +107,7 @@ public class AircraftController {
                                                       @ApiParam(value = "Update aircracft", required = true)
                                                       @RequestBody AircraftDTO aircraftDTO) {
         AircraftDTO aircraft = aircraftService.update(aircraftId, aircraftDTO);
-        return new ResponseEntity<>(setLinks(aircraft), HttpStatus.OK);
+        return new ResponseEntity<>(setLinksForAircraft(aircraft), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Update one field of the aircraft", notes = "Operation allowed for ADMIN only")
@@ -121,7 +123,7 @@ public class AircraftController {
                                                      @RequestBody Map<String, Object> params) {
 
         AircraftDTO aircraftDTO = aircraftService.patch(aircraftId, params);
-        return new ResponseEntity<>(setLinks(aircraftDTO), HttpStatus.OK);
+        return new ResponseEntity<>(setLinksForAircraft(aircraftDTO), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Delete aircraft", notes = "Operation allowed for ADMIN only")
@@ -135,20 +137,5 @@ public class AircraftController {
     public ResponseEntity<AircraftDTO> deleteAircraft(@ApiParam(value = "Aircraft ID which should be deleted", required = true)
                                                       @PathVariable("aircraftId") Long aircraftId) {
         return new ResponseEntity<>(aircraftService.delete(aircraftId), HttpStatus.NO_CONTENT);
-    }
-
-    /**
-     * Method to set HATEOAS links for aircraft
-     *
-     * @param aircraftDTO get DTO to setup links
-     * @return DTO with links
-     */
-    private AircraftDTO setLinks(AircraftDTO aircraftDTO) {
-        Link selfLink = ControllerLinkBuilder.linkTo(
-                ControllerLinkBuilder.methodOn(AircraftController.class).getAircraftById(aircraftDTO.getAircraftId())).withSelfRel();
-        Link link = ControllerLinkBuilder.linkTo(AircraftController.class).withRel("allAircrafts");
-        aircraftDTO.add(selfLink);
-        aircraftDTO.add(link);
-        return aircraftDTO;
     }
 }
