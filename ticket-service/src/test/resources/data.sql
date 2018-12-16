@@ -1,1 +1,0 @@
-insert into customer(first_name, last_name, age) value ('John', 'Smith', 20);

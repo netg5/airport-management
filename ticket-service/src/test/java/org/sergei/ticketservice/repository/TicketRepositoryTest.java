@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
@@ -24,13 +25,13 @@ import static junit.framework.TestCase.assertTrue;
  *
  * @author Sergei Visotsky, 2018
  */
-@Ignore
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @TestPropertySource(locations = "classpath:application-test.properties")
 @ContextConfiguration(classes = {WebSecurityConfigTest.class})
 @EnableJpaRepositories(basePackages = "org.sergei.ticketservice.repository")
 @EntityScan(basePackages = "org.sergei.ticketservice.model")
+//@Sql(scripts = {"classpath:sql/schema.sql", "classpath:sql/data.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 public class TicketRepositoryTest {
 
     @Autowired
@@ -46,11 +47,7 @@ public class TicketRepositoryTest {
     @Ignore
     @Test
     public void getTicketsForCustomer() {
-        List<Ticket> ticketList = ticketRepository.findByCustomerIdPlaceOrDistance(1L, "New-York", 562.0);
+        List<Ticket> ticketList = ticketRepository.findByCustomerIdPlaceOrDistance(1L, "Riga", 2500.0);
         assertEquals(1, ticketList.size());
-    }
-
-    public void setupDataSet() {
-
     }
 }

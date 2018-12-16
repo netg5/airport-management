@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
+ * Util class to perform mapping from {@code entityClass} to DTO class {@code outClass}
+ *
  * @author Sergei Visotsky, 2018
  */
 public class ObjectMapperUtils {
@@ -58,8 +60,17 @@ public class ObjectMapperUtils {
                 .collect(Collectors.toList());
     }
 
-    public static <D, T> Page<D> mapAllPages(final Page<T> entityList, Class<D> outCLass) {
-        return entityList.map(entity -> map(entity, outCLass));
+    /**
+     * Maps {@code entityClass} taken from pagination to the {@code outClass}
+     *
+     * @param entityList page with entity classes
+     * @param outClass   DTO in which should be converted {@code outClass}
+     * @param <D>        {@code entityClass}
+     * @param <T>        {@code DTO class}
+     * @return list of mapped DTOs
+     */
+    public static <D, T> Page<D> mapAllPages(final Page<T> entityList, Class<D> outClass) {
+        return entityList.map(entity -> map(entity, outClass));
     }
 
     /**
