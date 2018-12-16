@@ -22,7 +22,8 @@
 * To run docker container command `docker run -it --rm -p 8085:8085 flight-service` should be performed
 
 ## Authentication
-To access any resource authentication should be performed. I this case access token should be obtained.
+To access any resource authentication should be performed. By performing this request with such a parameters access_token is retrieved.
+After authentication we have an access resource by providing access_token
 * URL: `http://localhost:8080/auth-api/oauth/token`
 * Content-Type: `application/x-www-form-urlencoded`
 * ContentOptions: `username=USERNAME&password=PASSWORD&grant_type=GRANT_TYPE`
