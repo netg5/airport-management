@@ -15,8 +15,7 @@ import org.springframework.stereotype.Component;
  * @author Sergei Visotsky
  * @since 12/16/2018
  */
-@Component
-public class LinkSetters {
+public final class LinkSetters {
 
     /**
      * Method to set HATEOAS links for customer

@@ -1,7 +1,6 @@
 package org.sergei.flightservice.controller;
 
 import io.swagger.annotations.*;
-import org.sergei.flightservice.controller.utils.LinkSetters;
 import org.sergei.flightservice.dto.CustomerDTO;
 import org.sergei.flightservice.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
  *
  * @author Sergei Visotsky, 2018
  */
-public class ObjectMapperUtils {
+public final class ObjectMapperUtils {
     private static ModelMapper modelMapper;
 
     /**
