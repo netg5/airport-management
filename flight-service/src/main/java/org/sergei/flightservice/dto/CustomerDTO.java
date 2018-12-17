@@ -1,6 +1,7 @@
 package org.sergei.flightservice.dto;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,8 +17,16 @@ import org.springframework.hateoas.ResourceSupport;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CustomerDTO extends ResourceSupport {
+
+    @ApiModelProperty("Customer ID")
     private Long customerId;
+
+    @ApiModelProperty("Customer first name")
     private String firstName;
+
+    @ApiModelProperty("Customer last name")
     private String lastName;
+
+    @ApiModelProperty("Customer age")
     private Integer age;
 }

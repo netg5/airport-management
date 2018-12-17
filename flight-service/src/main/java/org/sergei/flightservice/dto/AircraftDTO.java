@@ -1,6 +1,7 @@
 package org.sergei.flightservice.dto;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,9 +17,19 @@ import org.springframework.hateoas.ResourceSupport;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AircraftDTO extends ResourceSupport {
+
+    @ApiModelProperty("Aircraft ID")
     private Long aircraftId;
+
+    @ApiModelProperty("Aircraft model")
     private String model;
+
+    @ApiModelProperty("Aircraft name")
     private String aircraftName;
+
+    @ApiModelProperty("Aircraft name")
     private Double aircraftWeight;
+
+    @ApiModelProperty("Maximum passengers in aircraft")
     private Integer maxPassengers;
 }

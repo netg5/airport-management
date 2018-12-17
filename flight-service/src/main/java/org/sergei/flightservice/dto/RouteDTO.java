@@ -1,6 +1,7 @@
 package org.sergei.flightservice.dto;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -19,11 +20,25 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RouteDTO extends ResourceSupport {
+
+    @ApiModelProperty("Route ID")
     private Long routeId;
+
+    @ApiModelProperty("Route distance")
     private Double distance;
+
+    @ApiModelProperty("Flight departure time")
     private LocalDateTime departureTime;
+
+    @ApiModelProperty("Flight arrival time")
     private LocalDateTime arrivalTime;
+
+    @ApiModelProperty("Flight price")
     private BigDecimal price;
+
+    @ApiModelProperty("Place to fly")
     private String place;
+
+    @ApiModelProperty("Aircraft ID which goes by this flight")
     private Long aircraftId;
 }
