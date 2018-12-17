@@ -7,7 +7,3 @@ spring:
       discovery:
         enabled: true
         service-id: config-service
-#eureka:
-#  instance:
-#    metadata-map:
-#      management.context-path: /flight-api

@@ -68,6 +68,7 @@ public class ServiceDescriptionUpdater {
 
     private String getSwaggerURL(ServiceInstance instance) {
         String swaggerURL = instance.getMetadata().get(KEY_SWAGGER_URL);
+        LOGGER.debug("Swagger URL is: {}", swaggerURL);
         return swaggerURL != null ? instance.getUri().getPath() + swaggerURL : instance.getUri() + DEFAULT_SWAGGER_URL;
     }
 
