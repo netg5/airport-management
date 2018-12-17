@@ -5,14 +5,11 @@ import org.sergei.flightservice.dto.AircraftDTO;
 import org.sergei.flightservice.service.AircraftService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resources;
-import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
 import java.util.Map;
@@ -49,9 +46,9 @@ public class AircraftController {
     @ApiOperation(value = "Get all existing aircrafts paginated")
     @GetMapping(params = {"page", "size"})
     public ResponseEntity<Resources> getAllAircraftPaginated(@ApiParam(value = "Number of page", required = true)
-                                                                          @RequestParam("page") int page,
-                                                                          @ApiParam(value = "Number of elements per page", required = true)
-                                                                          @RequestParam("size") int size) {
+                                                             @RequestParam("page") int page,
+                                                             @ApiParam(value = "Number of elements per page", required = true)
+                                                             @RequestParam("size") int size) {
         Page<AircraftDTO> aircrafts = aircraftService.findAllPaginated(page, size);
         return new ResponseEntity<>(setLinksForAllAircrafts(aircrafts), HttpStatus.OK);
     }

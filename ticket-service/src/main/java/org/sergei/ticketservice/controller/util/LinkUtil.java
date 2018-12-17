@@ -11,6 +11,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
  */
 public final class LinkUtil {
 
+    private LinkUtil() {
+    }
+
     /**
      * Method to set links for ticket
      *

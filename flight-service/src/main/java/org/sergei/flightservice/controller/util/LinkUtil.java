@@ -14,7 +14,10 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
  * @author Sergei Visotsky
  * @since 12/16/2018
  */
-public final class LinkUtil<E> {
+public final class LinkUtil {
+
+    private LinkUtil() {
+    }
 
     /**
      * Set HATEOAS links for each customer of collection
