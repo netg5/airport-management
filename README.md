@@ -49,11 +49,10 @@ In case if access token is expired refresh token should be used to renew access 
 * ContentOptions: `grant_type=refresh_token&refresh_token=REFRESH_TOKEN`
 
 ## FIXME
-3. Method availability for a specific role
-4. Authorization in Swagger UI
+1. Method availability for a specific role
+2. Authorization in Swagger UI
 
 ## TODO
 1. Write tests for the RESTful service
-3. Make Swagger available through the gateway for all microservices
-4. Implement Hystrix fallback methods
-5. Front-end (REST client)
+2. Implement Hystrix fallback methods
+3. Front-end (REST client)
