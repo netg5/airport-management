@@ -5,18 +5,16 @@ import org.sergei.flightservice.dto.CustomerDTO;
 import org.sergei.flightservice.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resources;
-import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
 import java.util.Map;
 
+import static org.sergei.flightservice.controller.util.LinkUtil.setLinksForAllCustomers;
 import static org.sergei.flightservice.controller.util.LinkUtil.setLinksForCustomer;
 
 /**
@@ -45,26 +43,9 @@ public class CustomerController {
             }
     )
     @GetMapping
-    public ResponseEntity<Resources<CustomerDTO>> getAllCustomers() {
-
+    public ResponseEntity<Resources> getAllCustomers() {
         List<CustomerDTO> customerList = customerService.findAll();
-        customerList.forEach(customer -> {
-            Link link = ControllerLinkBuilder.linkTo(
-                    ControllerLinkBuilder.methodOn(CustomerController.class)
-                            .getCustomerById(customer.getCustomerId())).withSelfRel();
-            Link reservationsLink = ControllerLinkBuilder.linkTo(
-                    ControllerLinkBuilder.methodOn(ReservationController.class)
-                            .getAllForCustomer(customer.getCustomerId())).withRel("reservations");
-            Link ticketsLink = new Link(
-                    "http://127.0.0.1:8080/ticket-api/tickets?customerId=" + customer.getCustomerId()).withRel("tickets");
-            customer.add(link);
-            customer.add(reservationsLink);
-            customer.add(ticketsLink);
-        });
-        Resources<CustomerDTO> resources = new Resources<>(customerList);
-        String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
-        resources.add(new Link(uriString, "self"));
-        return new ResponseEntity<>(resources, HttpStatus.OK);
+        return new ResponseEntity<>(setLinksForAllCustomers(customerList), HttpStatus.OK);
     }
 
     @ApiOperation("Get all customers paginated")
@@ -74,30 +55,12 @@ public class CustomerController {
             }
     )
     @GetMapping(params = {"page", "size"})
-    public ResponseEntity<Resources<CustomerDTO>> getAllCustomersPaginated(@ApiParam(value = "Number of page", required = true)
+    public ResponseEntity<Resources> getAllCustomersPaginated(@ApiParam(value = "Number of page", required = true)
                                                                            @RequestParam(value = "page") int page,
                                                                            @ApiParam(value = "Number of elements per page", required = true)
                                                                            @RequestParam(value = "size") int size) {
-
         Page<CustomerDTO> customerList = customerService.findAllPaginated(page, size);
-
-        customerList.forEach(customer -> {
-            Link link = ControllerLinkBuilder.linkTo(
-                    ControllerLinkBuilder.methodOn(CustomerController.class)
-                            .getCustomerById(customer.getCustomerId())).withSelfRel();
-            Link reservationsLink = ControllerLinkBuilder.linkTo(
-                    ControllerLinkBuilder.methodOn(ReservationController.class)
-                            .getAllForCustomer(customer.getCustomerId())).withRel("reservations");
-            Link ticketsLink = new Link(
-                    "http://127.0.0.1:8080/ticket-api/tickets?customerId=" + customer.getCustomerId()).withRel("tickets");
-            customer.add(link);
-            customer.add(reservationsLink);
-            customer.add(ticketsLink);
-        });
-        Resources<CustomerDTO> resources = new Resources<>(customerList);
-        String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
-        resources.add(new Link(uriString, "self"));
-        return new ResponseEntity<>(resources, HttpStatus.OK);
+        return new ResponseEntity<>(setLinksForAllCustomers(customerList), HttpStatus.OK);
     }
 
     @ApiOperation("Get customer by ID")

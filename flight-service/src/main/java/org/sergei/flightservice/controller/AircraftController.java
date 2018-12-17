@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.sergei.flightservice.controller.util.LinkUtil.setLinksForAircraft;
+import static org.sergei.flightservice.controller.util.LinkUtil.setLinksForAllAircrafts;
 
 /**
  * @author Sergei Visotsky, 2018
@@ -40,37 +41,19 @@ public class AircraftController {
 
     @ApiOperation(value = "Get all existing aircrafts")
     @GetMapping
-    public ResponseEntity<Resources<AircraftDTO>> getAllAircraft() {
+    public ResponseEntity<Resources> getAllAircraft() {
         List<AircraftDTO> aircrafts = aircraftService.findAll();
-        aircrafts.forEach(aircraft -> {
-            Link link = ControllerLinkBuilder.linkTo(
-                    ControllerLinkBuilder.methodOn(AircraftController.class)
-                            .getAircraftById(aircraft.getAircraftId())).withSelfRel();
-            aircraft.add(link);
-        });
-        Resources<AircraftDTO> resources = new Resources<>(aircrafts);
-        String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
-        resources.add(new Link(uriString, "self"));
-        return new ResponseEntity<>(resources, HttpStatus.OK);
+        return new ResponseEntity<>(setLinksForAllAircrafts(aircrafts), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Get all existing aircrafts paginated")
     @GetMapping(params = {"page", "size"})
-    public ResponseEntity<Resources<AircraftDTO>> getAllAircraftPaginated(@ApiParam(value = "Number of page", required = true)
+    public ResponseEntity<Resources> getAllAircraftPaginated(@ApiParam(value = "Number of page", required = true)
                                                                           @RequestParam("page") int page,
                                                                           @ApiParam(value = "Number of elements per page", required = true)
                                                                           @RequestParam("size") int size) {
         Page<AircraftDTO> aircrafts = aircraftService.findAllPaginated(page, size);
-        aircrafts.forEach(aircraft -> {
-            Link link = ControllerLinkBuilder.linkTo(
-                    ControllerLinkBuilder.methodOn(AircraftController.class)
-                            .getAircraftById(aircraft.getAircraftId())).withSelfRel();
-            aircraft.add(link);
-        });
-        Resources<AircraftDTO> resources = new Resources<>(aircrafts);
-        String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
-        resources.add(new Link(uriString, "self"));
-        return new ResponseEntity<>(resources, HttpStatus.OK);
+        return new ResponseEntity<>(setLinksForAllAircrafts(aircrafts), HttpStatus.OK);
     }
 
     @ApiOperation("Get aircraftDTO by ID")

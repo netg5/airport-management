@@ -17,6 +17,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.util.List;
 import java.util.Map;
 
+import static org.sergei.flightservice.controller.util.LinkUtil.setLinksForAllReservations;
+
 /**
  * @author Sergei Visotsky, 2018
  */
@@ -39,21 +41,11 @@ public class ReservationController {
             }
     )
     @GetMapping("/{customerId}/reservations")
-    public ResponseEntity<Resources<ReservationExtendedDTO>> getAllForCustomer(@ApiParam(value = "Customer ID whose reservations should be found", required = true)
+    public ResponseEntity<Resources> getAllForCustomer(@ApiParam(value = "Customer ID whose reservations should be found", required = true)
                                                                                @PathVariable("customerId") Long customerId) {
-        List<ReservationExtendedDTO> flightReservations =
+        List<ReservationExtendedDTO> reservations =
                 reservationService.findAllForCustomer(customerId);
-        flightReservations.forEach(flightReservation -> {
-            Link link = ControllerLinkBuilder.linkTo(
-                    ControllerLinkBuilder.methodOn(ReservationController.class)
-                            .getOneForCustomer(flightReservation.getCustomerId(),
-                                    flightReservation.getReservationId())).withRel("reservation");
-            flightReservation.add(link);
-        });
-        Resources<ReservationExtendedDTO> resources = new Resources<>(flightReservations);
-        String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
-        resources.add(new Link(uriString, "self"));
-        return new ResponseEntity<>(resources, HttpStatus.OK);
+        return new ResponseEntity<>(setLinksForAllReservations(reservations), HttpStatus.OK);
     }
 
     @ApiOperation("Get all reservations for customer")
@@ -63,25 +55,15 @@ public class ReservationController {
             }
     )
     @GetMapping(value = "/{customerId}/reservations", params = {"page", "size"})
-    public ResponseEntity<Resources<ReservationExtendedDTO>> getAllForCustomerPaginated(@ApiParam(value = "Customer ID whose reservations should be found", required = true)
+    public ResponseEntity<Resources> getAllForCustomerPaginated(@ApiParam(value = "Customer ID whose reservations should be found", required = true)
                                                                                         @PathVariable("customerId") Long customerId,
                                                                                         @ApiParam(value = "Number of page", required = true)
                                                                                         @RequestParam("page") int page,
                                                                                         @ApiParam(value = "Number of elements per page", required = true)
                                                                                         @RequestParam("size") int size) {
-        Page<ReservationExtendedDTO> flightReservations =
+        Page<ReservationExtendedDTO> reservations =
                 reservationService.findAllForCustomerPaginated(customerId, page, size);
-        flightReservations.forEach(flightReservation -> {
-            Link link = ControllerLinkBuilder.linkTo(
-                    ControllerLinkBuilder.methodOn(ReservationController.class)
-                            .getOneForCustomer(flightReservation.getCustomerId(),
-                                    flightReservation.getReservationId())).withRel("reservation");
-            flightReservation.add(link);
-        });
-        Resources<ReservationExtendedDTO> resources = new Resources<>(flightReservations);
-        String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
-        resources.add(new Link(uriString, "self"));
-        return new ResponseEntity<>(resources, HttpStatus.OK);
+        return new ResponseEntity<>(setLinksForAllReservations(reservations), HttpStatus.OK);
     }
 
     @ApiOperation("Get one reservation by ID for the customer")

@@ -8,7 +8,6 @@ import org.sergei.ticketservice.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +15,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
+
+import static org.sergei.ticketservice.controller.util.LinkUtil.setLinksForTicket;
 
 /**
  * @author Sergei Visotsky
@@ -44,11 +44,7 @@ public class TicketController {
                                                                @ApiParam(value = "Distance with which ticket should be found")
                                                                @RequestParam(value = "distance", required = false) Double distance) {
         List<Ticket> ticketList = ticketRepository.findByCustomerIdPlaceOrDistance(customerId, place, distance);
-        Resources<Ticket> resources = new Resources<>(ticketList);
-        String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
-        resources.add(new Link(uriString, "self"));
-        resources.add(new Link("http://127.0.0.1:8080/flight-api/customers/" + customerId, "customer"));
-        return new ResponseEntity<>(resources, HttpStatus.OK);
+        return new ResponseEntity<>(setLinksForTicket(ticketList, customerId), HttpStatus.OK);
     }
 
     @ApiOperation("Get ticket for customer by ID")
@@ -64,10 +60,6 @@ public class TicketController {
                                                                         @ApiParam(value = "Number of elements per page", required = true)
                                                                         @RequestParam("size") int size) {
         Page<Ticket> ticketList = ticketRepository.findByCustomerIdPlaceOrDistancePageable(customerId, place, distance, PageRequest.of(page, size));
-        Resources<Ticket> resources = new Resources<>(ticketList);
-        String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
-        resources.add(new Link(uriString, "self"));
-        resources.add(new Link("http://127.0.0.1:8080/flight-api/customers/" + customerId, "customer"));
-        return new ResponseEntity<>(resources, HttpStatus.OK);
+        return new ResponseEntity<>(setLinksForTicket(ticketList, customerId), HttpStatus.OK);
     }
 }
