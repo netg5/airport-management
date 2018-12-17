@@ -49,7 +49,6 @@ In case if access token is expired refresh token should be used to renew access 
 * ContentOptions: `grant_type=refresh_token&refresh_token=REFRESH_TOKEN`
 
 ## FIXME
-2. Test cases for controllers in flight-service
 3. Method availability for a specific role
 4. Authorization in Swagger UI
 
