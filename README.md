@@ -54,5 +54,6 @@ In case if access token is expired refresh token should be used to renew access 
 
 ## TODO
 1. Write tests for the RESTful service
-2. Implement Hystrix fallback methods
-3. Front-end (REST client)
+2. Ignore services without swagger json in doc-service
+3. Implement Hystrix fallback methods
+4. Front-end (REST client)
