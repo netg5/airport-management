@@ -57,6 +57,6 @@ public class TicketControllerTest {
                 .andExpect(jsonPath("$._embedded.ticketList[0].price").value(2500))
                 .andExpect(jsonPath("$._embedded.ticketList[0].aircraftName").value("Boeing"))
                 .andExpect(jsonPath("$._links.self.href").value("http://localhost/tickets?customerId=1"))
-                .andExpect(jsonPath("$._links.reservations.href").value("http://localhost/customers/1"));
+                .andExpect(jsonPath("$._links.customer.href").value("http://127.0.0.1:8080/flight-api/customers/1"));
     }
 }

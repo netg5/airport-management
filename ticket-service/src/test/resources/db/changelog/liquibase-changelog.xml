@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="01" author="sergeivisotsky">
+
+        <createTable tableName="customer" remarks="A table to contain all customers">
+            <column name="customer_id" type="bigint(20)">
+                <constraints nullable="false" unique="true" primaryKey="true"/>
+            </column>
+            <column name="first_name" type="varchar(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="varchar(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="age" type="int(11)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="aircraft" remarks="A table to contain all aircrafts">
+            <column name="aircraft_id" type="bigint(20)">
+                <constraints nullable="false" unique="true" primaryKey="true"/>
+            </column>
+            <column name="aircraft_name" type="varchar(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="weight" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="max_passengers" type="int(11)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="model" type="varchar(45)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="route" remarks="A table to contain all routes">
+            <column name="route_id" type="bigint(20)">
+                <constraints nullable="false" unique="true" primaryKey="true"/>
+            </column>
+            <column name="arrival_time" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="departure_time" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="distanec" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="place" type="varchar(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="decimal(19, 20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="aircraft_id" type="bigint(20)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="route" baseColumnNames="aircraft_id"
+                                 constraintName="aircraft_fk"
+                                 referencedTableName="aircrafts" referencedColumnNames="aircraft_id"/>
+
+        <createTable tableName="reservation" remarks="A table to contain all flight reservations">
+            <column name="reservation_id" type="bigint(20)">
+                <constraints nullable="false" unique="true" primaryKey="true"/>
+            </column>
+            <column name="reservation_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="customer_id" type="bigint(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="route_id" type="bigint(20)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="reservation" baseColumnNames="customer_id"
+                                 constraintName="customer_fk"
+                                 referencedTableName="customer" referencedColumnNames="customer_id"/>
+        <addForeignKeyConstraint baseTableName="reservation" baseColumnNames="route_id"
+                                 constraintName="route_fk"
+                                 referencedTableName="route" referencedColumnNames="route_id"/>
+
+        <createView catalogName="ticket_view"
+                    replaceIfExists="true"
+                    schemaName="public"
+                    viewName="v_person">
+
+        </createView>
+    </changeSet>
+</databaseChangeLog>
