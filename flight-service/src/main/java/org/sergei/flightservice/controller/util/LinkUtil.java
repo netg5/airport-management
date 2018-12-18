@@ -16,6 +16,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
  */
 public final class LinkUtil {
 
+    /**
+     * Hide from public use
+     */
     private LinkUtil() {
     }
 
@@ -39,7 +42,7 @@ public final class LinkUtil {
             customer.add(reservationsLink);
             customer.add(ticketsLink);
         });
-        return setServletResources(customerList);
+        return setServletResourceLinks(customerList);
     }
 
     /**
@@ -78,7 +81,7 @@ public final class LinkUtil {
                                     reservation.getReservationId())).withRel("reservation");
             reservation.add(link);
         });
-        return setServletResources(reservations);
+        return setServletResourceLinks(reservations);
     }
 
 
@@ -95,7 +98,7 @@ public final class LinkUtil {
                             .getAircraftById(aircraft.getAircraftId())).withSelfRel();
             aircraft.add(link);
         });
-        return setServletResources(aircrafts);
+        return setServletResourceLinks(aircrafts);
     }
 
     /**
@@ -120,7 +123,7 @@ public final class LinkUtil {
                             .getRouteById(route.getRouteId())).withSelfRel();
             route.add(link);
         });
-        return setServletResources(routes);
+        return setServletResourceLinks(routes);
     }
 
     /**
@@ -145,7 +148,7 @@ public final class LinkUtil {
      * @param <E>        Generic entity
      * @return resource with links set
      */
-    private static <E> Resources setServletResources(Iterable<E> collection) {
+    private static <E> Resources setServletResourceLinks(Iterable<E> collection) {
         Resources<E> resources = new Resources<>(collection);
         String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
         resources.add(new Link(uriString, "self"));
