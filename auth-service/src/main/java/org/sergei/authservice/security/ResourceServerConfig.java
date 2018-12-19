@@ -7,10 +7,9 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 
 /**
- * @author Sergei Visotsky, 2018
- * <pre>
- *    Enables a Spring Security that authenticates requests via an incoming OAuth2 token
- * </pre>
+ * Enables a Spring Security that authenticates requests via an incoming OAuth2 token
+ *
+ * @author Sergei Visotsky
  */
 @Configuration
 @EnableResourceServer

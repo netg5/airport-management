@@ -22,7 +22,7 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 /**
  * Test for {@link AircraftRepository}
  *
- * @author Sergei Visotsky, 2018
+ * @author Sergei Visotsky
  */
 @RunWith(SpringRunner.class)
 @DataJpaTest

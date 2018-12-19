@@ -32,7 +32,7 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 /**
  * Test for {@link ReservationRepository}
  *
- * @author Sergei Visotsky, 2018
+ * @author Sergei Visotsky
  */
 @Ignore
 @RunWith(SpringRunner.class)

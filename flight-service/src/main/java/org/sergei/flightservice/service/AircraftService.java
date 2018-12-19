@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author Sergei Visotsky, 2018
+ * @author Sergei Visotsky
  */
 @Service
 public class AircraftService implements IService<AircraftDTO> {
@@ -52,6 +52,13 @@ public class AircraftService implements IService<AircraftDTO> {
         return ObjectMapperUtil.mapAll(aircraftList, AircraftDTO.class);
     }
 
+    /**
+     * Find all aircrafts paginated
+     *
+     * @param page which should be shown
+     * @param size number of elements per page
+     * @return collection of aircrafts
+     */
     @Override
     public Page<AircraftDTO> findAllPaginated(int page, int size) {
         Page<Aircraft> aircraftList = aircraftRepository.findAll(PageRequest.of(page, size));

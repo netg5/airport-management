@@ -14,7 +14,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * @author Sergei Visotsky, 2018
+ * @author Sergei Visotsky
  */
 @RestController
 @PreAuthorize("hasAuthority('ROLE_ADMIN')")

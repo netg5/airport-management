@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 /**
  * Util class to perform mapping from {@code entityClass} to DTO class {@code outClass}
  *
- * @author Sergei Visotsky, 2018
+ * @author Sergei Visotsky
  */
 public final class ObjectMapperUtil {
     private static ModelMapper modelMapper;

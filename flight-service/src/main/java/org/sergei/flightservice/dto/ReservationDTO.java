@@ -11,7 +11,7 @@ import org.springframework.hateoas.ResourceSupport;
 import java.time.LocalDateTime;
 
 /**
- * @author Sergei Visotsky, 2018
+ * @author Sergei Visotsky
  */
 @ApiModel(value = "Reservation", description = "Flight reservation meta data model")
 @Data

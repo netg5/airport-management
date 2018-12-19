@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.hateoas.ResourceSupport;
 
 /**
- * @author Sergei Visotsky, 2018
+ * @author Sergei Visotsky
  */
 @ApiModel(value = "Customer", description = "Customer model")
 @Data

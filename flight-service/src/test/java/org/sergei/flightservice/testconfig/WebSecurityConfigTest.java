@@ -7,11 +7,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 /**
- * @author Sergei Visotsky, 2018
+ * Security config for test cases
  *
- * <pre>
- *     Security config for test cases
- * </pre>
+ * @author Sergei Visotsky
  */
 @Configuration
 @EnableWebSecurity

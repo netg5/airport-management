@@ -20,7 +20,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 import javax.sql.DataSource;
 
 /**
- * @author Sergei Visotsky, 2018
+ * @author Sergei Visotsky
  */
 @Configuration
 @EnableAuthorizationServer

@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author Sergei Visotsky, 2018
+ * @author Sergei Visotsky
  */
 @Service
 public class ReservationService implements IReservationService<ReservationExtendedDTO, ReservationDTO> {

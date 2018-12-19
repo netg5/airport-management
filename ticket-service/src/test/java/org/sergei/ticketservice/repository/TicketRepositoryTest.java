@@ -22,7 +22,7 @@ import static junit.framework.TestCase.assertTrue;
 /**
  * Test for {@link TicketRepository}
  *
- * @author Sergei Visotsky, 2018
+ * @author Sergei Visotsky
  */
 @RunWith(SpringRunner.class)
 @DataJpaTest

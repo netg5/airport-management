@@ -18,7 +18,7 @@ import static org.sergei.flightservice.controller.util.LinkUtil.setLinksForAllCu
 import static org.sergei.flightservice.controller.util.LinkUtil.setLinksForCustomer;
 
 /**
- * @author Sergei Visotsky, 2018
+ * @author Sergei Visotsky
  */
 @Api(
         value = "/flight-api/customers",

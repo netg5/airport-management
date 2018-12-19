@@ -18,7 +18,7 @@ import static org.sergei.flightservice.controller.util.LinkUtil.setLinksForAircr
 import static org.sergei.flightservice.controller.util.LinkUtil.setLinksForAllAircrafts;
 
 /**
- * @author Sergei Visotsky, 2018
+ * @author Sergei Visotsky
  */
 @Api(
         value = "/flight-api/aircrafts",

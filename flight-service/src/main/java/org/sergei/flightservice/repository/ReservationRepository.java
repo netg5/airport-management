@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * @author Sergei Visotsky, 2018
+ * @author Sergei Visotsky
  */
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {

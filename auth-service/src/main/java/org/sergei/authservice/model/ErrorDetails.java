@@ -7,7 +7,7 @@ import lombok.Setter;
 import java.util.Date;
 
 /**
- * @author Sergei Visotsky, 2018
+ * @author Sergei Visotsky
  */
 @Getter
 @Setter

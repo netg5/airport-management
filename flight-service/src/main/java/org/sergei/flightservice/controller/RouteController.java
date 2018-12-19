@@ -19,7 +19,7 @@ import static org.sergei.flightservice.controller.util.LinkUtil.setLinksForAllRo
 import static org.sergei.flightservice.controller.util.LinkUtil.setLinksForRoute;
 
 /**
- * @author Sergei Visotsky, 2018
+ * @author Sergei Visotsky
  */
 @Api(
         value = "/flight-api/routes",

@@ -26,7 +26,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Test for {@link RouteRepository}
  *
- * @author Sergei Visotsky, 2018
+ * @author Sergei Visotsky
  */
 @RunWith(SpringRunner.class)
 @DataJpaTest
