@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Ignore
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = TicketServiceApplication.class)
-@TestPropertySource(locations = "classpath:application-test.properties")
+@TestPropertySource(locations = "classpath:application-test.yml")
 @AutoConfigureMockMvc
 @ContextConfiguration(classes = {ResourceServerConfiguration.class})
 @EnableJpaRepositories(basePackages = "org.sergei.ticketservice.repository")

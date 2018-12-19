@@ -60,11 +60,11 @@
         </dependency>
 
         <!-- Liquibase testing plugin -->
-        <dependency>
+        <!--<dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-maven-plugin</artifactId>
             <version>${liquibase-version}</version>
-        </dependency>
+        </dependency>-->
 
         <!-- JSON and expressions -->
         <dependency>
@@ -119,14 +119,14 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-            <plugin>
+<!--            <plugin>
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-maven-plugin</artifactId>
                 <version>${liquibase-version}</version>
                 <configuration>
                     <propertyFile>src/test/resources/liquibase.properties</propertyFile>
                 </configuration>
-            </plugin>
+            </plugin>-->
         </plugins>
     </build>
 

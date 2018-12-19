@@ -12,7 +12,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
@@ -27,7 +26,7 @@ import static junit.framework.TestCase.assertTrue;
  */
 @RunWith(SpringRunner.class)
 @DataJpaTest
-@TestPropertySource(locations = "classpath:application-test.properties")
+@TestPropertySource(locations = "classpath:application-test.yml")
 @ContextConfiguration(classes = {WebSecurityConfigTest.class})
 @EnableJpaRepositories(basePackages = "org.sergei.ticketservice.repository")
 @EntityScan(basePackages = "org.sergei.ticketservice.model")
