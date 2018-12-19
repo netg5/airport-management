@@ -7,7 +7,6 @@ import java.util.Map;
 
 /**
  * @author Sergei Visotsky
- * Created on 12/10/2018
  */
 public interface IReservationService<E, T> extends IService {
     E findOneForCustomer(Long aLong, Long aLong2);

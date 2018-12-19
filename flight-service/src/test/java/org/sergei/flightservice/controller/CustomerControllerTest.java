@@ -28,7 +28,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Test for {@link CustomerController}
  *
  * @author Sergei Visotsky
- * Created on 11/24/2018
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = FlightServiceApplication.class)

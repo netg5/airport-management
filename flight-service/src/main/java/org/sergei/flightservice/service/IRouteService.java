@@ -6,7 +6,6 @@ import java.util.List;
 
 /**
  * @author Sergei Visotsky
- * Created on 12/10/2018
  */
 public interface IRouteService<E, T> extends IService<E> {
     T findOneRoute(Long aLong);

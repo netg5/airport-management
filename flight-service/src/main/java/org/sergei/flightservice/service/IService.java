@@ -7,7 +7,6 @@ import java.util.Map;
 
 /**
  * @author Sergei Visotsky
- * Created on 12/10/2018
  */
 public interface IService<E> {
     E findOne(Long aLong);

@@ -35,7 +35,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Test for {@link ReservationController}
  *
  * @author Sergei Visotsky
- * Created on 12/19/2018
  */
 @Ignore
 @RunWith(SpringRunner.class)

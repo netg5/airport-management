@@ -16,8 +16,8 @@
     </parent>
 
     <properties>
-        <com.fasterxml.jackson-version>2.9.6</com.fasterxml.jackson-version>
-        <io.swagger-version>2.9.1</io.swagger-version>
+        <com.fasterxml.jackson.version>2.9.6</com.fasterxml.jackson.version>
+        <io.swagger.version>2.9.1</io.swagger.version>
     </properties>
 
     <dependencies>
@@ -93,12 +93,12 @@
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
-            <version>${io.swagger-version}</version>
+            <version>${io.swagger.version}</version>
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
-            <version>${io.swagger-version}</version>
+            <version>${io.swagger.version}</version>
         </dependency>
     </dependencies>
 
