@@ -50,9 +50,6 @@ public class AircraftControllerTest {
     @Autowired
     private AircraftRepository aircraftRepository;
 
-    @Autowired
-    private RouteRepository routeRepository;
-
     @Test
     public void getAllAircrafts_thenReturnOk() throws Exception {
         final String model = "747-400";

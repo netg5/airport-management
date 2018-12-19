@@ -24,10 +24,5 @@ public class ZuulGatewayApplication {
         public String welcome() {
             return "Gateway";
         }
-
-        @GetMapping("/docs")
-        public String docsRedirect() {
-            return "redirect:swagger-ui.html";
-        }
     }
 }
