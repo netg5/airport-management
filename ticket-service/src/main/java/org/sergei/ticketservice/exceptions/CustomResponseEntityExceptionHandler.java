@@ -15,7 +15,6 @@ import java.util.Date;
 
 /**
  * @author Sergei Visotsky
- * Created on 12/4/2018
  */
 @ControllerAdvice
 @RestController

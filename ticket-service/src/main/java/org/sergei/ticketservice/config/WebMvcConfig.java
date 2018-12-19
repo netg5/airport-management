@@ -9,7 +9,6 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
 /**
  * @author Sergei Visotsky
- * Created on 11/27/2018
  */
 @Configuration
 @Import(SwaggerConfig.class)

@@ -11,7 +11,6 @@ import java.util.List;
 
 /**
  * @author Sergei Visotsky
- * Created on 11/27/2018
  */
 @Repository
 public interface TicketRepository extends JpaRepository<Ticket, Long> {

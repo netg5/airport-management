@@ -16,14 +16,10 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
- * @author Sergei Visotsky
- * Created on 11/27/2018
+ * Takes data from ticket_view located in MySQL server
  *
- * <pre>
- *     Takes data from ticket_view located in MySQL server
- * </pre>
+ * @author Sergei Visotsky
  */
-
 @ApiModel(value = "Ticket", description = "Ticket model")
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -42,7 +38,7 @@ public class Ticket extends ResourceSupport implements Serializable {
 
     @ApiModelProperty("Customer first name whose ticket is returned")
     @Column(name = "first_name")
-    private String fistName;
+    private String firstName;
 
     @ApiModelProperty("Customer first name whose ticket is returned")
     @Column(name = "last_name")

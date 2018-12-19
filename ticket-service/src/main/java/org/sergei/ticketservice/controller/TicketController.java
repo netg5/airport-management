@@ -22,7 +22,6 @@ import static org.sergei.ticketservice.controller.util.LinkUtil.setLinksForTicke
 
 /**
  * @author Sergei Visotsky
- * Created on 11/27/2018
  */
 @Api(
         value = "/ticket-api/tickets",

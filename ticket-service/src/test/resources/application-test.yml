@@ -13,6 +13,8 @@ spring:
         show_sql: true
         hbm2ddl.auto: create
         generate-ddl: false
+  liquibase:
+    enabled: true
   getaway:
     port: 8080
 security:
