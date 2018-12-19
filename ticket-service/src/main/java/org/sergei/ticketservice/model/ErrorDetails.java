@@ -4,7 +4,7 @@ import java.util.Date;
 
 /**
  * @author Sergei Visotsky
- * @since 12/4/2018
+ * Created on 12/4/2018
  */
 public class ErrorDetails {
     private Date timestamp;

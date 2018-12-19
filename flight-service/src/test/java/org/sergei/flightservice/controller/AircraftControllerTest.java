@@ -7,7 +7,6 @@ import org.junit.runner.RunWith;
 import org.sergei.flightservice.FlightServiceApplication;
 import org.sergei.flightservice.model.Aircraft;
 import org.sergei.flightservice.repository.AircraftRepository;
-import org.sergei.flightservice.repository.RouteRepository;
 import org.sergei.flightservice.testconfig.ResourceServerConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Test for {@link AircraftController}
  *
  * @author Sergei Visotsky
- * @since 12/12/2018
+ * Created on 12/12/2018
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = FlightServiceApplication.class)

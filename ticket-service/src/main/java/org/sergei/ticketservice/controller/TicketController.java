@@ -22,7 +22,7 @@ import static org.sergei.ticketservice.controller.util.LinkUtil.setLinksForTicke
 
 /**
  * @author Sergei Visotsky
- * @since 11/27/2018
+ * Created on 11/27/2018
  */
 @Api(
         value = "/ticket-api/tickets",

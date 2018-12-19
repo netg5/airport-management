@@ -24,7 +24,7 @@ import static org.springframework.security.oauth2.provider.token.AccessTokenConv
 
 /**
  * @author Sergei Visotsky
- * @since 11/27/2018
+ * Created on 11/27/2018
  */
 @Configuration
 @EnableSwagger2

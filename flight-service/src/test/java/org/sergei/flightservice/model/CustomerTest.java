@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  * Test for {@link Customer}
  *
  * @author Sergei Visotsky
- * @since 12/8/2018
+ * Created on 12/8/2018
  */
 @Ignore
 @RunWith(SpringRunner.class)

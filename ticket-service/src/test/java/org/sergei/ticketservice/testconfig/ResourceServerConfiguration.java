@@ -8,7 +8,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 
 /**
  * @author Sergei Visotsky
- * @since 12/6/2018
+ * Created on 12/6/2018
  */
 @Configuration
 @EnableResourceServer

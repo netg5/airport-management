@@ -15,10 +15,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
 
-
 /**
  * @author Sergei Visotsky
- * @since 11/27/2018
+ * Created on 11/27/2018
  *
  * <pre>
  *     Takes data from ticket_view located in MySQL server

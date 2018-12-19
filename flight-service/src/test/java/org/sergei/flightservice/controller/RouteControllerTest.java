@@ -34,7 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Test for {@link RouteController}
  *
  * @author Sergei Visotsky
- * @since 12/11/2018
+ * Created on 12/11/2018
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = FlightServiceApplication.class)
