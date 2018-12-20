@@ -53,7 +53,7 @@ In case if access token is expired refresh token should be used to renew access 
 2. Authorization in Swagger UI
 
 ## TODO
-1. Write tests for the RESTful service
+1. Adopt liquibase for unit tests
 2. Ignore services without swagger json in doc-service
 3. Implement Hystrix fallback methods
 4. Front-end (REST client)
