@@ -24,6 +24,7 @@ import static junit.framework.TestCase.assertTrue;
  *
  * @author Sergei Visotsky
  */
+@Ignore
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @TestPropertySource(locations = "classpath:application-test.yml")
