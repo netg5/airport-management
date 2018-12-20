@@ -25,6 +25,13 @@ public class OAuth2TokenEnhancer implements TokenEnhancer {
     @Autowired
     private ApiUserService apiUserService;
 
+    /**
+     * Method to find user and enhance access token
+     *
+     * @param oAuth2AccessToken    access token
+     * @param oAuth2Authentication authentication
+     * @return user with set username and access token
+     */
     @Override
     public OAuth2AccessToken enhance(OAuth2AccessToken oAuth2AccessToken,
                                      OAuth2Authentication oAuth2Authentication) {

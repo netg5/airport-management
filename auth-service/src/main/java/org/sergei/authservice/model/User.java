@@ -1,6 +1,5 @@
 package org.sergei.authservice.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,7 +13,6 @@ import java.util.List;
  */
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "user")
 public class User implements Serializable {
@@ -39,4 +37,10 @@ public class User implements Serializable {
             cascade = CascadeType.ALL
     )
     private List<UserRoles> userRoles = new LinkedList<>();
+
+    public User(String username, String password, List<UserRoles> userRoles) {
+        this.username = username;
+        this.password = password;
+        this.userRoles = userRoles;
+    }
 }

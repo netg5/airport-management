@@ -31,7 +31,17 @@ public class ApiUserController {
 
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {
-        return new ResponseEntity<>(apiUserService.getAllUsers(), HttpStatus.OK);
+        return new ResponseEntity<>(apiUserService.findAll(), HttpStatus.OK);
+    }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<User> getUserById(@PathVariable("userId") Long userId) {
+        return new ResponseEntity<>(apiUserService.findById(userId), HttpStatus.OK);
+    }
+
+    @GetMapping(params = "username")
+    public ResponseEntity<User> getUserByUsername(@RequestParam("username") String username) {
+        return new ResponseEntity<>(apiUserService.findByUsername(username), HttpStatus.OK);
     }
 
     @PostMapping(consumes = "application/json")

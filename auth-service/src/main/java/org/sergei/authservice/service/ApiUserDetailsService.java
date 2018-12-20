@@ -1,7 +1,7 @@
 package org.sergei.authservice.service;
 
+import org.sergei.authservice.exceptions.ResourceNotFoundException;
 import org.sergei.authservice.model.ApiUserDetails;
-import org.sergei.authservice.model.User;
 import org.sergei.authservice.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,7 +19,11 @@ public class ApiUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        User user = userRepository.findByUsername(username);
-        return new ApiUserDetails(user);
+        return new ApiUserDetails(
+                userRepository.findByUsername(username)
+                        .orElseThrow(
+                                () -> new ResourceNotFoundException("User not found")
+                        )
+        );
     }
 }

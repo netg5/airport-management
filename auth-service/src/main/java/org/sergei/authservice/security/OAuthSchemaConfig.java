@@ -13,6 +13,8 @@ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import javax.sql.DataSource;
 
 /**
+ * Generate schema to store tokens and users
+ *
  * @author Sergei Visotsky
  */
 @Configuration

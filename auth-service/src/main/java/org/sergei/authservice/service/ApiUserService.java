@@ -24,8 +24,15 @@ public class ApiUserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public List<User> getAllUsers() {
+    public List<User> findAll() {
         return userRepository.findAll();
+    }
+
+    public User findById(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(
+                        () -> new ResourceNotFoundException("User with this ID not found")
+                );
     }
 
     public User saveUser(User user) {
@@ -35,14 +42,13 @@ public class ApiUserService {
     }
 
     public User findByUsername(String username) {
-        User user = userRepository.findByUsername(username);
-        if (user == null) {
-            throw new ResourceNotFoundException("User not found");
-        }
-        return user;
+        return userRepository.findByUsername(username)
+                .orElseThrow(
+                        () -> new ResourceNotFoundException("User not found")
+                );
     }
 
-    // Saving admin once!
+    // Saving admin once! Hardcoded for dev purposes only!
     /*@PostConstruct
     private void saveDefaultUser() {
         userRepository.save(

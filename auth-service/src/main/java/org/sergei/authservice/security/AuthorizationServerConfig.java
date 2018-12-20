@@ -50,7 +50,13 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         this.passwordEncoder = passwordEncoder;
     }
 
-    // All the clients are stored into the database
+    /**
+     * All the clients are stored into the database. Manage clients saving and retrieving then.
+     * Password encoding
+     *
+     * @param clients client details
+     * @throws Exception any kind of exception
+     */
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         LOGGER.debug("User management with encoded password");

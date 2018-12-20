@@ -11,6 +11,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 public class GatewaySecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    /**
+     * Permits to all
+     *
+     * @param http request
+     * @throws Exception any kind of exception
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -20,7 +26,11 @@ public class GatewaySecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**").permitAll();
     }
 
-    // Allowing all the request to pass
+    /**
+     * Allows to pass all request to the path /
+     *
+     * @param web security
+     */
     @Override
     public void configure(WebSecurity web) {
         web

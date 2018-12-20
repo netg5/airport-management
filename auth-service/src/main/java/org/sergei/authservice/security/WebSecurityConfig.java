@@ -23,6 +23,8 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
 
 /**
+ * Permissions and restrictions
+ *
  * @author Sergei Visotsky
  */
 @Configuration
@@ -40,34 +42,58 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         this.apiUserDetailsService = apiUserDetailsService;
     }
 
-    // All users are stored into the database
+    /**
+     * All users are stored into the database all passwords are encoded using method {@link #encoder()}
+     *
+     * @param auth {@link AuthenticationManagerBuilder}
+     * @throws Exception any kind of exception
+     */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(apiUserDetailsService).passwordEncoder(encoder());
     }
 
+    /**
+     * Authentication manager
+     *
+     * @return authenticated user
+     * @throws Exception any kind of exception
+     */
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
 
-    // In case of JWT TokenStore
+    /**
+     * Get JWT token from the token store {@link #jwtTokenEnhancer()}
+     *
+     * @return enhanced JWT token
+     */
     @Bean
     public TokenStore tokenStore() {
         return new JwtTokenStore(jwtTokenEnhancer());
     }
 
+    /**
+     * Allows to use keypair located in .jks file
+     *
+     * @return converted key
+     */
     @Bean
     protected JwtAccessTokenConverter jwtTokenEnhancer() {
         KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("jwt.jks"), "secretKey".toCharArray());
-
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         converter.setKeyPair(keyStoreKeyFactory.getKeyPair("jwt"));
-
         return converter;
     }
 
+    /**
+     * Takes client details from {@link ClientDetailsService} and sets token
+     *
+     * @param tokenStore gets token store as a parameter
+     * @return handler with token and user details set
+     */
     @Bean
     @Autowired
     public TokenStoreUserApprovalHandler userApprovalHandler(TokenStore tokenStore) {
@@ -78,6 +104,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return handler;
     }
 
+    /**
+     * Token approval store
+     *
+     * @param tokenStore token to approve in token store
+     * @return approved token
+     */
     @Bean
     @Autowired
     public ApprovalStore approvalStore(TokenStore tokenStore) {
@@ -86,12 +118,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return store;
     }
 
-    // Password encoder
+    /**
+     * Password encoder
+     *
+     * @return base64 encoded password
+     */
     @Bean
     public BCryptPasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * Set to be accessible /oauth/token endpoint
+     *
+     * @param http to set permissions and restrictions
+     * @throws Exception any kind of exception
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http

@@ -43,9 +43,9 @@ public class RouteController {
     @ApiOperation("Get all existing routes paginated")
     @GetMapping(params = {"page", "size"})
     public ResponseEntity<Resources> getAllRoutesPaginated(@ApiParam(value = "Number of page", required = true)
-                                                                             @RequestParam("page") int page,
-                                                                             @ApiParam(value = "Number of elements per page", required = true)
-                                                                             @RequestParam("size") int size) {
+                                                           @RequestParam("page") int page,
+                                                           @ApiParam(value = "Number of elements per page", required = true)
+                                                           @RequestParam("size") int size) {
         Page<RouteExtendedDTO> routes = routeService.findAllRoutesPaginated(page, size);
         return new ResponseEntity<>(setLinksForAllRoutes(routes), HttpStatus.OK);
     }
