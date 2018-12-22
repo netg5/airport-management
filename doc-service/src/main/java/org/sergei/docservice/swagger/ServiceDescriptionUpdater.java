@@ -55,7 +55,7 @@ public class ServiceDescriptionUpdater {
                 Optional<Object> jsonData = getSwaggerDefinitionForAPI(serviceId, swaggerURL);
 
                 if (jsonData.isPresent()) {
-                    String content = getJSON(serviceId, jsonData.get());
+                    String content = getJSON(jsonData.get());
                     definitionContext.addServiceDefinition(serviceId, content);
                 } else {
                     LOGGER.error("Skipping service id: {} Error: Could not get Swagger definition from API ", serviceId);
@@ -84,7 +84,7 @@ public class ServiceDescriptionUpdater {
 
     }
 
-    private String getJSON(String serviceId, Object jsonData) {
+    private String getJSON(Object jsonData) {
         try {
             return new ObjectMapper().writeValueAsString(jsonData);
         } catch (JsonProcessingException e) {

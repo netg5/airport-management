@@ -4,8 +4,9 @@
 ## Technologies
 * Java 8
 * Spring Boot 2
+* JPA
 * Apache Maven
-* Swagger UI
+* Swagger
 * ModelMapper
 
 ## Services
