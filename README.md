@@ -49,7 +49,6 @@ In case if access token is expired refresh token should be used to renew access 
 * ContentOptions: `grant_type=refresh_token&refresh_token=REFRESH_TOKEN`
 
 ## FIXME
-1. Resources available for admin only - MAJOR
 2. Authorization in Swagger UI
 
 ## TODO
