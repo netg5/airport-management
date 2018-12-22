@@ -6,8 +6,9 @@
 * Spring Boot 2
 * JPA
 * Apache Maven
-* Swagger
+* MySQL
 * ModelMapper
+* Swagger
 
 ## Services
 * config-service - microserivce which makes calls to tht repository where all configurations are stored - [https://github.com/sergeivisotsky/flight-reservation-config](https://github.com/sergeivisotsky/flight-reservation-config)
