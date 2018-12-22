@@ -23,7 +23,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
 
 /**
- * Permissions and restrictions
+ * Permissions and restrictions and access_token issuing
  *
  * @author Sergei Visotsky
  */

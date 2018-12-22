@@ -17,7 +17,6 @@ import java.util.List;
  * @author Sergei Visotsky
  */
 @RestController
-@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 @RequestMapping(value = "/users", produces = "application/json")
 public class ApiUserController {
 
@@ -30,21 +29,25 @@ public class ApiUserController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<List<User>> getAllUsers() {
         return new ResponseEntity<>(apiUserService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{userId}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<User> getUserById(@PathVariable("userId") Long userId) {
         return new ResponseEntity<>(apiUserService.findById(userId), HttpStatus.OK);
     }
 
     @GetMapping(params = "username")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<User> getUserByUsername(@RequestParam("username") String username) {
         return new ResponseEntity<>(apiUserService.findByUsername(username), HttpStatus.OK);
     }
 
     @PostMapping(consumes = "application/json")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<User> createUser(@RequestBody User user) {
         user.setUserRoles(Collections.singletonList(new UserRoles("USER")));
         User newUser = apiUserService.saveUser(user);

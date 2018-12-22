@@ -1,4 +1,4 @@
-package org.sergei.flightservice.config;
+package org.sergei.ticketservice.security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
