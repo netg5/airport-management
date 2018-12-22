@@ -56,9 +56,9 @@ public class CustomerController {
     )
     @GetMapping(params = {"page", "size"})
     public ResponseEntity<Resources> getAllCustomersPaginated(@ApiParam(value = "Number of page", required = true)
-                                                                           @RequestParam(value = "page") int page,
+                                                                           @RequestParam("page") int page,
                                                                            @ApiParam(value = "Number of elements per page", required = true)
-                                                                           @RequestParam(value = "size") int size) {
+                                                                           @RequestParam("size") int size) {
         Page<CustomerDTO> customerList = customerService.findAllPaginated(page, size);
         return new ResponseEntity<>(setLinksForAllCustomers(customerList), HttpStatus.OK);
     }

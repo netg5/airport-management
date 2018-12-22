@@ -54,9 +54,9 @@ public class TicketController {
                                                                         @RequestParam(value = "place", required = false) String place,
                                                                         @ApiParam(value = "Distance with which ticket should be found")
                                                                         @RequestParam(value = "distance", required = false) Double distance,
-                                                                        @ApiParam(value = "Number of page", required = true)
+                                                                        @ApiParam("Number of page")
                                                                         @RequestParam("page") int page,
-                                                                        @ApiParam(value = "Number of elements per page", required = true)
+                                                                        @ApiParam("Number of elements per page")
                                                                         @RequestParam("size") int size) {
         Page<Ticket> ticketList = ticketRepository.findByCustomerIdPlaceOrDistancePageable(customerId, place, distance, PageRequest.of(page, size));
         return new ResponseEntity<>(setLinksForTicket(ticketList, customerId), HttpStatus.OK);

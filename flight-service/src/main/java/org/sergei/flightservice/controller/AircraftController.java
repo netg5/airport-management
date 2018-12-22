@@ -45,9 +45,9 @@ public class AircraftController {
 
     @ApiOperation(value = "Get all existing aircrafts paginated")
     @GetMapping(params = {"page", "size"})
-    public ResponseEntity<Resources> getAllAircraftPaginated(@ApiParam(value = "Number of page", required = true)
+    public ResponseEntity<Resources> getAllAircraftPaginated(@ApiParam("Number of page")
                                                              @RequestParam("page") int page,
-                                                             @ApiParam(value = "Number of elements per page", required = true)
+                                                             @ApiParam("Number of elements per page")
                                                              @RequestParam("size") int size) {
         Page<AircraftDTO> aircrafts = aircraftService.findAllPaginated(page, size);
         return new ResponseEntity<>(setLinksForAllAircrafts(aircrafts), HttpStatus.OK);
@@ -84,7 +84,7 @@ public class AircraftController {
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<AircraftDTO> updateAircraft(@ApiParam(value = "Aircraft ID which should be updated", required = true)
                                                       @PathVariable("aircraftId") Long aircraftId,
-                                                      @ApiParam(value = "Update aircracft", required = true)
+                                                      @ApiParam(value = "Update aircraft", required = true)
                                                       @RequestBody AircraftDTO aircraftDTO) {
         AircraftDTO aircraft = aircraftService.update(aircraftId, aircraftDTO);
         return new ResponseEntity<>(setLinksForAircraft(aircraft), HttpStatus.OK);
