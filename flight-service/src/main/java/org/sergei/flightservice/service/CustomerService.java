@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 
+import static org.sergei.flightservice.util.ObjectMapperUtil.*;
+
 /**
  * @author Sergei Visotsky
  */
@@ -39,7 +41,7 @@ public class CustomerService implements IService<CustomerDTO> {
                 .orElseThrow(() ->
                         new ResourceNotFoundException(CUSTOMER_NOT_FOUND)
                 );
-        return ObjectMapperUtil.map(customer, CustomerDTO.class);
+        return map(customer, CustomerDTO.class);
     }
 
     /**
@@ -50,7 +52,7 @@ public class CustomerService implements IService<CustomerDTO> {
     @Override
     public List<CustomerDTO> findAll() {
         List<Customer> customerList = customerRepository.findAll();
-        return ObjectMapperUtil.mapAll(customerList, CustomerDTO.class);
+        return mapAll(customerList, CustomerDTO.class);
     }
 
     /**
@@ -63,7 +65,7 @@ public class CustomerService implements IService<CustomerDTO> {
     @Override
     public Page<CustomerDTO> findAllPaginated(int page, int size) {
         Page<Customer> customerList = customerRepository.findAll(PageRequest.of(page, size));
-        return ObjectMapperUtil.mapAllPages(customerList, CustomerDTO.class);
+        return mapAllPages(customerList, CustomerDTO.class);
     }
 
     /**
@@ -74,9 +76,9 @@ public class CustomerService implements IService<CustomerDTO> {
      */
     @Override
     public CustomerDTO save(CustomerDTO customerDTO) {
-        Customer customer = ObjectMapperUtil.map(customerDTO, Customer.class);
+        Customer customer = map(customerDTO, Customer.class);
         Customer savedCustomer = customerRepository.save(customer);
-        return ObjectMapperUtil.map(savedCustomer, CustomerDTO.class);
+        return map(savedCustomer, CustomerDTO.class);
     }
 
     /**
@@ -127,7 +129,7 @@ public class CustomerService implements IService<CustomerDTO> {
         }
         customerRepository.save(customer);
 
-        return ObjectMapperUtil.map(customer, CustomerDTO.class);
+        return map(customer, CustomerDTO.class);
     }
 
     /**
@@ -143,6 +145,6 @@ public class CustomerService implements IService<CustomerDTO> {
                         new ResourceNotFoundException(CUSTOMER_NOT_FOUND)
                 );
         customerRepository.delete(customer);
-        return ObjectMapperUtil.map(customer, CustomerDTO.class);
+        return map(customer, CustomerDTO.class);
     }
 }

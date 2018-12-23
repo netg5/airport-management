@@ -18,7 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @Ignore
 @RunWith(SpringRunner.class)
 @DataJpaTest
-@TestPropertySource(locations = "classpath:application-test.properties")
+@TestPropertySource(locations = "classpath:application-test.yml")
 @ContextConfiguration(classes = {WebSecurityConfigTest.class})
 @EntityScan(basePackages = "org.sergei.flightservice.model")
 public class CustomerTest {

@@ -19,6 +19,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
+import static org.sergei.flightservice.util.ObjectMapperUtil.map;
+
 /**
  * @author Sergei Visotsky
  */
@@ -50,7 +52,7 @@ public class RouteService implements IRouteService<RouteDTO, RouteExtendedDTO> {
                 .orElseThrow(() ->
                         new ResourceNotFoundException(ROUTE_NOT_FOUND)
                 );
-        RouteExtendedDTO routeExtendedDTO = ObjectMapperUtil.map(route, RouteExtendedDTO.class);
+        RouteExtendedDTO routeExtendedDTO = map(route, RouteExtendedDTO.class);
 
         // Find aircraftDTO map it into the aircraftDTO DTO
         Aircraft aircraft = aircraftRepository.findById(route.getAircraft().getAircraftId())
@@ -58,7 +60,7 @@ public class RouteService implements IRouteService<RouteDTO, RouteExtendedDTO> {
                         new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
                 );
 
-        AircraftDTO aircraftDTO = ObjectMapperUtil.map(aircraft, AircraftDTO.class);
+        AircraftDTO aircraftDTO = map(aircraft, AircraftDTO.class);
 
         // Set to the route extended DTO
         routeExtendedDTO.setAircraftDTO(aircraftDTO);
@@ -82,7 +84,7 @@ public class RouteService implements IRouteService<RouteDTO, RouteExtendedDTO> {
                             new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
                     );
 
-            AircraftDTO aircraftDTO = ObjectMapperUtil.map(aircraft, AircraftDTO.class);
+            AircraftDTO aircraftDTO = map(aircraft, AircraftDTO.class);
             routeExtendedDTO.setAircraftDTO(aircraftDTO);
             counter++;
         }
@@ -108,7 +110,7 @@ public class RouteService implements IRouteService<RouteDTO, RouteExtendedDTO> {
                             new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
                     );
 
-            AircraftDTO aircraftDTO = ObjectMapperUtil.map(aircraft, AircraftDTO.class);
+            AircraftDTO aircraftDTO = map(aircraft, AircraftDTO.class);
             routeExtendedDTO.setAircraftDTO(aircraftDTO);
             counter++;
         }
@@ -123,7 +125,7 @@ public class RouteService implements IRouteService<RouteDTO, RouteExtendedDTO> {
      */
     @Override
     public RouteDTO save(RouteDTO routeDTO) {
-        Route route = ObjectMapperUtil.map(routeDTO, Route.class);
+        Route route = map(routeDTO, Route.class);
 
         // Find aircraftDTO required in request body
         Aircraft aircraft = aircraftRepository.findById(routeDTO.getAircraftId())
@@ -132,7 +134,7 @@ public class RouteService implements IRouteService<RouteDTO, RouteExtendedDTO> {
                 );
         route.setAircraft(aircraft);
         Route savedRoute = routeRepository.save(route);
-        return ObjectMapperUtil.map(savedRoute, RouteDTO.class);
+        return map(savedRoute, RouteDTO.class);
     }
 
     /**
@@ -201,7 +203,7 @@ public class RouteService implements IRouteService<RouteDTO, RouteExtendedDTO> {
                             new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
                     ));
         }
-        return ObjectMapperUtil.map(route, RouteDTO.class);
+        return map(route, RouteDTO.class);
     }
 
     /**
@@ -217,7 +219,7 @@ public class RouteService implements IRouteService<RouteDTO, RouteExtendedDTO> {
                         new ResourceNotFoundException(ROUTE_NOT_FOUND)
                 );
         routeRepository.delete(route);
-        return ObjectMapperUtil.map(route, RouteDTO.class);
+        return map(route, RouteDTO.class);
     }
 
     @Override

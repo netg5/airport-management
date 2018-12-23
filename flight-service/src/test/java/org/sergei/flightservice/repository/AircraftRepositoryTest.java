@@ -26,7 +26,7 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
  */
 @RunWith(SpringRunner.class)
 @DataJpaTest
-@TestPropertySource(locations = "classpath:application-test.properties")
+@TestPropertySource(locations = "classpath:application-test.yml")
 @ContextConfiguration(classes = {WebSecurityConfigTest.class})
 @EnableJpaRepositories(basePackages = "org.sergei.flightservice.repository")
 @EntityScan(basePackages = "org.sergei.flightservice.model")
