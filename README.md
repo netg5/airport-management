@@ -29,7 +29,7 @@ To access any resource authentication should be performed. By performing this re
 After authentication we have an access resource by providing access_token
 * URL: `http://localhost:8080/auth-api/oauth/token`
 * Content-Type: `application/x-www-form-urlencoded`
-* ContentOptions: `username=USERNAME&password=PASSWORD&grant_type=GRANT_TYPE`
+* Content-Options: `username=USERNAME&password=PASSWORD&grant_type=GRANT_TYPE`
 
 _response_
 ```
@@ -49,7 +49,7 @@ The next step is get an access to the resources. Example for the flight-api: `ht
 In case if access token is expired refresh token should be used to renew access token.
 * URL: `http://localhost:8080/auth-api/oauth/token`
 * Content-Type: `application/x-www-form-urlencoded`
-* ContentOptions: `grant_type=refresh_token&refresh_token=REFRESH_TOKEN`
+* Content-Options: `grant_type=refresh_token&refresh_token=REFRESH_TOKEN`
 
 ## TODO
 1. Adopt liquibase for unit tests
