@@ -8,6 +8,7 @@
 * Apache Maven
 * MySQL
 * ModelMapper
+* Jackson
 * Swagger
 
 ## Services
