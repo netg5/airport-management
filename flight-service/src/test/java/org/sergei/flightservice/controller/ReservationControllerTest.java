@@ -40,7 +40,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Ignore
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = FlightServiceApplication.class)
-@TestPropertySource(locations = "classpath:application-test.yml")
+@TestPropertySource(locations = "classpath:application-test.properties")
 @AutoConfigureMockMvc
 @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
 @ContextConfiguration(classes = {ResourceServerConfiguration.class})
