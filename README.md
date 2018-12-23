@@ -26,8 +26,9 @@
 
 ## Authentication
 To access any resource authentication should be performed. By performing this request with such a parameters access_token is retrieved.
-After authentication we have an access resource by providing access_token
+After authentication we have an access for resources providing an access_token
 * URL: `http://localhost:8080/auth-api/oauth/token`
+* Method: `POST`
 * Content-Type: `application/x-www-form-urlencoded`
 * Content-Options: `username=USERNAME&password=PASSWORD&grant_type=GRANT_TYPE`
 
@@ -48,6 +49,7 @@ The next step is get an access to the resources. Example for the flight-api: `ht
 
 In case if access token is expired refresh token should be used to renew access token.
 * URL: `http://localhost:8080/auth-api/oauth/token`
+* Method: `POST`
 * Content-Type: `application/x-www-form-urlencoded`
 * Content-Options: `grant_type=refresh_token&refresh_token=REFRESH_TOKEN`
 
