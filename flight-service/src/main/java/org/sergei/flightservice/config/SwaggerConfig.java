@@ -102,7 +102,7 @@ public class SwaggerConfig {
         return SecurityContext
                 .builder()
                 .securityReferences(defaultAuth())
-                .forPaths(PathSelectors.ant("/flight-api/**"))
+                .forPaths(PathSelectors.ant("/**"))
                 .build();
     }
 }

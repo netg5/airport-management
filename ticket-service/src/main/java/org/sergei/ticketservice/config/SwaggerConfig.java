@@ -102,7 +102,7 @@ public class SwaggerConfig {
         return SecurityContext
                 .builder()
                 .securityReferences(defaultAuth())
-                .forPaths(PathSelectors.ant("/controller/**"))
+                .forPaths(PathSelectors.ant("/**"))
                 .build();
     }
 }
