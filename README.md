@@ -50,9 +50,6 @@ In case if access token is expired refresh token should be used to renew access 
 * Content-Type: `application/x-www-form-urlencoded`
 * ContentOptions: `grant_type=refresh_token&refresh_token=REFRESH_TOKEN`
 
-## FIXME
-* Authorization in Swagger UI
-
 ## TODO
 1. Adopt liquibase for unit tests
 2. Ignore services without swagger json in doc-service
