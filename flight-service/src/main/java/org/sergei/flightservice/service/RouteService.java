@@ -9,6 +9,8 @@ import org.sergei.flightservice.model.Route;
 import org.sergei.flightservice.repository.AircraftRepository;
 import org.sergei.flightservice.repository.RouteRepository;
 import org.sergei.flightservice.util.ObjectMapperUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,6 +28,8 @@ import static org.sergei.flightservice.util.ObjectMapperUtil.map;
  */
 @Service
 public class RouteService implements IRouteService<RouteDTO, RouteExtendedDTO> {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(RouteService.class);
 
     private static final String ROUTE_NOT_FOUND = "Route with this ID not found";
     private static final String AIRCRAFT_NOT_FOUND = "Aircraft with this ID not found";
@@ -132,9 +136,13 @@ public class RouteService implements IRouteService<RouteDTO, RouteExtendedDTO> {
                 .orElseThrow(() ->
                         new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
                 );
+        LOGGER.debug("Found aircraft ID: {}", aircraft.getAircraftId());
         route.setAircraft(aircraft);
         Route savedRoute = routeRepository.save(route);
-        return map(savedRoute, RouteDTO.class);
+        LOGGER.debug("Aircraft ID in saved route: {}", savedRoute.getAircraft().getAircraftId());
+        RouteDTO savedRouteDTO = map(savedRoute, RouteDTO.class);
+        savedRouteDTO.setAircraftId(aircraft.getAircraftId());
+        return savedRouteDTO;
     }
 
     /**

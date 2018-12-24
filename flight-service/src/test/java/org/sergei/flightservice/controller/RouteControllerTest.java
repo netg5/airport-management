@@ -133,24 +133,27 @@ public class RouteControllerTest {
                 .andExpect(jsonPath("$.aircraft.maxPassengers").value(maxPassengers));
     }
 
-    // FIXME: postRoute_thenGetCreated - JSON parse error: Cannot deserialize value of type `java.time.LocalDateTime` from String
-    @Ignore
     @Test
     public void postRoute_thenGetCreated() throws Exception {
-        final Long routeId = 1L;
+        final String model = "747-400";
+        final String aircraftName = "Boeing";
+        final Double aircraftWeight = 30000.0;
+        final Integer maxPassengers = 2300;
+        Aircraft aircraft = setupAircraft(model, aircraftName, aircraftWeight, maxPassengers);
+
         final Double distance = 3600.0;
         final String departureTime = "2018-09-28T22:00:00";
         final String arrivalTime = "2018-09-28T22:00:00";
-        final BigDecimal price = BigDecimal.valueOf(450.0);
+        final BigDecimal price = BigDecimal.valueOf(450);
         final String place = "New-York";
 
         JSONObject jsonObject = new JSONObject()
-                .put("routeId", routeId)
                 .put("distance", distance)
                 .put("departureTime", departureTime)
                 .put("arrivalTime", arrivalTime)
                 .put("price", price)
-                .put("place", place);
+                .put("place", place)
+                .put("aircraftId", aircraft.getAircraftId());
 
         mvc.perform(
                 post(BASE_URL)
@@ -162,27 +165,31 @@ public class RouteControllerTest {
                 .andExpect(jsonPath("$.departureTime").value(departureTime))
                 .andExpect(jsonPath("$.arrivalTime").value(arrivalTime))
                 .andExpect(jsonPath("$.price").value(price))
-                .andExpect(jsonPath("$.place").value(place));
+                .andExpect(jsonPath("$.place").value(place))
+                .andExpect(jsonPath("aircraftId").value(aircraft.getAircraftId()));
     }
 
-    // FIXME: postRoute_thenDelete_thenGetNoContent - JSON parse error: Cannot deserialize value of type `java.time.LocalDateTime` from String
-    @Ignore
     @Test
     public void postRoute_thenDelete_thenGetNoContent() throws Exception {
-        final long routeId = 1L;
+        final String model = "747-400";
+        final String aircraftName = "Boeing";
+        final Double aircraftWeight = 30000.0;
+        final Integer maxPassengers = 2300;
+        Aircraft aircraft = setupAircraft(model, aircraftName, aircraftWeight, maxPassengers);
+
         final Double distance = 3600.0;
-        final String departureTime = "2018-09-28T22:00";
-        final String arrivalTime = "2018-09-28T22:00";
-        final BigDecimal price = BigDecimal.valueOf(450.0);
+        final String departureTime = "2018-09-28T22:00:00";
+        final String arrivalTime = "2018-09-28T22:00:00";
+        final BigDecimal price = BigDecimal.valueOf(450);
         final String place = "New-York";
 
         JSONObject jsonObject = new JSONObject()
-                .put("routeId", routeId)
                 .put("distance", distance)
                 .put("departureTime", departureTime)
                 .put("arrivalTime", arrivalTime)
                 .put("price", price)
-                .put("place", place);
+                .put("place", place)
+                .put("aircraftId", aircraft.getAircraftId());
         mvc.perform(
                 post(BASE_URL)
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -193,10 +200,11 @@ public class RouteControllerTest {
                 .andExpect(jsonPath("$.departureTime").value(departureTime))
                 .andExpect(jsonPath("$.arrivalTime").value(arrivalTime))
                 .andExpect(jsonPath("$.price").value(price))
-                .andExpect(jsonPath("$.place").value(place));
+                .andExpect(jsonPath("$.place").value(place))
+                .andExpect(jsonPath("aircraftId").value(aircraft.getAircraftId()));
 
         mvc.perform(
-                delete(BASE_URL + "/" + routeId))
+                delete(BASE_URL + "/1"))
                 .andExpect(status().isNoContent());
     }
 

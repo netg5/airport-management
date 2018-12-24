@@ -68,7 +68,7 @@ public class RouteController {
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<RouteDTO> saveRoute(@ApiParam(value = "Saved route", required = true)
                                               @RequestBody RouteDTO routeDTO) {
-        return new ResponseEntity<>(routeService.save(routeDTO), HttpStatus.OK);
+        return new ResponseEntity<>(routeService.save(routeDTO), HttpStatus.CREATED);
     }
 
     @ApiOperation(value = "Update route information", notes = "Operation allowed for ADMIN only")
