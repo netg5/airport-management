@@ -78,7 +78,7 @@ _Example for MySQL:_
 NOTE: if you change any port it should be changed in all places where it is used depending on the micrservice.
 
 ## Run
-##### 1 way - from maven or command line
+##### 1 way - using maven or java command
 * Perform command `mvn spring-boot:run` or compile each microservice into the .jar and perform command `java -jar SERVICE-NAME-VERSION.jar`
 
 ##### 2 way - run into the Docker container
