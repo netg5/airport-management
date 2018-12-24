@@ -45,8 +45,10 @@ _response_
 }
 ```
 As there is used JWT access and refresh tokens are pretty long.
-<p>The next step is get an access to the resources. Example for the flight-api: `http://localhost:8080/flight-api/v1/customers?access_token=ACCESS_TOKEN`</p>
-<p>In case if access token is expired refresh token should be used to renew access token.</p>
+
+The next step is get an access to the resources. Example for the flight-api: `http://localhost:8080/flight-api/v1/customers?access_token=ACCESS_TOKEN`
+
+In case if access token is expired refresh token should be used to renew access token.
 * URL: `http://localhost:8080/auth-api/oauth/token`
 * Method: `POST`
 * Content-Type: `application/x-www-form-urlencoded`
