@@ -1,7 +1,6 @@
 package org.sergei.flightservice.controller;
 
 import org.json.JSONObject;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sergei.flightservice.FlightServiceApplication;
@@ -26,6 +25,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -68,9 +68,9 @@ public class RouteControllerTest {
         Aircraft aircraft = new Aircraft(model, aircraftName, aircraftWeight, maxPassengers);
 
         final Double distance = 3600.0;
-        final LocalDateTime departureTime = LocalDateTime.parse("2018-09-28T22:00:00");
-        final LocalDateTime arrivalTime = LocalDateTime.parse("2018-09-28T22:00:00");
-        final BigDecimal price = BigDecimal.valueOf(450.0);
+        final LocalDateTime departureTime = LocalDateTime.parse("2018-09-28T22:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
+        final LocalDateTime arrivalTime = LocalDateTime.parse("2018-09-28T22:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
+        final BigDecimal price = BigDecimal.valueOf(450.5);
         final String place = "New-York";
         Route route = setupRoute(distance, departureTime, arrivalTime, price, place, aircraft);
 
@@ -105,9 +105,9 @@ public class RouteControllerTest {
         Aircraft aircraft = new Aircraft(model, aircraftName, aircraftWeight, maxPassengers);
 
         final Double distance = 3600.0;
-        final LocalDateTime departureTime = LocalDateTime.parse("2018-09-28T22:00:00");
-        final LocalDateTime arrivalTime = LocalDateTime.parse("2018-09-28T22:00:00");
-        final BigDecimal price = BigDecimal.valueOf(450.0);
+        final LocalDateTime departureTime = LocalDateTime.parse("2018-09-28T22:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
+        final LocalDateTime arrivalTime = LocalDateTime.parse("2018-09-28T22:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
+        final BigDecimal price = BigDecimal.valueOf(450.5);
         final String place = "New-York";
         Route route = setupRoute(distance, departureTime, arrivalTime, price, place, aircraft);
 
@@ -166,6 +166,69 @@ public class RouteControllerTest {
                 .andExpect(jsonPath("$.arrivalTime").value(arrivalTime))
                 .andExpect(jsonPath("$.price").value(price))
                 .andExpect(jsonPath("$.place").value(place))
+                .andExpect(jsonPath("aircraftId").value(aircraft.getAircraftId()));
+    }
+
+    @Test
+    public void postRoute_thenPutRoute_thenGetOk() throws Exception {
+        final String model = "747-400";
+        final String aircraftName = "Boeing";
+        final Double aircraftWeight = 30000.0;
+        final Integer maxPassengers = 2300;
+        Aircraft aircraft = setupAircraft(model, aircraftName, aircraftWeight, maxPassengers);
+
+        final Double distance = 3600.0;
+        final String departureTime = "2018-09-28T22:00:00";
+        final String arrivalTime = "2018-09-28T22:00:00";
+        final BigDecimal price = BigDecimal.valueOf(450);
+        final String place = "New-York";
+
+        JSONObject jsonObject = new JSONObject()
+                .put("distance", distance)
+                .put("departureTime", departureTime)
+                .put("arrivalTime", arrivalTime)
+                .put("price", price)
+                .put("place", place)
+                .put("aircraftId", aircraft.getAircraftId());
+
+        mvc.perform(
+                post(BASE_URL)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                        .content(jsonObject.toString()))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.routeId").isNotEmpty())
+                .andExpect(jsonPath("$.distance").value(distance))
+                .andExpect(jsonPath("$.departureTime").value(departureTime))
+                .andExpect(jsonPath("$.arrivalTime").value(arrivalTime))
+                .andExpect(jsonPath("$.price").value(price))
+                .andExpect(jsonPath("$.place").value(place))
+                .andExpect(jsonPath("aircraftId").value(aircraft.getAircraftId()));
+
+        final Double distanceAfter = 1000.0;
+        final String departureTimeAfter = "2019-01-01T19:30:00";
+        final String arrivalTimeAfter = "2019-01-01T19:30:00";
+        final BigDecimal priceAfter = BigDecimal.valueOf(120);
+        final String placeAfter = "Chicago";
+
+        JSONObject jsonObjectAfter = new JSONObject()
+                .put("distance", distanceAfter)
+                .put("departureTime", departureTimeAfter)
+                .put("arrivalTime", arrivalTimeAfter)
+                .put("price", priceAfter)
+                .put("place", placeAfter)
+                .put("aircraftId", aircraft.getAircraftId());
+
+        mvc.perform(
+                put(BASE_URL + "/1")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                        .content(jsonObjectAfter.toString()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.routeId").isNotEmpty())
+                .andExpect(jsonPath("$.distance").value(distanceAfter))
+                .andExpect(jsonPath("$.departureTime").value(departureTimeAfter))
+                .andExpect(jsonPath("$.arrivalTime").value(arrivalTimeAfter))
+                .andExpect(jsonPath("$.price").value(priceAfter))
+                .andExpect(jsonPath("$.place").value(placeAfter))
                 .andExpect(jsonPath("aircraftId").value(aircraft.getAircraftId()));
     }
 

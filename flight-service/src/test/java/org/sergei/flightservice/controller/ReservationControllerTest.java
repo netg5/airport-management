@@ -78,7 +78,7 @@ public class ReservationControllerTest {
         final Double distance = 3600.0;
         final LocalDateTime departureTime = LocalDateTime.parse("2018-09-28T22:00:00");
         final LocalDateTime arrivalTime = LocalDateTime.parse("2018-09-28T22:00:00");
-        final BigDecimal price = BigDecimal.valueOf(450.0);
+        final BigDecimal price = BigDecimal.valueOf(450);
         final String place = "New-York";
         Route route = setupRoute(distance, departureTime, arrivalTime, price, place, aircraft);
 
