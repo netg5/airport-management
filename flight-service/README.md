@@ -10,3 +10,6 @@ Customer makes a flight reservation of the specific route as well as aircraft du
 * Apache Maven
 * Swagger UI
 * ModelMapper
+
+## Setup
+For setup see main README

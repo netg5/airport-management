@@ -21,10 +21,6 @@
 * ticket-service - service where all customer tickets can be seen
 * flight-service-ui - user interface made using angular
 
-## Docker commands
-* To build docker image command `docker build -t flight-service .` should be performed
-* To run docker container command `docker run -it --rm -p 8085:8085 flight-service` should be performed
-
 ## Authentication
 To access any resource authentication should be performed. By performing this request with such a parameters access_token is retrieved.
 
@@ -35,7 +31,7 @@ Client ID and client secret should be provided in headers as a basic auth.
 * Content-Type: `application/x-www-form-urlencoded`
 * Content-Options: `username=USERNAME&password=PASSWORD&grant_type=GRANT_TYPE`
 
-_response_
+_Response:_
 ```
 {
     "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NDIzODg2MzMsInVzZXJfbmFtZSI6ImFkbWluIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9VU0VSIiwiUk9MRV9BRE1JTiJdLCJqdGkiOiIzZTEzM2Q5MS0wYmVmLTQ0MzQtOTAyNS1kZmQwYTk2Njg1YzgiLCJjbGllbnRfaWQiOiJ0cnVzdGVkLWNsaWVudCIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSIsInRydXN0Il19.GHfKu8p7sEIBKPOoH7iknWj5eBffaoPEa2e3YZ3EAS-RFWpLi2-BK0rQd6FOtSdpNd9GOf6yvfcdmBWN7wrq9mS4RWVuhdSm8AaP-SOvntVIydvW-5m_32OGTS7r2Vlxjal0EkPisgHmFKMNYnPQw3D8R0St3NV32ycwOlpqCAaJFjuAO5iqhq0IuxUOJjGplqqNI9ubdd9qvZ7giHMbXhBbaBzsVBgzlQLkZAxN11VytqzVaC0ZL-BjKoNVgxPmTWtmY5rNgk9aqwvFw0hefzvlKkDmYuDDGK8g9C1J56MiY-HyVwKkbki3D08LC8hU4idzVxG7g9G6TVuUbKNjiA",
@@ -58,7 +54,42 @@ In case if access token is expired refresh token should be used to renew access 
 * Content-Type: `application/x-www-form-urlencoded`
 * Content-Options: `grant_type=refresh_token&refresh_token=REFRESH_TOKEN`
 
+## Setup
+* Setup your database driver dependency in main pom.xml.
+
+_Example for MySQL:_
+```xml
+<dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+    <scope>runtime</scope>
+</dependency>
+```
+
+1. Checkout config service [https://github.com/sergeivisotsky/flight-reservation-config](https://github.com/sergeivisotsky/flight-reservation-config) to clone all the necessary config files
+2. Edit `server.port` for each service if needed which configs are located in the repository above and other configs that are not locates in config repository in `1.` paragraph
+3. Open `SERVICE_NAME.yml` config file and setup your database url and credentials for services `flight-service` , `ticket service` and `auth-service`
+4. Open SQL file `oauth_schema.sql` script located in auth-service under `resources/sql` and change database name to yours
+5. Open SQL file `ticket_view.sql` in service `ticket-service` under `resources/sql` and execute this script for your database (NOTE: MySQL dialect was used in this case) 
+6. Create view for customer report by opening SQL file `customer_report_view.sql` and execute SQL code in your database (NOTE: MySQL dialect was used in this case)
+7. Keep in mind that application port and port in `security.oauth2.resource.accessTokenUri` property might be changed in your case
+8. Open `logback-spring.xml` for each microservice and setup directory where all your logging files are going to saved
+9. Setup .jar names and ports in `Dockerfile` for each module
+NOTE: if you change any port it should be changed in all places where it is used depending on the micrservice.
+
+## Run
+##### 1 way - from maven or command line
+* Perform command `mvn spring-boot:run` or compile each microservice into the .jar and perform command `java -jar SERVICE-NAME-VERSION.jar`
+
+##### 2 way - run into the Docker container
+As was mentioned earlier in Setup section `9.` paragraph each microservice containd Dockerfile that allows to run it into the Docker container.
+1. Change .jar file name as it is called in your case.
+2. Change port for each microservice
+3. Build Docker image performing command `docker build -t SERVICE-NAME .` (e.g. `docker build -t flight-service .`)
+4. Run Docker container performing command `docker run -it --rm -p MACHINE PORT:CONTAINER PORT SERVICE-NAME` (e.g. `docker run -it --rm -p 8085:8085 flight-service`)
+
 ## TODO
 1. Adopt liquibase for unit tests
 2. Ignore services without swagger json in doc-service
 3. Implement Hystrix fallback methods
+4. Develop Front-end with Angular
