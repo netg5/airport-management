@@ -70,7 +70,7 @@ public class RouteControllerTest {
         final Double distance = 3600.0;
         final LocalDateTime departureTime = LocalDateTime.parse("2018-09-28T22:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
         final LocalDateTime arrivalTime = LocalDateTime.parse("2018-09-28T22:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
-        final BigDecimal price = BigDecimal.valueOf(450.5);
+        final BigDecimal price = BigDecimal.valueOf(450.0);
         final String place = "New-York";
         Route route = setupRoute(distance, departureTime, arrivalTime, price, place, aircraft);
 
@@ -87,7 +87,7 @@ public class RouteControllerTest {
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].arrivalTime").value("2018-09-28T22:00:00"))
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].price").value(price))
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].place").value(place))
-                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0]._links.self.href").value("http://localhost/routes/1"))
+                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0]._links.self.href").value("http://localhost/routes/2"))
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.aircraftId").isNotEmpty())
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.model").value(model))
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.aircraftName").value(aircraftName))
@@ -107,7 +107,7 @@ public class RouteControllerTest {
         final Double distance = 3600.0;
         final LocalDateTime departureTime = LocalDateTime.parse("2018-09-28T22:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
         final LocalDateTime arrivalTime = LocalDateTime.parse("2018-09-28T22:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
-        final BigDecimal price = BigDecimal.valueOf(450.5);
+        final BigDecimal price = BigDecimal.valueOf(450.0);
         final String place = "New-York";
         Route route = setupRoute(distance, departureTime, arrivalTime, price, place, aircraft);
 
@@ -115,7 +115,7 @@ public class RouteControllerTest {
         LOGGER.info("Departure time is (object): {}", route.getDepartureTime());
 
         mvc.perform(
-                get(BASE_URL + "/1")
+                get(BASE_URL + "/2")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.routeId").isNotEmpty())
@@ -124,7 +124,7 @@ public class RouteControllerTest {
                 .andExpect(jsonPath("$.arrivalTime").value("2018-09-28T22:00:00"))
                 .andExpect(jsonPath("$.price").value(price))
                 .andExpect(jsonPath("$.place").value(place))
-                .andExpect(jsonPath("$._links.self.href").value("http://localhost/routes/1"))
+                .andExpect(jsonPath("$._links.self.href").value("http://localhost/routes/2"))
                 .andExpect(jsonPath("$._links.allRoutes.href").value("http://localhost/routes"))
                 .andExpect(jsonPath("$.aircraft.aircraftId").isNotEmpty())
                 .andExpect(jsonPath("$.aircraft.model").value(model))
@@ -219,7 +219,7 @@ public class RouteControllerTest {
                 .put("aircraftId", aircraft.getAircraftId());
 
         mvc.perform(
-                put(BASE_URL + "/1")
+                put(BASE_URL + "/2")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .content(jsonObjectAfter.toString()))
                 .andExpect(status().isOk())
