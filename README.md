@@ -19,7 +19,7 @@
 * zuul-gateway - entry point of the all microservices
 * flight-service - main microservice which allows to reserve flight
 * ticket-service - service where all customer tickets can be seen
-* flight-service-ui - application user interface using angular another microservice
+* flight-service-ui - user interface made using angular
 
 ## Docker commands
 * To build docker image command `docker build -t flight-service .` should be performed
