@@ -19,6 +19,7 @@
 * zuul-gateway - entry point of the all microservices
 * flight-service - main microservice which allows to reserve flight
 * ticket-service - service where all customer tickets can be seen
+* flight-service-ui - application user interface using angular another microservice
 
 ## Docker commands
 * To build docker image command `docker build -t flight-service .` should be performed
@@ -61,4 +62,3 @@ In case if access token is expired refresh token should be used to renew access 
 1. Adopt liquibase for unit tests
 2. Ignore services without swagger json in doc-service
 3. Implement Hystrix fallback methods
-4. Front-end (REST client)
