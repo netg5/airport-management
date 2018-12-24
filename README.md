@@ -26,8 +26,9 @@
 
 ## Authentication
 To access any resource authentication should be performed. By performing this request with such a parameters access_token is retrieved.
-Client ID and client secret should be provided in headers as a basic auth
-After authentication we have an access for resources providing an access_token
+
+Client ID and client secret should be provided in headers as a basic auth.
+
 * URL: `http://localhost:8080/auth-api/oauth/token`
 * Method: `POST`
 * Content-Type: `application/x-www-form-urlencoded`
@@ -44,11 +45,13 @@ _response_
     "jti": "3e133d91-0bef-4434-9025-dfd0a96685c8"
 }
 ```
-As there is used JWT access and refresh tokens are pretty long.
+
+After authentication it is able to access any resource with an access token provided. As there is used JWT access and refresh tokens are pretty long.
 
 The next step is get an access to the resources. Example for the flight-api: `http://localhost:8080/flight-api/v1/customers?access_token=ACCESS_TOKEN`
 
 In case if access token is expired refresh token should be used to renew access token.
+
 * URL: `http://localhost:8080/auth-api/oauth/token`
 * Method: `POST`
 * Content-Type: `application/x-www-form-urlencoded`
