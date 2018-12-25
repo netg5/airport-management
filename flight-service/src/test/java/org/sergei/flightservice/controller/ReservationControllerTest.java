@@ -1,5 +1,6 @@
 package org.sergei.flightservice.controller;
 
+import org.json.JSONObject;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,9 +27,11 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.hamcrest.core.Is.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -48,7 +51,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @EntityScan(basePackages = "org.sergei.flightservice.model")
 public class ReservationControllerTest {
 
-    private static final String BASE_URL = "/customers";
+    private static final String BASE_URL = "/customers/1/reservations";
 
     @Autowired
     private MockMvc mvc;
@@ -62,13 +65,15 @@ public class ReservationControllerTest {
     @Autowired
     private AircraftRepository aircraftRepository;
 
+    @Ignore
     @Test
     public void getAllReservations_thenReturnOk() throws Exception {
         final String model = "747-400";
         final String aircraftName = "Boeing";
         final Double aircraftWeight = 30000.0;
         final Integer maxPassengers = 2300;
-        Aircraft aircraft = setupAircraft(model, aircraftName, aircraftWeight, maxPassengers);
+//        Aircraft aircraft = setupAircraft(model, aircraftName, aircraftWeight, maxPassengers);
+        Aircraft aircraft = new Aircraft(model, aircraftName, aircraftWeight, maxPassengers);
 
         final String firstName = "John";
         final String lastName = "Smith";
@@ -76,13 +81,14 @@ public class ReservationControllerTest {
         Customer customer = setupCustomer(firstName, lastName, age);
 
         final Double distance = 3600.0;
-        final LocalDateTime departureTime = LocalDateTime.parse("2018-09-28T22:00:00");
-        final LocalDateTime arrivalTime = LocalDateTime.parse("2018-09-28T22:00:00");
+        final LocalDateTime departureTime = LocalDateTime.parse("2018-09-28T22:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
+        final LocalDateTime arrivalTime = LocalDateTime.parse("2018-09-28T22:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
         final BigDecimal price = BigDecimal.valueOf(450);
         final String place = "New-York";
-        Route route = setupRoute(distance, departureTime, arrivalTime, price, place, aircraft);
+//        Route route = setupRoute(distance, departureTime, arrivalTime, price, place, aircraft);
+        Route route = new Route(distance, departureTime, arrivalTime, price, place, aircraft, Collections.emptyList());
 
-        final LocalDateTime reservationDate = LocalDateTime.parse("2018-09-28T22:00:00");
+        final LocalDateTime reservationDate = LocalDateTime.parse("2018-09-28T22:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
         setupReservation(reservationDate, customer, route);
 
         mvc.perform(
@@ -90,9 +96,9 @@ public class ReservationControllerTest {
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservationId").isNotEmpty())
-                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].customerId").value(1))
+                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].customerId").value(customer.getCustomerId()))
                 .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservationDate").value(reservationDate))
-                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0]._links.reservation.href").value("http://localhost/customers/2/reservations/1"))
+                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0]._links.reservation.href", is("http://localhost/customers/2/reservations/1")))
                 .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].allReservedRoutes.routeId").isNotEmpty())
                 .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].allReservedRoutes.distance").value(distance))
                 .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].allReservedRoutes.departureTime").value(departureTime))
@@ -104,7 +110,179 @@ public class ReservationControllerTest {
                 .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].allReservedRoutes.place.aircraft.aircraftName").value(aircraftName))
                 .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].allReservedRoutes.place.aircraft.aircraftWeight").value(aircraftWeight))
                 .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].allReservedRoutes.place.aircraft.maxPassengers").value(maxPassengers))
-                .andExpect(jsonPath("$._links.self.href").value("http://localhost/customers/1/reservations"));
+                .andExpect(jsonPath("$._links.self.href", is("http://localhost/customers/1/reservations")));
+    }
+
+    @Ignore
+    @Test
+    public void getOneReservation_thenReturnOk() throws Exception {
+        final String model = "747-400";
+        final String aircraftName = "Boeing";
+        final Double aircraftWeight = 30000.0;
+        final Integer maxPassengers = 2300;
+//        Aircraft aircraft = setupAircraft(model, aircraftName, aircraftWeight, maxPassengers);
+        Aircraft aircraft = new Aircraft(model, aircraftName, aircraftWeight, maxPassengers);
+
+        final String firstName = "John";
+        final String lastName = "Smith";
+        final int age = 20;
+        Customer customer = setupCustomer(firstName, lastName, age);
+
+        final Double distance = 3600.0;
+        final LocalDateTime departureTime = LocalDateTime.parse("2018-09-28T22:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
+        final LocalDateTime arrivalTime = LocalDateTime.parse("2018-09-28T22:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
+        final BigDecimal price = BigDecimal.valueOf(450);
+        final String place = "New-York";
+//        Route route = setupRoute(distance, departureTime, arrivalTime, price, place, aircraft);
+        Route route = new Route(distance, departureTime, arrivalTime, price, place, aircraft, Collections.emptyList());
+
+        final LocalDateTime reservationDate = LocalDateTime.parse("2018-09-28T22:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
+        Reservation reservation = setupReservation(reservationDate, customer, route);
+
+        mvc.perform(
+                get(BASE_URL + "/1")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.reservationId").isNotEmpty())
+                .andExpect(jsonPath("$.customerId").value(customer.getCustomerId()))
+                .andExpect(jsonPath("$.reservationDate").value(reservationDate))
+                .andExpect(jsonPath("$._links.customer.href", is("http://localhost/customers/2")))
+                .andExpect(jsonPath("$._links.reservation.href", is("http://localhost/customers/2/reservations/1")))
+                .andExpect(jsonPath("$.allReservedRoutes.routeId").isNotEmpty())
+                .andExpect(jsonPath("$.allReservedRoutes.distance").value(distance))
+                .andExpect(jsonPath("$.allReservedRoutes.departureTime").value(departureTime))
+                .andExpect(jsonPath("$.allReservedRoutes.arrivalTime").value(arrivalTime))
+                .andExpect(jsonPath("$.allReservedRoutes.place").value(place))
+                .andExpect(jsonPath("$.allReservedRoutes.aircraft").value(place))
+                .andExpect(jsonPath("$.allReservedRoutes.place.aircraft.aircraftId").isNotEmpty())
+                .andExpect(jsonPath("$.allReservedRoutes.place.aircraft.model").value(model))
+                .andExpect(jsonPath("$.allReservedRoutes.place.aircraft.aircraftName").value(aircraftName))
+                .andExpect(jsonPath("$.allReservedRoutes.place.aircraft.aircraftWeight").value(aircraftWeight))
+                .andExpect(jsonPath("$.allReservedRoutes.place.aircraft.maxPassengers").value(maxPassengers));
+    }
+
+    @Test
+    public void postReservation_thenReturnCreated() throws Exception {
+        final String firstName = "John";
+        final String lastName = "Smith";
+        final int age = 20;
+        Customer customer = setupCustomer(firstName, lastName, age);
+
+        final String model = "747-400";
+        final String aircraftName = "Boeing";
+        final Double aircraftWeight = 30000.0;
+        final Integer maxPassengers = 2300;
+        Aircraft aircraft = new Aircraft(model, aircraftName, aircraftWeight, maxPassengers);
+
+        final Double distance = 3600.0;
+        final LocalDateTime departureTime = LocalDateTime.parse("2018-09-28T22:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
+        final LocalDateTime arrivalTime = LocalDateTime.parse("2018-09-28T22:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
+        final BigDecimal price = BigDecimal.valueOf(450);
+        final String place = "New-York";
+        Route route = setupRoute(distance, departureTime, arrivalTime, price, place, aircraft);
+
+        final String reservationDate = "2018-09-28T22:00:00";
+
+        JSONObject jsonObject = new JSONObject()
+                .put("routeId", route.getRouteId())
+                .put("reservationDate", reservationDate);
+        mvc.perform(
+                post(BASE_URL)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                        .content(jsonObject.toString()))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("reservationId").isNotEmpty())
+                .andExpect(jsonPath("customerId").value(1))
+                .andExpect(jsonPath("routeId").value(route.getRouteId()))
+                .andExpect(jsonPath("reservationDate").value(reservationDate));
+    }
+
+    @Test
+    public void postReservation_thenPut_thenReturnOk() throws Exception {
+        final String firstName = "John";
+        final String lastName = "Smith";
+        final int age = 20;
+        Customer customer = setupCustomer(firstName, lastName, age);
+
+        final String model = "747-400";
+        final String aircraftName = "Boeing";
+        final Double aircraftWeight = 30000.0;
+        final Integer maxPassengers = 2300;
+        Aircraft aircraft = new Aircraft(model, aircraftName, aircraftWeight, maxPassengers);
+
+        final Double distance = 3600.0;
+        final LocalDateTime departureTime = LocalDateTime.parse("2018-09-28T22:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
+        final LocalDateTime arrivalTime = LocalDateTime.parse("2018-09-28T22:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
+        final BigDecimal price = BigDecimal.valueOf(450);
+        final String place = "New-York";
+        Route route = setupRoute(distance, departureTime, arrivalTime, price, place, aircraft);
+
+        final String reservationDate = "2018-09-28T22:00:00";
+
+        JSONObject jsonObject = new JSONObject()
+                .put("routeId", route.getRouteId())
+                .put("reservationDate", reservationDate);
+        mvc.perform(
+                post(BASE_URL)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                        .content(jsonObject.toString()))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("reservationId").isNotEmpty())
+                .andExpect(jsonPath("customerId").value(customer.getCustomerId()))
+                .andExpect(jsonPath("routeId").value(route.getRouteId()))
+                .andExpect(jsonPath("reservationDate").value(reservationDate));
+
+        final String reservationDateAfter = "2019-01-01T15:27:05";
+        JSONObject jsonObjectAfter = new JSONObject()
+                .put("routeId", route.getRouteId())
+                .put("reservationDate", reservationDateAfter);
+        mvc.perform(
+                put(BASE_URL + "/1")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                        .content(jsonObjectAfter.toString()))
+                .andExpect(status().isAccepted())
+                .andExpect(jsonPath("reservationId").isNotEmpty())
+                .andExpect(jsonPath("customerId").value(customer.getCustomerId()))
+                .andExpect(jsonPath("routeId").value(route.getRouteId()))
+                .andExpect(jsonPath("reservationDate").value(reservationDateAfter));
+    }
+
+    @Test
+    public void postReservation_thenDelete_thenReturnNoContent() throws Exception {
+        final String firstName = "John";
+        final String lastName = "Smith";
+        final int age = 20;
+        Customer customer = setupCustomer(firstName, lastName, age);
+
+        final String model = "747-400";
+        final String aircraftName = "Boeing";
+        final Double aircraftWeight = 30000.0;
+        final Integer maxPassengers = 2300;
+        Aircraft aircraft = new Aircraft(model, aircraftName, aircraftWeight, maxPassengers);
+
+        final Double distance = 3600.0;
+        final LocalDateTime departureTime = LocalDateTime.parse("2018-09-28T22:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
+        final LocalDateTime arrivalTime = LocalDateTime.parse("2018-09-28T22:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
+        final BigDecimal price = BigDecimal.valueOf(450);
+        final String place = "New-York";
+        Route route = setupRoute(distance, departureTime, arrivalTime, price, place, aircraft);
+
+        final String reservationDate = "2018-09-28T22:00:00";
+
+        JSONObject jsonObject = new JSONObject()
+                .put("routeId", route.getRouteId())
+                .put("reservationDate", reservationDate);
+        mvc.perform(
+                post(BASE_URL)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                        .content(jsonObject.toString()))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("reservationId").isNotEmpty())
+                .andExpect(jsonPath("customerId").value(1))
+                .andExpect(jsonPath("routeId").value(route.getRouteId()))
+                .andExpect(jsonPath("reservationDate").value(reservationDate));
+
+        mvc.perform(delete(BASE_URL + "/1")).andExpect(status().isNoContent());
     }
 
     private Reservation setupReservation(LocalDateTime reservationDate, Customer customer, Route route) {

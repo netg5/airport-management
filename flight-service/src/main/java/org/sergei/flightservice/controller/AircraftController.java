@@ -87,7 +87,7 @@ public class AircraftController {
                                                       @ApiParam(value = "Update aircraft", required = true)
                                                       @RequestBody AircraftDTO aircraftDTO) {
         AircraftDTO aircraft = aircraftService.update(aircraftId, aircraftDTO);
-        return new ResponseEntity<>(setLinksForAircraft(aircraft), HttpStatus.OK);
+        return new ResponseEntity<>(setLinksForAircraft(aircraft), HttpStatus.ACCEPTED);
     }
 
     @ApiOperation(value = "Update one field of the aircraft", notes = "Operation allowed for ADMIN only")
@@ -103,7 +103,7 @@ public class AircraftController {
                                                      @RequestBody Map<String, Object> params) {
 
         AircraftDTO aircraftDTO = aircraftService.patch(aircraftId, params);
-        return new ResponseEntity<>(setLinksForAircraft(aircraftDTO), HttpStatus.OK);
+        return new ResponseEntity<>(setLinksForAircraft(aircraftDTO), HttpStatus.ACCEPTED);
     }
 
     @ApiOperation(value = "Delete aircraft", notes = "Operation allowed for ADMIN only")

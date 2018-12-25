@@ -23,6 +23,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.hamcrest.core.Is.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -57,7 +58,7 @@ public class AircraftControllerTest {
         final String aircraftName = "Boeing";
         final Double aircraftWeight = 30000.0;
         final Integer maxPassengers = 2300;
-        setupAircraft(model, aircraftName, aircraftWeight, maxPassengers);
+        Aircraft aircraft = setupAircraft(model, aircraftName, aircraftWeight, maxPassengers);
 
         mvc.perform(
                 get(BASE_URL)
@@ -68,8 +69,8 @@ public class AircraftControllerTest {
                 .andExpect(jsonPath("$._embedded.aircraftDTOList[0].aircraftName").value(aircraftName))
                 .andExpect(jsonPath("$._embedded.aircraftDTOList[0].aircraftWeight").value(aircraftWeight))
                 .andExpect(jsonPath("$._embedded.aircraftDTOList[0].maxPassengers").value(maxPassengers))
-                .andExpect(jsonPath("$._embedded.aircraftDTOList[0]._links.self.href").value("http://localhost/aircrafts/1"))
-                .andExpect(jsonPath("$._links.self.href").value("http://localhost/aircrafts"));
+                .andExpect(jsonPath("$._embedded.aircraftDTOList[0]._links.self.href", is("http://localhost/aircrafts/1")))
+                .andExpect(jsonPath("$._links.self.href", is("http://localhost/aircrafts")));
     }
 
     @Test
@@ -78,7 +79,7 @@ public class AircraftControllerTest {
         final String aircraftName = "Boeing";
         final Double aircraftWeight = 30000.0;
         final Integer maxPassengers = 2300;
-        setupAircraft(model, aircraftName, aircraftWeight, maxPassengers);
+        Aircraft aircraft = setupAircraft(model, aircraftName, aircraftWeight, maxPassengers);
 
         mvc.perform(
                 get(BASE_URL + "/1")
@@ -89,8 +90,8 @@ public class AircraftControllerTest {
                 .andExpect(jsonPath("$.aircraftName").value(aircraftName))
                 .andExpect(jsonPath("$.aircraftWeight").value(aircraftWeight))
                 .andExpect(jsonPath("$.maxPassengers").value(maxPassengers))
-                .andExpect(jsonPath("$._links.self.href").value("http://localhost/aircrafts/1"))
-                .andExpect(jsonPath("$._links.allAircrafts.href").value("http://localhost/aircrafts"));
+                .andExpect(jsonPath("$._links.self.href", is("http://localhost/aircrafts/" + aircraft.getAircraftId())))
+                .andExpect(jsonPath("$._links.allAircrafts.href", is("http://localhost/aircrafts")));
     }
 
     @Test
@@ -154,7 +155,7 @@ public class AircraftControllerTest {
                 put(BASE_URL + "/1")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .content(putJsonObject.toString()))
-                .andExpect(status().isOk())
+                .andExpect(status().isAccepted())
                 .andExpect(jsonPath("$.aircraftId").isNotEmpty())
                 .andExpect(jsonPath("$.model").value(putModel))
                 .andExpect(jsonPath("$.aircraftName").value(putAircraft))
@@ -199,7 +200,7 @@ public class AircraftControllerTest {
                 patch(BASE_URL + "/1/patch")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .content(putJsonObject.toString()))
-                .andExpect(status().isOk())
+                .andExpect(status().isAccepted())
                 .andExpect(jsonPath("$.aircraftId").isNotEmpty())
                 .andExpect(jsonPath("$.model").value(putModel))
                 .andExpect(jsonPath("$.aircraftName").value(putAircraft))

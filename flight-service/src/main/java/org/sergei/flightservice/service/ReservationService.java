@@ -13,7 +13,6 @@ import org.sergei.flightservice.repository.AircraftRepository;
 import org.sergei.flightservice.repository.CustomerRepository;
 import org.sergei.flightservice.repository.ReservationRepository;
 import org.sergei.flightservice.repository.RouteRepository;
-import org.sergei.flightservice.util.ObjectMapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -35,6 +34,7 @@ public class ReservationService implements IReservationService<ReservationExtend
     private static final String ROUTE_NOT_FOUND = "Route with this ID not found";
     private static final String AIRCRAFT_NOT_FOUND = "Aircraft with this ID not found";
     private static final String RESERVATION_NOT_FOUND = "Reservation with this ID not found";
+    private static final String RESERVATIONS_NOT_FOUND = "This customer has no reservations";
 
     private final CustomerRepository customerRepository;
     private final RouteRepository routeRepository;
@@ -110,7 +110,7 @@ public class ReservationService implements IReservationService<ReservationExtend
         // Find all flight reservation for the customer
         List<Reservation> reservation = reservationRepository.findAllForCustomer(customerId)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException(RESERVATION_NOT_FOUND)
+                        new ResourceNotFoundException(RESERVATIONS_NOT_FOUND)
                 );
         List<ReservationExtendedDTO> flightReservationExtendedDTOList =
                 mapAll(reservation, ReservationExtendedDTO.class);
@@ -164,7 +164,7 @@ public class ReservationService implements IReservationService<ReservationExtend
         // Find all flight reservation for the customer
         Page<Reservation> reservation = reservationRepository.findAllForCustomerPaginated(customerId, PageRequest.of(page, size))
                 .orElseThrow(() ->
-                        new ResourceNotFoundException(RESERVATION_NOT_FOUND)
+                        new ResourceNotFoundException(RESERVATIONS_NOT_FOUND)
                 );
         Page<ReservationExtendedDTO> flightReservationExtendedDTOList =
                 mapAllPages(reservation, ReservationExtendedDTO.class);
@@ -221,12 +221,23 @@ public class ReservationService implements IReservationService<ReservationExtend
                         new ResourceNotFoundException(ROUTE_NOT_FOUND)
                 );
 
+        final Long customerEntityId = customer.getCustomerId();
+        final Long routeEntityId = route.getRouteId();
+
         // Set customer ID and route into the flight reservation DTO
-        reservationDTO.setCustomerId(customer.getCustomerId());
-        reservationDTO.setRouteId(route.getRouteId());
+        reservationDTO.setCustomerId(customerEntityId);
+        reservationDTO.setRouteId(routeEntityId);
+
         Reservation reservation = map(reservationDTO, Reservation.class);
+        reservation.setCustomer(customer);
+        reservation.setRoute(route);
+
         Reservation savedReservation = reservationRepository.save(reservation);
-        return map(savedReservation, ReservationDTO.class);
+        ReservationDTO savedReservationDTO = map(savedReservation, ReservationDTO.class);
+        savedReservationDTO.setCustomerId(customerEntityId);
+        savedReservationDTO.setRouteId(routeEntityId);
+
+        return savedReservationDTO;
     }
 
     /**
@@ -241,24 +252,29 @@ public class ReservationService implements IReservationService<ReservationExtend
     public ReservationDTO updateReservation(Long customerId,
                                             Long reservationId,
                                             ReservationDTO reservationDTO) {
+        Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(CUSTOMER_NOT_FOUND)
+                );
         Reservation reservation = reservationRepository.findOneForCustomer(customerId, reservationId)
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Customer or reservation with this ID not found")
                 );
-        reservation.setCustomer(
-                customerRepository.findById(customerId)
-                        .orElseThrow(() ->
-                                new ResourceNotFoundException(CUSTOMER_NOT_FOUND)
-                        ));
-        reservation.setRoute(
-                routeRepository.findById(reservationDTO.getRouteId())
-                        .orElseThrow(() ->
-                                new ResourceNotFoundException(ROUTE_NOT_FOUND)
-                        ));
+        reservation.setCustomer(customer);
+        Route route = routeRepository.findById(reservationDTO.getRouteId())
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(ROUTE_NOT_FOUND)
+                );
+        reservation.setRoute(route);
         reservation.setReservationDate(reservationDTO.getReservationDate());
-        reservationRepository.save(reservation);
 
-        return reservationDTO;
+        Reservation savedReservation = reservationRepository.save(reservation);
+
+        ReservationDTO savedReservationDTO = map(savedReservation, ReservationDTO.class);
+        savedReservationDTO.setCustomerId(customer.getCustomerId());
+        savedReservationDTO.setRouteId(route.getRouteId());
+
+        return savedReservationDTO;
     }
 
     /**

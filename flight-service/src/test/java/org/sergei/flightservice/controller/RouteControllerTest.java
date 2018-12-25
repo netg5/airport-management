@@ -27,6 +27,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import static org.hamcrest.core.Is.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -87,13 +88,13 @@ public class RouteControllerTest {
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].arrivalTime").value("2018-09-28T22:00:00"))
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].price").value(price))
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].place").value(place))
-                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0]._links.self.href").value("http://localhost/routes/2"))
-                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.aircraftId").isNotEmpty())
+                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0]._links.self.href", is("http://localhost/routes/2")))
+                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.aircraftId", is(2)))
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.model").value(model))
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.aircraftName").value(aircraftName))
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.aircraftWeight").value(aircraftWeight))
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.maxPassengers").value(maxPassengers))
-                .andExpect(jsonPath("$._links.self.href").value("http://localhost/routes"));
+                .andExpect(jsonPath("$._links.self.href", is("http://localhost/routes")));
     }
 
     @Test
@@ -115,7 +116,7 @@ public class RouteControllerTest {
         LOGGER.info("Departure time is (object): {}", route.getDepartureTime());
 
         mvc.perform(
-                get(BASE_URL + "/2")
+                get(BASE_URL + "/" + route.getRouteId())
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.routeId").isNotEmpty())
@@ -124,13 +125,13 @@ public class RouteControllerTest {
                 .andExpect(jsonPath("$.arrivalTime").value("2018-09-28T22:00:00"))
                 .andExpect(jsonPath("$.price").value(price))
                 .andExpect(jsonPath("$.place").value(place))
-                .andExpect(jsonPath("$._links.self.href").value("http://localhost/routes/2"))
-                .andExpect(jsonPath("$._links.allRoutes.href").value("http://localhost/routes"))
+                .andExpect(jsonPath("$._links.self.href", is("http://localhost/routes/" + route.getRouteId())))
+                .andExpect(jsonPath("$._links.allRoutes.href", is("http://localhost/routes")))
                 .andExpect(jsonPath("$.aircraft.aircraftId").isNotEmpty())
-                .andExpect(jsonPath("$.aircraft.model").value(model))
-                .andExpect(jsonPath("$.aircraft.aircraftName").value(aircraftName))
-                .andExpect(jsonPath("$.aircraft.aircraftWeight").value(aircraftWeight))
-                .andExpect(jsonPath("$.aircraft.maxPassengers").value(maxPassengers));
+                .andExpect(jsonPath("$.aircraft.model", is(model)))
+                .andExpect(jsonPath("$.aircraft.aircraftName", is(aircraftName)))
+                .andExpect(jsonPath("$.aircraft.aircraftWeight", is(aircraftWeight)))
+                .andExpect(jsonPath("$.aircraft.maxPassengers", is(maxPassengers)));
     }
 
     @Test
@@ -222,7 +223,7 @@ public class RouteControllerTest {
                 put(BASE_URL + "/2")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .content(jsonObjectAfter.toString()))
-                .andExpect(status().isOk())
+                .andExpect(status().isAccepted())
                 .andExpect(jsonPath("$.routeId").isNotEmpty())
                 .andExpect(jsonPath("$.distance").value(distanceAfter))
                 .andExpect(jsonPath("$.departureTime").value(departureTimeAfter))

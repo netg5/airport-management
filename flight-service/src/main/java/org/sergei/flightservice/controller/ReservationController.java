@@ -133,7 +133,7 @@ public class ReservationController {
                                                            @RequestBody Map<String, Object> params) {
 
         ReservationDTO reservationDTO = reservationService.patchReservation(reservationId, params);
-        return new ResponseEntity<>(reservationDTO, HttpStatus.OK);
+        return new ResponseEntity<>(reservationDTO, HttpStatus.ACCEPTED);
     }
 
     @ApiOperation("Delete reservation")
