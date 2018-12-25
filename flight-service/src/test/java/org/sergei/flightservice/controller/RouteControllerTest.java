@@ -234,6 +234,68 @@ public class RouteControllerTest {
     }
 
     @Test
+    public void postRoute_thenPatch_thenGetOk() throws Exception {
+        final String model = "747-400";
+        final String aircraftName = "Boeing";
+        final Double aircraftWeight = 30000.0;
+        final Integer maxPassengers = 2300;
+        Aircraft aircraft = setupAircraft(model, aircraftName, aircraftWeight, maxPassengers);
+
+        final Double distance = 3600.0;
+        final String departureTime = "2018-09-28T22:00:00";
+        final String arrivalTime = "2018-09-28T22:00:00";
+        final BigDecimal price = BigDecimal.valueOf(450);
+        final String place = "New-York";
+
+        JSONObject jsonObject = new JSONObject()
+                .put("distance", distance)
+                .put("departureTime", departureTime)
+                .put("arrivalTime", arrivalTime)
+                .put("price", price)
+                .put("place", place)
+                .put("aircraftId", aircraft.getAircraftId());
+        mvc.perform(
+                post(BASE_URL)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                        .content(jsonObject.toString()))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.routeId").isNotEmpty())
+                .andExpect(jsonPath("$.distance").value(distance))
+                .andExpect(jsonPath("$.departureTime").value(departureTime))
+                .andExpect(jsonPath("$.arrivalTime").value(arrivalTime))
+                .andExpect(jsonPath("$.price").value(price))
+                .andExpect(jsonPath("$.place").value(place))
+                .andExpect(jsonPath("aircraftId").value(aircraft.getAircraftId()));
+
+        final Double distanceAfter = 1205.0;
+        final String departureTimeAfter = "2018-01-01T08:15:00";
+        final String arrivalTimeAfter = "2018-01-01T08:15:00";
+        final BigDecimal priceAfter = BigDecimal.valueOf(230);
+        final String placeAfter = "Boston";
+
+        JSONObject jsonObjectAfter = new JSONObject()
+                .put("distance", distanceAfter)
+                .put("departureTime", departureTimeAfter)
+                .put("arrivalTime", arrivalTimeAfter)
+                .put("price", priceAfter)
+                .put("place", placeAfter)
+                .put("aircraftId", aircraft.getAircraftId());
+
+        mvc.perform(
+                patch(BASE_URL + "/1/patch")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                        .content(jsonObjectAfter.toString()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.routeId").isNotEmpty())
+                .andExpect(jsonPath("$.distance").value(distanceAfter))
+                .andExpect(jsonPath("$.departureTime").value(departureTimeAfter))
+                .andExpect(jsonPath("$.arrivalTime").value(arrivalTimeAfter))
+                .andExpect(jsonPath("$.price").value(priceAfter))
+                .andExpect(jsonPath("$.place").value(placeAfter))
+                .andExpect(jsonPath("aircraftId").value(aircraft.getAircraftId()));
+    }
+
+    @Test
     public void postRoute_thenDelete_thenGetNoContent() throws Exception {
         final String model = "747-400";
         final String aircraftName = "Boeing";

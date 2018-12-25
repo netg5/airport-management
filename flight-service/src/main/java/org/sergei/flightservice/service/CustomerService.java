@@ -4,7 +4,6 @@ import org.sergei.flightservice.dto.CustomerDTO;
 import org.sergei.flightservice.exceptions.ResourceNotFoundException;
 import org.sergei.flightservice.model.Customer;
 import org.sergei.flightservice.repository.CustomerRepository;
-import org.sergei.flightservice.util.ObjectMapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -127,9 +126,7 @@ public class CustomerService implements IService<CustomerDTO> {
         if (params.get("age") != null) {
             customer.setAge(Integer.valueOf(String.valueOf(params.get("age"))));
         }
-        customerRepository.save(customer);
-
-        return map(customer, CustomerDTO.class);
+        return map(customerRepository.save(customer), CustomerDTO.class);
     }
 
     /**

@@ -131,7 +131,7 @@ public class AircraftService implements IService<AircraftDTO> {
         if (params.get("maxPassengers") != null) {
             aircraft.setMaxPassengers(Integer.valueOf(String.valueOf(params.get("maxPassengers"))));
         }
-        return map(aircraft, AircraftDTO.class);
+        return map(aircraftRepository.save(aircraft), AircraftDTO.class);
     }
 
     /**

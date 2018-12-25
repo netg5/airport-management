@@ -249,6 +249,56 @@ public class ReservationControllerTest {
     }
 
     @Test
+    public void postReservation_thenPatch_thenReturnOk() throws Exception {
+        final String firstName = "John";
+        final String lastName = "Smith";
+        final int age = 20;
+        Customer customer = setupCustomer(firstName, lastName, age);
+
+        final String model = "747-400";
+        final String aircraftName = "Boeing";
+        final Double aircraftWeight = 30000.0;
+        final Integer maxPassengers = 2300;
+        Aircraft aircraft = new Aircraft(model, aircraftName, aircraftWeight, maxPassengers);
+
+        final Double distance = 3600.0;
+        final LocalDateTime departureTime = LocalDateTime.parse("2018-09-28T22:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
+        final LocalDateTime arrivalTime = LocalDateTime.parse("2018-09-28T22:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
+        final BigDecimal price = BigDecimal.valueOf(450);
+        final String place = "New-York";
+        Route route = setupRoute(distance, departureTime, arrivalTime, price, place, aircraft);
+
+        final String reservationDate = "2018-09-28T22:00:00";
+
+        JSONObject jsonObject = new JSONObject()
+                .put("routeId", route.getRouteId())
+                .put("reservationDate", reservationDate);
+        mvc.perform(
+                post(BASE_URL)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                        .content(jsonObject.toString()))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("reservationId").isNotEmpty())
+                .andExpect(jsonPath("customerId").value(customer.getCustomerId()))
+                .andExpect(jsonPath("routeId").value(route.getRouteId()))
+                .andExpect(jsonPath("reservationDate").value(reservationDate));
+
+        final String reservationDateAfter = "2019-01-01T15:27:05";
+        JSONObject jsonObjectAfter = new JSONObject()
+                .put("routeId", route.getRouteId())
+                .put("reservationDate", reservationDateAfter);
+        mvc.perform(
+                patch(BASE_URL + "/1/patch")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                        .content(jsonObjectAfter.toString()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("reservationId").isNotEmpty())
+                .andExpect(jsonPath("customerId").value(customer.getCustomerId()))
+                .andExpect(jsonPath("routeId").value(route.getRouteId()))
+                .andExpect(jsonPath("reservationDate").value(reservationDateAfter));
+    }
+
+    @Test
     public void postReservation_thenDelete_thenReturnNoContent() throws Exception {
         final String firstName = "John";
         final String lastName = "Smith";

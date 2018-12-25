@@ -290,13 +290,6 @@ public class ReservationService implements IReservationService<ReservationExtend
                 .orElseThrow(
                         () -> new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
                 );
-        if (params.get("customerId") != null) {
-            reservation.setCustomer(customerRepository.findById(Long.valueOf(String.valueOf(params.get("customerId"))))
-                    .orElseThrow(() ->
-                            new ResourceNotFoundException(CUSTOMER_NOT_FOUND)
-                    )
-            );
-        }
         if (params.get("routeId") != null) {
             reservation.setRoute(routeRepository.findById(Long.valueOf(String.valueOf(params.get("routeId"))))
                     .orElseThrow(() ->
@@ -306,7 +299,9 @@ public class ReservationService implements IReservationService<ReservationExtend
         if (params.get("reservationDate") != null) {
             reservation.setReservationDate(LocalDateTime.parse(String.valueOf(params.get("reservationDate"))));
         }
-        return null;
+        ReservationDTO reservationDTO = map(reservationRepository.save(reservation), ReservationDTO.class);
+        reservationDTO.setRouteId(reservation.getRoute().getRouteId());
+        return reservationDTO;
     }
 
     /**
