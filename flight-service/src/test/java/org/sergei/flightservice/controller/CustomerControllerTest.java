@@ -41,7 +41,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @EntityScan(basePackages = "org.sergei.flightservice.model")
 public class CustomerControllerTest {
 
-    private static final String BASE_URL = "/customers";
+    private static final String BASE_URL = "http://localhost/customers";
+    private static final String RESERVATIONS_PATH = "/reservations";
 
     @Autowired
     private MockMvc mvc;
@@ -64,9 +65,9 @@ public class CustomerControllerTest {
                 .andExpect(jsonPath("$._embedded.customerDTOList[0].firstName").value(firstName))
                 .andExpect(jsonPath("$._embedded.customerDTOList[0].lastName").value(lastName))
                 .andExpect(jsonPath("$._embedded.customerDTOList[0].age").value(age))
-                .andExpect(jsonPath("$._embedded.customerDTOList[0]._links.self.href", is("http://localhost/customers/2")))
-                .andExpect(jsonPath("$._embedded.customerDTOList[0]._links.reservations.href", is("http://localhost/customers/2/reservations")))
-                .andExpect(jsonPath("$._links.self.href", is("http://localhost/customers")));
+                .andExpect(jsonPath("$._embedded.customerDTOList[0]._links.self.href", is(BASE_URL + "/2")))
+                .andExpect(jsonPath("$._embedded.customerDTOList[0]._links.reservations.href", is(BASE_URL + "/2" + RESERVATIONS_PATH)))
+                .andExpect(jsonPath("$._links.self.href", is(BASE_URL)));
     }
 
     @Test
@@ -84,9 +85,9 @@ public class CustomerControllerTest {
                 .andExpect(jsonPath("$.firstName").value(firstName))
                 .andExpect(jsonPath("$.lastName").value(lastName))
                 .andExpect(jsonPath("$.age").value(age))
-                .andExpect(jsonPath("$._links.self.href", is("http://localhost/customers/2")))
-                .andExpect(jsonPath("$._links.reservations.href", is("http://localhost/customers/2/reservations")))
-                .andExpect(jsonPath("$._links.allCustomers.href", is("http://localhost/customers")));
+                .andExpect(jsonPath("$._links.self.href", is(BASE_URL + "/2")))
+                .andExpect(jsonPath("$._links.reservations.href", is(BASE_URL + "/2" + RESERVATIONS_PATH)))
+                .andExpect(jsonPath("$._links.allCustomers.href", is(BASE_URL)));
     }
 
     @Test

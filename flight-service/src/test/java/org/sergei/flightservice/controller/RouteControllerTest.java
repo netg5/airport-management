@@ -49,7 +49,7 @@ public class RouteControllerTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RouteControllerTest.class);
 
-    private static final String BASE_URL = "/routes";
+    private static final String BASE_URL = "http://localhost/routes";
 
     @Autowired
     private MockMvc mvc;
@@ -94,7 +94,7 @@ public class RouteControllerTest {
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.aircraftName").value(aircraftName))
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.aircraftWeight").value(aircraftWeight))
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.maxPassengers").value(maxPassengers))
-                .andExpect(jsonPath("$._links.self.href", is("http://localhost/routes")));
+                .andExpect(jsonPath("$._links.self.href", is(BASE_URL)));
     }
 
     @Test
@@ -125,8 +125,8 @@ public class RouteControllerTest {
                 .andExpect(jsonPath("$.arrivalTime").value("2018-09-28T22:00:00"))
                 .andExpect(jsonPath("$.price").value(price))
                 .andExpect(jsonPath("$.place").value(place))
-                .andExpect(jsonPath("$._links.self.href", is("http://localhost/routes/" + route.getRouteId())))
-                .andExpect(jsonPath("$._links.allRoutes.href", is("http://localhost/routes")))
+                .andExpect(jsonPath("$._links.self.href", is(BASE_URL + "/" + route.getRouteId())))
+                .andExpect(jsonPath("$._links.allRoutes.href", is(BASE_URL)))
                 .andExpect(jsonPath("$.aircraft.aircraftId").isNotEmpty())
                 .andExpect(jsonPath("$.aircraft.model", is(model)))
                 .andExpect(jsonPath("$.aircraft.aircraftName", is(aircraftName)))

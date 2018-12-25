@@ -51,7 +51,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @EntityScan(basePackages = "org.sergei.flightservice.model")
 public class ReservationControllerTest {
 
-    private static final String BASE_URL = "/customers/1/reservations";
+    private static final String BASE_URL = "http://localhost/customers";
+    private static final String RESERVATIONS_PATH = "/reservations";
 
     @Autowired
     private MockMvc mvc;
@@ -98,7 +99,7 @@ public class ReservationControllerTest {
                 .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservationId").isNotEmpty())
                 .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].customerId").value(customer.getCustomerId()))
                 .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservationDate").value(reservationDate))
-                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0]._links.reservation.href", is("http://localhost/customers/2/reservations/1")))
+                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0]._links.reservation.href", is(BASE_URL + "/2" + RESERVATIONS_PATH + "/1")))
                 .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].allReservedRoutes.routeId").isNotEmpty())
                 .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].allReservedRoutes.distance").value(distance))
                 .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].allReservedRoutes.departureTime").value(departureTime))
@@ -110,7 +111,7 @@ public class ReservationControllerTest {
                 .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].allReservedRoutes.place.aircraft.aircraftName").value(aircraftName))
                 .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].allReservedRoutes.place.aircraft.aircraftWeight").value(aircraftWeight))
                 .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].allReservedRoutes.place.aircraft.maxPassengers").value(maxPassengers))
-                .andExpect(jsonPath("$._links.self.href", is("http://localhost/customers/1/reservations")));
+                .andExpect(jsonPath("$._links.self.href", is(BASE_URL + "/1" + RESERVATIONS_PATH)));
     }
 
     @Ignore
@@ -146,8 +147,8 @@ public class ReservationControllerTest {
                 .andExpect(jsonPath("$.reservationId").isNotEmpty())
                 .andExpect(jsonPath("$.customerId").value(customer.getCustomerId()))
                 .andExpect(jsonPath("$.reservationDate").value(reservationDate))
-                .andExpect(jsonPath("$._links.customer.href", is("http://localhost/customers/2")))
-                .andExpect(jsonPath("$._links.reservation.href", is("http://localhost/customers/2/reservations/1")))
+                .andExpect(jsonPath("$._links.customer.href", is(BASE_URL + "/2")))
+                .andExpect(jsonPath("$._links.reservation.href", is(BASE_URL + "/2/" + RESERVATIONS_PATH + "/1")))
                 .andExpect(jsonPath("$.allReservedRoutes.routeId").isNotEmpty())
                 .andExpect(jsonPath("$.allReservedRoutes.distance").value(distance))
                 .andExpect(jsonPath("$.allReservedRoutes.departureTime").value(departureTime))

@@ -44,7 +44,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class AircraftControllerTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(AircraftControllerTest.class);
 
-    private static final String BASE_URL = "/aircrafts";
+    private static final String BASE_URL = "http://localhost/aircrafts";
 
     @Autowired
     private MockMvc mvc;
@@ -69,8 +69,8 @@ public class AircraftControllerTest {
                 .andExpect(jsonPath("$._embedded.aircraftDTOList[0].aircraftName").value(aircraftName))
                 .andExpect(jsonPath("$._embedded.aircraftDTOList[0].aircraftWeight").value(aircraftWeight))
                 .andExpect(jsonPath("$._embedded.aircraftDTOList[0].maxPassengers").value(maxPassengers))
-                .andExpect(jsonPath("$._embedded.aircraftDTOList[0]._links.self.href", is("http://localhost/aircrafts/1")))
-                .andExpect(jsonPath("$._links.self.href", is("http://localhost/aircrafts")));
+                .andExpect(jsonPath("$._embedded.aircraftDTOList[0]._links.self.href", is(BASE_URL + "/1")))
+                .andExpect(jsonPath("$._links.self.href", is(BASE_URL)));
     }
 
     @Test
@@ -90,8 +90,8 @@ public class AircraftControllerTest {
                 .andExpect(jsonPath("$.aircraftName").value(aircraftName))
                 .andExpect(jsonPath("$.aircraftWeight").value(aircraftWeight))
                 .andExpect(jsonPath("$.maxPassengers").value(maxPassengers))
-                .andExpect(jsonPath("$._links.self.href", is("http://localhost/aircrafts/" + aircraft.getAircraftId())))
-                .andExpect(jsonPath("$._links.allAircrafts.href", is("http://localhost/aircrafts")));
+                .andExpect(jsonPath("$._links.self.href", is(BASE_URL + "/" + aircraft.getAircraftId())))
+                .andExpect(jsonPath("$._links.allAircrafts.href", is(BASE_URL)));
     }
 
     @Test
