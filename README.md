@@ -67,14 +67,16 @@ _Example for MySQL:_
 ```
 
 1. Checkout config service [https://github.com/sergeivisotsky/flight-reservation-config](https://github.com/sergeivisotsky/flight-reservation-config) to clone all the necessary config files
-2. Edit `server.port` for each service if needed which configs are located in the repository above and other configs that are not locates in config repository in `1.` paragraph
-3. Open `SERVICE_NAME.yml` config file and setup your database url and credentials for services `flight-service` , `ticket service` and `auth-service`
-4. Open SQL file `oauth_schema.sql` script located in auth-service under `resources/sql` and change database name to yours
-5. Open SQL file `ticket_view.sql` in service `ticket-service` under `resources/sql` and execute this script for your database (NOTE: MySQL dialect was used in this case) 
-6. Create view for customer report by opening SQL file `customer_report_view.sql` and execute SQL code in your database (NOTE: MySQL dialect was used in this case)
-7. Keep in mind that application port and port in `security.oauth2.resource.accessTokenUri` property might be changed in your case
-8. Open `logback-spring.xml` for each microservice and setup directory where all your logging files are going to saved
-9. Setup .jar names and ports in `Dockerfile` for each module
+2. Copy all the property files in each microservice or create another repository and change the path to it in `bootstrap.yml` config file in `config-service` by changing property `spring.cloud.config.server.git.uri`
+3. Edit `server.port` for each service if needed which configs are located in the repository above and other configs that are not locates in config repository in `1.` paragraph
+4. Open `SERVICE_NAME.yml` config file and setup your database url and credentials for services `flight-service` , `ticket service` and `auth-service`
+5. Open SQL file `oauth_schema.sql` script located in auth-service under `resources/sql` and change database name to yours
+6. Open SQL file `ticket_view.sql` in service `ticket-service` under `resources/sql` and execute this script for your database (NOTE: MySQL dialect was used in this case) 
+7. Create view for customer report by opening SQL file `customer_report_view.sql` and execute SQL code in your database (NOTE: MySQL dialect was used in this case)
+8. Keep in mind that application port and port in `security.oauth2.resource.accessTokenUri` property might be changed in your case
+9. Open `logback-spring.xml` for each microservice and setup directory where all your logging files are going to saved
+10. Setup .jar names and ports in `Dockerfile` for each module
+
 NOTE: if you change any port it should be changed in all places where it is used depending on the micrservice.
 
 ## Run
@@ -87,6 +89,8 @@ As was mentioned earlier in Setup section `9.` paragraph each microservice conta
 2. Change port for each microservice
 3. Build Docker image performing command `docker build -t SERVICE-NAME .` (e.g. `docker build -t flight-service .`)
 4. Run Docker container performing command `docker run -it --rm -p MACHINE PORT:CONTAINER PORT SERVICE-NAME` (e.g. `docker run -it --rm -p 8085:8085 flight-service`)
+
+NOTE: However you run `config-service` and `eureka-service` should be run first due to all the configs are stored in the separate repository
 
 ## TODO
 1. Adopt liquibase for unit tests
