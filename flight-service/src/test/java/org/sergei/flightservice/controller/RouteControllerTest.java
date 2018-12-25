@@ -282,7 +282,7 @@ public class RouteControllerTest {
                 .put("aircraftId", aircraft.getAircraftId());
 
         mvc.perform(
-                patch(BASE_URL + "/1/patch")
+                patch(BASE_URL + "/2/patch")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .content(jsonObjectAfter.toString()))
                 .andExpect(status().isOk())
