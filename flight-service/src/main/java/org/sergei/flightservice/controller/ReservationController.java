@@ -118,7 +118,7 @@ public class ReservationController {
                                                             @RequestBody ReservationDTO reservationDTO) {
         return new ResponseEntity<>(
                 reservationService.updateReservation(customerId, reservationId, reservationDTO),
-                HttpStatus.ACCEPTED);
+                HttpStatus.OK);
     }
 
     @ApiOperation(value = "Update one field for the reservation", notes = "Operation allowed for ADMIN only")
@@ -133,7 +133,7 @@ public class ReservationController {
                                                            @RequestBody Map<String, Object> params) {
 
         ReservationDTO reservationDTO = reservationService.patchReservation(reservationId, params);
-        return new ResponseEntity<>(reservationDTO, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(reservationDTO, HttpStatus.OK);
     }
 
     @ApiOperation("Delete reservation")

@@ -90,7 +90,7 @@ public class CustomerController {
                                                       @ApiParam(value = "Updated customer", required = true)
                                                       @RequestBody CustomerDTO customerDTO) {
         CustomerDTO customer = customerService.update(customerId, customerDTO);
-        return new ResponseEntity<>(setLinksForCustomer(customer), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(setLinksForCustomer(customer), HttpStatus.OK);
     }
 
     @ApiOperation("Update one field for a customer")
@@ -104,7 +104,7 @@ public class CustomerController {
                                                      @PathVariable("customerId") Long customerId,
                                                      @RequestBody Map<String, Object> params) {
         CustomerDTO customerDTO = customerService.patch(customerId, params);
-        return new ResponseEntity<>(setLinksForCustomer(customerDTO), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(setLinksForCustomer(customerDTO), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Delete customer data", notes = "Operation allowed for ADMIN only")

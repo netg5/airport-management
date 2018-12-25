@@ -241,7 +241,7 @@ public class ReservationControllerTest {
                 put(BASE_URL + "/1")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .content(jsonObjectAfter.toString()))
-                .andExpect(status().isAccepted())
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("reservationId").isNotEmpty())
                 .andExpect(jsonPath("customerId").value(customer.getCustomerId()))
                 .andExpect(jsonPath("routeId").value(route.getRouteId()))

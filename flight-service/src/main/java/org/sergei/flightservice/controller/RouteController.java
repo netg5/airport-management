@@ -84,7 +84,7 @@ public class RouteController {
                                                 @ApiParam(value = "Saved route", required = true)
                                                 @RequestBody RouteDTO routeDTO) {
         RouteDTO route = routeService.update(routeId, routeDTO);
-        return new ResponseEntity<>(setLinksForRoute(route), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(setLinksForRoute(route), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Update one field for the route", notes = "Operation allowed for ADMIN only")
@@ -100,7 +100,7 @@ public class RouteController {
                                                @RequestBody Map<String, Object> params) {
 
         RouteDTO routeDTO = routeService.patch(routeId, params);
-        return new ResponseEntity<>(setLinksForRoute(routeDTO), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(setLinksForRoute(routeDTO), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Method to delete route", notes = "Operation allowed for ADMIN only")

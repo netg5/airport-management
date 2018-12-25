@@ -223,7 +223,7 @@ public class RouteControllerTest {
                 put(BASE_URL + "/2")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .content(jsonObjectAfter.toString()))
-                .andExpect(status().isAccepted())
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$.routeId").isNotEmpty())
                 .andExpect(jsonPath("$.distance").value(distanceAfter))
                 .andExpect(jsonPath("$.departureTime").value(departureTimeAfter))
