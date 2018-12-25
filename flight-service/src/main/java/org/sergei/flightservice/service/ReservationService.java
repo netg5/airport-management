@@ -241,17 +241,15 @@ public class ReservationService implements IReservationService<ReservationExtend
     }
 
     /**
-     * Method to update reservation details
+     * Update reservation details
      *
-     * @param customerId     gets as a parameter customer ID
-     * @param reservationId  get as a parameter reservation ID
-     * @param reservationDTO get as a parameter Flight reservation DTO
-     * @return flight reservation DTO
+     * @param customerId    customer who made reservation
+     * @param reservationId reservation ID to be patched
+     * @param params        Field(-s) to be patched
+     * @return patched reservation
      */
     @Override
-    public ReservationDTO updateReservation(Long customerId,
-                                            Long reservationId,
-                                            ReservationDTO reservationDTO) {
+    public ReservationDTO updateReservation(Long customerId, Long reservationId, Map<String, Object> params) {
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(CUSTOMER_NOT_FOUND)
@@ -261,35 +259,6 @@ public class ReservationService implements IReservationService<ReservationExtend
                         new ResourceNotFoundException("Customer or reservation with this ID not found")
                 );
         reservation.setCustomer(customer);
-        Route route = routeRepository.findById(reservationDTO.getRouteId())
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(ROUTE_NOT_FOUND)
-                );
-        reservation.setRoute(route);
-        reservation.setReservationDate(reservationDTO.getReservationDate());
-
-        Reservation savedReservation = reservationRepository.save(reservation);
-
-        ReservationDTO savedReservationDTO = map(savedReservation, ReservationDTO.class);
-        savedReservationDTO.setCustomerId(customer.getCustomerId());
-        savedReservationDTO.setRouteId(route.getRouteId());
-
-        return savedReservationDTO;
-    }
-
-    /**
-     * Method to update one field of the reservation
-     *
-     * @param reservationId ID of the reservation that should be updates
-     * @param params        list of params that should be updated
-     * @return rupdated reservation
-     */
-    @Override
-    public ReservationDTO patchReservation(Long reservationId, Map<String, Object> params) {
-        Reservation reservation = reservationRepository.findById(reservationId)
-                .orElseThrow(
-                        () -> new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
-                );
         if (params.get("routeId") != null) {
             reservation.setRoute(routeRepository.findById(Long.valueOf(String.valueOf(params.get("routeId"))))
                     .orElseThrow(() ->
@@ -301,6 +270,7 @@ public class ReservationService implements IReservationService<ReservationExtend
         }
         ReservationDTO reservationDTO = map(reservationRepository.save(reservation), ReservationDTO.class);
         reservationDTO.setRouteId(reservation.getRoute().getRouteId());
+        reservationDTO.setCustomerId(customer.getCustomerId());
         return reservationDTO;
     }
 

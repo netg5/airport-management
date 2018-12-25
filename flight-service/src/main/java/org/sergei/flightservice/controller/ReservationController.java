@@ -103,36 +103,19 @@ public class ReservationController {
                 HttpStatus.CREATED);
     }
 
-    @ApiOperation("Update reservation by customer ID")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(code = 404, message = "Invalid customer or reservation ID")
-            }
-    )
-    @PutMapping(value = "/{customerId}/reservations/{reservationId}", consumes = "application/json")
-    public ResponseEntity<ReservationDTO> updateReservation(@ApiParam(value = "Customer ID who made reservation", required = true)
-                                                            @PathVariable("customerId") Long customerId,
-                                                            @ApiParam(value = "Reservation ID which should be updated", required = true)
-                                                            @PathVariable("reservationId") Long reservationId,
-                                                            @ApiParam(value = "Saved flight reservation", required = true)
-                                                            @RequestBody ReservationDTO reservationDTO) {
-        return new ResponseEntity<>(
-                reservationService.updateReservation(customerId, reservationId, reservationDTO),
-                HttpStatus.OK);
-    }
-
-    @ApiOperation(value = "Update one field for the reservation", notes = "Operation allowed for ADMIN only")
+    @ApiOperation(value = "Update reservation by customer ID")
     @ApiResponses(
             value = {
                     @ApiResponse(code = 404, message = "Invalid reservation ID")
             }
     )
-    @PutMapping(value = "/{customerId}/reservations/{reservationId}/patch", consumes = "application/json")
-    public ResponseEntity<ReservationDTO> patchReservation(@ApiParam(value = "Reservation ID which should be updated", required = true)
-                                                           @PathVariable("reservationId") Long reservationId,
-                                                           @RequestBody Map<String, Object> params) {
-
-        ReservationDTO reservationDTO = reservationService.patchReservation(reservationId, params);
+    @PatchMapping(value = "/{customerId}/reservations/{reservationId}", consumes = "application/json")
+    public ResponseEntity<ReservationDTO> updateReservation(@ApiParam(value = "Customer ID who made reservation", required = true)
+                                                            @PathVariable("customerId") Long customerId,
+                                                            @ApiParam(value = "Reservation ID which should be updated", required = true)
+                                                            @PathVariable("reservationId") Long reservationId,
+                                                            @RequestBody Map<String, Object> params) {
+        ReservationDTO reservationDTO = reservationService.updateReservation(customerId, reservationId, params);
         return new ResponseEntity<>(reservationDTO, HttpStatus.OK);
     }
 

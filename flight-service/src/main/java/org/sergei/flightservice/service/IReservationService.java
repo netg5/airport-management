@@ -47,21 +47,12 @@ public interface IReservationService<E, T> extends IService {
     T saveReservation(Long aLong, T entityDTO);
 
     /**
-     * Update reservation
+     * Update reservation details
      *
-     * @param customerId    ID of the customer who made reservation
-     * @param reservationId reservation ID to be updated
-     * @param entityDTO     updated reservation body
-     * @return updated reservation
-     */
-    T updateReservation(Long customerId, Long reservationId, T entityDTO);
-
-    /**
-     * Patch one or multiple fields of reservation
-     *
-     * @param aLong  reservation ID to be patched
-     * @param params Field(-s) to be patched
+     * @param customerId    customer who made reservation
+     * @param reservationId reservation ID to be patched
+     * @param params        Field(-s) to be patched
      * @return patched reservation
      */
-    T patchReservation(Long aLong, Map<String, Object> params);
+    T updateReservation(Long customerId, Long reservationId, Map<String, Object> params);
 }
