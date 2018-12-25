@@ -81,7 +81,7 @@ NOTE: if you change any port it should be changed in all places where it is used
 
 ## Run
 ##### 1 way - using maven or java command
-* Perform command `mvn spring-boot:run` or compile each microservice into the .jar and perform command `java -jar SERVICE-NAME-VERSION.jar`
+* Perform command `mvn spring-boot:run` or compile each microservice into the .jar and perform command `java -jar target/SERVICE-NAME-VERSION.jar`
 
 ##### 2 way - run into the Docker container
 As was mentioned earlier in Setup section `9.` paragraph each microservice containd Dockerfile that allows to run it into the Docker container.
