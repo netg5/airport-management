@@ -74,7 +74,7 @@ public class AircraftController {
         return new ResponseEntity<>(aircraftService.save(aircraftDTO), HttpStatus.CREATED);
     }
 
-    @ApiOperation(value = "Update aircraft data", notes = "Operation allowed for ADMIN only")
+    @ApiOperation(value = "Update aircraft data", notes = "Operation allowed for the ROLE_ADMIN only")
     @ApiResponses(
             value = {
                     @ApiResponse(code = 404, message = "Aircraft with this ID not found")
@@ -90,7 +90,7 @@ public class AircraftController {
         return new ResponseEntity<>(setLinksForAircraft(aircraft), HttpStatus.OK);
     }
 
-    @ApiOperation(value = "Update one field of the aircraft", notes = "Operation allowed for ADMIN only")
+    @ApiOperation(value = "Update one field of the aircraft", notes = "Operation allowed for the ROLE_ADMIN only")
     @ApiResponses(
             value = {
                     @ApiResponse(code = 404, message = "Aircraft with this ID not found")
@@ -106,7 +106,7 @@ public class AircraftController {
         return new ResponseEntity<>(setLinksForAircraft(aircraftDTO), HttpStatus.OK);
     }
 
-    @ApiOperation(value = "Delete aircraft", notes = "Operation allowed for ADMIN only")
+    @ApiOperation(value = "Delete aircraft", notes = "Operation allowed for the ROLE_ADMIN only")
     @ApiResponses(
             value = {
                     @ApiResponse(code = 404, message = "Aircraft with this ID not found")

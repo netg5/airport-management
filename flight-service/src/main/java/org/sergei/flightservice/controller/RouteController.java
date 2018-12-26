@@ -63,7 +63,7 @@ public class RouteController {
         return new ResponseEntity<>(setLinksForRoute(routeDTO), HttpStatus.OK);
     }
 
-    @ApiOperation(value = "Save route", notes = "Operation allowed for ADMIN only")
+    @ApiOperation(value = "Save route", notes = "Operation allowed for the ROLE_ADMIN only")
     @ApiResponses(
             value = {
                     @ApiResponse(code = 404, message = "Aircraft with this ID not found")
@@ -76,7 +76,7 @@ public class RouteController {
         return new ResponseEntity<>(routeService.save(routeDTO), HttpStatus.CREATED);
     }
 
-    @ApiOperation(value = "Update route information", notes = "Operation allowed for ADMIN only")
+    @ApiOperation(value = "Update route information", notes = "Operation allowed for the ROLE_ADMIN only")
     @ApiResponses(
             value = {
                     @ApiResponse(code = 404, message = "Route or aircraft with this ID not found")
@@ -92,7 +92,7 @@ public class RouteController {
         return new ResponseEntity<>(setLinksForRoute(route), HttpStatus.OK);
     }
 
-    @ApiOperation(value = "Update one field for the route", notes = "Operation allowed for ADMIN only")
+    @ApiOperation(value = "Update one field for the route", notes = "Operation allowed for the ROLE_ADMIN only")
     @ApiResponses(
             value = {
                     @ApiResponse(code = 404, message = "Route or aircraft with this ID not found")
@@ -108,7 +108,7 @@ public class RouteController {
         return new ResponseEntity<>(setLinksForRoute(routeDTO), HttpStatus.OK);
     }
 
-    @ApiOperation(value = "Method to delete route", notes = "Operation allowed for ADMIN only")
+    @ApiOperation(value = "Method to delete route", notes = "Operation allowed for the ROLE_ADMIN only")
     @ApiResponses(
             value = {
                     @ApiResponse(code = 404, message = "Route with this ID not found")

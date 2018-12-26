@@ -102,7 +102,7 @@ public class CustomerController {
         return new ResponseEntity<>(setLinksForCustomer(customerDTO), HttpStatus.OK);
     }
 
-    @ApiOperation(value = "Delete customer data", notes = "Operation allowed for ADMIN only")
+    @ApiOperation(value = "Delete customer data", notes = "Operation allowed for the ROLE_ADMIN only")
     @ApiResponses(
             value = {
                     @ApiResponse(code = 404, message = "Customer with this ID not found")
