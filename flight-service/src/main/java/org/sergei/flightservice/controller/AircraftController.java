@@ -66,7 +66,7 @@ public class AircraftController {
         return new ResponseEntity<>(setLinksForAircraft(aircraftDTO), HttpStatus.OK);
     }
 
-    @ApiOperation(value = "Save aircraft", notes = "Operation allowed for ADMIN only")
+    @ApiOperation(value = "Save aircraft", notes = "Operation allowed for the ROLE_ADMIN only")
     @PostMapping(consumes = "application/json")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<AircraftDTO> saveAircraft(@ApiParam(value = "Aircraft which should be saved", required = true)

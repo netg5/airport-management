@@ -93,7 +93,8 @@ As was mentioned earlier in Setup section `9.` paragraph each microservice conta
 NOTE: However you run `config-service` and `eureka-service` should be run first due to all the configs are stored in the separate repository
 
 ## TODO
-1. Adopt liquibase for unit tests
-2. Ignore services without swagger json in doc-service
-3. Implement Hystrix fallback methods
-4. Develop Front-end with Angular
+1. Implement SSL certificate
+2. Adopt liquibase for unit tests
+3. Ignore services without swagger json in doc-service
+4. Implement Hystrix fallback methods
+5. Develop Front-end with Angular
