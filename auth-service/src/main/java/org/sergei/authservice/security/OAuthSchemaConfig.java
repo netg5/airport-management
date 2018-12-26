@@ -22,7 +22,7 @@ public class OAuthSchemaConfig {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthorizationServerConfig.class);
 
-    @Value("classpath:oauth_schema.sql")
+    @Value("classpath:sql/oauth_schema.sql")
     private Resource schemaScript;
 
     @Bean

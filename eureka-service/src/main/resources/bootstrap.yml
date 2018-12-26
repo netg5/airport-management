@@ -1,5 +1,10 @@
 server:
   port: 8761
+#  ssl:
+#    key-store-type: PKCS12
+#    key-store: classpath:tls/keystore.p12
+#    key-store-password: keyStoreSecret
+#    key-alias: tomcat
 spring:
   application:
     name: eureka-service
@@ -12,4 +17,4 @@ eureka:
     healthcheck:
       enabled: true
     serviceUrl:
-      defaulZone: http://localhost:8761/eureka
+      defaulZone: https://localhost:8761/eureka

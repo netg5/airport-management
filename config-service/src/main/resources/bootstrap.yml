@@ -23,4 +23,4 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     serviceUrl:
-      defaulZone: http://localhost:8761/eureka
+      defaulZone: https://localhost:8761/eureka
