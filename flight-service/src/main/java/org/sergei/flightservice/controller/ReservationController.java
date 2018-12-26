@@ -37,8 +37,7 @@ public class ReservationController {
     @ApiOperation("Get all reservations for customer")
     @ApiResponses(
             value = {
-                    @ApiResponse(code = 404, message = "Customer with this ID not found"),
-                    @ApiResponse(code = 404, message = "This customer has no reservations made")
+                    @ApiResponse(code = 404, message = "Customer with this ID not found or no reservations made"),
             }
     )
     @GetMapping("/{customerId}/reservations")
@@ -52,8 +51,7 @@ public class ReservationController {
     @ApiOperation("Get all reservations for customer")
     @ApiResponses(
             value = {
-                    @ApiResponse(code = 404, message = "Customer with this ID not found"),
-                    @ApiResponse(code = 404, message = "This customer has no reservations made")
+                    @ApiResponse(code = 404, message = "Customer with this ID not found or no reservations made"),
             }
     )
     @GetMapping(value = "/{customerId}/reservations", params = {"page", "size"})
@@ -71,8 +69,7 @@ public class ReservationController {
     @ApiOperation("Get one reservation by ID for the customer")
     @ApiResponses(
             value = {
-                    @ApiResponse(code = 404, message = "Customer with this ID not found"),
-                    @ApiResponse(code = 404, message = "Reservation with this ID not found")
+                    @ApiResponse(code = 404, message = "Customer with this ID not found or no reservations made"),
             }
     )
     @GetMapping("/{customerId}/reservations/{reservationId}")
@@ -93,8 +90,7 @@ public class ReservationController {
     @ApiOperation("Create reservation for customer")
     @ApiResponses(
             value = {
-                    @ApiResponse(code = 404, message = "Customer with this ID not found"),
-                    @ApiResponse(code = 404, message = "Route with this ID not found")
+                    @ApiResponse(code = 404, message = "Customer or route with this ID not found")
             }
     )
     @PostMapping(value = "/{customerId}/reservations", consumes = "application/json")
@@ -110,8 +106,7 @@ public class ReservationController {
     @ApiOperation(value = "Update reservation by customer ID")
     @ApiResponses(
             value = {
-                    @ApiResponse(code = 404, message = "Customer with this ID not found"),
-                    @ApiResponse(code = 404, message = "Route with this ID not found")
+                    @ApiResponse(code = 404, message = "Customer or route with this ID not found")
             }
     )
     @PatchMapping(value = "/{customerId}/reservations/{reservationId}", consumes = "application/json")
@@ -127,8 +122,7 @@ public class ReservationController {
     @ApiOperation("Delete reservation")
     @ApiResponses(
             value = {
-                    @ApiResponse(code = 404, message = "Customer with this ID not found"),
-                    @ApiResponse(code = 404, message = "Reservation with this ID not found")
+                    @ApiResponse(code = 404, message = "Customer with this ID not found or no reservations made")
             }
     )
     @DeleteMapping("/{customerId}/reservations/{reservationId}")

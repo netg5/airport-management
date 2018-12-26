@@ -79,8 +79,7 @@ public class RouteController {
     @ApiOperation(value = "Update route information", notes = "Operation allowed for ADMIN only")
     @ApiResponses(
             value = {
-                    @ApiResponse(code = 404, message = "Route with this ID not found"),
-                    @ApiResponse(code = 404, message = "Aircraft with this ID not found")
+                    @ApiResponse(code = 404, message = "Route or aircraft with this ID not found")
             }
     )
     @PutMapping(value = "/{routeId}", consumes = "application/json")
@@ -96,8 +95,7 @@ public class RouteController {
     @ApiOperation(value = "Update one field for the route", notes = "Operation allowed for ADMIN only")
     @ApiResponses(
             value = {
-                    @ApiResponse(code = 404, message = "Route with this ID not found"),
-                    @ApiResponse(code = 404, message = "Aircraft with this ID not found")
+                    @ApiResponse(code = 404, message = "Route or aircraft with this ID not found")
             }
     )
     @PatchMapping(value = "/{routeId}/patch", consumes = "application/json")
