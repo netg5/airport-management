@@ -37,11 +37,6 @@ public class CustomerController {
     }
 
     @ApiOperation("Get all customers")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(code = 404, message = "Invalid customer ID")
-            }
-    )
     @GetMapping
     public ResponseEntity<Resources> getAllCustomers() {
         List<CustomerDTO> customerList = customerService.findAll();
@@ -49,21 +44,21 @@ public class CustomerController {
     }
 
     @ApiOperation("Get all customers paginated")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(code = 404, message = "Invalid customer ID")
-            }
-    )
     @GetMapping(params = {"page", "size"})
-    public ResponseEntity<Resources> getAllCustomersPaginated(@ApiParam(value = "Number of page", required = true)
-                                                                           @RequestParam("page") int page,
-                                                                           @ApiParam(value = "Number of elements per page", required = true)
-                                                                           @RequestParam("size") int size) {
+    public ResponseEntity<Resources> getAllCustomersPaginated(@ApiParam(value = "Number of the page")
+                                                              @RequestParam("page") int page,
+                                                              @ApiParam(value = "Maximum number of content blocks on the page")
+                                                              @RequestParam("size") int size) {
         Page<CustomerDTO> customerList = customerService.findAllPaginated(page, size);
         return new ResponseEntity<>(setLinksForAllCustomers(customerList), HttpStatus.OK);
     }
 
     @ApiOperation("Get customer by ID")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(code = 404, message = "Customer with this ID not found")
+            }
+    )
     @GetMapping("/{customerId}")
     public ResponseEntity<CustomerDTO> getCustomerById(@ApiParam(value = "Customer ID which should be found", required = true)
                                                        @PathVariable("customerId") Long customerId) {
@@ -81,7 +76,7 @@ public class CustomerController {
     @ApiOperation("Update customer data")
     @ApiResponses(
             value = {
-                    @ApiResponse(code = 404, message = "Invalid customer ID")
+                    @ApiResponse(code = 404, message = "Customer with this ID not found")
             }
     )
     @PutMapping(value = "/{customerId}", consumes = "application/json")
@@ -96,7 +91,7 @@ public class CustomerController {
     @ApiOperation("Update one field for a customer")
     @ApiResponses(
             value = {
-                    @ApiResponse(code = 404, message = "Invalid customer ID")
+                    @ApiResponse(code = 404, message = "Customer with this ID not found")
             }
     )
     @PatchMapping(value = "/{customerId}/patch", consumes = "application/json")
@@ -110,7 +105,7 @@ public class CustomerController {
     @ApiOperation(value = "Delete customer data", notes = "Operation allowed for ADMIN only")
     @ApiResponses(
             value = {
-                    @ApiResponse(code = 404, message = "Invalid customer ID")
+                    @ApiResponse(code = 404, message = "Customer with this ID not found")
             }
     )
     @DeleteMapping(value = "/{customerId}")

@@ -37,7 +37,8 @@ public class ReservationController {
     @ApiOperation("Get all reservations for customer")
     @ApiResponses(
             value = {
-                    @ApiResponse(code = 404, message = "Invalid customer ID")
+                    @ApiResponse(code = 404, message = "Customer with this ID not found"),
+                    @ApiResponse(code = 404, message = "This customer has no reservations made")
             }
     )
     @GetMapping("/{customerId}/reservations")
@@ -51,15 +52,16 @@ public class ReservationController {
     @ApiOperation("Get all reservations for customer")
     @ApiResponses(
             value = {
-                    @ApiResponse(code = 404, message = "Invalid customer ID")
+                    @ApiResponse(code = 404, message = "Customer with this ID not found"),
+                    @ApiResponse(code = 404, message = "This customer has no reservations made")
             }
     )
     @GetMapping(value = "/{customerId}/reservations", params = {"page", "size"})
     public ResponseEntity<Resources> getAllForCustomerPaginated(@ApiParam(value = "Customer ID whose reservations should be found", required = true)
                                                                 @PathVariable("customerId") Long customerId,
-                                                                @ApiParam("Number of page")
+                                                                @ApiParam("Number of the page")
                                                                 @RequestParam("page") int page,
-                                                                @ApiParam("Number of elements per page")
+                                                                @ApiParam("Maximum number of content blocks on the page")
                                                                 @RequestParam("size") int size) {
         Page<ReservationExtendedDTO> reservations =
                 reservationService.findAllForCustomerPaginated(customerId, page, size);
@@ -69,7 +71,8 @@ public class ReservationController {
     @ApiOperation("Get one reservation by ID for the customer")
     @ApiResponses(
             value = {
-                    @ApiResponse(code = 404, message = "Invalid customer or reservation ID")
+                    @ApiResponse(code = 404, message = "Customer with this ID not found"),
+                    @ApiResponse(code = 404, message = "Reservation with this ID not found")
             }
     )
     @GetMapping("/{customerId}/reservations/{reservationId}")
@@ -90,7 +93,8 @@ public class ReservationController {
     @ApiOperation("Create reservation for customer")
     @ApiResponses(
             value = {
-                    @ApiResponse(code = 404, message = "Invalid customer ID")
+                    @ApiResponse(code = 404, message = "Customer with this ID not found"),
+                    @ApiResponse(code = 404, message = "Route with this ID not found")
             }
     )
     @PostMapping(value = "/{customerId}/reservations", consumes = "application/json")
@@ -106,7 +110,8 @@ public class ReservationController {
     @ApiOperation(value = "Update reservation by customer ID")
     @ApiResponses(
             value = {
-                    @ApiResponse(code = 404, message = "Invalid reservation ID")
+                    @ApiResponse(code = 404, message = "Customer with this ID not found"),
+                    @ApiResponse(code = 404, message = "Route with this ID not found")
             }
     )
     @PatchMapping(value = "/{customerId}/reservations/{reservationId}", consumes = "application/json")
@@ -122,14 +127,17 @@ public class ReservationController {
     @ApiOperation("Delete reservation")
     @ApiResponses(
             value = {
-                    @ApiResponse(code = 404, message = "Invalid reservation ID")
+                    @ApiResponse(code = 404, message = "Customer with this ID not found"),
+                    @ApiResponse(code = 404, message = "Reservation with this ID not found")
             }
     )
     @DeleteMapping("/{customerId}/reservations/{reservationId}")
-    public ResponseEntity<ReservationExtendedDTO> deleteReservation(@ApiParam(value = "Reservation ID which should be deleted", required = true)
+    public ResponseEntity<ReservationExtendedDTO> deleteReservation(@ApiParam(value = "Customer ID who made reservation", required = true)
+                                                                    @PathVariable("customerId") Long customerId,
+                                                                    @ApiParam(value = "Reservation ID which should be deleted", required = true)
                                                                     @PathVariable("reservationId") Long reservationId) {
         return new ResponseEntity<>(
-                reservationService.delete(reservationId),
+                reservationService.deleteReservation(customerId, reservationId),
                 HttpStatus.NO_CONTENT);
     }
 }

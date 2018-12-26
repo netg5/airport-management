@@ -48,7 +48,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class RouteControllerTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RouteControllerTest.class);
-
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
     private static final String BASE_URL = "http://localhost/routes";
 
     @Autowired
@@ -69,8 +69,8 @@ public class RouteControllerTest {
         Aircraft aircraft = new Aircraft(model, aircraftName, aircraftWeight, maxPassengers);
 
         final Double distance = 3600.0;
-        final LocalDateTime departureTime = LocalDateTime.parse("2018-09-28T22:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
-        final LocalDateTime arrivalTime = LocalDateTime.parse("2018-09-28T22:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
+        final LocalDateTime departureTime = LocalDateTime.parse("2018-09-28T22:00:00", FORMATTER);
+        final LocalDateTime arrivalTime = LocalDateTime.parse("2018-09-28T22:00:00", FORMATTER);
         final BigDecimal price = BigDecimal.valueOf(450.0);
         final String place = "New-York";
         Route route = setupRoute(distance, departureTime, arrivalTime, price, place, aircraft);
@@ -106,8 +106,8 @@ public class RouteControllerTest {
         Aircraft aircraft = new Aircraft(model, aircraftName, aircraftWeight, maxPassengers);
 
         final Double distance = 3600.0;
-        final LocalDateTime departureTime = LocalDateTime.parse("2018-09-28T22:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
-        final LocalDateTime arrivalTime = LocalDateTime.parse("2018-09-28T22:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
+        final LocalDateTime departureTime = LocalDateTime.parse("2018-09-28T22:00:00", FORMATTER);
+        final LocalDateTime arrivalTime = LocalDateTime.parse("2018-09-28T22:00:00", FORMATTER);
         final BigDecimal price = BigDecimal.valueOf(450.0);
         final String place = "New-York";
         Route route = setupRoute(distance, departureTime, arrivalTime, price, place, aircraft);

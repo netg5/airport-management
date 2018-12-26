@@ -34,7 +34,7 @@ public class ReservationService implements IReservationService<ReservationExtend
     private static final String ROUTE_NOT_FOUND = "Route with this ID not found";
     private static final String AIRCRAFT_NOT_FOUND = "Aircraft with this ID not found";
     private static final String RESERVATION_NOT_FOUND = "Reservation with this ID not found";
-    private static final String RESERVATIONS_NOT_FOUND = "This customer has no reservations";
+    private static final String RESERVATIONS_NOT_FOUND = "This customer has no reservations made";
 
     private final CustomerRepository customerRepository;
     private final RouteRepository routeRepository;
@@ -274,14 +274,19 @@ public class ReservationService implements IReservationService<ReservationExtend
         return reservationDTO;
     }
 
+
     /**
-     * Delete reservation by ID
+     * Delete reservation by ID and customer ID
      *
-     * @param reservationId get reservation ID to be deleted
+     * @param customerId    customer who made reservation
+     * @param reservationId reservation ID to be deleted
      * @return deleted reservation DTO
      */
     @Override
-    public ReservationExtendedDTO delete(Long reservationId) {
+    public ReservationExtendedDTO deleteReservation(Long customerId, Long reservationId) {
+        customerRepository.findById(customerId).orElseThrow(() ->
+                new ResourceNotFoundException(CUSTOMER_NOT_FOUND)
+        );
         Reservation reservation = reservationRepository.findById(reservationId)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(RESERVATION_NOT_FOUND)
@@ -317,6 +322,11 @@ public class ReservationService implements IReservationService<ReservationExtend
 
     @Override
     public Object patch(Long aLong, Map params) {
+        return null;
+    }
+
+    @Override
+    public ReservationExtendedDTO delete(Long aLong) {
         return null;
     }
 }

@@ -55,4 +55,13 @@ public interface IReservationService<E, T> extends IService {
      * @return patched reservation
      */
     T updateReservation(Long customerId, Long reservationId, Map<String, Object> params);
+
+    /**
+     * Method to delete reservation
+     *
+     * @param customerId    customer who made reservations
+     * @param reservationId made reservation ID
+     * @return deleted reservation entity
+     */
+    T deleteReservation(Long customerId, Long reservationId);
 }

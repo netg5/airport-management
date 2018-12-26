@@ -45,9 +45,9 @@ public class AircraftController {
 
     @ApiOperation(value = "Get all existing aircrafts paginated")
     @GetMapping(params = {"page", "size"})
-    public ResponseEntity<Resources> getAllAircraftPaginated(@ApiParam("Number of page")
+    public ResponseEntity<Resources> getAllAircraftPaginated(@ApiParam("Number of the page")
                                                              @RequestParam("page") int page,
-                                                             @ApiParam("Number of elements per page")
+                                                             @ApiParam("Maximum number of content blocks on the page")
                                                              @RequestParam("size") int size) {
         Page<AircraftDTO> aircrafts = aircraftService.findAllPaginated(page, size);
         return new ResponseEntity<>(setLinksForAllAircrafts(aircrafts), HttpStatus.OK);
@@ -56,7 +56,7 @@ public class AircraftController {
     @ApiOperation("Get aircraftDTO by ID")
     @ApiResponses(
             value = {
-                    @ApiResponse(code = 404, message = "Invalid aircraft ID")
+                    @ApiResponse(code = 404, message = "Aircraft with this ID not found")
             }
     )
     @GetMapping("/{aircraftId}")
@@ -77,7 +77,7 @@ public class AircraftController {
     @ApiOperation(value = "Update aircraft data", notes = "Operation allowed for ADMIN only")
     @ApiResponses(
             value = {
-                    @ApiResponse(code = 404, message = "Invalid aircraft ID")
+                    @ApiResponse(code = 404, message = "Aircraft with this ID not found")
             }
     )
     @PutMapping(value = "/{aircraftId}", consumes = "application/json")
@@ -93,7 +93,7 @@ public class AircraftController {
     @ApiOperation(value = "Update one field of the aircraft", notes = "Operation allowed for ADMIN only")
     @ApiResponses(
             value = {
-                    @ApiResponse(code = 404, message = "Invalid aircraft ID")
+                    @ApiResponse(code = 404, message = "Aircraft with this ID not found")
             }
     )
     @PatchMapping(value = "/{aircraftId}/patch", consumes = "application/json")
@@ -109,7 +109,7 @@ public class AircraftController {
     @ApiOperation(value = "Delete aircraft", notes = "Operation allowed for ADMIN only")
     @ApiResponses(
             value = {
-                    @ApiResponse(code = 404, message = "Invalid aircraft ID")
+                    @ApiResponse(code = 404, message = "Aircraft with this ID not found")
             }
     )
     @DeleteMapping(value = "/{aircraftId}")

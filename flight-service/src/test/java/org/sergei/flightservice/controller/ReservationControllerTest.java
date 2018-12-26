@@ -53,6 +53,7 @@ public class ReservationControllerTest {
 
     private static final String BASE_URL = "http://localhost/customers";
     private static final String RESERVATIONS_PATH = "/reservations";
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 
     @Autowired
     private MockMvc mvc;
@@ -66,9 +67,14 @@ public class ReservationControllerTest {
     @Autowired
     private AircraftRepository aircraftRepository;
 
-    @Ignore
+    //    @Ignore
     @Test
     public void getAllReservations_thenReturnOk() throws Exception {
+        final String firstName = "John";
+        final String lastName = "Smith";
+        final int age = 20;
+        Customer customer = setupCustomer(firstName, lastName, age);
+
         final String model = "747-400";
         final String aircraftName = "Boeing";
         final Double aircraftWeight = 30000.0;
@@ -76,24 +82,19 @@ public class ReservationControllerTest {
 //        Aircraft aircraft = setupAircraft(model, aircraftName, aircraftWeight, maxPassengers);
         Aircraft aircraft = new Aircraft(model, aircraftName, aircraftWeight, maxPassengers);
 
-        final String firstName = "John";
-        final String lastName = "Smith";
-        final int age = 20;
-        Customer customer = setupCustomer(firstName, lastName, age);
-
         final Double distance = 3600.0;
-        final LocalDateTime departureTime = LocalDateTime.parse("2018-09-28T22:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
-        final LocalDateTime arrivalTime = LocalDateTime.parse("2018-09-28T22:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
+        final LocalDateTime departureTime = LocalDateTime.parse("2018-09-28T22:00:00", FORMATTER);
+        final LocalDateTime arrivalTime = LocalDateTime.parse("2018-09-28T22:00:00", FORMATTER);
         final BigDecimal price = BigDecimal.valueOf(450);
         final String place = "New-York";
 //        Route route = setupRoute(distance, departureTime, arrivalTime, price, place, aircraft);
         Route route = new Route(distance, departureTime, arrivalTime, price, place, aircraft, Collections.emptyList());
 
-        final LocalDateTime reservationDate = LocalDateTime.parse("2018-09-28T22:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
+        final LocalDateTime reservationDate = LocalDateTime.parse("2018-09-28T22:00:00", FORMATTER);
         setupReservation(reservationDate, customer, route);
 
         mvc.perform(
-                get(BASE_URL)
+                get(BASE_URL + "/" + customer.getCustomerId() + RESERVATIONS_PATH)
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservationId").isNotEmpty())
@@ -130,14 +131,14 @@ public class ReservationControllerTest {
         Customer customer = setupCustomer(firstName, lastName, age);
 
         final Double distance = 3600.0;
-        final LocalDateTime departureTime = LocalDateTime.parse("2018-09-28T22:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
-        final LocalDateTime arrivalTime = LocalDateTime.parse("2018-09-28T22:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
+        final LocalDateTime departureTime = LocalDateTime.parse("2018-09-28T22:00:00", FORMATTER);
+        final LocalDateTime arrivalTime = LocalDateTime.parse("2018-09-28T22:00:00", FORMATTER);
         final BigDecimal price = BigDecimal.valueOf(450);
         final String place = "New-York";
 //        Route route = setupRoute(distance, departureTime, arrivalTime, price, place, aircraft);
         Route route = new Route(distance, departureTime, arrivalTime, price, place, aircraft, Collections.emptyList());
 
-        final LocalDateTime reservationDate = LocalDateTime.parse("2018-09-28T22:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
+        final LocalDateTime reservationDate = LocalDateTime.parse("2018-09-28T22:00:00", FORMATTER);
         Reservation reservation = setupReservation(reservationDate, customer, route);
 
         mvc.perform(
@@ -176,8 +177,8 @@ public class ReservationControllerTest {
         Aircraft aircraft = new Aircraft(model, aircraftName, aircraftWeight, maxPassengers);
 
         final Double distance = 3600.0;
-        final LocalDateTime departureTime = LocalDateTime.parse("2018-09-28T22:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
-        final LocalDateTime arrivalTime = LocalDateTime.parse("2018-09-28T22:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
+        final LocalDateTime departureTime = LocalDateTime.parse("2018-09-28T22:00:00", FORMATTER);
+        final LocalDateTime arrivalTime = LocalDateTime.parse("2018-09-28T22:00:00", FORMATTER);
         final BigDecimal price = BigDecimal.valueOf(450);
         final String place = "New-York";
         Route route = setupRoute(distance, departureTime, arrivalTime, price, place, aircraft);
@@ -212,8 +213,8 @@ public class ReservationControllerTest {
         Aircraft aircraft = new Aircraft(model, aircraftName, aircraftWeight, maxPassengers);
 
         final Double distance = 3600.0;
-        final LocalDateTime departureTime = LocalDateTime.parse("2018-09-28T22:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
-        final LocalDateTime arrivalTime = LocalDateTime.parse("2018-09-28T22:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
+        final LocalDateTime departureTime = LocalDateTime.parse("2018-09-28T22:00:00", FORMATTER);
+        final LocalDateTime arrivalTime = LocalDateTime.parse("2018-09-28T22:00:00", FORMATTER);
         final BigDecimal price = BigDecimal.valueOf(450);
         final String place = "New-York";
         Route route = setupRoute(distance, departureTime, arrivalTime, price, place, aircraft);
@@ -238,7 +239,7 @@ public class ReservationControllerTest {
                 .put("routeId", route.getRouteId())
                 .put("reservationDate", reservationDateAfter);
         mvc.perform(
-                patch(BASE_URL + "/1/patch")
+                patch(BASE_URL + "/1")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .content(jsonObjectAfter.toString()))
                 .andExpect(status().isOk())
@@ -262,8 +263,8 @@ public class ReservationControllerTest {
         Aircraft aircraft = new Aircraft(model, aircraftName, aircraftWeight, maxPassengers);
 
         final Double distance = 3600.0;
-        final LocalDateTime departureTime = LocalDateTime.parse("2018-09-28T22:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
-        final LocalDateTime arrivalTime = LocalDateTime.parse("2018-09-28T22:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
+        final LocalDateTime departureTime = LocalDateTime.parse("2018-09-28T22:00:00", FORMATTER);
+        final LocalDateTime arrivalTime = LocalDateTime.parse("2018-09-28T22:00:00", FORMATTER);
         final BigDecimal price = BigDecimal.valueOf(450);
         final String place = "New-York";
         Route route = setupRoute(distance, departureTime, arrivalTime, price, place, aircraft);

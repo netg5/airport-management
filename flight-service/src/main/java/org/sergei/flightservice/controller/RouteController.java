@@ -42,9 +42,9 @@ public class RouteController {
 
     @ApiOperation("Get all existing routes paginated")
     @GetMapping(params = {"page", "size"})
-    public ResponseEntity<Resources> getAllRoutesPaginated(@ApiParam(value = "Number of page")
+    public ResponseEntity<Resources> getAllRoutesPaginated(@ApiParam("Number of the page")
                                                            @RequestParam("page") int page,
-                                                           @ApiParam(value = "Number of elements per page")
+                                                           @ApiParam("Maximum number of content blocks on the page")
                                                            @RequestParam("size") int size) {
         Page<RouteExtendedDTO> routes = routeService.findAllRoutesPaginated(page, size);
         return new ResponseEntity<>(setLinksForAllRoutes(routes), HttpStatus.OK);
@@ -53,7 +53,7 @@ public class RouteController {
     @ApiOperation("Get route by ID")
     @ApiResponses(
             value = {
-                    @ApiResponse(code = 404, message = "Invalid route ID")
+                    @ApiResponse(code = 404, message = "Route with this ID not found")
             }
     )
     @GetMapping("/{routeId}")
@@ -64,6 +64,11 @@ public class RouteController {
     }
 
     @ApiOperation(value = "Save route", notes = "Operation allowed for ADMIN only")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(code = 404, message = "Aircraft with this ID not found")
+            }
+    )
     @PostMapping(consumes = "application/json")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<RouteDTO> saveRoute(@ApiParam(value = "Saved route", required = true)
@@ -74,7 +79,8 @@ public class RouteController {
     @ApiOperation(value = "Update route information", notes = "Operation allowed for ADMIN only")
     @ApiResponses(
             value = {
-                    @ApiResponse(code = 404, message = "Invalid route ID")
+                    @ApiResponse(code = 404, message = "Route with this ID not found"),
+                    @ApiResponse(code = 404, message = "Aircraft with this ID not found")
             }
     )
     @PutMapping(value = "/{routeId}", consumes = "application/json")
@@ -90,7 +96,8 @@ public class RouteController {
     @ApiOperation(value = "Update one field for the route", notes = "Operation allowed for ADMIN only")
     @ApiResponses(
             value = {
-                    @ApiResponse(code = 404, message = "Invalid route ID")
+                    @ApiResponse(code = 404, message = "Route with this ID not found"),
+                    @ApiResponse(code = 404, message = "Aircraft with this ID not found")
             }
     )
     @PatchMapping(value = "/{routeId}/patch", consumes = "application/json")
@@ -106,7 +113,7 @@ public class RouteController {
     @ApiOperation(value = "Method to delete route", notes = "Operation allowed for ADMIN only")
     @ApiResponses(
             value = {
-                    @ApiResponse(code = 404, message = "Invalid route ID")
+                    @ApiResponse(code = 404, message = "Route with this ID not found")
             }
     )
     @DeleteMapping("/{routeId}")
