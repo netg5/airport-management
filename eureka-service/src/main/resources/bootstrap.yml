@@ -1,6 +1,9 @@
 server:
   port: 8761
+  http:
+    port: 9095
 #  ssl:
+#    enabled: true
 #    key-store-type: PKCS12
 #    key-store: classpath:tls/keystore.p12
 #    key-store-password: keyStoreSecret
@@ -10,6 +13,7 @@ spring:
     name: eureka-service
 eureka:
   instance:
+    non-secure-port-enabled: false
     hostname: localhost
   client:
     register-with-eureka: false
