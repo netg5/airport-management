@@ -1,4 +1,4 @@
-package org.sergei.zuulgateway.config;
+package org.sergei.serviceresource;
 
 import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;

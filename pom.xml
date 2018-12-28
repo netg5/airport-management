@@ -9,7 +9,7 @@
     <packaging>pom</packaging>
 
     <name>flight-reservation</name>
-    <description>Application to reserve flights based on the microseriveice architecture</description>
+    <description>Application to reserve flights based on the microservice architecture</description>
 
     <modules>
         <module>config-service</module>

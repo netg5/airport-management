@@ -13,12 +13,15 @@ spring:
     name: eureka-service
 eureka:
   instance:
-    non-secure-port-enabled: false
     hostname: localhost
+    secure-port-enabled: true
+    secure-port: ${server.port}
+    non-secure-port-enabled: false
+    homePageUrl: https://${eureka.instance.hostname}:${server.port}
   client:
     register-with-eureka: false
     fetch-registry: false
-    healthcheck:
-      enabled: true
     serviceUrl:
       defaulZone: https://localhost:8761/eureka
+    healthcheck:
+      enabled: true

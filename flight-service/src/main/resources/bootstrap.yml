@@ -2,8 +2,12 @@ spring:
   cloud:
     config:
       name: flight-service
-      uri: http://localhost:8079
+      uri: https://localhost:8079
       enabled: true
       discovery:
         enabled: true
         service-id: config-service
+    gateway:
+      httpclient:
+        ssl:
+          useInsecureTrustManager: true

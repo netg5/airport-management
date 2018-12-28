@@ -11,6 +11,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
+ * This class is used to provide redirect from HTTP to HTTPS
+ *
  * @author Sergei Visotsky
  */
 @Configuration
@@ -40,7 +42,7 @@ public class ConnectorConfig {
     }
 
     private Connector redirectConnector() {
-        Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
+        Connector connector = new Connector(TomcatServletWebServerFactory.DEFAULT_PROTOCOL);
         connector.setScheme("http");
         connector.setPort(httpPort);
         connector.setSecure(false);
