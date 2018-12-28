@@ -31,7 +31,7 @@ NOTE: Self-signed certificates are not verified by any certification agency and 
 ## Authentication
 To access any resource authentication should be performed. By performing this request with such a parameters access_token is retrieved.
 
-Client ID and client secret should be provided in headers as a basic auth.
+Client ID and client secret should be sent as a basic auth header.
 
 * URL: `http://localhost:8080/auth-api/oauth/token`
 * Method: `POST`
