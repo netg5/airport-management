@@ -51,7 +51,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @EntityScan(basePackages = "org.sergei.flightservice.model")
 public class ReservationControllerTest {
 
-    private static final String BASE_URL = "http://localhost/customers";
+    private static final String BASE_URL = "https://localhost/customers";
     private static final String RESERVATIONS_PATH = "/reservations";
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 

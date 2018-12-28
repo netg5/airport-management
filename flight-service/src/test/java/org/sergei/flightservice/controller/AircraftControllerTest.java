@@ -44,7 +44,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class AircraftControllerTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(AircraftControllerTest.class);
 
-    private static final String BASE_URL = "http://localhost/aircrafts";
+    private static final String BASE_URL = "https://localhost/aircrafts";
 
     @Autowired
     private MockMvc mvc;

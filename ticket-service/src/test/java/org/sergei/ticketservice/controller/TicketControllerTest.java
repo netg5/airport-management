@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Ignore
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = TicketServiceApplication.class)
-@TestPropertySource(locations = "classpath:application-test.yml")
+@TestPropertySource(locations = "classpath:application-test.properties")
 @AutoConfigureMockMvc
 @ContextConfiguration(classes = {ResourceServerConfiguration.class})
 @EnableJpaRepositories(basePackages = "org.sergei.ticketservice.repository")
@@ -36,7 +36,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 //@Sql(scripts = {"classpath:sql/schema.sql", "classpath:sql/data.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 public class TicketControllerTest {
 
-    private static final String BASE_URL = "/tickets";
+    private static final String BASE_URL = "https://localhost/tickets";
+    private static final String CUSTOMER_ID_PARAM = "?customerId=";
 
     @Autowired
     private MockMvc mvc;
@@ -44,7 +45,7 @@ public class TicketControllerTest {
     @Test
     public void getTickets() throws Exception {
         mvc.perform(
-                get(BASE_URL + "?customerId=1")
+                get(BASE_URL + CUSTOMER_ID_PARAM + 1)
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.ticketList[0].firstName").value("John"))
@@ -55,7 +56,7 @@ public class TicketControllerTest {
                 .andExpect(jsonPath("$._embedded.ticketList[0].distance").value(2500))
                 .andExpect(jsonPath("$._embedded.ticketList[0].price").value(2500))
                 .andExpect(jsonPath("$._embedded.ticketList[0].aircraftName").value("Boeing"))
-                .andExpect(jsonPath("$._links.self.href").value("http://localhost/tickets?customerId=1"))
-                .andExpect(jsonPath("$._links.customer.href").value("http://127.0.0.1:8080/flight-api/customers/1"));
+                .andExpect(jsonPath("$._links.self.href").value(BASE_URL + CUSTOMER_ID_PARAM + 1))
+                .andExpect(jsonPath("$._links.customer.href").value("https://127.0.0.1:8080/flight-api/customers/1"));
     }
 }
