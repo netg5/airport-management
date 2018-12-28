@@ -49,7 +49,7 @@ public class RouteControllerTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RouteControllerTest.class);
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-    private static final String BASE_URL = "https://localhost/routes";
+    private static final String BASE_URL = "https://localhost:80/routes";
 
     @Autowired
     private MockMvc mvc;
