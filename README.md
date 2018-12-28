@@ -92,8 +92,12 @@ As was mentioned earlier in Setup section `9.` paragraph each microservice conta
 
 NOTE: However you run `config-service` and `eureka-service` should be run first due to all the configs are stored in the separate repository
 
+## FIXME
+1. oAuth between microservices with SSL enabled
+2. Eureka availability with SSL enabled
+3. Swagger documentation availability with SSL enabled
+
 ## TODO
-1. Implement SSL certificate
 2. Adopt liquibase for unit tests
 3. Ignore services without swagger json in doc-service
 4. Implement Hystrix fallback methods

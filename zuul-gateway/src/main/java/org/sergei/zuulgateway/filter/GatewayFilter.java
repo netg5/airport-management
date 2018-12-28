@@ -18,6 +18,7 @@ public class GatewayFilter extends ZuulFilter {
     public Object run() {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
+
         if (request.getHeader(AUTHORIZATION_HEADER) != null) {
             ctx.addZuulRequestHeader(AUTHORIZATION_HEADER, request.getHeader(AUTHORIZATION_HEADER));
         }
