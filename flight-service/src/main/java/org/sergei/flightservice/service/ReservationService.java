@@ -284,14 +284,14 @@ public class ReservationService implements IReservationService<ReservationExtend
      */
     @Override
     public ReservationExtendedDTO deleteReservation(Long customerId, Long reservationId) {
-        customerRepository.findById(customerId).orElseThrow(() ->
+        Customer customer = customerRepository.findById(customerId).orElseThrow(() ->
                 new ResourceNotFoundException(CUSTOMER_NOT_FOUND)
         );
         Reservation reservation = reservationRepository.findById(reservationId)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(RESERVATION_NOT_FOUND)
                 );
-        reservationRepository.delete(reservation);
+        reservationRepository.deleteByCustomerIdAndReservationId(customer, reservation);
         return map(reservation, ReservationExtendedDTO.class);
     }
 
