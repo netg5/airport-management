@@ -20,10 +20,7 @@ public class GatewayFilter extends ZuulFilter {
         HttpServletRequest request = ctx.getRequest();
 
         if (request.getHeader(AUTHORIZATION_HEADER) != null) {
-            ctx.addZuulRequestHeader(
-                    AUTHORIZATION_HEADER,
-                    request.getHeader(AUTHORIZATION_HEADER)
-            );
+            ctx.addZuulRequestHeader(AUTHORIZATION_HEADER, request.getHeader(AUTHORIZATION_HEADER));
         }
         return request;
     }
