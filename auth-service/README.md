@@ -9,7 +9,7 @@ Command to generate .jks file:
 keytool -genkeypair -alias jwt -keyalg RSA -keypass SECRET_KEY -keystore jwt.jks -storepass STORE_PASS
 ```
 
-* `secretKey` is a password in this case.
+* `SECRET_KEY` is a password in this case.
 
 ## Setup
 For setup see main README
