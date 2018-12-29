@@ -36,6 +36,15 @@ Command to generate public certificate:
 keytool -exportcert -keystore keystore.p12 -storepass MY_PASSWORD -alias KEYSTORE_ENTRY -rfc -file public-certificate.pem
 ```
 
+In case of self-signed certificate it should be added to the JVM cacerts so that client were able to communicate with services.
+
+Command for operation described below:
+```text
+keytool -import -trustcacerts -keystore "%JAVA_HOME%/jre/lib/security/cacerts" -storepass changeit -alias KEYSTORE_ENTRY -import -file public-certificate.pem
+```
+
+* `changeit` default password fir cacerts
+
 You can use openssl also.
 
 NOTE: Self-signed certificates are not verified by any certification agency and due to this every browser shows warning that they are not secured and consequently are not applicable for production and can be used for dev purposes only.
