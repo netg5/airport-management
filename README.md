@@ -21,7 +21,7 @@
 * ticket-service - service where all customer tickets can be seen
 * flight-service-ui - user interface made using angular
 
-## TLS / SSL
+## TLS / SSL - TEMPORARILY DISABLED
 Each microservice is using self-signed TLS/SSL PKCS12 certificate.
 
 To generate keystore and public certificate the following commands should be performed.
