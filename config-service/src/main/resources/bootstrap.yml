@@ -1,7 +1,7 @@
 server:
   port: 8079
-  http:
-    port: 9097
+#  http:
+#    port: 9097
 #  ssl:
 #    enabled: true
 #    key-store-type: PKCS12

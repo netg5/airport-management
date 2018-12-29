@@ -15,8 +15,10 @@ import org.springframework.context.annotation.Configuration;
  *
  * @author Sergei Visotsky
  */
-@Configuration
+//@Configuration
 public class ConnectorConfig {
+/*
+    private static final String USER_CONSTRAINT = "CONFIDENTIAL";
 
     @Value("${server.port}")
     private int sslPort;
@@ -30,7 +32,7 @@ public class ConnectorConfig {
             @Override
             protected void postProcessContext(Context context) {
                 SecurityConstraint securityConstraint = new SecurityConstraint();
-                securityConstraint.setUserConstraint("CONFIDENTIAL");
+                securityConstraint.setUserConstraint(USER_CONSTRAINT);
                 SecurityCollection collection = new SecurityCollection();
                 collection.addPattern("/*");
                 securityConstraint.addCollection(collection);
@@ -48,5 +50,5 @@ public class ConnectorConfig {
         connector.setSecure(false);
         connector.setRedirectPort(sslPort);
         return connector;
-    }
+    }*/
 }

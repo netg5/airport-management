@@ -1,4 +1,4 @@
-package org.sergei.serviceresource;
+package org.sergei.configservice;
 
 import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
@@ -17,8 +17,7 @@ import org.springframework.context.annotation.Configuration;
  */
 //@Configuration
 public class ConnectorConfig {
-/*
-    private static final String USER_CONSTRAINT = "CONFIDENTIAL";
+    /*private static final String USER_CONSTRAINT = "CONFIDENTIAL";
 
     @Value("${server.port}")
     private int sslPort;
