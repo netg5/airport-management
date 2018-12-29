@@ -7,8 +7,8 @@ import org.springframework.security.config.annotation.method.configuration.Globa
 import org.springframework.security.oauth2.provider.expression.OAuth2MethodSecurityExpressionHandler;
 
 /**
- * This class needs so that it was able to delegate roles fot the API resources.
- * For example allow admin to delete any resource only
+ * Class for the role delegation of the REST API methods
+ * For example allow to the admin only to delete any resource
  *
  * @author Sergei Visotsky
  */
