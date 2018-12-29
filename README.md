@@ -115,8 +115,8 @@ NOTE: if you change any port it should be changed in all places where it is used
 As was mentioned earlier in Setup section `9.` paragraph each microservice containd Dockerfile that allows to run it into the Docker container.
 1. Change .jar file name as it is called in your case.
 2. Change port for each microservice
-3. Build Docker image performing command `docker build -t SERVICE-NAME .` (e.g. `docker build -t flight-service .`)
-4. Run Docker container performing command `docker run -it --rm -p MACHINE PORT:CONTAINER PORT SERVICE-NAME` (e.g. `docker run -it --rm -p 8085:8085 flight-service`)
+3. Build Docker image performing command `docker build -t SERVICE_NAME .` (e.g. `docker build -t flight-service .`)
+4. Run Docker container performing command `docker run -it --rm -p MACHINE_PORT:CONTAINER_PORT SERVICE_NAME` (e.g. `docker run -it --rm -p 8085:8085 flight-service`)
 
 NOTE: However you run `config-service` and `eureka-service` should be run first due to all the configs are stored in the separate repository
 
