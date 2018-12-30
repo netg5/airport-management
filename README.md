@@ -26,14 +26,34 @@ Each microservice is using self-signed TLS/SSL PKCS12 certificate.
 
 To generate keystore and public certificate the following commands should be performed.
 
-Command to generate keystore:
+Command to generate root key:
 ```text
-keytool -genkey -alias KEYSTORE_ENTRY -storetype PKCS12 -keyalg RSA -keysize 2048 -keystore keystore.p12 -validity 3650
+openssl genrsa -out ca.key 4096
 ```
 
-Command to generate public certificate:
+Command to generate root key with password:
 ```text
-keytool -exportcert -keystore keystore.p12 -storepass MY_PASSWORD -alias KEYSTORE_ENTRY -rfc -file public-certificate.pem
+openssl genrsa –des3 -out ca.key 4096
+```
+
+In case if program does not accept certificate generated be the previous command this command should be performed:
+```text
+openssl rsa -in ca.key -out ca.key
+```
+
+Command to generate root certificate:
+```text
+openssl req -new -x509 -days 3650 -key ca.key -out ca.crt
+```
+
+Command to generate PKCS12 certificate:
+```text
+openssl pkcs12 -export -in ca.crt -inkey ca.key -out keystore.p12 -name localhost -CAfile ca.crt -caname localhost -chain
+```
+
+Command to convert PKCS12 into the _.pem_ certificate:
+```text
+openssl pkcs12 -in keystore.p12 -out keystore.pem -nodes
 ```
 
 In case of self-signed certificate it should be added to the JVM cacerts so that client were able to communicate with services.
@@ -44,8 +64,6 @@ keytool -import -trustcacerts -keystore "%JAVA_HOME%/jre/lib/security/cacerts" -
 ```
 
 * `changeit` default password for cacerts
-
-You can use openssl also.
 
 NOTE: Self-signed certificates are not verified by any certification agency and due to this every browser shows warning that they are not secured and consequently are not applicable for production and can be used for dev purposes only.
 
@@ -97,6 +115,11 @@ _Example for MySQL:_
 1. Checkout config service [https://github.com/sergeivisotsky/flight-reservation-config](https://github.com/sergeivisotsky/flight-reservation-config) to clone all the necessary config files
 2. Copy all the property files in each microservice or create another repository and change the path to it in `bootstrap.yml` config file in `config-service` by changing property `spring.cloud.config.server.git.uri`
 3. Edit `server.port` for each service if needed which configs are located in the repository above and other configs that are not locates in config repository in `1.` paragraph
+4. Edit `server.http.port` so that it was able to organize redirect from _http_ to _https_
+5. Add pem certificate to the JVM cacerts due to it is self-signed executing the following command:
+```text
+keytool -import -trustcacerts -keystore "%JAVA_HOME%/jre/lib/security/cacerts" -storepass changeit -alias KEYSTORE_ENTRY -import -file keystore.pem
+```
 4. Open `SERVICE_NAME.yml` config file and setup your database url and credentials for services `flight-service` , `ticket service` and `auth-service`
 5. Open SQL file `oauth_schema.sql` script located in auth-service under `resources/sql` and change database name to yours
 6. Open SQL file `ticket_view.sql` in service `ticket-service` under `resources/sql` and execute this script for your database (NOTE: MySQL dialect was used in this case) 
@@ -118,14 +141,10 @@ As was mentioned earlier in Setup section `9.` paragraph each microservice conta
 3. Build Docker image performing command `docker build -t SERVICE_NAME .` (e.g. `docker build -t flight-service .`)
 4. Run Docker container performing command `docker run -it --rm -p MACHINE_PORT:CONTAINER_PORT SERVICE_NAME` (e.g. `docker run -it --rm -p 8085:8085 flight-service`)
 
-NOTE: However you run `config-service` and `eureka-service` should be run first due to all the configs are stored in the separate repository
-
-## FIXME
-1. oAuth between microservices with SSL enabled
-2. Eureka availability with SSL enabled
-3. Swagger documentation availability with SSL enabled
+NOTE: `config-service` and `eureka-service` should be run first due to all the configs are stored in the separate repository
 
 ## TODO
+1. SSL for the Eureka and Config servers
 2. Adopt liquibase for unit tests
 3. Ignore services without swagger json in doc-service
 4. Implement Hystrix fallback methods
