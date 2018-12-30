@@ -27,7 +27,7 @@ public class GatewaySecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * Allows to pass all request to the path /
+     * Allows to pass all request to the path
      *
      * @param web security
      */

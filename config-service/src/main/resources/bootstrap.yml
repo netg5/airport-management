@@ -5,9 +5,9 @@ server:
 #  ssl:
 #    enabled: true
 #    key-store-type: PKCS12
-#    key-store: classpath:tls/keystore.p12
+#    key-store: config-service/src/main/resources/tls/keystore.p12
 #    key-store-password: keyStoreSecret
-#    key-alias: tomcat
+#    key-alias: localhost
 spring:
   application:
     name: config-service
@@ -32,4 +32,4 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     serviceUrl:
-      defaulZone: https://localhost:8761/eureka
+      defaulZone: http://localhost:8761/eureka
