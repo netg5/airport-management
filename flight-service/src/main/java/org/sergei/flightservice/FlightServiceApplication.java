@@ -18,7 +18,7 @@ public class FlightServiceApplication {
     }
 
     @RestController
-    class WelcomeEntry {
+    class WelcomeController {
         @GetMapping("/")
         public String welcome() {
             return "Flights";

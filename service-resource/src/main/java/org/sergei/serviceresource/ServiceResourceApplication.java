@@ -13,7 +13,7 @@ public class ServiceResourceApplication {
     }
 
     @RestController
-    class WelcomeEntry {
+    class WelcomeController {
         @GetMapping("/")
         public String welcome() {
             return "Service resource";

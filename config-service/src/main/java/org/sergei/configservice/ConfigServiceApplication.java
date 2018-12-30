@@ -17,7 +17,7 @@ public class ConfigServiceApplication {
     }
 
     @RestController
-    class GreetingController {
+    class WelcomeController {
 
         @GetMapping("/")
         public String welcome() {

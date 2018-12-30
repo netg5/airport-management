@@ -15,7 +15,7 @@ public class AuthServiceApplication {
     }
 
     @RestController
-    class WelcomeEntry {
+    class WelcomeController {
         @GetMapping("/")
         public String welcome() {
             return "Auth";

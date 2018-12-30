@@ -18,7 +18,7 @@ public class TicketServiceApplication {
     }
 
     @RestController
-    class WelcomeEntry {
+    class WelcomeController {
         @GetMapping("/")
         public String welcome() {
             return "Tickets";
