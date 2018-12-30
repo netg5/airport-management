@@ -15,9 +15,8 @@ import org.springframework.context.annotation.Configuration;
  *
  * @author Sergei Visotsky
  */
-//@Configuration
+@Configuration
 public class ConnectorConfig {
-/*
     private static final String USER_CONSTRAINT = "CONFIDENTIAL";
 
     @Value("${server.port}")
@@ -50,5 +49,5 @@ public class ConnectorConfig {
         connector.setSecure(false);
         connector.setRedirectPort(sslPort);
         return connector;
-    }*/
+    }
 }
