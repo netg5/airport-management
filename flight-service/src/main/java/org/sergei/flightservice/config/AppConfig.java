@@ -23,7 +23,7 @@ public class AppConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("Origin");
+        config.addAllowedOrigin("*");
         config.setMaxAge(3600L);
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
