@@ -56,7 +56,7 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("Authentication API methods")
-                .description("Methods that are needed for user authentication")
+                .description("User authentication and management resources")
                 .version("1.0")
                 .license("Apache 2.0")
                 .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")

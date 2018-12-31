@@ -15,6 +15,8 @@ import java.util.List;
 @Service
 public class ApiUserService {
 
+    private static final String USER_NOT_FOUND = "User not found";
+
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
@@ -31,7 +33,7 @@ public class ApiUserService {
     public User findById(Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(
-                        () -> new ResourceNotFoundException("User with this ID not found")
+                        () -> new ResourceNotFoundException(USER_NOT_FOUND)
                 );
     }
 
@@ -44,7 +46,7 @@ public class ApiUserService {
     public User findByUsername(String username) {
         return userRepository.findByUsername(username)
                 .orElseThrow(
-                        () -> new ResourceNotFoundException("User not found")
+                        () -> new ResourceNotFoundException(USER_NOT_FOUND)
                 );
     }
 

@@ -1,5 +1,7 @@
 package org.sergei.authservice.controller;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,9 +18,11 @@ public class EncryptionEndpoint {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
+    @ApiOperation("Service method to encrypt client_secret or password")
     @GetMapping(value = "/encryption")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String getEncryptedPassword(@RequestParam("password") String password) {
+    public String getEncryptedPassword(@ApiParam(value = "Password to be encrypted", required = true)
+                                       @RequestParam("password") String password) {
         return passwordEncoder.encode(password);
     }
 }
