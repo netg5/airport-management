@@ -120,13 +120,13 @@ _Example for MySQL:_
 ```text
 keytool -import -trustcacerts -keystore "%JAVA_HOME%/jre/lib/security/cacerts" -storepass changeit -alias KEYSTORE_ENTRY -import -file keystore.pem
 ```
-4. Open `SERVICE_NAME.yml` config file and setup your database url and credentials for services `flight-service` , `ticket service` and `auth-service`
-5. Open SQL file `oauth_schema.sql` script located in auth-service under `resources/sql` and change database name to yours
-6. Open SQL file `ticket_view.sql` in service `ticket-service` under `resources/sql` and execute this script for your database (NOTE: MySQL dialect was used in this case) 
-7. Create view for customer report by opening SQL file `customer_report_view.sql` and execute SQL code in your database (NOTE: MySQL dialect was used in this case)
-8. Keep in mind that application port and port in `security.oauth2.resource.accessTokenUri` property might be changed in your case
-9. Open `logback-spring.xml` for each microservice and setup directory where all your logging files are going to saved
-10. Setup .jar names and ports in `Dockerfile` for each module
+6. Open `SERVICE_NAME.yml` config file and setup your database url and credentials for services `flight-service` , `ticket service` and `auth-service`
+7. Open SQL file `oauth_schema.sql` script located in auth-service under `resources/sql` and change database name to yours
+8. Open SQL file `ticket_view.sql` in service `ticket-service` under `resources/sql` and execute this script for your database (NOTE: MySQL dialect was used in this case) 
+9. Create view for customer report by opening SQL file `customer_report_view.sql` and execute SQL code in your database (NOTE: MySQL dialect was used in this case)
+10. Keep in mind that application port and port in `security.oauth2.resource.accessTokenUri` property might be changed in your case
+11. Open `logback-spring.xml` for each microservice and setup directory where all your logging files are going to saved
+12. Setup .jar names and ports in `Dockerfile` for each module
 
 NOTE: if you change any port it should be changed in all places where it is used depending on the micrservice.
 
