@@ -1,5 +1,4 @@
 # flight-reservation
-[![Build Status](https://travis-ci.com/sergeivisotsky/flight-reservation.svg?branch=master)](https://travis-ci.com/sergeivisotsky/flight-reservation)
 
 ## Technologies
 * Java 8
