@@ -2,7 +2,7 @@ spring:
   cloud:
     config:
       name: ticket-service
-      uri: https://localhost:8079
+      uri: http://localhost:8079
       enabled: true
       discovery:
         enabled: true

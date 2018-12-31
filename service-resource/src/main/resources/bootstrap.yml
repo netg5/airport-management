@@ -17,9 +17,11 @@ eureka:
     secure-port-enabled: true
     secure-port: ${server.port}
     prefer-ip-address: true
+    status-page-url-path: https://localhost:${server.port}/actuator/info
+    health-check-url-path: https://localhost:${server.port}/actuator/health
     home-page-url: https://localhost:${server.port}
   client:
-    # register-with-eureka: true
-    # fetch-registry: true
+    register-with-eureka: true
+    fetch-registry: true
     serviceUrl:
-      defaulZone: https://localhost:8761/eureka
+      defaulZone: http://localhost:8761/eureka

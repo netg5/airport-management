@@ -2,7 +2,7 @@ spring:
   cloud:
     config:
       name: zuul-gateway
-      uri: https://localhost:8079
+      uri: http://localhost:8079
       enabled: true
       discovery:
         enabled: true
