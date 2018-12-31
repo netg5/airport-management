@@ -16,8 +16,8 @@ public class EncryptionEndpoint {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
+    @GetMapping(value = "/encryption")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    @GetMapping(value = "/encryption", produces = "text/plain")
     public String getEncryptedPassword(@RequestParam("password") String password) {
         return passwordEncoder.encode(password);
     }
