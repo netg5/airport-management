@@ -25,7 +25,7 @@ public class CORSFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
 
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
         response.setHeader("Access-Control-Allow-Credentials", "true");
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE");
         response.setHeader("Access-Control-Max-Age", "3600");
@@ -40,11 +40,11 @@ public class CORSFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) {
-        LOGGER.info("This method does not need to be implemented");
+        LOGGER.info("Implementation is not required");
     }
 
     @Override
     public void destroy() {
-        LOGGER.info("This method does not need to be implemented");
+        LOGGER.info("Implementation is not required");
     }
 }

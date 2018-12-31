@@ -1,4 +1,5 @@
 # flight-reservation
+Flight reservation application based on the microservice architecture which allows to add customer, aircraft and route, reserve flight and see all tickets for a particular customer.
 
 ## Technologies
 * Java 8
@@ -20,7 +21,7 @@
 * ticket-service - service where all customer tickets can be seen
 * flight-service-ui - user interface made using angular
 
-## TLS / SSL - TEMPORARILY DISABLED
+## TLS / SSL
 Each microservice is using self-signed TLS/SSL PKCS12 certificate.
 
 To generate keystore and public certificate the following commands should be performed.
@@ -113,8 +114,8 @@ _Example for MySQL:_
 
 1. Checkout config service [https://github.com/sergeivisotsky/flight-reservation-config](https://github.com/sergeivisotsky/flight-reservation-config) to clone all the necessary config files
 2. Copy all the property files in each microservice or create another repository and change the path to it in `bootstrap.yml` config file in `config-service` by changing property `spring.cloud.config.server.git.uri`
-3. Edit `server.port` for each service if needed which configs are located in the repository above and other configs that are not locates in config repository in `1.` paragraph
-4. Edit `server.http.port` so that it was able to organize redirect from _http_ to _https_
+3. Change `server.port` for each service if needed which configs are located in the repository above and other configs that are not locates in config repository in `1.` paragraph
+4. Change `server.http.port` so that it was able to organize redirect from _HTTP_ to _HTTPS_
 5. Add pem certificate to the JVM cacerts due to it is self-signed executing the following command:
 ```text
 keytool -import -trustcacerts -keystore "%JAVA_HOME%/jre/lib/security/cacerts" -storepass changeit -alias KEYSTORE_ENTRY -import -file keystore.pem
