@@ -1,4 +1,4 @@
-package org.sergei.serviceresource;
+package org.sergei.serviceresource.config;
 
 import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;

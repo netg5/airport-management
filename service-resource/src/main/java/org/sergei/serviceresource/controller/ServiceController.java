@@ -1,4 +1,4 @@
-package org.sergei.serviceresource;
+package org.sergei.serviceresource.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,13 +8,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Random;
 
 /**
- * @author Sergei Visotsky, 2018
- * <pre>
- *    REST controller with service endpoints
- * </pre>
+ * REST controller with service endpoints
+ *
+ * @author Sergei Visotsky
  */
 @RestController
-public class ServiceEndpoints {
+public class ServiceController {
 
     @GetMapping(value = "/greeting", produces = "application/json")
     public ResponseEntity<DemoDTO> demoGreeting() {
