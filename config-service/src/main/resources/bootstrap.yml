@@ -30,7 +30,6 @@ eureka:
 #    non-secure-port-enabled: false
 #    secure-port-enabled: true
 #    secure-port: ${server.port}
-    prefer-ip-address: true
     status-page-url-path: http://localhost:${server.port}/actuator/info
     health-check-url-path: http://localhost:${server.port}/actuator/health
     home-page-url: http://localhost:${server.port}

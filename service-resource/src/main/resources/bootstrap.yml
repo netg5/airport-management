@@ -16,7 +16,6 @@ eureka:
     non-secure-port-enabled: false
     secure-port-enabled: true
     secure-port: ${server.port}
-    prefer-ip-address: true
     status-page-url-path: https://localhost:${server.port}/actuator/info
     health-check-url-path: https://localhost:${server.port}/actuator/health
     home-page-url: https://localhost:${server.port}
