@@ -31,8 +31,12 @@ import static org.sergei.ticketservice.controller.util.LinkUtil.setLinksForTicke
 @RequestMapping(value = "/tickets", produces = "application/json")
 public class TicketController {
 
+    private final TicketRepository ticketRepository;
+
     @Autowired
-    private TicketRepository ticketRepository;
+    public TicketController(TicketRepository ticketRepository) {
+        this.ticketRepository = ticketRepository;
+    }
 
     @ApiOperation("Get ticket for customer by ID")
     @GetMapping

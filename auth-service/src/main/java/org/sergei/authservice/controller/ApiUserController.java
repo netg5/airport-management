@@ -25,8 +25,12 @@ import java.util.List;
 @RequestMapping(value = "/users", produces = "application/json")
 public class ApiUserController {
 
+    private final ApiUserService apiUserService;
+
     @Autowired
-    private ApiUserService apiUserService;
+    public ApiUserController(ApiUserService apiUserService) {
+        this.apiUserService = apiUserService;
+    }
 
     @ApiOperation("Method to authenticate user")
     @ApiResponses(

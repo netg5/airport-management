@@ -15,8 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class EncryptionEndpoint {
 
+    private final BCryptPasswordEncoder passwordEncoder;
+
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    public EncryptionEndpoint(BCryptPasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @ApiOperation("Service method to encrypt client_secret or password")
     @GetMapping(value = "/encryption")

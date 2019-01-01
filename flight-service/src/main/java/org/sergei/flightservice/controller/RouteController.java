@@ -30,8 +30,12 @@ import static org.sergei.flightservice.controller.util.LinkUtil.setLinksForRoute
 @RequestMapping(value = "/routes", produces = "application/json")
 public class RouteController {
 
+    private final RouteService routeService;
+
     @Autowired
-    private RouteService routeService;
+    public RouteController(RouteService routeService) {
+        this.routeService = routeService;
+    }
 
     @ApiOperation("Get all existing routes")
     @GetMapping

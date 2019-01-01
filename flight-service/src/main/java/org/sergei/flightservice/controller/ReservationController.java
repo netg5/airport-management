@@ -31,8 +31,12 @@ import static org.sergei.flightservice.controller.util.LinkUtil.setLinksForAllRe
 @RequestMapping(value = "/customers", produces = "application/json")
 public class ReservationController {
 
+    private final ReservationService reservationService;
+
     @Autowired
-    private ReservationService reservationService;
+    public ReservationController(ReservationService reservationService) {
+        this.reservationService = reservationService;
+    }
 
     @ApiOperation("Get all reservations for customer")
     @ApiResponses(

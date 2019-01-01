@@ -22,8 +22,12 @@ public class OAuth2TokenEnhancer implements TokenEnhancer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthorizationServerConfig.class);
 
+    private final ApiUserService apiUserService;
+
     @Autowired
-    private ApiUserService apiUserService;
+    public OAuth2TokenEnhancer(ApiUserService apiUserService) {
+        this.apiUserService = apiUserService;
+    }
 
     /**
      * Method to find user and enhance access token
