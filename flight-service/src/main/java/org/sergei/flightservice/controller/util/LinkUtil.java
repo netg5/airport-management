@@ -7,8 +7,10 @@ import org.sergei.flightservice.controller.RouteController;
 import org.sergei.flightservice.dto.*;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resources;
-import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 /**
  * @author Sergei Visotsky
@@ -29,11 +31,11 @@ public final class LinkUtil {
      */
     public static Resources setLinksForAllCustomers(Iterable<CustomerDTO> customerList) {
         customerList.forEach(customer -> {
-            Link link = ControllerLinkBuilder.linkTo(
-                    ControllerLinkBuilder.methodOn(CustomerController.class)
+            Link link = linkTo(
+                    methodOn(CustomerController.class)
                             .getCustomerById(customer.getCustomerId())).withSelfRel();
-            Link reservationsLink = ControllerLinkBuilder.linkTo(
-                    ControllerLinkBuilder.methodOn(ReservationController.class)
+            Link reservationsLink = linkTo(
+                    methodOn(ReservationController.class)
                             .getAllForCustomer(customer.getCustomerId())).withRel("reservations");
             Link ticketsLink = new Link(
                     "http://127.0.0.1:8080/ticket-api/tickets?customerId=" + customer.getCustomerId()).withRel("tickets");
@@ -51,14 +53,15 @@ public final class LinkUtil {
      * @return customer DTO with links;
      */
     public static CustomerDTO setLinksForCustomer(CustomerDTO customerDTO) {
-        Link selfLink = ControllerLinkBuilder.linkTo(
-                ControllerLinkBuilder.methodOn(CustomerController.class).getCustomerById(customerDTO.getCustomerId())).withSelfRel();
-        Link reservationsLink = ControllerLinkBuilder.linkTo(
-                ControllerLinkBuilder.methodOn(ReservationController.class)
+        Link selfLink = linkTo(
+                methodOn(CustomerController.class)
+                        .getCustomerById(customerDTO.getCustomerId())).withSelfRel();
+        Link reservationsLink = linkTo(
+                methodOn(ReservationController.class)
                         .getAllForCustomer(customerDTO.getCustomerId())).withRel("reservations");
         Link ticketsLink = new Link(
                 "http://127.0.0.1:8080/ticket-api/tickets?customerId=" + customerDTO.getCustomerId()).withRel("tickets");
-        Link link = ControllerLinkBuilder.linkTo(CustomerController.class).withRel("allCustomers");
+        Link link = linkTo(CustomerController.class).withRel("allCustomers");
         customerDTO.add(selfLink);
         customerDTO.add(reservationsLink);
         customerDTO.add(ticketsLink);
@@ -74,8 +77,8 @@ public final class LinkUtil {
      */
     public static Resources setLinksForAllReservations(Iterable<ReservationExtendedDTO> reservations) {
         reservations.forEach(reservation -> {
-            Link link = ControllerLinkBuilder.linkTo(
-                    ControllerLinkBuilder.methodOn(ReservationController.class)
+            Link link = linkTo(
+                    methodOn(ReservationController.class)
                             .getOneForCustomer(reservation.getCustomerId(),
                                     reservation.getReservationId())).withRel("reservation");
             reservation.add(link);
@@ -92,8 +95,8 @@ public final class LinkUtil {
      */
     public static Resources setLinksForAllAircrafts(Iterable<AircraftDTO> aircrafts) {
         aircrafts.forEach(aircraft -> {
-            Link link = ControllerLinkBuilder.linkTo(
-                    ControllerLinkBuilder.methodOn(AircraftController.class)
+            Link link = linkTo(
+                    methodOn(AircraftController.class)
                             .getAircraftById(aircraft.getAircraftId())).withSelfRel();
             aircraft.add(link);
         });
@@ -107,9 +110,10 @@ public final class LinkUtil {
      * @return DTO with links
      */
     public static AircraftDTO setLinksForAircraft(AircraftDTO aircraftDTO) {
-        Link selfLink = ControllerLinkBuilder.linkTo(
-                ControllerLinkBuilder.methodOn(AircraftController.class).getAircraftById(aircraftDTO.getAircraftId())).withSelfRel();
-        Link link = ControllerLinkBuilder.linkTo(AircraftController.class).withRel("allAircrafts");
+        Link selfLink = linkTo(
+                methodOn(AircraftController.class)
+                        .getAircraftById(aircraftDTO.getAircraftId())).withSelfRel();
+        Link link = linkTo(AircraftController.class).withRel("allAircrafts");
         aircraftDTO.add(selfLink);
         aircraftDTO.add(link);
         return aircraftDTO;
@@ -117,8 +121,8 @@ public final class LinkUtil {
 
     public static Resources setLinksForAllRoutes(Iterable<RouteExtendedDTO> routes) {
         routes.forEach(route -> {
-            Link link = ControllerLinkBuilder.linkTo(
-                    ControllerLinkBuilder.methodOn(RouteController.class)
+            Link link = linkTo(
+                    methodOn(RouteController.class)
                             .getRouteById(route.getRouteId())).withSelfRel();
             route.add(link);
         });
@@ -132,9 +136,10 @@ public final class LinkUtil {
      * @return DTO with links added
      */
     public static RouteDTO setLinksForRoute(RouteDTO routeDTO) {
-        Link link = ControllerLinkBuilder.linkTo(RouteController.class).withRel("allRoutes");
-        Link selfLink = ControllerLinkBuilder.linkTo(
-                ControllerLinkBuilder.methodOn(RouteController.class).getRouteById(routeDTO.getRouteId())).withSelfRel();
+        Link link = linkTo(RouteController.class).withRel("allRoutes");
+        Link selfLink = linkTo(
+                methodOn(RouteController.class)
+                        .getRouteById(routeDTO.getRouteId())).withSelfRel();
         routeDTO.add(selfLink);
         routeDTO.add(link);
         return routeDTO;

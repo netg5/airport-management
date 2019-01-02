@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resources;
-import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +17,8 @@ import java.util.List;
 import java.util.Map;
 
 import static org.sergei.flightservice.controller.util.LinkUtil.setLinksForAllReservations;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 /**
  * @author Sergei Visotsky
@@ -83,8 +84,9 @@ public class ReservationController {
                                                                     @PathVariable("reservationId") Long reservationId) {
         ReservationExtendedDTO flightReservationExtendedDTO =
                 reservationService.findOneForCustomer(customerId, reservationId);
-        Link link = ControllerLinkBuilder.linkTo(
-                ControllerLinkBuilder.methodOn(CustomerController.class).getCustomerById(customerId)).withRel("customer");
+        Link link = linkTo(
+                methodOn(CustomerController.class)
+                        .getCustomerById(customerId)).withRel("customer");
         flightReservationExtendedDTO.add(link);
         String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
         flightReservationExtendedDTO.add(new Link(uriString, "self"));
