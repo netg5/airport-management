@@ -7,12 +7,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.hateoas.Resources;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @author Sergei Visotsky
@@ -102,19 +107,19 @@ public class ExperimentService {
      *
      * @return customer entity
      */
-    public ResponseEntity<CustomerIds> getAllCustomerIds() {
+    public List<Long> getAllCustomerIds() {
         RestTemplate restTemplate = new RestTemplate();
         AuthTokenInfo tokenInfo = sendTokenRequest();
         HttpEntity<String> request = new HttpEntity<>(getHeaders());
-        return restTemplate.exchange(REST_RESOURCE_URI + "/customers" + ACCESS_TOKEN + tokenInfo,
+        return Objects.requireNonNull(restTemplate.exchange(REST_RESOURCE_URI + "/customers" + ACCESS_TOKEN + tokenInfo,
                 HttpMethod.GET,
-                request, CustomerIds.class
-                /*new ParameterizedTypeReference<Resources<CustomerIds>>() {
-                }*/);
-                /*.getBody())
+                request,
+                new ParameterizedTypeReference<Resources<CustomerIds>>() {
+                })
+                .getBody())
                 .getContent()
                 .stream()
                 .map(CustomerIds::getCustomerId)
-                .collect(Collectors.toList());*/
+                .collect(Collectors.toList());
     }
 }

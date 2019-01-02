@@ -1,11 +1,11 @@
 package org.sergei.serviceresource.controller;
 
-import org.sergei.serviceresource.model.CustomerIds;
 import org.sergei.serviceresource.service.ExperimentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * @author Sergei Visotsky
@@ -21,7 +21,7 @@ public class ExperimentController {
     }
 
     @GetMapping(value = "/experiment", produces = "application/json")
-    public ResponseEntity<CustomerIds> getAllCustomerIds() {
+    public List<Long> getAllCustomerIds() {
         return experimentService.getAllCustomerIds();
     }
 }
