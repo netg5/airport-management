@@ -31,6 +31,9 @@ public class SwaggerConfig {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SwaggerConfig.class);
 
+    @Value("${server.servlet.context-path}")
+    private String contextPath;
+
     @Value("${security.oauth2.accessTokenUri}")
     private String authServer;
 
@@ -43,6 +46,7 @@ public class SwaggerConfig {
     public Docket api() {
         LOGGER.debug("Server port id: {}", port);
         return new Docket(DocumentationType.SWAGGER_2)
+                .pathMapping(contextPath)
                 .host("localhost:" + port)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("org.sergei.ticketservice.controller"))

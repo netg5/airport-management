@@ -19,7 +19,8 @@ import java.util.List;
  */
 @Api(
         value = "/auth-api/users",
-        produces = "application/json"
+        produces = "application/json",
+        consumes = "application/json"
 )
 @RestController
 @RequestMapping(value = "/users", produces = "application/json")
