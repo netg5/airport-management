@@ -16,7 +16,7 @@
     </parent>
 
     <properties>
-        <com.fasterxml.jackson.version>2.9.6</com.fasterxml.jackson.version>
+        <jackson.version>2.9.6</jackson.version>
         <io.swagger.version>2.9.1</io.swagger.version>
         <liquibase.version>3.6.2</liquibase.version>
     </properties>
@@ -60,12 +60,12 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
-            <version>${com.fasterxml.jackson.version}</version>
+            <version>${jackson.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>${com.fasterxml.jackson.version}</version>
+            <version>${jackson.version}</version>
         </dependency>
 
         <!-- To DTO and from DTO serialization -->
