@@ -40,12 +40,12 @@ public class ExperimentService {
     @Value("${oauth.password}")
     private String passwordValue;
 
-    //    private final RestTemplate restTemplate;
+        private final RestTemplate restTemplate;
     private final HttpHeaders httpHeaders;
 
     @Autowired
-    public ExperimentService(/*RestTemplate restTemplate, */HttpHeaders httpHeaders) {
-//        this.restTemplate = restTemplate;
+    public ExperimentService(RestTemplate restTemplate, HttpHeaders httpHeaders) {
+        this.restTemplate = restTemplate;
         this.httpHeaders = httpHeaders;
     }
 
@@ -70,7 +70,7 @@ public class ExperimentService {
 
         HttpHeaders headers = getHeaders();
         LOGGER.debug("Headers: {}", headers.toString());
-        headers.add("Authorization", "Basic " + base64ClientCredentials);
+        headers.add("Authorization", "Bearer " + base64ClientCredentials);
         return headers;
     }
 
@@ -82,11 +82,10 @@ public class ExperimentService {
     @SuppressWarnings("unchecked")
     private AuthTokenInfo sendTokenRequest() {
 
-        RestTemplate restTemplate = new RestTemplate();
         HttpEntity<String> request = new HttpEntity<>(getHeadersWithClientCredentials());
         LOGGER.debug("Request body: {}", request.getBody());
         ResponseEntity<Object> response =
-                restTemplate.exchange(AUTH_SERVER + PASSWORD_GRANT + USERNAME + usernameValue + PASSWORD + passwordValue,
+                this.restTemplate.exchange(AUTH_SERVER + PASSWORD_GRANT + USERNAME + usernameValue + PASSWORD + passwordValue,
                         HttpMethod.POST, request, Object.class);
         LinkedHashMap<String, Object> map = (LinkedHashMap<String, Object>) response.getBody();
         AuthTokenInfo tokenInfo = null;
@@ -111,10 +110,9 @@ public class ExperimentService {
      * @return list of all IDs
      */
     public List<Long> getAllCustomerIds() {
-        RestTemplate restTemplate = new RestTemplate();
         AuthTokenInfo tokenInfo = sendTokenRequest();
         HttpEntity<String> request = new HttpEntity<>(getHeaders());
-        return Objects.requireNonNull(restTemplate.exchange(REST_RESOURCE_URI + "/customers" + ACCESS_TOKEN + tokenInfo,
+        return Objects.requireNonNull(this.restTemplate.exchange(REST_RESOURCE_URI + "/customers" + ACCESS_TOKEN + tokenInfo,
                 HttpMethod.GET,
                 request,
                 new ParameterizedTypeReference<Resources<CustomerIds>>() {

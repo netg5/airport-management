@@ -13,7 +13,6 @@ import org.springframework.web.client.RestTemplate;
 public class AppConfig {
 
     @Bean
-    @LoadBalanced
     public RestTemplate restTemplate() {
         return new RestTemplate();
     }
