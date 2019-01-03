@@ -49,7 +49,7 @@ public final class LinkUtil {
         return setServletResourceLinks(customerList);
     }
 
-    public static Resources setLinksForIdsOfCustomers(List<CustomerIdsDTO> customerIdsDTOList) {
+    public static Resources setLinksForIdsOfCustomers(Iterable<CustomerIdsDTO> customerIdsDTOList) {
         Resources resources = setServletResourceLinks(customerIdsDTOList);
         Link allCustomers = linkTo(methodOn(CustomerController.class).getAllCustomers()).withRel("allCustomers");
         resources.add(allCustomers);

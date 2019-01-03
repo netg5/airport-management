@@ -59,6 +59,10 @@ public class CustomerService implements IService<CustomerDTO> {
         return customerRepository.findIdsOfAllCustomers();
     }
 
+    public Page<CustomerIdsDTO> findIdsOfAllCustomersPaginated(int page, int size) {
+        return customerRepository.findIdsOfAllCustomersPaginated(PageRequest.of(page, size));
+    }
+
     /**
      * Find all customers with pagination
      *

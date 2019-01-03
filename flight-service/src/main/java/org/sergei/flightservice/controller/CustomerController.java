@@ -46,8 +46,18 @@ public class CustomerController {
     @ApiOperation("Get IDs of all existing customers")
     @GetMapping("/ids")
     public ResponseEntity<Resources> getIdsOfAllCustomers() {
-        List<CustomerIdsDTO> customerIdDTOS = customerService.findIdsOfAllCustomers();
-        return new ResponseEntity<>(setLinksForIdsOfCustomers(customerIdDTOS), HttpStatus.OK);
+        List<CustomerIdsDTO> customerIdDTOList = customerService.findIdsOfAllCustomers();
+        return new ResponseEntity<>(setLinksForIdsOfCustomers(customerIdDTOList), HttpStatus.OK);
+    }
+
+    @ApiOperation("Get IDs of all existing customers paginated")
+    @GetMapping(value = "/ids", params = {"page", "size"})
+    public ResponseEntity<Resources> getIdsOfAllCustomersPaginated(@ApiParam(value = "Number of the page")
+                                                                   @RequestParam("page") int page,
+                                                                   @ApiParam(value = "Maximum number of content blocks on the page")
+                                                                   @RequestParam("size") int size) {
+        Page<CustomerIdsDTO> customerIdPage = customerService.findIdsOfAllCustomersPaginated(page, size);
+        return new ResponseEntity<>(setLinksForIdsOfCustomers(customerIdPage), HttpStatus.OK);
     }
 
     @ApiOperation("Get all customers paginated")
