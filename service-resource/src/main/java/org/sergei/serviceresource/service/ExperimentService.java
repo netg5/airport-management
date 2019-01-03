@@ -69,6 +69,7 @@ public class ExperimentService {
         String base64ClientCredentials = new String(Base64.encodeBase64(plainClientCredentials.getBytes()));
 
         HttpHeaders headers = getHeaders();
+        LOGGER.debug("Headers: {}", headers.toString());
         headers.add("Authorization", "Basic " + base64ClientCredentials);
         return headers;
     }
@@ -83,6 +84,7 @@ public class ExperimentService {
 
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity<String> request = new HttpEntity<>(getHeadersWithClientCredentials());
+        LOGGER.debug("Request body: {}", request.getBody());
         ResponseEntity<Object> response =
                 restTemplate.exchange(AUTH_SERVER + PASSWORD_GRANT + USERNAME + usernameValue + PASSWORD + passwordValue,
                         HttpMethod.POST, request, Object.class);
@@ -96,6 +98,7 @@ public class ExperimentService {
             tokenInfo.setRefreshToken((String) map.get("refresh_token"));
             tokenInfo.setExpiresIn((int) map.get("expires_in"));
             tokenInfo.setScope((String) map.get("scope"));
+            LOGGER.debug("Authentication response: {}", response.getBody());
         } else {
             LOGGER.debug("User does not exist");
         }
@@ -103,9 +106,9 @@ public class ExperimentService {
     }
 
     /**
-     * Get customer by ID
+     * Get all IDs of all customers
      *
-     * @return customer entity
+     * @return list of all IDs
      */
     public List<Long> getAllCustomerIds() {
         RestTemplate restTemplate = new RestTemplate();
