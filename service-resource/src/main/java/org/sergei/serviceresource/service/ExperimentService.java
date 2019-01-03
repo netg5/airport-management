@@ -16,7 +16,6 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -34,13 +33,19 @@ public class ExperimentService {
     private static final String PASSWORD = "&password=";
     private static final String ACCESS_TOKEN = "?access_token=";
 
+    @Value("${oauth.client-id}")
+    private String clientId;
+
+    @Value("${oauth.client-secret}")
+    private String clientSecret;
+
     @Value("${oauth.username}")
     private String usernameValue;
 
     @Value("${oauth.password}")
     private String passwordValue;
 
-        private final RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
     private final HttpHeaders httpHeaders;
 
     @Autowired
@@ -65,24 +70,24 @@ public class ExperimentService {
      * @return headers with Authorization header added
      */
     private HttpHeaders getHeadersWithClientCredentials() {
-        String plainClientCredentials = "trusted-client:trusted-client-secret";
+        String plainClientCredentials = clientId + ":" + clientSecret;
         String base64ClientCredentials = new String(Base64.encodeBase64(plainClientCredentials.getBytes()));
 
         HttpHeaders headers = getHeaders();
-        LOGGER.debug("Headers: {}", headers.toString());
-        headers.add("Authorization", "Bearer " + base64ClientCredentials);
+        headers.add("Authorization", "Basic " + base64ClientCredentials);
         return headers;
     }
 
     /**
      * Send a POST request [on /oauth/token] to get an access_token, which will then be send with each request.
      *
-     * @return access token for each request
+     * @return access token to access resources
      */
     @SuppressWarnings("unchecked")
     private AuthTokenInfo sendTokenRequest() {
 
         HttpEntity<String> request = new HttpEntity<>(getHeadersWithClientCredentials());
+        LOGGER.debug("Get headers with client credentials: {}", getHeadersWithClientCredentials());
         LOGGER.debug("Request body: {}", request.getBody());
         ResponseEntity<Object> response =
                 this.restTemplate.exchange(AUTH_SERVER + PASSWORD_GRANT + USERNAME + usernameValue + PASSWORD + passwordValue,
@@ -111,13 +116,14 @@ public class ExperimentService {
      */
     public List<Long> getAllCustomerIds() {
         AuthTokenInfo tokenInfo = sendTokenRequest();
+        LOGGER.debug("Token info: {}", tokenInfo.toString());
         HttpEntity<String> request = new HttpEntity<>(getHeaders());
-        return Objects.requireNonNull(this.restTemplate.exchange(REST_RESOURCE_URI + "/customers" + ACCESS_TOKEN + tokenInfo,
+        return this.restTemplate.exchange(REST_RESOURCE_URI + "/customers" + ACCESS_TOKEN + tokenInfo.getAccessToken(),
                 HttpMethod.GET,
                 request,
                 new ParameterizedTypeReference<Resources<CustomerIds>>() {
                 })
-                .getBody())
+                .getBody()
                 .getContent()
                 .stream()
                 .map(CustomerIds::getCustomerId)

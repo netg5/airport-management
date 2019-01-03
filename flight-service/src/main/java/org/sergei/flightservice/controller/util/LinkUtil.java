@@ -5,9 +5,12 @@ import org.sergei.flightservice.controller.CustomerController;
 import org.sergei.flightservice.controller.ReservationController;
 import org.sergei.flightservice.controller.RouteController;
 import org.sergei.flightservice.dto.*;
+import org.sergei.flightservice.dto.CustomerIdsDTO;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resources;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.util.List;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -38,12 +41,19 @@ public final class LinkUtil {
                     methodOn(ReservationController.class)
                             .getAllForCustomer(customer.getCustomerId())).withRel("reservations");
             Link ticketsLink = new Link(
-                    "http://127.0.0.1:8080/ticket-api/tickets?customerId=" + customer.getCustomerId()).withRel("tickets");
+                    "https://127.0.0.1:9090/ticket-api/tickets?customerId=" + customer.getCustomerId()).withRel("tickets");
             customer.add(link);
             customer.add(reservationsLink);
             customer.add(ticketsLink);
         });
         return setServletResourceLinks(customerList);
+    }
+
+    public static Resources setLinksForIdsOfCustomers(List<CustomerIdsDTO> customerIdsDTOList) {
+        Resources resources = setServletResourceLinks(customerIdsDTOList);
+        Link allCustomers = linkTo(methodOn(CustomerController.class).getAllCustomers()).withRel("allCustomers");
+        resources.add(allCustomers);
+        return resources;
     }
 
     /**

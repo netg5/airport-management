@@ -2,6 +2,7 @@ package org.sergei.flightservice.controller;
 
 import io.swagger.annotations.*;
 import org.sergei.flightservice.dto.CustomerDTO;
+import org.sergei.flightservice.dto.CustomerIdsDTO;
 import org.sergei.flightservice.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,8 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-import static org.sergei.flightservice.controller.util.LinkUtil.setLinksForAllCustomers;
-import static org.sergei.flightservice.controller.util.LinkUtil.setLinksForCustomer;
+import static org.sergei.flightservice.controller.util.LinkUtil.*;
 
 /**
  * @author Sergei Visotsky
@@ -41,6 +41,13 @@ public class CustomerController {
     public ResponseEntity<Resources> getAllCustomers() {
         List<CustomerDTO> customerList = customerService.findAll();
         return new ResponseEntity<>(setLinksForAllCustomers(customerList), HttpStatus.OK);
+    }
+
+    @ApiOperation("Get IDs of all existing customers")
+    @GetMapping("/ids")
+    public ResponseEntity<Resources> getIdsOfAllCustomers() {
+        List<CustomerIdsDTO> customerIdDTOS = customerService.findIdsOfAllCustomers();
+        return new ResponseEntity<>(setLinksForIdsOfCustomers(customerIdDTOS), HttpStatus.OK);
     }
 
     @ApiOperation("Get all customers paginated")

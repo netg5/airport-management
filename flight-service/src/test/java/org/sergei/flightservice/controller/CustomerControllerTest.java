@@ -71,6 +71,27 @@ public class CustomerControllerTest {
     }
 
     @Test
+    public void getIdsOfCustomers_thenReturnOk() throws Exception {
+        final String firstNameOne = "John";
+        final String lastNameOne = "Smith";
+        final int ageOne = 20;
+        Customer firstCustomer = setupCustomer(firstNameOne, lastNameOne, ageOne);
+
+        final String firstNameTwo = "Jerry Name";
+        final String lastNameTwo = "Jerry";
+        final int ageTwo = 45;
+        Customer secondCustomer = setupCustomer(firstNameTwo, lastNameTwo, ageTwo);
+        mvc.perform(
+                get(BASE_URL + "/ids")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$._embedded.customerIdsDTOList[0].customerId").value(firstCustomer.getCustomerId()))
+                .andExpect(jsonPath("$._embedded.customerIdsDTOList[1].customerId").value(secondCustomer.getCustomerId()))
+                .andExpect(jsonPath("$._links.self.href", is(BASE_URL + "/ids")))
+                .andExpect(jsonPath("$._links.allCustomers.href", is(BASE_URL)));
+    }
+
+    @Test
     public void getCustomerById_thenGetOk() throws Exception {
         final String firstName = "John";
         final String lastName = "Smith";

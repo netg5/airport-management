@@ -1,6 +1,7 @@
 package org.sergei.flightservice.service;
 
 import org.sergei.flightservice.dto.CustomerDTO;
+import org.sergei.flightservice.dto.CustomerIdsDTO;
 import org.sergei.flightservice.exceptions.ResourceNotFoundException;
 import org.sergei.flightservice.model.Customer;
 import org.sergei.flightservice.repository.CustomerRepository;
@@ -52,6 +53,10 @@ public class CustomerService implements IService<CustomerDTO> {
     public List<CustomerDTO> findAll() {
         List<Customer> customerList = customerRepository.findAll();
         return mapAll(customerList, CustomerDTO.class);
+    }
+
+    public List<CustomerIdsDTO> findIdsOfAllCustomers() {
+        return customerRepository.findIdsOfAllCustomers();
     }
 
     /**
