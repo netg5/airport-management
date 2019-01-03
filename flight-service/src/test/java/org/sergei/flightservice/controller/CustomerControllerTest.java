@@ -85,8 +85,8 @@ public class CustomerControllerTest {
                 get(BASE_URL + "/ids")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$._embedded.customerIdsDTOList[0].customerId").value(firstCustomer.getCustomerId()))
-                .andExpect(jsonPath("$._embedded.customerIdsDTOList[1].customerId").value(secondCustomer.getCustomerId()))
+                .andExpect(jsonPath("$._embedded.customerIdsDTOList[0].customerId").isNotEmpty())
+                .andExpect(jsonPath("$._embedded.customerIdsDTOList[1].customerId").isNotEmpty())
                 .andExpect(jsonPath("$._links.self.href", is(BASE_URL + "/ids")))
                 .andExpect(jsonPath("$._links.allCustomers.href", is(BASE_URL)));
     }
