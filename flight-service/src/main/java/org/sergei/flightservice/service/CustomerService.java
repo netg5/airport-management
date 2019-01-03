@@ -55,10 +55,22 @@ public class CustomerService implements IService<CustomerDTO> {
         return mapAll(customerList, CustomerDTO.class);
     }
 
+    /**
+     * Find ID of each customer in one JSON response as a list
+     *
+     * @return list of IDs
+     */
     public List<CustomerIdsDTO> findIdsOfAllCustomers() {
         return customerRepository.findIdsOfAllCustomers();
     }
 
+    /**
+     * Find ID of each customer in one JSON response as a list paginated
+     *
+     * @param page how many pages to show
+     * @param size how much entites in one page
+     * @return page of the IDs
+     */
     public Page<CustomerIdsDTO> findIdsOfAllCustomersPaginated(int page, int size) {
         return customerRepository.findIdsOfAllCustomersPaginated(PageRequest.of(page, size));
     }
