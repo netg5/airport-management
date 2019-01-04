@@ -75,12 +75,12 @@ public class CustomerControllerTest {
         final String firstNameOne = "John";
         final String lastNameOne = "Smith";
         final int ageOne = 20;
-        Customer firstCustomer = setupCustomer(firstNameOne, lastNameOne, ageOne);
+        setupCustomer(firstNameOne, lastNameOne, ageOne);
 
         final String firstNameTwo = "Jerry Name";
         final String lastNameTwo = "Jerry";
         final int ageTwo = 45;
-        Customer secondCustomer = setupCustomer(firstNameTwo, lastNameTwo, ageTwo);
+        setupCustomer(firstNameTwo, lastNameTwo, ageTwo);
         mvc.perform(
                 get(BASE_URL + "/ids")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))

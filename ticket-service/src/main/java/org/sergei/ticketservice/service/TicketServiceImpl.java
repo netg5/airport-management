@@ -18,9 +18,9 @@ public class TicketServiceImpl implements TicketService {
 
     private static final String TICKETS_NOT_FOUND = "Customer has no tickets";
 
-    @Autowired
-    private TicketRepository ticketRepository;
+    private final TicketRepository ticketRepository;
 
+    @Autowired
     public TicketServiceImpl(TicketRepository ticketRepository) {
         this.ticketRepository = ticketRepository;
     }
@@ -36,6 +36,7 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public List<Ticket> findAllTickets(Long customerId, String place, Double distance) {
         List<Ticket> ticketList = ticketRepository.findAllTickets(customerId, place, distance);
+//        ticketList.isEmpty() ? throw new ResourceNotFoundException(TICKETS_NOT_FOUND) : return null;
         if (ticketList.isEmpty()) {
             throw new ResourceNotFoundException(TICKETS_NOT_FOUND);
         }
