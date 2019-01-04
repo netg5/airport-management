@@ -17,7 +17,7 @@ Flight reservation application based on the microservice architecture which allo
 * eureka-service - microservice registry where of all microservices can be observed
 * doc-service - Swagger documentation service
 * zuul-gateway - entry point of the all microservices
-* flight-service - main microservice which allows to reserve flight
+* reservation-service - main microservice which allows to reserve flight
 * ticket-service - service where all customer tickets can be seen
 * flight-service-ui - user interface made using angular
 

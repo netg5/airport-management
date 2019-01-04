@@ -1,9 +1,0 @@
-spring:
-  cloud:
-    config:
-      name: flight-service
-      uri: http://localhost:8079
-      enabled: true
-      discovery:
-        enabled: true
-        service-id: config-service
