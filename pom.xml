@@ -18,7 +18,7 @@
         <module>auth-service</module>
         <module>eureka-service</module>
         <module>zuul-gateway</module>
-        <module>flight-service</module>
+        <module>reservation-service</module>
         <module>ticket-service</module>
         <module>flight-reservation-ui</module>
     </modules>

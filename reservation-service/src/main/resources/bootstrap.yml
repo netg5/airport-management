@@ -1,0 +1,9 @@
+spring:
+  cloud:
+    config:
+      name: reservation-service
+      uri: http://localhost:8079
+      enabled: true
+      discovery:
+        enabled: true
+        service-id: config-service
