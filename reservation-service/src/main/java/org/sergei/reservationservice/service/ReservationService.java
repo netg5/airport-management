@@ -294,39 +294,4 @@ public class ReservationService implements IReservationService<ReservationExtend
         reservationRepository.deleteByCustomerIdAndReservationId(customer, reservation);
         return map(reservation, ReservationExtendedDTO.class);
     }
-
-    @Override
-    public Object findOne(Long aLong) {
-        return null;
-    }
-
-    @Override
-    public List findAll() {
-        return null;
-    }
-
-    @Override
-    public Page<ReservationExtendedDTO> findAllPaginated(int page, int size) {
-        return null;
-    }
-
-    @Override
-    public Object save(Object entityDTO) {
-        return null;
-    }
-
-    @Override
-    public Object update(Long aLong, Object entityDTO) {
-        return null;
-    }
-
-    @Override
-    public Object patch(Long aLong, Map params) {
-        return null;
-    }
-
-    @Override
-    public ReservationExtendedDTO delete(Long aLong) {
-        return null;
-    }
 }

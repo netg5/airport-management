@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * @author Sergei Visotsky
  */
-public interface IReservationService<E, T> extends IService {
+public interface IReservationService<E, T> {
 
     /**
      * Find one reservation for customer
