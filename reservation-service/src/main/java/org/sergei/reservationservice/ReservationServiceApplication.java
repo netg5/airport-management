@@ -21,7 +21,7 @@ public class ReservationServiceApplication {
     class WelcomeController {
         @GetMapping("/")
         public String welcome() {
-            return "Flights";
+            return "Reservation";
         }
 
         @GetMapping("/docs")

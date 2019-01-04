@@ -59,7 +59,7 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Flight service REST methods")
+                .title("Reservation service REST methods")
                 .description("Methods needed to retrieve, add and modify data")
                 .version("1.0")
                 .license("Apache 2.0")
