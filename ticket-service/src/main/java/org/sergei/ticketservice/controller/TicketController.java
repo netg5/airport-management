@@ -40,13 +40,13 @@ public class TicketController {
             @ApiResponse(code = 404, message = "Customer has no tickets")
     })
     @GetMapping
-    public ResponseEntity<Resources<Ticket>> findByCustomerIdPlaceOrDistance(@ApiParam(value = "Customer ID whose ticket should be found", required = true)
-                                                                             @RequestParam("customerId") Long customerId,
-                                                                             @ApiParam(value = "Place with which ticket should be found")
-                                                                             @RequestParam(value = "place", required = false) String place,
-                                                                             @ApiParam(value = "Distance with which ticket should be found")
-                                                                             @RequestParam(value = "distance", required = false) Double distance) {
-        List<Ticket> ticketList = ticketService.findByCustomerIdPlaceOrDistance(customerId, place, distance);
+    public ResponseEntity<Resources<Ticket>> findAllTickets(@ApiParam(value = "Customer ID whose ticket should be found", required = true)
+                                                            @RequestParam("customerId") Long customerId,
+                                                            @ApiParam(value = "Place with which ticket should be found")
+                                                            @RequestParam(value = "place", required = false) String place,
+                                                            @ApiParam(value = "Distance with which ticket should be found")
+                                                            @RequestParam(value = "distance", required = false) Double distance) {
+        List<Ticket> ticketList = ticketService.findAllTickets(customerId, place, distance);
         return new ResponseEntity<>(setLinksForTicket(ticketList, customerId), HttpStatus.OK);
     }
 
@@ -55,17 +55,17 @@ public class TicketController {
             @ApiResponse(code = 404, message = "Customer has no tickets")
     })
     @GetMapping(params = {"page", "size"})
-    public ResponseEntity<Resources<Ticket>> findByCustomerIdPlaceOrDistancePageable(@ApiParam(value = "Customer ID whose ticket should be found", required = true)
-                                                                                     @RequestParam("customerId") Long customerId,
-                                                                                     @ApiParam(value = "Place with which ticket should be found")
-                                                                                     @RequestParam(value = "place", required = false) String place,
-                                                                                     @ApiParam(value = "Distance with which ticket should be found")
-                                                                                     @RequestParam(value = "distance", required = false) Double distance,
-                                                                                     @ApiParam("Number of page")
-                                                                                     @RequestParam("page") int page,
-                                                                                     @ApiParam("Number of elements per page")
-                                                                                     @RequestParam("size") int size) {
-        Page<Ticket> ticketList = ticketService.findByCustomerIdPlaceOrDistancePageable(customerId, place, distance, page, size);
+    public ResponseEntity<Resources<Ticket>> findAllTicketsPageable(@ApiParam(value = "Customer ID whose ticket should be found", required = true)
+                                                                    @RequestParam("customerId") Long customerId,
+                                                                    @ApiParam(value = "Place with which ticket should be found")
+                                                                    @RequestParam(value = "place", required = false) String place,
+                                                                    @ApiParam(value = "Distance with which ticket should be found")
+                                                                    @RequestParam(value = "distance", required = false) Double distance,
+                                                                    @ApiParam("Number of page")
+                                                                    @RequestParam("page") int page,
+                                                                    @ApiParam("Number of elements per page")
+                                                                    @RequestParam("size") int size) {
+        Page<Ticket> ticketList = ticketService.findAllTicketsPageable(customerId, place, distance, page, size);
         return new ResponseEntity<>(setLinksForTicket(ticketList, customerId), HttpStatus.OK);
     }
 }

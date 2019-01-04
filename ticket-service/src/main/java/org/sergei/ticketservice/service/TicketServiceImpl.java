@@ -34,8 +34,8 @@ public class TicketServiceImpl implements TicketService {
      * @return collection of tickets
      */
     @Override
-    public List<Ticket> findByCustomerIdPlaceOrDistance(Long customerId, String place, Double distance) {
-        List<Ticket> ticketList = ticketRepository.findByCustomerIdPlaceOrDistance(customerId, place, distance);
+    public List<Ticket> findAllTickets(Long customerId, String place, Double distance) {
+        List<Ticket> ticketList = ticketRepository.findAllTickets(customerId, place, distance);
         if (ticketList.isEmpty()) {
             throw new ResourceNotFoundException(TICKETS_NOT_FOUND);
         }
@@ -53,8 +53,8 @@ public class TicketServiceImpl implements TicketService {
      * @return Collection of tickets
      */
     @Override
-    public Page<Ticket> findByCustomerIdPlaceOrDistancePageable(Long customerId, String place, Double distance, int page, int size) {
-        Page<Ticket> ticketList = ticketRepository.findByCustomerIdPlaceOrDistancePageable(customerId, place, distance, PageRequest.of(page, size));
+    public Page<Ticket> findAllTicketsPageable(Long customerId, String place, Double distance, int page, int size) {
+        Page<Ticket> ticketList = ticketRepository.findAllTicketsPageable(customerId, place, distance, PageRequest.of(page, size));
         if (ticketList.isEmpty()) {
             throw new ResourceNotFoundException(TICKETS_NOT_FOUND);
         }

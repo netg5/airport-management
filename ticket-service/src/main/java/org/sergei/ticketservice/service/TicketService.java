@@ -18,7 +18,7 @@ public interface TicketService {
      * @param distance   Up to the point
      * @return collection of tickets
      */
-    List<Ticket> findByCustomerIdPlaceOrDistance(Long customerId, String place, Double distance);
+    List<Ticket> findAllTickets(Long customerId, String place, Double distance);
 
     /**
      * Method to find tickets for customer paginated
@@ -30,5 +30,5 @@ public interface TicketService {
      * @param size       element quantity per page
      * @return Collection of tickets
      */
-    Page<Ticket> findByCustomerIdPlaceOrDistancePageable(Long customerId, String place, Double distance, int page, int size);
+    Page<Ticket> findAllTicketsPageable(Long customerId, String place, Double distance, int page, int size);
 }

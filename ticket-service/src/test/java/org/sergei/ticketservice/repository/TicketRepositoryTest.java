@@ -47,7 +47,7 @@ public class TicketRepositoryTest {
     @Ignore
     @Test
     public void getTicketsForCustomer() {
-        List<Ticket> ticketList = ticketRepository.findByCustomerIdPlaceOrDistance(1L, "Riga", 2500.0);
+        List<Ticket> ticketList = ticketRepository.findAllTickets(1L, "Riga", 2500.0);
         assertEquals(1, ticketList.size());
     }
 }

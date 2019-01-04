@@ -26,7 +26,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
     @Query("SELECT t FROM Ticket t WHERE t.customerId = ?1 " +
             "AND (?2 IS NULL OR t.place = ?2) " +
             "AND (?3 IS NULL OR t.distance = ?3)")
-    List<Ticket> findByCustomerIdPlaceOrDistance(Long customerId, String place, Double distance);
+    List<Ticket> findAllTickets(Long customerId, String place, Double distance);
 
     /**
      * Find ticket by customer ID, place or/and distance with pagination
@@ -40,6 +40,6 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
     @Query("SELECT t FROM Ticket t WHERE t.customerId = ?1 " +
             "AND (?2 IS NULL OR t.place = ?2) " +
             "AND (?3 IS NULL OR t.distance = ?3)")
-    Page<Ticket> findByCustomerIdPlaceOrDistancePageable(Long customerId, String place,
-                                                         Double distance, Pageable pageable);
+    Page<Ticket> findAllTicketsPageable(Long customerId, String place,
+                                        Double distance, Pageable pageable);
 }
