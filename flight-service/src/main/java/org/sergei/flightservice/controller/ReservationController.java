@@ -82,15 +82,15 @@ public class ReservationController {
                                                                     @PathVariable("customerId") Long customerId,
                                                                     @ApiParam(value = "Reservation ID which which was made", required = true)
                                                                     @PathVariable("reservationId") Long reservationId) {
-        ReservationExtendedDTO flightReservationExtendedDTO =
+        ReservationExtendedDTO reservationExtendedDTO =
                 reservationService.findOneForCustomer(customerId, reservationId);
         Link link = linkTo(
                 methodOn(CustomerController.class)
                         .getCustomerById(customerId)).withRel("customer");
-        flightReservationExtendedDTO.add(link);
+        reservationExtendedDTO.add(link);
         String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
-        flightReservationExtendedDTO.add(new Link(uriString, "self"));
-        return new ResponseEntity<>(flightReservationExtendedDTO, HttpStatus.OK);
+        reservationExtendedDTO.add(new Link(uriString, "self"));
+        return new ResponseEntity<>(reservationExtendedDTO, HttpStatus.OK);
     }
 
     @ApiOperation("Create reservation for customer")
