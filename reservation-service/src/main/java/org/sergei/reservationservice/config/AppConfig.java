@@ -1,8 +1,10 @@
 package org.sergei.reservationservice.config;
 
 import org.modelmapper.ModelMapper;
+import org.sergei.reservationservice.aop.logging.LoggingAspect;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -11,7 +13,13 @@ import org.springframework.web.filter.CorsFilter;
  * @author Sergei Visotsky
  */
 @Configuration
+@EnableAspectJAutoProxy
 public class AppConfig {
+
+    @Bean
+    public LoggingAspect loggingAspect() {
+        return new LoggingAspect();
+    }
 
     @Bean
     public ModelMapper modelMapper() {
