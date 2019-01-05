@@ -136,9 +136,10 @@ NOTE: if you change any port it should be changed in all places where it is used
 
 ##### 2 way - run into the Docker container
 As was mentioned earlier in Setup section `9.` paragraph each microservice contains _Dockerfile_ that allows to run it into the Docker container.
-More than that every container is described in _docker-compose.yml_
 
-_Steps to get ready with docker-compose: (THE BEST WAY TO RUN 10+ CONTAINERS)_
+More than that every container is described in _docker-compose.yml_ _(THE BEST WAY TO RUN 10+ CONTAINERS)_
+
+_Steps to get ready with docker-compose:_
 
 1. Build each microservice executing the following command foe each service:
 ```text
