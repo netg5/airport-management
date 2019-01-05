@@ -138,7 +138,7 @@ NOTE: if you change any port it should be changed in all places where it is used
 As was mentioned earlier in Setup section `9.` paragraph each microservice contains _Dockerfile_ that allows to run it into the Docker container.
 More than that every container is described in _docker-compose.yml_
 
-_Steps to get ready:_
+_Steps to get ready with docker-compose: (THE BEST WAY TO RUN 10+ CONTAINERS)_
 
 1. Build each microservice executing the following command foe each service:
 ```text
@@ -160,37 +160,38 @@ docker-compose up --build
 docker-compose down
 ``` 
 
-Another approach to run each docker container without _docker-compose.yml_.
+Another approach to run each docker container without _docker-compose.yml_. _(UGLIEST WAY EVER IN CASE YOU HAVE 10+ SERVICES, prefer docker-compose instead)_
 
 _Follow this steps:_
 
-* Create image from _Dockerfile_:
+1. Create image from _Dockerfile_:
 ```text
 docker build --file=Dockerfile --tag=IMAGE_NAME:latest --rm=true .
 ```
 
-* Create volume for mounting:
+2. Create volume for mounting:
 ```text
 docker volume create --name=VOLUME_NAME
 ```
 
-* Run Docker image:
+3. Run Docker image:
 ```text
 docker run --name=CONTAINER_NAME --publish=8888:8888 --volume=VOLUME_NAME:/var/lib/project-root/service-dir IMAGE_NAME:latest
 ```
 
 _When you need to stop any container perform the following commands:_
-* Inspect container details:
+
+4. Inspect container details:
 ```text
 docker inspect CONTAINER_NAME
 ```
 
-* Stop container
+5. Stop container
 ```text
 docker inspect CONTAINER_NAME
 ```
 
-* Remove container:
+6. Remove container:
 ```text
 docker inspect CONTAINER_NAME
 ```
