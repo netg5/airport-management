@@ -160,7 +160,7 @@ docker-compose up --build
 docker-compose down
 ``` 
 
-Another approach to run each docker container without _docker-compose.yml_. _(UGLIEST WAY EVER IN CASE YOU HAVE 10+ SERVICES, prefer docker-compose instead)_
+Another approach to run each docker container without _docker-compose.yml_. _(UGLIEST WAY EVER IN CASE YOU HAVE 10+ CONTAINERS, prefer docker-compose instead)_
 
 _Follow this steps:_
 
