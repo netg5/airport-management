@@ -1,6 +1,8 @@
-FROM java:8
-
-ADD ./target/doc-service-1.0.0.jar /app/
-CMD ["java", "-Xmx200m", "-jar", "/app/doc-service-1.0.0.jar"]
-
-EXPOSE 8085
+FROM openjdk:8-jdk-alpine
+VOLUME /tmp
+ARG DEPENDENCY=target/dependency
+COPY ${DEPENDENCY}/BOOT-INF/lib /app/lib
+COPY ${DEPENDENCY}/META-INF /app/META-INF
+COPY ${DEPENDENCY}/BOOT-INF/classes /app
+EXPOSE 9093
+ENTRYPOINT ["java","-cp","app:app/lib/*","org.sergei.docservice.DocServiceApplication"]
