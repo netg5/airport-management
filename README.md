@@ -135,11 +135,65 @@ NOTE: if you change any port it should be changed in all places where it is used
 * Perform command `mvn spring-boot:run` or compile each microservice into the .jar and perform command `java -jar target/SERVICE-NAME-VERSION.jar`
 
 ##### 2 way - run into the Docker container
-As was mentioned earlier in Setup section `9.` paragraph each microservice containd Dockerfile that allows to run it into the Docker container.
-1. Change .jar file name as it is called in your case.
-2. Change port for each microservice
-3. Build Docker image performing command `docker build -t SERVICE_NAME .` (e.g. `docker build -t flight-service .`)
-4. Run Docker container performing command `docker run -it --rm -p MACHINE_PORT:CONTAINER_PORT SERVICE_NAME` (e.g. `docker run -it --rm -p 8085:8085 flight-service`)
+As was mentioned earlier in Setup section `9.` paragraph each microservice contains _Dockerfile_ that allows to run it into the Docker container.
+More than that every container is described in _docker-compose.yml_
+
+_Steps to get ready:_
+
+1. Build each microservice executing the following command foe each service:
+```text
+mvnw clean package spring-boot:repackage
+```
+
+2. Next step: check docker-compose for syntax errors:
+```text
+docker-compose config
+```
+
+3. Let docker compose build each image:
+```text
+docker-compose up --build
+```
+
+4. When you are about to stop all containers remove from Docker and remove the connected networks and volumes from it perform the following command:
+```text
+docker-compose down
+``` 
+
+Another approach to run each docker container without _docker-compose.yml_.
+
+_Follow this steps:_
+
+* Create image from _Dockerfile_:
+```text
+docker build --file=Dockerfile --tag=IMAGE_NAME:latest --rm=true .
+```
+
+* Create volume for mounting:
+```text
+docker volume create --name=VOLUME_NAME
+```
+
+* Run Docker image:
+```text
+docker run --name=CONTAINER_NAME --publish=8888:8888 --volume=VOLUME_NAME:/var/lib/project-root/service-dir IMAGE_NAME:latest
+```
+
+_When you need to stop any container perform the following commands:_
+* Inspect container details:
+```text
+docker inspect CONTAINER_NAME
+```
+
+* Stop container
+```text
+docker inspect CONTAINER_NAME
+```
+
+* Remove container:
+```text
+docker inspect CONTAINER_NAME
+```
 
 NOTE: `config-service` and `eureka-service` should be run first due to all the configs are stored in the separate repository
 
