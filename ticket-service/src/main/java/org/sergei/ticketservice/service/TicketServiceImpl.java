@@ -2,11 +2,13 @@ package org.sergei.ticketservice.service;
 
 import org.sergei.ticketservice.exceptions.ResourceNotFoundException;
 import org.sergei.ticketservice.model.Ticket;
+import org.sergei.ticketservice.repository.CustomerRepository;
 import org.sergei.ticketservice.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -17,12 +19,17 @@ import java.util.List;
 public class TicketServiceImpl implements TicketService {
 
     private static final String TICKETS_NOT_FOUND = "Customer has no tickets";
+    private static final String CUSTOMER_NOT_FOUND = "Customer with this ID not found";
 
+    private final RestTemplate restTemplate;
     private final TicketRepository ticketRepository;
+    private final CustomerRepository customerRepository;
 
     @Autowired
-    public TicketServiceImpl(TicketRepository ticketRepository) {
+    public TicketServiceImpl(RestTemplate restTemplate, TicketRepository ticketRepository, CustomerRepository customerRepository) {
+        this.restTemplate = restTemplate;
         this.ticketRepository = ticketRepository;
+        this.customerRepository = customerRepository;
     }
 
     /**
@@ -36,9 +43,12 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public List<Ticket> findAllTickets(Long customerId, String place, Double distance) {
         List<Ticket> ticketList = ticketRepository.findAllTickets(customerId, place, distance);
-//        ticketList.isEmpty() ? throw new ResourceNotFoundException(TICKETS_NOT_FOUND) : return null;
-        if (ticketList.isEmpty()) {
-            throw new ResourceNotFoundException(TICKETS_NOT_FOUND);
+        if (customerRepository.findById(customerId).isPresent()) {
+            if (ticketList.isEmpty()) {
+                throw new ResourceNotFoundException(TICKETS_NOT_FOUND);
+            }
+        } else {
+            throw new ResourceNotFoundException(CUSTOMER_NOT_FOUND);
         }
         return ticketList;
     }
