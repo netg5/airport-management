@@ -4,6 +4,8 @@ import org.sergei.authservice.service.ApiUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -130,21 +132,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * Set to be accessible /oauth/token endpoint
+     * Set to be accessible [/oauth/token] endpoint
      *
      * @param http to set permissions and restrictions
      * @throws Exception any kind of exception
      */
     @Override
+    @Order(Ordered.HIGHEST_PRECEDENCE)
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf()
                 .disable()
                 .anonymous().disable()
                 .authorizeRequests()
-                .antMatchers("/oauth/token/**").permitAll()
-                .and().authorizeRequests()
-                .antMatchers("/oauth/authorize/**").permitAll();
+                .antMatchers("/oauth/**").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .httpBasic()
+                .realmName("API_REALM");
     }
 
     @Override

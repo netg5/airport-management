@@ -55,7 +55,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     }
 
     /**
-     * All the clients are stored into the database. Manage clients saving and retrieving then.
+     * All clients are stored into the database. Manage, save and retrieve clients.
      * Password encoding
      *
      * @param clients client details
@@ -83,9 +83,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         oauthServer
                 .realm("API_REALM")
                 .passwordEncoder(passwordEncoder)
-                // Applied for [/oauth/check_token]
-                .checkTokenAccess("permitAll()")
                 // Applied for [/oauth/token_key]
-                .tokenKeyAccess("permitAll()");
+                .tokenKeyAccess("permitAll()")
+                // Applied for [/oauth/check_token]
+                .checkTokenAccess("isAuthenticated()");
     }
 }
