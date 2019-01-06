@@ -37,10 +37,14 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public AuthorizationServerConfig(DataSource dataSource, UserApprovalHandler userApprovalHandler,
-                                     @Qualifier("authenticationManagerBean") AuthenticationManager authenticationManager,
-                                     TokenStore tokenStore, JwtAccessTokenConverter jwtTokenEnhancer,
-                                     ApiUserDetailsService apiUserDetailsService, BCryptPasswordEncoder passwordEncoder) {
+    public AuthorizationServerConfig(DataSource dataSource,
+                                     UserApprovalHandler userApprovalHandler,
+                                     @Qualifier("authenticationManagerBean")
+                                             AuthenticationManager authenticationManager,
+                                     TokenStore tokenStore,
+                                     JwtAccessTokenConverter jwtTokenEnhancer,
+                                     ApiUserDetailsService apiUserDetailsService,
+                                     BCryptPasswordEncoder passwordEncoder) {
         this.dataSource = dataSource;
         this.authenticationManager = authenticationManager;
         this.userApprovalHandler = userApprovalHandler;
@@ -76,6 +80,12 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) {
-        oauthServer.realm("API_REALM").passwordEncoder(passwordEncoder);
+        oauthServer
+                .realm("API_REALM")
+                .passwordEncoder(passwordEncoder)
+                // Applied for [/oauth/check_token]
+                .checkTokenAccess("permitAll()")
+                // Applied for [/oauth/token_key]
+                .tokenKeyAccess("permitAll()");
     }
 }

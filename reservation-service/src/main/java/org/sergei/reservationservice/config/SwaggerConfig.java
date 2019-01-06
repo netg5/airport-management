@@ -34,7 +34,7 @@ public class SwaggerConfig {
     @Value("${server.servlet.context-path}")
     private String contextPath;
 
-    @Value("${security.oauth2.accessTokenUri}")
+    @Value("${security.oauth2.access-token-uri}")
     private String authServer;
 
     @Value("${spring.getaway.port}")

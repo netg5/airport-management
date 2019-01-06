@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -21,13 +20,11 @@ public class TicketServiceImpl implements TicketService {
     private static final String TICKETS_NOT_FOUND = "Customer has no tickets";
     private static final String CUSTOMER_NOT_FOUND = "Customer with this ID not found";
 
-    private final RestTemplate restTemplate;
     private final TicketRepository ticketRepository;
     private final CustomerRepository customerRepository;
 
     @Autowired
-    public TicketServiceImpl(RestTemplate restTemplate, TicketRepository ticketRepository, CustomerRepository customerRepository) {
-        this.restTemplate = restTemplate;
+    public TicketServiceImpl(TicketRepository ticketRepository, CustomerRepository customerRepository) {
         this.ticketRepository = ticketRepository;
         this.customerRepository = customerRepository;
     }

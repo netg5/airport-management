@@ -142,7 +142,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
                 .anonymous().disable()
                 .authorizeRequests()
-                .antMatchers("/oauth/token/**").permitAll();
+                .antMatchers("/oauth/token/**").permitAll()
+                .and().authorizeRequests()
+                .antMatchers("/oauth/authorize/**").permitAll();
     }
 
     @Override
