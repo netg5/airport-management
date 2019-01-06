@@ -18,11 +18,6 @@ import org.springframework.web.filter.CorsFilter;
 public class AppConfig {
 
     @Bean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
-    }
-
-    @Bean
     public LoggingAspect loggingAspect() {
         return new LoggingAspect();
     }
