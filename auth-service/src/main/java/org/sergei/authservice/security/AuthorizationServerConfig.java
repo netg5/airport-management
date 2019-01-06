@@ -82,10 +82,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) {
         oauthServer
                 .realm("API_REALM")
-                .passwordEncoder(passwordEncoder)
                 // Applied for [/oauth/token_key]
                 .tokenKeyAccess("permitAll()")
                 // Applied for [/oauth/check_token]
-                .checkTokenAccess("isAuthenticated()");
+                .checkTokenAccess("isAuthenticated()")
+                .passwordEncoder(passwordEncoder);
     }
 }
