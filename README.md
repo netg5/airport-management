@@ -227,10 +227,8 @@ docker inspect CONTAINER_NAME
 NOTE: `config-service` and `eureka-service` should be run first due to all the configs are stored in the separate repository
 
 ## TODO
-1. End up experiment (in case of success implement in any service)
-2. Configure authentication with authorization code grant_type
+1. Adopt liquibase for unit tests
+2. Implement Hystrix fallback methods
 3. SSL for the Eureka and Config servers
-4. Adopt liquibase for unit tests
-5. Ignore services without swagger json in doc-service
-6. Implement Hystrix fallback methods
-7. Develop Front-end with Angular
+4. Ignore services without swagger json in doc-service
+5. Develop Front-end using Angular
