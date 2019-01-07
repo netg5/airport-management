@@ -70,12 +70,13 @@ NOTE: Self-signed certificates are not verified by any certification agency and 
 ## Authentication
 To access any resource authentication should be performed. By performing this request with such a parameters access_token is retrieved.
 
+##### 1 way - using client credentials
 Client ID and client secret should be sent as a basic auth header.
 
 * URL: `http://localhost:8080/auth-api/oauth/token`
 * Method: `POST`
 * Content-Type: `application/x-www-form-urlencoded`
-* Content-Options: `username=USERNAME&password=PASSWORD&grant_type=GRANT_TYPE`
+* Content-Options: `username=USERNAME&password=PASSWORD&grant_type=password`
 
 _Response:_
 ```json
@@ -86,6 +87,32 @@ _Response:_
     "expires_in": 86399,
     "scope": "read write trust",
     "jti": "3e133d91-0bef-4434-9025-dfd0a96685c8"
+}
+```
+
+##### 2 way - using _authorization_code_
+1. Get authorization code sending credentials using method _GET_ in browser
+
+`https://localhost:9090/auth-api/oauth/authorize?
+&client_id=CLIENT_ID&client_secret=CLIENT_SECRET&response_type=code&redirect_uri=REDIRECT_URI&scope=SCOPES`
+
+2. Authorization with code:
+Client ID and client secret should be sent as a basic auth header.
+
+* URL: `http://localhost:8080/auth-api/oauth/token`
+* Method: `POST`
+* Content-Type: `application/x-www-form-urlencoded`
+* Content-Options: `redirect_uri=REDIRECT_URI&grant_type=authorization_code&code=CODE&scope=SCOPES`
+
+_Response:_
+```json
+{
+    "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NDY5NDYyMDEsInVzZXJfbmFtZSI6ImFkbWluIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9VU0VSIiwiUk9MRV9BRE1JTiJdLCJqdGkiOiI1MDA2Y2VmYi0xYjRlLTQxYzYtOGVlZi0xZDEzZDBhNGM2YjkiLCJjbGllbnRfaWQiOiJ0cnVzdC1tZSIsInNjb3BlIjpbInJlYWQiXX0.fpcwy8K9EUK07YAzX4QvGKM65jL7aV64lnJA3HiA2Y-EJphN-2L5HOM2MfOKtpROjtB0he0ZbUM75RWQGhpiODcf2mpvWRa1L466cnCPtoj6BN2Rdyi_ZcHG0HAtRRZHRkDfRfeVtBxl7N_AxceK3esuV-y-hD-sWq-XYi5vdt-yjdJdoGG8sJ4S9Ee_qz8qUt2baRKrpwn2dAFyD5peLRhIxKvjaVUWK6lOyVg2aoaWHADV1F-ALvxF63l40JLccu4Yqmoq7rDeFzfUn66KrHneTBwAFQPsB3cxBaFSsXUWblz-mKZbNG55V1y6huqGv-6ip3M9UvOrmigSEejF6Q",
+    "token_type": "bearer",
+    "refresh_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJhZG1pbiIsInNjb3BlIjpbInJlYWQiXSwiYXRpIjoiNTAwNmNlZmItMWI0ZS00MWM2LThlZWYtMWQxM2QwYTRjNmI5IiwiZXhwIjoxNTQ3MTE5MDAxLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiLCJST0xFX0FETUlOIl0sImp0aSI6ImE2NzA5NjFmLTY3NGUtNGM3Ny1iOTY2LTg3YzM2ZDYyOTk0OSIsImNsaWVudF9pZCI6InRydXN0LW1lIn0.Cmda6hHop3WgCmdLhpKwbRhDVPxGu6huTHpWl-xicZ5WYSe4uDLC5bGH5h7ZDPGPk4VhDYgXYG-rbCk0bcPymbbzZa511idCP2BbAplFhYCRcaOw76pksc_4os-sF8nCFDXUU2x1eMkJeGYukSO_VxuU7KvYFiOQXGxSOvQgN_7P0fp-1wUwyx16DOqQGZWByr1mL0s0nJhEl-w7jhKgHIsKVa8STXj-bkAOi3dYkB9kkRV9110ZDRdqxI0e5CaZEgcpEd6jEdTAJgTiLH4K68eEiAOA-jNIbXr174J0PT__Pnwm16wM_XaV0diDqkkZWxwuw3dbKp7Gqg8El_xFjA",
+    "expires_in": 86399,
+    "scope": "read",
+    "jti": "5006cefb-1b4e-41c6-8eef-1d13d0a4c6b9"
 }
 ```
 
@@ -198,9 +225,6 @@ docker inspect CONTAINER_NAME
 ```
 
 NOTE: `config-service` and `eureka-service` should be run first due to all the configs are stored in the separate repository
-
-## FIXME
-1. Authorization using _authorization_code_
 
 ## TODO
 1. End up experiment (in case of success implement in any service)
