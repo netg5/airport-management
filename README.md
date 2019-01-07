@@ -70,7 +70,7 @@ NOTE: Self-signed certificates are not verified by any certification agency and 
 ## Authentication
 To access any resource authentication should be performed. By performing this request with such a parameters access_token is retrieved.
 
-##### 1 way - using client credentials
+#### 1 way - using client credentials
 Client ID and client secret should be sent as a basic auth header.
 
 * URL: `http://localhost:8080/auth-api/oauth/token`
@@ -90,7 +90,7 @@ _Response:_
 }
 ```
 
-##### 2 way - using _authorization_code_
+#### 2 way - using _authorization_code_ (more secured)
 1. Get authorization code sending credentials using method _GET_ in browser
 
 `https://localhost:9090/auth-api/oauth/authorize?
@@ -158,10 +158,10 @@ keytool -import -trustcacerts -keystore "%JAVA_HOME%/jre/lib/security/cacerts" -
 NOTE: if you change any port it should be changed in all places where it is used depending on the micrservice.
 
 ## Run
-##### 1 way - using maven or java command
+#### 1 way - using maven or java command
 * Perform command `mvn spring-boot:run` or compile each microservice into the .jar and perform command `java -jar target/SERVICE-NAME-VERSION.jar`
 
-##### 2 way - run into the Docker container
+#### 2 way - run into the Docker container
 As was mentioned earlier in Setup section `9.` paragraph each microservice contains _Dockerfile_ that allows to run it into the Docker container.
 
 More than that every container is described in _docker-compose.yml_ _(THE BEST WAY TO RUN 10+ CONTAINERS)_
