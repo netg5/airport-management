@@ -127,6 +127,11 @@ In case if access token is expired refresh token should be used to renew access 
 * Content-Type: `application/x-www-form-urlencoded`
 * Content-Options: `grant_type=refresh_token&refresh_token=REFRESH_TOKEN`
 
+## API documentation
+For endpoint documentation is used Swagger which is accessible by the url - `http://localhost:8080/docs`.
+ 
+ _where `http://localhost:8080` is a gateway url_
+
 ## Setup
 * Setup your database driver dependency in main pom.xml.
 
