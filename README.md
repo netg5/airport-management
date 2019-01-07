@@ -199,6 +199,9 @@ docker inspect CONTAINER_NAME
 
 NOTE: `config-service` and `eureka-service` should be run first due to all the configs are stored in the separate repository
 
+## FIXME
+1. Authorization using _authorization_code_
+
 ## TODO
 1. End up experiment (in case of success implement in any service)
 2. Configure authentication with authorization code grant_type
