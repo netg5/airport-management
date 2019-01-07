@@ -11,9 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static org.sergei.ticketservice.service.Constants.CUSTOMER_NOT_FOUND;
-import static org.sergei.ticketservice.service.Constants.TICKETS_NOT_FOUND;
-
 /**
  * @author Sergei Visotsky
  */
@@ -42,10 +39,10 @@ public class TicketServiceImpl implements TicketService {
         List<Ticket> ticketList = ticketRepository.findAllTickets(customerId, place, distance);
         if (customerRepository.findById(customerId).isPresent()) {
             if (ticketList.isEmpty()) {
-                throw new ResourceNotFoundException(TICKETS_NOT_FOUND);
+                throw new ResourceNotFoundException(Constants.TICKETS_NOT_FOUND);
             }
         } else {
-            throw new ResourceNotFoundException(CUSTOMER_NOT_FOUND);
+            throw new ResourceNotFoundException(Constants.CUSTOMER_NOT_FOUND);
         }
         return ticketList;
     }
@@ -64,7 +61,7 @@ public class TicketServiceImpl implements TicketService {
     public Page<Ticket> findAllTicketsPageable(Long customerId, String place, Double distance, int page, int size) {
         Page<Ticket> ticketList = ticketRepository.findAllTicketsPageable(customerId, place, distance, PageRequest.of(page, size));
         if (ticketList.isEmpty()) {
-            throw new ResourceNotFoundException(TICKETS_NOT_FOUND);
+            throw new ResourceNotFoundException(Constants.TICKETS_NOT_FOUND);
         }
         return ticketList;
     }

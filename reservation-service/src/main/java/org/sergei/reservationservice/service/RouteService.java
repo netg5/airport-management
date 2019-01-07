@@ -22,8 +22,6 @@ import java.util.List;
 import java.util.Map;
 
 import static org.sergei.reservationservice.util.ObjectMapperUtil.map;
-import static org.sergei.reservationservice.service.Constants.AIRCRAFT_NOT_FOUND;
-import static org.sergei.reservationservice.service.Constants.ROUTE_NOT_FOUND;
 
 /**
  * @author Sergei Visotsky
@@ -53,14 +51,14 @@ public class RouteService implements IRouteService<RouteDTO, RouteExtendedDTO> {
         // Find route and map into the extended DTO
         Route route = routeRepository.findById(routeId)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException(ROUTE_NOT_FOUND)
+                        new ResourceNotFoundException(Constants.ROUTE_NOT_FOUND)
                 );
         RouteExtendedDTO routeExtendedDTO = map(route, RouteExtendedDTO.class);
 
         // Find aircraftDTO map it into the aircraftDTO DTO
         Aircraft aircraft = aircraftRepository.findById(route.getAircraft().getAircraftId())
                 .orElseThrow(() ->
-                        new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
+                        new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
                 );
 
         AircraftDTO aircraftDTO = map(aircraft, AircraftDTO.class);
@@ -84,7 +82,7 @@ public class RouteService implements IRouteService<RouteDTO, RouteExtendedDTO> {
         for (RouteExtendedDTO routeExtendedDTO : routeExtendedDTOList) {
             Aircraft aircraft = aircraftRepository.findById(routeList.get(counter).getAircraft().getAircraftId())
                     .orElseThrow(() ->
-                            new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
+                            new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
                     );
 
             AircraftDTO aircraftDTO = map(aircraft, AircraftDTO.class);
@@ -110,7 +108,7 @@ public class RouteService implements IRouteService<RouteDTO, RouteExtendedDTO> {
         for (RouteExtendedDTO routeExtendedDTO : routeExtendedDTOList) {
             Aircraft aircraft = aircraftRepository.findById(routePage.getContent().get(counter).getAircraft().getAircraftId())
                     .orElseThrow(() ->
-                            new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
+                            new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
                     );
 
             AircraftDTO aircraftDTO = map(aircraft, AircraftDTO.class);
@@ -133,7 +131,7 @@ public class RouteService implements IRouteService<RouteDTO, RouteExtendedDTO> {
         // Find aircraftDTO required in request body
         Aircraft aircraft = aircraftRepository.findById(routeDTO.getAircraftId())
                 .orElseThrow(() ->
-                        new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
+                        new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
                 );
         LOGGER.debug("Found aircraft ID: {}", aircraft.getAircraftId());
         route.setAircraft(aircraft);
@@ -157,7 +155,7 @@ public class RouteService implements IRouteService<RouteDTO, RouteExtendedDTO> {
 
         Route route = routeRepository.findById(routeId)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException(ROUTE_NOT_FOUND)
+                        new ResourceNotFoundException(Constants.ROUTE_NOT_FOUND)
                 );
         route.setDistance(routeDTO.getDistance());
         route.setDepartureTime(routeDTO.getDepartureTime());
@@ -168,7 +166,7 @@ public class RouteService implements IRouteService<RouteDTO, RouteExtendedDTO> {
         route.setAircraft(
                 aircraftRepository.findById(routeDTO.getAircraftId())
                         .orElseThrow(() ->
-                                new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
+                                new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
                         )
         );
         routeRepository.save(route);
@@ -187,7 +185,7 @@ public class RouteService implements IRouteService<RouteDTO, RouteExtendedDTO> {
     public RouteDTO patch(Long routeId, Map<String, Object> params) {
         Route route = routeRepository.findById(routeId)
                 .orElseThrow(
-                        () -> new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
+                        () -> new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
                 );
         if (params.get("distance") != null) {
             route.setDistance(Double.valueOf(String.valueOf(params.get("distance"))));
@@ -207,7 +205,7 @@ public class RouteService implements IRouteService<RouteDTO, RouteExtendedDTO> {
         if (params.get("aircraftId") != null) {
             route.setAircraft(aircraftRepository.findById(Long.valueOf(String.valueOf(params.get("aircraftId"))))
                     .orElseThrow(() ->
-                            new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
+                            new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
                     ));
         }
         RouteDTO routeDTO = map(routeRepository.save(route), RouteDTO.class);
@@ -225,7 +223,7 @@ public class RouteService implements IRouteService<RouteDTO, RouteExtendedDTO> {
     public RouteDTO delete(Long routeId) {
         Route route = routeRepository.findById(routeId)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException(ROUTE_NOT_FOUND)
+                        new ResourceNotFoundException(Constants.ROUTE_NOT_FOUND)
                 );
         routeRepository.delete(route);
         return map(route, RouteDTO.class);

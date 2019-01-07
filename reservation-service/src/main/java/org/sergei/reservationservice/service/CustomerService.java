@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 
 import static org.sergei.reservationservice.util.ObjectMapperUtil.*;
-import static org.sergei.reservationservice.service.Constants.CUSTOMER_NOT_FOUND;
 
 /**
  * @author Sergei Visotsky
@@ -39,7 +38,7 @@ public class CustomerService implements IService<CustomerDTO> {
     public CustomerDTO findOne(Long customerId) {
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException(CUSTOMER_NOT_FOUND)
+                        new ResourceNotFoundException(Constants.CUSTOMER_NOT_FOUND)
                 );
         return map(customer, CustomerDTO.class);
     }
@@ -114,7 +113,7 @@ public class CustomerService implements IService<CustomerDTO> {
 
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException(CUSTOMER_NOT_FOUND)
+                        new ResourceNotFoundException(Constants.CUSTOMER_NOT_FOUND)
                 );
         customer.setFirstName(customerDTO.getFirstName());
         customer.setLastName(customerDTO.getLastName());
@@ -136,7 +135,7 @@ public class CustomerService implements IService<CustomerDTO> {
     public CustomerDTO patch(Long customerId, Map<String, Object> params) {
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException(CUSTOMER_NOT_FOUND)
+                        new ResourceNotFoundException(Constants.CUSTOMER_NOT_FOUND)
                 );
         if (params.get("firstName") != null) {
             customer.setFirstName(String.valueOf(params.get("firstName")));
@@ -160,7 +159,7 @@ public class CustomerService implements IService<CustomerDTO> {
     public CustomerDTO delete(Long customerId) {
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException(CUSTOMER_NOT_FOUND)
+                        new ResourceNotFoundException(Constants.CUSTOMER_NOT_FOUND)
                 );
         customerRepository.delete(customer);
         return map(customer, CustomerDTO.class);

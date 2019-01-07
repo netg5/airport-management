@@ -23,8 +23,6 @@ import java.util.List;
 import java.util.Map;
 
 import static org.sergei.reservationservice.util.ObjectMapperUtil.*;
-import static org.sergei.reservationservice.service.Constants.*;
-import static org.sergei.reservationservice.service.Constants.RESERVATION_NOT_FOUND;
 
 /**
  * @author Sergei Visotsky
@@ -56,12 +54,12 @@ public class ReservationService implements IReservationService<ReservationExtend
     @Override
     public ReservationExtendedDTO findOneForCustomer(Long customerId, Long reservationId) {
         Customer customer = customerRepository.findById(customerId).orElseThrow(() ->
-                new ResourceNotFoundException(CUSTOMER_NOT_FOUND)
+                new ResourceNotFoundException(Constants.CUSTOMER_NOT_FOUND)
         );
 
         Reservation reservation = reservationRepository.findOneForCustomer(customerId, reservationId)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException(RESERVATION_NOT_FOUND)
+                        new ResourceNotFoundException(Constants.RESERVATION_NOT_FOUND)
                 );
         ReservationExtendedDTO flightReservationExtendedDTO =
                 map(reservation, ReservationExtendedDTO.class);
@@ -70,14 +68,14 @@ public class ReservationService implements IReservationService<ReservationExtend
         // Find route by ID
         Route route = routeRepository.findById(reservation.getRoute().getRouteId())
                 .orElseThrow(() ->
-                        new ResourceNotFoundException(ROUTE_NOT_FOUND)
+                        new ResourceNotFoundException(Constants.ROUTE_NOT_FOUND)
                 );
         RouteExtendedDTO routeExtendedDTO = map(route, RouteExtendedDTO.class);
 
         // Find aircraftDTO by ID taken from the entity
         Aircraft aircraft = aircraftRepository.findById(route.getAircraft().getAircraftId())
                 .orElseThrow(() ->
-                        new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
+                        new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
                 );
 
         AircraftDTO aircraftDTO = map(aircraft, AircraftDTO.class);
@@ -100,13 +98,13 @@ public class ReservationService implements IReservationService<ReservationExtend
         // Find customer
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException(CUSTOMER_NOT_FOUND)
+                        new ResourceNotFoundException(Constants.CUSTOMER_NOT_FOUND)
                 );
 
         // Find all flight reservation for the customer
         List<Reservation> reservation = reservationRepository.findAllForCustomer(customerId)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException(RESERVATIONS_NOT_FOUND)
+                        new ResourceNotFoundException(Constants.RESERVATIONS_NOT_FOUND)
                 );
         List<ReservationExtendedDTO> flightReservationExtendedDTOList =
                 mapAll(reservation, ReservationExtendedDTO.class);
@@ -119,14 +117,14 @@ public class ReservationService implements IReservationService<ReservationExtend
             // Find route by ID
             Route route = routeRepository.findById(reservation.get(counter).getRoute().getRouteId())
                     .orElseThrow(() ->
-                            new ResourceNotFoundException(ROUTE_NOT_FOUND)
+                            new ResourceNotFoundException(Constants.ROUTE_NOT_FOUND)
                     );
             RouteExtendedDTO routeExtendedDTO = map(route, RouteExtendedDTO.class);
 
             // Find aircraftDTO by ID taken from the entity
             Aircraft aircraft = aircraftRepository.findById(route.getAircraft().getAircraftId())
                     .orElseThrow(() ->
-                            new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
+                            new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
                     );
 
             AircraftDTO aircraftDTO = map(aircraft, AircraftDTO.class);
@@ -154,13 +152,13 @@ public class ReservationService implements IReservationService<ReservationExtend
         // Find customer
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException(CUSTOMER_NOT_FOUND)
+                        new ResourceNotFoundException(Constants.CUSTOMER_NOT_FOUND)
                 );
 
         // Find all flight reservation for the customer
         Page<Reservation> reservation = reservationRepository.findAllForCustomerPaginated(customerId, PageRequest.of(page, size))
                 .orElseThrow(() ->
-                        new ResourceNotFoundException(RESERVATIONS_NOT_FOUND)
+                        new ResourceNotFoundException(Constants.RESERVATIONS_NOT_FOUND)
                 );
         Page<ReservationExtendedDTO> flightReservationExtendedDTOList =
                 mapAllPages(reservation, ReservationExtendedDTO.class);
@@ -173,14 +171,14 @@ public class ReservationService implements IReservationService<ReservationExtend
             // Find route by ID
             Route route = routeRepository.findById(reservation.getContent().get(counter).getRoute().getRouteId())
                     .orElseThrow(() ->
-                            new ResourceNotFoundException(ROUTE_NOT_FOUND)
+                            new ResourceNotFoundException(Constants.ROUTE_NOT_FOUND)
                     );
             RouteExtendedDTO routeExtendedDTO = map(route, RouteExtendedDTO.class);
 
             // Find aircraftDTO by ID taken from the entity
             Aircraft aircraft = aircraftRepository.findById(route.getAircraft().getAircraftId())
                     .orElseThrow(() ->
-                            new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
+                            new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
                     );
 
             AircraftDTO aircraftDTO = map(aircraft, AircraftDTO.class);
@@ -208,13 +206,13 @@ public class ReservationService implements IReservationService<ReservationExtend
         // Find customer by ID
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException(CUSTOMER_NOT_FOUND)
+                        new ResourceNotFoundException(Constants.CUSTOMER_NOT_FOUND)
                 );
 
         // Find route by route ID
         Route route = routeRepository.findById(reservationDTO.getRouteId())
                 .orElseThrow(() ->
-                        new ResourceNotFoundException(ROUTE_NOT_FOUND)
+                        new ResourceNotFoundException(Constants.ROUTE_NOT_FOUND)
                 );
 
         final Long customerEntityId = customer.getCustomerId();
@@ -248,7 +246,7 @@ public class ReservationService implements IReservationService<ReservationExtend
     public ReservationDTO updateReservation(Long customerId, Long reservationId, Map<String, Object> params) {
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException(CUSTOMER_NOT_FOUND)
+                        new ResourceNotFoundException(Constants.CUSTOMER_NOT_FOUND)
                 );
         Reservation reservation = reservationRepository.findOneForCustomer(customerId, reservationId)
                 .orElseThrow(() ->
@@ -258,7 +256,7 @@ public class ReservationService implements IReservationService<ReservationExtend
         if (params.get("routeId") != null) {
             reservation.setRoute(routeRepository.findById(Long.valueOf(String.valueOf(params.get("routeId"))))
                     .orElseThrow(() ->
-                            new ResourceNotFoundException(ROUTE_NOT_FOUND)
+                            new ResourceNotFoundException(Constants.ROUTE_NOT_FOUND)
                     ));
         }
         if (params.get("reservationDate") != null) {
@@ -281,11 +279,11 @@ public class ReservationService implements IReservationService<ReservationExtend
     @Override
     public ReservationExtendedDTO deleteReservation(Long customerId, Long reservationId) {
         Customer customer = customerRepository.findById(customerId).orElseThrow(() ->
-                new ResourceNotFoundException(CUSTOMER_NOT_FOUND)
+                new ResourceNotFoundException(Constants.CUSTOMER_NOT_FOUND)
         );
         Reservation reservation = reservationRepository.findById(reservationId)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException(RESERVATION_NOT_FOUND)
+                        new ResourceNotFoundException(Constants.RESERVATION_NOT_FOUND)
                 );
         reservationRepository.deleteByCustomerIdAndReservationId(customer, reservation);
         return map(reservation, ReservationExtendedDTO.class);

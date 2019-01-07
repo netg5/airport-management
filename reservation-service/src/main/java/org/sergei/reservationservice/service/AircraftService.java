@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Map;
 
 import static org.sergei.reservationservice.util.ObjectMapperUtil.*;
-import static org.sergei.reservationservice.service.Constants.AIRCRAFT_NOT_FOUND;
 
 /**
  * @author Sergei Visotsky
@@ -38,7 +37,7 @@ public class AircraftService implements IService<AircraftDTO> {
     public AircraftDTO findOne(Long aircraftId) {
         Aircraft aircraft = aircraftRepository.findById(aircraftId)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
+                        new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
                 );
         return map(aircraft, AircraftDTO.class);
     }
@@ -93,7 +92,7 @@ public class AircraftService implements IService<AircraftDTO> {
 
         Aircraft aircraft = aircraftRepository.findById(aircraftId)
                 .orElseThrow(
-                        () -> new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
+                        () -> new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
                 );
 
         aircraft.setAircraftId(aircraftId);
@@ -118,7 +117,7 @@ public class AircraftService implements IService<AircraftDTO> {
     public AircraftDTO patch(Long aircraftId, Map<String, Object> params) {
         Aircraft aircraft = aircraftRepository.findById(aircraftId)
                 .orElseThrow(
-                        () -> new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
+                        () -> new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
                 );
         if (params.get("model") != null) {
             aircraft.setModel(String.valueOf(params.get("model")));
@@ -145,7 +144,7 @@ public class AircraftService implements IService<AircraftDTO> {
     public AircraftDTO delete(Long aircraftId) {
         Aircraft aircraft = aircraftRepository.findById(aircraftId)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException(AIRCRAFT_NOT_FOUND)
+                        new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
                 );
         aircraftRepository.delete(aircraft);
         return map(aircraft, AircraftDTO.class);
