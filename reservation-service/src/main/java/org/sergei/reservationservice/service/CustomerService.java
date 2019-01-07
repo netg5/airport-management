@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.sergei.reservationservice.util.ObjectMapperUtil.*;
+import static org.sergei.reservationservice.service.Constants.CUSTOMER_NOT_FOUND;
 
 /**
  * @author Sergei Visotsky
@@ -21,7 +22,6 @@ import static org.sergei.reservationservice.util.ObjectMapperUtil.*;
 @Service
 public class CustomerService implements IService<CustomerDTO> {
 
-    private static final String CUSTOMER_NOT_FOUND = "Customer with this ID not found";
     private final CustomerRepository customerRepository;
 
     @Autowired

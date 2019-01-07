@@ -23,18 +23,14 @@ import java.util.List;
 import java.util.Map;
 
 import static org.sergei.reservationservice.util.ObjectMapperUtil.*;
+import static org.sergei.reservationservice.service.Constants.*;
+import static org.sergei.reservationservice.service.Constants.RESERVATION_NOT_FOUND;
 
 /**
  * @author Sergei Visotsky
  */
 @Service
 public class ReservationService implements IReservationService<ReservationExtendedDTO, ReservationDTO> {
-
-    private static final String CUSTOMER_NOT_FOUND = "Customer with this ID not found";
-    private static final String ROUTE_NOT_FOUND = "Route with this ID not found";
-    private static final String AIRCRAFT_NOT_FOUND = "Aircraft with this ID not found";
-    private static final String RESERVATION_NOT_FOUND = "Reservation with this ID not found";
-    private static final String RESERVATIONS_NOT_FOUND = "This customer has no reservations made";
 
     private final CustomerRepository customerRepository;
     private final RouteRepository routeRepository;

@@ -11,14 +11,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static org.sergei.ticketservice.service.Constants.CUSTOMER_NOT_FOUND;
+import static org.sergei.ticketservice.service.Constants.TICKETS_NOT_FOUND;
+
 /**
  * @author Sergei Visotsky
  */
 @Service
 public class TicketServiceImpl implements TicketService {
-
-    private static final String TICKETS_NOT_FOUND = "Customer has no tickets";
-    private static final String CUSTOMER_NOT_FOUND = "Customer with this ID not found";
 
     private final TicketRepository ticketRepository;
     private final CustomerRepository customerRepository;

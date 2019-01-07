@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Map;
 
 import static org.sergei.reservationservice.util.ObjectMapperUtil.map;
+import static org.sergei.reservationservice.service.Constants.AIRCRAFT_NOT_FOUND;
+import static org.sergei.reservationservice.service.Constants.ROUTE_NOT_FOUND;
 
 /**
  * @author Sergei Visotsky
@@ -30,9 +32,6 @@ import static org.sergei.reservationservice.util.ObjectMapperUtil.map;
 public class RouteService implements IRouteService<RouteDTO, RouteExtendedDTO> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RouteService.class);
-
-    private static final String ROUTE_NOT_FOUND = "Route with this ID not found";
-    private static final String AIRCRAFT_NOT_FOUND = "Aircraft with this ID not found";
 
     private final AircraftRepository aircraftRepository;
     private RouteRepository routeRepository;

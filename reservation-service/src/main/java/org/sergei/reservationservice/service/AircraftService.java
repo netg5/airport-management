@@ -13,13 +13,14 @@ import java.util.List;
 import java.util.Map;
 
 import static org.sergei.reservationservice.util.ObjectMapperUtil.*;
+import static org.sergei.reservationservice.service.Constants.AIRCRAFT_NOT_FOUND;
 
 /**
  * @author Sergei Visotsky
  */
 @Service
 public class AircraftService implements IService<AircraftDTO> {
-    private static final String AIRCRAFT_NOT_FOUND = "Aircraft with this ID not found";
+
     private final AircraftRepository aircraftRepository;
 
     @Autowired
