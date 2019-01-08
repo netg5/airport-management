@@ -36,9 +36,9 @@ public class RouteDTO extends ResourceSupport {
     @ApiModelProperty("Flight price")
     private BigDecimal price;
 
-    @ApiModelProperty("Place to fly")
+    @ApiModelProperty("Destination place")
     private String place;
 
-    @ApiModelProperty("Aircraft ID which goes by this flight")
+    @ApiModelProperty("Aircraft ID to fly with")
     private Long aircraftId;
 }
