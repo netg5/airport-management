@@ -16,7 +16,7 @@ import javax.persistence.Table;
 @Immutable
 @Entity
 @Table(name = "customer")
-public class CustomerId {
+public class BaseCustomer {
 
     @Id
     private Long customerId;
