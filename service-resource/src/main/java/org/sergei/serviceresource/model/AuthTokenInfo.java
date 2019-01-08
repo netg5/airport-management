@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 /**
  * @author Sergei Visotsky
  */
+@Deprecated
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

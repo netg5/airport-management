@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 /**
  * @author Sergei Visotsky
  */
+@Deprecated
 @Service
 public class ExperimentService {
 

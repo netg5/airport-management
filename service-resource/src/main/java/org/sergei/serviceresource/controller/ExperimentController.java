@@ -12,6 +12,7 @@ import java.util.List;
 /**
  * @author Sergei Visotsky
  */
+@Deprecated
 @RestController
 public class ExperimentController {
 
