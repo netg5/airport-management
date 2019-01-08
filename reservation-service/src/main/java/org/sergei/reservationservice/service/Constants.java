@@ -6,6 +6,13 @@ package org.sergei.reservationservice.service;
  * @author Sergei Visotsky
  */
 final class Constants {
+
+    /**
+     * Hide from the public access
+     */
+    private Constants() {
+    }
+
     static final String AIRCRAFT_NOT_FOUND = "Aircraft with this ID not found";
     static final String CUSTOMER_NOT_FOUND = "Customer with this ID not found";
     static final String ROUTE_NOT_FOUND = "Route with this ID not found";
