@@ -24,7 +24,7 @@ import java.util.Map;
 /**
  * @author Sergei Visotsky
  */
-public interface IReservationService<E, T> {
+public interface IReservationService<EXTENDED_DTO, DTO> {
 
     /**
      * Find one reservation for customer
@@ -33,7 +33,7 @@ public interface IReservationService<E, T> {
      * @param reservationId reservation ID
      * @return reservation entity
      */
-    E findOneForCustomer(Long customerId, Long reservationId);
+    EXTENDED_DTO findOneForCustomer(Long customerId, Long reservationId);
 
     /**
      * Find all reservations for customer
@@ -41,7 +41,7 @@ public interface IReservationService<E, T> {
      * @param customerId customer ID to find reservations
      * @return list of reservations
      */
-    List<E> findAllForCustomer(Long customerId);
+    List<EXTENDED_DTO> findAllForCustomer(Long customerId);
 
     /**
      * Find all reservations for customer paginated
@@ -51,7 +51,7 @@ public interface IReservationService<E, T> {
      * @param size       number of elements per page
      * @return collection of entities
      */
-    Page<E> findAllForCustomerPaginated(Long customerId, int page, int size);
+    Page<EXTENDED_DTO> findAllForCustomerPaginated(Long customerId, int page, int size);
 
     /**
      * Save reservation for customer
@@ -60,7 +60,7 @@ public interface IReservationService<E, T> {
      * @param entityDTO reservation body
      * @return saved reservation
      */
-    T saveReservation(Long aLong, T entityDTO);
+    DTO saveReservation(Long aLong, DTO entityDTO);
 
     /**
      * Update reservation details
@@ -70,7 +70,7 @@ public interface IReservationService<E, T> {
      * @param params        Field(-s) to be patched
      * @return patched reservation
      */
-    T updateReservation(Long customerId, Long reservationId, Map<String, Object> params);
+    DTO updateReservation(Long customerId, Long reservationId, Map<String, Object> params);
 
     /**
      * Method to delete reservation
@@ -79,5 +79,5 @@ public interface IReservationService<E, T> {
      * @param reservationId made reservation ID
      * @return deleted reservation entity
      */
-    T deleteReservation(Long customerId, Long reservationId);
+    DTO deleteReservation(Long customerId, Long reservationId);
 }

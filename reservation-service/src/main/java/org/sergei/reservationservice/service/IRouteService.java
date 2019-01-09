@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * @author Sergei Visotsky
  */
-public interface IRouteService<E, T> extends IService<E> {
+public interface IRouteService<DTO, EXTENDED_DTO> extends IService<DTO> {
 
     /**
      * Find one route
@@ -31,14 +31,14 @@ public interface IRouteService<E, T> extends IService<E> {
      * @param aLong ID of the route to be found
      * @return route body to be returned
      */
-    T findOneRoute(Long aLong);
+    EXTENDED_DTO findOneRoute(Long aLong);
 
     /**
      * Find list of routes
      *
      * @return list of all routes found
      */
-    List<T> findAllRoutes();
+    List<EXTENDED_DTO> findAllRoutes();
 
     /**
      * Find all routed paginated
@@ -47,5 +47,5 @@ public interface IRouteService<E, T> extends IService<E> {
      * @param size number of elements per page
      * @return page of entities
      */
-    Page<T> findAllRoutesPaginated(int page, int size);
+    Page<EXTENDED_DTO> findAllRoutesPaginated(int page, int size);
 }
