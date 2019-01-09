@@ -26,6 +26,9 @@
         </rollingPolicy>
     </appender>
 
+    <!--Disabled due to the NumberFormatException what is caused by the bug in Swagger internals-->
+    <logger name="io.swagger.models.parameters.AbstractSerializableParameter" level="ERROR"/>
+
     <logger name="org.sergei.ticketservice" level="info, debug"/>
 
     <root level="info, debug">
