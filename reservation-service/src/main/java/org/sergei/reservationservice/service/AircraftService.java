@@ -20,6 +20,7 @@ import org.sergei.reservationservice.dto.AircraftDTO;
 import org.sergei.reservationservice.exceptions.ResourceNotFoundException;
 import org.sergei.reservationservice.model.Aircraft;
 import org.sergei.reservationservice.repository.AircraftRepository;
+import org.sergei.reservationservice.service.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

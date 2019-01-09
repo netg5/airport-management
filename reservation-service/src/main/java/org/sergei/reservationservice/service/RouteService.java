@@ -24,6 +24,8 @@ import org.sergei.reservationservice.model.Aircraft;
 import org.sergei.reservationservice.model.Route;
 import org.sergei.reservationservice.repository.AircraftRepository;
 import org.sergei.reservationservice.repository.RouteRepository;
+import org.sergei.reservationservice.service.util.Constants;
+import org.sergei.reservationservice.service.util.ServiceComponent;
 import org.sergei.reservationservice.util.ObjectMapperUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,12 +50,14 @@ public class RouteService implements IRouteService<RouteDTO, RouteExtendedDTO> {
     private static final Logger LOGGER = LoggerFactory.getLogger(RouteService.class);
 
     private final AircraftRepository aircraftRepository;
-    private RouteRepository routeRepository;
+    private final RouteRepository routeRepository;
+    private final ServiceComponent serviceComponent;
 
     @Autowired
-    public RouteService(AircraftRepository aircraftRepository, RouteRepository routeRepository) {
+    public RouteService(AircraftRepository aircraftRepository, RouteRepository routeRepository, ServiceComponent serviceComponent) {
         this.aircraftRepository = aircraftRepository;
         this.routeRepository = routeRepository;
+        this.serviceComponent = serviceComponent;
     }
 
     /**
@@ -69,19 +73,8 @@ public class RouteService implements IRouteService<RouteDTO, RouteExtendedDTO> {
                 .orElseThrow(() ->
                         new ResourceNotFoundException(Constants.ROUTE_NOT_FOUND)
                 );
-        RouteExtendedDTO routeExtendedDTO = map(route, RouteExtendedDTO.class);
 
-        // Find aircraftDTO map it into the aircraftDTO DTO
-        Aircraft aircraft = aircraftRepository.findById(route.getAircraft().getAircraftId())
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
-                );
-
-        AircraftDTO aircraftDTO = map(aircraft, AircraftDTO.class);
-
-        // Set to the route extended DTO
-        routeExtendedDTO.setAircraftDTO(aircraftDTO);
-        return routeExtendedDTO;
+        return serviceComponent.setExtendedRoute(route);
     }
 
     /**

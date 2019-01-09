@@ -14,14 +14,14 @@
  *  limitations under the License.
  */
 
-package org.sergei.reservationservice.service;
+package org.sergei.reservationservice.service.util;
 
 /**
  * Constants that are used in service layer
  *
  * @author Sergei Visotsky
  */
-final class Constants {
+public final class Constants {
 
     /**
      * Hide from the public access
@@ -29,9 +29,9 @@ final class Constants {
     private Constants() {
     }
 
-    static final String AIRCRAFT_NOT_FOUND = "Aircraft with this ID not found";
-    static final String CUSTOMER_NOT_FOUND = "Customer with this ID not found";
-    static final String ROUTE_NOT_FOUND = "Route with this ID not found";
-    static final String RESERVATION_NOT_FOUND = "Reservation with this ID not found";
-    static final String RESERVATIONS_NOT_FOUND = "This customer has no reservations made";
+    public static final String AIRCRAFT_NOT_FOUND = "Aircraft with this ID not found";
+    public static final String CUSTOMER_NOT_FOUND = "Customer with this ID not found";
+    public static final String ROUTE_NOT_FOUND = "Route with this ID not found";
+    public static final String RESERVATION_NOT_FOUND = "Reservation with this ID not found";
+    public static final String RESERVATIONS_NOT_FOUND = "This customer has no reservations made";
 }

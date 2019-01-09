@@ -16,19 +16,17 @@
 
 package org.sergei.reservationservice.service;
 
-import org.sergei.reservationservice.dto.AircraftDTO;
 import org.sergei.reservationservice.dto.ReservationDTO;
 import org.sergei.reservationservice.dto.ReservationExtendedDTO;
-import org.sergei.reservationservice.dto.RouteExtendedDTO;
 import org.sergei.reservationservice.exceptions.ResourceNotFoundException;
-import org.sergei.reservationservice.model.Aircraft;
 import org.sergei.reservationservice.model.Customer;
 import org.sergei.reservationservice.model.Reservation;
 import org.sergei.reservationservice.model.Route;
-import org.sergei.reservationservice.repository.AircraftRepository;
 import org.sergei.reservationservice.repository.CustomerRepository;
 import org.sergei.reservationservice.repository.ReservationRepository;
 import org.sergei.reservationservice.repository.RouteRepository;
+import org.sergei.reservationservice.service.util.Constants;
+import org.sergei.reservationservice.service.util.ServiceComponent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -48,16 +46,16 @@ public class ReservationService implements IReservationService<ReservationExtend
 
     private final CustomerRepository customerRepository;
     private final RouteRepository routeRepository;
-    private ReservationRepository reservationRepository;
-    private final AircraftRepository aircraftRepository;
+    private final ReservationRepository reservationRepository;
+    private final ServiceComponent serviceComponent;
 
     @Autowired
     public ReservationService(CustomerRepository customerRepository, RouteRepository routeRepository,
-                              ReservationRepository reservationRepository, AircraftRepository aircraftRepository) {
+                              ReservationRepository reservationRepository, ServiceComponent serviceComponent) {
         this.customerRepository = customerRepository;
         this.routeRepository = routeRepository;
         this.reservationRepository = reservationRepository;
-        this.aircraftRepository = aircraftRepository;
+        this.serviceComponent = serviceComponent;
     }
 
     /**
@@ -77,30 +75,21 @@ public class ReservationService implements IReservationService<ReservationExtend
                 .orElseThrow(() ->
                         new ResourceNotFoundException(Constants.RESERVATION_NOT_FOUND)
                 );
-        ReservationExtendedDTO flightReservationExtendedDTO =
+        ReservationExtendedDTO reservationExtendedDTO =
                 map(reservation, ReservationExtendedDTO.class);
-        flightReservationExtendedDTO.setCustomerId(customer.getCustomerId());
+        reservationExtendedDTO.setCustomerId(customer.getCustomerId());
 
         // Find route by ID
         Route route = routeRepository.findById(reservation.getRoute().getRouteId())
                 .orElseThrow(() ->
                         new ResourceNotFoundException(Constants.ROUTE_NOT_FOUND)
                 );
-        RouteExtendedDTO routeExtendedDTO = map(route, RouteExtendedDTO.class);
 
-        // Find aircraftDTO by ID taken from the entity
-        Aircraft aircraft = aircraftRepository.findById(route.getAircraft().getAircraftId())
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
-                );
+        reservationExtendedDTO.setRouteExtendedDTO(
+                serviceComponent.setExtendedRoute(route)
+        );
 
-        AircraftDTO aircraftDTO = map(aircraft, AircraftDTO.class);
-
-        // Set aircraft DTO to the flight reservation extended DTO
-        routeExtendedDTO.setAircraftDTO(aircraftDTO);
-        flightReservationExtendedDTO.setRouteExtendedDTO(routeExtendedDTO);
-
-        return flightReservationExtendedDTO;
+        return reservationExtendedDTO;
     }
 
     /**
@@ -122,37 +111,28 @@ public class ReservationService implements IReservationService<ReservationExtend
                 .orElseThrow(() ->
                         new ResourceNotFoundException(Constants.RESERVATIONS_NOT_FOUND)
                 );
-        List<ReservationExtendedDTO> flightReservationExtendedDTOList =
+        List<ReservationExtendedDTO> reservationExtendedDTOList =
                 mapAll(reservation, ReservationExtendedDTO.class);
         int counter = 0;
         // For each DTO set customer ID, route extended DTO
-        for (ReservationExtendedDTO flightReservationExtendedDTO : flightReservationExtendedDTOList) {
+        for (ReservationExtendedDTO reservationExtendedDTO : reservationExtendedDTOList) {
             // Set customer ID in DTO response
-            flightReservationExtendedDTO.setCustomerId(customer.getCustomerId());
+            reservationExtendedDTO.setCustomerId(customer.getCustomerId());
 
             // Find route by ID
             Route route = routeRepository.findById(reservation.get(counter).getRoute().getRouteId())
                     .orElseThrow(() ->
                             new ResourceNotFoundException(Constants.ROUTE_NOT_FOUND)
                     );
-            RouteExtendedDTO routeExtendedDTO = map(route, RouteExtendedDTO.class);
 
-            // Find aircraftDTO by ID taken from the entity
-            Aircraft aircraft = aircraftRepository.findById(route.getAircraft().getAircraftId())
-                    .orElseThrow(() ->
-                            new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
-                    );
-
-            AircraftDTO aircraftDTO = map(aircraft, AircraftDTO.class);
-
-            // Set aircraftDTO DTO to the flight reservation extended DTO
-            routeExtendedDTO.setAircraftDTO(aircraftDTO);
-            flightReservationExtendedDTO.setRouteExtendedDTO(routeExtendedDTO);
+            reservationExtendedDTO.setRouteExtendedDTO(
+                    serviceComponent.setExtendedRoute(route)
+            );
             counter++;
         }
 
         // Returns extended flight reservation DTO
-        return flightReservationExtendedDTOList;
+        return reservationExtendedDTOList;
     }
 
 
@@ -180,28 +160,19 @@ public class ReservationService implements IReservationService<ReservationExtend
                 mapAllPages(reservation, ReservationExtendedDTO.class);
         int counter = 0;
         // For each DTO set customer ID, route extended DTO
-        for (ReservationExtendedDTO flightReservationExtendedDTO : flightReservationExtendedDTOList) {
+        for (ReservationExtendedDTO reservationExtendedDTO : flightReservationExtendedDTOList) {
             // Set customer ID in DTO response
-            flightReservationExtendedDTO.setCustomerId(customer.getCustomerId());
+            reservationExtendedDTO.setCustomerId(customer.getCustomerId());
 
             // Find route by ID
             Route route = routeRepository.findById(reservation.getContent().get(counter).getRoute().getRouteId())
                     .orElseThrow(() ->
                             new ResourceNotFoundException(Constants.ROUTE_NOT_FOUND)
                     );
-            RouteExtendedDTO routeExtendedDTO = map(route, RouteExtendedDTO.class);
 
-            // Find aircraftDTO by ID taken from the entity
-            Aircraft aircraft = aircraftRepository.findById(route.getAircraft().getAircraftId())
-                    .orElseThrow(() ->
-                            new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
-                    );
-
-            AircraftDTO aircraftDTO = map(aircraft, AircraftDTO.class);
-
-            // Set aircraftDTO DTO to the flight reservation extended DTO
-            routeExtendedDTO.setAircraftDTO(aircraftDTO);
-            flightReservationExtendedDTO.setRouteExtendedDTO(routeExtendedDTO);
+            reservationExtendedDTO.setRouteExtendedDTO(
+                    serviceComponent.setExtendedRoute(route)
+            );
             counter++;
         }
 
