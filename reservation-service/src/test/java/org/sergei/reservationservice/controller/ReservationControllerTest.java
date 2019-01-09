@@ -67,7 +67,6 @@ public class ReservationControllerTest {
     @Autowired
     private AircraftRepository aircraftRepository;
 
-    //    @Ignore
     @Test
     public void getAllReservations_thenReturnOk() throws Exception {
         final String firstName = "John";
@@ -79,7 +78,6 @@ public class ReservationControllerTest {
         final String aircraftName = "Boeing";
         final Double aircraftWeight = 30000.0;
         final Integer maxPassengers = 2300;
-//        Aircraft aircraft = setupAircraft(model, aircraftName, aircraftWeight, maxPassengers);
         Aircraft aircraft = new Aircraft(model, aircraftName, aircraftWeight, maxPassengers);
 
         final Double distance = 3600.0;
@@ -87,7 +85,6 @@ public class ReservationControllerTest {
         final LocalDateTime arrivalTime = LocalDateTime.parse("2018-09-28T22:00:00", FORMATTER);
         final BigDecimal price = BigDecimal.valueOf(450);
         final String place = "New-York";
-//        Route route = setupRoute(distance, departureTime, arrivalTime, price, place, aircraft);
         Route route = new Route(distance, departureTime, arrivalTime, price, place, aircraft, Collections.emptyList());
 
         final LocalDateTime reservationDate = LocalDateTime.parse("2018-09-28T22:00:00", FORMATTER);
@@ -122,7 +119,6 @@ public class ReservationControllerTest {
         final String aircraftName = "Boeing";
         final Double aircraftWeight = 30000.0;
         final Integer maxPassengers = 2300;
-//        Aircraft aircraft = setupAircraft(model, aircraftName, aircraftWeight, maxPassengers);
         Aircraft aircraft = new Aircraft(model, aircraftName, aircraftWeight, maxPassengers);
 
         final String firstName = "John";
@@ -135,7 +131,6 @@ public class ReservationControllerTest {
         final LocalDateTime arrivalTime = LocalDateTime.parse("2018-09-28T22:00:00", FORMATTER);
         final BigDecimal price = BigDecimal.valueOf(450);
         final String place = "New-York";
-//        Route route = setupRoute(distance, departureTime, arrivalTime, price, place, aircraft);
         Route route = new Route(distance, departureTime, arrivalTime, price, place, aircraft, Collections.emptyList());
 
         final LocalDateTime reservationDate = LocalDateTime.parse("2018-09-28T22:00:00", FORMATTER);

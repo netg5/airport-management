@@ -58,7 +58,7 @@ public class AircraftControllerTest {
         final String aircraftName = "Boeing";
         final Double aircraftWeight = 30000.0;
         final Integer maxPassengers = 2300;
-        Aircraft aircraft = setupAircraft(model, aircraftName, aircraftWeight, maxPassengers);
+        setupAircraft(model, aircraftName, aircraftWeight, maxPassengers);
 
         mvc.perform(
                 get(BASE_URL)
@@ -71,6 +71,38 @@ public class AircraftControllerTest {
                 .andExpect(jsonPath("$._embedded.aircraftDTOList[0].maxPassengers").value(maxPassengers))
                 .andExpect(jsonPath("$._embedded.aircraftDTOList[0]._links.self.href", is(BASE_URL + "/1")))
                 .andExpect(jsonPath("$._links.self.href", is(BASE_URL)));
+        aircraftRepository.deleteAll();
+    }
+
+    @Test
+    public void getAllAircraftsPaginated_thenReturnOk() throws Exception {
+        final String page = "?page=1";
+        final String size = "&size=1";
+
+        final String model = "747-400";
+        final String aircraftName = "Boeing";
+        final Double aircraftWeight = 30000.0;
+        final Integer maxPassengers = 2300;
+        setupAircraft(model, aircraftName, aircraftWeight, maxPassengers);
+
+        final String secondModel = "340-750";
+        final String secondAircraftName = "SecondTestAircraft";
+        final Double secondAircraftWeight = 1000.0;
+        final Integer secondMaxPassengers = 1000;
+        Aircraft secondAircraft = setupAircraft(secondModel, secondAircraftName, secondAircraftWeight, secondMaxPassengers);
+
+        mvc.perform(
+                get(BASE_URL + page + size)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$._embedded.aircraftDTOList[0].aircraftId").isNotEmpty())
+                .andExpect(jsonPath("$._embedded.aircraftDTOList[0].model").value(secondModel))
+                .andExpect(jsonPath("$._embedded.aircraftDTOList[0].aircraftName").value(secondAircraftName))
+                .andExpect(jsonPath("$._embedded.aircraftDTOList[0].aircraftWeight").value(secondAircraftWeight))
+                .andExpect(jsonPath("$._embedded.aircraftDTOList[0].maxPassengers").value(secondMaxPassengers))
+                .andExpect(jsonPath("$._embedded.aircraftDTOList[0]._links.self.href", is(BASE_URL + "/" + secondAircraft.getAircraftId())))
+                .andExpect(jsonPath("$._links.self.href", is(BASE_URL + page + size)));
+        aircraftRepository.deleteAll();
     }
 
     @Test
@@ -92,6 +124,7 @@ public class AircraftControllerTest {
                 .andExpect(jsonPath("$.maxPassengers").value(maxPassengers))
                 .andExpect(jsonPath("$._links.self.href", is(BASE_URL + "/" + aircraft.getAircraftId())))
                 .andExpect(jsonPath("$._links.allAircrafts.href", is(BASE_URL)));
+        aircraftRepository.deleteAll();
     }
 
     @Test
@@ -116,6 +149,7 @@ public class AircraftControllerTest {
                 .andExpect(jsonPath("$.aircraftName").value(aircraftName))
                 .andExpect(jsonPath("$.aircraftWeight").value(aircraftWeight))
                 .andExpect(jsonPath("$.maxPassengers").value(maxPassengers));
+        aircraftRepository.deleteAll();
     }
 
     @Test
@@ -161,6 +195,7 @@ public class AircraftControllerTest {
                 .andExpect(jsonPath("$.aircraftName").value(putAircraft))
                 .andExpect(jsonPath("$.aircraftWeight").value(putAircraftWeight))
                 .andExpect(jsonPath("$.maxPassengers").value(putMaxPassengers));
+        aircraftRepository.deleteAll();
     }
 
     @Test
@@ -206,6 +241,7 @@ public class AircraftControllerTest {
                 .andExpect(jsonPath("$.aircraftName").value(putAircraft))
                 .andExpect(jsonPath("$.aircraftWeight").value(putAircraftWeight))
                 .andExpect(jsonPath("$.maxPassengers").value(putMaxPassengers));
+        aircraftRepository.deleteAll();
     }
 
     @Ignore
@@ -237,6 +273,7 @@ public class AircraftControllerTest {
 
         mvc.perform(delete(BASE_URL + "/" + aircraftId))
                 .andExpect(status().isNoContent());
+        aircraftRepository.deleteAll();
     }
 
     private Aircraft setupAircraft(String model, String aircraftName,

@@ -1,6 +1,7 @@
 package org.sergei.reservationservice.controller;
 
 import org.json.JSONObject;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sergei.reservationservice.ReservationServiceApplication;
@@ -95,6 +96,48 @@ public class RouteControllerTest {
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.aircraftWeight").value(aircraftWeight))
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.maxPassengers").value(maxPassengers))
                 .andExpect(jsonPath("$._links.self.href", is(BASE_URL)));
+        routeRepository.deleteAll();
+        aircraftRepository.deleteAll();
+    }
+
+    @Ignore
+    @Test
+    public void getAllRoutesPaginated_thenReturnOk() throws Exception {
+        final String page = "?page=1";
+        final String size = "&size=1";
+
+        final String model = "747-400";
+        final String aircraftName = "Boeing";
+        final Double aircraftWeight = 30000.0;
+        final Integer maxPassengers = 2300;
+        Aircraft aircraft = new Aircraft(model, aircraftName, aircraftWeight, maxPassengers);
+
+        final Double distance = 3600.0;
+        final LocalDateTime departureTime = LocalDateTime.parse("2018-09-28T22:00:00", FORMATTER);
+        final LocalDateTime arrivalTime = LocalDateTime.parse("2018-09-28T22:00:00", FORMATTER);
+        final BigDecimal price = BigDecimal.valueOf(450.0);
+        final String place = "New-York";
+        Route route = setupRoute(distance, departureTime, arrivalTime, price, place, aircraft);
+
+        mvc.perform(
+                get(BASE_URL + page + size)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].routeId").isNotEmpty())
+                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].distance").value(distance))
+                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].departureTime").value("2018-09-28T22:00:00"))
+                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].arrivalTime").value("2018-09-28T22:00:00"))
+                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].price").value(price))
+                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].place").value(place))
+                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0]._links.self.href", is(BASE_URL + "/" + route.getRouteId())))
+                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.aircraftId", is(1)))
+                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.model").value(model))
+                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.aircraftName").value(aircraftName))
+                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.aircraftWeight").value(aircraftWeight))
+                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.maxPassengers").value(maxPassengers))
+                .andExpect(jsonPath("$._links.self.href", is(BASE_URL + page + size)));
+        routeRepository.deleteAll();
+        aircraftRepository.deleteAll();
     }
 
     @Test
@@ -132,6 +175,8 @@ public class RouteControllerTest {
                 .andExpect(jsonPath("$.aircraft.aircraftName", is(aircraftName)))
                 .andExpect(jsonPath("$.aircraft.aircraftWeight", is(aircraftWeight)))
                 .andExpect(jsonPath("$.aircraft.maxPassengers", is(maxPassengers)));
+        routeRepository.deleteAll();
+        aircraftRepository.deleteAll();
     }
 
     @Test
@@ -168,6 +213,8 @@ public class RouteControllerTest {
                 .andExpect(jsonPath("$.price").value(price))
                 .andExpect(jsonPath("$.place").value(place))
                 .andExpect(jsonPath("aircraftId").value(aircraft.getAircraftId()));
+        routeRepository.deleteAll();
+        aircraftRepository.deleteAll();
     }
 
     @Test
@@ -231,6 +278,8 @@ public class RouteControllerTest {
                 .andExpect(jsonPath("$.price").value(priceAfter))
                 .andExpect(jsonPath("$.place").value(placeAfter))
                 .andExpect(jsonPath("aircraftId").value(aircraft.getAircraftId()));
+        routeRepository.deleteAll();
+        aircraftRepository.deleteAll();
     }
 
     @Test
@@ -295,6 +344,8 @@ public class RouteControllerTest {
                 .andExpect(jsonPath("aircraftId").value(aircraft.getAircraftId()))
                 .andExpect(jsonPath("$._links.self.href", is(BASE_URL + "/2")))
                 .andExpect(jsonPath("$._links.allRoutes.href", is(BASE_URL)));
+        routeRepository.deleteAll();
+        aircraftRepository.deleteAll();
     }
 
     @Test
@@ -334,6 +385,8 @@ public class RouteControllerTest {
         mvc.perform(
                 delete(BASE_URL + "/1"))
                 .andExpect(status().isNoContent());
+        routeRepository.deleteAll();
+        aircraftRepository.deleteAll();
     }
 
     private Aircraft setupAircraft(String model, String aircraftName,

@@ -68,6 +68,36 @@ public class CustomerControllerTest {
                 .andExpect(jsonPath("$._embedded.customerDTOList[0]._links.self.href", is(BASE_URL + "/2")))
                 .andExpect(jsonPath("$._embedded.customerDTOList[0]._links.reservations.href", is(BASE_URL + "/2" + RESERVATIONS_PATH)))
                 .andExpect(jsonPath("$._links.self.href", is(BASE_URL)));
+        customerRepository.deleteAll();
+    }
+
+    @Test
+    public void getAllCustomersPaginated_thenReturnOk() throws Exception {
+        final String page = "?page=1";
+        final String size = "&size=1";
+
+        final String firstName = "John";
+        final String lastName = "Smith";
+        final int age = 20;
+        setupCustomer(firstName, lastName, age);
+
+        final String secondFirstName = "Jane";
+        final String secondLastName = "Test";
+        final int secondAge = 30;
+        Customer secondCustomer = setupCustomer(secondFirstName, secondLastName, secondAge);
+
+        mvc.perform(
+                get(BASE_URL + page + size)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$._embedded.customerDTOList[0].customerId").isNotEmpty())
+                .andExpect(jsonPath("$._embedded.customerDTOList[0].firstName").value(secondFirstName))
+                .andExpect(jsonPath("$._embedded.customerDTOList[0].lastName").value(secondLastName))
+                .andExpect(jsonPath("$._embedded.customerDTOList[0].age").value(secondAge))
+                .andExpect(jsonPath("$._embedded.customerDTOList[0]._links.self.href", is(BASE_URL + "/" + secondCustomer.getCustomerId())))
+                .andExpect(jsonPath("$._embedded.customerDTOList[0]._links.reservations.href", is(BASE_URL + "/" + secondCustomer.getCustomerId() + RESERVATIONS_PATH)))
+                .andExpect(jsonPath("$._links.self.href", is(BASE_URL + page + size)));
+        customerRepository.deleteAll();
     }
 
     @Test
@@ -89,6 +119,7 @@ public class CustomerControllerTest {
                 .andExpect(jsonPath("$._embedded.customerIdsDTOList[1].customerId").isNotEmpty())
                 .andExpect(jsonPath("$._links.self.href", is(BASE_URL + "/ids")))
                 .andExpect(jsonPath("$._links.allCustomers.href", is(BASE_URL)));
+        customerRepository.deleteAll();
     }
 
     @Test
@@ -109,6 +140,7 @@ public class CustomerControllerTest {
                 .andExpect(jsonPath("$._links.self.href", is(BASE_URL + "/2")))
                 .andExpect(jsonPath("$._links.reservations.href", is(BASE_URL + "/2" + RESERVATIONS_PATH)))
                 .andExpect(jsonPath("$._links.allCustomers.href", is(BASE_URL)));
+        customerRepository.deleteAll();
     }
 
     @Test
@@ -131,6 +163,7 @@ public class CustomerControllerTest {
                 .andExpect(jsonPath("$.firstName").value(firstName))
                 .andExpect(jsonPath("$.lastName").value(lastName))
                 .andExpect(jsonPath("$.age").value(age));
+        customerRepository.deleteAll();
     }
 
     @Test
@@ -170,6 +203,7 @@ public class CustomerControllerTest {
                 .andExpect(jsonPath("$.firstName").value(putFirstName))
                 .andExpect(jsonPath("$.lastName").value(putLastName))
                 .andExpect(jsonPath("$.age").value(putAge));
+        customerRepository.deleteAll();
     }
 
     @Test
@@ -209,6 +243,7 @@ public class CustomerControllerTest {
                 .andExpect(jsonPath("$.firstName").value(patchFirstName))
                 .andExpect(jsonPath("$.lastName").value(patchLastName))
                 .andExpect(jsonPath("$.age").value(patchAge));
+        customerRepository.deleteAll();
     }
 
     @Test
@@ -233,6 +268,7 @@ public class CustomerControllerTest {
 
         mvc.perform(delete(BASE_URL + "/1"))
                 .andExpect(status().isNoContent());
+        customerRepository.deleteAll();
     }
 
     private Customer setupCustomer(String firstName, String lastName, int age) {
