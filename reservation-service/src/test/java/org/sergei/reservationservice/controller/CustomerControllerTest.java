@@ -78,7 +78,7 @@ public class CustomerControllerTest {
         final String firstName = "John";
         final String lastName = "Smith";
         final int age = 20;
-        setupCustomer(firstName, lastName, age);
+        Customer customer = setupCustomer(firstName, lastName, age);
 
         final String secondFirstName = "Jane";
         final String secondLastName = "Test";
@@ -90,11 +90,11 @@ public class CustomerControllerTest {
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.customerDTOList[0].customerId").isNotEmpty())
-                .andExpect(jsonPath("$._embedded.customerDTOList[0].firstName").value(secondFirstName))
-                .andExpect(jsonPath("$._embedded.customerDTOList[0].lastName").value(secondLastName))
-                .andExpect(jsonPath("$._embedded.customerDTOList[0].age").value(secondAge))
-                .andExpect(jsonPath("$._embedded.customerDTOList[0]._links.self.href", is(BASE_URL + "/" + secondCustomer.getCustomerId())))
-                .andExpect(jsonPath("$._embedded.customerDTOList[0]._links.reservations.href", is(BASE_URL + "/" + secondCustomer.getCustomerId() + RESERVATIONS_PATH)))
+                .andExpect(jsonPath("$._embedded.customerDTOList[0].firstName").value(firstName))
+                .andExpect(jsonPath("$._embedded.customerDTOList[0].lastName").value(lastName))
+                .andExpect(jsonPath("$._embedded.customerDTOList[0].age").value(age))
+                .andExpect(jsonPath("$._embedded.customerDTOList[0]._links.self.href", is(BASE_URL + "/" + customer.getCustomerId())))
+                .andExpect(jsonPath("$._embedded.customerDTOList[0]._links.reservations.href", is(BASE_URL + "/" + customer.getCustomerId() + RESERVATIONS_PATH)))
                 .andExpect(jsonPath("$._links.self.href", is(BASE_URL + page + size)));
     }
 

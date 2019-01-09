@@ -82,7 +82,7 @@ public class AircraftControllerTest {
         final String aircraftName = "Boeing";
         final Double aircraftWeight = 30000.0;
         final Integer maxPassengers = 2300;
-        setupAircraft(model, aircraftName, aircraftWeight, maxPassengers);
+        Aircraft aircraft = setupAircraft(model, aircraftName, aircraftWeight, maxPassengers);
 
         final String secondModel = "340-750";
         final String secondAircraftName = "SecondTestAircraft";
@@ -95,11 +95,11 @@ public class AircraftControllerTest {
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.aircraftDTOList[0].aircraftId").isNotEmpty())
-                .andExpect(jsonPath("$._embedded.aircraftDTOList[0].model").value(secondModel))
-                .andExpect(jsonPath("$._embedded.aircraftDTOList[0].aircraftName").value(secondAircraftName))
-                .andExpect(jsonPath("$._embedded.aircraftDTOList[0].aircraftWeight").value(secondAircraftWeight))
-                .andExpect(jsonPath("$._embedded.aircraftDTOList[0].maxPassengers").value(secondMaxPassengers))
-                .andExpect(jsonPath("$._embedded.aircraftDTOList[0]._links.self.href", is(BASE_URL + "/" + secondAircraft.getAircraftId())))
+                .andExpect(jsonPath("$._embedded.aircraftDTOList[0].model").value(model))
+                .andExpect(jsonPath("$._embedded.aircraftDTOList[0].aircraftName").value(aircraftName))
+                .andExpect(jsonPath("$._embedded.aircraftDTOList[0].aircraftWeight").value(aircraftWeight))
+                .andExpect(jsonPath("$._embedded.aircraftDTOList[0].maxPassengers").value(maxPassengers))
+                .andExpect(jsonPath("$._embedded.aircraftDTOList[0]._links.self.href", is(BASE_URL + "/" + aircraft.getAircraftId())))
                 .andExpect(jsonPath("$._links.self.href", is(BASE_URL + page + size)));
     }
 
