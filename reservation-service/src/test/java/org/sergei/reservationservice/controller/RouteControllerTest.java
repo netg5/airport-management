@@ -17,7 +17,6 @@
 package org.sergei.reservationservice.controller;
 
 import org.json.JSONObject;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sergei.reservationservice.ReservationServiceApplication;
@@ -66,6 +65,7 @@ public class RouteControllerTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RouteControllerTest.class);
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+
     private static final String BASE_URL = "https://localhost:80/routes";
 
     @Autowired
@@ -114,7 +114,6 @@ public class RouteControllerTest {
                 .andExpect(jsonPath("$._links.self.href", is(BASE_URL)));
     }
 
-    @Ignore
     @Test
     public void getAllRoutesPaginated_thenReturnOk() throws Exception {
         final String page = "?page=1";
@@ -126,12 +125,27 @@ public class RouteControllerTest {
         final Integer maxPassengers = 2300;
         Aircraft aircraft = new Aircraft(model, aircraftName, aircraftWeight, maxPassengers);
 
+        final String secondModel = "747-400";
+        final String secondAircraftName = "Boeing";
+        final Double secondAircraftWeight = 30000.0;
+        final Integer secondMaxPassengers = 2300;
+        Aircraft secondAircraft = new Aircraft(
+                secondModel, secondAircraftName, secondAircraftWeight, secondMaxPassengers);
+
         final Double distance = 3600.0;
         final LocalDateTime departureTime = LocalDateTime.parse("2018-09-28T22:00:00", FORMATTER);
         final LocalDateTime arrivalTime = LocalDateTime.parse("2018-09-28T22:00:00", FORMATTER);
         final BigDecimal price = BigDecimal.valueOf(450.0);
         final String place = "New-York";
         Route route = setupRoute(distance, departureTime, arrivalTime, price, place, aircraft);
+
+        final Double secondDistance = 3600.0;
+        final LocalDateTime secondDepartureTime = LocalDateTime.parse("2018-09-28T22:00:00", FORMATTER);
+        final LocalDateTime secondArrivalTime = LocalDateTime.parse("2018-09-28T22:00:00", FORMATTER);
+        final BigDecimal secondPrice = BigDecimal.valueOf(450.0);
+        final String secondPlace = "New-York";
+        Route secondRoute = setupRoute(
+                secondDistance, secondDepartureTime, secondArrivalTime, secondPrice, secondPlace, secondAircraft);
 
         mvc.perform(
                 get(BASE_URL + page + size)
@@ -143,8 +157,8 @@ public class RouteControllerTest {
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].arrivalTime").value("2018-09-28T22:00:00"))
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].price").value(price))
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].place").value(place))
-                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0]._links.self.href", is(BASE_URL + "/" + route.getRouteId())))
-                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.aircraftId", is(1)))
+                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0]._links.self.href", is(BASE_URL + "/" + secondRoute.getRouteId())))
+                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.aircraftId", is(2)))
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.model").value(model))
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.aircraftName").value(aircraftName))
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.aircraftWeight").value(aircraftWeight))
