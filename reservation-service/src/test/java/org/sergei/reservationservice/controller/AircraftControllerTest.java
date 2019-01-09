@@ -99,7 +99,7 @@ public class AircraftControllerTest {
                 .andExpect(jsonPath("$._embedded.aircraftDTOList[0].aircraftName").value(aircraftName))
                 .andExpect(jsonPath("$._embedded.aircraftDTOList[0].aircraftWeight").value(aircraftWeight))
                 .andExpect(jsonPath("$._embedded.aircraftDTOList[0].maxPassengers").value(maxPassengers))
-                .andExpect(jsonPath("$._embedded.aircraftDTOList[0]._links.self.href", is(BASE_URL + "/" + aircraft.getAircraftId())))
+                .andExpect(jsonPath("$._embedded.aircraftDTOList[0]._links.self.href", is(BASE_URL + "/" + "2")))
                 .andExpect(jsonPath("$._links.self.href", is(BASE_URL + page + size)));
     }
 

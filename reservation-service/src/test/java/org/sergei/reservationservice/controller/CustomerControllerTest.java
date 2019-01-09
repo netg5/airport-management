@@ -93,7 +93,7 @@ public class CustomerControllerTest {
                 .andExpect(jsonPath("$._embedded.customerDTOList[0].firstName").value(firstName))
                 .andExpect(jsonPath("$._embedded.customerDTOList[0].lastName").value(lastName))
                 .andExpect(jsonPath("$._embedded.customerDTOList[0].age").value(age))
-                .andExpect(jsonPath("$._embedded.customerDTOList[0]._links.self.href", is(BASE_URL + "/" + customer.getCustomerId())))
+                .andExpect(jsonPath("$._embedded.customerDTOList[0]._links.self.href", is(BASE_URL + "/3")))
                 .andExpect(jsonPath("$._embedded.customerDTOList[0]._links.reservations.href", is(BASE_URL + "/" + customer.getCustomerId() + RESERVATIONS_PATH)))
                 .andExpect(jsonPath("$._links.self.href", is(BASE_URL + page + size)));
     }
