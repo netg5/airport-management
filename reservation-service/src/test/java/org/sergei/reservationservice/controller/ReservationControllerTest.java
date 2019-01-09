@@ -128,7 +128,7 @@ public class ReservationControllerTest {
                 .andExpect(jsonPath("$._links.self.href", is(BASE_URL + "/1" + RESERVATIONS_PATH)));
     }
 
-    @Ignore
+//    @Ignore
     @Test
     public void getOneReservation_thenReturnOk() throws Exception {
         final String model = "747-400";
@@ -153,7 +153,7 @@ public class ReservationControllerTest {
         Reservation reservation = setupReservation(reservationDate, customer, route);
 
         mvc.perform(
-                get(BASE_URL + "/1")
+                get(BASE_URL + "/1" + RESERVATIONS_PATH)
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.reservationId").isNotEmpty())
