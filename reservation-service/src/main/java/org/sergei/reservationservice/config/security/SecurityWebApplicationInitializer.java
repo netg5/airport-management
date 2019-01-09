@@ -1,4 +1,4 @@
-package org.sergei.ticketservice.security;
+package org.sergei.reservationservice.config.security;
 
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 

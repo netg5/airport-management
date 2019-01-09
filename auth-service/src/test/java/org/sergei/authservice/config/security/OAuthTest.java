@@ -1,4 +1,4 @@
-package org.sergei.authservice.security;
+package org.sergei.authservice.config.security;
 
 import org.junit.Assert;
 import org.junit.Ignore;

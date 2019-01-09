@@ -1,4 +1,4 @@
-package org.sergei.ticketservice.security;
+package org.sergei.reservationservice.config.security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
@@ -7,7 +7,7 @@ import org.springframework.security.config.annotation.method.configuration.Globa
 import org.springframework.security.oauth2.provider.expression.OAuth2MethodSecurityExpressionHandler;
 
 /**
- * This class needs so that it was able to delegate roles fot the API resources.
+ * This class performs role delegation for the API resources.
  * For example allow admin to delete any resource only
  *
  * @author Sergei Visotsky

@@ -1,4 +1,4 @@
-package org.sergei.authservice.security;
+package org.sergei.authservice.config.security;
 
 import org.sergei.authservice.model.User;
 import org.sergei.authservice.service.ApiUserService;
