@@ -158,7 +158,7 @@ public class RouteControllerTest {
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].price").value(price))
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].place").value(place))
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0]._links.self.href", is(BASE_URL + "/3")))
-                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.aircraftId", is(2)))
+                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.aircraftId", is(3)))
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.model").value(model))
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.aircraftName").value(aircraftName))
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.aircraftWeight").value(aircraftWeight))
