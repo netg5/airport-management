@@ -71,7 +71,6 @@ public class AircraftControllerTest {
                 .andExpect(jsonPath("$._embedded.aircraftDTOList[0].maxPassengers").value(maxPassengers))
                 .andExpect(jsonPath("$._embedded.aircraftDTOList[0]._links.self.href", is(BASE_URL + "/1")))
                 .andExpect(jsonPath("$._links.self.href", is(BASE_URL)));
-        aircraftRepository.deleteAll();
     }
 
     @Test
@@ -102,7 +101,6 @@ public class AircraftControllerTest {
                 .andExpect(jsonPath("$._embedded.aircraftDTOList[0].maxPassengers").value(secondMaxPassengers))
                 .andExpect(jsonPath("$._embedded.aircraftDTOList[0]._links.self.href", is(BASE_URL + "/" + secondAircraft.getAircraftId())))
                 .andExpect(jsonPath("$._links.self.href", is(BASE_URL + page + size)));
-        aircraftRepository.deleteAll();
     }
 
     @Test
@@ -124,7 +122,6 @@ public class AircraftControllerTest {
                 .andExpect(jsonPath("$.maxPassengers").value(maxPassengers))
                 .andExpect(jsonPath("$._links.self.href", is(BASE_URL + "/" + aircraft.getAircraftId())))
                 .andExpect(jsonPath("$._links.allAircrafts.href", is(BASE_URL)));
-        aircraftRepository.deleteAll();
     }
 
     @Test
@@ -149,7 +146,6 @@ public class AircraftControllerTest {
                 .andExpect(jsonPath("$.aircraftName").value(aircraftName))
                 .andExpect(jsonPath("$.aircraftWeight").value(aircraftWeight))
                 .andExpect(jsonPath("$.maxPassengers").value(maxPassengers));
-        aircraftRepository.deleteAll();
     }
 
     @Test
@@ -195,7 +191,6 @@ public class AircraftControllerTest {
                 .andExpect(jsonPath("$.aircraftName").value(putAircraft))
                 .andExpect(jsonPath("$.aircraftWeight").value(putAircraftWeight))
                 .andExpect(jsonPath("$.maxPassengers").value(putMaxPassengers));
-        aircraftRepository.deleteAll();
     }
 
     @Test
@@ -241,7 +236,6 @@ public class AircraftControllerTest {
                 .andExpect(jsonPath("$.aircraftName").value(putAircraft))
                 .andExpect(jsonPath("$.aircraftWeight").value(putAircraftWeight))
                 .andExpect(jsonPath("$.maxPassengers").value(putMaxPassengers));
-        aircraftRepository.deleteAll();
     }
 
     @Ignore
@@ -273,7 +267,6 @@ public class AircraftControllerTest {
 
         mvc.perform(delete(BASE_URL + "/" + aircraftId))
                 .andExpect(status().isNoContent());
-        aircraftRepository.deleteAll();
     }
 
     private Aircraft setupAircraft(String model, String aircraftName,
