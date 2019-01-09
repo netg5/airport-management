@@ -18,6 +18,7 @@ package org.sergei.reservationservice.config;
 
 import org.modelmapper.ModelMapper;
 import org.sergei.reservationservice.aop.logging.LoggingAspect;
+import org.sergei.reservationservice.aop.logging.PerformanceAspect;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -31,6 +32,11 @@ import org.springframework.web.filter.CorsFilter;
 @Configuration
 @EnableAspectJAutoProxy
 public class AppConfig {
+
+    @Bean
+    public PerformanceAspect performanceAspect() {
+        return new PerformanceAspect();
+    }
 
     @Bean
     public LoggingAspect loggingAspect() {
