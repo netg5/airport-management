@@ -28,6 +28,8 @@ import org.springframework.stereotype.Component;
 import static org.sergei.reservationservice.util.ObjectMapperUtil.map;
 
 /**
+ * Component to set extended route to the reservations and routes
+ *
  * @author Sergei Visotsky
  */
 @Component
@@ -40,6 +42,12 @@ public class ServiceComponent {
         this.aircraftRepository = aircraftRepository;
     }
 
+    /**
+     * Util method fo set extended route
+     *
+     * @param route model to be mapped into the DTO
+     * @return Route extended DTO
+     */
     public RouteExtendedDTO setExtendedRoute(Route route) {
         RouteExtendedDTO routeExtendedDTO = map(route, RouteExtendedDTO.class);
 
