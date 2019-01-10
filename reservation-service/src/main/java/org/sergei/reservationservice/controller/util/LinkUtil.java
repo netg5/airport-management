@@ -41,7 +41,7 @@ public final class LinkUtil {
     }
 
     /**
-     * Set HATEOAS links for each customer of collection
+     * Set HATEOAS links for each customer in collection
      *
      * @param customerList get collection with customers
      * @return resource with customer
@@ -71,7 +71,7 @@ public final class LinkUtil {
     }
 
     /**
-     * Method to set HATEOAS links for customer
+     * Method to set HATEOAS links for the customer response
      *
      * @param customerDTO get customer DTO to setup links
      * @return customer DTO with links;
@@ -112,7 +112,7 @@ public final class LinkUtil {
 
 
     /**
-     * Set HATEOAS links for each aircraft of collection
+     * Set HATEOAS links for each aircraft in collection
      *
      * @param aircrafts get collection of aircrafts
      * @return collection of aircrafts with links set
@@ -128,7 +128,7 @@ public final class LinkUtil {
     }
 
     /**
-     * Method to set HATEOAS links for aircraft
+     * Method to set HATEOAS links for the aircraft
      *
      * @param aircraftDTO get DTO to setup links
      * @return DTO with links
