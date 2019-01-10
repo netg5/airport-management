@@ -17,8 +17,8 @@
 package org.sergei.reservationservice.config;
 
 import org.modelmapper.ModelMapper;
-import org.sergei.reservationservice.aop.logging.LoggingAspect;
-import org.sergei.reservationservice.aop.logging.PerformanceAspect;
+import org.sergei.reservationservice.aop.LoggingAspect;
+import org.sergei.reservationservice.aop.PerformanceAspect;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;

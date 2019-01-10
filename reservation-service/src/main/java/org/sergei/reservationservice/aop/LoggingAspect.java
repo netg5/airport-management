@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package org.sergei.reservationservice.aop.logging;
+package org.sergei.reservationservice.aop;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
