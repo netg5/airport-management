@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * @param <E> Extended DTO
+ * @param <D> Simple DTO
  * @author Sergei Visotsky
  */
 public interface IReservationService<E, D> {
@@ -56,7 +58,7 @@ public interface IReservationService<E, D> {
     /**
      * Save reservation for customer
      *
-     * @param aLong     Customer ID who made reservation
+     * @param aLong   Customer ID who made reservation
      * @param entityD reservation body
      * @return saved reservation
      */

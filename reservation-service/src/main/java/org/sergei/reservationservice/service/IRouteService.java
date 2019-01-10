@@ -21,6 +21,8 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 /**
+ * @param <D> Simple DTO
+ * @param <E> Extended DTO
  * @author Sergei Visotsky
  */
 public interface IRouteService<D, E> extends IService<D> {

@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * @param <D> Simple DTO
  * @author Sergei Visotsky
  */
 public interface IService<D> {
@@ -61,7 +62,7 @@ public interface IService<D> {
     /**
      * Update all data fro entity
      *
-     * @param aLong     entity ID to beupdated
+     * @param aLong   entity ID to beupdated
      * @param entityD updated entity body
      * @return updated entity
      */
