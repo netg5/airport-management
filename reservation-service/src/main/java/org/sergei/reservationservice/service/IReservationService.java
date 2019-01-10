@@ -24,7 +24,7 @@ import java.util.Map;
 /**
  * @author Sergei Visotsky
  */
-public interface IReservationService<EXTENDED_DTO, DTO> {
+public interface IReservationService<E, D> {
 
     /**
      * Find one reservation for customer
@@ -33,7 +33,7 @@ public interface IReservationService<EXTENDED_DTO, DTO> {
      * @param reservationId reservation ID
      * @return reservation entity
      */
-    EXTENDED_DTO findOneForCustomer(Long customerId, Long reservationId);
+    E findOneForCustomer(Long customerId, Long reservationId);
 
     /**
      * Find all reservations for customer
@@ -41,7 +41,7 @@ public interface IReservationService<EXTENDED_DTO, DTO> {
      * @param customerId customer ID to find reservations
      * @return list of reservations
      */
-    List<EXTENDED_DTO> findAllForCustomer(Long customerId);
+    List<E> findAllForCustomer(Long customerId);
 
     /**
      * Find all reservations for customer paginated
@@ -51,16 +51,16 @@ public interface IReservationService<EXTENDED_DTO, DTO> {
      * @param size       number of elements per page
      * @return collection of entities
      */
-    Page<EXTENDED_DTO> findAllForCustomerPaginated(Long customerId, int page, int size);
+    Page<E> findAllForCustomerPaginated(Long customerId, int page, int size);
 
     /**
      * Save reservation for customer
      *
      * @param aLong     Customer ID who made reservation
-     * @param entityDTO reservation body
+     * @param entityD reservation body
      * @return saved reservation
      */
-    DTO saveReservation(Long aLong, DTO entityDTO);
+    D saveReservation(Long aLong, D entityD);
 
     /**
      * Update reservation details
@@ -70,7 +70,7 @@ public interface IReservationService<EXTENDED_DTO, DTO> {
      * @param params        Field(-s) to be patched
      * @return patched reservation
      */
-    DTO updateReservation(Long customerId, Long reservationId, Map<String, Object> params);
+    D updateReservation(Long customerId, Long reservationId, Map<String, Object> params);
 
     /**
      * Method to delete reservation
@@ -79,5 +79,5 @@ public interface IReservationService<EXTENDED_DTO, DTO> {
      * @param reservationId made reservation ID
      * @return deleted reservation entity
      */
-    DTO deleteReservation(Long customerId, Long reservationId);
+    D deleteReservation(Long customerId, Long reservationId);
 }

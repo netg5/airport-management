@@ -24,7 +24,7 @@ import java.util.Map;
 /**
  * @author Sergei Visotsky
  */
-public interface IService<DTO> {
+public interface IService<D> {
 
     /**
      * Find one entity by ID
@@ -32,14 +32,14 @@ public interface IService<DTO> {
      * @param aLong entity ID
      * @return entity found
      */
-    DTO findOne(Long aLong);
+    D findOne(Long aLong);
 
     /**
      * Find all entities
      *
      * @return list of entities
      */
-    List<DTO> findAll();
+    List<D> findAll();
 
     /**
      * Find all entities paginated
@@ -48,24 +48,24 @@ public interface IService<DTO> {
      * @param size quantity of elements per page
      * @return page of entities
      */
-    Page<DTO> findAllPaginated(int page, int size);
+    Page<D> findAllPaginated(int page, int size);
 
     /**
      * Save entity
      *
-     * @param entityDTO entity data t o be saved
+     * @param entityD entity data t o be saved
      * @return saved entity data
      */
-    DTO save(DTO entityDTO);
+    D save(D entityD);
 
     /**
      * Update all data fro entity
      *
      * @param aLong     entity ID to beupdated
-     * @param entityDTO updated entity body
+     * @param entityD updated entity body
      * @return updated entity
      */
-    DTO update(Long aLong, DTO entityDTO);
+    D update(Long aLong, D entityD);
 
     /**
      * Patch one or multiple fields of one entity
@@ -74,7 +74,7 @@ public interface IService<DTO> {
      * @param params fields to be patched
      * @return patched entity
      */
-    DTO patch(Long aLong, Map<String, Object> params);
+    D patch(Long aLong, Map<String, Object> params);
 
     /**
      * Delete entity by ID
@@ -82,5 +82,5 @@ public interface IService<DTO> {
      * @param aLong ID of the entity to be deleted
      * @return deleted entity body
      */
-    DTO delete(Long aLong);
+    D delete(Long aLong);
 }
