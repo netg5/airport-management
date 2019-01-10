@@ -20,6 +20,7 @@
         <module>zuul-gateway</module>
         <module>reservation-service</module>
         <module>ticket-service</module>
+        <module>report-service</module>
         <module>flight-reservation-ui</module>
     </modules>
 
