@@ -27,5 +27,5 @@ public final class Constants {
     private Constants() {
     }
 
-    public static final String AIRCRAFT_NOT_FOUND = "Aircraft with this ID not found report cannot be made";
+    public static final String AIRCRAFT_NOT_FOUND = "Aircraft is not found in any route, report cannot be made";
 }

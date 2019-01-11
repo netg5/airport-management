@@ -55,17 +55,7 @@ public final class LinkUtil {
                     methodOn(AircraftReportController.class)
                             .findByAircraftId(aircraftReportDTO.getAircraftId())).withRel("aircraft");
             aircraftReportDTO.add(link);
-            List<Reservation> reservationList = aircraftReportDTO.getReservationList();
-
-            int index = 0;
-
-            for (Reservation reservation : reservationList) {
-                Link reservationLink = new Link(
-                        "https://127.0.0.1:" + GatewayPortPojo.GATEWAY_PORT + "/reservation-api/customers/" +
-                                aircraftReportDTO.getReservationList().get(index).getReservationId()).withRel("reportSelf");
-                reservation.add(reservationLink);
-                index++;
-            }
+            setLinksForEachReservation(aircraftReportDTO);
         });
         return setServletResourceLinks(aircraftReports);
     }
@@ -77,6 +67,7 @@ public final class LinkUtil {
      * @return DTO with links set
      */
     public static AircraftReportDTO setLinksForAircraftReport(AircraftReportDTO aircraftReportDTO) {
+        setLinksForEachReservation(aircraftReportDTO);
         Link selfLink = linkTo(
                 methodOn(AircraftReportController.class)
                         .findByAircraftId(aircraftReportDTO.getAircraftId())).withRel("aircraftSelf");
@@ -84,6 +75,20 @@ public final class LinkUtil {
         aircraftReportDTO.add(selfLink);
         aircraftReportDTO.add(link);
         return aircraftReportDTO;
+    }
+
+    private static void setLinksForEachReservation(AircraftReportDTO aircraftReportDTO) {
+        List<Reservation> reservationList = aircraftReportDTO.getReservationList();
+
+        int index = 0;
+
+        for (Reservation reservation : reservationList) {
+            Link reservationLink = new Link(
+                    "https://127.0.0.1:" + GatewayPortPojo.GATEWAY_PORT + "/reservation-api/customers/" +
+                            aircraftReportDTO.getReservationList().get(index).getReservationId()).withRel("reportSelf");
+            reservation.add(reservationLink);
+            index++;
+        }
     }
 
     /**
