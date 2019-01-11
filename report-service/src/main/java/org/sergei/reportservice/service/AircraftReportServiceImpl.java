@@ -46,6 +46,13 @@ public class AircraftReportServiceImpl implements AircraftReportService<Aircraft
         this.reservationRepository = reservationRepository;
     }
 
+    /**
+     * Find all existing reports
+     *
+     * @param page number of page to ssow
+     * @param size number of elements per page
+     * @return list of existing reports
+     */
     @Override
     public Page<AircraftReportDTO> findAll(int page, int size) {
         Page<AircraftReport> aircraftReports =
@@ -62,6 +69,12 @@ public class AircraftReportServiceImpl implements AircraftReportService<Aircraft
         return aircraftReportDTOS;
     }
 
+    /**
+     * Find one report by ID
+     *
+     * @param id identity of the report that should be found
+     * @return Report entity
+     */
     @Override
     public AircraftReportDTO findById(Long aircraftId) {
         AircraftReport aircraftReport = aircraftReportRepository.findById(aircraftId)

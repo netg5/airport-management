@@ -18,6 +18,7 @@ package org.sergei.reportservice.config;
 
 import org.modelmapper.ModelMapper;
 import org.sergei.reportservice.aop.LoggingAspect;
+import org.sergei.reportservice.aop.PerformanceAspect;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -35,6 +36,11 @@ public class AppConfig {
     @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();
+    }
+
+    @Bean
+    public PerformanceAspect performanceAspect() {
+        return new PerformanceAspect();
     }
 
     @Bean

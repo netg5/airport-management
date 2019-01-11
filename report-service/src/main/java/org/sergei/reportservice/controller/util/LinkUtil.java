@@ -18,7 +18,10 @@ package org.sergei.reportservice.controller.util;
 
 import org.sergei.reportservice.controller.AircraftReportController;
 import org.sergei.reportservice.dto.AircraftReportDTO;
+import org.springframework.data.domain.Page;
 import org.springframework.hateoas.Link;
+import org.springframework.hateoas.Resources;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -33,6 +36,28 @@ public final class LinkUtil {
     private LinkUtil() {
     }
 
+    /**
+     * Set links for each report in collection
+     *
+     * @param aircraftReports collection of reports
+     * @return collection with links set
+     */
+    public static Resources setLinksForAllReports(Page<AircraftReportDTO> aircraftReports) {
+        aircraftReports.forEach(aircraftReportDTO -> {
+            Link link = linkTo(
+                    methodOn(AircraftReportController.class)
+                            .findByAircraftId(aircraftReportDTO.getAircraftId())).withSelfRel();
+            aircraftReportDTO.add(link);
+        });
+        return setServletResourceLinks(aircraftReports);
+    }
+
+    /**
+     * Set link for required report
+     *
+     * @param aircraftReportDTO Report DTO to set links
+     * @return DTO with links set
+     */
     public static AircraftReportDTO setLinksForAircraftReport(AircraftReportDTO aircraftReportDTO) {
         Link selfLink = linkTo(
                 methodOn(AircraftReportController.class)
@@ -41,5 +66,19 @@ public final class LinkUtil {
         aircraftReportDTO.add(selfLink);
         aircraftReportDTO.add(link);
         return aircraftReportDTO;
+    }
+
+    /**
+     * Set HATEOAS links from servlet context
+     *
+     * @param collection collection of entities
+     * @param <E>        Generic entity
+     * @return resource with links set
+     */
+    private static <E> Resources setServletResourceLinks(Iterable<E> collection) {
+        Resources<E> resources = new Resources<>(collection);
+        String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
+        resources.add(new Link(uriString, "self"));
+        return resources;
     }
 }

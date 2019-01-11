@@ -23,11 +23,14 @@ import org.sergei.reportservice.service.AircraftReportServiceImpl;
 import org.sergei.reportservice.service.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import static org.sergei.reportservice.controller.util.LinkUtil.setLinksForAircraftReport;
+import static org.sergei.reportservice.controller.util.LinkUtil.setLinksForAllReports;
 
 /**
  * @author Sergei Visotsky
@@ -38,6 +41,7 @@ import static org.sergei.reportservice.controller.util.LinkUtil.setLinksForAircr
 )
 @RestController
 @RequestMapping("/aircraft")
+@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 public class AircraftReportController {
 
     private final AircraftReportService<AircraftReportDTO> aircraftReportService;
@@ -47,16 +51,23 @@ public class AircraftReportController {
         this.aircraftReportService = aircraftReportService;
     }
 
-    @ApiOperation("Get all existing reports in paginated way")
+    @ApiOperation(
+            value = "Get all existing reports in paginated way",
+            notes = "Operation allowed for the ROLE_ADMIN only"
+    )
     @GetMapping(params = {"page", "size"})
-    public ResponseEntity<Page<AircraftReportDTO>> findAllReports(@ApiParam("Number of the page to show")
-                                                                  @RequestParam("page") int page,
-                                                                  @ApiParam("Number of elements per page")
-                                                                  @RequestParam("size") int size) {
-        return new ResponseEntity<>(aircraftReportService.findAll(page, size), HttpStatus.OK);
+    public ResponseEntity<Resources> findAllReports(@ApiParam("Number of the page to show")
+                                                    @RequestParam("page") int page,
+                                                    @ApiParam("Number of elements per page")
+                                                    @RequestParam("size") int size) {
+        Page<AircraftReportDTO> aircraftReports = aircraftReportService.findAll(page, size);
+        return new ResponseEntity<>(setLinksForAllReports(aircraftReports), HttpStatus.OK);
     }
 
-    @ApiOperation("Get report for the aircraft by ID")
+    @ApiOperation(
+            value = "Get report for the aircraft by ID",
+            notes = "Operation allowed for the ROLE_ADMIN only"
+    )
     @ApiResponses(
             @ApiResponse(code = 404, message = Constants.AIRCRAFT_NOT_FOUND)
     )
