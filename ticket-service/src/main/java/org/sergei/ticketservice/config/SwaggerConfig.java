@@ -16,6 +16,7 @@
 
 package org.sergei.ticketservice.config;
 
+import org.sergei.ticketservice.util.GatewayPortPojo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -53,17 +54,13 @@ public class SwaggerConfig {
     @Value("${security.oauth2.access-token-uri}")
     private String authServer;
 
-    @Value("${spring.getaway.port}")
-    private int port;
-
     private static final String CLIENT_SECRET = "client_secret";
 
     @Bean
     public Docket api() {
-        LOGGER.debug("Server port id: {}", port);
         return new Docket(DocumentationType.SWAGGER_2)
                 .pathMapping(contextPath)
-                .host("localhost:" + port)
+                .host("localhost:" + GatewayPortPojo.GATEWAY_PORT)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("org.sergei.ticketservice.controller"))
                 .paths(PathSelectors.any())

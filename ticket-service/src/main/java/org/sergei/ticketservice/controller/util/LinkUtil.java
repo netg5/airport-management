@@ -17,6 +17,7 @@
 package org.sergei.ticketservice.controller.util;
 
 import org.sergei.ticketservice.model.Ticket;
+import org.sergei.ticketservice.util.GatewayPortPojo;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resources;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -43,7 +44,7 @@ public final class LinkUtil {
         Resources<Ticket> resources = new Resources<>(ticketList);
         String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
         resources.add(new Link(uriString, "self"));
-        resources.add(new Link("http://127.0.0.1:9090/flight-api/customers/" + customerId, "customer"));
+        resources.add(new Link("http://127.0.0.1:" + GatewayPortPojo.GATEWAY_PORT + "/flight-api/customers/" + customerId, "customer"));
         return resources;
     }
 }

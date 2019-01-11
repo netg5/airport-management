@@ -21,7 +21,7 @@ import org.sergei.reservationservice.controller.CustomerController;
 import org.sergei.reservationservice.controller.ReservationController;
 import org.sergei.reservationservice.controller.RouteController;
 import org.sergei.reservationservice.dto.*;
-import org.sergei.reservationservice.dto.CustomerIdsDTO;
+import org.sergei.reservationservice.util.GatewayPortPojo;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resources;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -55,7 +55,7 @@ public final class LinkUtil {
                     methodOn(ReservationController.class)
                             .getAllForCustomer(customer.getCustomerId())).withRel("reservations");
             Link ticketsLink = new Link(
-                    "https://127.0.0.1:9090/ticket-api/tickets?customerId=" + customer.getCustomerId()).withRel("tickets");
+                    "https://127.0.0.1:" + GatewayPortPojo.GATEWAY_PORT + "/ticket-api/tickets?customerId=" + customer.getCustomerId()).withRel("tickets");
             customer.add(link);
             customer.add(reservationsLink);
             customer.add(ticketsLink);
@@ -84,7 +84,8 @@ public final class LinkUtil {
                 methodOn(ReservationController.class)
                         .getAllForCustomer(customerDTO.getCustomerId())).withRel("reservations");
         Link ticketsLink = new Link(
-                "http://127.0.0.1:8080/ticket-api/tickets?customerId=" + customerDTO.getCustomerId()).withRel("tickets");
+                "http://127.0.0.1:" + GatewayPortPojo.GATEWAY_PORT + "/ticket-api/tickets?customerId=" +
+                        customerDTO.getCustomerId()).withRel("tickets");
         Link link = linkTo(CustomerController.class).withRel("allCustomers");
         customerDTO.add(selfLink);
         customerDTO.add(reservationsLink);

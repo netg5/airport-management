@@ -18,8 +18,10 @@ package org.sergei.reportservice.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Immutable;
+import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,12 +33,13 @@ import java.time.LocalDateTime;
  * @author Sergei Visotsky
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "reservation")
 @Immutable
-public class Reservation {
+public class Reservation extends ResourceSupport {
 
     @Id
     @Column(name = "reservation_id")

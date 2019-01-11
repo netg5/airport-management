@@ -53,7 +53,7 @@ public class SwaggerConfig {
     @Value("${security.oauth2.access-token-uri}")
     private String authServer;
 
-    @Value("${spring.getaway.port}")
+    @Value("${spring.gateway.port}")
     private int port;
 
     private static final String CLIENT_SECRET = "client_secret";

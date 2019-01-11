@@ -18,10 +18,16 @@ package org.sergei.reportservice.controller.util;
 
 import org.sergei.reportservice.controller.AircraftReportController;
 import org.sergei.reportservice.dto.AircraftReportDTO;
+import org.sergei.reportservice.model.Reservation;
+import org.sergei.reportservice.util.GatewayPortPojo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resources;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.util.List;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -33,6 +39,8 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
  */
 public final class LinkUtil {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(LinkUtil.class);
+
     private LinkUtil() {
     }
 
@@ -43,11 +51,23 @@ public final class LinkUtil {
      * @return collection with links set
      */
     public static Resources setLinksForAllReports(Page<AircraftReportDTO> aircraftReports) {
+        LOGGER.debug("Gateway port is: {}", GatewayPortPojo.GATEWAY_PORT);
         aircraftReports.forEach(aircraftReportDTO -> {
             Link link = linkTo(
                     methodOn(AircraftReportController.class)
                             .findByAircraftId(aircraftReportDTO.getAircraftId())).withSelfRel();
             aircraftReportDTO.add(link);
+            List<Reservation> reservationList = aircraftReportDTO.getReservationList();
+
+            int index = 0;
+
+            for (Reservation reservation : reservationList) {
+                Link reservationLink = new Link(
+                        "https://127.0.0.1:" + GatewayPortPojo.GATEWAY_PORT +"/reservation-api/customers/" +
+                                aircraftReportDTO.getReservationList().get(index).getReservationId()).withSelfRel();
+                reservation.add(reservationLink);
+                index++;
+            }
         });
         return setServletResourceLinks(aircraftReports);
     }
