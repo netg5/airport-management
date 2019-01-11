@@ -232,9 +232,8 @@ docker inspect CONTAINER_NAME
 NOTE: `config-service` and `eureka-service` should be run first due to all the configs are stored in the separate repository
 
 ## TODO
-1. Create aircraft report endpoint where is can be see in which reservations and routes it is mentioned
-2. Adopt liquibase for unit tests
-3. Implement Hystrix fallback methods
-4. SSL for the Eureka and Config servers
-5. Ignore services without swagger json in doc-service
-6. Develop Front-end using Angular
+1. Adopt liquibase for unit tests
+2. Implement Hystrix fallback methods
+3. SSL for the Eureka and Config servers
+4. Ignore services without swagger json in doc-service
+5. Develop Front-end using Angular
