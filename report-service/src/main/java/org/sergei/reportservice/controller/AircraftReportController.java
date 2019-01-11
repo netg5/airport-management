@@ -16,9 +16,11 @@
 
 package org.sergei.reportservice.controller;
 
+import io.swagger.annotations.*;
 import org.sergei.reportservice.dto.AircraftReportDTO;
 import org.sergei.reportservice.service.AircraftReportService;
 import org.sergei.reportservice.service.AircraftReportServiceImpl;
+import org.sergei.reportservice.service.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -30,6 +32,10 @@ import static org.sergei.reportservice.controller.util.LinkUtil.setLinksForAircr
 /**
  * @author Sergei Visotsky
  */
+@Api(
+        value = "/report-api/aircraft",
+        produces = "application/json"
+)
 @RestController
 @RequestMapping("/aircraft")
 public class AircraftReportController {
@@ -41,14 +47,22 @@ public class AircraftReportController {
         this.aircraftReportService = aircraftReportService;
     }
 
+    @ApiOperation("Get all existing reports in paginated way")
     @GetMapping(params = {"page", "size"})
-    public ResponseEntity<Page<AircraftReportDTO>> findAllReports(@RequestParam("page") int page,
+    public ResponseEntity<Page<AircraftReportDTO>> findAllReports(@ApiParam("Number of the page to show")
+                                                                  @RequestParam("page") int page,
+                                                                  @ApiParam("Number of elements per page")
                                                                   @RequestParam("size") int size) {
         return new ResponseEntity<>(aircraftReportService.findAll(page, size), HttpStatus.OK);
     }
 
+    @ApiOperation("Get report for the aircraft by ID")
+    @ApiResponses(
+            @ApiResponse(code = 404, message = Constants.AIRCRAFT_NOT_FOUND)
+    )
     @GetMapping("/{aircraftId}")
-    public ResponseEntity<AircraftReportDTO> findByAircraftId(@PathVariable("aircraftId") Long aircraftId) {
+    public ResponseEntity<AircraftReportDTO> findByAircraftId(@ApiParam("Aircraft ID to find the report")
+                                                              @PathVariable("aircraftId") Long aircraftId) {
         AircraftReportDTO aircraftReportDTO = aircraftReportService.findById(aircraftId);
         return new ResponseEntity<>(setLinksForAircraftReport(aircraftReportDTO), HttpStatus.OK);
     }

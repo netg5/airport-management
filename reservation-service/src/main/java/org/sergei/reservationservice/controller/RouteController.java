@@ -20,6 +20,7 @@ import io.swagger.annotations.*;
 import org.sergei.reservationservice.dto.RouteDTO;
 import org.sergei.reservationservice.dto.RouteExtendedDTO;
 import org.sergei.reservationservice.service.RouteService;
+import org.sergei.reservationservice.service.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.hateoas.Resources;
@@ -73,7 +74,7 @@ public class RouteController {
     @ApiOperation("Get route by ID")
     @ApiResponses(
             value = {
-                    @ApiResponse(code = 404, message = "Route with this ID not found")
+                    @ApiResponse(code = 404, message = Constants.ROUTE_NOT_FOUND)
             }
     )
     @GetMapping("/{routeId}")
@@ -86,7 +87,7 @@ public class RouteController {
     @ApiOperation(value = "Save route", notes = "Operation allowed for the ROLE_ADMIN only")
     @ApiResponses(
             value = {
-                    @ApiResponse(code = 404, message = "Aircraft with this ID not found")
+                    @ApiResponse(code = 404, message = Constants.AIRCRAFT_NOT_FOUND)
             }
     )
     @PostMapping(consumes = "application/json")
@@ -131,7 +132,7 @@ public class RouteController {
     @ApiOperation(value = "Method to delete route", notes = "Operation allowed for the ROLE_ADMIN only")
     @ApiResponses(
             value = {
-                    @ApiResponse(code = 404, message = "Route with this ID not found")
+                    @ApiResponse(code = 404, message = Constants.ROUTE_NOT_FOUND)
             }
     )
     @DeleteMapping("/{routeId}")

@@ -21,7 +21,7 @@ package org.sergei.ticketservice.service;
  *
  * @author Sergei Visotsky
  */
-final class Constants {
+public final class Constants {
 
     /**
      * Hide from the public access
@@ -29,6 +29,6 @@ final class Constants {
     private Constants() {
     }
 
-    static final String TICKETS_NOT_FOUND = "Customer has no tickets";
-    static final String CUSTOMER_NOT_FOUND = "Customer with this ID not found";
+    public static final String TICKETS_NOT_FOUND = "Customer has no tickets";
+    public static final String CUSTOMER_NOT_FOUND = "Customer with this ID not found";
 }

@@ -20,6 +20,7 @@ import io.swagger.annotations.*;
 import org.sergei.reservationservice.dto.CustomerDTO;
 import org.sergei.reservationservice.dto.CustomerIdsDTO;
 import org.sergei.reservationservice.service.CustomerService;
+import org.sergei.reservationservice.service.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.hateoas.Resources;
@@ -89,7 +90,7 @@ public class CustomerController {
     @ApiOperation("Get customer by ID")
     @ApiResponses(
             value = {
-                    @ApiResponse(code = 404, message = "Customer with this ID not found")
+                    @ApiResponse(code = 404, message = Constants.CUSTOMER_NOT_FOUND)
             }
     )
     @GetMapping("/{customerId}")
@@ -109,7 +110,7 @@ public class CustomerController {
     @ApiOperation("Update customer data")
     @ApiResponses(
             value = {
-                    @ApiResponse(code = 404, message = "Customer with this ID not found")
+                    @ApiResponse(code = 404, message = Constants.CUSTOMER_NOT_FOUND)
             }
     )
     @PutMapping(value = "/{customerId}", consumes = "application/json")
@@ -124,7 +125,7 @@ public class CustomerController {
     @ApiOperation("Update one field for a customer")
     @ApiResponses(
             value = {
-                    @ApiResponse(code = 404, message = "Customer with this ID not found")
+                    @ApiResponse(code = 404, message = Constants.CUSTOMER_NOT_FOUND)
             }
     )
     @PatchMapping(value = "/{customerId}/patch", consumes = "application/json")
@@ -138,7 +139,7 @@ public class CustomerController {
     @ApiOperation(value = "Delete customer data", notes = "Operation allowed for the ROLE_ADMIN only")
     @ApiResponses(
             value = {
-                    @ApiResponse(code = 404, message = "Customer with this ID not found")
+                    @ApiResponse(code = 404, message = Constants.CUSTOMER_NOT_FOUND)
             }
     )
     @DeleteMapping(value = "/{customerId}")

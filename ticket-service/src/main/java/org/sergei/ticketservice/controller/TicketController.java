@@ -18,6 +18,7 @@ package org.sergei.ticketservice.controller;
 
 import io.swagger.annotations.*;
 import org.sergei.ticketservice.model.Ticket;
+import org.sergei.ticketservice.service.Constants;
 import org.sergei.ticketservice.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -53,7 +54,7 @@ public class TicketController {
 
     @ApiOperation("Get ticket for customer by ID")
     @ApiResponses({
-            @ApiResponse(code = 404, message = "Customer has no tickets")
+            @ApiResponse(code = 404, message = Constants.TICKETS_NOT_FOUND)
     })
     @GetMapping
     public ResponseEntity<Resources<Ticket>> findAllTickets(@ApiParam(value = "Customer ID whose ticket should be found", required = true)
