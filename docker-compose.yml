@@ -169,7 +169,7 @@ services:
     networks:
       - spring-cloud-network
     volumes:
-      - flight-reservation-zuul-gateway:/var/lib/flight-reservation/report-service
+      - flight-reservation-report-service:/var/lib/flight-reservation/report-service
     links:
       - config-service:config-service
       - eureka-service:eureka-service
