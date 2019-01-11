@@ -20,8 +20,6 @@ import org.sergei.reportservice.controller.AircraftReportController;
 import org.sergei.reportservice.dto.AircraftReportDTO;
 import org.sergei.reportservice.model.Reservation;
 import org.sergei.reportservice.util.GatewayPortPojo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resources;
@@ -39,8 +37,9 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
  */
 public final class LinkUtil {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(LinkUtil.class);
-
+    /**
+     * Hide from the public use
+     */
     private LinkUtil() {
     }
 
@@ -51,7 +50,6 @@ public final class LinkUtil {
      * @return collection with links set
      */
     public static Resources setLinksForAllReports(Page<AircraftReportDTO> aircraftReports) {
-        LOGGER.debug("Gateway port is: {}", GatewayPortPojo.GATEWAY_PORT);
         aircraftReports.forEach(aircraftReportDTO -> {
             Link link = linkTo(
                     methodOn(AircraftReportController.class)
@@ -63,8 +61,8 @@ public final class LinkUtil {
 
             for (Reservation reservation : reservationList) {
                 Link reservationLink = new Link(
-                        "https://127.0.0.1:" + GatewayPortPojo.GATEWAY_PORT +"/reservation-api/customers/" +
-                                aircraftReportDTO.getReservationList().get(index).getReservationId()).withSelfRel();
+                        "https://127.0.0.1:" + GatewayPortPojo.GATEWAY_PORT + "/reservation-api/customers/" +
+                                aircraftReportDTO.getReservationList().get(index).getReservationId()).withRel("reportSelf");
                 reservation.add(reservationLink);
                 index++;
             }
@@ -81,7 +79,7 @@ public final class LinkUtil {
     public static AircraftReportDTO setLinksForAircraftReport(AircraftReportDTO aircraftReportDTO) {
         Link selfLink = linkTo(
                 methodOn(AircraftReportController.class)
-                        .findByAircraftId(aircraftReportDTO.getAircraftId())).withSelfRel();
+                        .findByAircraftId(aircraftReportDTO.getAircraftId())).withRel("aircraftSelf");
         Link link = linkTo(AircraftReportController.class).withRel("allReports");
         aircraftReportDTO.add(selfLink);
         aircraftReportDTO.add(link);

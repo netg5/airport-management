@@ -6,4 +6,4 @@ spring:
       enabled: true
       discovery:
         enabled: true
-        service-id: report-service
+        service-id: config-service
