@@ -154,6 +154,31 @@ services:
     logging:
       driver: json-file
     command: mvn clean package spring-boot:repackage
+  report-service:
+    container_name: report-service
+    build:
+      context: report-service
+      dockerfile: Dockerfile
+    image: report-service:latest
+    environment:
+      SPRING_APPLICATION_JSON: '{"spring": {"cloud": {"config": {"uri": "https://localhost:9095"}}}}'
+    expose:
+      - 9095
+    ports:
+      - 9095:9095
+    networks:
+      - spring-cloud-network
+    volumes:
+      - flight-reservation-zuul-gateway:/var/lib/flight-reservation/report-service
+    links:
+      - config-service:config-service
+      - eureka-service:eureka-service
+    depends_on:
+      - config-service
+      - eureka-service
+    logging:
+      driver: json-file
+    command: mvn clean package spring-boot:repackage
 networks:
   spring-cloud-network:
     driver: bridge
