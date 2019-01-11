@@ -32,6 +32,8 @@ spring:
         hbm2ddl:
           auto: update
         generate-ddl: true
+  liquibase:
+    enabled: false
   getaway:
     port: 9090
 eureka:
