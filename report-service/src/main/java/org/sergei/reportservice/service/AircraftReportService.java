@@ -16,48 +16,28 @@
 
 package org.sergei.reportservice.service;
 
-import org.sergei.reportservice.dto.AircraftReportDTO;
-import org.sergei.reportservice.exceptions.ResourceNotFoundException;
-import org.sergei.reportservice.model.AircraftReport;
-import org.sergei.reportservice.model.Reservation;
-import org.sergei.reportservice.repository.AircraftReportRepository;
-import org.sergei.reportservice.repository.ReservationRepository;
-import org.sergei.reportservice.util.ObjectMapperUtil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 /**
+ * @param <D> Data Transfer Object
  * @author Sergei Visotsky
  */
-@Service
-public class AircraftReportService implements IReportService<AircraftReportDTO> {
+public interface AircraftReportService<D> {
 
-    private final AircraftReportRepository aircraftReportRepository;
-    private final ReservationRepository reservationRepository;
+    /**
+     * Find all existing reports
+     *
+     * @param page number of page to ssow
+     * @param size number of elements per page
+     * @return list of existing reports
+     */
+    Page<D> findAll(int page, int size);
 
-    @Autowired
-    public AircraftReportService(AircraftReportRepository aircraftReportRepository,
-                                 ReservationRepository reservationRepository) {
-        this.aircraftReportRepository = aircraftReportRepository;
-        this.reservationRepository = reservationRepository;
-    }
-
-    @Override
-    public List<AircraftReportDTO> findAll() {
-        return null;
-    }
-
-    @Override
-    public AircraftReportDTO findById(Long aircraftId) {
-        AircraftReport aircraftReport = aircraftReportRepository.findById(aircraftId)
-                .orElseThrow(
-                        () -> new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
-                );
-        List<Reservation> reservationList = reservationRepository.findByRouteId(aircraftReport.getRouteId());
-        AircraftReportDTO aircraftReportDTO = ObjectMapperUtil.map(aircraftReport, AircraftReportDTO.class);
-        aircraftReportDTO.setReservationList(reservationList);
-        return aircraftReportDTO;
-    }
+    /**
+     * Find one report by ID
+     *
+     * @param id identity of the report that should be found
+     * @return Report entity
+     */
+    D findById(Long id);
 }

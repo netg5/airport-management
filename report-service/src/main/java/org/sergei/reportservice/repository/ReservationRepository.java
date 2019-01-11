@@ -30,5 +30,5 @@ import java.util.List;
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 
     @Query(value = "select * from reservation r join aircraft_report_view ar on r.route_id = ar.route_id", nativeQuery = true)
-    List<Reservation> findByRouteId(Long aircraftId);
+    List<Reservation> findAllByRouteId(Long routeId);
 }

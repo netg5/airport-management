@@ -18,8 +18,10 @@ package org.sergei.reportservice.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.sergei.reportservice.model.Reservation;
+import org.springframework.hateoas.ResourceSupport;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -28,13 +30,14 @@ import java.util.List;
  * @author Sergei Visotsky
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class AircraftReportDTO {
+public class AircraftReportDTO extends ResourceSupport {
     private Long aircraftId;
     private String aircraftName;
     private String model;
-    private String routeId;
+    private Long routeId;
     private Double distance;
     private String place;
     private BigDecimal price;

@@ -18,28 +18,38 @@ package org.sergei.reportservice.controller;
 
 import org.sergei.reportservice.dto.AircraftReportDTO;
 import org.sergei.reportservice.service.AircraftReportService;
+import org.sergei.reportservice.service.AircraftReportServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import static org.sergei.reportservice.controller.util.LinkUtil.setLinksForAircraftReport;
 
 /**
  * @author Sergei Visotsky
  */
 @RestController
+@RequestMapping("/aircraft")
 public class AircraftReportController {
 
-    private final AircraftReportService aircraftReportService;
+    private final AircraftReportService<AircraftReportDTO> aircraftReportService;
 
     @Autowired
-    public AircraftReportController(AircraftReportService aircraftReportService) {
+    public AircraftReportController(AircraftReportServiceImpl aircraftReportService) {
         this.aircraftReportService = aircraftReportService;
     }
 
-    @GetMapping("/aircraft/{aircraftId}")
+    @GetMapping(params = {"page", "size"})
+    public ResponseEntity<Page<AircraftReportDTO>> findAllReports(@RequestParam("page") int page,
+                                                                  @RequestParam("size") int size) {
+        return new ResponseEntity<>(aircraftReportService.findAll(page, size), HttpStatus.OK);
+    }
+
+    @GetMapping("/{aircraftId}")
     public ResponseEntity<AircraftReportDTO> findByAircraftId(@PathVariable("aircraftId") Long aircraftId) {
-        return new ResponseEntity<>(aircraftReportService.findById(aircraftId), HttpStatus.OK);
+        AircraftReportDTO aircraftReportDTO = aircraftReportService.findById(aircraftId);
+        return new ResponseEntity<>(setLinksForAircraftReport(aircraftReportDTO), HttpStatus.OK);
     }
 }
