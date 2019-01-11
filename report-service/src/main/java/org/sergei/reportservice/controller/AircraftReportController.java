@@ -38,7 +38,7 @@ public class AircraftReportController {
         this.aircraftReportService = aircraftReportService;
     }
 
-    @GetMapping("/aircrafts/{aircraftId}")
+    @GetMapping("/aircraft/{aircraftId}")
     public ResponseEntity<AircraftReportDTO> findByAircraftId(@PathVariable("aircraftId") Long aircraftId) {
         return new ResponseEntity<>(aircraftReportService.findById(aircraftId), HttpStatus.OK);
     }
