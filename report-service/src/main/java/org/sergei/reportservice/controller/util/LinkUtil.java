@@ -53,7 +53,7 @@ public final class LinkUtil {
         aircraftReports.forEach(aircraftReportDTO -> {
             Link link = linkTo(
                     methodOn(AircraftReportController.class)
-                            .findByAircraftId(aircraftReportDTO.getAircraftId())).withSelfRel();
+                            .findByAircraftId(aircraftReportDTO.getAircraftId())).withRel("aircraft");
             aircraftReportDTO.add(link);
             List<Reservation> reservationList = aircraftReportDTO.getReservationList();
 
