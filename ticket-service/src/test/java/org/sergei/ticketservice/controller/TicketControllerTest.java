@@ -16,7 +16,6 @@
 
 package org.sergei.ticketservice.controller;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sergei.ticketservice.TicketServiceApplication;
@@ -41,7 +40,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  *
  * @author Sergei Visotsky
  */
-@Ignore
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = TicketServiceApplication.class)
 @TestPropertySource(locations = "classpath:application-test.properties")
@@ -49,7 +47,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ContextConfiguration(classes = {ResourceServerConfiguration.class})
 @EnableJpaRepositories(basePackages = "org.sergei.ticketservice.repository")
 @EntityScan(basePackages = "org.sergei.ticketservice.model")
-//@Sql(scripts = {"classpath:sql/schema.sql", "classpath:sql/data.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 public class TicketControllerTest {
 
     private static final String BASE_URL = "https://localhost/tickets";

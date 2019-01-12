@@ -47,7 +47,6 @@ import static junit.framework.TestCase.assertTrue;
 @ContextConfiguration(classes = {WebSecurityConfigTest.class})
 @EnableJpaRepositories(basePackages = "org.sergei.ticketservice.repository")
 @EntityScan(basePackages = "org.sergei.ticketservice.model")
-//@Sql(scripts = {"classpath:sql/schema.sql", "classpath:sql/data.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 public class TicketRepositoryTest {
 
     @Autowired
