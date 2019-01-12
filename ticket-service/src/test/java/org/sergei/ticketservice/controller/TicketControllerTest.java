@@ -16,6 +16,7 @@
 
 package org.sergei.ticketservice.controller;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sergei.ticketservice.TicketServiceApplication;
@@ -40,6 +41,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  *
  * @author Sergei Visotsky
  */
+@Ignore
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = TicketServiceApplication.class)
 @TestPropertySource(locations = "classpath:application-test.properties")

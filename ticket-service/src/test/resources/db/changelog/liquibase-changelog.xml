@@ -20,6 +20,13 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+        <loadUpdateData file="/csv/aircraft.csv"
+                        primaryKey="pk_id"
+                        quotchar="A String"
+                        schemaName="public"
+                        separator="A String"
+                        tableName="aircraft">
+        </loadUpdateData>
     </changeSet>
     <changeSet author="Sergei (generated)" id="1547304762872-2">
         <createTable tableName="aircraft_seq">
@@ -41,6 +48,13 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+        <loadUpdateData file="/csv/customer.csv"
+                        primaryKey="pk_id"
+                        quotchar="A String"
+                        schemaName="public"
+                        separator="A String"
+                        tableName="customer">
+        </loadUpdateData>
     </changeSet>
     <changeSet author="Sergei (generated)" id="1547304762872-4">
         <createTable tableName="customer_seq">
@@ -62,6 +76,13 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+        <loadUpdateData file="/csv/reservation.csv"
+                        primaryKey="pk_id"
+                        quotchar="A String"
+                        schemaName="public"
+                        separator="A String"
+                        tableName="reservation">
+        </loadUpdateData>
     </changeSet>
     <changeSet author="Sergei (generated)" id="1547304762872-6">
         <createTable tableName="reservation_seq">
@@ -92,6 +113,13 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+        <loadUpdateData file="/csv/route.csv"
+                        primaryKey="pk_id"
+                        quotchar="A String"
+                        schemaName="public"
+                        separator="A String"
+                        tableName="route">
+        </loadUpdateData>
     </changeSet>
     <changeSet author="Sergei (generated)" id="1547304762872-8">
         <createTable tableName="route_seq">
@@ -132,8 +160,7 @@
                                  referencedColumnNames="aircraft_id" referencedTableName="aircraft" validate="true"/>
     </changeSet>
     <changeSet author="Sergei (generated)" id="1547304762872-15">
-        <createView catalogName="cat"
-                    replaceIfExists="true"
+        <createView replaceIfExists="true"
                     schemaName="public"
                     viewName="ticket_view">
             SELECT
@@ -146,14 +173,14 @@
             rt.price AS price,
             a.aircraft_name AS aircraft_name
             FROM
-            (((flight_reservation.customer c
-            JOIN flight_reservation.reservation r)
-            JOIN flight_reservation.route rt)
-            JOIN flight_reservation.aircraft a)
+            (((customer c
+            JOIN reservation r)
+            JOIN route rt)
+            JOIN aircraft a)
             WHERE
             ((c.customer_id = r.customer_id)
             AND (r.route_id = rt.route_id)
-            AND (rt.`aircraft_id = a.aircraft_id))
+            AND (rt.aircraft_id = a.aircraft_id))
         </createView>
     </changeSet>
 </databaseChangeLog>
