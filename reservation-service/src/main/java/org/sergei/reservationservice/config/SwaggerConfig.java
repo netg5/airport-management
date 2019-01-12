@@ -48,9 +48,6 @@ public class SwaggerConfig {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SwaggerConfig.class);
 
-    @Value("${server.servlet.context-path}")
-    private String contextPath;
-
     @Value("${security.oauth2.access-token-uri}")
     private String authServer;
 
@@ -59,7 +56,6 @@ public class SwaggerConfig {
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .pathMapping(contextPath)
                 .host("localhost:" + GatewayPortPojo.GATEWAY_PORT)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("org.sergei.reservationservice.controller"))
