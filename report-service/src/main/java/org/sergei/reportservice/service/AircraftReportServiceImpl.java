@@ -72,7 +72,7 @@ public class AircraftReportServiceImpl implements AircraftReportService<Aircraft
     /**
      * Find one report by ID
      *
-     * @param id identity of the report that should be found
+     * @param aircraftId identity of the report that should be found
      * @return Report entity
      */
     @Override
