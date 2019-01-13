@@ -14,6 +14,15 @@
  * limitations under the License.
  */
 
-export const environment = {
-  production: true
-};
+class ApiUser {
+  userId: number;
+  username: string;
+  password: string;
+
+
+  constructor(userId: number, username: string, password: string) {
+    this.userId = userId;
+    this.username = username;
+    this.password = password;
+  }
+}
