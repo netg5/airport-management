@@ -44,7 +44,8 @@ public final class LinkUtil {
         Resources<Ticket> resources = new Resources<>(ticketList);
         String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
         resources.add(new Link(uriString, "self"));
-        resources.add(new Link("http://127.0.0.1:" + GatewayPortPojo.GATEWAY_PORT + "/flight-api/customers/" + customerId, "customer"));
+        resources.add(new Link("http://127.0.0.1:" +
+                GatewayPortPojo.getGatewayPort() + "/flight-api/customers/" + customerId, "customer"));
         return resources;
     }
 }

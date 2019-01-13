@@ -54,8 +54,8 @@ public final class LinkUtil {
             Link reservationsLink = linkTo(
                     methodOn(ReservationController.class)
                             .getAllForCustomer(customer.getCustomerId())).withRel("reservations");
-            Link ticketsLink = new Link(
-                    "https://127.0.0.1:" + GatewayPortPojo.GATEWAY_PORT + "/ticket-api/tickets?customerId=" + customer.getCustomerId()).withRel("tickets");
+            Link ticketsLink = new Link("https://127.0.0.1:" + GatewayPortPojo.getGatewayPort() +
+                    "/ticket-api/tickets?customerId=" + customer.getCustomerId()).withRel("tickets");
             customer.add(link);
             customer.add(reservationsLink);
             customer.add(ticketsLink);
@@ -84,7 +84,7 @@ public final class LinkUtil {
                 methodOn(ReservationController.class)
                         .getAllForCustomer(customerDTO.getCustomerId())).withRel("reservations");
         Link ticketsLink = new Link(
-                "http://127.0.0.1:" + GatewayPortPojo.GATEWAY_PORT + "/ticket-api/tickets?customerId=" +
+                "http://127.0.0.1:" + GatewayPortPojo.getGatewayPort() + "/ticket-api/tickets?customerId=" +
                         customerDTO.getCustomerId()).withRel("tickets");
         Link link = linkTo(CustomerController.class).withRel("allCustomers");
         customerDTO.add(selfLink);

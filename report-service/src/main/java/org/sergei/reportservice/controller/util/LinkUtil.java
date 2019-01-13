@@ -84,7 +84,7 @@ public final class LinkUtil {
 
         for (Reservation reservation : reservationList) {
             Link reservationLink = new Link(
-                    "https://127.0.0.1:" + GatewayPortPojo.GATEWAY_PORT + "/reservation-api/customers/" +
+                    "https://127.0.0.1:" + GatewayPortPojo.getGatewayPort() + "/reservation-api/customers/" +
                             aircraftReportDTO.getReservationList().get(index).getReservationId()).withRel("reportSelf");
             reservation.add(reservationLink);
             index++;

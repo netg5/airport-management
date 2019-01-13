@@ -56,7 +56,7 @@ public class SwaggerConfig {
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .host("localhost:" + GatewayPortPojo.GATEWAY_PORT)
+                .host("localhost:" + GatewayPortPojo.getGatewayPort())
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("org.sergei.reservationservice.controller"))
                 .paths(PathSelectors.any())

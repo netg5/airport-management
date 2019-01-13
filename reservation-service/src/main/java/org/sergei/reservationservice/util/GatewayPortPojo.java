@@ -28,10 +28,14 @@ public class GatewayPortPojo {
     private GatewayPortPojo() {
     }
 
-    public static int GATEWAY_PORT;
+    private static int gatewayPort;
 
     @Value("${spring.gateway.port}")
     public void setGatewayPort(int gatewayPort) {
-        GATEWAY_PORT = gatewayPort;
+        GatewayPortPojo.gatewayPort = gatewayPort;
+    }
+
+    public static int getGatewayPort() {
+        return gatewayPort;
     }
 }
