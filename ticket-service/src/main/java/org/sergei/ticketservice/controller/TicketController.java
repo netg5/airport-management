@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static org.sergei.ticketservice.controller.util.LinkUtil.setLinksForTicket;
+import static org.sergei.ticketservice.controller.hateoas.LinkUtil.setLinksForTicket;
 
 /**
  * @author Sergei Visotsky

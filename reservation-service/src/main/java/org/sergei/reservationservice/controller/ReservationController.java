@@ -32,7 +32,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.util.List;
 import java.util.Map;
 
-import static org.sergei.reservationservice.controller.util.LinkUtil.setLinksForAllReservations;
+import static org.sergei.reservationservice.controller.hateoas.LinkUtil.setLinksForAllReservations;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 

@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-import static org.sergei.reservationservice.controller.util.LinkUtil.*;
+import static org.sergei.reservationservice.controller.hateoas.LinkUtil.*;
 
 /**
  * @author Sergei Visotsky

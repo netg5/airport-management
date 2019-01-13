@@ -29,8 +29,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import static org.sergei.reportservice.controller.util.LinkUtil.setLinksForAircraftReport;
-import static org.sergei.reportservice.controller.util.LinkUtil.setLinksForAllReports;
+import static org.sergei.reportservice.controller.hateoas.LinkUtil.setLinksForAircraftReport;
+import static org.sergei.reportservice.controller.hateoas.LinkUtil.setLinksForAllReports;
 
 /**
  * @author Sergei Visotsky

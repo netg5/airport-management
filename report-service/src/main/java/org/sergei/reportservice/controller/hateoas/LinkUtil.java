@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sergei.reportservice.controller.util;
+package org.sergei.reportservice.controller.hateoas;
 
 import org.sergei.reportservice.controller.AircraftReportController;
 import org.sergei.reportservice.dto.AircraftReportDTO;

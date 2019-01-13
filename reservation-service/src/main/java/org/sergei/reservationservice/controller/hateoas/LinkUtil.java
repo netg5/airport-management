@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sergei.reservationservice.controller.util;
+package org.sergei.reservationservice.controller.hateoas;
 
 import org.sergei.reservationservice.controller.AircraftController;
 import org.sergei.reservationservice.controller.CustomerController;

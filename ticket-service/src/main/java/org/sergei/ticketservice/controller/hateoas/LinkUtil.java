@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sergei.ticketservice.controller.util;
+package org.sergei.ticketservice.controller.hateoas;
 
 import org.sergei.ticketservice.model.Ticket;
 import org.sergei.ticketservice.util.GatewayPortPojo;
