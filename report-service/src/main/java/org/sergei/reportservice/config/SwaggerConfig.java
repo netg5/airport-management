@@ -68,7 +68,7 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Report service REST endpoints")
+                .title("Report service API methods")
                 .description("Methods needed to retrieve all data to create reports for a specific model")
                 .version("1.0")
                 .license("Apache 2.0")

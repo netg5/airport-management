@@ -68,7 +68,7 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Ticket service REST methods")
+                .title("Ticket service API methods")
                 .description("Methods needed to retrieve, add and modify data")
                 .version("1.0")
                 .license("Apache 2.0")
