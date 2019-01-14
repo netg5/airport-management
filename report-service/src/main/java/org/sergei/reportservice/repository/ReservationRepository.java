@@ -35,4 +35,11 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
             nativeQuery = true
     )
     List<Reservation> findAllByRouteId(Long routeId);
+
+    @Query(
+            value = "select * from reservation r join customer c " +
+                    "on r.customer_id = c.customer_id where r.customer_id = ?1",
+            nativeQuery = true
+    )
+    List<Reservation> findAllByCustomerId(Long customerId);
 }

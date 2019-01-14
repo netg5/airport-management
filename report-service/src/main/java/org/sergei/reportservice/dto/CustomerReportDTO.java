@@ -14,19 +14,28 @@
  * limitations under the License.
  */
 
-package org.sergei.reportservice.service;
+package org.sergei.reportservice.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import org.sergei.reportservice.model.Reservation;
+import org.springframework.hateoas.ResourceSupport;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author Sergei Visotsky
  */
-public final class Constants {
-
-    /**
-     * Hide from the public use
-     */
-    private Constants() {
-    }
-
-    public static final String AIRCRAFT_NOT_FOUND = "Aircraft is not found in any route, report cannot be made";
-    public static final String CUSTOMER_NOT_FOUND = "Customer with this ID not found";
+@Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
+@AllArgsConstructor
+public class CustomerReportDTO extends ResourceSupport {
+    private Long customerId;
+    private String firstName;
+    private String lastName;
+    private List<Reservation> reservations = new LinkedList<>();
 }

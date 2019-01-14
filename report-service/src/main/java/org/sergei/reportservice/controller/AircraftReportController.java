@@ -18,8 +18,8 @@ package org.sergei.reportservice.controller;
 
 import io.swagger.annotations.*;
 import org.sergei.reportservice.dto.AircraftReportDTO;
+import org.sergei.reportservice.service.IReportService;
 import org.sergei.reportservice.service.AircraftReportService;
-import org.sergei.reportservice.service.AircraftReportServiceImpl;
 import org.sergei.reportservice.service.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -44,10 +44,10 @@ import static org.sergei.reportservice.controller.hateoas.LinkUtil.setLinksForAl
 @PreAuthorize("hasAuthority('ROLE_ADMIN')")
 public class AircraftReportController {
 
-    private final AircraftReportService<AircraftReportDTO> aircraftReportService;
+    private final IReportService<AircraftReportDTO> aircraftReportService;
 
     @Autowired
-    public AircraftReportController(AircraftReportServiceImpl aircraftReportService) {
+    public AircraftReportController(AircraftReportService aircraftReportService) {
         this.aircraftReportService = aircraftReportService;
     }
 

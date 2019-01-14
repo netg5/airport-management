@@ -17,7 +17,9 @@
 package org.sergei.reportservice.controller.hateoas;
 
 import org.sergei.reportservice.controller.AircraftReportController;
+import org.sergei.reportservice.controller.CustomerReportController;
 import org.sergei.reportservice.dto.AircraftReportDTO;
+import org.sergei.reportservice.dto.CustomerReportDTO;
 import org.sergei.reportservice.model.Reservation;
 import org.sergei.reportservice.util.GatewayPortPojo;
 import org.springframework.data.domain.Page;
@@ -55,7 +57,7 @@ public final class LinkUtil {
                     methodOn(AircraftReportController.class)
                             .findByAircraftId(aircraftReportDTO.getAircraftId())).withRel("aircraft");
             aircraftReportDTO.add(link);
-            setLinksForEachReservation(aircraftReportDTO);
+            setLinksForEachReservation(aircraftReportDTO.getReservationList());
         });
         return setServletResourceLinks(aircraftReports);
     }
@@ -67,7 +69,8 @@ public final class LinkUtil {
      * @return DTO with links set
      */
     public static AircraftReportDTO setLinksForAircraftReport(AircraftReportDTO aircraftReportDTO) {
-        setLinksForEachReservation(aircraftReportDTO);
+        List<Reservation> reservationList = aircraftReportDTO.getReservationList();
+        setLinksForEachReservation(reservationList);
         Link selfLink = linkTo(
                 methodOn(AircraftReportController.class)
                         .findByAircraftId(aircraftReportDTO.getAircraftId())).withRel("aircraftSelf");
@@ -77,15 +80,33 @@ public final class LinkUtil {
         return aircraftReportDTO;
     }
 
-    private static void setLinksForEachReservation(AircraftReportDTO aircraftReportDTO) {
-        List<Reservation> reservationList = aircraftReportDTO.getReservationList();
+    /**
+     * Method to set links for customer report
+     *
+     * @param customerReportDTO customer report pojo
+     * @return pojo with links set everywhere it needs
+     */
+    public static CustomerReportDTO setLinksForCustomerReport(CustomerReportDTO customerReportDTO) {
+        List<Reservation> reservationList = customerReportDTO.getReservations();
+        setLinksForEachReservation(reservationList);
+        Link selfLink = linkTo(
+                methodOn(CustomerReportController.class)
+                        .findReportByCustomerId(customerReportDTO.getCustomerId())).withSelfRel();
+        customerReportDTO.add(selfLink);
+        return customerReportDTO;
+    }
 
+    /**
+     * Method to se links for each aircraft reservation
+     *
+     * @param reservationList collection of aircraft report payloads to set links for each
+     */
+    private static void setLinksForEachReservation(List<Reservation> reservationList) {
         int index = 0;
-
         for (Reservation reservation : reservationList) {
             Link reservationLink = new Link(
                     "https://127.0.0.1:" + GatewayPortPojo.getGatewayPort() + "/reservation-api/customers/" +
-                            aircraftReportDTO.getReservationList().get(index).getReservationId()).withRel("reportSelf");
+                            reservationList.get(index).getReservationId()).withRel("reportSelf");
             reservation.add(reservationLink);
             index++;
         }

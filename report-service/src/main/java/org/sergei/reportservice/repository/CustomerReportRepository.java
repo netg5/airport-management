@@ -14,19 +14,13 @@
  * limitations under the License.
  */
 
-package org.sergei.reportservice.service;
+package org.sergei.reportservice.repository;
+
+import org.sergei.reportservice.model.CustomerReport;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * @author Sergei Visotsky
  */
-public final class Constants {
-
-    /**
-     * Hide from the public use
-     */
-    private Constants() {
-    }
-
-    public static final String AIRCRAFT_NOT_FOUND = "Aircraft is not found in any route, report cannot be made";
-    public static final String CUSTOMER_NOT_FOUND = "Customer with this ID not found";
+public interface CustomerReportRepository extends JpaRepository<CustomerReport, Long> {
 }

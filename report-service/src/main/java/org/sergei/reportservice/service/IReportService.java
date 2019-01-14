@@ -16,17 +16,28 @@
 
 package org.sergei.reportservice.service;
 
+import org.springframework.data.domain.Page;
+
 /**
+ * @param <D> Data Transfer Object
  * @author Sergei Visotsky
  */
-public final class Constants {
+public interface IReportService<D> {
 
     /**
-     * Hide from the public use
+     * Find all existing reports
+     *
+     * @param page number of page to ssow
+     * @param size number of elements per page
+     * @return list of existing reports
      */
-    private Constants() {
-    }
+    Page<D> findAll(int page, int size);
 
-    public static final String AIRCRAFT_NOT_FOUND = "Aircraft is not found in any route, report cannot be made";
-    public static final String CUSTOMER_NOT_FOUND = "Customer with this ID not found";
+    /**
+     * Find one report by ID
+     *
+     * @param id identity of the report that should be found
+     * @return Report entity
+     */
+    D findById(Long id);
 }

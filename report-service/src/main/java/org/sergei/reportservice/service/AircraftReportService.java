@@ -16,13 +16,35 @@
 
 package org.sergei.reportservice.service;
 
+import org.sergei.reportservice.dto.AircraftReportDTO;
+import org.sergei.reportservice.exceptions.ResourceNotFoundException;
+import org.sergei.reportservice.model.AircraftReport;
+import org.sergei.reportservice.model.Reservation;
+import org.sergei.reportservice.repository.AircraftReportRepository;
+import org.sergei.reportservice.repository.ReservationRepository;
+import org.sergei.reportservice.util.ObjectMapperUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
- * @param <D> Data Transfer Object
  * @author Sergei Visotsky
  */
-public interface AircraftReportService<D> {
+@Service
+public class AircraftReportService implements IReportService<AircraftReportDTO> {
+
+    private final AircraftReportRepository aircraftReportRepository;
+    private final ReservationRepository reservationRepository;
+
+    @Autowired
+    public AircraftReportService(AircraftReportRepository aircraftReportRepository,
+                                 ReservationRepository reservationRepository) {
+        this.aircraftReportRepository = aircraftReportRepository;
+        this.reservationRepository = reservationRepository;
+    }
 
     /**
      * Find all existing reports
@@ -31,13 +53,37 @@ public interface AircraftReportService<D> {
      * @param size number of elements per page
      * @return list of existing reports
      */
-    Page<D> findAll(int page, int size);
+    @Override
+    public Page<AircraftReportDTO> findAll(int page, int size) {
+        Page<AircraftReport> aircraftReports =
+                aircraftReportRepository.findAll(PageRequest.of(page, size));
+
+        Page<AircraftReportDTO> aircraftReportDTOS =
+                ObjectMapperUtil.mapAllPages(aircraftReports, AircraftReportDTO.class);
+
+        aircraftReportDTOS.forEach(reportDTO -> {
+            List<Reservation> reservationList =
+                    reservationRepository.findAllByRouteId(reportDTO.getRouteId());
+            reportDTO.setReservationList(reservationList);
+        });
+        return aircraftReportDTOS;
+    }
 
     /**
      * Find one report by ID
      *
-     * @param id identity of the report that should be found
+     * @param aircraftId identity of the report that should be found
      * @return Report entity
      */
-    D findById(Long id);
+    @Override
+    public AircraftReportDTO findById(Long aircraftId) {
+        AircraftReport aircraftReport = aircraftReportRepository.findById(aircraftId)
+                .orElseThrow(
+                        () -> new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
+                );
+        List<Reservation> reservationList = reservationRepository.findAllByRouteId(aircraftReport.getRouteId());
+        AircraftReportDTO aircraftReportDTO = ObjectMapperUtil.map(aircraftReport, AircraftReportDTO.class);
+        aircraftReportDTO.setReservationList(reservationList);
+        return aircraftReportDTO;
+    }
 }
