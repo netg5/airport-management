@@ -17,7 +17,6 @@
 package org.sergei.reportservice.controller;
 
 import io.swagger.annotations.Api;
-import org.sergei.reportservice.controller.hateoas.LinkUtil;
 import org.sergei.reportservice.dto.CustomerReportDTO;
 import org.sergei.reportservice.service.CustomerReportService;
 import org.springframework.beans.factory.annotation.Autowired;

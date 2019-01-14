@@ -22,14 +22,13 @@ import org.sergei.reportservice.model.CustomerReport;
 import org.sergei.reportservice.model.Reservation;
 import org.sergei.reportservice.repository.CustomerReportRepository;
 import org.sergei.reportservice.repository.ReservationRepository;
-import org.sergei.reportservice.util.ObjectMapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static org.sergei.reportservice.util.ObjectMapperUtil.*;
+import static org.sergei.reportservice.util.ObjectMapperUtil.map;
 
 /**
  * @author Sergei Visotsky
