@@ -84,7 +84,7 @@ public class CustomerService implements IService<CustomerDTO> {
      * Find ID of each customer in one JSON response as a list paginated
      *
      * @param page how many pages to show
-     * @param size how much entites in one page
+     * @param size number of elements per page
      * @return page of the IDs
      */
     public Page<CustomerIdsDTO> findIdsOfAllCustomersPaginated(int page, int size) {
@@ -95,7 +95,7 @@ public class CustomerService implements IService<CustomerDTO> {
      * Find all customers with pagination
      *
      * @param page how many pages to show
-     * @param size how much entites in one page
+     * @param size number of elements per page
      * @return list with entities
      */
     @Override
