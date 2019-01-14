@@ -149,17 +149,31 @@ _Example for MySQL:_
 2. Copy all the property files in each microservice or create another repository and change the path to it in `bootstrap.yml` config file in `config-service` by changing property `spring.cloud.config.server.git.uri`
 3. Change `server.port` for each service if needed which configs are located in the repository above and other configs that are not locates in config repository in `1.` paragraph
 4. Change `server.http.port` so that it was able to organize redirect from _HTTP_ to _HTTPS_
-5. Add pem certificate to the JVM cacerts due to it is self-signed executing the following command:
+5. Change database driver for your database.
+_Example for MySQL_
+```xml
+<dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+    <scope>runtime</scope>
+</dependency>
+```
+6. Change the value of database driver property `spring.datasource.driver-class-name` in config file located in repo called `flight-reservation-config` for each service which communicates with database
+7. Change database url property: `spring.datasource.url`
+8. Change database url property: `spring.datasource.username`
+9. Change database url property: `spring.datasource.password`
+10. Change SQL dialect modifying this property: `spring.jpa.properties.hibernate.dialect`
+11. Add pem certificate to the JVM cacerts due to it is self-signed executing the following command:
 ```text
 keytool -import -trustcacerts -keystore "%JAVA_HOME%/jre/lib/security/cacerts" -storepass changeit -alias KEYSTORE_ENTRY -import -file keystore.pem
 ```
-6. Open `SERVICE_NAME.yml` config file and setup your database url and credentials for services `flight-service` , `ticket service` and `auth-service`
-7. Open SQL file `oauth_schema.sql` script located in auth-service under `resources/sql` and change database name to yours
-8. Open SQL file `ticket_view.sql` in service `ticket-service` under `resources/sql` and execute this script for your database (NOTE: MySQL dialect was used in this case) 
-9. Create view for customer report by opening SQL file `customer_report_view.sql` and execute SQL code in your database (NOTE: MySQL dialect was used in this case)
-10. Keep in mind that application port and port in `security.oauth2.resource.accessTokenUri` property might be changed in your case
-11. Open `logback-spring.xml` for each microservice and setup directory where all your logging files are going to saved
-12. Setup .jar names and ports in `Dockerfile` for each module
+12. Open `SERVICE_NAME.yml` config file and setup your database url and credentials for services `flight-service` , `ticket service` and `auth-service`
+12. Open SQL file `oauth_schema.sql` script located in auth-service under `resources/sql` and change database name to yours
+13. Open SQL file `ticket_view.sql` in service `ticket-service` under `resources/sql` and execute this script for your database (NOTE: MySQL dialect was used in this case) 
+14. Create view for customer report by opening SQL file `customer_report_view.sql` and execute SQL code in your database (NOTE: MySQL dialect was used in this case)
+15. Keep in mind that application port and port in `security.oauth2.resource.accessTokenUri` property might be changed in your case
+16. Open `logback-spring.xml` for each microservice and setup directory where all your logging files are going to saved
+17. Setup .jar names and ports in `Dockerfile` for each module
 
 NOTE: if you change any port it should be changed in all places where it is used depending on the micrservice.
 
