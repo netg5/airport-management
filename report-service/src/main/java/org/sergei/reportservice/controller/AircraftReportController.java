@@ -40,7 +40,7 @@ import static org.sergei.reportservice.controller.hateoas.LinkUtil.setLinksForAl
         produces = "application/json"
 )
 @RestController
-@RequestMapping("/aircraft")
+@RequestMapping("/aircrafts")
 @PreAuthorize("hasAuthority('ROLE_ADMIN')")
 public class AircraftReportController {
 

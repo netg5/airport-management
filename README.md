@@ -150,7 +150,8 @@ _Example for MySQL:_
 3. Change `server.port` for each service if needed which configs are located in the repository above and other configs that are not locates in config repository in `1.` paragraph
 4. Change `server.http.port` so that it was able to organize redirect from _HTTP_ to _HTTPS_
 5. Change database driver for your database.
-_Example for MySQL_
+
+_Example for MySQL:_
 ```xml
 <dependency>
     <groupId>mysql</groupId>
