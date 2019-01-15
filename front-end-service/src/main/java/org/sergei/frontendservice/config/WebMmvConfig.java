@@ -14,17 +14,14 @@
  * limitations under the License.
  */
 
-package org.sergei.frontendservice.model;
+package org.sergei.frontendservice.config;
 
-import lombok.Data;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * @author Sergei Visotsky
  */
-@Data
-public class Customer {
-    private Long customerId;
-    private String firstName;
-    private String lastName;
-    private Integer age;
+@Configuration
+public class WebMmvConfig implements WebMvcConfigurer {
 }

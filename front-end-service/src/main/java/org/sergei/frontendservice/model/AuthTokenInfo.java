@@ -16,15 +16,20 @@
 
 package org.sergei.frontendservice.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author Sergei Visotsky
  */
 @Data
-public class Customer {
-    private Long customerId;
-    private String firstName;
-    private String lastName;
-    private Integer age;
+@NoArgsConstructor
+@AllArgsConstructor
+public class AuthTokenInfo {
+    private String accessToken;
+    private String tokenType;
+    private String refreshToken;
+    private Integer expiresIn;
+    private String scope;
 }

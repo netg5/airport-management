@@ -16,8 +16,15 @@
 
 package org.sergei.frontendservice.controller;
 
+import org.sergei.frontendservice.model.Customer;
+import org.sergei.frontendservice.service.CustomerService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.Objects;
 
 /**
  * @author Sergei Visotsky
@@ -25,8 +32,27 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class MainController {
 
+    private final CustomerService customerService;
+
+    @Autowired
+    public MainController(CustomerService customerService) {
+        this.customerService = customerService;
+    }
+
     @GetMapping("/")
-    public String showHomePage() {
+    public String showHomePage(Model model) {
         return "index";
+    }
+
+    @GetMapping("/customer")
+    public String customerDataPage(Model model) {
+        final Long customerId = 1L;
+        ResponseEntity<Customer> customer = customerService.getCustomerByNumber(customerId);
+        Customer customerResponseBody = customer.getBody();
+        model.addAttribute("customerId", Objects.requireNonNull(customerResponseBody).getCustomerId());
+        model.addAttribute("firstName", customerResponseBody.getFirstName());
+        model.addAttribute("lastName", customerResponseBody.getLastName());
+        model.addAttribute("age", customerResponseBody.getAge());
+        return "customer";
     }
 }

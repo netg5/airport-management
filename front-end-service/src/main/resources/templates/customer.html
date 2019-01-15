@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Flight reservation</title>
+    <title>Flight reservation - customer data</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -13,11 +13,14 @@
 <nav class="navbar navbar-light bg-light">
     <a class="navbar-brand" href="/">Flight reservation application</a>
 </nav>
-
 <div class="container">
-    <a href="/customer">First customer data</a>
-</div>
 
+    <h1>Customer:</h1>
+    <div>Customer ID: [[${customerId}]]</div>
+    <div>Fist name: [[${firstName}]]</div>
+    <div>Last name: [[${lastName}]]</div>
+    <div>Age: [[${age}]]</div>
+</div>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
