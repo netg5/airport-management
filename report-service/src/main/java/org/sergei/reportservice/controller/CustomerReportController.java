@@ -17,6 +17,7 @@
 package org.sergei.reportservice.controller;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.sergei.reportservice.dto.CustomerReportDTO;
 import org.sergei.reportservice.service.CustomerReportService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,10 @@ public class CustomerReportController {
         this.customerReportService = customerReportService;
     }
 
+    @ApiOperation(
+            value = "Get report for a specific customer",
+            notes = "Operation allowed for the ROLE_ADMIN only"
+    )
     @GetMapping("/{customerId}")
     public ResponseEntity<CustomerReportDTO> findReportByCustomerId(@PathVariable Long customerId) {
         CustomerReportDTO customerReportDTO = customerReportService.findById(customerId);

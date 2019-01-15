@@ -16,6 +16,8 @@
 
 package org.sergei.reportservice.dto;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -29,13 +31,22 @@ import java.util.List;
 /**
  * @author Sergei Visotsky
  */
+@ApiModel(value = "CustomerReport", description = "Customer report model")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class CustomerReportDTO extends ResourceSupport {
+
+    @ApiModelProperty("Customer ID who made reservation")
     private Long customerId;
+
+    @ApiModelProperty("First name of customer who made reservation")
     private String firstName;
+
+    @ApiModelProperty("Last name of the customer who made reservation")
     private String lastName;
+
+    @ApiModelProperty("Collection of reservations made by customer")
     private List<Reservation> reservations = new LinkedList<>();
 }

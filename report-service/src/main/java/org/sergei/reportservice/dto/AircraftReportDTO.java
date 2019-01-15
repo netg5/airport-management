@@ -16,6 +16,8 @@
 
 package org.sergei.reportservice.dto;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,22 +26,40 @@ import org.sergei.reportservice.model.Reservation;
 import org.springframework.hateoas.ResourceSupport;
 
 import java.math.BigDecimal;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
  * @author Sergei Visotsky
  */
+@ApiModel(value = "AircraftReport", description = "Aircraft report model")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class AircraftReportDTO extends ResourceSupport {
+
+    @ApiModelProperty("Aircraft ID whoose report is shown")
     private Long aircraftId;
+
+    @ApiModelProperty("Aircraft name")
     private String aircraftName;
+
+    @ApiModelProperty("Aircraft model")
     private String model;
+
+    @ApiModelProperty("Route ID")
     private Long routeId;
+
+    @ApiModelProperty("Distance to fly")
     private Double distance;
+
+    @ApiModelProperty("Destination place")
     private String place;
+
+    @ApiModelProperty("Flight price")
     private BigDecimal price;
-    private List<Reservation> reservationList;
+
+    @ApiModelProperty("Collection of reservation made for specific aircraft")
+    private List<Reservation> reservationList = new LinkedList<>();
 }

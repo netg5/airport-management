@@ -16,6 +16,8 @@
 
 package org.sergei.reportservice.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -32,6 +34,7 @@ import java.time.LocalDateTime;
 /**
  * @author Sergei Visotsky
  */
+@ApiModel(value = "Reservation", description = "Reservation made")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
@@ -41,16 +44,20 @@ import java.time.LocalDateTime;
 @Immutable
 public class Reservation extends ResourceSupport {
 
+    @ApiModelProperty("Reservation ID")
     @Id
     @Column(name = "reservation_id")
     private Long reservationId;
 
+    @ApiModelProperty("Date when reservation was made")
     @Column(name = "reservation_date")
     private LocalDateTime reservationDate;
 
+    @ApiModelProperty("Customer ID who made reservation")
     @Column(name = "customer_id")
     private Long customerId;
 
+    @ApiModelProperty("Destination route I")
     @Column(name = "route_id")
     private Long routeId;
 }
