@@ -17,13 +17,19 @@
 package org.sergei.frontendservice.controller;
 
 import org.sergei.frontendservice.model.Customer;
+import org.sergei.frontendservice.model.Reservation;
 import org.sergei.frontendservice.service.CustomerService;
+import org.sergei.frontendservice.service.ReservationService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -32,11 +38,15 @@ import java.util.Objects;
 @Controller
 public class MainController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(MainController.class);
+
     private final CustomerService customerService;
+    private final ReservationService reservationService;
 
     @Autowired
-    public MainController(CustomerService customerService) {
+    public MainController(CustomerService customerService, ReservationService reservationService) {
         this.customerService = customerService;
+        this.reservationService = reservationService;
     }
 
     @GetMapping("/")
@@ -47,12 +57,17 @@ public class MainController {
     @GetMapping("/customer")
     public String customerDataPage(Model model) {
         final Long customerId = 1L;
-        ResponseEntity<Customer> customer = customerService.getCustomerByNumber(customerId);
+        ResponseEntity<Customer> customer = customerService.getCustomerById(customerId);
         Customer customerResponseBody = customer.getBody();
         model.addAttribute("customerId", Objects.requireNonNull(customerResponseBody).getCustomerId());
         model.addAttribute("firstName", customerResponseBody.getFirstName());
         model.addAttribute("lastName", customerResponseBody.getLastName());
         model.addAttribute("age", customerResponseBody.getAge());
+
+        ResponseEntity<List<Reservation>> reservations = reservationService.getReservationsByCustomerId(customerId);
+        List<Reservation> reservationsResponseBody = reservations.getBody();
+
+        model.addAttribute("reservations", reservationsResponseBody);
         return "customer";
     }
 }
