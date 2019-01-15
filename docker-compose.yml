@@ -179,6 +179,31 @@ services:
     logging:
       driver: json-file
     command: mvn clean package spring-boot:repackage
+  front-end-service:
+    container_name: front-end-service
+    build:
+      context: front-end-service
+      dockerfile: Dockerfile
+    image: front-end-service:latest
+    environment:
+      SPRING_APPLICATION_JSON: '{"spring": {"cloud": {"config": {"uri": "https://localhost:9095"}}}}'
+    expose:
+      - 9095
+    ports:
+      - 9095:9095
+    networks:
+      - spring-cloud-network
+    volumes:
+      - flight-reservation-front-end-service:/var/lib/flight-reservation/front-end-service
+    links:
+      - config-service:config-service
+      - eureka-service:eureka-service
+    depends_on:
+      - config-service
+      - eureka-service
+    logging:
+      driver: json-file
+    command: mvn clean package spring-boot:repackage
 networks:
   spring-cloud-network:
     driver: bridge

@@ -1,48 +1,9 @@
-##
-# This config should be placed into the config repository
-##
-server:
-  port: 9097
-  http:
-    port: 8087
-  ssl:
-    enabled: true
-    key-store-type: PKCS12
-    key-store: front-end-service/src/main/resources/tls/keystore.p12
-    key-store-password: keyStoreSecret
-    key-alias: localhost
 spring:
-  application:
-    name: front-end-service
-eureka:
-  instance:
-    non-secure-port-enabled: false
-    secure-port-enabled: true
-    secure-port: ${server.port}
-    status-page-url-path: https://localhost:${server.port}/actuator/info
-    health-check-url-path: https://localhost:${server.port}/actuator/health
-    home-page-url: https://localhost:${server.port}
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    serviceUrl:
-      defaulZone: http://localhost:8761
-management:
-  endpoint:
-    health:
-      show-details: always
-oauth:
-  client-id: trusted-client
-  client-secret: trusted-client-secret
-  username: admin
-  password: 123456
-
-#spring:
-#  cloud:
-#    config:
-#      name: front-end-service
-#      uri: http://localhost:8079
-#      enabled: true
-#      discovery:
-#        enabled: true
-#        service-id: config-service
+  cloud:
+    config:
+      name: front-end-service
+      uri: http://localhost:8079
+      enabled: true
+      discovery:
+        enabled: true
+        service-id: config-service
