@@ -38,8 +38,6 @@ import java.util.Objects;
 @Controller
 public class MainController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MainController.class);
-
     private final CustomerService customerService;
     private final ReservationService reservationService;
 
