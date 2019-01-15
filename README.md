@@ -135,17 +135,6 @@ For endpoint documentation is used Swagger which is accessible by the url - `htt
  * _where `http://localhost:8080` is a gateway url_
 
 ## Setup
-* Setup your database driver dependency in main pom.xml.
-
-_Example for MySQL:_
-```xml
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <scope>runtime</scope>
-</dependency>
-```
-
 1. Checkout config service [https://github.com/sergeivisotsky/flight-reservation-config](https://github.com/sergeivisotsky/flight-reservation-config) to clone all the necessary config files
 2. Copy all the property files in each microservice or create another repository and change the path to it in `bootstrap.yml` config file in `config-service` by changing property `spring.cloud.config.server.git.uri`
 3. Change `server.port` for each service if needed which configs are located in the repository above and other configs that are not locates in config repository in `1.` paragraph
