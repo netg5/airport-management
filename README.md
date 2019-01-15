@@ -164,19 +164,18 @@ _Example for MySQL:_
 8. Change database url property: `spring.datasource.username`
 9. Change database url property: `spring.datasource.password`
 10. Change SQL dialect modifying this property: `spring.jpa.properties.hibernate.dialect`
-11. Add pem certificate to the JVM cacerts due to it is self-signed executing the following command:
+11. Open SQL file `oauth_schema.sql` script located in auth-service under `resources/sql` and change database name to yours
+12. Open each SQL file in `ticket-service` and `report-service` under `resources/sql` and execute each this script for your database (NOTE: MySQL dialect was used in this case due to this MySQL is preferable choice) 
+13. Add pem certificate to the JVM cacerts due to it is self-signed executing the following command:
 ```text
 keytool -import -trustcacerts -keystore "%JAVA_HOME%/jre/lib/security/cacerts" -storepass changeit -alias KEYSTORE_ENTRY -import -file keystore.pem
 ```
-12. Open `SERVICE_NAME.yml` config file and setup your database url and credentials for services `flight-service` , `ticket service` and `auth-service`
-12. Open SQL file `oauth_schema.sql` script located in auth-service under `resources/sql` and change database name to yours
-13. Open SQL file `ticket_view.sql` in service `ticket-service` under `resources/sql` and execute this script for your database (NOTE: MySQL dialect was used in this case) 
-14. Create view for customer report by opening SQL file `customer_report_view.sql` and execute SQL code in your database (NOTE: MySQL dialect was used in this case)
+14. Open `SERVICE_NAME.yml` config file and setup your database url and credentials for services `flight-service` , `ticket service` and `auth-service`
 15. Keep in mind that application port and port in `security.oauth2.resource.accessTokenUri` property might be changed in your case
 16. Open `logback-spring.xml` for each microservice and setup directory where all your logging files are going to saved
 17. Setup .jar names and ports in `Dockerfile` for each module
 
-NOTE: if you change any port it should be changed in all places where it is used depending on the micrservice.
+NOTE: If you change any port it should be changed in all places where it is used depending on the micrservice too.
 
 ## Run
 #### 1 way - using maven or java command
