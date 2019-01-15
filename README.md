@@ -10,6 +10,7 @@ Flight reservation application based on the microservice architecture which allo
 * ModelMapper
 * Jackson
 * Swagger
+* Thymeleaf
 
 ## Services
 * config-service - microserivce which makes calls to tht repository where all configurations are stored - [https://github.com/sergeivisotsky/flight-reservation-config](https://github.com/sergeivisotsky/flight-reservation-config)
