@@ -21,7 +21,7 @@ Flight reservation application based on the microservice architecture which allo
 * reservation-service - main microservice which allows to reserve flight
 * ticket-service - service where all customer tickets can be seen
 * report-service - service to get all reports for a specific purpose (e.g. route report)
-* flight-service-ui - user interface made using angular
+* front-end-service - user interface service
 
 ## TLS / SSL
 Each microservice is using self-signed TLS/SSL PKCS12 certificate.
