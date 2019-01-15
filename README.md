@@ -1,4 +1,4 @@
-# flight-reservation
+# Flight reservation
 Flight reservation application based on the microservice architecture which allows to add customer, aircraft and route, reserve flight and see all tickets for a particular customer.
 
 ## Technologies
