@@ -20,6 +20,7 @@ import org.sergei.frontendservice.model.AuthTokenInfo;
 import org.sergei.frontendservice.model.Reservation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -54,12 +55,12 @@ public class ReservationService {
      * @param customerId whose reservations should be found
      * @return collection of customer reservations
      */
-    public ResponseEntity<List<Reservation>> getReservationsByCustomerId(Long customerId) {
+    public ResponseEntity<Resources<Reservation>> getReservationsByCustomerId(Long customerId) {
         AuthTokenInfo tokenInfo = tokenRetrievalService.sendTokenRequest();
         HttpEntity<String> request = new HttpEntity<>(tokenRetrievalService.getHeaders());
         return this.restTemplate.exchange(RESERVATION_API_URI +
                         CUSTOMERS_PATH + customerId + RESERVATIONS_PATH + ACCESS_TOKEN + tokenInfo.getAccessToken(),
-                HttpMethod.GET, request, new ParameterizedTypeReference<List<Reservation>>() {
+                HttpMethod.GET, request, new ParameterizedTypeReference<Resources<Reservation>>() {
                 });
     }
 }

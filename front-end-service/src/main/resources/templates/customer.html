@@ -21,16 +21,12 @@
     <div>Last name: [[${lastName}]]</div>
     <div>Age: [[${age}]]</div>
 
-    <h2>Reservations for this customer:</h2>
-    <table>
-        <tbody th:each="reservation : ${reservations}">
-        <tr>
-            <td th:text="${reservation.reservationId}">Reservation ID is:</td>
-            <td th:text="${reservation.customerId}">Customer ID who made reservation:</td>
-            <td th:text="${reservation.reservationDate}">Reservation date:</td>
-        </tr>
-        </tbody>
-    </table>
+    <h6>Reservations for this customer:</h6>
+    <div th:each="reservation : ${reservations}">
+        <p th:text="${reservation.reservationId}">Reservation ID is:</p>
+        <p th:text="${reservation.customerId}">Customer ID who made reservation:</p>
+        <p th:text="${reservation.reservationDate}">Reservation date:</p>
+    </div>
 </div>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

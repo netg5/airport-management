@@ -23,13 +23,12 @@ import org.sergei.frontendservice.service.ReservationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.io.IOException;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -37,6 +36,8 @@ import java.util.Objects;
  */
 @Controller
 public class MainController {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(MainController.class);
 
     private final CustomerService customerService;
     private final ReservationService reservationService;
@@ -62,8 +63,9 @@ public class MainController {
         model.addAttribute("lastName", customerResponseBody.getLastName());
         model.addAttribute("age", customerResponseBody.getAge());
 
-        ResponseEntity<List<Reservation>> reservations = reservationService.getReservationsByCustomerId(customerId);
-        List<Reservation> reservationsResponseBody = reservations.getBody();
+        ResponseEntity<Resources<Reservation>> reservations = reservationService.getReservationsByCustomerId(customerId);
+        Resources<Reservation> reservationsResponseBody = reservations.getBody();
+        LOGGER.debug("Reservation response body is: {}", reservationsResponseBody.getContent());
 
         model.addAttribute("reservations", reservationsResponseBody);
         return "customer";

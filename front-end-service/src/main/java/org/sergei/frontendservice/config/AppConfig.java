@@ -16,6 +16,8 @@
 
 package org.sergei.frontendservice.config;
 
+import org.sergei.frontendservice.aop.LoggingAspect;
+import org.sergei.frontendservice.aop.PerformanceAspect;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
@@ -26,6 +28,16 @@ import org.springframework.web.client.RestTemplate;
  */
 @Configuration
 public class AppConfig {
+
+    @Bean
+    public PerformanceAspect performanceAspect() {
+        return new PerformanceAspect();
+    }
+
+    @Bean
+    public LoggingAspect loggingAspect() {
+        return new LoggingAspect();
+    }
 
     @Bean
     public RestTemplate restTemplate() {
