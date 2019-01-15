@@ -40,7 +40,7 @@ public class MainController {
     }
 
     @GetMapping("/")
-    public String showHomePage(Model model) {
+    public String showHomePage() {
         return "index";
     }
 
