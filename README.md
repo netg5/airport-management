@@ -252,4 +252,3 @@ NOTE: `config-service` and `eureka-service` should be run first due to all the c
 2. Implement Hystrix fallback methods
 3. SSL for the Eureka and Config servers
 4. Ignore services without swagger json in doc-service
-5. Develop Front-end using Angular
