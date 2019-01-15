@@ -49,7 +49,7 @@ public class ReservationService {
     }
 
     /**
-     * ГGet collection of reservations for a specific customer
+     * Get collection of reservations for a specific customer
      *
      * @param customerId whose reservations should be found
      * @return collection of customer reservations
