@@ -4,7 +4,7 @@ spring:
       name: zuul-gateway
       uri: http://localhost:8079
       enabled: true
-      label: "master"
+      label: "master" # branch where config is located
       discovery:
         enabled: true
         service-id: config-service
