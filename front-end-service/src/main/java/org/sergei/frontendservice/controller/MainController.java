@@ -65,9 +65,13 @@ public class MainController {
 
         ResponseEntity<Resources<Reservation>> reservations = reservationService.getReservationsByCustomerId(customerId);
         Resources<Reservation> reservationsResponseBody = reservations.getBody();
-        LOGGER.debug("Reservation response body is: {}", reservationsResponseBody.getContent());
+        reservationsResponseBody
+                .forEach(
+                        reservation ->
+                                LOGGER.debug("Reservation data is: {}", reservation.toString())
+                );
 
-        model.addAttribute("reservations", reservationsResponseBody);
+        model.addAttribute("reservations", reservationsResponseBody.getContent());
         return "customer";
     }
 }
