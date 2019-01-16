@@ -16,6 +16,7 @@
 
 package org.sergei.frontendservice.controller;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sergei.frontendservice.FrontEndServiceApplication;
@@ -33,6 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * @author Sergei Visotsky
  */
+@Ignore
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = FrontEndServiceApplication.class)
 @TestPropertySource(locations = "classpath:application-test.properties")
