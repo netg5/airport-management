@@ -2,7 +2,7 @@ spring:
   cloud:
     config:
       name: auth-service
-      uri: http://localhost:8079
+      uri: http://localhost:8888
       enabled: true
       label: "master" # branch where config is located
       discovery:
