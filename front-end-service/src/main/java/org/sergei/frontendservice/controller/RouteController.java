@@ -41,7 +41,7 @@ public class RouteController {
     }
 
     @GetMapping("/routes/{routeId}")
-    public String getRouteById(@PathVariable Long routeId, Model model) {
+    public String routeDataPage(@PathVariable Long routeId, Model model) {
         ResponseEntity<Route> route = routeService.getRouteById(routeId);
         Route routeResponseBody = route.getBody();
         model.addAttribute("routeId", Objects.requireNonNull(routeResponseBody).getRouteId());

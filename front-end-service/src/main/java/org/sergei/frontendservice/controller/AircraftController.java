@@ -40,7 +40,7 @@ public class AircraftController {
         this.aircraftService = aircraftService;
     }
 
-    @GetMapping("/aircraft/{aircraftId}")
+    @GetMapping("/aircrafts/{aircraftId}")
     public String aircraftDataPage(@PathVariable Long aircraftId, Model model) {
         ResponseEntity<Aircraft> aircraft = aircraftService.getAircraftById(aircraftId);
         Aircraft aircraftResponseBody = aircraft.getBody();

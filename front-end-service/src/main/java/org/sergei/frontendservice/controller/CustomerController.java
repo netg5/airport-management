@@ -44,7 +44,7 @@ public class CustomerController {
         this.reservationService = reservationService;
     }
 
-    @GetMapping("/customer/{customerId}")
+    @GetMapping("/customers/{customerId}")
     public String customerDataPage(@PathVariable Long customerId, Model model) throws IOException {
         ResponseEntity<Customer> customer = customerService.getCustomerById(customerId);
         Customer customerResponseBody = customer.getBody();
