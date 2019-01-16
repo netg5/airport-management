@@ -4,6 +4,7 @@ spring:
       name: ticket-service
       uri: http://localhost:8079
       enabled: true
+      label: "master"
       discovery:
         enabled: true
         service-id: config-service
