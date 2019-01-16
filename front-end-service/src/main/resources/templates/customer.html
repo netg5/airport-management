@@ -11,7 +11,7 @@
 </head>
 <body>
 <nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand" href="/">Flight reservation application</a>
+    <a class="navbar-brand" href="/">Flight reservation application - Customer data</a>
 </nav>
 <div class="container">
 
@@ -21,12 +21,12 @@
     <div>Last name: [[${lastName}]]</div>
     <div>Age: [[${age}]]</div>
 
-    <h6>Reservations for this customer:</h6>
+    <!--<h6>Reservations for this customer:</h6>
     <div th:each="reservation : ${reservations}">
         <p th:text="${reservation.reservationId}">Reservation ID is:</p>
         <p th:text="${reservation.customerId}">Customer ID who made reservation:</p>
         <p th:text="${reservation.reservationDate}">Reservation date:</p>
-    </div>
+    </div>-->
 </div>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

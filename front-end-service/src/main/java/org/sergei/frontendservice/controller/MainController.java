@@ -16,19 +16,20 @@
 
 package org.sergei.frontendservice.controller;
 
+import org.sergei.frontendservice.model.Aircraft;
 import org.sergei.frontendservice.model.Customer;
-import org.sergei.frontendservice.model.Reservation;
+import org.sergei.frontendservice.service.AircraftService;
 import org.sergei.frontendservice.service.CustomerService;
 import org.sergei.frontendservice.service.ReservationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.io.IOException;
 import java.util.Objects;
 
 /**
@@ -41,11 +42,15 @@ public class MainController {
 
     private final CustomerService customerService;
     private final ReservationService reservationService;
+    private final AircraftService aircraftService;
 
     @Autowired
-    public MainController(CustomerService customerService, ReservationService reservationService) {
+    public MainController(CustomerService customerService,
+                          ReservationService reservationService,
+                          AircraftService aircraftService) {
         this.customerService = customerService;
         this.reservationService = reservationService;
+        this.aircraftService = aircraftService;
     }
 
     @GetMapping("/")
@@ -54,7 +59,7 @@ public class MainController {
     }
 
     @GetMapping("/customer")
-    public String customerDataPage(Model model) {
+    public String customerDataPage(Model model) throws IOException {
         final Long customerId = 1L;
         ResponseEntity<Customer> customer = customerService.getCustomerById(customerId);
         Customer customerResponseBody = customer.getBody();
@@ -63,15 +68,21 @@ public class MainController {
         model.addAttribute("lastName", customerResponseBody.getLastName());
         model.addAttribute("age", customerResponseBody.getAge());
 
-        ResponseEntity<Resources<Reservation>> reservations = reservationService.getReservationsByCustomerId(customerId);
-        Resources<Reservation> reservationsResponseBody = reservations.getBody();
-        reservationsResponseBody
-                .forEach(
-                        reservation ->
-                                LOGGER.debug("Reservation data is: {}", reservation.toString())
-                );
-
-        model.addAttribute("reservations", reservationsResponseBody.getContent());
+        /*ResponseEntity<List<Reservation>> reservations = reservationService.getReservationsByCustomerId(customerId);
+        model.addAttribute("reservations", reservations);*/
         return "customer";
+    }
+
+    @GetMapping("/aircraft")
+    public String aircraftDataPage(Model model) {
+        final Long aircraftId = 1L;
+        ResponseEntity<Aircraft> aircraft = aircraftService.getAircraftById(aircraftId);
+        Aircraft aircraftResponseBody = aircraft.getBody();
+        model.addAttribute("aircraftId", Objects.requireNonNull(aircraftResponseBody).getAircraftId());
+        model.addAttribute("model", aircraftResponseBody.getModel());
+        model.addAttribute("aircraftName", aircraftResponseBody.getAircraftName());
+        model.addAttribute("aircraftWeight", aircraftResponseBody.getAircraftWeight());
+        model.addAttribute("maxPassengers", aircraftResponseBody.getMaxPassengers());
+        return "aircraft";
     }
 }

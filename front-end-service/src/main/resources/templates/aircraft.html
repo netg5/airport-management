@@ -1,7 +1,7 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Flight reservation</title>
+    <title>Flight reservation - customer data</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -11,18 +11,24 @@
 </head>
 <body>
 <nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand" href="/">Flight reservation application</a>
+    <a class="navbar-brand" href="/">Flight reservation application - Aircraft data</a>
 </nav>
-
 <div class="container">
-    <p>
-        <a href="/customer">First customer dat</a>
-    </p>
-    <p>
-        <a href="/aircraft">First aircraft data</a>
-    </p>
-</div>
 
+    <h1>Customer:</h1>
+    <div>Aircraft ID: [[${aircraftId}]]</div>
+    <div>Model: [[${model}]]</div>
+    <div>Aircraft name: [[${aircraftName}]]</div>
+    <div>Aircraft weight: [[${aircraftWeight}]]</div>
+    <div>Maximum passengers: [[${maxPassengers}]]</div>
+
+    <!--<h6>Reservations for this customer:</h6>
+    <div th:each="reservation : ${reservations}">
+        <p th:text="${reservation.reservationId}">Reservation ID is:</p>
+        <p th:text="${reservation.customerId}">Customer ID who made reservation:</p>
+        <p th:text="${reservation.reservationDate}">Reservation date:</p>
+    </div>-->
+</div>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

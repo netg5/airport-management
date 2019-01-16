@@ -16,16 +16,21 @@
 
 package org.sergei.frontendservice.service;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.sergei.frontendservice.model.AuthTokenInfo;
 import org.sergei.frontendservice.model.Reservation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.io.IOException;
+import java.util.List;
 
 /**
  * @author Sergei Visotsky
@@ -53,12 +58,22 @@ public class ReservationService {
      * @param customerId whose reservations should be found
      * @return collection of customer reservations
      */
-    public ResponseEntity<Resources<Reservation>> getReservationsByCustomerId(Long customerId) {
+    public ResponseEntity<List<Reservation>> getReservationsByCustomerId(Long customerId) throws IOException {
         AuthTokenInfo tokenInfo = tokenRetrievalService.sendTokenRequest();
         HttpEntity<String> request = new HttpEntity<>(tokenRetrievalService.getHeaders());
-        return this.restTemplate.exchange(RESERVATION_API_URI +
+        ResponseEntity<String> responseEntity = this.restTemplate.exchange(RESERVATION_API_URI +
                         CUSTOMERS_PATH + customerId + RESERVATIONS_PATH + ACCESS_TOKEN + tokenInfo.getAccessToken(),
-                HttpMethod.GET, request, new ParameterizedTypeReference<Resources<Reservation>>() {
-                });
+                HttpMethod.GET, request, String.class);
+
+        String data = responseEntity.getBody();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+        JsonNode jsNode = objectMapper.readTree(data);
+        String nodeAt = jsNode.at("/_embedded/reservationExtendedDTOList").toString();
+
+        return objectMapper.readValue(nodeAt, new TypeReference<List<Reservation>>() {
+        });
     }
 }

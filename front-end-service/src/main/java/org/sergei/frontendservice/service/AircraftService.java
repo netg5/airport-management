@@ -14,18 +14,20 @@
  * limitations under the License.
  */
 
-package org.sergei.frontendservice.model;
+package org.sergei.frontendservice.service;
 
-import lombok.Data;
+import org.sergei.frontendservice.model.Aircraft;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 /**
  * @author Sergei Visotsky
  */
-@Data
-public class Aircraft {
-    private Long aircraftId;
-    private String model;
-    private String aircraftName;
-    private Double aircraftWeight;
-    private String maxPassengers;
+@Service
+public class AircraftService {
+
+    // TODO
+    public ResponseEntity<Aircraft> getAircraftById(Long aircraftId) {
+        return null;
+    }
 }
