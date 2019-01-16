@@ -31,12 +31,12 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class CustomerService {
 
-    private final RestTemplate restTemplate;
-    private final TokenRetrievalService tokenRetrievalService;
-
     private static final String RESERVATION_API_URI = "https://localhost:9090/reservation-api";
     private static final String CUSTOMERS_PATH = "/customers/";
     private static final String ACCESS_TOKEN = "?access_token=";
+
+    private final RestTemplate restTemplate;
+    private final TokenRetrievalService tokenRetrievalService;
 
     @Autowired
     public CustomerService(RestTemplate restTemplate, TokenRetrievalService tokenRetrievalService) {

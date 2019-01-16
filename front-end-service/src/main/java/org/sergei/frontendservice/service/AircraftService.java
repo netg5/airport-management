@@ -17,8 +17,12 @@
 package org.sergei.frontendservice.service;
 
 import org.sergei.frontendservice.model.Aircraft;
+import org.sergei.frontendservice.model.AuthTokenInfo;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * @author Sergei Visotsky
@@ -26,8 +30,29 @@ import org.springframework.stereotype.Service;
 @Service
 public class AircraftService {
 
-    // TODO
+    private static final String RESERVATION_API_URI = "https://localhost:9090/reservation-api";
+    private static final String AIRCRAFTS_PATH = "/aircrafts/";
+    private static final String ACCESS_TOKEN = "?access_token=";
+
+    private final RestTemplate restTemplate;
+    private final TokenRetrievalService tokenRetrievalService;
+
+
+    public AircraftService(RestTemplate restTemplate, TokenRetrievalService tokenRetrievalService) {
+        this.restTemplate = restTemplate;
+        this.tokenRetrievalService = tokenRetrievalService;
+    }
+
+    /**
+     * Method to get aircraft by ID
+     *
+     * @param aircraftId which should be found
+     * @return aircraft response to be shown in view
+     */
     public ResponseEntity<Aircraft> getAircraftById(Long aircraftId) {
-        return null;
+        AuthTokenInfo tokenInfo = tokenRetrievalService.sendTokenRequest();
+        HttpEntity<String> request = new HttpEntity<>(tokenRetrievalService.getHeaders());
+        return this.restTemplate.exchange(RESERVATION_API_URI + AIRCRAFTS_PATH + aircraftId + ACCESS_TOKEN +
+                tokenInfo.getAccessToken(), HttpMethod.GET, request, Aircraft.class);
     }
 }
