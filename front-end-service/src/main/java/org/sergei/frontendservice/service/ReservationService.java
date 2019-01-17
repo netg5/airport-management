@@ -22,6 +22,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.sergei.frontendservice.model.AuthTokenInfo;
 import org.sergei.frontendservice.model.Reservation;
+import org.sergei.frontendservice.model.ReservationPost;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -37,6 +40,8 @@ import java.util.List;
  */
 @Service
 public class ReservationService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ReservationService.class);
 
     private final RestTemplate restTemplate;
     private final TokenRetrievalService tokenRetrievalService;
@@ -75,5 +80,19 @@ public class ReservationService {
 
         return objectMapper.readValue(nodeAt, new TypeReference<List<Reservation>>() {
         });
+    }
+
+    /**
+     * Method to make reservation for customer
+     *
+     * @param reservationPost reservation model to be saved
+     */
+    public ReservationPost submitReservation(ReservationPost reservationPost) {
+        LOGGER.debug("Route ID for which reservation was made: {}", reservationPost.getRouteId());
+        AuthTokenInfo tokenInfo = tokenRetrievalService.sendTokenRequest();
+        HttpEntity<ReservationPost> request = new HttpEntity<>(reservationPost, tokenRetrievalService.getHeaders());
+        long customerId = reservationPost.getCusotmerId();
+        return this.restTemplate.postForObject(RESERVATION_API_URI + CUSTOMERS_PATH +
+                customerId + RESERVATIONS_PATH + ACCESS_TOKEN + tokenInfo.getAccessToken(), request, ReservationPost.class);
     }
 }

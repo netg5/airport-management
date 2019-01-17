@@ -24,8 +24,8 @@ import java.time.LocalDateTime;
  * @author Sergei Visotsky
  */
 @Data
-public class Reservation {
-    private Long reservationId;
-    private Long customerId;
+public class ReservationPost {
+    private Long routeId;
+    private Long cusotmerId;
     private LocalDateTime reservationDate;
 }
