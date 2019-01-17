@@ -236,6 +236,10 @@ docker inspect CONTAINER_NAME
 
 NOTE: `config-service` and `eureka-service` should be run first due to all the configs are stored in the separate repository
 
+## FIXME
+* Show reservation list for a particular customer
+* Save reservation (throws 500 Internal Server Error)
+
 ## TODO
 1. Adopt liquibase for unit tests
 2. Implement Hystrix fallback methods
