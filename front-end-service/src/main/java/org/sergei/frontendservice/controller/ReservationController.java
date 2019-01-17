@@ -43,8 +43,8 @@ public class ReservationController {
 
     @GetMapping("/customers/{customerId}/reservations")
     public String showCustomerReservation(@PathVariable Long customerId, Model model) throws IOException {
-        ResponseEntity<List<Reservation>> reservations = reservationService.getReservationsByCustomerId(customerId);
-        model.addAttribute("reservations", reservations);
+        /*ResponseEntity<List<Reservation>> reservations = reservationService.getReservationsByCustomerId(customerId);
+        model.addAttribute("reservations", reservations);*/
         return "reservation";
     }
 }

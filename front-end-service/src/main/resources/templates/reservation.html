@@ -22,6 +22,23 @@
         <p th:text="${reservation.customerId}">Customer ID who made reservation:</p>
         <p th:text="${reservation.reservationDate}">Reservation date:</p>
     </div>
+
+    <h6>Make a reservation:</h6>
+    <form method="post">
+        <p>
+            Route ID:
+            <label>
+                <input type="text"/>
+            </label>
+        </p>
+        <p>
+            Date:
+            <label>
+                <input type="datetime-local">
+            </label>
+        </p>
+        <button>Submit</button>
+    </form>
 </div>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
