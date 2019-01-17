@@ -28,7 +28,7 @@ import org.springframework.stereotype.Component;
 import static org.sergei.reservationservice.util.ObjectMapperUtil.map;
 
 /**
- * Component to set extended route to the reservations and routes
+ * Component to set extended route to the reservations and routes responses
  *
  * @author Sergei Visotsky
  */
