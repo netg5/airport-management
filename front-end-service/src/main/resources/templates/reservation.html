@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Flight reservation - customer data</title>
     <meta charset="utf-8">
@@ -15,15 +15,13 @@
 </nav>
 <div class="container">
 
-    <h1>Customer:</h1>
-    <div>Customer ID: [[${customerId}]]</div>
-    <div>Fist name: [[${firstName}]]</div>
-    <div>Last name: [[${lastName}]]</div>
-    <div>Age: [[${age}]]</div>
-
-    <p>
-        <a href="/customers/1/reservations">Reservations for the first customer</a>
-    </p>
+    <h6>Reservations for this customer:</h6>
+    <div th:each="reservation : ${reservations}">
+        <p th:text="${reservation.reservationId}">Reservation ID:</p>
+        <p th:text="${reservation.customerId}">Customer ID:</p>
+        <p th:text="${reservation.customerId}">Customer ID who made reservation:</p>
+        <p th:text="${reservation.reservationDate}">Reservation date:</p>
+    </div>
 </div>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

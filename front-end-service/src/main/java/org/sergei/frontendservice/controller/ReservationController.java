@@ -16,8 +16,8 @@
 
 package org.sergei.frontendservice.controller;
 
-import org.sergei.frontendservice.model.Customer;
-import org.sergei.frontendservice.service.CustomerService;
+import org.sergei.frontendservice.model.Reservation;
+import org.sergei.frontendservice.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -25,29 +25,26 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import java.util.Objects;
+import java.io.IOException;
+import java.util.List;
 
 /**
  * @author Sergei Visotsky
  */
 @Controller
-public class CustomerController {
+public class ReservationController {
 
-    private final CustomerService customerService;
+    private final ReservationService reservationService;
 
     @Autowired
-    public CustomerController(CustomerService customerService) {
-        this.customerService = customerService;
+    public ReservationController(ReservationService reservationService) {
+        this.reservationService = reservationService;
     }
 
-    @GetMapping("/customers/{customerId}")
-    public String customerDataPage(@PathVariable Long customerId, Model model) {
-        ResponseEntity<Customer> customer = customerService.getCustomerById(customerId);
-        Customer customerResponseBody = customer.getBody();
-        model.addAttribute("customerId", Objects.requireNonNull(customerResponseBody).getCustomerId());
-        model.addAttribute("firstName", customerResponseBody.getFirstName());
-        model.addAttribute("lastName", customerResponseBody.getLastName());
-        model.addAttribute("age", customerResponseBody.getAge());
-        return "customer";
+    @GetMapping("/customers/{customerId}/reservations")
+    public String showCustomerReservation(@PathVariable Long customerId, Model model) throws IOException {
+        ResponseEntity<List<Reservation>> reservations = reservationService.getReservationsByCustomerId(customerId);
+        model.addAttribute("reservations", reservations);
+        return "reservation";
     }
 }
