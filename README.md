@@ -13,7 +13,7 @@ Flight reservation application based on the microservice architecture which allo
 * Thymeleaf
 
 ## Services
-* config-service - microserivce which makes calls to tht repository where all configurations are stored - [https://github.com/sergeivisotsky/flight-reservation-config](https://github.com/sergeivisotsky/flight-reservation-config)
+* config-service - microserivce which makes calls to the repository where all configurations are stored - [https://github.com/sergeivisotsky/flight-reservation-config](https://github.com/sergeivisotsky/flight-reservation-config)
 * auth-service - microservice responsible for authentication and authorization
 * eureka-service - microservice registry where of all microservices can be observed
 * doc-service - Swagger documentation service
@@ -171,6 +171,8 @@ NOTE: If you change any port it should be changed in all places where it is used
 #### 1 way - using maven or java command
 * Perform command `mvn spring-boot:run` or compile each microservice into the .jar and perform command `java -jar target/SERVICE-NAME-VERSION.jar`
 
+NOTE: `config-service` and `eureka-service` should be run first due to all the configs are stored in the separate repository.
+
 #### 2 way - run into the Docker container
 As was mentioned earlier in Setup section `9.` paragraph each microservice contains _Dockerfile_ that allows to run it into the Docker container.
 
@@ -234,7 +236,7 @@ docker inspect CONTAINER_NAME
 docker inspect CONTAINER_NAME
 ```
 
-NOTE: `config-service` and `eureka-service` should be run first due to all the configs are stored in the separate repository
+NOTE: `config-service` and `eureka-service` should be run first due to all the configs are stored in the separate repository.
 
 ## FIXME
 * Show reservation list for a particular customer
