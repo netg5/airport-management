@@ -57,4 +57,11 @@ public class CustomerService {
                         CUSTOMERS_PATH + customerId + ACCESS_TOKEN + tokenInfo.getAccessToken(),
                 HttpMethod.GET, request, Customer.class);
     }
+
+    public Customer save(Customer customer) {
+        AuthTokenInfo tokenInfo = tokenRetrievalService.sendTokenRequest();
+        HttpEntity<Customer> request = new HttpEntity<>(customer, tokenRetrievalService.getHeaders());
+        return this.restTemplate.postForObject(RESERVATION_API_URI + CUSTOMERS_PATH +
+                ACCESS_TOKEN + tokenInfo.getAccessToken(), request, Customer.class);
+    }
 }

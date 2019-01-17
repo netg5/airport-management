@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Flight reservation - customer data</title>
     <meta charset="utf-8">
@@ -24,6 +24,29 @@
     <p>
         <a href="/customers/1/reservations">Reservations for the first customer</a>
     </p>
+
+    <h6>Add a new customer:</h6>
+    <form th:action="@{/customers}" th:object="${customer}" method="post">
+        <p>
+            First name:
+            <label>
+                <input type="text" th:field="*{firstName}">
+            </label>
+        </p>
+        <p>
+            Last name:
+            <label>
+                <input type="text" th:field="*{lastName}">
+            </label>
+        </p>
+        <p>
+            Age:
+            <label>
+                <input type="text" th:field="*{age}">
+            </label>
+        </p>
+        <button>Submit</button>
+    </form>
 </div>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

@@ -16,25 +16,25 @@
 <div class="container">
 
     <h6>Reservations for this customer:</h6>
-    <div th:each="reservation : ${reservations}">
+    <!--<div th:each="reservation : ${reservations}">
         <p th:text="${reservation.reservationId}">Reservation ID:</p>
         <p th:text="${reservation.customerId}">Customer ID:</p>
         <p th:text="${reservation.customerId}">Customer ID who made reservation:</p>
         <p th:text="${reservation.reservationDate}">Reservation date:</p>
-    </div>
+    </div>-->
 
     <h6>Make a reservation:</h6>
-    <form th:action="@{/customers/{customerId}/reservations}" th:object="${reservationPost}" method="post">
+    <form th:action="@{/cusotmers/{customerId}/reservations}" th:object="${reservationPost}" method="post">
         <p>
             Route ID:
             <label>
-                <input type="text"/>
+                <input type="text" th:field="*{routeId}"/>
             </label>
         </p>
         <p>
             Date:
             <label>
-                <input type="datetime-local">
+                <input type="datetime-local" th:field="*{reservationDate}">
             </label>
         </p>
         <button>Submit</button>

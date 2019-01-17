@@ -23,7 +23,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Objects;
 
@@ -44,10 +46,17 @@ public class CustomerController {
     public String customerDataPage(@PathVariable Long customerId, Model model) {
         ResponseEntity<Customer> customer = customerService.getCustomerById(customerId);
         Customer customerResponseBody = customer.getBody();
+        model.addAttribute("customer", customerResponseBody);
         model.addAttribute("customerId", Objects.requireNonNull(customerResponseBody).getCustomerId());
         model.addAttribute("firstName", customerResponseBody.getFirstName());
         model.addAttribute("lastName", customerResponseBody.getLastName());
         model.addAttribute("age", customerResponseBody.getAge());
         return "customer";
+    }
+
+    @PostMapping("/customers")
+    public String saveCustomer(@ModelAttribute("customer") Customer customer) {
+        customerService.save(customer);
+        return "success_page";
     }
 }
