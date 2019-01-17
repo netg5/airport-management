@@ -46,17 +46,17 @@ public class ReservationController {
 
     @GetMapping("/customers/{customerId}/reservations")
     public String showCustomerReservation(@PathVariable Long customerId, Model model) throws IOException {
-//        ResponseEntity<List<Reservation>> reservations = reservationService.getReservationsByCustomerId(customerId);
-//        model.addAttribute("reservations", reservations);
+        ResponseEntity<List<Reservation>> reservations = reservationService.getReservationsByCustomerId(customerId);
+        model.addAttribute("reservations", reservations);
         model.addAttribute("reservationPost", new ReservationPost());
         return "reservation";
     }
 
     @PostMapping("/customers/{customerId}/reservations")
-    public String submitReservation(@PathVariable Long customerId,
-                                    @ModelAttribute("reservationPost") ReservationPost reservationPost) {
+    public String saveReservation(@PathVariable Long customerId,
+                                  @ModelAttribute("reservationPost") ReservationPost reservationPost) {
         reservationPost.setCusotmerId(customerId);
-        reservationService.submitReservation(reservationPost);
+        reservationService.saveReservation(reservationPost);
         return "success_page";
     }
 }
