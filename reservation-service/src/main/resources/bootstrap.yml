@@ -8,3 +8,11 @@ spring:
       discovery:
         enabled: true
         service-id: config-service
+eureka:
+  client:
+    enabled: true
+    registry-fetch-interval-seconds: 10 # how often to fetch the registry from Eureka server
+    instance-info-replication-interval-seconds: 10 # how often to replicate instance changes to be replicated to Eureka server
+  instance:
+    lease-renewal-interval-in-seconds: 10 # intervalSeconds between subsequent heartbeats sent to Eureka server
+    lease-expiration-duration-in-seconds: 20 # time that Eureka server waits since it received last heartbeat before it can evict this instance
