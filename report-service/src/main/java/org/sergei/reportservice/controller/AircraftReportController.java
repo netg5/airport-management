@@ -46,8 +46,7 @@ public class AircraftReportController {
     private final IReportService<AircraftReportDTO> aircraftReportService;
 
     @Autowired
-    public AircraftReportController(LinkUtil linkUtil,
-                                    AircraftReportService aircraftReportService) {
+    public AircraftReportController(LinkUtil linkUtil, AircraftReportService aircraftReportService) {
         this.linkUtil = linkUtil;
         this.aircraftReportService = aircraftReportService;
     }
