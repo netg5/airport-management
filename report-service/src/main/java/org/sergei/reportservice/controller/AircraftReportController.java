@@ -17,10 +17,11 @@
 package org.sergei.reportservice.controller;
 
 import io.swagger.annotations.*;
+import org.sergei.reportservice.controller.hateoas.LinkUtil;
 import org.sergei.reportservice.dto.AircraftReportDTO;
-import org.sergei.reportservice.service.IReportService;
 import org.sergei.reportservice.service.AircraftReportService;
 import org.sergei.reportservice.service.Constants;
+import org.sergei.reportservice.service.IReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.hateoas.Resources;
@@ -28,9 +29,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import static org.sergei.reportservice.controller.hateoas.LinkUtil.setLinksForAircraftReport;
-import static org.sergei.reportservice.controller.hateoas.LinkUtil.setLinksForAllReports;
 
 /**
  * @author Sergei Visotsky
@@ -44,10 +42,13 @@ import static org.sergei.reportservice.controller.hateoas.LinkUtil.setLinksForAl
 @PreAuthorize("hasAuthority('ROLE_ADMIN')")
 public class AircraftReportController {
 
+    private final LinkUtil linkUtil;
     private final IReportService<AircraftReportDTO> aircraftReportService;
 
     @Autowired
-    public AircraftReportController(AircraftReportService aircraftReportService) {
+    public AircraftReportController(LinkUtil linkUtil,
+                                    AircraftReportService aircraftReportService) {
+        this.linkUtil = linkUtil;
         this.aircraftReportService = aircraftReportService;
     }
 
@@ -61,7 +62,7 @@ public class AircraftReportController {
                                                     @ApiParam("Number of elements per page")
                                                     @RequestParam("size") int size) {
         Page<AircraftReportDTO> aircraftReports = aircraftReportService.findAll(page, size);
-        return new ResponseEntity<>(setLinksForAllReports(aircraftReports), HttpStatus.OK);
+        return new ResponseEntity<>(linkUtil.setLinksForAllReports(aircraftReports), HttpStatus.OK);
     }
 
     @ApiOperation(
@@ -75,6 +76,6 @@ public class AircraftReportController {
     public ResponseEntity<AircraftReportDTO> findByAircraftId(@ApiParam("Aircraft ID to find the report")
                                                               @PathVariable("aircraftId") Long aircraftId) {
         AircraftReportDTO aircraftReportDTO = aircraftReportService.findById(aircraftId);
-        return new ResponseEntity<>(setLinksForAircraftReport(aircraftReportDTO), HttpStatus.OK);
+        return new ResponseEntity<>(linkUtil.setLinksForAircraftReport(aircraftReportDTO), HttpStatus.OK);
     }
 }

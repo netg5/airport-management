@@ -16,9 +16,10 @@
 
 package org.sergei.ticketservice.config;
 
-import org.sergei.ticketservice.util.GatewayPortPojo;
+import org.sergei.ticketservice.properties.GatewayPortProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -53,10 +54,17 @@ public class SwaggerConfig {
 
     private static final String CLIENT_SECRET = "client_secret";
 
+    private final GatewayPortProperties gatewayPortProperties;
+
+    @Autowired
+    public SwaggerConfig(GatewayPortProperties gatewayPortProperties) {
+        this.gatewayPortProperties = gatewayPortProperties;
+    }
+
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .host("localhost:" + GatewayPortPojo.getGatewayPort())
+                .host("localhost:" + gatewayPortProperties.getPort())
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("org.sergei.ticketservice.controller"))
                 .paths(PathSelectors.any())

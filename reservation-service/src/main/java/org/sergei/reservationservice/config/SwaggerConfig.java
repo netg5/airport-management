@@ -16,9 +16,10 @@
 
 package org.sergei.reservationservice.config;
 
-import org.sergei.reservationservice.util.GatewayPortPojo;
+import org.sergei.reservationservice.properties.GatewayPortProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -48,15 +49,22 @@ public class SwaggerConfig {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SwaggerConfig.class);
 
+    private final GatewayPortProperties gatewayPortProperties;
+
     @Value("${security.oauth2.access-token-uri}")
     private String authServer;
 
     private static final String CLIENT_SECRET = "client_secret";
 
+    @Autowired
+    public SwaggerConfig(GatewayPortProperties gatewayPortProperties) {
+        this.gatewayPortProperties = gatewayPortProperties;
+    }
+
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .host("localhost:" + GatewayPortPojo.getGatewayPort())
+                .host("localhost:" + gatewayPortProperties.getPort())
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("org.sergei.reservationservice.controller"))
                 .paths(PathSelectors.any())

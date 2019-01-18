@@ -18,6 +18,7 @@ package org.sergei.reportservice.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.sergei.reportservice.controller.hateoas.LinkUtil;
 import org.sergei.reportservice.dto.CustomerReportDTO;
 import org.sergei.reportservice.service.CustomerReportService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +29,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import static org.sergei.reportservice.controller.hateoas.LinkUtil.setLinksForCustomerReport;
 
 /**
  * @author Sergei Visotsky
@@ -43,10 +42,13 @@ import static org.sergei.reportservice.controller.hateoas.LinkUtil.setLinksForCu
 @PreAuthorize("hasAuthority('ROLE_ADMIN')")
 public class CustomerReportController {
 
+    private final LinkUtil linkUtil;
     private final CustomerReportService customerReportService;
 
     @Autowired
-    public CustomerReportController(CustomerReportService customerReportService) {
+    public CustomerReportController(LinkUtil linkUtil,
+                                    CustomerReportService customerReportService) {
+        this.linkUtil = linkUtil;
         this.customerReportService = customerReportService;
     }
 
@@ -57,6 +59,6 @@ public class CustomerReportController {
     @GetMapping("/{customerId}")
     public ResponseEntity<CustomerReportDTO> findReportByCustomerId(@PathVariable Long customerId) {
         CustomerReportDTO customerReportDTO = customerReportService.findById(customerId);
-        return new ResponseEntity<>(setLinksForCustomerReport(customerReportDTO), HttpStatus.OK);
+        return new ResponseEntity<>(linkUtil.setLinksForCustomerReport(customerReportDTO), HttpStatus.OK);
     }
 }

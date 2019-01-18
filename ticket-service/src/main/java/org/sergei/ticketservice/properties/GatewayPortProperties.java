@@ -14,28 +14,24 @@
  * limitations under the License.
  */
 
-package org.sergei.reservationservice.util;
+package org.sergei.ticketservice.properties;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author Sergei Visotsky
  */
-@Component
-public class GatewayPortPojo {
-
-    private GatewayPortPojo() {
-    }
-
-    private static int gatewayPort;
-
-    @Value("${spring.gateway.port}")
-    public void setGatewayPort(int gatewayPort) {
-        GatewayPortPojo.gatewayPort = gatewayPort;
-    }
-
-    public static int getGatewayPort() {
-        return gatewayPort;
-    }
+@Getter
+@Setter
+@NoArgsConstructor
+@Configuration
+@EnableConfigurationProperties(GatewayPortProperties.class)
+@ConfigurationProperties(prefix = "spring.gateway")
+public class GatewayPortProperties {
+    private int port;
 }

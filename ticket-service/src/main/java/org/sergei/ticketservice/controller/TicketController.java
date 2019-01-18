@@ -17,6 +17,7 @@
 package org.sergei.ticketservice.controller;
 
 import io.swagger.annotations.*;
+import org.sergei.ticketservice.controller.hateoas.LinkUtil;
 import org.sergei.ticketservice.model.Ticket;
 import org.sergei.ticketservice.service.Constants;
 import org.sergei.ticketservice.service.TicketService;
@@ -32,8 +33,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static org.sergei.ticketservice.controller.hateoas.LinkUtil.setLinksForTicket;
-
 /**
  * @author Sergei Visotsky
  */
@@ -45,10 +44,12 @@ import static org.sergei.ticketservice.controller.hateoas.LinkUtil.setLinksForTi
 @RequestMapping(value = "/tickets", produces = "application/json")
 public class TicketController {
 
+    private final LinkUtil linkUtil;
     private final TicketService ticketService;
 
     @Autowired
-    public TicketController(TicketService ticketService) {
+    public TicketController(LinkUtil linkUtil, TicketService ticketService) {
+        this.linkUtil = linkUtil;
         this.ticketService = ticketService;
     }
 
@@ -64,7 +65,7 @@ public class TicketController {
                                                             @ApiParam(value = "Distance with which ticket should be found")
                                                             @RequestParam(value = "distance", required = false) Double distance) {
         List<Ticket> ticketList = ticketService.findAllTickets(customerId, place, distance);
-        return new ResponseEntity<>(setLinksForTicket(ticketList, customerId), HttpStatus.OK);
+        return new ResponseEntity<>(linkUtil.setLinksForTicket(ticketList, customerId), HttpStatus.OK);
     }
 
     @ApiOperation("Get ticket for customer by ID")
@@ -83,6 +84,6 @@ public class TicketController {
                                                                     @ApiParam("Number of elements per page")
                                                                     @RequestParam("size") int size) {
         Page<Ticket> ticketList = ticketService.findAllTicketsPageable(customerId, place, distance, page, size);
-        return new ResponseEntity<>(setLinksForTicket(ticketList, customerId), HttpStatus.OK);
+        return new ResponseEntity<>(linkUtil.setLinksForTicket(ticketList, customerId), HttpStatus.OK);
     }
 }

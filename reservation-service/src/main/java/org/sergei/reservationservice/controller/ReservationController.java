@@ -17,6 +17,7 @@
 package org.sergei.reservationservice.controller;
 
 import io.swagger.annotations.*;
+import org.sergei.reservationservice.controller.hateoas.LinkUtil;
 import org.sergei.reservationservice.dto.ReservationDTO;
 import org.sergei.reservationservice.dto.ReservationExtendedDTO;
 import org.sergei.reservationservice.service.ReservationService;
@@ -32,7 +33,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.util.List;
 import java.util.Map;
 
-import static org.sergei.reservationservice.controller.hateoas.LinkUtil.setLinksForAllReservations;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
@@ -48,10 +48,12 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @RequestMapping(value = "/customers", produces = "application/json")
 public class ReservationController {
 
+    private final LinkUtil linkUtil;
     private final ReservationService reservationService;
 
     @Autowired
-    public ReservationController(ReservationService reservationService) {
+    public ReservationController(LinkUtil linkUtil, ReservationService reservationService) {
+        this.linkUtil = linkUtil;
         this.reservationService = reservationService;
     }
 
@@ -66,7 +68,7 @@ public class ReservationController {
                                                        @PathVariable("customerId") Long customerId) {
         List<ReservationExtendedDTO> reservations =
                 reservationService.findAllForCustomer(customerId);
-        return new ResponseEntity<>(setLinksForAllReservations(reservations), HttpStatus.OK);
+        return new ResponseEntity<>(linkUtil.setLinksForAllReservations(reservations), HttpStatus.OK);
     }
 
     @ApiOperation("Get all reservations for customer")
@@ -84,7 +86,7 @@ public class ReservationController {
                                                                 @RequestParam("size") int size) {
         Page<ReservationExtendedDTO> reservations =
                 reservationService.findAllForCustomerPaginated(customerId, page, size);
-        return new ResponseEntity<>(setLinksForAllReservations(reservations), HttpStatus.OK);
+        return new ResponseEntity<>(linkUtil.setLinksForAllReservations(reservations), HttpStatus.OK);
     }
 
     @ApiOperation("Get one reservation by ID for the customer")

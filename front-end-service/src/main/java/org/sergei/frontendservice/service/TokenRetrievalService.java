@@ -18,10 +18,10 @@ package org.sergei.frontendservice.service;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.sergei.frontendservice.model.AuthTokenInfo;
+import org.sergei.frontendservice.properties.OauthClientProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -42,25 +42,16 @@ public class TokenRetrievalService {
     private static final String USERNAME = "&username=";
     private static final String PASSWORD = "&password=";
 
-    @Value("${oauth.client-id}")
-    private String clientId;
-
-    @Value("${oauth.client-secret}")
-    private String clientSecret;
-
-    @Value("${oauth.username}")
-    private String usernameValue;
-
-    @Value("${oauth.password}")
-    private String passwordValue;
-
     private final RestTemplate restTemplate;
     private final HttpHeaders httpHeaders;
+    private final OauthClientProperties oauthClientProperties;
 
     @Autowired
-    public TokenRetrievalService(RestTemplate restTemplate, HttpHeaders httpHeaders) {
+    public TokenRetrievalService(RestTemplate restTemplate, HttpHeaders httpHeaders,
+                                 OauthClientProperties oauthClientProperties) {
         this.restTemplate = restTemplate;
         this.httpHeaders = httpHeaders;
+        this.oauthClientProperties = oauthClientProperties;
     }
 
     /**
@@ -79,7 +70,7 @@ public class TokenRetrievalService {
      * @return headers with Authorization header added
      */
     private HttpHeaders getHeadersWithClientCredentials() {
-        String plainClientCredentials = clientId + ":" + clientSecret;
+        String plainClientCredentials = oauthClientProperties.getClientId() + ":" + oauthClientProperties.getClientSecret();
         String base64ClientCredentials = new String(Base64.encodeBase64(plainClientCredentials.getBytes()));
 
         HttpHeaders headers = getHeaders();
@@ -97,7 +88,8 @@ public class TokenRetrievalService {
 
         HttpEntity<String> request = new HttpEntity<>(getHeadersWithClientCredentials());
         ResponseEntity<Object> response =
-                this.restTemplate.exchange(AUTH_SERVER + PASSWORD_GRANT + USERNAME + usernameValue + PASSWORD + passwordValue,
+                this.restTemplate.exchange(AUTH_SERVER + PASSWORD_GRANT + USERNAME +
+                                oauthClientProperties.getUsername() + PASSWORD + oauthClientProperties.getPassword(),
                         HttpMethod.POST, request, Object.class);
         LinkedHashMap<String, Object> map = (LinkedHashMap<String, Object>) response.getBody();
         AuthTokenInfo tokenInfo = null;

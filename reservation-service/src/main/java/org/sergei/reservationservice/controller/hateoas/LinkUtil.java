@@ -21,9 +21,11 @@ import org.sergei.reservationservice.controller.CustomerController;
 import org.sergei.reservationservice.controller.ReservationController;
 import org.sergei.reservationservice.controller.RouteController;
 import org.sergei.reservationservice.dto.*;
-import org.sergei.reservationservice.util.GatewayPortPojo;
+import org.sergei.reservationservice.properties.GatewayPortProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resources;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
@@ -32,12 +34,14 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 /**
  * @author Sergei Visotsky
  */
-public final class LinkUtil {
+@Component
+public class LinkUtil {
 
-    /**
-     * Hide from public use
-     */
-    private LinkUtil() {
+    private final GatewayPortProperties gatewayPortProperties;
+
+    @Autowired
+    public LinkUtil(GatewayPortProperties gatewayPortProperties) {
+        this.gatewayPortProperties = gatewayPortProperties;
     }
 
     /**
@@ -46,7 +50,7 @@ public final class LinkUtil {
      * @param customerList get collection with customers
      * @return resource with customer
      */
-    public static Resources setLinksForAllCustomers(Iterable<CustomerDTO> customerList) {
+    public Resources setLinksForAllCustomers(Iterable<CustomerDTO> customerList) {
         customerList.forEach(customer -> {
             Link link = linkTo(
                     methodOn(CustomerController.class)
@@ -54,7 +58,7 @@ public final class LinkUtil {
             Link reservationsLink = linkTo(
                     methodOn(ReservationController.class)
                             .getAllForCustomer(customer.getCustomerId())).withRel("reservations");
-            Link ticketsLink = new Link("https://127.0.0.1:" + GatewayPortPojo.getGatewayPort() +
+            Link ticketsLink = new Link("https://127.0.0.1:" + gatewayPortProperties.getPort() +
                     "/ticket-api/tickets?customerId=" + customer.getCustomerId()).withRel("tickets");
             customer.add(link);
             customer.add(reservationsLink);
@@ -63,7 +67,7 @@ public final class LinkUtil {
         return setServletResourceLinks(customerList);
     }
 
-    public static Resources setLinksForIdsOfCustomers(Iterable<CustomerIdsDTO> customerIdsDTOList) {
+    public Resources setLinksForIdsOfCustomers(Iterable<CustomerIdsDTO> customerIdsDTOList) {
         Resources resources = setServletResourceLinks(customerIdsDTOList);
         Link allCustomers = linkTo(methodOn(CustomerController.class).getAllCustomers()).withRel("allCustomers");
         resources.add(allCustomers);
@@ -76,7 +80,7 @@ public final class LinkUtil {
      * @param customerDTO get customer DTO to setup links
      * @return customer DTO with links;
      */
-    public static CustomerDTO setLinksForCustomer(CustomerDTO customerDTO) {
+    public CustomerDTO setLinksForCustomer(CustomerDTO customerDTO) {
         Link selfLink = linkTo(
                 methodOn(CustomerController.class)
                         .getCustomerById(customerDTO.getCustomerId())).withSelfRel();
@@ -84,7 +88,7 @@ public final class LinkUtil {
                 methodOn(ReservationController.class)
                         .getAllForCustomer(customerDTO.getCustomerId())).withRel("reservations");
         Link ticketsLink = new Link(
-                "http://127.0.0.1:" + GatewayPortPojo.getGatewayPort() + "/ticket-api/tickets?customerId=" +
+                "http://127.0.0.1:" + gatewayPortProperties.getPort() + "/ticket-api/tickets?customerId=" +
                         customerDTO.getCustomerId()).withRel("tickets");
         Link link = linkTo(CustomerController.class).withRel("allCustomers");
         customerDTO.add(selfLink);
@@ -100,7 +104,7 @@ public final class LinkUtil {
      * @param reservations collection of reservations
      * @return collection of reservation with links set
      */
-    public static Resources setLinksForAllReservations(Iterable<ReservationExtendedDTO> reservations) {
+    public Resources setLinksForAllReservations(Iterable<ReservationExtendedDTO> reservations) {
         reservations.forEach(reservation -> {
             Link link = linkTo(
                     methodOn(ReservationController.class)
@@ -118,7 +122,7 @@ public final class LinkUtil {
      * @param aircrafts get collection of aircrafts
      * @return collection of aircrafts with links set
      */
-    public static Resources setLinksForAllAircrafts(Iterable<AircraftDTO> aircrafts) {
+    public Resources setLinksForAllAircrafts(Iterable<AircraftDTO> aircrafts) {
         aircrafts.forEach(aircraft -> {
             Link link = linkTo(
                     methodOn(AircraftController.class)
@@ -134,7 +138,7 @@ public final class LinkUtil {
      * @param aircraftDTO get DTO to setup links
      * @return DTO with links
      */
-    public static AircraftDTO setLinksForAircraft(AircraftDTO aircraftDTO) {
+    public AircraftDTO setLinksForAircraft(AircraftDTO aircraftDTO) {
         Link selfLink = linkTo(
                 methodOn(AircraftController.class)
                         .getAircraftById(aircraftDTO.getAircraftId())).withSelfRel();
@@ -144,7 +148,7 @@ public final class LinkUtil {
         return aircraftDTO;
     }
 
-    public static Resources setLinksForAllRoutes(Iterable<RouteExtendedDTO> routes) {
+    public Resources setLinksForAllRoutes(Iterable<RouteExtendedDTO> routes) {
         routes.forEach(route -> {
             Link link = linkTo(
                     methodOn(RouteController.class)
@@ -160,7 +164,7 @@ public final class LinkUtil {
      * @param routeDTO get route DTO to set links
      * @return DTO with links added
      */
-    public static RouteDTO setLinksForRoute(RouteDTO routeDTO) {
+    public RouteDTO setLinksForRoute(RouteDTO routeDTO) {
         Link link = linkTo(RouteController.class).withRel("allRoutes");
         Link selfLink = linkTo(
                 methodOn(RouteController.class)

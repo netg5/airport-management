@@ -17,6 +17,7 @@
 package org.sergei.reservationservice.controller;
 
 import io.swagger.annotations.*;
+import org.sergei.reservationservice.controller.hateoas.LinkUtil;
 import org.sergei.reservationservice.dto.AircraftDTO;
 import org.sergei.reservationservice.service.AircraftService;
 import org.sergei.reservationservice.service.util.Constants;
@@ -31,9 +32,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-import static org.sergei.reservationservice.controller.hateoas.LinkUtil.setLinksForAircraft;
-import static org.sergei.reservationservice.controller.hateoas.LinkUtil.setLinksForAllAircrafts;
-
 /**
  * @author Sergei Visotsky
  */
@@ -46,10 +44,12 @@ import static org.sergei.reservationservice.controller.hateoas.LinkUtil.setLinks
 @RequestMapping(value = "/aircrafts", produces = "application/json")
 public class AircraftController {
 
+    private final LinkUtil linkUtil;
     private final AircraftService aircraftService;
 
     @Autowired
-    public AircraftController(AircraftService aircraftService) {
+    public AircraftController(LinkUtil linkUtil, AircraftService aircraftService) {
+        this.linkUtil = linkUtil;
         this.aircraftService = aircraftService;
     }
 
@@ -57,7 +57,7 @@ public class AircraftController {
     @GetMapping
     public ResponseEntity<Resources> getAllAircraft() {
         List<AircraftDTO> aircrafts = aircraftService.findAll();
-        return new ResponseEntity<>(setLinksForAllAircrafts(aircrafts), HttpStatus.OK);
+        return new ResponseEntity<>(linkUtil.setLinksForAllAircrafts(aircrafts), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Get all existing aircrafts paginated")
@@ -67,7 +67,7 @@ public class AircraftController {
                                                              @ApiParam("Maximum number of content blocks on the page")
                                                              @RequestParam("size") int size) {
         Page<AircraftDTO> aircrafts = aircraftService.findAllPaginated(page, size);
-        return new ResponseEntity<>(setLinksForAllAircrafts(aircrafts), HttpStatus.OK);
+        return new ResponseEntity<>(linkUtil.setLinksForAllAircrafts(aircrafts), HttpStatus.OK);
     }
 
     @ApiOperation("Get aircraftDTO by ID")
@@ -80,7 +80,7 @@ public class AircraftController {
     public ResponseEntity<AircraftDTO> getAircraftById(@ApiParam(value = "Aircraft ID which should be found", required = true)
                                                        @PathVariable("aircraftId") Long aircraftId) {
         AircraftDTO aircraftDTO = aircraftService.findOne(aircraftId);
-        return new ResponseEntity<>(setLinksForAircraft(aircraftDTO), HttpStatus.OK);
+        return new ResponseEntity<>(linkUtil.setLinksForAircraft(aircraftDTO), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Save aircraft", notes = "Operation allowed for the ROLE_ADMIN only")
@@ -104,7 +104,7 @@ public class AircraftController {
                                                       @ApiParam(value = "Update aircraft", required = true)
                                                       @RequestBody AircraftDTO aircraftDTO) {
         AircraftDTO aircraft = aircraftService.update(aircraftId, aircraftDTO);
-        return new ResponseEntity<>(setLinksForAircraft(aircraft), HttpStatus.OK);
+        return new ResponseEntity<>(linkUtil.setLinksForAircraft(aircraft), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Update one field of the aircraft", notes = "Operation allowed for the ROLE_ADMIN only")
@@ -120,7 +120,7 @@ public class AircraftController {
                                                      @RequestBody Map<String, Object> params) {
 
         AircraftDTO aircraftDTO = aircraftService.patch(aircraftId, params);
-        return new ResponseEntity<>(setLinksForAircraft(aircraftDTO), HttpStatus.OK);
+        return new ResponseEntity<>(linkUtil.setLinksForAircraft(aircraftDTO), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Delete aircraft", notes = "Operation allowed for the ROLE_ADMIN only")
