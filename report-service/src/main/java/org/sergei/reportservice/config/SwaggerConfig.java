@@ -16,7 +16,6 @@
 
 package org.sergei.reportservice.config;
 
-import com.netflix.discovery.converters.Auto;
 import org.sergei.reportservice.properties.GatewayPortProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
