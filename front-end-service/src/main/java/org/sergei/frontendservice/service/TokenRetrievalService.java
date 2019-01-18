@@ -22,6 +22,7 @@ import org.sergei.frontendservice.properties.OAuthClientProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -48,7 +49,8 @@ public class TokenRetrievalService {
 
     @Autowired
     public TokenRetrievalService(RestTemplate restTemplate, HttpHeaders httpHeaders,
-                                 OAuthClientProperties oauthClientProperties) {
+                                 @Qualifier("OAuthClientProperties")
+                                         OAuthClientProperties oauthClientProperties) {
         this.restTemplate = restTemplate;
         this.httpHeaders = httpHeaders;
         this.oauthClientProperties = oauthClientProperties;
