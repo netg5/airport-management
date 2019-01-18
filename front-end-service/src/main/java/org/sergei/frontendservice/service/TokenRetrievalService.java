@@ -18,7 +18,7 @@ package org.sergei.frontendservice.service;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.sergei.frontendservice.model.AuthTokenInfo;
-import org.sergei.frontendservice.properties.OauthClientProperties;
+import org.sergei.frontendservice.properties.OAuthClientProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,11 +44,11 @@ public class TokenRetrievalService {
 
     private final RestTemplate restTemplate;
     private final HttpHeaders httpHeaders;
-    private final OauthClientProperties oauthClientProperties;
+    private final OAuthClientProperties oauthClientProperties;
 
     @Autowired
     public TokenRetrievalService(RestTemplate restTemplate, HttpHeaders httpHeaders,
-                                 OauthClientProperties oauthClientProperties) {
+                                 OAuthClientProperties oauthClientProperties) {
         this.restTemplate = restTemplate;
         this.httpHeaders = httpHeaders;
         this.oauthClientProperties = oauthClientProperties;

@@ -30,9 +30,9 @@ import org.springframework.context.annotation.Configuration;
 @Setter
 @NoArgsConstructor
 @Configuration
-@EnableConfigurationProperties(OauthClientProperties.class)
+@EnableConfigurationProperties(OAuthClientProperties.class)
 @ConfigurationProperties(prefix = "oauth")
-public class OauthClientProperties {
+public class OAuthClientProperties {
     private String clientId;
     private String clientSecret;
     private String username;
