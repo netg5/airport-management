@@ -16,7 +16,7 @@
 
 package org.sergei.reportservice.config;
 
-import org.sergei.reportservice.properties.GatewayPortProperties;
+import org.sergei.reportservice.properties.GatewayProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,17 +54,17 @@ public class SwaggerConfig {
 
     private static final String CLIENT_SECRET = "client_secret";
 
-    private final GatewayPortProperties gatewayPortProperties;
+    private final GatewayProperties gatewayProperties;
 
     @Autowired
-    public SwaggerConfig(GatewayPortProperties gatewayPortProperties) {
-        this.gatewayPortProperties = gatewayPortProperties;
+    public SwaggerConfig(GatewayProperties gatewayProperties) {
+        this.gatewayProperties = gatewayProperties;
     }
 
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .host("localhost:" + gatewayPortProperties.getPort())
+                .host("localhost:" + gatewayProperties.getPort())
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("org.sergei.reportservice.controller"))
                 .paths(PathSelectors.any())

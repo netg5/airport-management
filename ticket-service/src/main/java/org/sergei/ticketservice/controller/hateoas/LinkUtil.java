@@ -17,7 +17,7 @@
 package org.sergei.ticketservice.controller.hateoas;
 
 import org.sergei.ticketservice.model.Ticket;
-import org.sergei.ticketservice.properties.GatewayPortProperties;
+import org.sergei.ticketservice.properties.GatewayProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resources;
@@ -30,11 +30,11 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @Component
 public class LinkUtil {
 
-    private final GatewayPortProperties gatewayPortProperties;
+    private final GatewayProperties gatewayProperties;
 
     @Autowired
-    public LinkUtil(GatewayPortProperties gatewayPortProperties) {
-        this.gatewayPortProperties = gatewayPortProperties;
+    public LinkUtil(GatewayProperties gatewayProperties) {
+        this.gatewayProperties = gatewayProperties;
     }
 
     /**
@@ -49,7 +49,7 @@ public class LinkUtil {
         String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
         resources.add(new Link(uriString, "self"));
         resources.add(new Link("http://127.0.0.1:" +
-                gatewayPortProperties.getPort() + "/flight-api/customers/" + customerId, "customer"));
+                gatewayProperties.getPort() + "/flight-api/customers/" + customerId, "customer"));
         return resources;
     }
 }

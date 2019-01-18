@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sergei.reservationservice.properties;
+package org.sergei.ticketservice.properties;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,8 +30,8 @@ import org.springframework.context.annotation.Configuration;
 @Setter
 @NoArgsConstructor
 @Configuration
-@EnableConfigurationProperties(GatewayPortProperties.class)
+@EnableConfigurationProperties(GatewayProperties.class)
 @ConfigurationProperties(prefix = "spring.gateway")
-public class GatewayPortProperties {
+public class GatewayProperties {
     private int port;
 }

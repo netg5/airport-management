@@ -21,7 +21,7 @@ import org.sergei.reportservice.controller.CustomerReportController;
 import org.sergei.reportservice.dto.AircraftReportDTO;
 import org.sergei.reportservice.dto.CustomerReportDTO;
 import org.sergei.reportservice.model.Reservation;
-import org.sergei.reportservice.properties.GatewayPortProperties;
+import org.sergei.reportservice.properties.GatewayProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.hateoas.Link;
@@ -42,11 +42,11 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @Component
 public class LinkUtil {
 
-    private final GatewayPortProperties gatewayPortProperties;
+    private final GatewayProperties gatewayProperties;
 
     @Autowired
-    public LinkUtil(GatewayPortProperties gatewayPortProperties) {
-        this.gatewayPortProperties = gatewayPortProperties;
+    public LinkUtil(GatewayProperties gatewayProperties) {
+        this.gatewayProperties = gatewayProperties;
     }
 
     /**
@@ -109,7 +109,7 @@ public class LinkUtil {
         int index = 0;
         for (Reservation reservation : reservationList) {
             Link reservationLink = new Link(
-                    "https://127.0.0.1:" + gatewayPortProperties.getPort() + "/reservation-api/customers/" +
+                    "https://127.0.0.1:" + gatewayProperties.getPort() + "/reservation-api/customers/" +
                             reservationList.get(index).getReservationId()).withRel("reportSelf");
             reservation.add(reservationLink);
             index++;

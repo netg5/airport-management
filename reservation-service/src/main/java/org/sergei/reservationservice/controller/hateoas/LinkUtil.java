@@ -21,7 +21,7 @@ import org.sergei.reservationservice.controller.CustomerController;
 import org.sergei.reservationservice.controller.ReservationController;
 import org.sergei.reservationservice.controller.RouteController;
 import org.sergei.reservationservice.dto.*;
-import org.sergei.reservationservice.properties.GatewayPortProperties;
+import org.sergei.reservationservice.properties.GatewayProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resources;
@@ -37,11 +37,11 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @Component
 public class LinkUtil {
 
-    private final GatewayPortProperties gatewayPortProperties;
+    private final GatewayProperties gatewayProperties;
 
     @Autowired
-    public LinkUtil(GatewayPortProperties gatewayPortProperties) {
-        this.gatewayPortProperties = gatewayPortProperties;
+    public LinkUtil(GatewayProperties gatewayProperties) {
+        this.gatewayProperties = gatewayProperties;
     }
 
     /**
@@ -58,7 +58,7 @@ public class LinkUtil {
             Link reservationsLink = linkTo(
                     methodOn(ReservationController.class)
                             .getAllForCustomer(customer.getCustomerId())).withRel("reservations");
-            Link ticketsLink = new Link("https://127.0.0.1:" + gatewayPortProperties.getPort() +
+            Link ticketsLink = new Link("https://127.0.0.1:" + gatewayProperties.getPort() +
                     "/ticket-api/tickets?customerId=" + customer.getCustomerId()).withRel("tickets");
             customer.add(link);
             customer.add(reservationsLink);
@@ -88,7 +88,7 @@ public class LinkUtil {
                 methodOn(ReservationController.class)
                         .getAllForCustomer(customerDTO.getCustomerId())).withRel("reservations");
         Link ticketsLink = new Link(
-                "http://127.0.0.1:" + gatewayPortProperties.getPort() + "/ticket-api/tickets?customerId=" +
+                "http://127.0.0.1:" + gatewayProperties.getPort() + "/ticket-api/tickets?customerId=" +
                         customerDTO.getCustomerId()).withRel("tickets");
         Link link = linkTo(CustomerController.class).withRel("allCustomers");
         customerDTO.add(selfLink);
