@@ -15,7 +15,7 @@
   -->
 
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Flight reservation</title>
     <meta charset="utf-8">
@@ -33,14 +33,15 @@
 <div class="container">
 
     <h1>All customer tickets:</h1>
-    <div>Route ID: [[${firstName}]]</div>
-    <div>Distance: [[${lastName}]]</div>
-    <div>Departure time: [[${routeId}]]</div>
-    <div>Arrival time: [[${place}]]</div>
-    <div>Price: [[${distance}]]</div>
-    <div>Place: [[${price}]]</div>
-    <div>Place: [[${aircraftName}]]</div>
-
+    <div th:each="ticket : ${tickets}">
+        <div>Route ID: [[${ticket.firstName}]]</div>
+        <div>Distance: [[${ticket.lastName}]]</div>
+        <div>Departure time: [[${ticket.routeId}]]</div>
+        <div>Arrival time: [[${ticket.place}]]</div>
+        <div>Price: [[${ticket.distance}]]</div>
+        <div>Place: [[${ticket.price}]]</div>
+        <div>Place: [[${ticket.aircraftName}]]</div>
+    </div>
 </div>
 
 <!-- Optional JavaScript -->

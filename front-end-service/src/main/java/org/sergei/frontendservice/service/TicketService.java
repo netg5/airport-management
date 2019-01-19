@@ -68,7 +68,7 @@ public class TicketService {
         JsonNode jsNode = objectMapper.readTree(data);
         String nodeAt = jsNode.at("/_embedded/ticketList").toString();
 
-        return objectMapper.readValue(nodeAt, new TypeReference<ResponseEntity<List<Reservation>>>() {
+        return objectMapper.readValue(nodeAt, new TypeReference<ResponseEntity<List<Ticket>>>() {
         });
     }
 }
