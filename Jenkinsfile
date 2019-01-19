@@ -37,7 +37,7 @@ pipeline {
                     echo '-=- run code inspection & check quality gate -=-'
                     sh 'mvn sonar:sonar ' +
                             '-Dsonar.host.url=http://79.135.149.36:9000 ' +
-                            '-Dsonar.login=e165f74a02785714d3506481c73f7f607a0a4a83'
+                            '-Dsonar.login=b18abeedf7353813275264a410d0acbc771219cd'
                 }
             }
         }
