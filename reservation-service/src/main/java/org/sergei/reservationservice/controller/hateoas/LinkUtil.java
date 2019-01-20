@@ -115,7 +115,6 @@ public class LinkUtil {
         return setServletResourceLinks(reservations);
     }
 
-
     /**
      * Set HATEOAS links for each aircraft in collection
      *

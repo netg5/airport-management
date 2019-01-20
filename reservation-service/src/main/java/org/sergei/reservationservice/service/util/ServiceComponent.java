@@ -16,6 +16,8 @@
 
 package org.sergei.reservationservice.service.util;
 
+import org.sergei.reservationservice.controller.AircraftController;
+import org.sergei.reservationservice.controller.RouteController;
 import org.sergei.reservationservice.dto.AircraftDTO;
 import org.sergei.reservationservice.dto.RouteExtendedDTO;
 import org.sergei.reservationservice.exceptions.ResourceNotFoundException;
@@ -23,9 +25,12 @@ import org.sergei.reservationservice.model.Aircraft;
 import org.sergei.reservationservice.model.Route;
 import org.sergei.reservationservice.repository.AircraftRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Component;
 
 import static org.sergei.reservationservice.util.ObjectMapperUtil.map;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 /**
  * Component to set extended route to the reservations and routes responses
@@ -59,8 +64,19 @@ public class ServiceComponent {
 
         AircraftDTO aircraftDTO = map(aircraft, AircraftDTO.class);
 
+        // Set links for the aircraft object in reservation JSON response
+        Link aircraftSelfLink = linkTo(methodOn(AircraftController.class)
+                .getAircraftById(aircraft.getAircraftId())).withRel("aircraftSelf");
+        aircraftDTO.add(aircraftSelfLink);
+
         // Set aircraftDTO DTO to the flight reservation extended DTO
         routeExtendedDTO.setAircraftDTO(aircraftDTO);
+
+        // Set links for the route object in reservation JSON response
+        Link routeSelfLink = linkTo(methodOn(RouteController.class)
+                .getRouteById(route.getRouteId())).withRel("routeSelf");
+
+        routeExtendedDTO.add(routeSelfLink);
 
         return routeExtendedDTO;
     }
