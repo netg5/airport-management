@@ -242,6 +242,7 @@ NOTE: `config-service` and `eureka-service` should be run first due to all the c
 * `Eureka discovery client has not yet successfully connected to a Eureka server` message in /actuator/health endpoint
 
 ## TODO
+* Set hateoas links for each entity of inner reservation JSON response
 1. Adopt liquibase for unit tests
 2. Implement Hystrix fallback methods
 3. SSL for the Eureka and Config servers
