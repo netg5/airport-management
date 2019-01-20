@@ -26,6 +26,6 @@ import java.time.LocalDateTime;
 @Data
 public class ReservationPost {
     private Long routeId;
-    private Long cusotmerId;
+    private Long customerId;
     private LocalDateTime reservationDate;
 }

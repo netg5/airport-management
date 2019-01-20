@@ -18,6 +18,7 @@ package org.sergei.frontendservice.service;
 
 import org.sergei.frontendservice.model.Aircraft;
 import org.sergei.frontendservice.model.AuthTokenInfo;
+import org.sergei.frontendservice.model.Customer;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -54,5 +55,12 @@ public class AircraftService {
         HttpEntity<String> request = new HttpEntity<>(tokenRetrievalService.getHeaders());
         return this.restTemplate.exchange(RESERVATION_API_URI + AIRCRAFTS_PATH + aircraftId + ACCESS_TOKEN_PARAM +
                 tokenInfo.getAccessToken(), HttpMethod.GET, request, Aircraft.class);
+    }
+
+    public Aircraft save(Aircraft aircraft) {
+        AuthTokenInfo tokenInfo = tokenRetrievalService.sendTokenRequest();
+        HttpEntity<Aircraft> request = new HttpEntity<>(aircraft, tokenRetrievalService.getHeaders());
+        return this.restTemplate.postForObject(RESERVATION_API_URI + AIRCRAFTS_PATH +
+                ACCESS_TOKEN_PARAM + tokenInfo.getAccessToken(), request, Aircraft.class);
     }
 }

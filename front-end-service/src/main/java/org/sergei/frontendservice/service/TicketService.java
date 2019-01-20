@@ -39,7 +39,7 @@ import java.util.List;
 public class TicketService {
 
     private static final String TICKET_API_URI = "https://localhost:9090/ticket-api";
-    private static final String TICKETS_PATH = "/tickets";
+    private static final String TICKETS_PATH = "/tickets/";
     private static final String CUSTOMER_ID_PARAM = "?customerId=";
     private static final String ACCESS_TOKEN_PARAM = "&access_token=";
 

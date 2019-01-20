@@ -87,11 +87,11 @@ public class ReservationService {
      *
      * @param reservationPost reservation model to be saved
      */
-    public ReservationPost saveReservation(ReservationPost reservationPost) {
+    public ReservationPost save(ReservationPost reservationPost) {
         LOGGER.debug("Route ID for which reservation was made: {}", reservationPost.getRouteId());
         AuthTokenInfo tokenInfo = tokenRetrievalService.sendTokenRequest();
         HttpEntity<ReservationPost> request = new HttpEntity<>(reservationPost, tokenRetrievalService.getHeaders());
-        long customerId = reservationPost.getCusotmerId();
+        long customerId = reservationPost.getCustomerId();
         return this.restTemplate.postForObject(RESERVATION_API_URI + CUSTOMERS_PATH +
                 customerId + RESERVATIONS_PATH + ACCESS_TOKEN_PARAM + tokenInfo.getAccessToken(), request, ReservationPost.class);
     }

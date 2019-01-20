@@ -17,13 +17,16 @@
 package org.sergei.frontendservice.controller;
 
 import org.sergei.frontendservice.model.Aircraft;
+import org.sergei.frontendservice.model.Customer;
 import org.sergei.frontendservice.service.AircraftService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Objects;
 
@@ -44,11 +47,18 @@ public class AircraftController {
     public String aircraftDataPage(@PathVariable Long aircraftId, Model model) {
         ResponseEntity<Aircraft> aircraft = aircraftService.getAircraftById(aircraftId);
         Aircraft aircraftResponseBody = aircraft.getBody();
+        model.addAttribute("aircraft", aircraftResponseBody);
         model.addAttribute("aircraftId", Objects.requireNonNull(aircraftResponseBody).getAircraftId());
         model.addAttribute("model", aircraftResponseBody.getModel());
         model.addAttribute("aircraftName", aircraftResponseBody.getAircraftName());
         model.addAttribute("aircraftWeight", aircraftResponseBody.getAircraftWeight());
         model.addAttribute("maxPassengers", aircraftResponseBody.getMaxPassengers());
         return "aircraft";
+    }
+
+    @PostMapping("/aircrafts")
+    public String saveAircraft(@ModelAttribute("aircraft") Aircraft aircraft) {
+        aircraftService.save(aircraft);
+        return "success_page";
     }
 }

@@ -54,8 +54,8 @@ public class ReservationController {
     @PostMapping("/customers/{customerId}/reservations")
     public String saveReservation(@PathVariable Long customerId,
                                   @ModelAttribute("reservationPost") ReservationPost reservationPost) {
-        reservationPost.setCusotmerId(customerId);
-        reservationService.saveReservation(reservationPost);
+        reservationPost.setCustomerId(customerId);
+        reservationService.save(reservationPost);
         return "success_page";
     }
 }

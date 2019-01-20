@@ -23,12 +23,34 @@
     <div>Aircraft weight: [[${aircraftWeight}]]</div>
     <div>Maximum passengers: [[${maxPassengers}]]</div>
 
-    <!--<h6>Reservations for this customer:</h6>
-    <div th:each="reservation : ${reservations}">
-        <p th:text="${reservation.reservationId}">Reservation ID is:</p>
-        <p th:text="${reservation.customerId}">Customer ID who made reservation:</p>
-        <p th:text="${reservation.reservationDate}">Reservation date:</p>
-    </div>-->
+    <h6>Add a new customer:</h6>
+    <form th:action="@{/aircrafts}" th:object="${aircraft}" method="post">
+        <p>
+            Model:
+            <label>
+                <input type="text" th:field="*{model}">
+            </label>
+        </p>
+        <p>
+            Aircraft name:
+            <label>
+                <input type="text" th:field="*{aircraftName}">
+            </label>
+        </p>
+        <p>
+            Weight:
+            <label>
+                <input type="text" th:field="*{aircraftWeight}">
+            </label>
+        </p>
+        <p>
+            Max. passengers:
+            <label>
+                <input type="text" th:field="*{maxPassengers}">
+            </label>
+        </p>
+        <button>Submit</button>
+    </form>
 </div>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
