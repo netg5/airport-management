@@ -32,7 +32,7 @@ public class AircraftService {
 
     private static final String RESERVATION_API_URI = "https://localhost:9090/reservation-api";
     private static final String AIRCRAFTS_PATH = "/aircrafts/";
-    private static final String ACCESS_TOKEN = "?access_token=";
+    private static final String ACCESS_TOKEN_PARAM = "?access_token=";
 
     private final RestTemplate restTemplate;
     private final TokenRetrievalService tokenRetrievalService;
@@ -52,7 +52,7 @@ public class AircraftService {
     public ResponseEntity<Aircraft> getAircraftById(Long aircraftId) {
         AuthTokenInfo tokenInfo = tokenRetrievalService.sendTokenRequest();
         HttpEntity<String> request = new HttpEntity<>(tokenRetrievalService.getHeaders());
-        return this.restTemplate.exchange(RESERVATION_API_URI + AIRCRAFTS_PATH + aircraftId + ACCESS_TOKEN +
+        return this.restTemplate.exchange(RESERVATION_API_URI + AIRCRAFTS_PATH + aircraftId + ACCESS_TOKEN_PARAM +
                 tokenInfo.getAccessToken(), HttpMethod.GET, request, Aircraft.class);
     }
 }

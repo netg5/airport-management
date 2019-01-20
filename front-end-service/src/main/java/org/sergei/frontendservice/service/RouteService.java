@@ -32,7 +32,7 @@ import org.springframework.web.client.RestTemplate;
 public class RouteService {
     private static final String RESERVATION_API_URI = "https://localhost:9090/reservation-api";
     private static final String ROUTES_PATH = "/routes/";
-    private static final String ACCESS_TOKEN = "?access_token=";
+    private static final String ACCESS_TOKEN_PARAM = "?access_token=";
 
     private final RestTemplate restTemplate;
     private final TokenRetrievalService tokenRetrievalService;
@@ -53,7 +53,7 @@ public class RouteService {
         AuthTokenInfo tokenInfo = tokenRetrievalService.sendTokenRequest();
         HttpEntity<String> request = new HttpEntity<>(tokenRetrievalService.getHeaders());
         return this.restTemplate.exchange(RESERVATION_API_URI +
-                        ROUTES_PATH + routeId + ACCESS_TOKEN + tokenInfo.getAccessToken(),
+                        ROUTES_PATH + routeId + ACCESS_TOKEN_PARAM + tokenInfo.getAccessToken(),
                 HttpMethod.GET, request, Route.class);
     }
 }

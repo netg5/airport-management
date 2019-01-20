@@ -21,7 +21,6 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.sergei.frontendservice.model.AuthTokenInfo;
-import org.sergei.frontendservice.model.Reservation;
 import org.sergei.frontendservice.model.Ticket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -42,7 +41,7 @@ public class TicketService {
     private static final String TICKET_API_URI = "https://localhost:9090/ticket-api";
     private static final String TICKETS_PATH = "/tickets";
     private static final String CUSTOMER_ID_PARAM = "?customerId=";
-    private static final String ACCESS_TOKEN = "&access_token=";
+    private static final String ACCESS_TOKEN_PARAM = "&access_token=";
 
     private final RestTemplate restTemplate;
     private final TokenRetrievalService tokenRetrievalService;
@@ -57,7 +56,7 @@ public class TicketService {
         AuthTokenInfo tokenInfo = tokenRetrievalService.sendTokenRequest();
         HttpEntity<String> request = new HttpEntity<>(tokenRetrievalService.getHeaders());
         ResponseEntity<String> responseEntity = this.restTemplate.exchange(TICKET_API_URI +
-                        TICKETS_PATH + CUSTOMER_ID_PARAM + customerId + ACCESS_TOKEN + tokenInfo.getAccessToken(),
+                        TICKETS_PATH + CUSTOMER_ID_PARAM + customerId + ACCESS_TOKEN_PARAM + tokenInfo.getAccessToken(),
                 HttpMethod.GET, request, String.class);
 
         String data = responseEntity.getBody();

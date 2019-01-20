@@ -33,7 +33,7 @@ public class CustomerService {
 
     private static final String RESERVATION_API_URI = "https://localhost:9090/reservation-api";
     private static final String CUSTOMERS_PATH = "/customers/";
-    private static final String ACCESS_TOKEN = "?access_token=";
+    private static final String ACCESS_TOKEN_PARAM = "?access_token=";
 
     private final RestTemplate restTemplate;
     private final TokenRetrievalService tokenRetrievalService;
@@ -54,7 +54,7 @@ public class CustomerService {
         AuthTokenInfo tokenInfo = tokenRetrievalService.sendTokenRequest();
         HttpEntity<String> request = new HttpEntity<>(tokenRetrievalService.getHeaders());
         return this.restTemplate.exchange(RESERVATION_API_URI +
-                        CUSTOMERS_PATH + customerId + ACCESS_TOKEN + tokenInfo.getAccessToken(),
+                        CUSTOMERS_PATH + customerId + ACCESS_TOKEN_PARAM + tokenInfo.getAccessToken(),
                 HttpMethod.GET, request, Customer.class);
     }
 
@@ -62,6 +62,6 @@ public class CustomerService {
         AuthTokenInfo tokenInfo = tokenRetrievalService.sendTokenRequest();
         HttpEntity<Customer> request = new HttpEntity<>(customer, tokenRetrievalService.getHeaders());
         return this.restTemplate.postForObject(RESERVATION_API_URI + CUSTOMERS_PATH +
-                ACCESS_TOKEN + tokenInfo.getAccessToken(), request, Customer.class);
+                ACCESS_TOKEN_PARAM + tokenInfo.getAccessToken(), request, Customer.class);
     }
 }

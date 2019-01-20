@@ -49,7 +49,7 @@ public class ReservationService {
     private static final String RESERVATION_API_URI = "https://localhost:9090/reservation-api";
     private static final String CUSTOMERS_PATH = "/customers/";
     private static final String RESERVATIONS_PATH = "/reservations";
-    private static final String ACCESS_TOKEN = "?access_token=";
+    private static final String ACCESS_TOKEN_PARAM = "?access_token=";
 
     @Autowired
     public ReservationService(RestTemplate restTemplate, TokenRetrievalService tokenRetrievalService) {
@@ -67,7 +67,7 @@ public class ReservationService {
         AuthTokenInfo tokenInfo = tokenRetrievalService.sendTokenRequest();
         HttpEntity<String> request = new HttpEntity<>(tokenRetrievalService.getHeaders());
         ResponseEntity<String> responseEntity = this.restTemplate.exchange(RESERVATION_API_URI +
-                        CUSTOMERS_PATH + customerId + RESERVATIONS_PATH + ACCESS_TOKEN + tokenInfo.getAccessToken(),
+                        CUSTOMERS_PATH + customerId + RESERVATIONS_PATH + ACCESS_TOKEN_PARAM + tokenInfo.getAccessToken(),
                 HttpMethod.GET, request, String.class);
 
         String data = responseEntity.getBody();
@@ -93,6 +93,6 @@ public class ReservationService {
         HttpEntity<ReservationPost> request = new HttpEntity<>(reservationPost, tokenRetrievalService.getHeaders());
         long customerId = reservationPost.getCusotmerId();
         return this.restTemplate.postForObject(RESERVATION_API_URI + CUSTOMERS_PATH +
-                customerId + RESERVATIONS_PATH + ACCESS_TOKEN + tokenInfo.getAccessToken(), request, ReservationPost.class);
+                customerId + RESERVATIONS_PATH + ACCESS_TOKEN_PARAM + tokenInfo.getAccessToken(), request, ReservationPost.class);
     }
 }
