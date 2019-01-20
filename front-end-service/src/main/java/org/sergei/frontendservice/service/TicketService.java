@@ -52,7 +52,14 @@ public class TicketService {
         this.tokenRetrievalService = tokenRetrievalService;
     }
 
-    public ResponseEntity<List<Ticket>> findAllTicketsByCustomerId(Long customerId) throws IOException {
+    /**
+     * Method to find all existing tickets for customer
+     *
+     * @param customerId whose tickets should be found
+     * @return list of tickets found
+     * @throws IOException input-output exception
+     */
+    public List<Ticket> findAllTicketsByCustomerId(Long customerId) throws IOException {
         AuthTokenInfo tokenInfo = tokenRetrievalService.sendTokenRequest();
         HttpEntity<String> request = new HttpEntity<>(tokenRetrievalService.getHeaders());
         ResponseEntity<String> responseEntity = this.restTemplate.exchange(TICKET_API_URI +
@@ -67,7 +74,7 @@ public class TicketService {
         JsonNode jsNode = objectMapper.readTree(data);
         String nodeAt = jsNode.at("/_embedded/ticketList").toString();
 
-        return objectMapper.readValue(nodeAt, new TypeReference<ResponseEntity<List<Ticket>>>() {
+        return objectMapper.readValue(nodeAt, new TypeReference<List<Ticket>>() {
         });
     }
 }

@@ -63,7 +63,7 @@ public class ReservationService {
      * @param customerId whose reservations should be found
      * @return collection of customer reservations
      */
-    public ResponseEntity<List<Reservation>> getReservationsByCustomerId(Long customerId) throws IOException {
+    public List<Reservation> getReservationsByCustomerId(Long customerId) throws IOException {
         AuthTokenInfo tokenInfo = tokenRetrievalService.sendTokenRequest();
         HttpEntity<String> request = new HttpEntity<>(tokenRetrievalService.getHeaders());
         ResponseEntity<String> responseEntity = this.restTemplate.exchange(RESERVATION_API_URI +

@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <link rel="stylesheet" href="/static/css/style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
@@ -16,11 +17,13 @@
 <div class="container">
 
     <h6>Reservations for this customer:</h6>
-    <div th:each="reservation : ${reservations}">
-        <p th:text="${reservation.reservationId}">Reservation ID:</p>
-        <p th:text="${reservation.customerId}">Customer ID:</p>
-        <p th:text="${reservation.customerId}">Customer ID who made reservation:</p>
-        <p th:text="${reservation.reservationDate}">Reservation date:</p>
+    <div class="row mb-3">
+        <div th:each="reservation : ${reservations}" class="col-4 themed-grid-col margin-top">
+            <p th:text="${reservation.reservationId}">Reservation ID:</p>
+            <p th:text="${reservation.customerId}">Customer ID:</p>
+            <p th:text="${reservation.customerId}">Customer ID who made reservation:</p>
+            <p th:text="${reservation.reservationDate}">Reservation date:</p>
+        </div>
     </div>
 
     <h6>Make a reservation:</h6>

@@ -19,7 +19,6 @@ package org.sergei.frontendservice.controller;
 import org.sergei.frontendservice.model.Ticket;
 import org.sergei.frontendservice.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,7 +42,7 @@ public class TicketController {
 
     @GetMapping("/customers/{customerId}/tickets")
     public String showCustomerTickets(@PathVariable Long customerId, Model model) throws IOException {
-        ResponseEntity<List<Ticket>> tickets = ticketService.findAllTicketsByCustomerId(customerId);
+        List<Ticket> tickets = ticketService.findAllTicketsByCustomerId(customerId);
         model.addAttribute("tickets", tickets);
         /*List<Ticket> ticketsResponseBody = tickets.getBody();
         model.addAttribute("firstName", Objects.requireNonNull(ticketsResponseBody).get(0).getFirstName());
