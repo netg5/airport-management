@@ -18,7 +18,6 @@ package org.sergei.frontendservice.service;
 
 import org.sergei.frontendservice.model.Aircraft;
 import org.sergei.frontendservice.model.AuthTokenInfo;
-import org.sergei.frontendservice.model.Customer;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
