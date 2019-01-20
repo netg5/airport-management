@@ -43,4 +43,4 @@ eureka:
     registry-fetch-interval-seconds: 10 # how often to fetch the registry from Eureka server
     instance-info-replication-interval-seconds: 10 # how often to replicate instance changes to be replicated to Eureka server
     serviceUrl:
-      defaulZone: http://localhost:8761
+      defaulZone: http://localhost:8761/eureka/
