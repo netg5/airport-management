@@ -240,8 +240,6 @@ NOTE: `config-service` and `eureka-service` should be run first due to all the c
 
 ## FIXME
 * `Eureka discovery client has not yet successfully connected to a Eureka server` message in /actuator/health endpoint
-* Show reservation list for a particular customer
-* Save reservation (throws 500 Internal Server Error)
 
 ## TODO
 1. Adopt liquibase for unit tests
