@@ -8,3 +8,6 @@ spring:
       discovery:
         enabled: true
         service-id: config-service
+  jackson:
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false

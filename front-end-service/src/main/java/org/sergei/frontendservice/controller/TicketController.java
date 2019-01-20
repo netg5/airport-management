@@ -44,14 +44,6 @@ public class TicketController {
     public String showCustomerTickets(@PathVariable Long customerId, Model model) throws IOException {
         List<Ticket> tickets = ticketService.findAllTicketsByCustomerId(customerId);
         model.addAttribute("tickets", tickets);
-        /*List<Ticket> ticketsResponseBody = tickets.getBody();
-        model.addAttribute("firstName", Objects.requireNonNull(ticketsResponseBody).get(0).getFirstName());
-        model.addAttribute("lastName", ticketsResponseBody.get(0).getLastName());
-        model.addAttribute("routeId", ticketsResponseBody.get(0).getRouteId());
-        model.addAttribute("place", ticketsResponseBody.get(0).getPlace());
-        model.addAttribute("distance", ticketsResponseBody.get(0).getDistance());
-        model.addAttribute("price", ticketsResponseBody.get(0).getPrice());
-        model.addAttribute("aircraftName", ticketsResponseBody.get(0).getAircraftName());*/
         return "tickets";
     }
 }
