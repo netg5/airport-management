@@ -20,6 +20,7 @@ import org.sergei.frontendservice.model.Reservation;
 import org.sergei.frontendservice.model.ReservationPost;
 import org.sergei.frontendservice.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,7 +45,7 @@ public class ReservationController {
     }
 
     @GetMapping("/customers/{customerId}/reservations")
-    public String showCustomerReservation(@PathVariable Long customerId, Model model) throws IOException {
+    public String showCustomerReservation(@PathVariable Long customerId, Model model) throws Exception {
         List<Reservation> reservations = reservationService.getReservationsByCustomerId(customerId);
         model.addAttribute("reservations", reservations);
         model.addAttribute("reservationPost", new ReservationPost());

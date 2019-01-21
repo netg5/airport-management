@@ -71,8 +71,8 @@ public class TicketService {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-        JsonNode jsNode = objectMapper.readTree(data);
-        String nodeAt = jsNode.at("/_embedded/ticketList").toString();
+        JsonNode jsonNode = objectMapper.readTree(data);
+        String nodeAt = jsonNode.at("/_embedded/ticketList").toString();
 
         return objectMapper.readValue(nodeAt, new TypeReference<List<Ticket>>() {
         });

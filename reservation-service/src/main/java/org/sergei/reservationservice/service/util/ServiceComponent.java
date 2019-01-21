@@ -64,7 +64,10 @@ public class ServiceComponent {
 
         AircraftDTO aircraftDTO = map(aircraft, AircraftDTO.class);
 
-        // Set links for the aircraft object in reservation JSON response
+        /*
+          TODO: Move into the HATEOAS LinkUtil class
+          Set links for the aircraft object in reservation JSON response
+         */
         Link aircraftSelfLink = linkTo(methodOn(AircraftController.class)
                 .getAircraftById(aircraft.getAircraftId())).withRel("aircraftSelf");
         aircraftDTO.add(aircraftSelfLink);
@@ -72,7 +75,10 @@ public class ServiceComponent {
         // Set aircraftDTO DTO to the flight reservation extended DTO
         routeExtendedDTO.setAircraftDTO(aircraftDTO);
 
-        // Set links for the route object in reservation JSON response
+        /*
+          TODO: Move into the HATEOAS LinkUtil class
+          Set links for the route object in reservation JSON response
+         */
         Link routeSelfLink = linkTo(methodOn(RouteController.class)
                 .getRouteById(route.getRouteId())).withRel("routeSelf");
 
