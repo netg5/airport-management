@@ -3,7 +3,6 @@ spring:
     config:
       name: zuul-gateway
       uri: http://localhost:8888
-      enabled: true
       label: "master" # branch where config is located
       discovery:
         enabled: true

@@ -19,8 +19,7 @@ spring:
         git:
           uri: https://github.com/sergeivisotsky/flight-reservation-config
           clone-on-start: true
-          search-paths: "{application}" # application config file or directory name
-#          skip-ssl-validation: true
+          search-paths: "config/{application}" # application config file or directory name
 management:
   endpoints:
     web:
