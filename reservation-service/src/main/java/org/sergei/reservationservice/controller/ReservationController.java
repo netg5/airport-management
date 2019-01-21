@@ -58,11 +58,9 @@ public class ReservationController {
     }
 
     @ApiOperation("Get all reservations for customer")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(code = 404, message = "Customer with this ID not found or no reservations made"),
-            }
-    )
+    @ApiResponses({
+            @ApiResponse(code = 404, message = "Customer with this ID not found or no reservations made"),
+    })
     @GetMapping("/{customerId}/reservations")
     public ResponseEntity<Resources> getAllForCustomer(@ApiParam(value = "Customer ID whose reservations should be found", required = true)
                                                        @PathVariable("customerId") Long customerId) {
@@ -72,11 +70,9 @@ public class ReservationController {
     }
 
     @ApiOperation("Get all reservations for customer")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(code = 404, message = "Customer with this ID not found or no reservations made"),
-            }
-    )
+    @ApiResponses({
+            @ApiResponse(code = 404, message = "Customer with this ID not found or no reservations made"),
+    })
     @GetMapping(value = "/{customerId}/reservations", params = {"page", "size"})
     public ResponseEntity<Resources> getAllForCustomerPaginated(@ApiParam(value = "Customer ID whose reservations should be found", required = true)
                                                                 @PathVariable("customerId") Long customerId,
@@ -90,11 +86,9 @@ public class ReservationController {
     }
 
     @ApiOperation("Get one reservation by ID for the customer")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(code = 404, message = "Customer with this ID not found or no reservations made"),
-            }
-    )
+    @ApiResponses({
+            @ApiResponse(code = 404, message = "Customer with this ID not found or no reservations made"),
+    })
     @GetMapping("/{customerId}/reservations/{reservationId}")
     public ResponseEntity<ReservationExtendedDTO> getOneForCustomer(@ApiParam(value = "Customer ID who made a reservation", required = true)
                                                                     @PathVariable("customerId") Long customerId,
@@ -112,11 +106,9 @@ public class ReservationController {
     }
 
     @ApiOperation("Create reservation for customer")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(code = 404, message = "Customer or route with this ID not found")
-            }
-    )
+    @ApiResponses({
+            @ApiResponse(code = 404, message = "Customer or route with this ID not found")
+    })
     @PostMapping(value = "/{customerId}/reservations", consumes = "application/json")
     public ResponseEntity<ReservationDTO> createReservation(@ApiParam(value = "Customer ID for whom reservation should be created", required = true)
                                                             @PathVariable("customerId") Long customerId,
@@ -128,11 +120,9 @@ public class ReservationController {
     }
 
     @ApiOperation(value = "Update reservation by customer ID")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(code = 404, message = "Customer or route with this ID not found")
-            }
-    )
+    @ApiResponses({
+            @ApiResponse(code = 404, message = "Customer or route with this ID not found")
+    })
     @PatchMapping(value = "/{customerId}/reservations/{reservationId}", consumes = "application/json")
     public ResponseEntity<ReservationDTO> updateReservation(@ApiParam(value = "Customer ID who made reservation", required = true)
                                                             @PathVariable("customerId") Long customerId,
@@ -144,11 +134,9 @@ public class ReservationController {
     }
 
     @ApiOperation("Delete reservation")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(code = 404, message = "Customer with this ID not found or no reservations made")
-            }
-    )
+    @ApiResponses({
+            @ApiResponse(code = 404, message = "Customer with this ID not found or no reservations made")
+    })
     @DeleteMapping("/{customerId}/reservations/{reservationId}")
     public ResponseEntity<ReservationExtendedDTO> deleteReservation(@ApiParam(value = "Customer ID who made reservation", required = true)
                                                                     @PathVariable("customerId") Long customerId,

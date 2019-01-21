@@ -89,11 +89,9 @@ public class CustomerController {
     }
 
     @ApiOperation("Get customer by ID")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(code = 404, message = Constants.CUSTOMER_NOT_FOUND)
-            }
-    )
+    @ApiResponses({
+            @ApiResponse(code = 404, message = Constants.CUSTOMER_NOT_FOUND)
+    })
     @GetMapping("/{customerId}")
     public ResponseEntity<CustomerDTO> getCustomerById(@ApiParam(value = "Customer ID which should be found", required = true)
                                                        @PathVariable("customerId") Long customerId) {
@@ -109,11 +107,9 @@ public class CustomerController {
     }
 
     @ApiOperation("Update customer data")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(code = 404, message = Constants.CUSTOMER_NOT_FOUND)
-            }
-    )
+    @ApiResponses({
+            @ApiResponse(code = 404, message = Constants.CUSTOMER_NOT_FOUND)
+    })
     @PutMapping(value = "/{customerId}", consumes = "application/json")
     public ResponseEntity<CustomerDTO> updateCustomer(@ApiParam(value = "Customer ID which should be updated", required = true)
                                                       @PathVariable("customerId") Long customerId,
@@ -124,11 +120,9 @@ public class CustomerController {
     }
 
     @ApiOperation("Update one field for a customer")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(code = 404, message = Constants.CUSTOMER_NOT_FOUND)
-            }
-    )
+    @ApiResponses({
+            @ApiResponse(code = 404, message = Constants.CUSTOMER_NOT_FOUND)
+    })
     @PatchMapping(value = "/{customerId}/patch", consumes = "application/json")
     public ResponseEntity<CustomerDTO> patchCustomer(@ApiParam(value = "Customer ID which should be updated", required = true)
                                                      @PathVariable("customerId") Long customerId,
@@ -138,11 +132,9 @@ public class CustomerController {
     }
 
     @ApiOperation(value = "Delete customer data", notes = "Operation allowed for the ROLE_ADMIN only")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(code = 404, message = Constants.CUSTOMER_NOT_FOUND)
-            }
-    )
+    @ApiResponses({
+            @ApiResponse(code = 404, message = Constants.CUSTOMER_NOT_FOUND)
+    })
     @DeleteMapping(value = "/{customerId}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<CustomerDTO> deleteCustomer(@ApiParam(value = "Customer ID which should be deleted", required = true)

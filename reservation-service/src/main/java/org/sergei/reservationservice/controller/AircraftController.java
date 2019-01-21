@@ -71,11 +71,9 @@ public class AircraftController {
     }
 
     @ApiOperation("Get aircraftDTO by ID")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(code = 404, message = Constants.AIRCRAFT_NOT_FOUND)
-            }
-    )
+    @ApiResponses({
+            @ApiResponse(code = 404, message = Constants.AIRCRAFT_NOT_FOUND)
+    })
     @GetMapping("/{aircraftId}")
     public ResponseEntity<AircraftDTO> getAircraftById(@ApiParam(value = "Aircraft ID which should be found", required = true)
                                                        @PathVariable("aircraftId") Long aircraftId) {
@@ -92,11 +90,9 @@ public class AircraftController {
     }
 
     @ApiOperation(value = "Update aircraft data", notes = "Operation allowed for the ROLE_ADMIN only")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(code = 404, message = "Aircraft with this ID not found")
-            }
-    )
+    @ApiResponses({
+            @ApiResponse(code = 404, message = "Aircraft with this ID not found")
+    })
     @PutMapping(value = "/{aircraftId}", consumes = "application/json")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<AircraftDTO> updateAircraft(@ApiParam(value = "Aircraft ID which should be updated", required = true)
@@ -108,11 +104,9 @@ public class AircraftController {
     }
 
     @ApiOperation(value = "Update one field of the aircraft", notes = "Operation allowed for the ROLE_ADMIN only")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(code = 404, message = Constants.AIRCRAFT_NOT_FOUND)
-            }
-    )
+    @ApiResponses({
+            @ApiResponse(code = 404, message = Constants.AIRCRAFT_NOT_FOUND)
+    })
     @PatchMapping(value = "/{aircraftId}/patch", consumes = "application/json")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<AircraftDTO> patchAircraft(@ApiParam(value = "Aircraft ID which should be updated", required = true)
@@ -124,11 +118,9 @@ public class AircraftController {
     }
 
     @ApiOperation(value = "Delete aircraft", notes = "Operation allowed for the ROLE_ADMIN only")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(code = 404, message = Constants.AIRCRAFT_NOT_FOUND)
-            }
-    )
+    @ApiResponses({
+            @ApiResponse(code = 404, message = Constants.AIRCRAFT_NOT_FOUND)
+    })
     @DeleteMapping(value = "/{aircraftId}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<AircraftDTO> deleteAircraft(@ApiParam(value = "Aircraft ID which should be deleted", required = true)

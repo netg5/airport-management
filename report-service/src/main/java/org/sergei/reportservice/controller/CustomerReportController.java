@@ -18,8 +18,11 @@ package org.sergei.reportservice.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.sergei.reportservice.controller.hateoas.LinkUtil;
 import org.sergei.reportservice.dto.CustomerReportDTO;
+import org.sergei.reportservice.service.Constants;
 import org.sergei.reportservice.service.CustomerReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -56,6 +59,9 @@ public class CustomerReportController {
             value = "Get report for a specific customer",
             notes = "Operation allowed for the ROLE_ADMIN only"
     )
+    @ApiResponses({
+            @ApiResponse(code = 404, message = Constants.CUSTOMER_NOT_FOUND)
+    })
     @GetMapping("/{customerId}")
     public ResponseEntity<CustomerReportDTO> findReportByCustomerId(@PathVariable Long customerId) {
         CustomerReportDTO customerReportDTO = customerReportService.findById(customerId);

@@ -72,11 +72,9 @@ public class RouteController {
     }
 
     @ApiOperation("Get route by ID")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(code = 404, message = Constants.ROUTE_NOT_FOUND)
-            }
-    )
+    @ApiResponses({
+            @ApiResponse(code = 404, message = Constants.ROUTE_NOT_FOUND)
+    })
     @GetMapping("/{routeId}")
     public ResponseEntity<RouteDTO> getRouteById(@ApiParam(value = "Route ID which should be found", required = true)
                                                  @PathVariable("routeId") Long routeId) {
@@ -85,11 +83,9 @@ public class RouteController {
     }
 
     @ApiOperation(value = "Save route", notes = "Operation allowed for the ROLE_ADMIN only")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(code = 404, message = Constants.AIRCRAFT_NOT_FOUND)
-            }
-    )
+    @ApiResponses({
+            @ApiResponse(code = 404, message = Constants.AIRCRAFT_NOT_FOUND)
+    })
     @PostMapping(consumes = "application/json")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<RouteDTO> saveRoute(@ApiParam(value = "Saved route", required = true)
@@ -98,11 +94,9 @@ public class RouteController {
     }
 
     @ApiOperation(value = "Update route information", notes = "Operation allowed for the ROLE_ADMIN only")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(code = 404, message = "Route or aircraft with this ID not found")
-            }
-    )
+    @ApiResponses({
+            @ApiResponse(code = 404, message = "Route or aircraft with this ID not found")
+    })
     @PutMapping(value = "/{routeId}", consumes = "application/json")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<RouteDTO> updateRoute(@ApiParam(value = "Route ID which should be updated", required = true)
@@ -114,11 +108,9 @@ public class RouteController {
     }
 
     @ApiOperation(value = "Update one field for the route", notes = "Operation allowed for the ROLE_ADMIN only")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(code = 404, message = "Route or aircraft with this ID not found")
-            }
-    )
+    @ApiResponses({
+            @ApiResponse(code = 404, message = "Route or aircraft with this ID not found")
+    })
     @PatchMapping(value = "/{routeId}/patch", consumes = "application/json")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<RouteDTO> patchRoute(@ApiParam(value = "Route ID which should be updated", required = true)
@@ -130,11 +122,9 @@ public class RouteController {
     }
 
     @ApiOperation(value = "Method to delete route", notes = "Operation allowed for the ROLE_ADMIN only")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(code = 404, message = Constants.ROUTE_NOT_FOUND)
-            }
-    )
+    @ApiResponses({
+            @ApiResponse(code = 404, message = Constants.ROUTE_NOT_FOUND)
+    })
     @DeleteMapping("/{routeId}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<RouteDTO> deleteRoute(@ApiParam(value = "Route ID which should be deleted", required = true)

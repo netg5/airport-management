@@ -68,9 +68,9 @@ public class AircraftReportController {
             value = "Get report for the aircraft by ID",
             notes = "Operation allowed for the ROLE_ADMIN only"
     )
-    @ApiResponses(
+    @ApiResponses({
             @ApiResponse(code = 404, message = Constants.AIRCRAFT_NOT_FOUND)
-    )
+    })
     @GetMapping("/{aircraftId}")
     public ResponseEntity<AircraftReportDTO> findByAircraftId(@ApiParam("Aircraft ID to find the report")
                                                               @PathVariable("aircraftId") Long aircraftId) {
