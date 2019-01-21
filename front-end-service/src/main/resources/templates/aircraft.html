@@ -17,11 +17,11 @@
 <div class="container">
 
     <h1>Aircraft:</h1>
-    <div>Aircraft ID: [[${aircraftId}]]</div>
-    <div>Model: [[${model}]]</div>
-    <div>Aircraft name: [[${aircraftName}]]</div>
-    <div>Aircraft weight: [[${aircraftWeight}]]</div>
-    <div>Maximum passengers: [[${maxPassengers}]]</div>
+    <div>Aircraft ID: [[${aircraft.aircraftId}]]</div>
+    <div>Model: [[${aircraft.model}]]</div>
+    <div>Aircraft name: [[${aircraft.aircraftName}]]</div>
+    <div>Aircraft weight: [[${aircraft.aircraftWeight}]]</div>
+    <div>Maximum passengers: [[${aircraft.maxPassengers}]]</div>
 
     <h6>Add a new customer:</h6>
     <form th:action="@{/aircrafts}" th:object="${aircraft}" method="post">

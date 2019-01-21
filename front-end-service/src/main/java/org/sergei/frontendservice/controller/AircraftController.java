@@ -47,11 +47,6 @@ public class AircraftController {
         ResponseEntity<Aircraft> aircraft = aircraftService.getAircraftById(aircraftId);
         Aircraft aircraftResponseBody = aircraft.getBody();
         model.addAttribute("aircraft", aircraftResponseBody);
-        model.addAttribute("aircraftId", Objects.requireNonNull(aircraftResponseBody).getAircraftId());
-        model.addAttribute("model", aircraftResponseBody.getModel());
-        model.addAttribute("aircraftName", aircraftResponseBody.getAircraftName());
-        model.addAttribute("aircraftWeight", aircraftResponseBody.getAircraftWeight());
-        model.addAttribute("maxPassengers", aircraftResponseBody.getMaxPassengers());
         return "aircraft";
     }
 

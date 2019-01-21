@@ -27,8 +27,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.Objects;
-
 /**
  * @author Sergei Visotsky
  */
@@ -47,10 +45,6 @@ public class CustomerController {
         ResponseEntity<Customer> customer = customerService.getCustomerById(customerId);
         Customer customerResponseBody = customer.getBody();
         model.addAttribute("customer", customerResponseBody);
-        model.addAttribute("customerId", Objects.requireNonNull(customerResponseBody).getCustomerId());
-        model.addAttribute("firstName", customerResponseBody.getFirstName());
-        model.addAttribute("lastName", customerResponseBody.getLastName());
-        model.addAttribute("age", customerResponseBody.getAge());
         return "customer";
     }
 

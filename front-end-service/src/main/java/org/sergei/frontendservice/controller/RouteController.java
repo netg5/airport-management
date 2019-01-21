@@ -44,12 +44,7 @@ public class RouteController {
     public String routeDataPage(@PathVariable Long routeId, Model model) {
         ResponseEntity<Route> route = routeService.getRouteById(routeId);
         Route routeResponseBody = route.getBody();
-        model.addAttribute("routeId", Objects.requireNonNull(routeResponseBody).getRouteId());
-        model.addAttribute("distance", routeResponseBody.getDistance());
-        model.addAttribute("departureTime", routeResponseBody.getDepartureTime());
-        model.addAttribute("arrivalTime", routeResponseBody.getArrivalTime());
-        model.addAttribute("price", routeResponseBody.getPrice());
-        model.addAttribute("place", routeResponseBody.getPlace());
+        model.addAttribute("route", routeResponseBody);
         return "route";
     }
 }
