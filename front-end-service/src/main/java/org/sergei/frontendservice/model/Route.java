@@ -36,4 +36,5 @@ public class Route {
     private LocalDateTime arrivalTime;
     private BigDecimal price;
     private String place;
+    private Aircraft aircraft;
 }

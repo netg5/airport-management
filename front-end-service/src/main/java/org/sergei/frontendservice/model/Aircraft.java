@@ -16,16 +16,20 @@
 
 package org.sergei.frontendservice.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author Sergei Visotsky
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Aircraft {
     private Long aircraftId;
     private String model;
     private String aircraftName;
     private Double aircraftWeight;
-    private String maxPassengers;
+    private Integer maxPassengers;
 }

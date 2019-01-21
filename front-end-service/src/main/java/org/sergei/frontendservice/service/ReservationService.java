@@ -19,10 +19,7 @@ package org.sergei.frontendservice.service;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.sergei.frontendservice.model.AuthTokenInfo;
-import org.sergei.frontendservice.model.Reservation;
-import org.sergei.frontendservice.model.ReservationPost;
-import org.sergei.frontendservice.model.Route;
+import org.sergei.frontendservice.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,6 +95,7 @@ public class ReservationService {
                     jsonArray.getJSONObject(i).get("reservationDate").toString()
             );
 
+            // Reserved route data
             Long routeId = Long.valueOf(jsonArray.getJSONObject(i).getJSONObject("reservedRoute").get("routeId").toString());
             Double distance = Double.valueOf(jsonArray.getJSONObject(i).getJSONObject("reservedRoute").get("distance").toString());
             LocalDateTime departureTime = LocalDateTime.parse(
@@ -108,7 +106,31 @@ public class ReservationService {
             );
             BigDecimal price = new BigDecimal(jsonArray.getJSONObject(i).getJSONObject("reservedRoute").get("price").toString());
             String place = jsonArray.getJSONObject(i).getJSONObject("reservedRoute").get("place").toString();
-            Route route = new Route(routeId, distance, departureTime, arrivalTime, price, place);
+
+            // Aircraft which flies for particular route
+            Long aircraftId =
+                    Long.valueOf(
+                            jsonArray.getJSONObject(i)
+                                    .getJSONObject("reservedRoute").getJSONObject("aircraft").get("aircraftId").toString()
+                    );
+            String model =
+                    jsonArray.getJSONObject(i)
+                            .getJSONObject("reservedRoute").getJSONObject("aircraft").get("model").toString();
+            String aircraftName =
+                    jsonArray.getJSONObject(i)
+                            .getJSONObject("reservedRoute").getJSONObject("aircraft").get("aircraftName").toString();
+            Double aircraftWeight =
+                    Double.valueOf(
+                            jsonArray.getJSONObject(i)
+                                    .getJSONObject("reservedRoute").getJSONObject("aircraft").get("aircraftWeight").toString()
+                    );
+            Integer maxPassengers =
+                    Integer.valueOf(
+                            jsonArray.getJSONObject(i)
+                                    .getJSONObject("reservedRoute").getJSONObject("aircraft").get("maxPassengers").toString()
+                    );
+            Aircraft aircraft = new Aircraft(aircraftId, model, aircraftName, aircraftWeight, maxPassengers);
+            Route route = new Route(routeId, distance, departureTime, arrivalTime, price, place, aircraft);
 
             reservationList.add(new Reservation(reservationId, customerIdParsed, reservationDate, route));
         }

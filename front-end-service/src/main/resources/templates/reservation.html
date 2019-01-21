@@ -16,20 +16,27 @@
 </nav>
 <div class="container">
 
-    <h6>Reservations for this customer:</h6>
+    <h1>Reservations for this customer:</h1>
     <div class="row mb-3">
-        <div th:each="reservation : ${reservations}" class="col-4 themed-grid-col margin-top">
+        <div th:each="reservation : ${reservations}" class="col-4 themed-grid-col margin-top-bigger">
             <div>Reservation ID: [[${reservation.reservationId}]]</div>
             <div>Customer ID: [[${reservation.customerId}]]</div>
             <div>Reservation date: [[${reservation.reservationDate}]]</div>
 
-            <h6>Reserved route:</h6>
-            <div>Route ID: [[${reservation.route.routeId}]]</div>
-            <div>Distance: [[${reservation.route.distance}]]</div>
-            <div>Departure time: [[${reservation.route.departureTime}]]</div>
-            <div>Arrival time: [[${reservation.route.arrivalTime}]]</div>
-            <div>Price: [[${reservation.route.price}]]</div>
-            <div>Place: [[${reservation.route.place}]]</div>
+            <h4>Reserved route:</h4>
+            <div>Route ID: [[${reservation.reservedRoute.routeId}]]</div>
+            <div>Distance: [[${reservation.reservedRoute.distance}]]</div>
+            <div>Departure time: [[${reservation.reservedRoute.departureTime}]]</div>
+            <div>Arrival time: [[${reservation.reservedRoute.arrivalTime}]]</div>
+            <div>Price: [[${reservation.reservedRoute.price}]]</div>
+            <div>Place: [[${reservation.reservedRoute.place}]]</div>
+
+            <h4>Aircraft to fly:</h4>
+            <div>Aircraft ID: [[${reservation.reservedRoute.aircraft.aircraftId}]]</div>
+            <div>Model: [[${reservation.reservedRoute.aircraft.model}]]</div>
+            <div>Name: [[${reservation.reservedRoute.aircraft.aircraftName}]]</div>
+            <div>Weight: [[${reservation.reservedRoute.aircraft.aircraftWeight}]]</div>
+            <div>Max. passengers: [[${reservation.reservedRoute.aircraft.maxPassengers}]]</div>
         </div>
     </div>
 
