@@ -147,7 +147,13 @@ public class LinkUtil {
         return aircraftDTO;
     }
 
-    public Resources setLinksForAllRoutes(Iterable<RouteExtendedDTO> routes) {
+    /**
+     * Set links for each route
+     *
+     * @param routes collection of routes to set links
+     * @return collection with links set
+     */
+    public Resources setLinksForEachRoute(Iterable<RouteExtendedDTO> routes) {
         routes.forEach(route -> {
             Link link = linkTo(
                     methodOn(RouteController.class)

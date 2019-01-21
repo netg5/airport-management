@@ -58,7 +58,7 @@ public class RouteController {
     @GetMapping
     public ResponseEntity<Resources> getAllRoutes() {
         List<RouteExtendedDTO> routes = routeService.findAllRoutes();
-        return new ResponseEntity<>(linkUtil.setLinksForAllRoutes(routes), HttpStatus.OK);
+        return new ResponseEntity<>(linkUtil.setLinksForEachRoute(routes), HttpStatus.OK);
     }
 
     @ApiOperation("Get all existing routes paginated")
@@ -68,7 +68,7 @@ public class RouteController {
                                                            @ApiParam("Maximum number of content blocks on the page")
                                                            @RequestParam("size") int size) {
         Page<RouteExtendedDTO> routes = routeService.findAllRoutesPaginated(page, size);
-        return new ResponseEntity<>(linkUtil.setLinksForAllRoutes(routes), HttpStatus.OK);
+        return new ResponseEntity<>(linkUtil.setLinksForEachRoute(routes), HttpStatus.OK);
     }
 
     @ApiOperation("Get route by ID")
