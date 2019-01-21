@@ -16,7 +16,9 @@
 
 package org.sergei.frontendservice.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
@@ -24,6 +26,8 @@ import java.time.LocalDateTime;
  * @author Sergei Visotsky
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Reservation {
     private Long reservationId;
     private Long customerId;

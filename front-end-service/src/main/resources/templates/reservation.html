@@ -19,15 +19,20 @@
     <h6>Reservations for this customer:</h6>
     <div class="row mb-3">
         <div th:each="reservation : ${reservations}" class="col-4 themed-grid-col margin-top">
-            <p th:text="${reservation.reservationId}">Reservation ID:</p>
-            <p th:text="${reservation.customerId}">Customer ID:</p>
-            <p th:text="${reservation.customerId}">Customer ID who made reservation:</p>
-            <p th:text="${reservation.reservationDate}">Reservation date:</p>
+            <div>Reservation ID: [[${reservation.reservationId}]]</div>
+            <div>Customer ID: [[${reservation.customerId}]]</div>
+            <div>Reservation date: [[${reservation.reservationDate}]]</div>
         </div>
     </div>
 
     <h6>Make a reservation:</h6>
-    <form th:action="@{/cusotmers/{customerId}/reservations}" th:object="${reservationPost}" method="post">
+    <form th:action="@{/reservation/post}" th:object="${reservationPost}" method="post">
+        <p>
+            Customer ID:
+            <label>
+                <input type="text" th:field="*{customerId}">
+            </label>
+        </p>
         <p>
             Route ID:
             <label>

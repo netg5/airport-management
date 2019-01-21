@@ -20,7 +20,6 @@ import org.sergei.frontendservice.model.Reservation;
 import org.sergei.frontendservice.model.ReservationPost;
 import org.sergei.frontendservice.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +27,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -52,10 +50,8 @@ public class ReservationController {
         return "reservation";
     }
 
-    @PostMapping("/customers/{customerId}/reservations")
-    public String saveReservation(@PathVariable Long customerId,
-                                  @ModelAttribute("reservationPost") ReservationPost reservationPost) {
-        reservationPost.setCustomerId(customerId);
+    @PostMapping("/reservation/post")
+    public String saveReservation(@ModelAttribute("reservationPost") ReservationPost reservationPost) {
         reservationService.save(reservationPost);
         return "success_page";
     }

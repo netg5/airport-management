@@ -16,7 +16,6 @@
 
 package org.sergei.frontendservice.service;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -27,15 +26,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONArray;
-import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -45,6 +44,7 @@ import java.util.List;
 public class ReservationService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ReservationService.class);
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS");
 
     private final RestTemplate restTemplate;
     private final TokenRetrievalService tokenRetrievalService;
@@ -85,19 +85,21 @@ public class ReservationService {
         String nodeAt = jsonNode.at("/_embedded/reservationExtendedDTOList").toString();
         LOGGER.debug("Node at is: {}", nodeAt);
 
-        /*JSONArray jsonArray = new JSONArray(nodeAt);
+        JSONArray jsonArray = new JSONArray(nodeAt);
+
+        List<Reservation> reservationList = new LinkedList<>();
 
         for (int i = 0; i < jsonArray.length(); i++) {
-            LOGGER.debug("JSONArray - reservationId: {}", jsonArray.getJSONObject(i).getJSONObject("reservationId").toString());
-            LOGGER.debug("JSONArray - customerId: {}", jsonArray.getJSONObject(i).getJSONObject("customerId").toString());
-            LOGGER.debug("JSONArray - reservationDate: {}", jsonArray.getJSONObject(i).getJSONObject("reservationDate").toString());
-        }
-        
-        String dateTimeStr = jsonArray.getJSONObject(1).getString("reservationDate");
-        LOGGER.debug("Date time from JSON response: {}", dateTimeStr);*/
+            Long reservationId = Long.valueOf(jsonArray.getJSONObject(i).get("reservationId").toString());
+            Long customerIdParsed = Long.valueOf(jsonArray.getJSONObject(i).get("customerId").toString());
+            LocalDateTime reservationDate = LocalDateTime.parse(
+                    jsonArray.getJSONObject(i).get("reservationDate").toString()
+            );
 
-        return objectMapper.readValue(nodeAt, new TypeReference<List<Reservation>>() {
-        });
+            reservationList.add(new Reservation(reservationId, customerIdParsed, reservationDate));
+        }
+
+        return reservationList;
     }
 
     /**
