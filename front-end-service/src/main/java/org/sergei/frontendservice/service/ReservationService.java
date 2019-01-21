@@ -24,15 +24,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONArray;
+import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -43,15 +44,16 @@ import java.util.List;
 public class ReservationService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ReservationService.class);
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS");
-
-    private final RestTemplate restTemplate;
-    private final TokenRetrievalService tokenRetrievalService;
 
     private static final String RESERVATION_API_URI = "https://localhost:9090/reservation-api";
     private static final String CUSTOMERS_PATH = "/customers/";
     private static final String RESERVATIONS_PATH = "/reservations";
     private static final String ACCESS_TOKEN_PARAM = "?access_token=";
+    private static final String ROUTE_JSON_PATH = "reservedRoute";
+    private static final String AIRCRAFT_JSON_PATH = "aircraft";
+
+    private final RestTemplate restTemplate;
+    private final TokenRetrievalService tokenRetrievalService;
 
     @Autowired
     public ReservationService(RestTemplate restTemplate, TokenRetrievalService tokenRetrievalService) {
@@ -64,9 +66,10 @@ public class ReservationService {
      *
      * @param customerId whose reservations should be found
      * @return collection of customer reservations
-     * @throws Exception IO exceptions and JSONException
+     * @throws IOException   IO exceptions and JSONException
+     * @throws JSONException in case we have any JSON parsing problems
      */
-    public List<Reservation> getReservationsByCustomerId(Long customerId) throws Exception {
+    public List<Reservation> getReservationsByCustomerId(Long customerId) throws IOException, JSONException {
         AuthTokenInfo tokenInfo = tokenRetrievalService.sendTokenRequest();
         HttpEntity<String> request = new HttpEntity<>(tokenRetrievalService.getHeaders());
         ResponseEntity<String> responseEntity = this.restTemplate.exchange(RESERVATION_API_URI +
@@ -79,7 +82,6 @@ public class ReservationService {
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
         JsonNode jsonNode = objectMapper.readTree(data);
-        LOGGER.debug("JSON node is: {}", jsonNode.toString());
 
         String nodeAt = jsonNode.at("/_embedded/reservationExtendedDTOList").toString();
         LOGGER.debug("Node at is: {}", nodeAt);
@@ -96,38 +98,38 @@ public class ReservationService {
             );
 
             // Reserved route data
-            Long routeId = Long.valueOf(jsonArray.getJSONObject(i).getJSONObject("reservedRoute").get("routeId").toString());
-            Double distance = Double.valueOf(jsonArray.getJSONObject(i).getJSONObject("reservedRoute").get("distance").toString());
+            Long routeId = Long.valueOf(jsonArray.getJSONObject(i).getJSONObject(ROUTE_JSON_PATH).get("routeId").toString());
+            Double distance = Double.valueOf(jsonArray.getJSONObject(i).getJSONObject(ROUTE_JSON_PATH).get("distance").toString());
             LocalDateTime departureTime = LocalDateTime.parse(
-                    jsonArray.getJSONObject(i).getJSONObject("reservedRoute").get("departureTime").toString()
+                    jsonArray.getJSONObject(i).getJSONObject(ROUTE_JSON_PATH).get("departureTime").toString()
             );
             LocalDateTime arrivalTime = LocalDateTime.parse(
-                    jsonArray.getJSONObject(i).getJSONObject("reservedRoute").get("arrivalTime").toString()
+                    jsonArray.getJSONObject(i).getJSONObject(ROUTE_JSON_PATH).get("arrivalTime").toString()
             );
-            BigDecimal price = new BigDecimal(jsonArray.getJSONObject(i).getJSONObject("reservedRoute").get("price").toString());
-            String place = jsonArray.getJSONObject(i).getJSONObject("reservedRoute").get("place").toString();
+            BigDecimal price = new BigDecimal(jsonArray.getJSONObject(i).getJSONObject(ROUTE_JSON_PATH).get("price").toString());
+            String place = jsonArray.getJSONObject(i).getJSONObject(ROUTE_JSON_PATH).get("place").toString();
 
             // Aircraft which flies for particular route
             Long aircraftId =
                     Long.valueOf(
                             jsonArray.getJSONObject(i)
-                                    .getJSONObject("reservedRoute").getJSONObject("aircraft").get("aircraftId").toString()
+                                    .getJSONObject(ROUTE_JSON_PATH).getJSONObject(AIRCRAFT_JSON_PATH).get("aircraftId").toString()
                     );
             String model =
                     jsonArray.getJSONObject(i)
-                            .getJSONObject("reservedRoute").getJSONObject("aircraft").get("model").toString();
+                            .getJSONObject(ROUTE_JSON_PATH).getJSONObject(AIRCRAFT_JSON_PATH).get("model").toString();
             String aircraftName =
                     jsonArray.getJSONObject(i)
-                            .getJSONObject("reservedRoute").getJSONObject("aircraft").get("aircraftName").toString();
+                            .getJSONObject(ROUTE_JSON_PATH).getJSONObject(AIRCRAFT_JSON_PATH).get("aircraftName").toString();
             Double aircraftWeight =
                     Double.valueOf(
                             jsonArray.getJSONObject(i)
-                                    .getJSONObject("reservedRoute").getJSONObject("aircraft").get("aircraftWeight").toString()
+                                    .getJSONObject(ROUTE_JSON_PATH).getJSONObject(AIRCRAFT_JSON_PATH).get("aircraftWeight").toString()
                     );
             Integer maxPassengers =
                     Integer.valueOf(
                             jsonArray.getJSONObject(i)
-                                    .getJSONObject("reservedRoute").getJSONObject("aircraft").get("maxPassengers").toString()
+                                    .getJSONObject(ROUTE_JSON_PATH).getJSONObject(AIRCRAFT_JSON_PATH).get("maxPassengers").toString()
                     );
             Aircraft aircraft = new Aircraft(aircraftId, model, aircraftName, aircraftWeight, maxPassengers);
             Route route = new Route(routeId, distance, departureTime, arrivalTime, price, place, aircraft);

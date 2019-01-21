@@ -17,7 +17,6 @@
 package org.sergei.frontendservice.controller;
 
 import org.sergei.frontendservice.model.Aircraft;
-import org.sergei.frontendservice.model.Customer;
 import org.sergei.frontendservice.service.AircraftService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
