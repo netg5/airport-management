@@ -35,6 +35,6 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties("routeId")
 public class ReservationExtendedDTO extends ReservationDTO {
 
-    @JsonProperty("allReservedRoutes")
+    @JsonProperty("reservedRoute")
     private RouteExtendedDTO routeExtendedDTO;
 }

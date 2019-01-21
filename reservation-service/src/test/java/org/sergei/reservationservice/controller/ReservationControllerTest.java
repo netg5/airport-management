@@ -116,19 +116,19 @@ public class ReservationControllerTest {
                 .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].customerId").value(customer.getCustomerId()))
                 .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservationDate").value(reservationDate))
                 .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0]._links.reservation.href", is(BASE_URL + "/2" + RESERVATIONS_PATH + "/1")))
-                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].allReservedRoutes.routeId").isNotEmpty())
-                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].allReservedRoutes.distance").value(distance))
-                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].allReservedRoutes.departureTime").value(departureTime))
-                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].allReservedRoutes.arrivalTime").value(arrivalTime))
-                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].allReservedRoutes.place").value(place))
-                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].allReservedRoutes._links.routeSelf.href",
+                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservedRoute.routeId").isNotEmpty())
+                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservedRoute.distance").value(distance))
+                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservedRoute.departureTime").value(departureTime))
+                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservedRoute.arrivalTime").value(arrivalTime))
+                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservedRoute.place").value(place))
+                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservedRoute._links.routeSelf.href",
                         is(BASE_URL + RESERVATIONS_PATH + ROUTES_PATH + "/" + route.getRouteId())))
-                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].allReservedRoutes.aircraft").value(place))
-                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].allReservedRoutes.place.aircraft.aircraftId").isNotEmpty())
-                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].allReservedRoutes.place.aircraft.model").value(model))
-                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].allReservedRoutes.place.aircraft.aircraftName").value(aircraftName))
-                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].allReservedRoutes.place.aircraft.aircraftWeight").value(aircraftWeight))
-                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].allReservedRoutes.place.aircraft.maxPassengers").value(maxPassengers))
+                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservedRoute.aircraft").value(place))
+                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservedRoute.place.aircraft.aircraftId").isNotEmpty())
+                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservedRoute.place.aircraft.model").value(model))
+                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservedRoute.place.aircraft.aircraftName").value(aircraftName))
+                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservedRoute.place.aircraft.aircraftWeight").value(aircraftWeight))
+                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservedRoute.place.aircraft.maxPassengers").value(maxPassengers))
                 .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].aircraft._links.aircraftSelf.href",
                         is(BASE_URL + RESERVATIONS_PATH + AIRCRAFTS_PATH + "/" + aircraft.getAircraftId())))
                 .andExpect(jsonPath("$._links.self.href", is(BASE_URL + "/1" + RESERVATIONS_PATH)));
@@ -166,20 +166,20 @@ public class ReservationControllerTest {
                 .andExpect(jsonPath("$.reservationDate").value(reservationDate))
                 .andExpect(jsonPath("$._links.customer.href", is(BASE_URL + "/2")))
                 .andExpect(jsonPath("$._links.reservation.href", is(BASE_URL + "/2/" + RESERVATIONS_PATH + "/1")))
-                .andExpect(jsonPath("$.allReservedRoutes.routeId").isNotEmpty())
-                .andExpect(jsonPath("$.allReservedRoutes.distance").value(distance))
-                .andExpect(jsonPath("$.allReservedRoutes.departureTime").value(departureTime))
-                .andExpect(jsonPath("$.allReservedRoutes.arrivalTime").value(arrivalTime))
-                .andExpect(jsonPath("$.allReservedRoutes.place").value(place))
-                .andExpect(jsonPath("$.allReservedRoutes._links.routeSelf.href",
+                .andExpect(jsonPath("$.reservedRoute.routeId").isNotEmpty())
+                .andExpect(jsonPath("$.reservedRoute.distance").value(distance))
+                .andExpect(jsonPath("$.reservedRoute.departureTime").value(departureTime))
+                .andExpect(jsonPath("$.reservedRoute.arrivalTime").value(arrivalTime))
+                .andExpect(jsonPath("$.reservedRoute.place").value(place))
+                .andExpect(jsonPath("$.reservedRoute._links.routeSelf.href",
                         is(BASE_URL + RESERVATIONS_PATH + ROUTES_PATH + "/" + route.getRouteId())))
-                .andExpect(jsonPath("$.allReservedRoutes.aircraft").value(place))
-                .andExpect(jsonPath("$.allReservedRoutes.place.aircraft.aircraftId").isNotEmpty())
-                .andExpect(jsonPath("$.allReservedRoutes.place.aircraft.model").value(model))
-                .andExpect(jsonPath("$.allReservedRoutes.place.aircraft.aircraftName").value(aircraftName))
-                .andExpect(jsonPath("$.allReservedRoutes.place.aircraft.aircraftWeight").value(aircraftWeight))
-                .andExpect(jsonPath("$.allReservedRoutes.place.aircraft.maxPassengers").value(maxPassengers))
-                .andExpect(jsonPath("$.allReservedRoutes.aircraft._links.aircraftSelf.href",
+                .andExpect(jsonPath("$.reservedRoute.aircraft").value(place))
+                .andExpect(jsonPath("$.reservedRoute.place.aircraft.aircraftId").isNotEmpty())
+                .andExpect(jsonPath("$.reservedRoute.place.aircraft.model").value(model))
+                .andExpect(jsonPath("$.reservedRoute.place.aircraft.aircraftName").value(aircraftName))
+                .andExpect(jsonPath("$.reservedRoute.place.aircraft.aircraftWeight").value(aircraftWeight))
+                .andExpect(jsonPath("$.reservedRoute.place.aircraft.maxPassengers").value(maxPassengers))
+                .andExpect(jsonPath("$.reservedRoute.aircraft._links.aircraftSelf.href",
                         is(BASE_URL + RESERVATIONS_PATH + AIRCRAFTS_PATH + "/" + aircraft.getAircraftId())));
     }
 

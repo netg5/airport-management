@@ -61,7 +61,7 @@ public class LinkUtil {
                     methodOn(AircraftReportController.class)
                             .findByAircraftId(aircraftReportDTO.getAircraftId())).withRel("aircraft");
             aircraftReportDTO.add(link);
-            setLinksForEachReservation(aircraftReportDTO.getReservationList());
+            setLinksForEachReservation(aircraftReportDTO.getReservations());
         });
         return setServletResourceLinks(aircraftReports);
     }
@@ -73,7 +73,7 @@ public class LinkUtil {
      * @return DTO with links set
      */
     public AircraftReportDTO setLinksForAircraftReport(AircraftReportDTO aircraftReportDTO) {
-        List<Reservation> reservationList = aircraftReportDTO.getReservationList();
+        List<Reservation> reservationList = aircraftReportDTO.getReservations();
         setLinksForEachReservation(reservationList);
         Link selfLink = linkTo(
                 methodOn(AircraftReportController.class)

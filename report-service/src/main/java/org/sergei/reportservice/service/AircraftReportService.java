@@ -64,7 +64,7 @@ public class AircraftReportService implements IReportService<AircraftReportDTO> 
         aircraftReportDTOS.forEach(reportDTO -> {
             List<Reservation> reservationList =
                     reservationRepository.findAllByRouteId(reportDTO.getRouteId());
-            reportDTO.setReservationList(reservationList);
+            reportDTO.setReservations(reservationList);
         });
         return aircraftReportDTOS;
     }
@@ -83,7 +83,7 @@ public class AircraftReportService implements IReportService<AircraftReportDTO> 
                 );
         List<Reservation> reservationList = reservationRepository.findAllByRouteId(aircraftReport.getRouteId());
         AircraftReportDTO aircraftReportDTO = ObjectMapperUtil.map(aircraftReport, AircraftReportDTO.class);
-        aircraftReportDTO.setReservationList(reservationList);
+        aircraftReportDTO.setReservations(reservationList);
         return aircraftReportDTO;
     }
 }

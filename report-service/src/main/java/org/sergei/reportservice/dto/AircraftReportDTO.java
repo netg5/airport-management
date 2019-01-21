@@ -61,5 +61,5 @@ public class AircraftReportDTO extends ResourceSupport {
     private BigDecimal price;
 
     @ApiModelProperty("Collection of reservation made for specific aircraft")
-    private List<Reservation> reservationList = new LinkedList<>();
+    private List<Reservation> reservations = new LinkedList<>();
 }
