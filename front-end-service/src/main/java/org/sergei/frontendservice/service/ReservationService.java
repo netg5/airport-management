@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.sergei.frontendservice.model.AuthTokenInfo;
 import org.sergei.frontendservice.model.Reservation;
 import org.sergei.frontendservice.model.ReservationPost;
+import org.sergei.frontendservice.model.Route;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
@@ -96,7 +98,19 @@ public class ReservationService {
                     jsonArray.getJSONObject(i).get("reservationDate").toString()
             );
 
-            reservationList.add(new Reservation(reservationId, customerIdParsed, reservationDate));
+            Long routeId = Long.valueOf(jsonArray.getJSONObject(i).getJSONObject("reservedRoute").get("routeId").toString());
+            Double distance = Double.valueOf(jsonArray.getJSONObject(i).getJSONObject("reservedRoute").get("distance").toString());
+            LocalDateTime departureTime = LocalDateTime.parse(
+                    jsonArray.getJSONObject(i).getJSONObject("reservedRoute").get("departureTime").toString()
+            );
+            LocalDateTime arrivalTime = LocalDateTime.parse(
+                    jsonArray.getJSONObject(i).getJSONObject("reservedRoute").get("arrivalTime").toString()
+            );
+            BigDecimal price = new BigDecimal(jsonArray.getJSONObject(i).getJSONObject("reservedRoute").get("price").toString());
+            String place = jsonArray.getJSONObject(i).getJSONObject("reservedRoute").get("place").toString();
+            Route route = new Route(routeId, distance, departureTime, arrivalTime, price, place);
+
+            reservationList.add(new Reservation(reservationId, customerIdParsed, reservationDate, route));
         }
 
         return reservationList;

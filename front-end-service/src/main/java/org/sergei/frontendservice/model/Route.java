@@ -16,7 +16,9 @@
 
 package org.sergei.frontendservice.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -25,6 +27,8 @@ import java.time.LocalDateTime;
  * @author Sergei Visotsky
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Route {
     private Long routeId;
     private Double distance;

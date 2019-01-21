@@ -32,4 +32,5 @@ public class Reservation {
     private Long reservationId;
     private Long customerId;
     private LocalDateTime reservationDate;
+    private Route reservedRoute;
 }
