@@ -239,9 +239,8 @@ docker inspect CONTAINER_NAME
 NOTE: `config-service` and `eureka-service` should be run first due to all the configs are stored in the separate repository.
 
 ## FIXME
-1. Zul fallback provider
-2. report-api endpoint restriction for non ROLE_ADMIN users
-3. `Eureka discovery client has not yet successfully connected to a Eureka server` message in /actuator/health endpoint
+1. Zuul fallback provider does not work
+2. `Eureka discovery client has not yet successfully connected to a Eureka server` message in /actuator/health endpoint
 
 ## TODO
 1. Adopt liquibase for unit tests
