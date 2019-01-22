@@ -239,7 +239,8 @@ docker inspect CONTAINER_NAME
 NOTE: `config-service` and `eureka-service` should be run first due to all the configs are stored in the separate repository.
 
 ## FIXME
-1. `Eureka discovery client has not yet successfully connected to a Eureka server` message in /actuator/health endpoint
+1. Services are not accessible through the gateway due to misconfiguration
+2. `Eureka discovery client has not yet successfully connected to a Eureka server` message in /actuator/health endpoint
 
 ## TODO
 1. Adopt liquibase for unit tests
