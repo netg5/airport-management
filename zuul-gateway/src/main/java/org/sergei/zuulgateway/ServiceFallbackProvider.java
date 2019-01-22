@@ -30,8 +30,10 @@ import java.io.InputStream;
 /**
  * @author Sergei Visotsky
  */
+// FIXME Does not work
 @Component
 public class ServiceFallbackProvider implements FallbackProvider {
+
     @Override
     public String getRoute() {
         return "*";
@@ -57,7 +59,6 @@ public class ServiceFallbackProvider implements FallbackProvider {
 
             @Override
             public void close() {
-
             }
 
             @Override
