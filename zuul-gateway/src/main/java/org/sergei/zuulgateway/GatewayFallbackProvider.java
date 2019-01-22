@@ -28,8 +28,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * FIXME: Does not work
- *
  * @author Sergei Visotsky
  */
 @Component
@@ -64,7 +62,7 @@ public class GatewayFallbackProvider implements FallbackProvider {
 
             @Override
             public InputStream getBody() throws IOException {
-                return new ByteArrayInputStream("fallback".getBytes());
+                return new ByteArrayInputStream("Service unavailable".getBytes());
             }
 
             @Override
