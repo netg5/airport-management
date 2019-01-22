@@ -33,7 +33,7 @@ import java.io.InputStream;
  * @author Sergei Visotsky
  */
 @Component
-public class ServiceFallbackProvider implements FallbackProvider {
+public class GatewayFallbackProvider implements FallbackProvider {
 
     @Override
     public String getRoute() {
