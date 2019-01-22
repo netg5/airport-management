@@ -39,8 +39,7 @@ public class GatewaySecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/**").permitAll()
-                .antMatchers("/report-api/**").hasRole("ADMIN");
+                .antMatchers("/**").permitAll();
     }
 
     /**

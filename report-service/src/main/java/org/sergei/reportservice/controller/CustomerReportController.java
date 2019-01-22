@@ -42,7 +42,6 @@ import org.springframework.web.bind.annotation.RestController;
 )
 @RestController
 @RequestMapping("/customers")
-@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 public class CustomerReportController {
 
     private final LinkUtil linkUtil;

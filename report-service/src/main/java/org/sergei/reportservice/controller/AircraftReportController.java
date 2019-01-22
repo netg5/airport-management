@@ -39,7 +39,6 @@ import org.springframework.web.bind.annotation.*;
 )
 @RestController
 @RequestMapping("/aircrafts")
-@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 public class AircraftReportController {
 
     private final LinkUtil linkUtil;
