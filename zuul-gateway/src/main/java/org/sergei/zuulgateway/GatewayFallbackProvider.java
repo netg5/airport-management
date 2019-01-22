@@ -16,6 +16,8 @@
 
 package org.sergei.zuulgateway;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cloud.netflix.zuul.filters.route.FallbackProvider;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -32,6 +34,8 @@ import java.io.InputStream;
  */
 @Component
 public class GatewayFallbackProvider implements FallbackProvider {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(GatewayFallbackProvider.class);
 
     @Override
     public String getRoute() {
@@ -58,7 +62,7 @@ public class GatewayFallbackProvider implements FallbackProvider {
 
             @Override
             public void close() {
-                throw new UnsupportedOperationException();
+                LOGGER.info("Operation is not supported");
             }
 
             @Override
