@@ -58,6 +58,7 @@ public class GatewayFallbackProvider implements FallbackProvider {
 
             @Override
             public void close() {
+                throw new UnsupportedOperationException();
             }
 
             @Override
