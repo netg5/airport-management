@@ -30,7 +30,7 @@ import java.io.InputStream;
 /**
  * @author Sergei Visotsky
  */
-// FIXME Does not work
+// FIXME: Does not work
 @Component
 public class ServiceFallbackProvider implements FallbackProvider {
 
