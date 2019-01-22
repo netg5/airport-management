@@ -49,10 +49,7 @@ public class AircraftReportController {
         this.aircraftReportService = aircraftReportService;
     }
 
-    @ApiOperation(
-            value = "Get all existing reports in paginated way",
-            notes = "Operation allowed for the ROLE_ADMIN only"
-    )
+    @ApiOperation("Get all existing reports in paginated way")
     @GetMapping(params = {"page", "size"})
     public ResponseEntity<Resources> findAllReports(@ApiParam("Number of the page to show")
                                                     @RequestParam("page") int page,
@@ -62,10 +59,7 @@ public class AircraftReportController {
         return new ResponseEntity<>(linkUtil.setLinksForAllReports(aircraftReports), HttpStatus.OK);
     }
 
-    @ApiOperation(
-            value = "Get report for the aircraft by ID",
-            notes = "Operation allowed for the ROLE_ADMIN only"
-    )
+    @ApiOperation("Get report for the aircraft by ID")
     @ApiResponses({
             @ApiResponse(code = 404, message = Constants.AIRCRAFT_NOT_FOUND)
     })

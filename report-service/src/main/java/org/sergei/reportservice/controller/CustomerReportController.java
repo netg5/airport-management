@@ -53,10 +53,7 @@ public class CustomerReportController {
         this.customerReportService = customerReportService;
     }
 
-    @ApiOperation(
-            value = "Get report for a specific customer",
-            notes = "Operation allowed for the ROLE_ADMIN only"
-    )
+    @ApiOperation("Get report for a specific customer")
     @ApiResponses({
             @ApiResponse(code = 404, message = Constants.CUSTOMER_NOT_FOUND)
     })

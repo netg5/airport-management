@@ -77,7 +77,8 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("Report service API methods")
-                .description("Methods needed to retrieve all data to create reports for a specific model")
+                .description("Methods needed to retrieve all data to create reports for a specific model " +
+                        "\n API accessible for the ROLE_ADMIN only")
                 .version("1.0")
                 .license("Apache 2.0")
                 .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
