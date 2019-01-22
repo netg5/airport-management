@@ -243,6 +243,5 @@ NOTE: `config-service` and `eureka-service` should be run first due to all the c
 
 ## TODO
 1. Adopt liquibase for unit tests
-2. Implement Hystrix fallback methods
-3. SSL for the Eureka and Config servers
-4. Ignore services without swagger json in doc-service
+2. SSL for the Eureka and Config servers
+3. Ignore services without swagger json in doc-service
