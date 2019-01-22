@@ -3,17 +3,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>reservation-service</artifactId>
-    <packaging>jar</packaging>
-
-    <name>reservation-service</name>
-    <description>Application to reserve flights using RESTful API</description>
-
     <parent>
         <groupId>org.sergei</groupId>
         <artifactId>flight-reservation</artifactId>
         <version>2.2.3-SNAPSHOT</version>
     </parent>
+
+    <artifactId>reservation-service</artifactId>
+    <packaging>jar</packaging>
+    <name>reservation-service</name>
+    <description>Service to perform flight reservation</description>
 
     <properties>
         <jackson.version>2.9.6</jackson.version>

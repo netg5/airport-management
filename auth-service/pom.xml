@@ -3,17 +3,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>auth-service</artifactId>
-    <packaging>jar</packaging>
-
-    <name>auth-service</name>
-    <description>Authentication microservice</description>
-
     <parent>
         <groupId>org.sergei</groupId>
         <artifactId>flight-reservation</artifactId>
         <version>2.2.3-SNAPSHOT</version>
     </parent>
+
+    <artifactId>auth-service</artifactId>
+    <packaging>jar</packaging>
+    <name>auth-service</name>
+    <description>Authentication microservice</description>
 
     <properties>
         <io.swagger.version>2.9.1</io.swagger.version>
