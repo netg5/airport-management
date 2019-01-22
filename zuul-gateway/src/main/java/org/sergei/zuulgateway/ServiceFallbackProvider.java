@@ -28,9 +28,10 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
+ * FIXME: Does not work
+ *
  * @author Sergei Visotsky
  */
-// FIXME: Does not work
 @Component
 public class ServiceFallbackProvider implements FallbackProvider {
 
