@@ -239,10 +239,10 @@ docker inspect CONTAINER_NAME
 NOTE: `config-service` and `eureka-service` should be run first due to all the configs are stored in the separate repository.
 
 ## FIXME
-1. Services are not accessible through the gateway due to misconfiguration
+1. Fallback does not work in gateway - PROBLEMS WITH CONFIGS
 2. `Eureka discovery client has not yet successfully connected to a Eureka server` message in /actuator/health endpoint
 
 ## TODO
-1. Adopt liquibase for unit tests
-2. SSL for the Eureka and Config servers
+1. SSL for the Eureka and Config servers
+2. Adopt liquibase for unit tests
 3. Ignore services without swagger json in doc-service
