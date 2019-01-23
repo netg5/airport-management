@@ -38,8 +38,8 @@ zuul:
   routes:
     service-resource:
       path: /service-api/**
-#      service-id: service-resource
-#      url: https://localhost:9096
+      service-id: service-resource
+      url: https://localhost:9096
       sensitive-headers: true
     doc-service:
       path: /docs/**
