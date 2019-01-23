@@ -67,7 +67,7 @@ public class GatewayFallbackProvider implements FallbackProvider {
 
             @Override
             public InputStream getBody() throws IOException {
-                return new ByteArrayInputStream("Service unavailable".getBytes());
+                return new ByteArrayInputStream("Service temporary unavailable".getBytes());
             }
 
             @Override

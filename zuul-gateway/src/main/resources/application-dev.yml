@@ -38,26 +38,36 @@ zuul:
   routes:
     service-resource:
       path: /service-api/**
-      url: https://localhost:9096/
-      strip-prefix: false
+#      service-id: service-resource
+#      url: https://localhost:9096
       sensitive-headers: true
     doc-service:
       path: /docs/**
+      service-id: doc-service
+      url: https://localhost:9093
       strip-prefix: false
       sensitive-headers: true
     auth-service:
       path: /auth-api/**
+      service-id: auth-service
+      url: https://localhost:9094
       strip-prefix: false
       sensitive-headers: true
     reservation-service:
       path: /reservation-api/**
+      service-id: reservation-service
+      url: https://localhost:9091
       strip-prefix: false
       sensitive-headers: true
     ticket-service:
       path: /ticket-api/**
+      service-id: ticket-service
+      url: https://localhost:9092
       strip-prefix: false
       sensitive-headers: true
     report-service:
       path: /report-api/**
+      service-id: report-service
+      url: https://localhost:9095
       strip-prefix: false
       sensitive-headers: true

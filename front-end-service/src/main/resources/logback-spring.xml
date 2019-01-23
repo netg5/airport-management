@@ -29,10 +29,21 @@
     <!--Disabled due to the NumberFormatException what is caused by the bug in Swagger internals-->
     <logger name="io.swagger.models.parameters.AbstractSerializableParameter" level="ERROR"/>
 
-    <logger name="org.sergei.frontendservice" level="info, debug"/>
+    <springProfile name="dev">
+        <logger name="org.sergei.frontendservice" level="info, debug"/>
 
-    <root level="info, debug">
-        <appender-ref ref="file"/>
-        <appender-ref ref="stdout"/>
-    </root>
+        <root level="info, debug">
+            <appender-ref ref="file"/>
+            <appender-ref ref="stdout"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="prod">
+        <logger name="org.sergei.frontendservice" level="info"/>
+
+        <root level="info">
+            <appender-ref ref="file"/>
+            <appender-ref ref="stdout"/>
+        </root>
+    </springProfile>
 </configuration>
