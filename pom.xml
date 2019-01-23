@@ -27,13 +27,6 @@
         <connection>scm:git:git@github.com:sergeivisotsky/flight-reservation.git</connection>
         <developerConnection>scm:git:git@github.com:sergeivisotsky/flight-reservation.git</developerConnection>
     </scm>
-    <developers>
-        <developer>
-            <id>sergeivisotsky</id>
-            <name>Sergei Visotsky</name>
-            <email>sergei.visotsky@gmail.com</email>
-        </developer>
-    </developers>
     <modules>
         <module>config-service</module>
         <module>service-resource</module>
