@@ -1,0 +1,17 @@
+server:
+  port: 8761
+spring:
+  application:
+    name: eureka-service
+eureka:
+  instance:
+    hostname: localhost
+    secure-port-enabled: true
+    secure-port: ${server.port}
+    non-secure-port-enabled: false
+    homePageUrl: https://${eureka.instance.hostname}:${server.port}
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    serviceUrl:
+      defaulZone: http://localhost:8761/eureka/
