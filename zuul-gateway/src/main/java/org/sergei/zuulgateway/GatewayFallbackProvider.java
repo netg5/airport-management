@@ -62,7 +62,7 @@ public class GatewayFallbackProvider implements FallbackProvider {
 
             @Override
             public void close() {
-                LOGGER.info("Operation is not supported");
+                LOGGER.debug("Operation is not supported");
             }
 
             @Override

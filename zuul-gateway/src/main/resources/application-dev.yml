@@ -34,7 +34,7 @@ management:
     health:
       show-details: always
 zuul:
-  ssl-hostname-validation-enabled: false
+  ssl-hostname-validation-enabled: false # No recommended in real production applications
   routes:
     service-resource:
       path: /service-api/**

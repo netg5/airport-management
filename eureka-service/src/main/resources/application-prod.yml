@@ -9,7 +9,7 @@ eureka:
     secure-port-enabled: true
     secure-port: ${server.port}
     non-secure-port-enabled: false
-    homePageUrl: https://${eureka.instance.hostname}:${server.port}
+    homePageUrl: http://${eureka.instance.hostname}:${server.port}
   client:
     register-with-eureka: false
     fetch-registry: false
