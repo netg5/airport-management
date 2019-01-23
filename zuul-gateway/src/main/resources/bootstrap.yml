@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: dev
   cloud:
     config:
       name: zuul-gateway

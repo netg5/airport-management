@@ -1,0 +1,63 @@
+server:
+  port: 9095
+  http:
+    port: 8089
+  servlet:
+    context-path: /report-api
+  ssl:
+    enabled: true
+    key-store-type: PKCS12
+    key-store: report-service/src/main/resources/tls/keystore.p12
+    key-store-password: keyStoreSecret
+    key-alias: localhost
+spring:
+  application:
+    name: report-service
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/flight_reservation?allowPublicKeyRetrieval=true&useSSL=true
+    username: flight
+    password: flight
+    initialization-mode: embedded
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL57InnoDBDialect
+        show_sql: true
+        hbm2ddl:
+          auto: update
+        generate-ddl: true
+  liquibase:
+    enabled: false
+  gateway:
+    port: 9090
+eureka:
+  instance:
+    non-secure-port-enabled: false
+    secure-port-enabled: true
+    secure-port: ${server.port}
+    status-page-url-path: https://localhost:${server.port}/${server.servlet.context-path}/actuator/info
+    health-check-url-path: https://localhost:${server.port}/${server.servlet.context-path}/actuator/health
+    home-page-url: https://localhost:${server.port}
+    lease-renewal-interval-in-seconds: 10 # intervalSeconds between subsequent heartbeats sent to Eureka server
+    lease-expiration-duration-in-seconds: 20 # time that Eureka server waits since it received last heartbeat before it can evict this instance
+    metadata-map:
+      swagger_url: https://localhost:${server.port}/${server.servlet.context-path}/v2/api-docs
+  client:
+    enabled: true
+    register-with-eureka: true
+    fetch-registry: true
+    registry-fetch-interval-seconds: 10 # how often to fetch the registry from Eureka server
+    instance-info-replication-interval-seconds: 10 # how often to replicate instance changes to be replicated to Eureka server
+    serviceUrl:
+      defaulZone: http://localhost:8761/eureka/
+security:
+  oauth2:
+    resource:
+      user-info-uri: https://localhost:9090/auth-api/users/authenticate
+    access-token-uri: https://localhost:9090/auth-api/oauth/token
+    user-authorization-uri: https://localhost:9090/auth-api/oauth/authorize
+management:
+  endpoint:
+    health:
+      show-details: always

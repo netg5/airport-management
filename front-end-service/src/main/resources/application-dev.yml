@@ -1,12 +1,16 @@
 server:
-  port: 8500
+  port: 9097
+  http:
+    port: 8087
+  ssl:
+    enabled: true
+    key-store-type: PKCS12
+    key-store: front-end-service/src/main/resources/tls/keystore.p12
+    key-store-password: keyStoreSecret
+    key-alias: localhost
 spring:
-  cloud:
-    consul:
-      host: localhost
-      port: 8500
   application:
-    name: consul-service
+    name: front-end-service
 eureka:
   instance:
     non-secure-port-enabled: false
@@ -29,3 +33,8 @@ management:
   endpoint:
     health:
       show-details: always
+oauth:
+  client-id: trusted-client
+  client-secret: trusted-client-secret
+  username: admin
+  password: 123456

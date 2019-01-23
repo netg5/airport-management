@@ -1,0 +1,63 @@
+server:
+  port: 9090
+  http:
+    port: 8080
+  ssl:
+    enabled: true
+    key-store-type: PKCS12
+    key-store: zuul-gateway/src/main/resources/tls/keystore.p12
+    key-store-password: keyStoreSecret
+    key-alias: localhost
+spring:
+  application:
+    name: zuul-gateway
+eureka:
+  instance:
+    non-secure-port-enabled: false
+    secure-port-enabled: true
+    secure-port: ${server.port}
+    status-page-url-path: https://localhost:${server.port}/actuator/info
+    health-check-url-path: https://localhost:${server.port}/actuator/health
+    home-page-url: https://localhost:${server.port}
+    lease-renewal-interval-in-seconds: 10 # intervalSeconds between subsequent heartbeats sent to Eureka server
+    lease-expiration-duration-in-seconds: 20 # time that Eureka server waits since it received last heartbeat before it can evict this instance
+  client:
+    enabled: true
+    register-with-eureka: true
+    fetch-registry: true
+    registry-fetch-interval-seconds: 10 # how often to fetch the registry from Eureka server
+    instance-info-replication-interval-seconds: 10 # how often to replicate instance changes to be replicated to Eureka server
+    serviceUrl:
+      defaulZone: http://localhost:8761/eureka/
+management:
+  endpoint:
+    health:
+      show-details: always
+zuul:
+  ssl-hostname-validation-enabled: false
+  routes:
+    service-resource:
+      path: /service-api/**
+      url: https://localhost:9096/
+      strip-prefix: false
+      sensitive-headers: true
+    doc-service:
+      path: /docs/**
+      strip-prefix: false
+      sensitive-headers: true
+    auth-service:
+      path: /auth-api/**
+      strip-prefix: false
+      sensitive-headers: true
+    reservation-service:
+      path: /reservation-api/**
+      strip-prefix: false
+      sensitive-headers: true
+    ticket-service:
+      path: /ticket-api/**
+      strip-prefix: false
+      sensitive-headers: true
+    report-service:
+      path: /report-api/**
+      strip-prefix: false
+      sensitive-headers: true
