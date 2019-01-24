@@ -9,19 +9,10 @@
         </encoder>
     </appender>
 
-    <springProfile name="dev">
-        <logger name="org.sergei.serviceresource" level="info, debug"/>
+    <logger name="org.sergei.serviceresource" level="info, debug"/>
 
-        <root level="info, debug">
-            <appender-ref ref="stdout"/>
-        </root>
-    </springProfile>
+    <root level="info, debug">
+        <appender-ref ref="stdout"/>
+    </root>
 
-    <springProfile name="prod">
-        <logger name="org.sergei.serviceresource" level="info"/>
-
-        <root level="info">
-            <appender-ref ref="stdout"/>
-        </root>
-    </springProfile>
 </configuration>
