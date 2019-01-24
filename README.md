@@ -1,9 +1,11 @@
 # Flight reservation
-Flight reservation application based on the microservice architecture which allows to add customer, aircraft and route, reserve flight and see all tickets for a particular customer.
+Flight reservation application based on the microservice architecture which allows to add customer, aircraft and route, 
+reserve flight and see all tickets for a particular customer.
 
 ## Technologies
 * Java 8
-* Spring Boot 2
+* Spring Boot
+* Spring Cloud
 * JPA
 * Apache Maven
 * MySQL
@@ -13,12 +15,13 @@ Flight reservation application based on the microservice architecture which allo
 * Thymeleaf
 
 ## Services
-* config-service - microserivce which makes calls to the repository where all configurations are stored - [https://github.com/sergeivisotsky/flight-reservation-config](https://github.com/sergeivisotsky/flight-reservation-config)
-* auth-service - microservice responsible for authentication and authorization
-* eureka-service - microservice registry where of all microservices can be observed
+* config-service - serivce which makes calls to the repository where all configurations are stored - 
+[https://github.com/sergeivisotsky/flight-reservation-config](https://github.com/sergeivisotsky/flight-reservation-config)
+* auth-service - service responsible for authentication and authorization
+* eureka-service - service registry where of all microservices can be observed
 * doc-service - Swagger documentation service
-* zuul-gateway - entry point of the all microservices
-* reservation-service - main microservice which allows to reserve flight
+* zuul-gateway - entry point of the all services
+* reservation-service - service which allows to reserve flight
 * ticket-service - service where all customer tickets can be seen
 * report-service - service to get all reports for a specific purpose (e.g. route report)
 * front-end-service - user interface service
@@ -67,7 +70,8 @@ keytool -import -trustcacerts -keystore "%JAVA_HOME%/jre/lib/security/cacerts" -
 
 * `changeit` default password for cacerts
 
-NOTE: Self-signed certificates are not verified by any certification agency and due to this every browser shows warning that they are not secured and consequently are not applicable for production and can be used for dev purposes only.
+**__NOTE: Self-signed certificates are not verified by any certification agency and due to this every browser shows warning 
+that they are not secured and consequently are not applicable for production and can be used for dev purposes only.__**
 
 ## Authentication
 To access any resource authentication should be performed. By performing this request with such a parameters access_token is retrieved.
@@ -135,9 +139,14 @@ For endpoint documentation is used Swagger which is accessible by the url - `htt
  * _where `http://localhost:8080` is a gateway url_
 
 ## Setup
-1. Checkout config service [https://github.com/sergeivisotsky/flight-reservation-config](https://github.com/sergeivisotsky/flight-reservation-config) to clone all the necessary config files
-2. Copy all the property files in each microservice or create another repository and change the path to it in `bootstrap.yml` config file in `config-service` by changing property `spring.cloud.config.server.git.uri`
-3. Change `server.port` for each service if needed which configs are located in the repository above and other configs that are not locates in config repository in `1.` paragraph
+1. Checkout config service [https://github.com/sergeivisotsky/flight-reservation-config](https://github.com/sergeivisotsky/flight-reservation-config) 
+to clone all the necessary config files
+2. Copy all the property files into the config folder locally and replace property `spring.cloud.config.server.git.uri` 
+with `spring.cloud.config.server.native.searchLocations: file:///${user.home}/config-repo` in `bootstrap.yml` config 
+file in `config-service` or create another repository and change the path to it by changing 
+property `spring.cloud.config.server.git.uri`
+3. Change `server.port` for each service if needed which configs are located in the repository above and other configs 
+that are not locates in config repository in `1.` paragraph
 4. Change `server.http.port` so that it was able to organize redirect from _HTTP_ to _HTTPS_
 5. Change database driver for your database.
 
@@ -149,29 +158,33 @@ _Example for MySQL:_
     <scope>runtime</scope>
 </dependency>
 ```
-6. Change the value of database driver property `spring.datasource.driver-class-name` in config file located in repo called `flight-reservation-config` for each service which communicates with database
+6. Change the value of database driver property `spring.datasource.driver-class-name` in config file located in repo 
+called `flight-reservation-config` for each service which communicates with database
 7. Change database url property: `spring.datasource.url`
 8. Change database url property: `spring.datasource.username`
 9. Change database url property: `spring.datasource.password`
 10. Change SQL dialect modifying this property: `spring.jpa.properties.hibernate.dialect`
 11. Open SQL file `oauth_schema.sql` script located in auth-service under `resources/sql` and change database name to yours
-12. Open each SQL file in `ticket-service` and `report-service` under `resources/sql` and execute each this script for your database (NOTE: MySQL dialect was used in this case due to this MySQL is preferable choice) 
-13. Add pem certificate to the JVM cacerts due to it is self-signed executing the following command:
+12. Open each SQL file in `ticket-service` and `report-service` under `resources/sql` and execute each this script for 
+your database (NOTE: MySQL dialect was used in this case due to this MySQL is preferable choice) 
+13. Add _pem_ certificate to the JVM cacerts due to it is self-signed executing the following command:
 ```text
 keytool -import -trustcacerts -keystore "%JAVA_HOME%/jre/lib/security/cacerts" -storepass changeit -alias KEYSTORE_ENTRY -import -file keystore.pem
 ```
-14. Open `SERVICE_NAME.yml` config file and setup your database url and credentials for services `flight-service` , `ticket service` and `auth-service`
-15. Keep in mind that application port and port in `security.oauth2.resource.accessTokenUri` property might be changed in your case
+14. Open `application.yml` config file located in config repository for this services `flight-service`, `ticket service` 
+and `auth-service` and setup your database url and credentials 
+15. Application port and port in `security.oauth2.resource.accessTokenUri` property might be changed in your case
 16. Open `logback-spring.xml` for each microservice and setup directory where all your logging files are going to saved
-17. Setup .jar names and ports in `Dockerfile` for each module
+17. Each service has additional dev profile config file and in case you want to use it you should 
+change property `spring.profiles.active` value from _prod_ to _dev_ and you can use development profile
 
-NOTE: If you change any port it should be changed in all places where it is used depending on the micrservice too.
+**__NOTE: If you change any port it should be changed in all places where it is used e.g. all depending microservices.__**
 
 ## Run
 #### 1 way - using maven or java command
 * Perform command `mvn spring-boot:run` or compile each microservice into the .jar and perform command `java -jar target/SERVICE-NAME-VERSION.jar`
 
-NOTE: `config-service` and `eureka-service` should be run first due to all the configs are stored in the separate repository.
+**__NOTE: `config-service` and `eureka-service` should be run first due to all the configs are stored in the separate repository.__**
 
 #### 2 way - run into the Docker container
 As was mentioned earlier in Setup section `9.` paragraph each microservice contains _Dockerfile_ that allows to run it into the Docker container.
@@ -236,7 +249,7 @@ docker inspect CONTAINER_NAME
 docker inspect CONTAINER_NAME
 ```
 
-NOTE: `config-service` and `eureka-service` should be run first due to all the configs are stored in the separate repository.
+**__NOTE: `config-service` and `eureka-service` should be run first due to all the configs are stored in the separate repository.__**
 
 ## FIXME
 1. Fallback does not work in gateway - PROBLEMS WITH CONFIGS
