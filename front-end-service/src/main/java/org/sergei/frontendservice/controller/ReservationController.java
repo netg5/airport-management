@@ -51,7 +51,7 @@ public class ReservationController {
     }
 
     @PostMapping("/reservation/post")
-    public String saveReservation(@ModelAttribute("reservationPost") ReservationPost reservationPost) {
+    public String saveReservation(@ModelAttribute ReservationPost reservationPost) {
         reservationService.save(reservationPost);
         return "success_page";
     }

@@ -45,11 +45,12 @@ public class CustomerController {
         ResponseEntity<Customer> customer = customerService.getCustomerById(customerId);
         Customer customerResponseBody = customer.getBody();
         model.addAttribute("customer", customerResponseBody);
+        model.addAttribute("customerPost", new Customer());
         return "customer";
     }
 
     @PostMapping("/customers")
-    public String saveCustomer(@ModelAttribute("customer") Customer customer) {
+    public String saveCustomer(@ModelAttribute Customer customer) {
         customerService.save(customer);
         return "success_page";
     }

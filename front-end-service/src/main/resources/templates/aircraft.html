@@ -24,7 +24,7 @@
     <div>Maximum passengers: [[${aircraft.maxPassengers}]]</div>
 
     <h6>Add a new customer:</h6>
-    <form th:action="@{/aircrafts}" th:object="${aircraft}" method="post">
+    <form th:action="@{/aircrafts}" th:object="${aircraftPost}" method="post">
         <p>
             Model:
             <label>

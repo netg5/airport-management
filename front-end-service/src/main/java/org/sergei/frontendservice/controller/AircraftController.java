@@ -45,11 +45,12 @@ public class AircraftController {
         ResponseEntity<Aircraft> aircraft = aircraftService.getAircraftById(aircraftId);
         Aircraft aircraftResponseBody = aircraft.getBody();
         model.addAttribute("aircraft", aircraftResponseBody);
+        model.addAttribute("aircraftPost", new Aircraft());
         return "aircraft";
     }
 
     @PostMapping("/aircrafts")
-    public String saveAircraft(@ModelAttribute("aircraft") Aircraft aircraft) {
+    public String saveAircraft(@ModelAttribute Aircraft aircraft) {
         aircraftService.save(aircraft);
         return "success_page";
     }
