@@ -171,8 +171,8 @@ your database (NOTE: MySQL dialect was used in this case due to this MySQL is pr
 ```text
 keytool -import -trustcacerts -keystore "%JAVA_HOME%/jre/lib/security/cacerts" -storepass changeit -alias KEYSTORE_ENTRY -import -file keystore.pem
 ```
-14. Open `application.yml` config file located in config repository for this services `flight-service`, `ticket service` 
-and `auth-service` and setup your database url and credentials 
+14. Open `application-prod.yml` config file located in config repository for this services `flight-service`, `ticket service` 
+and `auth-service` and setup your database url and credentials or in each service `application-dev.yml` in case of _dev_ profile
 15. Application port and port in `security.oauth2.resource.accessTokenUri` property might be changed in your case
 16. Open `logback-spring.xml` for each microservice and setup directory where all your logging files are going to saved
 17. Each service has additional dev profile config file and in case you want to use it you should 
