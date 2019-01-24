@@ -3,13 +3,21 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
     <changeSet id="1547304762872-16" author="Sergei">
-        <sql>INSERT INTO aircraft(aircraft_id, aircraft_name, weight, max_passengers, model)
-            VALUES (1, 'Boeing', 2000, 2300, '123-897')</sql>
-        <sql>INSERT INTO customer(customer_id, first_name, last_name, age)
-            VALUES (1, 'John', 'Smith', 20)</sql>
-        <sql>INSERT INTO reservation(reservation_id, reservation_date, customer_id, route_id)
-            VALUES (1, '2018-12-23', 1, 1)</sql>
-        <sql>INSERT INTO route(route_id, arrival_time, departure_time, distance, place, price, aircraft_id)
-            VALUES (1, '2018-12-23', '2018-12-23', 2500, 'Riga', 2500, 1)</sql>
+        <sql>
+            INSERT INTO aircraft(aircraft_id, aircraft_name, weight, max_passengers, model)
+            VALUES (1, 'Boeing', 2000, 2300, '123-897')
+        </sql>
+        <sql>
+            INSERT INTO customer(customer_id, first_name, last_name, age)
+            VALUES (1, 'John', 'Smith', 20)
+        </sql>
+        <sql>
+            INSERT INTO reservation(reservation_id, reservation_date, customer_id, route_id)
+            VALUES (1, '2018-12-23', 1, 1)
+        </sql>
+        <sql>
+            INSERT INTO route(route_id, arrival_time, departure_time, distance, place, price, aircraft_id)
+            VALUES (1, '2018-12-23', '2018-12-23', 2500, 'Riga', 2500, 1)
+        </sql>
     </changeSet>
 </databaseChangeLog>
