@@ -20,6 +20,7 @@ import io.swagger.annotations.*;
 import org.sergei.reservationservice.controller.hateoas.LinkUtil;
 import org.sergei.reservationservice.dto.ReservationDTO;
 import org.sergei.reservationservice.dto.ReservationExtendedDTO;
+import org.sergei.reservationservice.service.IReservationService;
 import org.sergei.reservationservice.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -49,7 +50,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 public class ReservationController {
 
     private final LinkUtil linkUtil;
-    private final ReservationService reservationService;
+    private final IReservationService<ReservationExtendedDTO, ReservationDTO> reservationService;
 
     @Autowired
     public ReservationController(LinkUtil linkUtil, ReservationService reservationService) {
@@ -138,10 +139,10 @@ public class ReservationController {
             @ApiResponse(code = 404, message = "Customer with this ID not found or no reservations made")
     })
     @DeleteMapping("/{customerId}/reservations/{reservationId}")
-    public ResponseEntity<ReservationExtendedDTO> deleteReservation(@ApiParam(value = "Customer ID who made reservation", required = true)
-                                                                    @PathVariable("customerId") Long customerId,
-                                                                    @ApiParam(value = "Reservation ID which should be deleted", required = true)
-                                                                    @PathVariable("reservationId") Long reservationId) {
+    public ResponseEntity<ReservationDTO> deleteReservation(@ApiParam(value = "Customer ID who made reservation", required = true)
+                                                            @PathVariable("customerId") Long customerId,
+                                                            @ApiParam(value = "Reservation ID which should be deleted", required = true)
+                                                            @PathVariable("reservationId") Long reservationId) {
         return new ResponseEntity<>(
                 reservationService.deleteReservation(customerId, reservationId),
                 HttpStatus.NO_CONTENT);

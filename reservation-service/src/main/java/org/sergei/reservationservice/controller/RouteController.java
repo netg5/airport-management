@@ -20,6 +20,7 @@ import io.swagger.annotations.*;
 import org.sergei.reservationservice.controller.hateoas.LinkUtil;
 import org.sergei.reservationservice.dto.RouteDTO;
 import org.sergei.reservationservice.dto.RouteExtendedDTO;
+import org.sergei.reservationservice.service.IRouteService;
 import org.sergei.reservationservice.service.RouteService;
 import org.sergei.reservationservice.service.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,7 @@ import java.util.Map;
 public class RouteController {
 
     private final LinkUtil linkUtil;
-    private final RouteService routeService;
+    private final IRouteService<RouteDTO, RouteExtendedDTO> routeService;
 
     @Autowired
     public RouteController(LinkUtil linkUtil, RouteService routeService) {

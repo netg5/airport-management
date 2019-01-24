@@ -36,7 +36,7 @@ import static org.sergei.reservationservice.util.ObjectMapperUtil.*;
  * @author Sergei Visotsky
  */
 @Service
-public class CustomerService implements IService<CustomerDTO> {
+public class CustomerService implements ICustomerService<CustomerDTO, CustomerIdsDTO> {
 
     private final CustomerRepository customerRepository;
 
@@ -76,6 +76,7 @@ public class CustomerService implements IService<CustomerDTO> {
      *
      * @return list of IDs
      */
+    @Override
     public List<CustomerIdsDTO> findIdsOfAllCustomers() {
         return customerRepository.findIdsOfAllCustomers();
     }
@@ -87,6 +88,7 @@ public class CustomerService implements IService<CustomerDTO> {
      * @param size number of elements per page
      * @return page of the IDs
      */
+    @Override
     public Page<CustomerIdsDTO> findIdsOfAllCustomersPaginated(int page, int size) {
         return customerRepository.findIdsOfAllCustomersPaginated(PageRequest.of(page, size));
     }

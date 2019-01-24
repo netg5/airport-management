@@ -20,6 +20,7 @@ import io.swagger.annotations.*;
 import org.sergei.reservationservice.controller.hateoas.LinkUtil;
 import org.sergei.reservationservice.dto.AircraftDTO;
 import org.sergei.reservationservice.service.AircraftService;
+import org.sergei.reservationservice.service.IService;
 import org.sergei.reservationservice.service.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -45,7 +46,7 @@ import java.util.Map;
 public class AircraftController {
 
     private final LinkUtil linkUtil;
-    private final AircraftService aircraftService;
+    private final IService<AircraftDTO> aircraftService;
 
     @Autowired
     public AircraftController(LinkUtil linkUtil, AircraftService aircraftService) {

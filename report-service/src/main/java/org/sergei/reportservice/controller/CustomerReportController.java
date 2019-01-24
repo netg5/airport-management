@@ -24,6 +24,7 @@ import org.sergei.reportservice.controller.hateoas.LinkUtil;
 import org.sergei.reportservice.dto.CustomerReportDTO;
 import org.sergei.reportservice.service.Constants;
 import org.sergei.reportservice.service.CustomerReportService;
+import org.sergei.reportservice.service.IReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,7 +45,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CustomerReportController {
 
     private final LinkUtil linkUtil;
-    private final CustomerReportService customerReportService;
+    private final IReportService<CustomerReportDTO> customerReportService;
 
     @Autowired
     public CustomerReportController(LinkUtil linkUtil,
