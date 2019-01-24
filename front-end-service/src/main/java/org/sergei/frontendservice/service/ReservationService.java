@@ -83,6 +83,7 @@ public class ReservationService {
 
         JsonNode jsonNode = objectMapper.readTree(data);
 
+        // Extract data after [ /_embedded/reservationExtendedDTOList ] tags
         String nodeAt = jsonNode.at("/_embedded/reservationExtendedDTOList").toString();
         LOGGER.debug("Node at is: {}", nodeAt);
 
@@ -90,6 +91,7 @@ public class ReservationService {
 
         List<Reservation> reservationList = new LinkedList<>();
 
+        // Puts each reservation to a collection
         for (int i = 0; i < jsonArray.length(); i++) {
             Long reservationId = Long.valueOf(jsonArray.getJSONObject(i).get("reservationId").toString());
             Long customerIdParsed = Long.valueOf(jsonArray.getJSONObject(i).get("customerId").toString());
@@ -97,7 +99,7 @@ public class ReservationService {
                     jsonArray.getJSONObject(i).get("reservationDate").toString()
             );
 
-            // Reserved route data
+            // Parsing fields of reserved route data JSON response
             Long routeId = Long.valueOf(jsonArray.getJSONObject(i).getJSONObject(ROUTE_JSON_PATH).get("routeId").toString());
             Double distance = Double.valueOf(jsonArray.getJSONObject(i).getJSONObject(ROUTE_JSON_PATH).get("distance").toString());
             LocalDateTime departureTime = LocalDateTime.parse(
@@ -109,7 +111,7 @@ public class ReservationService {
             BigDecimal price = new BigDecimal(jsonArray.getJSONObject(i).getJSONObject(ROUTE_JSON_PATH).get("price").toString());
             String place = jsonArray.getJSONObject(i).getJSONObject(ROUTE_JSON_PATH).get("place").toString();
 
-            // Aircraft which flies for particular route
+            // Parsing fields of Aircraft JSON response which flies for particular route
             Long aircraftId =
                     Long.valueOf(
                             jsonArray.getJSONObject(i)
@@ -144,6 +146,7 @@ public class ReservationService {
      * Method to make reservation for customer
      *
      * @param reservationPost reservation model to be saved
+     * @return saved reservation
      */
     public ReservationPost save(ReservationPost reservationPost) {
         LOGGER.debug("Route ID for which reservation was made: {}", reservationPost.getRouteId());

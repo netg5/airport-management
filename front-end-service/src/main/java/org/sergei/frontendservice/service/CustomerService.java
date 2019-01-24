@@ -58,6 +58,12 @@ public class CustomerService {
                 HttpMethod.GET, request, Customer.class);
     }
 
+    /**
+     * Method to save customer
+     *
+     * @param customer entity to be saved
+     * @return saved entity
+     */
     public Customer save(Customer customer) {
         AuthTokenInfo tokenInfo = tokenRetrievalService.sendTokenRequest();
         HttpEntity<Customer> request = new HttpEntity<>(customer, tokenRetrievalService.getHeaders());

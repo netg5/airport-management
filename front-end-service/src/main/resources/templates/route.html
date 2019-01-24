@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Flight reservation</title>
     <meta charset="utf-8">
@@ -24,6 +24,47 @@
     <div>Arrival time: [[${route.arrivalTime}]]</div>
     <div>Price: [[${route.price}]]</div>
     <div>Place: [[${route.place}]]</div>
+
+    <h6>Create a new customer:</h6>
+    <form th:action="@{/routes}" th:object="${routePost}" method="post">
+        <p>
+            Aircraft ID which flies:
+            <label>
+                <input type="number" th:field="*{aircraftId}">
+            </label>
+        </p>
+        <p>
+            Distance to fly:
+            <label>
+                <input type="number" th:field="*{distance}">
+            </label>
+        </p>
+        <p>
+            Departure time:
+            <label>
+                <input type="datetime-local" th:field="*{departureTime}">
+            </label>
+        </p>
+        <p>
+            Arrival time:
+            <label>
+                <input type="datetime-local" th:field="*{arrivalTime}">
+            </label>
+        </p>
+        <p>
+            Route price:
+            <label>
+                <input type="number" th:field="*{price}">
+            </label>
+        </p>
+        <p>
+            Place to fly:
+            <label>
+                <input type="text" th:field="*{place}">
+            </label>
+        </p>
+        <button>Submit</button>
+    </form>
 
 </div>
 

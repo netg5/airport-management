@@ -56,6 +56,12 @@ public class AircraftService {
                 tokenInfo.getAccessToken(), HttpMethod.GET, request, Aircraft.class);
     }
 
+    /**
+     * Method to save aircraft
+     *
+     * @param aircraft aircraft entity taken from the front-end
+     * @return saved aircraft entity
+     */
     public Aircraft save(Aircraft aircraft) {
         AuthTokenInfo tokenInfo = tokenRetrievalService.sendTokenRequest();
         HttpEntity<Aircraft> request = new HttpEntity<>(aircraft, tokenRetrievalService.getHeaders());
