@@ -41,12 +41,12 @@ import org.springframework.web.bind.annotation.*;
 public class AircraftReportController {
 
     private final LinkUtil linkUtil;
-    private final IReportService<AircraftReportDTO> aircraftReportService;
+    private final IReportService<AircraftReportDTO> reportService;
 
     @Autowired
-    public AircraftReportController(LinkUtil linkUtil, AircraftReportService aircraftReportService) {
+    public AircraftReportController(LinkUtil linkUtil, AircraftReportService reportService) {
         this.linkUtil = linkUtil;
-        this.aircraftReportService = aircraftReportService;
+        this.reportService = reportService;
     }
 
     @ApiOperation("Get all existing reports in paginated way")
@@ -55,7 +55,7 @@ public class AircraftReportController {
                                                     @RequestParam("page") int page,
                                                     @ApiParam("Number of elements per page")
                                                     @RequestParam("size") int size) {
-        Page<AircraftReportDTO> aircraftReports = aircraftReportService.findAll(page, size);
+        Page<AircraftReportDTO> aircraftReports = reportService.findAll(page, size);
         return new ResponseEntity<>(linkUtil.setLinksForAllReports(aircraftReports), HttpStatus.OK);
     }
 
@@ -66,7 +66,7 @@ public class AircraftReportController {
     @GetMapping("/{aircraftId}")
     public ResponseEntity<AircraftReportDTO> findByAircraftId(@ApiParam("Aircraft ID to find the report")
                                                               @PathVariable("aircraftId") Long aircraftId) {
-        AircraftReportDTO aircraftReportDTO = aircraftReportService.findById(aircraftId);
+        AircraftReportDTO aircraftReportDTO = reportService.findById(aircraftId);
         return new ResponseEntity<>(linkUtil.setLinksForAircraftReport(aircraftReportDTO), HttpStatus.OK);
     }
 }

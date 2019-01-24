@@ -45,13 +45,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class CustomerReportController {
 
     private final LinkUtil linkUtil;
-    private final IReportService<CustomerReportDTO> customerReportService;
+    private final IReportService<CustomerReportDTO> reportService;
 
     @Autowired
     public CustomerReportController(LinkUtil linkUtil,
-                                    CustomerReportService customerReportService) {
+                                    CustomerReportService iReportService) {
         this.linkUtil = linkUtil;
-        this.customerReportService = customerReportService;
+        this.reportService = iReportService;
     }
 
     @ApiOperation("Get report for a specific customer")
@@ -60,7 +60,7 @@ public class CustomerReportController {
     })
     @GetMapping("/{customerId}")
     public ResponseEntity<CustomerReportDTO> findReportByCustomerId(@PathVariable Long customerId) {
-        CustomerReportDTO customerReportDTO = customerReportService.findById(customerId);
+        CustomerReportDTO customerReportDTO = reportService.findById(customerId);
         return new ResponseEntity<>(linkUtil.setLinksForCustomerReport(customerReportDTO), HttpStatus.OK);
     }
 }
