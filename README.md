@@ -177,6 +177,7 @@ and `auth-service` and setup your database url and credentials
 16. Open `logback-spring.xml` for each microservice and setup directory where all your logging files are going to saved
 17. Each service has additional dev profile config file and in case you want to use it you should 
 change property `spring.profiles.active` value from _prod_ to _dev_ and you can use development profile
+18. Change port for each microservice in _docker-compose.yml_ for yours
 
 **__NOTE: If you change any port it should be changed in all places where it is used e.g. all depending microservices.__**
 
