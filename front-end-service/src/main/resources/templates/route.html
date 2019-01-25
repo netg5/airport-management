@@ -43,39 +43,34 @@
         <h6>Create a new customer:</h6>
         <form th:action="@{/routes}" th:object="${routePost}" method="post">
             <p>
-                Aircraft ID which flies:
                 <label>
-                    <input type="number" th:field="*{aircraftId}">
+                    <input type="number" class="form-control" placeholder="Aircraft ID which flies"
+                           th:field="*{aircraftId}">
                 </label>
             </p>
             <p>
-                Distance to fly:
                 <label>
-                    <input type="number" th:field="*{distance}">
+                    <input type="number" class="form-control" placeholder="Distance to fly" th:field="*{distance}">
                 </label>
             </p>
             <p>
-                Departure time:
                 <label>
-                    <input type="datetime-local" th:field="*{departureTime}">
+                    <input type="datetime-local" class="form-control" placeholder="Departure time" th:field="*{departureTime}">
                 </label>
             </p>
             <p>
-                Arrival time:
                 <label>
-                    <input type="datetime-local" th:field="*{arrivalTime}">
+                    <input type="datetime-local" class="form-control" placeholder="Arrival time" th:field="*{arrivalTime}">
                 </label>
             </p>
             <p>
-                Route price:
                 <label>
-                    <input type="number" th:field="*{price}">
+                    <input type="number" class="form-control" placeholder="Route price" th:field="*{price}">
                 </label>
             </p>
             <p>
-                Place to fly:
                 <label>
-                    <input type="text" th:field="*{place}">
+                    <input type="text" class="form-control" placeholder="Place to fly" th:field="*{place}">
                 </label>
             </p>
             <button class="btn btn-primary">Submit</button>

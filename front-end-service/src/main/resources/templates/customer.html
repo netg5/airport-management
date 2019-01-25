@@ -48,21 +48,18 @@
         <h6>Add a new customer:</h6>
         <form th:action="@{/customers}" th:object="${customerPost}" method="post">
             <p>
-                First name:
                 <label>
-                    <input type="text" th:field="*{firstName}">
+                    <input type="text" class="form-control" placeholder="First name" th:field="*{firstName}">
                 </label>
             </p>
             <p>
-                Last name:
                 <label>
-                    <input type="text" th:field="*{lastName}">
+                    <input type="text" class="form-control" placeholder="Last name" th:field="*{lastName}">
                 </label>
             </p>
             <p>
-                Age:
                 <label>
-                    <input type="number" th:field="*{age}">
+                    <input type="number" class="form-control" placeholder="Age" th:field="*{age}">
                 </label>
             </p>
             <button class="btn btn-primary">Submit</button>

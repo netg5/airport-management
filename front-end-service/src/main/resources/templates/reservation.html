@@ -59,21 +59,18 @@
         <h6>Make a reservation:</h6>
         <form th:action="@{/reservation/post}" th:object="${reservationPost}" method="post">
             <p>
-                Customer ID:
                 <label>
-                    <input type="number" th:field="*{customerId}">
+                    <input type="number" class="form-control" placeholder="Customer ID" th:field="*{customerId}">
                 </label>
             </p>
             <p>
-                Route ID:
                 <label>
-                    <input type="number" th:field="*{routeId}"/>
+                    <input type="number" class="form-control" placeholder="Route ID" th:field="*{routeId}"/>
                 </label>
             </p>
             <p>
-                Date:
                 <label>
-                    <input type="datetime-local" th:field="*{reservationDate}">
+                    <input type="datetime-local" class="form-control" placeholder="Date" th:field="*{reservationDate}">
                 </label>
             </p>
             <button class="btn btn-primary">Submit</button>

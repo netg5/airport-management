@@ -42,27 +42,23 @@
         <h6>Add a new customer:</h6>
         <form th:action="@{/aircrafts}" th:object="${aircraftPost}" method="post">
             <p>
-                Model:
                 <label>
-                    <input type="text" th:field="*{model}">
+                    <input type="text" class="form-control" placeholder="Model" th:field="*{model}">
                 </label>
             </p>
             <p>
-                Aircraft name:
                 <label>
-                    <input type="text" th:field="*{aircraftName}">
+                    <input type="text" class="form-control" placeholder="Aircraft name" th:field="*{aircraftName}">
                 </label>
             </p>
             <p>
-                Weight:
                 <label>
-                    <input type="number" th:field="*{aircraftWeight}">
+                    <input type="number" class="form-control" placeholder="Weight" th:field="*{aircraftWeight}">
                 </label>
             </p>
             <p>
-                Max. passengers:
                 <label>
-                    <input type="number" th:field="*{maxPassengers}">
+                    <input type="number" class="form-control" placeholder="Max. passengers" th:field="*{maxPassengers}">
                 </label>
             </p>
             <button class="btn btn-primary">Submit</button>
