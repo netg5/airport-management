@@ -1,7 +1,7 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Flight reservation - customer data</title>
+    <title>Flight reservation</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -10,48 +10,57 @@
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
 </head>
-<body>
-<nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand" href="/">Flight reservation application</a>
-</nav>
-<div class="container">
+<body class="d-flex flex-column h-100">
+<header>
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
+        <a class="navbar-brand" href="/">Flight reservation application</a>
+    </nav>
+</header>
+<main role="main" class="flex-shrink-0">
+    <div class="container">
 
-    <h1>Aircraft:</h1>
-    <div>Aircraft ID: [[${aircraft.aircraftId}]]</div>
-    <div>Model: [[${aircraft.model}]]</div>
-    <div>Aircraft name: [[${aircraft.aircraftName}]]</div>
-    <div>Aircraft weight: [[${aircraft.aircraftWeight}]]</div>
-    <div>Maximum passengers: [[${aircraft.maxPassengers}]]</div>
+        <h1>Aircraft:</h1>
+        <div>Aircraft ID: [[${aircraft.aircraftId}]]</div>
+        <div>Model: [[${aircraft.model}]]</div>
+        <div>Aircraft name: [[${aircraft.aircraftName}]]</div>
+        <div>Aircraft weight: [[${aircraft.aircraftWeight}]]</div>
+        <div>Maximum passengers: [[${aircraft.maxPassengers}]]</div>
 
-    <h6>Add a new customer:</h6>
-    <form th:action="@{/aircrafts}" th:object="${aircraftPost}" method="post">
-        <p>
-            Model:
-            <label>
-                <input type="text" th:field="*{model}">
-            </label>
-        </p>
-        <p>
-            Aircraft name:
-            <label>
-                <input type="text" th:field="*{aircraftName}">
-            </label>
-        </p>
-        <p>
-            Weight:
-            <label>
-                <input type="number" th:field="*{aircraftWeight}">
-            </label>
-        </p>
-        <p>
-            Max. passengers:
-            <label>
-                <input type="number" th:field="*{maxPassengers}">
-            </label>
-        </p>
-        <button>Submit</button>
-    </form>
-</div>
+        <h6>Add a new customer:</h6>
+        <form th:action="@{/aircrafts}" th:object="${aircraftPost}" method="post">
+            <p>
+                Model:
+                <label>
+                    <input type="text" th:field="*{model}">
+                </label>
+            </p>
+            <p>
+                Aircraft name:
+                <label>
+                    <input type="text" th:field="*{aircraftName}">
+                </label>
+            </p>
+            <p>
+                Weight:
+                <label>
+                    <input type="number" th:field="*{aircraftWeight}">
+                </label>
+            </p>
+            <p>
+                Max. passengers:
+                <label>
+                    <input type="number" th:field="*{maxPassengers}">
+                </label>
+            </p>
+            <button type="button" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</main>
+<footer class="footer mt-auto py-3">
+    <div class="container">
+        <span class="text-muted">&#169; 2018-[[${#dates.year(#dates.createNow())}]] Sergei Visotsky</span>
+    </div>
+</footer>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="/js/main.js"></script>

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Flight reservation</title>
     <meta charset="utf-8">
@@ -10,23 +10,30 @@
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
 </head>
-<body>
-<nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand" href="/">Flight reservation application</a>
-</nav>
-
-<div class="container">
-    <p>
-        <a href="/customers/1">1st customer data</a>
-    </p>
-    <p>
-        <a href="/aircrafts/1">1st aircraft data</a>
-    </p>
-    <p>
-        <a href="/routes/31">31st route data</a>
-    </p>
-</div>
-
+<body class="d-flex flex-column h-100">
+<header>
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
+        <a class="navbar-brand" href="/">Flight reservation application</a>
+    </nav>
+</header>
+<main role="main" class="flex-shrink-0">
+    <div class="container">
+        <p>
+            <a href="/customers/1">1st customer data</a>
+        </p>
+        <p>
+            <a href="/aircrafts/1">1st aircraft data</a>
+        </p>
+        <p>
+            <a href="/routes/31">31st route data</a>
+        </p>
+    </div>
+</main>
+<footer class="footer mt-auto py-3">
+    <div class="container">
+        <span class="text-muted">&#169; 2018-[[${#dates.year(#dates.createNow())}]] Sergei Visotsky</span>
+    </div>
+</footer>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="/js/main.js"></script>

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Flight reservation</title>
     <meta charset="utf-8">
@@ -10,26 +10,33 @@
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
 </head>
-<body>
-<nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand" href="/">Flight reservation application</a>
-</nav>
-
-<div class="container">
-    <h1>All customer tickets:</h1>
-    <div class="row mb-3">
-        <div th:each="ticket : ${tickets}" class="col-4 themed-grid-col margin-top">
-            <div>Route ID: [[${ticket.firstName}]]</div>
-            <div>Distance: [[${ticket.lastName}]]</div>
-            <div>Departure time: [[${ticket.routeId}]]</div>
-            <div>Arrival time: [[${ticket.place}]]</div>
-            <div>Price: [[${ticket.distance}]]</div>
-            <div>Place: [[${ticket.price}]]</div>
-            <div>Place: [[${ticket.aircraftName}]]</div>
+<body class="d-flex flex-column h-100">
+<header>
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
+        <a class="navbar-brand" href="/">Flight reservation application</a>
+    </nav>
+</header>
+<main role="main" class="flex-shrink-0">
+    <div class="container">
+        <h1>All customer tickets:</h1>
+        <div class="row mb-3">
+            <div th:each="ticket : ${tickets}" class="col-4 themed-grid-col margin-top">
+                <div>Route ID: [[${ticket.firstName}]]</div>
+                <div>Distance: [[${ticket.lastName}]]</div>
+                <div>Departure time: [[${ticket.routeId}]]</div>
+                <div>Arrival time: [[${ticket.place}]]</div>
+                <div>Price: [[${ticket.distance}]]</div>
+                <div>Place: [[${ticket.price}]]</div>
+                <div>Place: [[${ticket.aircraftName}]]</div>
+            </div>
         </div>
     </div>
-</div>
-
+</main>
+<footer class="footer mt-auto py-3">
+    <div class="container">
+        <span class="text-muted">&#169; 2018-[[${#dates.year(#dates.createNow())}]] Sergei Visotsky</span>
+    </div>
+</footer>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="/js/main.js"></script>

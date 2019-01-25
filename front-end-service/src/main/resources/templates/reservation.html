@@ -1,7 +1,7 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Flight reservation - customer data</title>
+    <title>Flight reservation</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -10,59 +10,68 @@
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
 </head>
-<body>
-<nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand" href="/">Flight reservation application</a>
-</nav>
-<div class="container">
+<body class="d-flex flex-column h-100">
+<header>
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
+        <a class="navbar-brand" href="/">Flight reservation application</a>
+    </nav>
+</header>
+<main role="main" class="flex-shrink-0">
+    <div class="container">
 
-    <h1>Reservations for this customer:</h1>
-    <div class="row mb-3">
-        <div th:each="reservation : ${reservations}" class="col-4 themed-grid-col margin-top-bigger">
-            <div>Reservation ID: [[${reservation.reservationId}]]</div>
-            <div>Customer ID: [[${reservation.customerId}]]</div>
-            <div>Reservation date: [[${reservation.reservationDate}]]</div>
+        <h1>Reservations for this customer:</h1>
+        <div class="row mb-3">
+            <div th:each="reservation : ${reservations}" class="col-4 themed-grid-col margin-top-bigger">
+                <div>Reservation ID: [[${reservation.reservationId}]]</div>
+                <div>Customer ID: [[${reservation.customerId}]]</div>
+                <div>Reservation date: [[${reservation.reservationDate}]]</div>
 
-            <h4>Reserved route:</h4>
-            <div>Route ID: [[${reservation.reservedRoute.routeId}]]</div>
-            <div>Distance: [[${reservation.reservedRoute.distance}]]</div>
-            <div>Departure time: [[${reservation.reservedRoute.departureTime}]]</div>
-            <div>Arrival time: [[${reservation.reservedRoute.arrivalTime}]]</div>
-            <div>Price: [[${reservation.reservedRoute.price}]]</div>
-            <div>Place: [[${reservation.reservedRoute.place}]]</div>
+                <h4>Reserved route:</h4>
+                <div>Route ID: [[${reservation.reservedRoute.routeId}]]</div>
+                <div>Distance: [[${reservation.reservedRoute.distance}]]</div>
+                <div>Departure time: [[${reservation.reservedRoute.departureTime}]]</div>
+                <div>Arrival time: [[${reservation.reservedRoute.arrivalTime}]]</div>
+                <div>Price: [[${reservation.reservedRoute.price}]]</div>
+                <div>Place: [[${reservation.reservedRoute.place}]]</div>
 
-            <h4>Aircraft to fly:</h4>
-            <div>Aircraft ID: [[${reservation.reservedRoute.aircraft.aircraftId}]]</div>
-            <div>Model: [[${reservation.reservedRoute.aircraft.model}]]</div>
-            <div>Name: [[${reservation.reservedRoute.aircraft.aircraftName}]]</div>
-            <div>Weight: [[${reservation.reservedRoute.aircraft.aircraftWeight}]]</div>
-            <div>Max. passengers: [[${reservation.reservedRoute.aircraft.maxPassengers}]]</div>
+                <h4>Aircraft to fly:</h4>
+                <div>Aircraft ID: [[${reservation.reservedRoute.aircraft.aircraftId}]]</div>
+                <div>Model: [[${reservation.reservedRoute.aircraft.model}]]</div>
+                <div>Name: [[${reservation.reservedRoute.aircraft.aircraftName}]]</div>
+                <div>Weight: [[${reservation.reservedRoute.aircraft.aircraftWeight}]]</div>
+                <div>Max. passengers: [[${reservation.reservedRoute.aircraft.maxPassengers}]]</div>
+            </div>
         </div>
-    </div>
 
-    <h6>Make a reservation:</h6>
-    <form th:action="@{/reservation/post}" th:object="${reservationPost}" method="post">
-        <p>
-            Customer ID:
-            <label>
-                <input type="number" th:field="*{customerId}">
-            </label>
-        </p>
-        <p>
-            Route ID:
-            <label>
-                <input type="number" th:field="*{routeId}"/>
-            </label>
-        </p>
-        <p>
-            Date:
-            <label>
-                <input type="datetime-local" th:field="*{reservationDate}">
-            </label>
-        </p>
-        <button>Submit</button>
-    </form>
-</div>
+        <h6>Make a reservation:</h6>
+        <form th:action="@{/reservation/post}" th:object="${reservationPost}" method="post">
+            <p>
+                Customer ID:
+                <label>
+                    <input type="number" th:field="*{customerId}">
+                </label>
+            </p>
+            <p>
+                Route ID:
+                <label>
+                    <input type="number" th:field="*{routeId}"/>
+                </label>
+            </p>
+            <p>
+                Date:
+                <label>
+                    <input type="datetime-local" th:field="*{reservationDate}">
+                </label>
+            </p>
+            <button type="button" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</main>
+<footer class="footer mt-auto py-3">
+    <div class="container">
+        <span class="text-muted">&#169; 2018-[[${#dates.year(#dates.createNow())}]] Sergei Visotsky</span>
+    </div>
+</footer>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="/js/main.js"></script>

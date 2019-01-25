@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Flight reservation</title>
     <meta charset="utf-8">
@@ -10,64 +10,70 @@
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
 </head>
-<body>
-<nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand" href="/">Flight reservation application</a>
-</nav>
+<body class="d-flex flex-column h-100">
+<header>
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
+        <a class="navbar-brand" href="/">Flight reservation application</a>
+    </nav>
+</header>
+<main role="main" class="flex-shrink-0">
+    <div class="container">
 
-<div class="container">
+        <h1>Route:</h1>
+        <div>Route ID: [[${route.routeId}]]</div>
+        <div>Distance: [[${route.distance}]]</div>
+        <div>Departure time: [[${route.departureTime}]]</div>
+        <div>Arrival time: [[${route.arrivalTime}]]</div>
+        <div>Price: [[${route.price}]]</div>
+        <div>Place: [[${route.place}]]</div>
 
-    <h1>Route:</h1>
-    <div>Route ID: [[${route.routeId}]]</div>
-    <div>Distance: [[${route.distance}]]</div>
-    <div>Departure time: [[${route.departureTime}]]</div>
-    <div>Arrival time: [[${route.arrivalTime}]]</div>
-    <div>Price: [[${route.price}]]</div>
-    <div>Place: [[${route.place}]]</div>
-
-    <h6>Create a new customer:</h6>
-    <form th:action="@{/routes}" th:object="${routePost}" method="post">
-        <p>
-            Aircraft ID which flies:
-            <label>
-                <input type="number" th:field="*{aircraftId}">
-            </label>
-        </p>
-        <p>
-            Distance to fly:
-            <label>
-                <input type="number" th:field="*{distance}">
-            </label>
-        </p>
-        <p>
-            Departure time:
-            <label>
-                <input type="datetime-local" th:field="*{departureTime}">
-            </label>
-        </p>
-        <p>
-            Arrival time:
-            <label>
-                <input type="datetime-local" th:field="*{arrivalTime}">
-            </label>
-        </p>
-        <p>
-            Route price:
-            <label>
-                <input type="number" th:field="*{price}">
-            </label>
-        </p>
-        <p>
-            Place to fly:
-            <label>
-                <input type="text" th:field="*{place}">
-            </label>
-        </p>
-        <button>Submit</button>
-    </form>
-
-</div>
-
+        <h6>Create a new customer:</h6>
+        <form th:action="@{/routes}" th:object="${routePost}" method="post">
+            <p>
+                Aircraft ID which flies:
+                <label>
+                    <input type="number" th:field="*{aircraftId}">
+                </label>
+            </p>
+            <p>
+                Distance to fly:
+                <label>
+                    <input type="number" th:field="*{distance}">
+                </label>
+            </p>
+            <p>
+                Departure time:
+                <label>
+                    <input type="datetime-local" th:field="*{departureTime}">
+                </label>
+            </p>
+            <p>
+                Arrival time:
+                <label>
+                    <input type="datetime-local" th:field="*{arrivalTime}">
+                </label>
+            </p>
+            <p>
+                Route price:
+                <label>
+                    <input type="number" th:field="*{price}">
+                </label>
+            </p>
+            <p>
+                Place to fly:
+                <label>
+                    <input type="text" th:field="*{place}">
+                </label>
+            </p>
+            <button type="button" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</main>
+<footer class="footer mt-auto py-3">
+    <div class="container">
+        <span class="text-muted">&#169; 2018-[[${#dates.year(#dates.createNow())}]] Sergei Visotsky</span>
+    </div>
+</footer>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="/js/main.js"></script>
