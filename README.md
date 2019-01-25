@@ -183,7 +183,7 @@ change property `spring.profiles.active` value from _prod_ to _dev_ and you can 
 
 ## Run
 #### 1 way - using maven or java command
-* Perform command `$ ./mvn spring-boot:run` or compile each microservice into the .jar and perform command `java -jar target/SERVICE-NAME-VERSION.jar`
+* Perform command `$ ./mvnw spring-boot:run` or compile each microservice into the .jar and perform command `java -jar target/SERVICE-NAME-VERSION.jar`
 
 **__NOTE: `config-service` and `eureka-service` should be run first due to all the configs are stored in the separate repository.__**
 
