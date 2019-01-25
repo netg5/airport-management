@@ -12,8 +12,21 @@
 </head>
 <body class="d-flex flex-column h-100">
 <header>
-    <nav class="navbar navbar-expand-md navbar-light bg-light">
+    <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
         <a class="navbar-brand" href="/">Flight reservation application</a>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/customers/1">Customer</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/aircrafts/1">Aircraft</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/routes/31">Route</a>
+                </li>
+            </ul>
+        </div>
     </nav>
 </header>
 <main role="main" class="flex-shrink-0">
