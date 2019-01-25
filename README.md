@@ -183,7 +183,7 @@ change property `spring.profiles.active` value from _prod_ to _dev_ and you can 
 
 ## Run
 #### 1 way - using maven or java command
-* Perform command `mvn spring-boot:run` or compile each microservice into the .jar and perform command `java -jar target/SERVICE-NAME-VERSION.jar`
+* Perform command `$ ./mvn spring-boot:run` or compile each microservice into the .jar and perform command `java -jar target/SERVICE-NAME-VERSION.jar`
 
 **__NOTE: `config-service` and `eureka-service` should be run first due to all the configs are stored in the separate repository.__**
 
@@ -196,7 +196,7 @@ _Steps to get ready with docker-compose:_
 
 1. Build each microservice executing the following command foe each service:
 ```text
-mvnw clean package spring-boot:repackage
+$ ./mvnw clean package spring-boot:repackage
 ```
 
 2. Next step: check docker-compose for syntax errors:
