@@ -17,6 +17,7 @@
 package org.sergei.frontendservice.model;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
@@ -27,5 +28,7 @@ import java.time.LocalDateTime;
 public class ReservationPost {
     private Long routeId;
     private Long customerId;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime reservationDate;
 }

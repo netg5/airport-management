@@ -17,6 +17,7 @@
 package org.sergei.frontendservice.model;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -29,7 +30,11 @@ public class RoutePost {
     private Long routeId;
     private Long aircraftId;
     private Double distance;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime departureTime;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime arrivalTime;
     private BigDecimal price;
     private String place;

@@ -150,6 +150,7 @@ public class ReservationService {
      */
     public ReservationPost save(ReservationPost reservationPost) {
         LOGGER.debug("Route ID for which reservation was made: {}", reservationPost.getRouteId());
+        LOGGER.debug("Date of the reservation: {}", reservationPost.getReservationDate());
         AuthTokenInfo tokenInfo = tokenRetrievalService.sendTokenRequest();
         HttpEntity<ReservationPost> request = new HttpEntity<>(reservationPost, tokenRetrievalService.getHeaders());
         long customerId = reservationPost.getCustomerId();
