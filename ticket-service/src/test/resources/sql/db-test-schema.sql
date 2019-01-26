@@ -77,4 +77,4 @@ FROM (((flight_reservation.customer c
        JOIN flight_reservation.aircraft a)
 WHERE ((c.customer_id = r.customer_id)
   AND (r.route_id = rt.route_id)
-  AND (rt.aircraft_id = a.aircraft_id))
+  AND (rt.aircraft_id = a.aircraft_id));
