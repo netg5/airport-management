@@ -47,6 +47,10 @@ import static junit.framework.TestCase.assertTrue;
 @ContextConfiguration(classes = {WebSecurityConfigTest.class})
 @EnableJpaRepositories(basePackages = "org.sergei.ticketservice.repository")
 @EntityScan(basePackages = "org.sergei.ticketservice.model")
+/*@Sql(scripts = {
+        "classpath:/sql/db-test-schema.sql",
+        "classpath:/sql/db-test-data.sql"
+}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)*/
 public class TicketRepositoryTest {
 
     @Autowired
@@ -59,7 +63,6 @@ public class TicketRepositoryTest {
         assertTrue(ticketList.isEmpty());
     }
 
-    @Ignore
     @Test
     public void getTicketsForCustomer() {
         List<Ticket> ticketList = ticketRepository.findAllTickets(1L, "Riga", 2500.0);
