@@ -241,10 +241,11 @@ public class ReservationService implements IReservationService<ReservationExtend
                 );
         reservation.setCustomer(customer);
         if (params.get("routeId") != null) {
-            reservation.setRoute(routeRepository.findById(Long.valueOf(String.valueOf(params.get("routeId"))))
-                    .orElseThrow(() ->
-                            new ResourceNotFoundException(Constants.ROUTE_NOT_FOUND)
-                    ));
+            reservation.setRoute(
+                    routeRepository.findById(Long.valueOf(String.valueOf(params.get("routeId"))))
+                            .orElseThrow(() ->
+                                    new ResourceNotFoundException(Constants.ROUTE_NOT_FOUND)
+                            ));
         }
         if (params.get("reservationDate") != null) {
             reservation.setReservationDate(LocalDateTime.parse(String.valueOf(params.get("reservationDate"))));
@@ -265,9 +266,10 @@ public class ReservationService implements IReservationService<ReservationExtend
      */
     @Override
     public ReservationExtendedDTO deleteReservation(Long customerId, Long reservationId) {
-        Customer customer = customerRepository.findById(customerId).orElseThrow(() ->
-                new ResourceNotFoundException(Constants.CUSTOMER_NOT_FOUND)
-        );
+        Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(Constants.CUSTOMER_NOT_FOUND)
+                );
         Reservation reservation = reservationRepository.findById(reservationId)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(Constants.RESERVATION_NOT_FOUND)
