@@ -1,4 +1,4 @@
-version: '3'
+version: '3.6'
 services:
   config-service:
     container_name: config-service
@@ -209,9 +209,9 @@ networks:
     driver: bridge
 volumes:
   flight-reservation-config-service:
-    external: true
+    external: false
   flight-reservation-eureka-service:
-    external: true
+    external: false
   flight-reservation-doc-service:
     external: false
   flight-reservation-zuul-gateway:
