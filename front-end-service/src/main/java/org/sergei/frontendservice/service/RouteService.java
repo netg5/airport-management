@@ -64,7 +64,6 @@ public class RouteService {
     }
 
     /**
-     * FIXME: 400 - Bad Request | Validation failed for object='routePost'. Error count: 2
      * Method to save route
      *
      * @param routePost entity to be saved taken from front-end
