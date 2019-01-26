@@ -212,6 +212,10 @@ volumes:
     external: true
   flight-reservation-eureka-service:
     external: true
+  flight-reservation-doc-service:
+    external: false
+  flight-reservation-zuul-gateway:
+    external: false
   flight-reservation-auth-service:
     external: false
   flight-reservation-reservation-service:
@@ -220,7 +224,5 @@ volumes:
     external: false
   flight-reservation-report-service:
     external: false
-  flight-reservation-doc-service:
-    external: false
-  flight-reservation-zuul-gateway:
+  flight-reservation-front-end-service:
     external: false
