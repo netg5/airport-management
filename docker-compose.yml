@@ -218,6 +218,8 @@ volumes:
     external: false
   flight-reservation-ticket-service:
     external: false
+  flight-reservation-report-service:
+    external: false
   flight-reservation-doc-service:
     external: false
   flight-reservation-zuul-gateway:
