@@ -25,15 +25,16 @@ import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactor
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 /**
  * This class is used to provide redirect from HTTP to HTTPS
  *
  * @author Sergei Visotsky
  */
-//@Configuration
+@Profile("dev")
+@Configuration
 public class ConnectorConfig {
-/*
     private static final String USER_CONSTRAINT = "CONFIDENTIAL";
 
     @Value("${server.port}")
@@ -66,5 +67,5 @@ public class ConnectorConfig {
         connector.setSecure(false);
         connector.setRedirectPort(sslPort);
         return connector;
-    }*/
+    }
 }
