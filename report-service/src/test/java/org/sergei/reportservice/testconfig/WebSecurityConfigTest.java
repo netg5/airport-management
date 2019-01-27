@@ -16,7 +16,7 @@
 
 package org.sergei.reportservice.testconfig;
 
-import org.springframework.context.annotation.Configuration;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -27,7 +27,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  *
  * @author Sergei Visotsky
  */
-@Configuration
+@TestConfiguration
 @EnableWebSecurity
 @Order(99)
 public class WebSecurityConfigTest extends WebSecurityConfigurerAdapter {

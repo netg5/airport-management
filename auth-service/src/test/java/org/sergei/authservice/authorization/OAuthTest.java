@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sergei.authservice.config.security;
+package org.sergei.authservice.authorization;
 
 import org.junit.Assert;
 import org.junit.Ignore;
@@ -43,7 +43,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * @author Sergei Visotsky, 2018
+ * @author Sergei Visotsky
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = AuthServiceApplication.class)

@@ -14,27 +14,26 @@
  * limitations under the License.
  */
 
-package org.sergei.reservationservice.testconfig;
+package org.sergei.authservice.testconfig;
 
 import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.core.annotation.Order;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 /**
- * Security config for test cases
- *
  * @author Sergei Visotsky
  */
 @TestConfiguration
-@EnableWebSecurity
-@Order(99)
-public class WebSecurityConfigTest extends WebSecurityConfigurerAdapter {
+public class AppConfigTest {
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/**").permitAll();
+    @Bean
+    public JwtAccessTokenConverter jwtAccessTokenConverter() {
+        return new JwtAccessTokenConverter();
     }
 
+    @Bean
+    public JwtTokenStore jwtTokenStore() {
+        return new JwtTokenStore(jwtAccessTokenConverter());
+    }
 }

@@ -16,7 +16,7 @@
 
 package org.sergei.reportservice.testconfig;
 
-import org.springframework.context.annotation.Configuration;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
@@ -25,7 +25,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 /**
  * @author Sergei Visotsky
  */
-@Configuration
+@TestConfiguration
 @EnableResourceServer
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 
