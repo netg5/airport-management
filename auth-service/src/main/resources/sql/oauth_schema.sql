@@ -1,3 +1,4 @@
+create schema if not exists flight_reservation_oauth;
 create table if not exists flight_reservation_oauth.oauth_client_details (
   client_id               VARCHAR(256) PRIMARY KEY,
   resource_ids            VARCHAR(256),
