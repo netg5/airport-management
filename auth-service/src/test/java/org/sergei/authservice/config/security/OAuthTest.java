@@ -43,7 +43,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * @author Sergei Visotsky, 2018
  */
-@Ignore
 @WebAppConfiguration
 @AutoConfigureMockMvc
 @RunWith(SpringRunner.class)
@@ -51,6 +50,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class OAuthTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OAuthTest.class);
+
+    private static final String RESOURCE_URL = "http://localhost";
+    private static final String OAUTH_ENDPOINT = "/oauth/token";
+    private static final String GATEWAY_URL = "https://localhost:9090";
+    private static final String RESERVATION_RES_PATH = "/reservation-api";
+    private static final String CUSTOMERS_PATH = "/customers";
 
     @Autowired
     private WebApplicationContext webApplicationContext;
@@ -60,21 +65,21 @@ public class OAuthTest {
 
     @Test
     public void givenNoToken_whenGetSecureRequest_thenUnauthorized() throws Exception {
-        mockMvc.perform(get("http://localhost:8080/flight-api/v1/customers")
-                .param("id", "1"))
+        mockMvc.perform(get(GATEWAY_URL + RESERVATION_RES_PATH + CUSTOMERS_PATH + "/1"))
                 .andExpect(status().isUnauthorized());
     }
 
+    @Ignore
     @Test
     public void givenInvalidRole_whenGetSecureRequest_thenForbidden() throws Exception {
         String accessToken = getAccessToken("testusername", "testpassword");
         LOGGER.debug("Access token is: {}", accessToken);
-        mockMvc.perform(get("http://localhost:8080/flight-api/v1/customers")
-                .header("Authorization", "Bearer " + accessToken)
-                .param("id", "1"))
+        mockMvc.perform(get(GATEWAY_URL + RESERVATION_RES_PATH + CUSTOMERS_PATH + "/1")
+                .header("Authorization", "Bearer " + accessToken))
                 .andExpect(status().isForbidden());
     }
 
+    @Ignore
     @Test
     public void obtainAccessToken() throws Exception {
         Assert.assertEquals(HttpStatus.OK, getAccessToken("admin", "123456"));
@@ -82,7 +87,7 @@ public class OAuthTest {
 
     private String getAccessToken(String username, String password) throws Exception {
         return mockMvc.perform(
-                post("http://localhost:8082/auth-api/oauth/token")
+                post(RESOURCE_URL + OAUTH_ENDPOINT)
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .characterEncoding("UTF-8")
