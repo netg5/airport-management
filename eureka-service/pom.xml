@@ -14,10 +14,6 @@
     <name>eureka-service</name>
     <description>Service registry</description>
 
-    <properties>
-        <docker.image.prefix>eureka-service</docker.image.prefix>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
