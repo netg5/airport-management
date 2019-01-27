@@ -39,6 +39,7 @@ import java.util.List;
         consumes = "application/json"
 )
 @RestController
+@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 @RequestMapping(value = "/users", produces = "application/json")
 public class ApiUserController {
 
@@ -65,7 +66,6 @@ public class ApiUserController {
             notes = "Allowed for the ROLE_ADMIN only"
     )
     @GetMapping
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<List<User>> getAllUsers() {
         return new ResponseEntity<>(apiUserService.findAll(), HttpStatus.OK);
     }
@@ -80,7 +80,6 @@ public class ApiUserController {
             }
     )
     @GetMapping("/{userId}")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<User> getUserById(@ApiParam(value = "ID of the user to be found", required = true)
                                             @PathVariable("userId") Long userId) {
         return new ResponseEntity<>(apiUserService.findById(userId), HttpStatus.OK);
@@ -96,7 +95,6 @@ public class ApiUserController {
             }
     )
     @GetMapping(params = "username")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<User> getUserByUsername(@ApiParam(value = "username of the user to be found", required = true)
                                                   @RequestParam("username") String username) {
         return new ResponseEntity<>(apiUserService.findByUsername(username), HttpStatus.OK);
@@ -107,7 +105,6 @@ public class ApiUserController {
             notes = "Allowed for the ROLE_ADMIN only"
     )
     @PostMapping(consumes = "application/json")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<User> createUser(@ApiParam(value = "User payload to be saved", required = true)
                                            @RequestBody User user) {
         user.setUserRoles(Collections.singletonList(new UserRoles("USER")));
