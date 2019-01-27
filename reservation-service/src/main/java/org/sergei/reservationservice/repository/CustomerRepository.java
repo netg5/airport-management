@@ -34,6 +34,9 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
     /**
      * Find ID of each customer in one JSON response as a list
+     * <p>
+     * new keyword is used to create projection into the DTO,
+     * e.g. to extract just only IDs from the model object in this case.
      *
      * @return list of IDs
      */
@@ -42,6 +45,8 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
     /**
      * Find ID of each customer in one JSON response as a list paginated
+     * <p>
+     * countQuery is used for create pageable response creation and to count element quantity
      *
      * @param pageable number of the page and number of the elements per page
      * @return Collection of customer IDs
