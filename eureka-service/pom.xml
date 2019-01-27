@@ -21,22 +21,6 @@
         </dependency>
     </dependencies>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.sergei</groupId>
-                <artifactId>flight-reservation</artifactId>
-                <version>2.2.4-SNAPSHOT</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.springframework.cloud</groupId>
-                        <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
     <build>
         <plugins>
             <plugin>
