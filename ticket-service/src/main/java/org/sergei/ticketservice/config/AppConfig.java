@@ -17,7 +17,7 @@
 package org.sergei.ticketservice.config;
 
 import org.modelmapper.ModelMapper;
-import org.sergei.ticketservice.aop.logging.LoggingAspect;
+import org.sergei.ticketservice.aop.LoggingAspect;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;

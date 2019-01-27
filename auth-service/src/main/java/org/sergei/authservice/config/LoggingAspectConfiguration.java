@@ -16,7 +16,7 @@
 
 package org.sergei.authservice.config;
 
-import org.sergei.authservice.aop.logging.LoggingAspect;
+import org.sergei.authservice.aop.LoggingAspect;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;

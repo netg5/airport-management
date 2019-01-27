@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sergei.ticketservice.aop.logging;
+package org.sergei.ticketservice.aop;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
