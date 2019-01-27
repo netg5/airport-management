@@ -12,7 +12,7 @@
     <artifactId>eureka-service</artifactId>
     <packaging>jar</packaging>
     <name>eureka-service</name>
-    <description>Eureka microservice</description>
+    <description>Service registry</description>
 
     <properties>
         <docker.image.prefix>eureka-service</docker.image.prefix>
@@ -22,17 +22,6 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.sergei</groupId>
-            <artifactId>flight-reservation</artifactId>
-            <version>2.2.4-SNAPSHOT</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.cloud</groupId>
-                    <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
     </dependencies>
     <build>
