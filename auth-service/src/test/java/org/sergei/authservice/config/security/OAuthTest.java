@@ -20,6 +20,7 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.sergei.authservice.AuthServiceApplication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -43,10 +45,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * @author Sergei Visotsky, 2018
  */
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = AuthServiceApplication.class)
+@TestPropertySource(locations = "classpath:application-test.properties")
 @WebAppConfiguration
 @AutoConfigureMockMvc
-@RunWith(SpringRunner.class)
-@SpringBootTest
 public class OAuthTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OAuthTest.class);

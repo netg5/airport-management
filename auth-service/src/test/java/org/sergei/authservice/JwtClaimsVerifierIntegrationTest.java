@@ -24,6 +24,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static junit.framework.TestCase.assertTrue;
@@ -34,6 +35,7 @@ import static junit.framework.TestCase.assertTrue;
 @Ignore
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = AuthServiceApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@TestPropertySource(locations = "classpath:application-test.properties")
 public class JwtClaimsVerifierIntegrationTest {
 
     @Autowired
