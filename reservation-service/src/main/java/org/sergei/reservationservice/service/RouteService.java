@@ -54,7 +54,8 @@ public class RouteService implements IRouteService<RouteDTO, RouteExtendedDTO> {
     private final ServiceComponent serviceComponent;
 
     @Autowired
-    public RouteService(AircraftRepository aircraftRepository, RouteRepository routeRepository, ServiceComponent serviceComponent) {
+    public RouteService(AircraftRepository aircraftRepository,
+                        RouteRepository routeRepository, ServiceComponent serviceComponent) {
         this.aircraftRepository = aircraftRepository;
         this.routeRepository = routeRepository;
         this.serviceComponent = serviceComponent;

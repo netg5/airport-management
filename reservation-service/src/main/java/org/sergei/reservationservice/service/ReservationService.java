@@ -75,8 +75,7 @@ public class ReservationService implements IReservationService<ReservationExtend
                 .orElseThrow(() ->
                         new ResourceNotFoundException(Constants.RESERVATION_NOT_FOUND)
                 );
-        ReservationExtendedDTO reservationExtendedDTO =
-                map(reservation, ReservationExtendedDTO.class);
+        ReservationExtendedDTO reservationExtendedDTO = map(reservation, ReservationExtendedDTO.class);
         reservationExtendedDTO.setCustomerId(customer.getCustomerId());
 
         // Find route by ID
@@ -111,8 +110,7 @@ public class ReservationService implements IReservationService<ReservationExtend
                 .orElseThrow(() ->
                         new ResourceNotFoundException(Constants.RESERVATIONS_NOT_FOUND)
                 );
-        List<ReservationExtendedDTO> reservationExtendedDTOList =
-                mapAll(reservation, ReservationExtendedDTO.class);
+        List<ReservationExtendedDTO> reservationExtendedDTOList = mapAll(reservation, ReservationExtendedDTO.class);
         int counter = 0;
         // For each DTO set customer ID, route extended DTO
         for (ReservationExtendedDTO reservationExtendedDTO : reservationExtendedDTOList) {
