@@ -20,6 +20,7 @@ reserve flight and see all tickets for a particular customer.
 * auth-service - service responsible for authentication and authorization
 * eureka-service - service registry where of all microservices can be observed
 * doc-service - Swagger documentation service
+* service-resource - service to experiment with the new features
 * zuul-gateway - entry point of the all services
 * reservation-service - service which allows to reserve flight
 * ticket-service - service where all customer tickets can be seen
