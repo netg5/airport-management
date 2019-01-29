@@ -27,7 +27,7 @@ public interface IReportService<D> {
     /**
      * Find all existing reports
      *
-     * @param page number of page to ssow
+     * @param page number of page to show
      * @param size number of elements per page
      * @return list of existing reports
      */
