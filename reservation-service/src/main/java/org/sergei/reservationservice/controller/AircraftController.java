@@ -90,7 +90,7 @@ public class AircraftController {
     @GetMapping(params = {"name", "weight", "passengers", "model"})
     public ResponseEntity<AircraftDTO> getAircraftByMultipleParams(HttpServletRequest request) {
         AircraftDTO aircraft = aircraftService.findOneByMultipleParams(request);
-        return new ResponseEntity<>(aircraft, HttpStatus.OK);
+        return new ResponseEntity<>(linkUtil.setLinksForAircraft(aircraft), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Save aircraft", notes = "Operation allowed for the ROLE_ADMIN only")
