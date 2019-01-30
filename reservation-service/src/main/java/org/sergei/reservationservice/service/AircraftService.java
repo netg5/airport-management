@@ -26,6 +26,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +38,7 @@ import static org.sergei.reservationservice.util.ObjectMapperUtil.*;
  * @author Sergei Visotsky
  */
 @Service
-public class AircraftService implements IService<AircraftDTO> {
+public class AircraftService implements IAircraftService<AircraftDTO> {
 
     private final AircraftRepository aircraftRepository;
 
@@ -56,6 +59,31 @@ public class AircraftService implements IService<AircraftDTO> {
                 .orElseThrow(() ->
                         new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
                 );
+        return map(aircraft, AircraftDTO.class);
+    }
+
+    /**
+     * Get aircraft by multiple parameters
+     *
+     * @param request Request of parameters
+     * @return aircraft DTO
+     */
+    @Override
+    public AircraftDTO findOneByMultipleParams(HttpServletRequest request) {
+        Enumeration enumeration = request.getParameterNames();
+        Map<String, Object> requestParams = new HashMap<>();
+        while (enumeration.hasMoreElements()) {
+            String paramName = String.valueOf(enumeration.nextElement());
+            requestParams.put(paramName, request.getParameter(paramName));
+        }
+        Aircraft aircraft = aircraftRepository.findAircraftByMultipleParams(
+                String.valueOf(requestParams.get("name")),
+                Double.valueOf(String.valueOf(requestParams.get("weight"))),
+                Integer.valueOf(String.valueOf(requestParams.get("passengers"))),
+                String.valueOf(requestParams.get("model"))
+        ).orElseThrow(
+                () -> new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
+        );
         return map(aircraft, AircraftDTO.class);
     }
 

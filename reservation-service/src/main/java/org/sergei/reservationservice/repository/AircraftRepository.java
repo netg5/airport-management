@@ -18,11 +18,28 @@ package org.sergei.reservationservice.repository;
 
 import org.sergei.reservationservice.model.Aircraft;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 /**
  * @author Sergei Visotsky
  */
 @Repository
 public interface AircraftRepository extends JpaRepository<Aircraft, Long> {
+
+    /**
+     * Method to get aircraft by multiple parameters
+     *
+     * @param aircraftName  aircraft name
+     * @param weight        aircraft weight
+     * @param maxPassengers maximum passengers per aircraft
+     * @param model         aircraft model
+     * @return aircraft entity
+     */
+    @Query("select a from Aircraft a where aircraftName = ?1 " +
+            "and aircraftWeight = ?2 and maxPassengers = ?3 and model = ?4")
+    Optional<Aircraft> findAircraftByMultipleParams(String aircraftName, Double weight,
+                                                    Integer maxPassengers, String model);
 }

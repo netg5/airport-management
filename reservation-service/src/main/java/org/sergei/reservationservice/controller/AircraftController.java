@@ -20,7 +20,7 @@ import io.swagger.annotations.*;
 import org.sergei.reservationservice.controller.hateoas.LinkUtil;
 import org.sergei.reservationservice.dto.AircraftDTO;
 import org.sergei.reservationservice.service.AircraftService;
-import org.sergei.reservationservice.service.IService;
+import org.sergei.reservationservice.service.IAircraftService;
 import org.sergei.reservationservice.service.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -30,6 +30,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -46,7 +47,7 @@ import java.util.Map;
 public class AircraftController {
 
     private final LinkUtil linkUtil;
-    private final IService<AircraftDTO> aircraftService;
+    private final IAircraftService<AircraftDTO> aircraftService;
 
     @Autowired
     public AircraftController(LinkUtil linkUtil, AircraftService aircraftService) {
@@ -80,6 +81,16 @@ public class AircraftController {
                                                        @PathVariable("aircraftId") Long aircraftId) {
         AircraftDTO aircraftDTO = aircraftService.findOne(aircraftId);
         return new ResponseEntity<>(linkUtil.setLinksForAircraft(aircraftDTO), HttpStatus.OK);
+    }
+
+    @ApiOperation("Get aircraft by multiple parameters")
+    @ApiResponses({
+            @ApiResponse(code = 404, message = Constants.AIRCRAFT_NOT_FOUND)
+    })
+    @GetMapping(params = {"name", "weight", "passengers", "model"})
+    public ResponseEntity<AircraftDTO> getAircraftByMultipleParams(HttpServletRequest request) {
+        AircraftDTO aircraft = aircraftService.findOneByMultipleParams(request);
+        return new ResponseEntity<>(aircraft, HttpStatus.OK);
     }
 
     @ApiOperation(value = "Save aircraft", notes = "Operation allowed for the ROLE_ADMIN only")

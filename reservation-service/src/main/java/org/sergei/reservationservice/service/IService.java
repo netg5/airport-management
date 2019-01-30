@@ -18,6 +18,7 @@ package org.sergei.reservationservice.service;
 
 import org.springframework.data.domain.Page;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
