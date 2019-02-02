@@ -12,7 +12,7 @@
 
     <groupId>org.sergei</groupId>
     <artifactId>flight-reservation</artifactId>
-    <version>2.2.4-SNAPSHOT</version>
+    <version>2.2.4</version>
     <packaging>pom</packaging>
     <name>flight-reservation</name>
     <url>https://github.com/sergeivisotsky/flight-reservation</url>
