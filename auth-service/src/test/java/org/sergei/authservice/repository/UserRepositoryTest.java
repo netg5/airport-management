@@ -37,7 +37,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author Sergei Visotsky
  */
-//@Ignore
+@Ignore
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = AuthServiceApplication.class)
 @TestPropertySource(locations = "classpath:application-test.properties")
