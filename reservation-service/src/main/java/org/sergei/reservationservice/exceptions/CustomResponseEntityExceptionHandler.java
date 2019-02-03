@@ -16,7 +16,7 @@
 
 package org.sergei.reservationservice.exceptions;
 
-import org.sergei.reservationservice.dto.ErrorDetailsDTO;
+import org.sergei.reservationservice.rest.dto.ErrorDetailsDTO;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

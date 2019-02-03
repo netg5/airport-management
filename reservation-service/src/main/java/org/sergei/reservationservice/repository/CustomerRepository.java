@@ -16,7 +16,7 @@
 
 package org.sergei.reservationservice.repository;
 
-import org.sergei.reservationservice.dto.CustomerIdsDTO;
+import org.sergei.reservationservice.rest.dto.CustomerIdsDTO;
 import org.sergei.reservationservice.model.Customer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

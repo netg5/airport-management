@@ -52,14 +52,14 @@ public class LoggingAspect {
      */
     @Pointcut("within(org.sergei.reportservice.repository..*)" +
             " || within(org.sergei.reportservice.service..*)" +
-            " || within(org.sergei.reportservice.controller..*)")
+            " || within(org.sergei.reportservice.rest..*)")
     public void applicationPackagePointcut() {
         // Method is empty as this is just a Pointcut, the implementations are in the advices.
     }
 
     @Pointcut("execution(* org.sergei.reportservice.repository.*.*(..))" +
             " || execution(* org.sergei.reportservice.service.*.*(..))" +
-            " || execution(* org.sergei.reportservice.controller.*.*(..))")
+            " || execution(* org.sergei.reportservice.rest.*.*(..))")
     public void parameterLoggingPointcut() {
         // Method is empty as this is just a Pointcut, the implementations are in the advices.
     }

@@ -16,10 +16,10 @@
 
 package org.sergei.reservationservice.service.util;
 
-import org.sergei.reservationservice.controller.AircraftController;
-import org.sergei.reservationservice.controller.RouteController;
-import org.sergei.reservationservice.dto.AircraftDTO;
-import org.sergei.reservationservice.dto.RouteExtendedDTO;
+import org.sergei.reservationservice.rest.AircraftController;
+import org.sergei.reservationservice.rest.RouteController;
+import org.sergei.reservationservice.rest.dto.AircraftDTO;
+import org.sergei.reservationservice.rest.dto.RouteExtendedDTO;
 import org.sergei.reservationservice.exceptions.ResourceNotFoundException;
 import org.sergei.reservationservice.model.Aircraft;
 import org.sergei.reservationservice.model.Route;

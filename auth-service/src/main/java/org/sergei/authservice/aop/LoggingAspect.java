@@ -52,14 +52,14 @@ public class LoggingAspect {
      */
     @Pointcut("within(org.sergei.authservice.repository..*)" +
             " || within(org.sergei.authservice.service..*)" +
-            " || within(org.sergei.authservice.controller..*)")
+            " || within(org.sergei.authservice.rest..*)")
     public void applicationPackagePointcut() {
         // Method is empty as this is just a Pointcut, the implementations are in the advices.
     }
 
     @Pointcut("execution(* org.sergei.authservice.repository.*.*(..))" +
             " || execution(* org.sergei.authservice.service.*.*(..))" +
-            " || execution(* org.sergei.authservice.controller.*.*(..))")
+            " || execution(* org.sergei.authservice.rest.*.*(..))")
     public void parameterLoggingPointcut() {
         // Method is empty as this is just a Pointcut, the implementations are in the advices.
     }

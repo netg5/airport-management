@@ -16,7 +16,7 @@
 
 package org.sergei.reservationservice.service;
 
-import org.sergei.reservationservice.dto.AircraftDTO;
+import org.sergei.reservationservice.rest.dto.AircraftDTO;
 import org.sergei.reservationservice.exceptions.ResourceNotFoundException;
 import org.sergei.reservationservice.model.Aircraft;
 import org.sergei.reservationservice.repository.AircraftRepository;

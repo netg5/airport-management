@@ -16,8 +16,8 @@
 
 package org.sergei.reservationservice.service;
 
-import org.sergei.reservationservice.dto.ReservationDTO;
-import org.sergei.reservationservice.dto.ReservationExtendedDTO;
+import org.sergei.reservationservice.rest.dto.ReservationDTO;
+import org.sergei.reservationservice.rest.dto.ReservationExtendedDTO;
 import org.sergei.reservationservice.exceptions.ResourceNotFoundException;
 import org.sergei.reservationservice.model.Customer;
 import org.sergei.reservationservice.model.Reservation;

@@ -16,7 +16,7 @@
 
 package org.sergei.reportservice.service;
 
-import org.sergei.reportservice.dto.AircraftReportDTO;
+import org.sergei.reportservice.rest.dto.AircraftReportDTO;
 import org.sergei.reportservice.exceptions.ResourceNotFoundException;
 import org.sergei.reportservice.model.AircraftReport;
 import org.sergei.reportservice.model.Reservation;

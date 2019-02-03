@@ -16,7 +16,7 @@
 
 package org.sergei.reportservice.exceptions;
 
-import org.sergei.reportservice.dto.ErrorDetailsDTO;
+import org.sergei.reportservice.rest.dto.ErrorDetailsDTO;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
