@@ -1,6 +1,4 @@
 spring:
-  profiles:
-    active: prod
   cloud:
     config:
       name: reservation-service

@@ -30,6 +30,11 @@ import java.io.IOException;
 public class TicketServiceApplication {
 
     public static void main(String[] args) {
+
+        if (System.getProperty("-Dspring.profiles.active") == null) {
+            System.setProperty("-Dspring.profiles.active", "dev");
+        }
+
         SpringApplication.run(TicketServiceApplication.class, args);
     }
 

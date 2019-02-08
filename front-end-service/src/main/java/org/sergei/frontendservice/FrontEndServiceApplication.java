@@ -9,6 +9,11 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 public class FrontEndServiceApplication {
 
     public static void main(String[] args) {
+
+        if (System.getProperty("-Dspring.profiles.active") == null) {
+            System.setProperty("-Dspring.profiles.active", "dev");
+        }
+
         SpringApplication.run(FrontEndServiceApplication.class, args);
     }
 

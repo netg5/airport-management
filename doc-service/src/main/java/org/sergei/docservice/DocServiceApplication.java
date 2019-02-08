@@ -31,6 +31,11 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class DocServiceApplication {
 
     public static void main(String[] args) {
+
+        if (System.getProperty("-Dspring.profiles.active") == null) {
+            System.setProperty("-Dspring.profiles.active", "dev");
+        }
+
         SpringApplication.run(DocServiceApplication.class, args);
     }
 

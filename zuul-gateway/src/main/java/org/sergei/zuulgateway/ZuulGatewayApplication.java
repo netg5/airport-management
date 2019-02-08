@@ -29,6 +29,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class ZuulGatewayApplication {
 
     public static void main(String[] args) {
+
+        if (System.getProperty("-Dspring.profiles.active") == null) {
+            System.setProperty("-Dspring.profiles.active", "dev");
+        }
+
         SpringApplication.run(ZuulGatewayApplication.class, args);
     }
 

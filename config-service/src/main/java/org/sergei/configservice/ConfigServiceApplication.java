@@ -29,6 +29,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class ConfigServiceApplication {
 
     public static void main(String[] args) {
+
+        if (System.getProperty("-Dspring.profiles.active") == null) {
+            System.setProperty("-Dspring.profiles.active", "dev");
+        }
+
         SpringApplication.run(ConfigServiceApplication.class, args);
     }
 

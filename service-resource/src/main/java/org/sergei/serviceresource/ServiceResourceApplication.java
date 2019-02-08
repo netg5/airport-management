@@ -30,11 +30,4 @@ public class ServiceResourceApplication {
         SpringApplication.run(ServiceResourceApplication.class, args);
     }
 
-    @RestController
-    class WelcomeController {
-        @GetMapping("/")
-        public String welcome() {
-            return "Service resource";
-        }
-    }
 }
