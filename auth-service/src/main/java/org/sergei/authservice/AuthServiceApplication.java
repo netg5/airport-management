@@ -30,11 +30,4 @@ public class AuthServiceApplication {
         SpringApplication.run(AuthServiceApplication.class, args);
     }
 
-    @RestController
-    class WelcomeController {
-        @GetMapping("/")
-        public String welcome() {
-            return "Auth";
-        }
-    }
 }

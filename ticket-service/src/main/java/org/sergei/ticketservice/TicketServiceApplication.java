@@ -33,16 +33,4 @@ public class TicketServiceApplication {
         SpringApplication.run(TicketServiceApplication.class, args);
     }
 
-    @RestController
-    class WelcomeController {
-        @GetMapping("/")
-        public String welcome() {
-            return "Tickets";
-        }
-
-        @GetMapping("/docs")
-        public void docsRedirect(HttpServletResponse response) throws IOException {
-            response.sendRedirect("swagger-ui.html");
-        }
-    }
 }

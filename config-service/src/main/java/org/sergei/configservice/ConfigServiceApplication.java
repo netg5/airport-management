@@ -32,12 +32,4 @@ public class ConfigServiceApplication {
         SpringApplication.run(ConfigServiceApplication.class, args);
     }
 
-    @RestController
-    class WelcomeController {
-
-        @GetMapping("/")
-        public String welcome() {
-            return "Config";
-        }
-    }
 }

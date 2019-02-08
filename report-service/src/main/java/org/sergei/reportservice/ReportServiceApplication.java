@@ -33,17 +33,5 @@ public class ReportServiceApplication {
         SpringApplication.run(ReportServiceApplication.class, args);
     }
 
-    @RestController
-    class WelcomeController {
-        @GetMapping("/")
-        public String welcome() {
-            return "Reports";
-        }
-
-        @GetMapping("/docs")
-        public void docsRedirect(HttpServletResponse response) throws IOException {
-            response.sendRedirect("swagger-ui.html");
-        }
-    }
 }
 

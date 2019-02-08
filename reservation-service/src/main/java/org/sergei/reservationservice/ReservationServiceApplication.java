@@ -33,16 +33,4 @@ public class ReservationServiceApplication {
         SpringApplication.run(ReservationServiceApplication.class, args);
     }
 
-    @RestController
-    class WelcomeController {
-        @GetMapping("/")
-        public String welcome() {
-            return "Reservation";
-        }
-
-        @GetMapping("/docs")
-        public void docsRedirect(HttpServletResponse response) throws IOException {
-            response.sendRedirect("swagger-ui.html");
-        }
-    }
 }

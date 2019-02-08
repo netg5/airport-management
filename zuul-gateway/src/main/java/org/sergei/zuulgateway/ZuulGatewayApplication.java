@@ -32,11 +32,4 @@ public class ZuulGatewayApplication {
         SpringApplication.run(ZuulGatewayApplication.class, args);
     }
 
-    @RestController
-    class WelcomeController {
-        @GetMapping("/")
-        public String welcome() {
-            return "Gateway";
-        }
-    }
 }
