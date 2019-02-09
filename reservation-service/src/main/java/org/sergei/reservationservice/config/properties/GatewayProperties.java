@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sergei.reservationservice.properties;
+package org.sergei.reservationservice.config.properties;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

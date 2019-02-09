@@ -17,7 +17,7 @@
 package org.sergei.ticketservice.rest.hateoas;
 
 import org.sergei.ticketservice.model.Ticket;
-import org.sergei.ticketservice.properties.GatewayProperties;
+import org.sergei.ticketservice.config.properties.GatewayProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resources;

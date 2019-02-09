@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sergei.reportservice.properties;
+package org.sergei.frontendservice.config.properties;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,8 +30,11 @@ import org.springframework.context.annotation.Configuration;
 @Setter
 @NoArgsConstructor
 @Configuration
-@EnableConfigurationProperties(GatewayProperties.class)
-@ConfigurationProperties(prefix = "spring.gateway")
-public class GatewayProperties {
-    private int port;
+@EnableConfigurationProperties(OAuthClientProperties.class)
+@ConfigurationProperties(prefix = "oauth")
+public class OAuthClientProperties {
+    private String clientId;
+    private String clientSecret;
+    private String username;
+    private String password;
 }

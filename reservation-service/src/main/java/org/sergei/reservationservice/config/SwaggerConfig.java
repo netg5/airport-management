@@ -16,7 +16,7 @@
 
 package org.sergei.reservationservice.config;
 
-import org.sergei.reservationservice.properties.GatewayProperties;
+import org.sergei.reservationservice.config.properties.GatewayProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

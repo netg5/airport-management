@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sergei.ticketservice.properties;
+package org.sergei.ticketservice.config.properties;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

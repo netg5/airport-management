@@ -16,7 +16,7 @@
 
 package org.sergei.ticketservice.config;
 
-import org.sergei.ticketservice.properties.GatewayProperties;
+import org.sergei.ticketservice.config.properties.GatewayProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

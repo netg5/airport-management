@@ -21,7 +21,7 @@ import org.sergei.reservationservice.rest.CustomerController;
 import org.sergei.reservationservice.rest.ReservationController;
 import org.sergei.reservationservice.rest.RouteController;
 import org.sergei.reservationservice.rest.dto.*;
-import org.sergei.reservationservice.properties.GatewayProperties;
+import org.sergei.reservationservice.config.properties.GatewayProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resources;

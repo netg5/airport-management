@@ -16,7 +16,7 @@
 
 package org.sergei.reportservice.config;
 
-import org.sergei.reportservice.properties.GatewayProperties;
+import org.sergei.reportservice.config.properties.GatewayProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

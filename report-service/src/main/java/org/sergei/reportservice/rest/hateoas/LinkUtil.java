@@ -21,7 +21,7 @@ import org.sergei.reportservice.rest.CustomerReportController;
 import org.sergei.reportservice.rest.dto.AircraftReportDTO;
 import org.sergei.reportservice.rest.dto.CustomerReportDTO;
 import org.sergei.reportservice.model.Reservation;
-import org.sergei.reportservice.properties.GatewayProperties;
+import org.sergei.reportservice.config.properties.GatewayProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.hateoas.Link;
