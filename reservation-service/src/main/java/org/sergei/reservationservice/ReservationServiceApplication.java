@@ -32,7 +32,7 @@ public class ReservationServiceApplication {
     public static void main(String[] args) {
 
         if (System.getProperty("-Dspring.profiles.active") == null) {
-            System.setProperty("-Dspring.profiles.active", "dev");
+            System.setProperty("-Dspring.profiles.active", "prod");
         }
 
         SpringApplication.run(ReservationServiceApplication.class, args);
