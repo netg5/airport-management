@@ -39,4 +39,12 @@ public class DocServiceApplication {
         SpringApplication.run(DocServiceApplication.class, args);
     }
 
+    @Controller
+    class DocsController {
+        @GetMapping("/")
+        public String docsRedirect() {
+            return "redirect:swagger-ui.html";
+        }
+    }
+
 }

@@ -25,8 +25,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ServiceDefinitionController {
 
+    private final ServiceDefinitionsContext definitionContext;
+
     @Autowired
-    private ServiceDefinitionsContext definitionContext;
+    public ServiceDefinitionController(ServiceDefinitionsContext definitionContext) {
+        this.definitionContext = definitionContext;
+    }
 
     @GetMapping("/service/{serviceName}")
     public String getServiceDefinition(@PathVariable("serviceName") String serviceName) {

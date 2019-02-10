@@ -61,7 +61,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .host("localhost:" + port)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("org.sergei.authservice.controller"))
+                .apis(RequestHandlerSelectors.basePackage("org.sergei.authservice.rest"))
                 .paths(PathSelectors.any())
                 .build()
                 .securitySchemes(Collections.singletonList(securitySchema()))

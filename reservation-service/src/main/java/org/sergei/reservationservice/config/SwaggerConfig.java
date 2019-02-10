@@ -66,7 +66,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .host("localhost:" + gatewayProperties.getPort())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("org.sergei.reservationservice.controller"))
+                .apis(RequestHandlerSelectors.basePackage("org.sergei.reservationservice.rest"))
                 .paths(PathSelectors.any())
                 .build()
                 .securitySchemes(Collections.singletonList(securitySchema()))
