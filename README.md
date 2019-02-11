@@ -80,7 +80,7 @@ To access any resource authentication should be performed. By performing this re
 #### 1 way - using client credentials
 Client ID and client secret should be sent as a basic auth header.
 
-* URL: `http://localhost:8080/auth-api/oauth/token`
+* URL: `https://localhost:9090/auth-api/oauth/token`
 * Method: `POST`
 * Content-Type: `application/x-www-form-urlencoded`
 * Content-Options: `username=USERNAME&password=PASSWORD&grant_type=password`
