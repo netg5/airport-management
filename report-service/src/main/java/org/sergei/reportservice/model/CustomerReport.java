@@ -16,10 +16,10 @@
 
 package org.sergei.reportservice.model;
 
-import jdk.nashorn.internal.ir.annotations.Immutable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Immutable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
