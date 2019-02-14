@@ -109,7 +109,7 @@ public class LinkUtil {
         int index = 0;
         for (Reservation reservation : reservationList) {
             Link reservationLink = new Link(
-                    "https://127.0.0.1:" + gatewayProperties.getPort() + "/reservation-api/customers/" +
+                    "http://127.0.0.1:" + gatewayProperties.getPort() + "/reservation-api/customers/" +
                             reservationList.get(index).getReservationId()).withRel("reportSelf");
             reservation.add(reservationLink);
             index++;

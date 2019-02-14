@@ -58,7 +58,7 @@ public class LinkUtil {
             Link reservationsLink = linkTo(
                     methodOn(ReservationController.class)
                             .getAllForCustomer(customer.getCustomerId())).withRel("reservations");
-            Link ticketsLink = new Link("https://127.0.0.1:" + gatewayProperties.getPort() +
+            Link ticketsLink = new Link("http://127.0.0.1:" + gatewayProperties.getPort() +
                     "/ticket-api/tickets?customerId=" + customer.getCustomerId()).withRel("tickets");
             customer.add(link);
             customer.add(reservationsLink);
