@@ -1,15 +1,7 @@
 server:
-  port: 9093
-  http:
-    port: 8085
+  port: 8082
   servlet:
     context-path: /docs
-  ssl:
-    enabled: true
-    key-store-type: PKCS12
-    key-store: doc-service/src/main/resources/tls/keystore.p12
-    key-store-password: keyStoreSecret
-    key-alias: localhost
 spring:
   application:
     name: doc-service
@@ -21,9 +13,9 @@ eureka:
     non-secure-port-enabled: false
     secure-port-enabled: true
     secure-port: ${server.port}
-    status-page-url-path: https://localhost:${server.port}/${server.servlet.context-path}/actuator/info
-    health-check-url-path: https://localhost:${server.port}/${server.servlet.context-path}/actuator/health
-    home-page-url: https://localhost:${server.port}
+    status-page-url-path: http://localhost:${server.port}/${server.servlet.context-path}/actuator/info
+    health-check-url-path: http://localhost:${server.port}/${server.servlet.context-path}/actuator/health
+    home-page-url: http://localhost:${server.port}
     lease-renewal-interval-in-seconds: 10 # intervalSeconds between subsequent heartbeats sent to Eureka server
     lease-expiration-duration-in-seconds: 20 # time that Eureka server waits since it received last heartbeat before it can evict this instance
   client:
