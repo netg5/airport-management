@@ -38,7 +38,7 @@ public class TokenRetrievalService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CustomerService.class);
 
-    private static final String AUTH_SERVER = "https://localhost:8080/auth-api/oauth/token";
+    private static final String AUTH_SERVER = "http://localhost:8080/auth-api/oauth/token";
     private static final String PASSWORD_GRANT = "?grant_type=password";
     private static final String USERNAME = "&username=";
     private static final String PASSWORD = "&password=";

@@ -45,7 +45,7 @@ public class ReservationService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ReservationService.class);
 
-    private static final String RESERVATION_API_URI = "https://localhost:8080/reservation-api";
+    private static final String RESERVATION_API_URI = "http://localhost:8080/reservation-api";
     private static final String CUSTOMERS_PATH = "/customers/";
     private static final String RESERVATIONS_PATH = "/reservations";
     private static final String ACCESS_TOKEN_PARAM = "?access_token=";
