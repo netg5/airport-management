@@ -119,7 +119,7 @@ called `flight-reservation-config` for each service which communicates with data
 9. Change database url property: `spring.datasource.password`
 10. Change SQL dialect modifying this property: `spring.jpa.properties.hibernate.dialect`
 11. Open SQL file `oauth_schema.sql` script located in auth-service under `resources/sql` and change database name to yours
-12. Open each SQL file in `ticket-service` and `report-service` under `resources/sql` and execute each this script for 
+12. Open directory database amd execute all SQL files located there
 your database (NOTE: MySQL dialect was used in this case due to this MySQL is preferable choice) 
 13. Open `application-prod.yml` config file located in config repository for this services `flight-service`, `ticket service` 
 and `auth-service` and setup your database url and credentials or in each service `application-dev.yml` in case of _dev_ profile
