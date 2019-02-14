@@ -3,7 +3,7 @@ Flight reservation application based on the microservice architecture which allo
 reserve flight and see all tickets for a particular customer.
 
 ## Technologies
-* Java 8+
+* Java 11
 * Spring Boot
 * Spring Cloud
 * JPA
