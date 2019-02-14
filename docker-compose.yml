@@ -38,9 +38,9 @@ services:
     environment:
       SPRING_APPLICATION_JSON: '{"spring": {"cloud": {"config": {"uri": "http://localhost:8079"}}}}'
     expose:
-      - 9094
+      - 8082
     ports:
-      - 9094:9094
+      - 8082:8082
     networks:
       - spring-cloud-network
     volumes:
@@ -63,9 +63,9 @@ services:
     environment:
       SPRING_APPLICATION_JSON: '{"spring": {"cloud": {"config": {"uri": "http://localhost:8079"}}}}'
     expose:
-      - 9091
+      - 8083
     ports:
-      - 9091:9091
+      - 8083:8083
     networks:
       - spring-cloud-network
     volumes:
@@ -88,9 +88,9 @@ services:
     environment:
       SPRING_APPLICATION_JSON: '{"spring": {"cloud": {"config": {"uri": "http://localhost:8079"}}}}'
     expose:
-      - 9092
+      - 8086
     ports:
-      - 9092:9092
+      - 8086:8086
     networks:
       - spring-cloud-network
     volumes:
@@ -113,9 +113,9 @@ services:
     environment:
       SPRING_APPLICATION_JSON: '{"spring": {"cloud": {"config": {"uri": "http://localhost:8079"}}}}'
     expose:
-      - 9093
+      - 8085
     ports:
-      - 9093:9093
+      - 8085:8085
     networks:
       - spring-cloud-network
     volumes:
@@ -138,9 +138,9 @@ services:
     environment:
       SPRING_APPLICATION_JSON: '{"spring": {"cloud": {"config": {"uri": "http://localhost:8079"}}}}'
     expose:
-      - 9090
+      - 8080
     ports:
-      - 9090:9090
+      - 8080:8080
     networks:
       - spring-cloud-network
     volumes:
@@ -163,9 +163,9 @@ services:
     environment:
       SPRING_APPLICATION_JSON: '{"spring": {"cloud": {"config": {"uri": "https://localhost:9095"}}}}'
     expose:
-      - 9095
+      - 8089
     ports:
-      - 9095:9095
+      - 8089:8089
     networks:
       - spring-cloud-network
     volumes:
@@ -188,9 +188,9 @@ services:
     environment:
       SPRING_APPLICATION_JSON: '{"spring": {"cloud": {"config": {"uri": "https://localhost:9095"}}}}'
     expose:
-      - 9095
+      - 8087
     ports:
-      - 9095:9095
+      - 8087:8087
     networks:
       - spring-cloud-network
     volumes:
