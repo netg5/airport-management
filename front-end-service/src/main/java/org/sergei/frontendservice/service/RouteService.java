@@ -36,7 +36,7 @@ public class RouteService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RouteService.class);
 
-    private static final String RESERVATION_API_URI = "https://localhost:9090/reservation-api";
+    private static final String RESERVATION_API_URI = "https://localhost:8080/reservation-api";
     private static final String ROUTES_PATH = "/routes/";
     private static final String ACCESS_TOKEN_PARAM = "?access_token=";
 

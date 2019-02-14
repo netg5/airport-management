@@ -1,13 +1,5 @@
 server:
-  port: 9090
-  http:
-    port: 8080
-  ssl:
-    enabled: true
-    key-store-type: PKCS12
-    key-store: zuul-gateway/src/main/resources/tls/keystore.p12
-    key-store-password: keyStoreSecret
-    key-alias: localhost
+  port: 8080
 spring:
   application:
     name: zuul-gateway
@@ -16,9 +8,9 @@ eureka:
     non-secure-port-enabled: false
     secure-port-enabled: true
     secure-port: ${server.port}
-    status-page-url-path: https://localhost:${server.port}/actuator/info
-    health-check-url-path: https://localhost:${server.port}/actuator/health
-    home-page-url: https://localhost:${server.port}
+    status-page-url-path: http://localhost:${server.port}/actuator/info
+    health-check-url-path: http://localhost:${server.port}/actuator/health
+    home-page-url: http://localhost:${server.port}
     lease-renewal-interval-in-seconds: 10 # intervalSeconds between subsequent heartbeats sent to Eureka server
     lease-expiration-duration-in-seconds: 20 # time that Eureka server waits since it received last heartbeat before it can evict this instance
   client:
@@ -39,35 +31,35 @@ zuul:
     service-resource:
       path: /service-api/**
       service-id: service-resource
-      url: https://localhost:9096
+      url: http://localhost:8084
       sensitive-headers: true
     doc-service:
       path: /docs/**
       service-id: doc-service
-      url: https://localhost:9093
+      url: http://localhost:8085
       strip-prefix: false
       sensitive-headers: true
     auth-service:
       path: /auth-api/**
       service-id: auth-service
-      url: https://localhost:9094
+      url: http://localhost:8082
       strip-prefix: false
       sensitive-headers: true
     reservation-service:
       path: /reservation-api/**
       service-id: reservation-service
-      url: https://localhost:9091
+      url: http://localhost:8083
       strip-prefix: false
       sensitive-headers: true
     ticket-service:
       path: /ticket-api/**
       service-id: ticket-service
-      url: https://localhost:9092
+      url: http://localhost:8086
       strip-prefix: false
       sensitive-headers: true
     report-service:
       path: /report-api/**
       service-id: report-service
-      url: https://localhost:9095
+      url: http://localhost:8089
       strip-prefix: false
       sensitive-headers: true
