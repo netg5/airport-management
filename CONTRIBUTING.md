@@ -1,7 +1,5 @@
-If you want to contribute get in touch with the author.
-
-## Rules to contribute
-1. Add copyright in your IDE:
+# Rules to contribute
+1. Add copyright into your IDE:
 ```text
 Copyright 2018-$today.year the original author or authors.
 
