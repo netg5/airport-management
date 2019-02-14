@@ -27,60 +27,13 @@ reserve flight and see all tickets for a particular customer.
 * report-service - service to get all reports for a specific purpose (e.g. route report)
 * front-end-service - user interface service
 
-## TLS / SSL
-Each microservice is using self-signed TLS/SSL PKCS12 certificate.
-
-To generate keystore and public certificate the following commands should be performed.
-
-Command to generate root key:
-```text
-openssl genrsa -out ca.key 4096
-```
-
-Command to generate root key with password:
-```text
-openssl genrsa –des3 -out ca.key 4096
-```
-
-In case if program does not accept certificate generated be the previous command this command should be performed:
-```text
-openssl rsa -in ca.key -out ca.key
-```
-
-Command to generate root certificate:
-```text
-openssl req -new -x509 -days 3650 -key ca.key -out ca.crt
-```
-
-Command to generate PKCS12 certificate:
-```text
-openssl pkcs12 -export -in ca.crt -inkey ca.key -out keystore.p12 -name localhost -CAfile ca.crt -caname localhost -chain
-```
-
-Command to convert PKCS12 into the _.pem_ certificate:
-```text
-openssl pkcs12 -in keystore.p12 -out keystore.pem -nodes
-```
-
-In case of self-signed certificate it should be added to the JVM cacerts so that client were able to communicate with services.
-
-Command for operation described below:
-```text
-keytool -import -trustcacerts -keystore "%JAVA_HOME%/jre/lib/security/cacerts" -storepass changeit -alias KEYSTORE_ENTRY -import -file public-certificate.pem
-```
-
-* `changeit` default password for cacerts
-
-**__NOTE: Self-signed certificates are not verified by any certification agency and due to this every browser shows warning 
-that they are not secured and consequently are not applicable for production and can be used for dev purposes only.__**
-
 ## Authentication
 To access any resource authentication should be performed. By performing this request with such a parameters access_token is retrieved.
 
 #### 1 way - using client credentials
 Client ID and client secret should be sent as a basic auth header.
 
-* URL: `https://localhost:9090/auth-api/oauth/token`
+* URL: `http://localhost:8080/auth-api/oauth/token`
 * Method: `POST`
 * Content-Type: `application/x-www-form-urlencoded`
 * Content-Options: `username=USERNAME&password=PASSWORD&grant_type=password`
@@ -100,7 +53,7 @@ _Response:_
 #### 2 way - using _authorization_code_ (more secured)
 1. Get authorization code sending credentials using method _GET_ in browser
 
-`https://localhost:9090/auth-api/oauth/authorize?
+`http://localhost:8080/auth-api/oauth/authorize?
 &client_id=CLIENT_ID&client_secret=CLIENT_SECRET&response_type=code&redirect_uri=REDIRECT_URI&scope=SCOPES`
 
 2. Authorization with code:
@@ -168,17 +121,13 @@ called `flight-reservation-config` for each service which communicates with data
 11. Open SQL file `oauth_schema.sql` script located in auth-service under `resources/sql` and change database name to yours
 12. Open each SQL file in `ticket-service` and `report-service` under `resources/sql` and execute each this script for 
 your database (NOTE: MySQL dialect was used in this case due to this MySQL is preferable choice) 
-13. Add _pem_ certificate to the JVM cacerts due to it is self-signed executing the following command:
-```text
-keytool -import -trustcacerts -keystore "%JAVA_HOME%/jre/lib/security/cacerts" -storepass changeit -alias KEYSTORE_ENTRY -import -file keystore.pem
-```
-14. Open `application-prod.yml` config file located in config repository for this services `flight-service`, `ticket service` 
+13. Open `application-prod.yml` config file located in config repository for this services `flight-service`, `ticket service` 
 and `auth-service` and setup your database url and credentials or in each service `application-dev.yml` in case of _dev_ profile
-15. Application port and port in `security.oauth2.resource.accessTokenUri` property might be changed in your case
-16. Open `logback-spring.xml` for each microservice and setup directory where all your logging files are going to saved
-17. Each service has additional dev profile config file and in case you want to use it you should 
+14. Application port and port in `security.oauth2.resource.accessTokenUri` property might be changed in your case
+15. Open `logback-spring.xml` for each microservice and setup directory where all your logging files are going to saved
+16. Each service has additional dev profile config file and in case you want to use it you should 
 change property `spring.profiles.active` value from _prod_ to _dev_ and you can use development profile
-18. Change port for each microservice in _docker-compose.yml_ for yours
+17. Change port for each microservice in _docker-compose.yml_ for yours
 
 **__NOTE: If you change any port it should be changed in all places where it is used e.g. all depending microservices.__**
 
