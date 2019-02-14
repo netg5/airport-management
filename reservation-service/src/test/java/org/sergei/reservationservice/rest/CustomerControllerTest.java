@@ -57,7 +57,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @EntityScan(basePackages = "org.sergei.reservationservice.model")
 public class CustomerControllerTest {
 
-    private static final String BASE_URL = "https://localhost:80/customers";
+    private static final String BASE_URL = "http://localhost/customers";
     private static final String RESERVATIONS_PATH = "/reservations";
 
     @Autowired

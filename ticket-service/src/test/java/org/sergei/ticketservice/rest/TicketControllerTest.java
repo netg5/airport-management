@@ -51,7 +51,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @EntityScan(basePackages = "org.sergei.ticketservice.model")
 public class TicketControllerTest {
 
-    private static final String BASE_URL = "https://localhost/tickets";
+    private static final String BASE_URL = "http://localhost/tickets";
     private static final String CUSTOMER_ID_PARAM = "?customerId=";
 
     @Autowired
