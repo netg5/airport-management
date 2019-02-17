@@ -99,8 +99,7 @@ to clone all the necessary config files
 with `spring.cloud.config.server.native.searchLocations: file:///${user.home}/config-repo` in `bootstrap.yml` config 
 file in `config-service` or create another repository and change the path to it by changing 
 property `spring.cloud.config.server.git.uri`
-3. Change `server.port` for each service if needed which configs are located in the repository above and other configs 
-that are not located in config repository mentioned in `1.` paragraph
+3. Change `server.port` for each service located in config repository mentioned in `1.` paragraph _(optional)_
 4. Change database driver for your database.
 
 _Example for MySQL:_
@@ -118,8 +117,7 @@ called `flight-reservation-config` for each service which communicates with data
 8. Change database url property: `spring.datasource.password`
 9. Change SQL dialect modifying this property: `spring.jpa.properties.hibernate.dialect`
 10. Open SQL file `oauth_schema.sql` script located in auth-service under `resources/sql` and change database name to yours
-11. Open directory database amd execute all SQL files located there
-your database (NOTE: MySQL dialect was used in this case due to this MySQL is preferable choice) 
+11. Open directory `database` and execute all SQL located there
 12. Open `application-prod.yml` config file located in config repository for this services `flight-service`, `ticket service` 
 and `auth-service` and setup your database url and credentials or in each service `application-dev.yml` in case of _dev_ profile
 13. Application port and port in `security.oauth2.resource.accessTokenUri` property might be changed in your case
