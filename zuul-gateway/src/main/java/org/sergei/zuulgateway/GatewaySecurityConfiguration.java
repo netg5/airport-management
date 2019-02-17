@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sergei.zuulgateway.config;
+package org.sergei.zuulgateway;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
