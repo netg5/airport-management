@@ -14,21 +14,48 @@
  * limitations under the License.
  */
 
-package org.sergei.reportservice.config;
+package org.sergei.reservationservice.config;
 
+import org.modelmapper.ModelMapper;
+import org.sergei.reservationservice.aop.LoggingAspect;
+import org.sergei.reservationservice.aop.PerformanceAspect;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Import;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
+import java.util.Collections;
+
 /**
  * @author Sergei Visotsky
  */
 @Configuration
+@EnableAspectJAutoProxy
 @Import(SwaggerConfig.class)
-public class WebMvcConfig implements WebMvcConfigurer {
+public class ReservationServiceConfig implements WebMvcConfigurer {
+
+    @Bean
+    public PerformanceAspect performanceAspect() {
+        return new PerformanceAspect();
+    }
+
+    @Bean
+    public LoggingAspect loggingAspect() {
+        return new LoggingAspect();
+    }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LocaleChangeInterceptor());
@@ -41,5 +68,15 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Collections.singletonList("*"));
+        configuration.setAllowedMethods(Collections.singletonList("*"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 }

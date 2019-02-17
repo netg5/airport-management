@@ -14,9 +14,12 @@
  * limitations under the License.
  */
 
-package org.sergei.ticketservice.config;
+package org.sergei.authservice.config;
 
+import org.sergei.authservice.aop.LoggingAspect;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -27,8 +30,15 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
  * @author Sergei Visotsky
  */
 @Configuration
+@EnableAspectJAutoProxy
 @Import(SwaggerConfig.class)
-public class WebMvcConfig implements WebMvcConfigurer {
+public class AuthServiceConfig implements WebMvcConfigurer {
+
+    @Bean
+    public LoggingAspect loggingAspect() {
+        return new LoggingAspect();
+    }
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LocaleChangeInterceptor());

@@ -14,17 +14,21 @@
  * limitations under the License.
  */
 
-package org.sergei.reservationservice.config;
+package org.sergei.ticketservice.config;
 
 import org.modelmapper.ModelMapper;
-import org.sergei.reservationservice.aop.LoggingAspect;
-import org.sergei.reservationservice.aop.PerformanceAspect;
+import org.sergei.ticketservice.aop.LoggingAspect;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.context.annotation.Import;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
 import java.util.Collections;
 
@@ -33,12 +37,8 @@ import java.util.Collections;
  */
 @Configuration
 @EnableAspectJAutoProxy
-public class AppConfig {
-
-    @Bean
-    public PerformanceAspect performanceAspect() {
-        return new PerformanceAspect();
-    }
+@Import(SwaggerConfig.class)
+public class TicketServiceConfig implements WebMvcConfigurer {
 
     @Bean
     public LoggingAspect loggingAspect() {
@@ -48,6 +48,20 @@ public class AppConfig {
     @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new LocaleChangeInterceptor());
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("swagger-ui.html")
+                .addResourceLocations("classpath:/META-INF/resources/");
+
+        registry.addResourceHandler("/webjars/**")
+                .addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
 
     @Bean
