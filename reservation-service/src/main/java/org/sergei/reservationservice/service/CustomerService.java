@@ -17,7 +17,6 @@
 package org.sergei.reservationservice.service;
 
 import org.sergei.reservationservice.rest.dto.CustomerDTO;
-import org.sergei.reservationservice.rest.dto.CustomerIdsDTO;
 import org.sergei.reservationservice.exceptions.ResourceNotFoundException;
 import org.sergei.reservationservice.model.Customer;
 import org.sergei.reservationservice.repository.CustomerRepository;
@@ -36,7 +35,7 @@ import static org.sergei.reservationservice.util.ObjectMapperUtil.*;
  * @author Sergei Visotsky
  */
 @Service
-public class CustomerService implements ICustomerService<CustomerDTO, CustomerIdsDTO> {
+public class CustomerService implements ICustomerService<CustomerDTO> {
 
     private final CustomerRepository customerRepository;
 
@@ -77,20 +76,8 @@ public class CustomerService implements ICustomerService<CustomerDTO, CustomerId
      * @return list of IDs
      */
     @Override
-    public List<CustomerIdsDTO> findIdsOfAllCustomers() {
+    public List<String> findIdsOfAllCustomers() {
         return customerRepository.findIdsOfAllCustomers();
-    }
-
-    /**
-     * Find ID of each customer in one JSON response as a list paginated
-     *
-     * @param page how many pages to show
-     * @param size number of elements per page
-     * @return page of the IDs
-     */
-    @Override
-    public Page<CustomerIdsDTO> findIdsOfAllCustomersPaginated(int page, int size) {
-        return customerRepository.findIdsOfAllCustomersPaginated(PageRequest.of(page, size));
     }
 
     /**

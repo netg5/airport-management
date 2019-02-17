@@ -16,17 +16,19 @@
 
 package org.sergei.reservationservice.rest.hateoas;
 
+import org.sergei.reservationservice.config.properties.GatewayProperties;
 import org.sergei.reservationservice.rest.AircraftController;
 import org.sergei.reservationservice.rest.CustomerController;
 import org.sergei.reservationservice.rest.ReservationController;
 import org.sergei.reservationservice.rest.RouteController;
 import org.sergei.reservationservice.rest.dto.*;
-import org.sergei.reservationservice.config.properties.GatewayProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resources;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.util.List;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -67,7 +69,13 @@ public class LinkUtil {
         return setServletResourceLinks(customerList);
     }
 
-    public Resources setLinksForIdsOfCustomers(Iterable<CustomerIdsDTO> customerIdsDTOList) {
+    /**
+     * Set links for the mehod where IDs of all customers are retrieved
+     *
+     * @param customerIdsDTOList collection with IDs of all customers
+     * @return collection with links set
+     */
+    public Resources setLinksForIdsOfCustomers(List<String> customerIdsDTOList) {
         Resources resources = setServletResourceLinks(customerIdsDTOList);
         Link allCustomers = linkTo(methodOn(CustomerController.class).getAllCustomers()).withRel("allCustomers");
         resources.add(allCustomers);

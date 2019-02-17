@@ -16,29 +16,17 @@
 
 package org.sergei.reservationservice.service;
 
-import org.springframework.data.domain.Page;
-
 import java.util.List;
 
 /**
  * @param <D> Simple DTO
- * @param <I> DTO with customer IDs
  * @author Sergei Visotsky
  */
-public interface ICustomerService<D, I> extends IService<D> {
+public interface ICustomerService<D> extends IService<D> {
     /**
      * Find ID of each customer in one JSON response as a list
      *
      * @return list of IDs
      */
-    List<I> findIdsOfAllCustomers();
-
-    /**
-     * Find ID of each customer in one JSON response as a list paginated
-     *
-     * @param page how many pages to show
-     * @param size number of elements per page
-     * @return page of the IDs
-     */
-    Page<I> findIdsOfAllCustomersPaginated(int page, int size);
+    List<String> findIdsOfAllCustomers();
 }

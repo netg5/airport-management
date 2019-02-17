@@ -17,10 +17,8 @@
 package org.sergei.reservationservice.rest;
 
 import io.swagger.annotations.*;
-import org.sergei.reservationservice.rest.hateoas.LinkUtil;
 import org.sergei.reservationservice.rest.dto.CustomerDTO;
-import org.sergei.reservationservice.rest.dto.CustomerIdsDTO;
-import org.sergei.reservationservice.service.CustomerService;
+import org.sergei.reservationservice.rest.hateoas.LinkUtil;
 import org.sergei.reservationservice.service.ICustomerService;
 import org.sergei.reservationservice.service.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,10 +45,10 @@ import java.util.Map;
 public class CustomerController {
 
     private final LinkUtil linkUtil;
-    private final ICustomerService<CustomerDTO, CustomerIdsDTO> customerService;
+    private final ICustomerService<CustomerDTO> customerService;
 
     @Autowired
-    public CustomerController(LinkUtil linkUtil, CustomerService customerService) {
+    public CustomerController(LinkUtil linkUtil, ICustomerService<CustomerDTO> customerService) {
         this.linkUtil = linkUtil;
         this.customerService = customerService;
     }
@@ -65,18 +63,8 @@ public class CustomerController {
     @ApiOperation("Get IDs of all existing customers")
     @GetMapping("/ids")
     public ResponseEntity<Resources> getIdsOfAllCustomers() {
-        List<CustomerIdsDTO> customerIdDTOList = customerService.findIdsOfAllCustomers();
+        List<String> customerIdDTOList = customerService.findIdsOfAllCustomers();
         return new ResponseEntity<>(linkUtil.setLinksForIdsOfCustomers(customerIdDTOList), HttpStatus.OK);
-    }
-
-    @ApiOperation("Get IDs of all existing customers paginated")
-    @GetMapping(value = "/ids", params = {"page", "size"})
-    public ResponseEntity<Resources> getIdsOfAllCustomersPaginated(@ApiParam(value = "Number of the page")
-                                                                   @RequestParam("page") int page,
-                                                                   @ApiParam(value = "Maximum number of content blocks on the page")
-                                                                   @RequestParam("size") int size) {
-        Page<CustomerIdsDTO> customerIdPage = customerService.findIdsOfAllCustomersPaginated(page, size);
-        return new ResponseEntity<>(linkUtil.setLinksForIdsOfCustomers(customerIdPage), HttpStatus.OK);
     }
 
     @ApiOperation("Get all customers paginated")
