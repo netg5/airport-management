@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sergei.frontendservice.config.properties;
+package org.sergei.frontendservice.properties;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

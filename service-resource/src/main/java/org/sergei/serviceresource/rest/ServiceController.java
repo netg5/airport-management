@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sergei.serviceresource.controller;
+package org.sergei.serviceresource.rest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

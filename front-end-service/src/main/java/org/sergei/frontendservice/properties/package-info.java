@@ -17,4 +17,4 @@
 /**
  * @author Sergei Visotsky
  */
-package org.sergei.serviceresource.controller;
+package org.sergei.frontendservice.properties;

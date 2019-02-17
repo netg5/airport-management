@@ -14,7 +14,26 @@
  * limitations under the License.
  */
 
+package org.sergei.serviceresource;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
+import org.springframework.web.client.RestTemplate;
+
 /**
  * @author Sergei Visotsky
  */
-package org.sergei.serviceresource.config;
+@Configuration
+public class ServiceResourceConfig {
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
+
+    @Bean
+    public HttpHeaders httpHeaders() {
+        return new HttpHeaders();
+    }
+}

@@ -14,14 +14,40 @@
  * limitations under the License.
  */
 
-package org.sergei.frontendservice.config;
+package org.sergei.frontendservice;
 
+import org.sergei.frontendservice.aop.LoggingAspect;
+import org.sergei.frontendservice.aop.PerformanceAspect;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * @author Sergei Visotsky
  */
 @Configuration
-public class WebMmvConfig implements WebMvcConfigurer {
+public class FrontEndConfig implements WebMvcConfigurer {
+
+    @Bean
+    public PerformanceAspect performanceAspect() {
+        return new PerformanceAspect();
+    }
+
+    @Bean
+    public LoggingAspect loggingAspect() {
+        return new LoggingAspect();
+    }
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
+
+    @Bean
+    public HttpHeaders httpHeaders() {
+        return new HttpHeaders();
+    }
+
 }

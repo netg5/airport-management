@@ -18,7 +18,7 @@ package org.sergei.frontendservice.service;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.sergei.frontendservice.model.AuthTokenInfo;
-import org.sergei.frontendservice.config.properties.OAuthClientProperties;
+import org.sergei.frontendservice.properties.OAuthClientProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
