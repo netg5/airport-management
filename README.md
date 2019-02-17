@@ -100,9 +100,8 @@ with `spring.cloud.config.server.native.searchLocations: file:///${user.home}/co
 file in `config-service` or create another repository and change the path to it by changing 
 property `spring.cloud.config.server.git.uri`
 3. Change `server.port` for each service if needed which configs are located in the repository above and other configs 
-that are not locates in config repository in `1.` paragraph
-4. Change `server.http.port` so that it was able to organize redirect from _HTTP_ to _HTTPS_
-5. Change database driver for your database.
+that are not located in config repository mentioned in `1.` paragraph
+4. Change database driver for your database.
 
 _Example for MySQL:_
 ```xml
@@ -112,22 +111,22 @@ _Example for MySQL:_
     <scope>runtime</scope>
 </dependency>
 ```
-6. Change the value of database driver property `spring.datasource.driver-class-name` in config file located in repo 
+5. Change the value of database driver property `spring.datasource.driver-class-name` in config file located in repo 
 called `flight-reservation-config` for each service which communicates with database
-7. Change database url property: `spring.datasource.url`
-8. Change database url property: `spring.datasource.username`
-9. Change database url property: `spring.datasource.password`
-10. Change SQL dialect modifying this property: `spring.jpa.properties.hibernate.dialect`
-11. Open SQL file `oauth_schema.sql` script located in auth-service under `resources/sql` and change database name to yours
-12. Open directory database amd execute all SQL files located there
+6. Change database url property: `spring.datasource.url`
+7. Change database url property: `spring.datasource.username`
+8. Change database url property: `spring.datasource.password`
+9. Change SQL dialect modifying this property: `spring.jpa.properties.hibernate.dialect`
+10. Open SQL file `oauth_schema.sql` script located in auth-service under `resources/sql` and change database name to yours
+11. Open directory database amd execute all SQL files located there
 your database (NOTE: MySQL dialect was used in this case due to this MySQL is preferable choice) 
-13. Open `application-prod.yml` config file located in config repository for this services `flight-service`, `ticket service` 
+12. Open `application-prod.yml` config file located in config repository for this services `flight-service`, `ticket service` 
 and `auth-service` and setup your database url and credentials or in each service `application-dev.yml` in case of _dev_ profile
-14. Application port and port in `security.oauth2.resource.accessTokenUri` property might be changed in your case
-15. Open `logback-spring.xml` for each microservice and setup directory where all your logging files are going to saved
-16. Each service has additional dev profile config file and in case you want to use it you should 
+13. Application port and port in `security.oauth2.resource.accessTokenUri` property might be changed in your case
+14. Open `logback-spring.xml` for each microservice and setup directory where all your logging files are going to saved
+15. Each service has additional dev profile config file and in case you want to use it you should 
 change property `spring.profiles.active` value from _prod_ to _dev_ and you can use development profile
-17. Change port for each microservice in _docker-compose.yml_ for yours
+16. Change port for each microservice in _docker-compose.yml_ for yours
 
 **__NOTE: If you change any port it should be changed in all places where it is used e.g. all depending microservices.__**
 
@@ -146,7 +145,7 @@ _Steps to get ready with docker-compose:_
 
 1. Build each microservice executing the following command foe each service:
 ```text
-$ ./mvnw clean package spring-boot:repackage
+./mvnw clean package spring-boot:repackage
 ```
 
 2. Next step: check docker-compose for syntax errors:
