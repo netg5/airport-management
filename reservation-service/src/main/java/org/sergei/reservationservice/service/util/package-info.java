@@ -17,4 +17,4 @@
 /**
  * @author Sergei Visotsky
  */
-package org.sergei.reportservice.service;
+package org.sergei.reservationservice.service.util;
