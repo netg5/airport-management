@@ -201,5 +201,3 @@ docker inspect CONTAINER_NAME
 
 ## Architecture diagram
 <img src="media/architecture_design.png" alt="architecture"/>
-
-Full image can be seen on Google Docs - [https://docs.google.com/drawings/d/13CZ5LxMtIG7big312Cn5tpQRkvf_Gy9doBPqZF8xiMQ/edit?usp=sharing](https://docs.google.com/drawings/d/13CZ5LxMtIG7big312Cn5tpQRkvf_Gy9doBPqZF8xiMQ/edit?usp=sharing)
