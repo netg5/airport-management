@@ -30,15 +30,27 @@ import java.util.List;
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 
     @Query(
-            value = "select * from reservation r join aircraft_report_view ar " +
-                    "on r.route_id = ar.route_id where ar.route_id = ?1",
+            value = "SELECT \n" +
+                    "    *\n" +
+                    "FROM\n" +
+                    "    reservation r\n" +
+                    "        LEFT JOIN\n" +
+                    "    aircraft_report_view ar ON r.route_id = ar.route_id\n" +
+                    "WHERE\n" +
+                    "    ar.route_id = ?1",
             nativeQuery = true
     )
     List<Reservation> findAllByRouteId(Long routeId);
 
     @Query(
-            value = "select * from reservation r join customer c " +
-                    "on r.customer_id = c.customer_id where r.customer_id = ?1",
+            value = "SELECT \n" +
+                    "    *\n" +
+                    "FROM\n" +
+                    "    reservation r\n" +
+                    "        LEFT JOIN\n" +
+                    "    customer c ON r.customer_id = c.customer_id\n" +
+                    "WHERE\n" +
+                    "    r.customer_id = ?1",
             nativeQuery = true
     )
     List<Reservation> findAllByCustomerId(Long customerId);

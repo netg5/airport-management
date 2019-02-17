@@ -39,9 +39,14 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
      * @param distance   distance by which ticket should be found
      * @return list of the found tickets
      */
-    @Query("SELECT t FROM Ticket t WHERE t.customerId = ?1 " +
-            "AND (?2 IS NULL OR t.place = ?2) " +
-            "AND (?3 IS NULL OR t.distance = ?3)")
+    @Query("SELECT \n" +
+            "    t\n" +
+            "FROM\n" +
+            "    Ticket t\n" +
+            "WHERE\n" +
+            "    t.customerId = ?1\n" +
+            "        AND (?2 IS NULL OR t.place = ?2)\n" +
+            "        AND (?3 IS NULL OR t.distance = ?3)")
     List<Ticket> findAllTickets(Long customerId, String place, Double distance);
 
     /**
@@ -53,9 +58,14 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
      * @param pageable   page number and element quantity per page
      * @return list of found tickets
      */
-    @Query("SELECT t FROM Ticket t WHERE t.customerId = ?1 " +
-            "AND (?2 IS NULL OR t.place = ?2) " +
-            "AND (?3 IS NULL OR t.distance = ?3)")
+    @Query("SELECT \n" +
+            "    t\n" +
+            "FROM\n" +
+            "    Ticket t\n" +
+            "WHERE\n" +
+            "    t.customerId = ?1\n" +
+            "        AND (?2 IS NULL OR t.place = ?2)\n" +
+            "        AND (?3 IS NULL OR t.distance = ?3)")
     Page<Ticket> findAllTicketsPageable(Long customerId, String place,
                                         Double distance, Pageable pageable);
 }

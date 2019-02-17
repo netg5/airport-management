@@ -38,8 +38,14 @@ public interface AircraftRepository extends JpaRepository<Aircraft, Long> {
      * @param model         aircraft model
      * @return aircraft entity
      */
-    @Query("select a from Aircraft a where aircraftName = ?1 " +
-            "and aircraftWeight = ?2 and maxPassengers = ?3 and model = ?4")
+    @Query("SELECT \n" +
+            "    a\n" +
+            "FROM\n" +
+            "    Aircraft a\n" +
+            "WHERE\n" +
+            "    aircraftName = ?1 AND aircraftWeight = ?2\n" +
+            "        AND maxPassengers = ?3\n" +
+            "        AND model = ?4")
     Optional<Aircraft> findAircraftByMultipleParams(String aircraftName, Double weight,
                                                     Integer maxPassengers, String model);
 }
