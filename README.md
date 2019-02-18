@@ -200,4 +200,4 @@ docker inspect CONTAINER_NAME
 **__NOTE: `config-service` and `eureka-service` should be run first due to all the configs are stored in the separate repository.__**
 
 ## Architecture diagram
-<img src="architecture_design.png" alt="architecture"/>
+<img src="images/architecture_design.svg" alt="architecture"/>
