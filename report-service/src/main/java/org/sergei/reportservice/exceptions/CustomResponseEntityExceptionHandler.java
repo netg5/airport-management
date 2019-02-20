@@ -34,7 +34,6 @@ import java.util.Date;
 /**
  * @author Sergei Visotsky
  */
-@RestController
 @ControllerAdvice
 public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
