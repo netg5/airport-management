@@ -17,19 +17,21 @@
 package org.sergei.reportservice.service;
 
 import org.sergei.common.Constants;
+import org.sergei.common.ObjectMapperUtil;
 import org.sergei.common.exceptions.ResourceNotFoundException;
 import org.sergei.reportservice.model.AircraftReport;
 import org.sergei.reportservice.model.Reservation;
 import org.sergei.reportservice.repository.AircraftReportRepository;
 import org.sergei.reportservice.repository.ReservationRepository;
 import org.sergei.reportservice.rest.dto.AircraftReportDTO;
-import org.sergei.reportservice.util.ObjectMapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static org.sergei.common.ObjectMapperUtil.*;
 
 /**
  * @author Sergei Visotsky
@@ -60,7 +62,7 @@ public class AircraftReportService implements IReportService<AircraftReportDTO> 
                 aircraftReportRepository.findAll(PageRequest.of(page, size));
 
         Page<AircraftReportDTO> aircraftReportDTOS =
-                ObjectMapperUtil.mapAllPages(aircraftReports, AircraftReportDTO.class);
+                mapAllPages(aircraftReports, AircraftReportDTO.class);
 
         aircraftReportDTOS.forEach(reportDTO -> {
             List<Reservation> reservationList =
@@ -83,7 +85,7 @@ public class AircraftReportService implements IReportService<AircraftReportDTO> 
                         () -> new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
                 );
         List<Reservation> reservationList = reservationRepository.findAllByRouteId(aircraftReport.getRouteId());
-        AircraftReportDTO aircraftReportDTO = ObjectMapperUtil.map(aircraftReport, AircraftReportDTO.class);
+        AircraftReportDTO aircraftReportDTO = map(aircraftReport, AircraftReportDTO.class);
         aircraftReportDTO.setReservations(reservationList);
         return aircraftReportDTO;
     }

@@ -26,7 +26,6 @@ import org.sergei.reservationservice.rest.dto.AircraftDTO;
 import org.sergei.reservationservice.rest.dto.RouteDTO;
 import org.sergei.reservationservice.rest.dto.RouteExtendedDTO;
 import org.sergei.reservationservice.service.util.ServiceComponent;
-import org.sergei.reservationservice.util.ObjectMapperUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +38,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
-import static org.sergei.reservationservice.util.ObjectMapperUtil.map;
+import static org.sergei.common.ObjectMapperUtil.*;
 
 /**
  * @author Sergei Visotsky
@@ -86,7 +85,7 @@ public class RouteService implements IRouteService<RouteDTO, RouteExtendedDTO> {
     @Override
     public List<RouteExtendedDTO> findAllRoutes() {
         List<Route> routeList = routeRepository.findAll();
-        List<RouteExtendedDTO> routeExtendedDTOList = ObjectMapperUtil.mapAll(routeList, RouteExtendedDTO.class);
+        List<RouteExtendedDTO> routeExtendedDTOList = mapAll(routeList, RouteExtendedDTO.class);
 
         int counter = 0;
         for (RouteExtendedDTO routeExtendedDTO : routeExtendedDTOList) {
@@ -113,7 +112,7 @@ public class RouteService implements IRouteService<RouteDTO, RouteExtendedDTO> {
     @Override
     public Page<RouteExtendedDTO> findAllRoutesPaginated(int page, int size) {
         Page<Route> routePage = routeRepository.findAll(PageRequest.of(page, size));
-        Page<RouteExtendedDTO> routeExtendedDTOList = ObjectMapperUtil.mapAllPages(routePage, RouteExtendedDTO.class);
+        Page<RouteExtendedDTO> routeExtendedDTOList = mapAllPages(routePage, RouteExtendedDTO.class);
         int counter = 0;
         for (RouteExtendedDTO routeExtendedDTO : routeExtendedDTOList) {
             Aircraft aircraft = aircraftRepository.findById(routePage.getContent().get(counter).getAircraft().getAircraftId())

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sergei.reservationservice.util;
+package org.sergei.common;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;

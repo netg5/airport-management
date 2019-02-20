@@ -29,7 +29,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static org.sergei.reportservice.util.ObjectMapperUtil.map;
+import static org.sergei.common.ObjectMapperUtil.map;
 
 /**
  * @author Sergei Visotsky
