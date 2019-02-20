@@ -16,9 +16,9 @@
 
 package org.sergei.authservice.service;
 
-import org.sergei.authservice.exceptions.ResourceNotFoundException;
 import org.sergei.authservice.model.ApiUserDetails;
 import org.sergei.authservice.repository.UserRepository;
+import org.sergei.library.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

@@ -14,7 +14,22 @@
  * limitations under the License.
  */
 
+package org.sergei.library.exceptions;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.Date;
+
 /**
  * @author Sergei Visotsky
  */
-package org.sergei.reservationservice.exceptions;
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+class ErrorDetails {
+    private Date timestamp;
+    private String message;
+    private String details;
+}

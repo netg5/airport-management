@@ -49,6 +49,7 @@
         <module>ticket-service</module>
         <module>report-service</module>
         <module>front-end-service</module>
+        <module>class-library</module>
     </modules>
 
     <properties>
@@ -143,11 +144,21 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>org.sergei</groupId>
+                <artifactId>class-library</artifactId>
+                <version>${parent.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
                 <version>${spring-cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-jwt</artifactId>
+                <version>1.0.9.RELEASE</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

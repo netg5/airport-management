@@ -16,16 +16,16 @@
 
 package org.sergei.reservationservice.service;
 
-import org.sergei.reservationservice.rest.dto.ReservationDTO;
-import org.sergei.reservationservice.rest.dto.ReservationExtendedDTO;
-import org.sergei.reservationservice.exceptions.ResourceNotFoundException;
+import org.sergei.library.Constants;
+import org.sergei.library.exceptions.ResourceNotFoundException;
 import org.sergei.reservationservice.model.Customer;
 import org.sergei.reservationservice.model.Reservation;
 import org.sergei.reservationservice.model.Route;
 import org.sergei.reservationservice.repository.CustomerRepository;
 import org.sergei.reservationservice.repository.ReservationRepository;
 import org.sergei.reservationservice.repository.RouteRepository;
-import org.sergei.reservationservice.service.util.Constants;
+import org.sergei.reservationservice.rest.dto.ReservationDTO;
+import org.sergei.reservationservice.rest.dto.ReservationExtendedDTO;
 import org.sergei.reservationservice.service.util.ServiceComponent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

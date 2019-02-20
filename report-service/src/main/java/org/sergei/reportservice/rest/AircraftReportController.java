@@ -17,10 +17,10 @@
 package org.sergei.reportservice.rest;
 
 import io.swagger.annotations.*;
-import org.sergei.reportservice.rest.hateoas.LinkUtil;
+import org.sergei.library.Constants;
 import org.sergei.reportservice.rest.dto.AircraftReportDTO;
+import org.sergei.reportservice.rest.hateoas.LinkUtil;
 import org.sergei.reportservice.service.AircraftReportService;
-import org.sergei.reportservice.service.Constants;
 import org.sergei.reportservice.service.IReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

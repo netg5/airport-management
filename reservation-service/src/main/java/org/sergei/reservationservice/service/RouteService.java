@@ -16,15 +16,15 @@
 
 package org.sergei.reservationservice.service;
 
-import org.sergei.reservationservice.rest.dto.AircraftDTO;
-import org.sergei.reservationservice.rest.dto.RouteDTO;
-import org.sergei.reservationservice.rest.dto.RouteExtendedDTO;
-import org.sergei.reservationservice.exceptions.ResourceNotFoundException;
+import org.sergei.library.Constants;
+import org.sergei.library.exceptions.ResourceNotFoundException;
 import org.sergei.reservationservice.model.Aircraft;
 import org.sergei.reservationservice.model.Route;
 import org.sergei.reservationservice.repository.AircraftRepository;
 import org.sergei.reservationservice.repository.RouteRepository;
-import org.sergei.reservationservice.service.util.Constants;
+import org.sergei.reservationservice.rest.dto.AircraftDTO;
+import org.sergei.reservationservice.rest.dto.RouteDTO;
+import org.sergei.reservationservice.rest.dto.RouteExtendedDTO;
 import org.sergei.reservationservice.service.util.ServiceComponent;
 import org.sergei.reservationservice.util.ObjectMapperUtil;
 import org.slf4j.Logger;

@@ -17,11 +17,11 @@
 package org.sergei.reservationservice.rest;
 
 import io.swagger.annotations.*;
-import org.sergei.reservationservice.rest.hateoas.LinkUtil;
+import org.sergei.library.Constants;
 import org.sergei.reservationservice.rest.dto.AircraftDTO;
+import org.sergei.reservationservice.rest.hateoas.LinkUtil;
 import org.sergei.reservationservice.service.AircraftService;
 import org.sergei.reservationservice.service.IAircraftService;
-import org.sergei.reservationservice.service.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.hateoas.Resources;
