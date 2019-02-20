@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sergei.library.exceptions;
+package org.sergei.common.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

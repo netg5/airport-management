@@ -16,8 +16,8 @@
 
 package org.sergei.reservationservice.service;
 
-import org.sergei.library.Constants;
-import org.sergei.library.exceptions.ResourceNotFoundException;
+import org.sergei.common.Constants;
+import org.sergei.common.exceptions.ResourceNotFoundException;
 import org.sergei.reservationservice.model.Aircraft;
 import org.sergei.reservationservice.model.Route;
 import org.sergei.reservationservice.repository.AircraftRepository;

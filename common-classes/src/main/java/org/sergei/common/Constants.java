@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sergei.library;
+package org.sergei.common;
 
 /**
  * Constants that are used in service layer

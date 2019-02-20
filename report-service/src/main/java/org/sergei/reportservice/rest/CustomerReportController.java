@@ -20,7 +20,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.sergei.library.Constants;
+import org.sergei.common.Constants;
 import org.sergei.reportservice.rest.dto.CustomerReportDTO;
 import org.sergei.reportservice.rest.hateoas.LinkUtil;
 import org.sergei.reportservice.service.CustomerReportService;

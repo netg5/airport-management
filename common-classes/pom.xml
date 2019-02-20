@@ -13,7 +13,7 @@
     <artifactId>class-library</artifactId>
     <packaging>jar</packaging>
 
-    <name>class-library</name>
+    <name>common-classes</name>
     <description>Library to store classes used in all services</description>
 
 </project>

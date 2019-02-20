@@ -16,8 +16,8 @@
 
 package org.sergei.ticketservice.service;
 
-import org.sergei.library.Constants;
-import org.sergei.library.exceptions.ResourceNotFoundException;
+import org.sergei.common.Constants;
+import org.sergei.common.exceptions.ResourceNotFoundException;
 import org.sergei.ticketservice.model.Ticket;
 import org.sergei.ticketservice.repository.CustomerRepository;
 import org.sergei.ticketservice.repository.TicketRepository;

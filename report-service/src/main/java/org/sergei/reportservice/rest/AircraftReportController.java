@@ -17,7 +17,7 @@
 package org.sergei.reportservice.rest;
 
 import io.swagger.annotations.*;
-import org.sergei.library.Constants;
+import org.sergei.common.Constants;
 import org.sergei.reportservice.rest.dto.AircraftReportDTO;
 import org.sergei.reportservice.rest.hateoas.LinkUtil;
 import org.sergei.reportservice.service.AircraftReportService;

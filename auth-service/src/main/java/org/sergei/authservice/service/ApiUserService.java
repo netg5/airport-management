@@ -18,7 +18,7 @@ package org.sergei.authservice.service;
 
 import org.sergei.authservice.model.User;
 import org.sergei.authservice.repository.UserRepository;
-import org.sergei.library.exceptions.ResourceNotFoundException;
+import org.sergei.common.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

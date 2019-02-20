@@ -17,4 +17,4 @@
 /**
  * @author Sergei Visotsky
  */
-package org.sergei.library.exceptions;
+package org.sergei.common;

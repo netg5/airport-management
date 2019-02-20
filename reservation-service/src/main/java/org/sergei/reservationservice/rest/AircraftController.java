@@ -17,7 +17,7 @@
 package org.sergei.reservationservice.rest;
 
 import io.swagger.annotations.*;
-import org.sergei.library.Constants;
+import org.sergei.common.Constants;
 import org.sergei.reservationservice.rest.dto.AircraftDTO;
 import org.sergei.reservationservice.rest.hateoas.LinkUtil;
 import org.sergei.reservationservice.service.AircraftService;

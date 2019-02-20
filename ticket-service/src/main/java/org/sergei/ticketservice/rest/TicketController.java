@@ -17,7 +17,7 @@
 package org.sergei.ticketservice.rest;
 
 import io.swagger.annotations.*;
-import org.sergei.library.Constants;
+import org.sergei.common.Constants;
 import org.sergei.ticketservice.model.Ticket;
 import org.sergei.ticketservice.rest.hateoas.LinkUtil;
 import org.sergei.ticketservice.service.TicketService;
