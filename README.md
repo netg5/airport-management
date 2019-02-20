@@ -18,6 +18,7 @@ reserve flight and see all tickets for a particular customer.
 * config-service - serivce which makes calls to the repository where all configurations are stored - 
 [https://github.com/sergeivisotsky/flight-reservation-config](https://github.com/sergeivisotsky/flight-reservation-config)
 * auth-service - service responsible for authentication and authorization
+* class-library - library to store all common class files for all services
 * eureka-service - service registry where of all microservices can be observed
 * doc-service - Swagger documentation service
 * service-resource - service to experiment with the new features
