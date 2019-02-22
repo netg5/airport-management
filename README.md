@@ -13,6 +13,7 @@ reserve flight and see all tickets for a particular customer.
 * Jackson
 * Swagger
 * Thymeleaf
+* Twitter Bootstrap
 
 ## Services
 * config-service - serivce which makes calls to the repository where all configurations are stored - 
@@ -25,7 +26,7 @@ reserve flight and see all tickets for a particular customer.
 * reservation-service - service which allows to reserve flight
 * ticket-service - service where all customer tickets can be seen
 * report-service - service to get all reports for a specific purpose (e.g. route report)
-* front-end-service - user interface service
+* front-end-service - user interface service (Thymeleaf + Twitter Bootstrap)
 
 ## Authentication
 To access any resource authentication should be performed. By performing this request with such a parameters access_token is retrieved.
