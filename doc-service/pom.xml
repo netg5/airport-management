@@ -11,7 +11,7 @@
 
     <artifactId>doc-service</artifactId>
     <packaging>jar</packaging>
-    <name>doc-service</name>
+    <name>Documentation</name>
     <description>Document microservice</description>
 
     <properties>

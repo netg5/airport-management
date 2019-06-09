@@ -11,7 +11,7 @@
 
     <artifactId>report-service</artifactId>
     <packaging>jar</packaging>
-    <name>report-service</name>
+    <name>Report service</name>
     <description>Service for reports</description>
 
     <properties>
@@ -22,7 +22,7 @@
     <dependencies>
         <dependency>
             <groupId>org.sergei</groupId>
-            <artifactId>common-classes</artifactId>
+            <artifactId>common</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

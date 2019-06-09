@@ -11,8 +11,8 @@
 
     <artifactId>service-resource</artifactId>
     <packaging>jar</packaging>
-    <name>service-resource</name>
-    <description>Service resource microservice</description>
+    <name>Service resource</name>
+    <description>Service resource microservice for testing purposes</description>
 
     <dependencies>
         <dependency>

@@ -11,7 +11,7 @@
 
     <artifactId>eureka-service</artifactId>
     <packaging>jar</packaging>
-    <name>eureka-service</name>
+    <name>Eureka discovery</name>
     <description>Service registry</description>
 
     <dependencies>

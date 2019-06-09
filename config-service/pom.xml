@@ -11,7 +11,7 @@
 
     <artifactId>config-service</artifactId>
     <packaging>jar</packaging>
-    <name>config-service</name>
+    <name>Config service</name>
     <description>Configuration microservice</description>
 
     <dependencies>

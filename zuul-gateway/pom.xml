@@ -11,8 +11,8 @@
 
     <artifactId>zuul-gateway</artifactId>
     <packaging>jar</packaging>
-    <name>zuul-gateway</name>
-    <description>Zuul gateway microservice</description>
+    <name>Gateway</name>
+    <description>Zuul gateway microservice - entry poin for the all endpoints</description>
 
     <dependencies>
         <dependency>

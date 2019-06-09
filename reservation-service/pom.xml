@@ -11,7 +11,7 @@
 
     <artifactId>reservation-service</artifactId>
     <packaging>jar</packaging>
-    <name>reservation-service</name>
+    <name>Reservation service</name>
     <description>Service to perform flight reservation</description>
 
     <properties>
@@ -22,7 +22,7 @@
     <dependencies>
         <dependency>
             <groupId>org.sergei</groupId>
-            <artifactId>common-classes</artifactId>
+            <artifactId>common</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

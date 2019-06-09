@@ -14,7 +14,7 @@
     <artifactId>flight-reservation</artifactId>
     <version>2.3.3-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>flight-reservation</name>
+    <name>Flight reservation</name>
     <url>https://github.com/sergeivisotsky/flight-reservation</url>
     <description>Application to reserve flights based on the microservice architecture</description>
 
@@ -39,7 +39,7 @@
     </developers>
 
     <modules>
-        <module>common-classes</module>
+        <module>common</module>
         <module>config-service</module>
         <module>service-resource</module>
         <module>doc-service</module>
@@ -100,7 +100,7 @@
         <dependencies>
             <dependency>
                 <groupId>org.sergei</groupId>
-                <artifactId>common-classes</artifactId>
+                <artifactId>common</artifactId>
                 <version>${parent.version}</version>
             </dependency>
             <dependency>

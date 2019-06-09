@@ -11,7 +11,7 @@
 
     <artifactId>auth-service</artifactId>
     <packaging>jar</packaging>
-    <name>auth-service</name>
+    <name>Authentication service</name>
     <description>Authentication microservice</description>
 
     <properties>
@@ -21,7 +21,7 @@
     <dependencies>
         <dependency>
             <groupId>org.sergei</groupId>
-            <artifactId>common-classes</artifactId>
+            <artifactId>common</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

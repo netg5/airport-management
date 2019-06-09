@@ -10,10 +10,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>common-classes</artifactId>
+    <artifactId>common</artifactId>
     <packaging>jar</packaging>
 
-    <name>common-classes</name>
+    <name>Common classes</name>
     <description>Library to store classes used in all services</description>
 
     <dependencies>

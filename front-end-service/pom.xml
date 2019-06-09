@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>front-end-service</artifactId>
-    <name>front-end-service</name>
+    <name>User Interface</name>
     <description>Projects' Front-end service</description>
 
     <dependencies>
