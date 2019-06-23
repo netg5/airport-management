@@ -16,9 +16,8 @@
 
 package org.sergei.reservationservice.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.sergei.reservationservice.config.properties.GatewayProperties;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -43,11 +42,10 @@ import static org.springframework.security.oauth2.provider.token.AccessTokenConv
 /**
  * @author Sergei Visotsky
  */
+@Slf4j
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(SwaggerConfig.class);
 
     private final GatewayProperties gatewayProperties;
 
@@ -102,7 +100,7 @@ public class SwaggerConfig {
         authorizationScopeList.add(new AuthorizationScope("write", "write all"));
 
         List<GrantType> grantTypes = new ArrayList<>();
-        LOGGER.debug("OAuth2 token URI is: {}", authServer);
+        log.debug("OAuth2 token URI is: {}", authServer);
         GrantType grantType = new ResourceOwnerPasswordCredentialsGrant(authServer);
         grantTypes.add(grantType);
 

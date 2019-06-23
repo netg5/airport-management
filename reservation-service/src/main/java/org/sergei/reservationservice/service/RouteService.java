@@ -16,6 +16,7 @@
 
 package org.sergei.reservationservice.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.sergei.common.Constants;
 import org.sergei.common.exceptions.ResourceNotFoundException;
 import org.sergei.reservationservice.model.Aircraft;
@@ -26,8 +27,6 @@ import org.sergei.reservationservice.rest.dto.AircraftDTO;
 import org.sergei.reservationservice.rest.dto.RouteDTO;
 import org.sergei.reservationservice.rest.dto.RouteExtendedDTO;
 import org.sergei.reservationservice.service.util.ServiceComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -43,10 +42,9 @@ import static org.sergei.common.ObjectMapperUtil.*;
 /**
  * @author Sergei Visotsky
  */
+@Slf4j
 @Service
 public class RouteService implements IRouteService<RouteDTO, RouteExtendedDTO> {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(RouteService.class);
 
     private final AircraftRepository aircraftRepository;
     private final RouteRepository routeRepository;
@@ -142,10 +140,10 @@ public class RouteService implements IRouteService<RouteDTO, RouteExtendedDTO> {
                 .orElseThrow(() ->
                         new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
                 );
-        LOGGER.debug("Found aircraft ID: {}", aircraft.getAircraftId());
+        log.debug("Found aircraft ID: {}", aircraft.getAircraftId());
         route.setAircraft(aircraft);
         Route savedRoute = routeRepository.save(route);
-        LOGGER.debug("Aircraft ID in saved route: {}", savedRoute.getAircraft().getAircraftId());
+        log.debug("Aircraft ID in saved route: {}", savedRoute.getAircraft().getAircraftId());
         RouteDTO savedRouteDTO = map(savedRoute, RouteDTO.class);
         savedRouteDTO.setAircraftId(aircraft.getAircraftId());
         return savedRouteDTO;
