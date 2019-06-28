@@ -42,7 +42,6 @@
         <module>common</module>
         <module>config-service</module>
         <module>service-resource</module>
-        <module>doc-service</module>
         <module>auth-service</module>
         <module>eureka-service</module>
         <module>zuul-gateway</module>
