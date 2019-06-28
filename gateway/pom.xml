@@ -9,7 +9,7 @@
         <version>2.3.4-SNAPSHOT</version>
     </parent>
 
-    <artifactId>zuul-gateway</artifactId>
+    <artifactId>gateway</artifactId>
     <packaging>jar</packaging>
     <name>Gateway</name>
     <description>Zuul gateway microservice - entry poin for the all endpoints</description>

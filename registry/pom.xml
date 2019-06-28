@@ -9,10 +9,10 @@
         <version>2.3.4-SNAPSHOT</version>
     </parent>
 
-    <artifactId>config-service</artifactId>
+    <artifactId>registry</artifactId>
     <packaging>jar</packaging>
-    <name>Config service</name>
-    <description>Configuration microservice</description>
+    <name>Eureka discovery</name>
+    <description>Service registry</description>
 
     <dependencies>
         <dependency>
@@ -21,11 +21,7 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-config-server</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+            <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -33,6 +29,7 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
     <build>
         <plugins>
             <plugin>

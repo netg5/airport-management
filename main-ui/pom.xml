@@ -9,7 +9,7 @@
         <version>2.3.4-SNAPSHOT</version>
     </parent>
 
-    <artifactId>front-end-service</artifactId>
+    <artifactId>main-ui</artifactId>
     <name>User Interface</name>
     <description>Projects' Front-end service</description>
 
