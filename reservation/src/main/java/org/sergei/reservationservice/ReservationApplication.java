@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sergei.authservice;
+package org.sergei.reservationservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,8 +22,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-public class AuthServiceApplication {
-
+public class ReservationApplication {
 
     public static void main(String[] args) {
 
@@ -31,7 +30,7 @@ public class AuthServiceApplication {
             System.setProperty("-Dspring.profiles.active", "prod");
         }
 
-        SpringApplication.run(AuthServiceApplication.class, args);
+        SpringApplication.run(ReservationApplication.class, args);
     }
 
 }

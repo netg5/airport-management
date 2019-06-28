@@ -19,7 +19,7 @@ package org.sergei.authservice.repository;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.sergei.authservice.AuthServiceApplication;
+import org.sergei.authservice.AuthApplication;
 import org.sergei.authservice.model.User;
 import org.sergei.authservice.model.UserRoles;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 @Ignore
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = AuthServiceApplication.class)
+@SpringBootTest(classes = AuthApplication.class)
 @TestPropertySource(locations = "classpath:application-test.properties")
 @EnableJpaRepositories(basePackages = "org.sergei.authservice.repository")
 @EntityScan(basePackages = "org.sergei.authservice.model")

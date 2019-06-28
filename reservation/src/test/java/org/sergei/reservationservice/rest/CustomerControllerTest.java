@@ -19,7 +19,7 @@ package org.sergei.reservationservice.rest;
 import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.sergei.reservationservice.ReservationServiceApplication;
+import org.sergei.reservationservice.ReservationApplication;
 import org.sergei.reservationservice.model.Customer;
 import org.sergei.reservationservice.repository.CustomerRepository;
 import org.sergei.reservationservice.testconfig.ResourceServerConfiguration;
@@ -47,7 +47,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author Sergei Visotsky
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = ReservationServiceApplication.class)
+@SpringBootTest(classes = ReservationApplication.class)
 @TestPropertySource(locations = "classpath:application-test.properties")
 @AutoConfigureMockMvc
 @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})

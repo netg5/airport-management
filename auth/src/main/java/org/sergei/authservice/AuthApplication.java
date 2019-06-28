@@ -14,20 +14,16 @@
  * limitations under the License.
  */
 
-package org.sergei.reportservice;
+package org.sergei.authservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-public class ReportServiceApplication {
+public class AuthApplication {
+
 
     public static void main(String[] args) {
 
@@ -35,8 +31,7 @@ public class ReportServiceApplication {
             System.setProperty("-Dspring.profiles.active", "prod");
         }
 
-        SpringApplication.run(ReportServiceApplication.class, args);
+        SpringApplication.run(AuthApplication.class, args);
     }
 
 }
-

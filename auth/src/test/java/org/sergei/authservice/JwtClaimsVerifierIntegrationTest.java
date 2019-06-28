@@ -34,7 +34,7 @@ import static junit.framework.TestCase.assertTrue;
  */
 @Ignore
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = AuthServiceApplication.class)
+@SpringBootTest(classes = AuthApplication.class)
 @TestPropertySource(locations = "classpath:application-test.properties")
 public class JwtClaimsVerifierIntegrationTest {
 

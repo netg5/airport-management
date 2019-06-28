@@ -14,19 +14,17 @@
  * limitations under the License.
  */
 
-package org.sergei.zuulgateway;
+package org.sergei.configservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.cloud.config.server.EnableConfigServer;
 
 @SpringBootApplication
-@EnableZuulProxy
+@EnableConfigServer
 @EnableDiscoveryClient
-public class ZuulGatewayApplication {
+public class ConfigApplication {
 
     public static void main(String[] args) {
 
@@ -34,7 +32,7 @@ public class ZuulGatewayApplication {
             System.setProperty("-Dspring.profiles.active", "prod");
         }
 
-        SpringApplication.run(ZuulGatewayApplication.class, args);
+        SpringApplication.run(ConfigApplication.class, args);
     }
 
 }

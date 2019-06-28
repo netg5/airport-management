@@ -6,7 +6,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-public class FrontEndServiceApplication {
+public class MainUiApplication {
 
     public static void main(String[] args) {
 
@@ -14,7 +14,7 @@ public class FrontEndServiceApplication {
             System.setProperty("-Dspring.profiles.active", "prod");
         }
 
-        SpringApplication.run(FrontEndServiceApplication.class, args);
+        SpringApplication.run(MainUiApplication.class, args);
     }
 
 }

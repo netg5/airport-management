@@ -14,21 +14,24 @@
  * limitations under the License.
  */
 
-package org.sergei.eurekaservice;
+package org.sergei.reportservice;
 
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
-@Ignore
-@RunWith(SpringRunner.class)
-@SpringBootTest
-public class EurekaServiceApplicationTests {
+@SpringBootApplication
+@EnableDiscoveryClient
+public class ReportsApplication {
 
-	@Test
-	public void contextLoads() {
-	}
+    public static void main(String[] args) {
+
+        if (System.getProperty("-Dspring.profiles.active") == null) {
+            System.setProperty("-Dspring.profiles.active", "prod");
+        }
+
+        SpringApplication.run(ReportsApplication.class, args);
+    }
 
 }
+

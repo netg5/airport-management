@@ -19,7 +19,7 @@ package org.sergei.ticketservice.rest;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.sergei.ticketservice.TicketServiceApplication;
+import org.sergei.ticketservice.TicketsApplication;
 import org.sergei.ticketservice.testconfig.ResourceServerConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -43,7 +43,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @Ignore
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = TicketServiceApplication.class)
+@SpringBootTest(classes = TicketsApplication.class)
 @TestPropertySource(locations = "classpath:application-test.properties")
 @AutoConfigureMockMvc
 @ContextConfiguration(classes = {ResourceServerConfiguration.class})

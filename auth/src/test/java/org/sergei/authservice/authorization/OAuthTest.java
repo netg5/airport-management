@@ -20,7 +20,7 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.sergei.authservice.AuthServiceApplication;
+import org.sergei.authservice.AuthApplication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +46,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author Sergei Visotsky
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = AuthServiceApplication.class)
+@SpringBootTest(classes = AuthApplication.class)
 @TestPropertySource(locations = "classpath:application-test.properties")
 @WebAppConfiguration
 @AutoConfigureMockMvc

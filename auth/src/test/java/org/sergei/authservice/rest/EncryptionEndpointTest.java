@@ -18,7 +18,7 @@ package org.sergei.authservice.rest;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.sergei.authservice.AuthServiceApplication;
+import org.sergei.authservice.AuthApplication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -34,7 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author Sergei Visotsky
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = AuthServiceApplication.class)
+@SpringBootTest(classes = AuthApplication.class)
 @AutoConfigureMockMvc
 @TestPropertySource(locations = "classpath:application-test.properties")
 @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})

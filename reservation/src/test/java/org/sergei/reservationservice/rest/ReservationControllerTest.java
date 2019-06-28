@@ -20,7 +20,7 @@ import org.json.JSONObject;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.sergei.reservationservice.ReservationServiceApplication;
+import org.sergei.reservationservice.ReservationApplication;
 import org.sergei.reservationservice.model.Aircraft;
 import org.sergei.reservationservice.model.Customer;
 import org.sergei.reservationservice.model.Reservation;
@@ -58,7 +58,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @Ignore
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = ReservationServiceApplication.class)
+@SpringBootTest(classes = ReservationApplication.class)
 @TestPropertySource(locations = "classpath:application-test.properties")
 @AutoConfigureMockMvc
 @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})

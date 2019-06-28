@@ -14,20 +14,17 @@
  * limitations under the License.
  */
 
-package org.sergei.ticketservice;
+package org.sergei.zuulgateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 
 @SpringBootApplication
+@EnableZuulProxy
 @EnableDiscoveryClient
-public class TicketServiceApplication {
+public class GatewayApplication {
 
     public static void main(String[] args) {
 
@@ -35,7 +32,7 @@ public class TicketServiceApplication {
             System.setProperty("-Dspring.profiles.active", "prod");
         }
 
-        SpringApplication.run(TicketServiceApplication.class, args);
+        SpringApplication.run(GatewayApplication.class, args);
     }
 
 }
