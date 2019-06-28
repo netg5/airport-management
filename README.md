@@ -16,17 +16,16 @@ reserve flight and see all tickets for a particular customer.
 * Twitter Bootstrap
 
 ## Services
-* config-service - serivce which makes calls to the repository where all configurations are stored - 
+* config - serivce which makes calls to the repository where all configurations are stored - 
 [https://github.com/sergeivisotsky/flight-reservation-config](https://github.com/sergeivisotsky/flight-reservation-config)
-* auth-service - service responsible for authentication and authorization
-* eureka-service - service registry where of all microservices can be observed
-* doc-service - Swagger documentation service
+* auth - service responsible for authentication and authorization
+* registry - service registry where of all microservices can be observed
 * service-resource - service to experiment with the new features
-* zuul-gateway - entry point of the all services
-* reservation-service - service which allows to reserve flight
-* ticket-service - service where all customer tickets can be seen
-* report-service - service to get all reports for a specific purpose (e.g. route report)
-* front-end-service - user interface service (Thymeleaf + Twitter Bootstrap)
+* gateway - entry point of the all services
+* reservation - service which allows to reserve flight
+* tickets - service where all customer tickets can be seen
+* reports - service to get all reports for a specific purpose (e.g. route report)
+* main-ui - user interface service (Thymeleaf + Twitter Bootstrap)
 
 ## Authentication
 To access any resource authentication should be performed. By performing this request with such a parameters access_token is retrieved.
