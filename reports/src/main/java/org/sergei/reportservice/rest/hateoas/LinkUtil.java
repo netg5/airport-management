@@ -20,7 +20,7 @@ import org.sergei.reportservice.rest.AircraftReportController;
 import org.sergei.reportservice.rest.CustomerReportController;
 import org.sergei.reportservice.rest.dto.AircraftReportDTO;
 import org.sergei.reportservice.rest.dto.CustomerReportDTO;
-import org.sergei.reportservice.model.Reservation;
+import org.sergei.reportservice.jpa.model.Reservation;
 import org.sergei.reportservice.config.properties.GatewayProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

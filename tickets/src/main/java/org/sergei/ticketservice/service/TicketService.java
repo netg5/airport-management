@@ -16,7 +16,7 @@
 
 package org.sergei.ticketservice.service;
 
-import org.sergei.ticketservice.model.Ticket;
+import org.sergei.ticketservice.jpa.model.Ticket;
 import org.springframework.data.domain.Page;
 
 import java.util.List;

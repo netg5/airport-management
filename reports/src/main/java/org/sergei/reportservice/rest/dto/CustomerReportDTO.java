@@ -22,7 +22,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.sergei.reportservice.model.Reservation;
+import org.sergei.reportservice.jpa.model.Reservation;
 import org.springframework.hateoas.ResourceSupport;
 
 import java.util.LinkedList;

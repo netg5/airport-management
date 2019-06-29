@@ -16,7 +16,7 @@
 
 package org.sergei.authservice.config.security;
 
-import org.sergei.authservice.model.User;
+import org.sergei.authservice.jpa.model.User;
 import org.sergei.authservice.service.ApiUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

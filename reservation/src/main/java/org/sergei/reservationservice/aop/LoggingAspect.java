@@ -50,14 +50,14 @@ public class LoggingAspect {
     /**
      * Pointcut that matches all Spring beans in the application's main packages.
      */
-    @Pointcut("within(org.sergei.reservationservice.repository..*)" +
+    @Pointcut("within(org.sergei.reservationservice.jpa.repository..*)" +
             " || within(org.sergei.reservationservice.service..*)" +
             " || within(org.sergei.reservationservice.rest..*)")
     public void applicationPackagePointcut() {
         // Method is empty as this is just a Pointcut, the implementations are in the advices.
     }
 
-    @Pointcut("execution(* org.sergei.reservationservice.repository.*.*(..))" +
+    @Pointcut("execution(* org.sergei.reservationservice.jpa.repository.*.*(..))" +
             " || execution(* org.sergei.reservationservice.service.*.*(..))" +
             " || execution(* org.sergei.reservationservice.rest.*.*(..))")
     public void parameterLoggingPointcut() {

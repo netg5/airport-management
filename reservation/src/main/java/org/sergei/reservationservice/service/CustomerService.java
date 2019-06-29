@@ -18,8 +18,8 @@ package org.sergei.reservationservice.service;
 
 import org.sergei.common.Constants;
 import org.sergei.common.exceptions.ResourceNotFoundException;
-import org.sergei.reservationservice.model.Customer;
-import org.sergei.reservationservice.repository.CustomerRepository;
+import org.sergei.reservationservice.jpa.model.Customer;
+import org.sergei.reservationservice.jpa.repository.CustomerRepository;
 import org.sergei.reservationservice.rest.dto.CustomerDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

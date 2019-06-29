@@ -21,8 +21,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sergei.reservationservice.ReservationApplication;
-import org.sergei.reservationservice.model.Aircraft;
-import org.sergei.reservationservice.repository.AircraftRepository;
+import org.sergei.reservationservice.jpa.model.Aircraft;
+import org.sergei.reservationservice.jpa.repository.AircraftRepository;
 import org.sergei.reservationservice.testconfig.ResourceServerConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,8 +55,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
 @ContextConfiguration(classes = {ResourceServerConfiguration.class}, initializers = ConfigFileApplicationContextInitializer.class)
-@EnableJpaRepositories(basePackages = "org.sergei.reservationservice.repository")
-@EntityScan(basePackages = "org.sergei.reservationservice.model")
+@EnableJpaRepositories(basePackages = "org.sergei.reservationservice.jpa.repository")
+@EntityScan(basePackages = "org.sergei.reservationservice.jpa.model")
 public class AircraftControllerTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(AircraftControllerTest.class);
 

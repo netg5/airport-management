@@ -17,8 +17,8 @@
 package org.sergei.authservice.rest;
 
 import io.swagger.annotations.*;
-import org.sergei.authservice.model.User;
-import org.sergei.authservice.model.UserRoles;
+import org.sergei.authservice.jpa.model.User;
+import org.sergei.authservice.jpa.model.UserRoles;
 import org.sergei.authservice.service.ApiUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -18,9 +18,9 @@ package org.sergei.ticketservice.service;
 
 import org.sergei.common.Constants;
 import org.sergei.common.exceptions.ResourceNotFoundException;
-import org.sergei.ticketservice.model.Ticket;
-import org.sergei.ticketservice.repository.CustomerRepository;
-import org.sergei.ticketservice.repository.TicketRepository;
+import org.sergei.ticketservice.jpa.model.Ticket;
+import org.sergei.ticketservice.jpa.repository.CustomerRepository;
+import org.sergei.ticketservice.jpa.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

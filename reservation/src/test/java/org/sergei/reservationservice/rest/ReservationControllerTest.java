@@ -21,13 +21,13 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sergei.reservationservice.ReservationApplication;
-import org.sergei.reservationservice.model.Aircraft;
-import org.sergei.reservationservice.model.Customer;
-import org.sergei.reservationservice.model.Reservation;
-import org.sergei.reservationservice.model.Route;
-import org.sergei.reservationservice.repository.AircraftRepository;
-import org.sergei.reservationservice.repository.CustomerRepository;
-import org.sergei.reservationservice.repository.RouteRepository;
+import org.sergei.reservationservice.jpa.model.Aircraft;
+import org.sergei.reservationservice.jpa.model.Customer;
+import org.sergei.reservationservice.jpa.model.Reservation;
+import org.sergei.reservationservice.jpa.model.Route;
+import org.sergei.reservationservice.jpa.repository.AircraftRepository;
+import org.sergei.reservationservice.jpa.repository.CustomerRepository;
+import org.sergei.reservationservice.jpa.repository.RouteRepository;
 import org.sergei.reservationservice.testconfig.ResourceServerConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -63,8 +63,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
 @ContextConfiguration(classes = {ResourceServerConfiguration.class})
-@EnableJpaRepositories(basePackages = "org.sergei.reservationservice.repository")
-@EntityScan(basePackages = "org.sergei.reservationservice.model")
+@EnableJpaRepositories(basePackages = "org.sergei.reservationservice.jpa.repository")
+@EntityScan(basePackages = "org.sergei.reservationservice.jpa.model")
 public class ReservationControllerTest {
 
     private static final String BASE_URL = "http://localhost/customers";

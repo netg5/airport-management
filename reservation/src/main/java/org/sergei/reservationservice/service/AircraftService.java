@@ -18,8 +18,8 @@ package org.sergei.reservationservice.service;
 
 import org.sergei.common.Constants;
 import org.sergei.common.exceptions.ResourceNotFoundException;
-import org.sergei.reservationservice.model.Aircraft;
-import org.sergei.reservationservice.repository.AircraftRepository;
+import org.sergei.reservationservice.jpa.model.Aircraft;
+import org.sergei.reservationservice.jpa.repository.AircraftRepository;
 import org.sergei.reservationservice.rest.dto.AircraftDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

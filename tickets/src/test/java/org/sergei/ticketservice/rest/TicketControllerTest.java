@@ -47,8 +47,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestPropertySource(locations = "classpath:application-test.properties")
 @AutoConfigureMockMvc
 @ContextConfiguration(classes = {ResourceServerConfiguration.class})
-@EnableJpaRepositories(basePackages = "org.sergei.ticketservice.repository")
-@EntityScan(basePackages = "org.sergei.ticketservice.model")
+@EnableJpaRepositories(basePackages = "org.sergei.ticketservice.jpa.repository")
+@EntityScan(basePackages = "org.sergei.ticketservice.jpa.model")
 public class TicketControllerTest {
 
     private static final String BASE_URL = "http://localhost/tickets";
