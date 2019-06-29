@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sergei.authservice.jpa.repository;
+package org.sergei.authservice.repository;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -22,6 +22,7 @@ import org.junit.runner.RunWith;
 import org.sergei.authservice.AuthApplication;
 import org.sergei.authservice.jpa.model.User;
 import org.sergei.authservice.jpa.model.UserRoles;
+import org.sergei.authservice.jpa.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
-package org.sergei.ticketservice.jpa.repository;
+package org.sergei.ticketservice.repostory;
 
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sergei.ticketservice.jpa.model.Ticket;
+import org.sergei.ticketservice.jpa.repository.TicketRepository;
 import org.sergei.ticketservice.testconfig.WebSecurityConfigTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

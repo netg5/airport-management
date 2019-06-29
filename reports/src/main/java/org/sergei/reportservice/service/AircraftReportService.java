@@ -16,13 +16,13 @@
 
 package org.sergei.reportservice.service;
 
-import org.sergei.common.Constants;
-import org.sergei.common.exceptions.ResourceNotFoundException;
+import org.sergei.reportservice.exceptions.ResourceNotFoundException;
 import org.sergei.reportservice.jpa.model.AircraftReport;
 import org.sergei.reportservice.jpa.model.Reservation;
 import org.sergei.reportservice.jpa.repository.AircraftReportRepository;
 import org.sergei.reportservice.jpa.repository.ReservationRepository;
 import org.sergei.reportservice.rest.dto.AircraftReportDTO;
+import org.sergei.reportservice.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,7 +30,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static org.sergei.common.ObjectMapperUtil.*;
+import static org.sergei.reportservice.utils.ObjectMapperUtil.map;
+import static org.sergei.reportservice.utils.ObjectMapperUtil.mapAllPages;
 
 /**
  * @author Sergei Visotsky

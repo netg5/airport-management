@@ -19,7 +19,6 @@
     <description>Application to reserve flights based on the microservice architecture</description>
 
     <modules>
-        <module>common</module>
         <module>config</module>
         <module>service-resource</module>
         <module>auth</module>
@@ -77,11 +76,6 @@
 
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>org.sergei</groupId>
-                <artifactId>common</artifactId>
-                <version>${parent.version}</version>
-            </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>

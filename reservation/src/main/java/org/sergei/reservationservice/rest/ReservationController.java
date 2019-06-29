@@ -17,10 +17,9 @@
 package org.sergei.reservationservice.rest;
 
 import io.swagger.annotations.*;
-import org.sergei.reservationservice.rest.hateoas.LinkUtil;
 import org.sergei.reservationservice.rest.dto.ReservationDTO;
 import org.sergei.reservationservice.rest.dto.ReservationExtendedDTO;
-import org.sergei.reservationservice.service.IReservationService;
+import org.sergei.reservationservice.rest.hateoas.LinkUtil;
 import org.sergei.reservationservice.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -50,7 +49,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 public class ReservationController {
 
     private final LinkUtil linkUtil;
-    private final IReservationService<ReservationExtendedDTO, ReservationDTO> reservationService;
+    private final ReservationService<ReservationExtendedDTO, ReservationDTO> reservationService;
 
     @Autowired
     public ReservationController(LinkUtil linkUtil, ReservationService reservationService) {

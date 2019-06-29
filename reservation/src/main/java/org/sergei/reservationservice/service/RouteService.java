@@ -16,238 +16,38 @@
 
 package org.sergei.reservationservice.service;
 
-import lombok.extern.slf4j.Slf4j;
-import org.sergei.common.Constants;
-import org.sergei.common.exceptions.ResourceNotFoundException;
-import org.sergei.reservationservice.jpa.model.Aircraft;
-import org.sergei.reservationservice.jpa.model.Route;
-import org.sergei.reservationservice.jpa.repository.AircraftRepository;
-import org.sergei.reservationservice.jpa.repository.RouteRepository;
-import org.sergei.reservationservice.rest.dto.AircraftDTO;
-import org.sergei.reservationservice.rest.dto.RouteDTO;
-import org.sergei.reservationservice.rest.dto.RouteExtendedDTO;
-import org.sergei.reservationservice.service.util.ServiceComponent;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
-
-import static org.sergei.common.ObjectMapperUtil.*;
 
 /**
+ * @param <D> Simple DTO
+ * @param <E> Extended DTO
  * @author Sergei Visotsky
  */
-@Slf4j
-@Service
-public class RouteService implements IRouteService<RouteDTO, RouteExtendedDTO> {
-
-    private final AircraftRepository aircraftRepository;
-    private final RouteRepository routeRepository;
-    private final ServiceComponent serviceComponent;
-
-    @Autowired
-    public RouteService(AircraftRepository aircraftRepository,
-                        RouteRepository routeRepository, ServiceComponent serviceComponent) {
-        this.aircraftRepository = aircraftRepository;
-        this.routeRepository = routeRepository;
-        this.serviceComponent = serviceComponent;
-    }
+public interface RouteService<D, E> extends IService<D> {
 
     /**
-     * Method to find one route
+     * Find one route
      *
-     * @param routeId as an input argument from controller
-     * @return route extended DTO
+     * @param aLong ID of the route to be found
+     * @return route body to be returned
      */
-    @Override
-    public RouteExtendedDTO findOneRoute(Long routeId) {
-        // Find route and map into the extended DTO
-        Route route = routeRepository.findById(routeId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(Constants.ROUTE_NOT_FOUND)
-                );
-
-        return serviceComponent.setExtendedRoute(route);
-    }
+    E findOneRoute(Long aLong);
 
     /**
-     * Find all routes
+     * Find list of routes
      *
-     * @return list of route extended DTO
+     * @return list of all routes found
      */
-    @Override
-    public List<RouteExtendedDTO> findAllRoutes() {
-        List<Route> routeList = routeRepository.findAll();
-        List<RouteExtendedDTO> routeExtendedDTOList = mapAll(routeList, RouteExtendedDTO.class);
-
-        int counter = 0;
-        for (RouteExtendedDTO routeExtendedDTO : routeExtendedDTOList) {
-            Aircraft aircraft = aircraftRepository.findById(routeList.get(counter).getAircraft().getAircraftId())
-                    .orElseThrow(() ->
-                            new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
-                    );
-
-            AircraftDTO aircraftDTO = map(aircraft, AircraftDTO.class);
-            routeExtendedDTO.setAircraftDTO(aircraftDTO);
-            counter++;
-        }
-
-        return routeExtendedDTOList;
-    }
+    List<E> findAllRoutes();
 
     /**
-     * Find paginated routes
+     * Find all routed paginated
      *
-     * @param page number of pages shown
-     * @param size number of elements on the page
-     * @return list of entities
+     * @param page number of page to return
+     * @param size number of elements per page
+     * @return page of entities
      */
-    @Override
-    public Page<RouteExtendedDTO> findAllRoutesPaginated(int page, int size) {
-        Page<Route> routePage = routeRepository.findAll(PageRequest.of(page, size));
-        Page<RouteExtendedDTO> routeExtendedDTOList = mapAllPages(routePage, RouteExtendedDTO.class);
-        int counter = 0;
-        for (RouteExtendedDTO routeExtendedDTO : routeExtendedDTOList) {
-            Aircraft aircraft = aircraftRepository.findById(routePage.getContent().get(counter).getAircraft().getAircraftId())
-                    .orElseThrow(() ->
-                            new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
-                    );
-
-            AircraftDTO aircraftDTO = map(aircraft, AircraftDTO.class);
-            routeExtendedDTO.setAircraftDTO(aircraftDTO);
-            counter++;
-        }
-        return routeExtendedDTOList;
-    }
-
-    /**
-     * Save route
-     *
-     * @param routeDTO gets route DTO as an input argument
-     * @return route DTO as a response
-     */
-    @Override
-    public RouteDTO save(RouteDTO routeDTO) {
-        Route route = map(routeDTO, Route.class);
-
-        // Find aircraftDTO required in request body
-        Aircraft aircraft = aircraftRepository.findById(routeDTO.getAircraftId())
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
-                );
-        log.debug("Found aircraft ID: {}", aircraft.getAircraftId());
-        route.setAircraft(aircraft);
-        Route savedRoute = routeRepository.save(route);
-        log.debug("Aircraft ID in saved route: {}", savedRoute.getAircraft().getAircraftId());
-        RouteDTO savedRouteDTO = map(savedRoute, RouteDTO.class);
-        savedRouteDTO.setAircraftId(aircraft.getAircraftId());
-        return savedRouteDTO;
-    }
-
-    /**
-     * Update route data
-     *
-     * @param routeId  get route ID as an input argument
-     * @param routeDTO Route DTO with updated data
-     * @return Route DTO as a response
-     */
-    @Override
-    public RouteDTO update(Long routeId, RouteDTO routeDTO) {
-        routeDTO.setRouteId(routeId);
-
-        Route route = routeRepository.findById(routeId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(Constants.ROUTE_NOT_FOUND)
-                );
-        route.setDistance(routeDTO.getDistance());
-        route.setDepartureTime(routeDTO.getDepartureTime());
-        route.setArrivalTime(routeDTO.getArrivalTime());
-        route.setPrice(routeDTO.getPrice());
-        route.setPrice(routeDTO.getPrice());
-        route.setPlace(routeDTO.getPlace());
-        route.setAircraft(
-                aircraftRepository.findById(routeDTO.getAircraftId())
-                        .orElseThrow(() ->
-                                new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
-                        )
-        );
-        routeRepository.save(route);
-
-        return routeDTO;
-    }
-
-    /**
-     * Method to update one field of the route
-     *
-     * @param routeId ID of the route which should be updated
-     * @param params  list of params that should be updated
-     * @return updated route
-     */
-    @Override
-    public RouteDTO patch(Long routeId, Map<String, Object> params) {
-        Route route = routeRepository.findById(routeId)
-                .orElseThrow(
-                        () -> new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
-                );
-        if (params.get("distance") != null) {
-            route.setDistance(Double.valueOf(String.valueOf(params.get("distance"))));
-        }
-        if (params.get("departureTime") != null) {
-            route.setDepartureTime(LocalDateTime.parse(String.valueOf(params.get("departureTime"))));
-        }
-        if (params.get("arrivalTime") != null) {
-            route.setArrivalTime(LocalDateTime.parse(String.valueOf(params.get("arrivalTime"))));
-        }
-        if (params.get("price") != null) {
-            route.setPrice(BigDecimal.valueOf(Long.parseLong(String.valueOf(params.get("price")))));
-        }
-        if (params.get("place") != null) {
-            route.setPlace(String.valueOf(params.get("place")));
-        }
-        if (params.get("aircraftId") != null) {
-            route.setAircraft(aircraftRepository.findById(Long.valueOf(String.valueOf(params.get("aircraftId"))))
-                    .orElseThrow(() ->
-                            new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
-                    ));
-        }
-        RouteDTO routeDTO = map(routeRepository.save(route), RouteDTO.class);
-        routeDTO.setAircraftId(route.getAircraft().getAircraftId());
-        return routeDTO;
-    }
-
-    /**
-     * Delete route by ID
-     *
-     * @param routeId gets route ID as an input argument
-     * @return Route DTO asa response
-     */
-    @Override
-    public RouteDTO delete(Long routeId) {
-        Route route = routeRepository.findById(routeId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(Constants.ROUTE_NOT_FOUND)
-                );
-        routeRepository.delete(route);
-        return map(route, RouteDTO.class);
-    }
-
-    @Override
-    public RouteDTO findOne(Long aLong) {
-        return null;
-    }
-
-    @Override
-    public List<RouteDTO> findAll() {
-        return null;
-    }
-
-    @Override
-    public Page<RouteDTO> findAllPaginated(int page, int size) {
-        return null;
-    }
+    Page<E> findAllRoutesPaginated(int page, int size);
 }

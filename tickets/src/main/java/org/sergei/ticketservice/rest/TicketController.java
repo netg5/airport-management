@@ -17,10 +17,10 @@
 package org.sergei.ticketservice.rest;
 
 import io.swagger.annotations.*;
-import org.sergei.common.Constants;
 import org.sergei.ticketservice.jpa.model.Ticket;
 import org.sergei.ticketservice.rest.hateoas.LinkUtil;
 import org.sergei.ticketservice.service.TicketService;
+import org.sergei.ticketservice.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.hateoas.Resources;

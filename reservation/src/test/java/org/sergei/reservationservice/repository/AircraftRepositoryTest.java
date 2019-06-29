@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
-package org.sergei.reservationservice.jpa.repository;
+package org.sergei.reservationservice.repository;
 
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sergei.reservationservice.jpa.model.Aircraft;
+import org.sergei.reservationservice.jpa.repository.AircraftRepository;
 import org.sergei.reservationservice.testconfig.WebSecurityConfigTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

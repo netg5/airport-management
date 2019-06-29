@@ -14,19 +14,22 @@
  * limitations under the License.
  */
 
-package org.sergei.reservationservice.service;
+package org.sergei.ticketservice.exceptions;
 
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.Date;
 
 /**
- * @param <D> Simple DTO
  * @author Sergei Visotsky
  */
-public interface ICustomerService<D> extends IService<D> {
-    /**
-     * Find ID of each customer in one JSON response as a list
-     *
-     * @return list of IDs
-     */
-    List<String> findIdsOfAllCustomers();
+@Getter
+@Setter
+@AllArgsConstructor
+class ErrorDetails {
+    private Date timestamp;
+    private String message;
+    private String details;
 }

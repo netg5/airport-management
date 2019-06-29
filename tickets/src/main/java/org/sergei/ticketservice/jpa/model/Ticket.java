@@ -19,9 +19,10 @@ package org.sergei.ticketservice.jpa.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.Immutable;
 import org.springframework.hateoas.ResourceSupport;
 
@@ -37,7 +38,8 @@ import java.io.Serializable;
  * @author Sergei Visotsky
  */
 @ApiModel(value = "Ticket", description = "Ticket model")
-@Data
+@Getter
+@Setter
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @Entity

@@ -14,21 +14,22 @@
  * limitations under the License.
  */
 
-package org.sergei.reservationservice.service;
+package org.sergei.reportservice.exceptions;
 
-import javax.servlet.http.HttpServletRequest;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.Date;
 
 /**
  * @author Sergei Visotsky
  */
-public interface IAircraftService<D> extends IService<D> {
-
-    /**
-     * Find aircraft by multiple parameters
-     * NOTE: There id no optional parameters
-     *
-     * @param request of all requested parameters
-     * @return DTO of found entity
-     */
-    D findOneByMultipleParams(HttpServletRequest request);
+@Getter
+@Setter
+@AllArgsConstructor
+class ErrorDetails {
+    private Date timestamp;
+    private String message;
+    private String details;
 }

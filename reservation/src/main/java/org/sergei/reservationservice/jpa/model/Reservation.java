@@ -16,8 +16,9 @@
 
 package org.sergei.reservationservice.jpa.model;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -26,7 +27,8 @@ import java.time.LocalDateTime;
 /**
  * @author Sergei Visotsky
  */
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "reservation")

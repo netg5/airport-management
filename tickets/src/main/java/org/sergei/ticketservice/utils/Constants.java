@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sergei.common;
+package org.sergei.ticketservice.utils;
 
 /**
  * Constants that are used in service layer

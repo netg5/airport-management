@@ -17,8 +17,9 @@
 package org.sergei.reportservice.jpa.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.Immutable;
 
 import javax.persistence.Column;
@@ -29,7 +30,8 @@ import javax.persistence.Table;
 /**
  * @author Sergei Visotsky
  */
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Immutable

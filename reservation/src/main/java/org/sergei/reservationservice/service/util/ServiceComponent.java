@@ -16,8 +16,7 @@
 
 package org.sergei.reservationservice.service.util;
 
-import org.sergei.common.Constants;
-import org.sergei.common.exceptions.ResourceNotFoundException;
+import org.sergei.reservationservice.exceptions.ResourceNotFoundException;
 import org.sergei.reservationservice.jpa.model.Aircraft;
 import org.sergei.reservationservice.jpa.model.Route;
 import org.sergei.reservationservice.jpa.repository.AircraftRepository;
@@ -25,11 +24,12 @@ import org.sergei.reservationservice.rest.AircraftController;
 import org.sergei.reservationservice.rest.RouteController;
 import org.sergei.reservationservice.rest.dto.AircraftDTO;
 import org.sergei.reservationservice.rest.dto.RouteExtendedDTO;
+import org.sergei.reservationservice.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Component;
 
-import static org.sergei.common.ObjectMapperUtil.map;
+import static org.sergei.reservationservice.utils.ObjectMapperUtil.map;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 

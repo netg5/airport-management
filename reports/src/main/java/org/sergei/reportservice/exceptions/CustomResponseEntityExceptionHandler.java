@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sergei.common.exceptions;
+package org.sergei.reportservice.exceptions;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

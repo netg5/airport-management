@@ -18,10 +18,7 @@ package org.sergei.reportservice.jpa.model;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Immutable;
 import org.springframework.hateoas.ResourceSupport;
 
@@ -35,7 +32,8 @@ import java.time.LocalDateTime;
  * @author Sergei Visotsky
  */
 @ApiModel(value = "Reservation", description = "Reservation made")
-@Data
+@Getter
+@Setter
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor

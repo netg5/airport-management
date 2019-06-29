@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sergei.common.exceptions;
+package org.sergei.reservationservice.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

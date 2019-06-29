@@ -17,12 +17,11 @@
 package org.sergei.reservationservice.rest;
 
 import io.swagger.annotations.*;
-import org.sergei.common.Constants;
 import org.sergei.reservationservice.rest.dto.RouteDTO;
 import org.sergei.reservationservice.rest.dto.RouteExtendedDTO;
 import org.sergei.reservationservice.rest.hateoas.LinkUtil;
-import org.sergei.reservationservice.service.IRouteService;
 import org.sergei.reservationservice.service.RouteService;
+import org.sergei.reservationservice.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.hateoas.Resources;
@@ -47,7 +46,7 @@ import java.util.Map;
 public class RouteController {
 
     private final LinkUtil linkUtil;
-    private final IRouteService<RouteDTO, RouteExtendedDTO> routeService;
+    private final RouteService<RouteDTO, RouteExtendedDTO> routeService;
 
     @Autowired
     public RouteController(LinkUtil linkUtil, RouteService routeService) {

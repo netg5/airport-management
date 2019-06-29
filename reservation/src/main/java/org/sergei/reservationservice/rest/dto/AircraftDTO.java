@@ -18,17 +18,15 @@ package org.sergei.reservationservice.rest.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.hateoas.ResourceSupport;
 
 /**
  * @author Sergei Visotsky
  */
 @ApiModel(value = "Aircraft", description = "Aircraft model")
-@Data
+@Getter
+@Setter
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor

@@ -18,10 +18,7 @@ package org.sergei.reportservice.rest.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.sergei.reportservice.jpa.model.Reservation;
 import org.springframework.hateoas.ResourceSupport;
 
@@ -32,7 +29,8 @@ import java.util.List;
  * @author Sergei Visotsky
  */
 @ApiModel(value = "CustomerReport", description = "Customer report model")
-@Data
+@Getter
+@Setter
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor

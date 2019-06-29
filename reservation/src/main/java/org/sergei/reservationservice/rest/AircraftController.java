@@ -17,11 +17,10 @@
 package org.sergei.reservationservice.rest;
 
 import io.swagger.annotations.*;
-import org.sergei.common.Constants;
 import org.sergei.reservationservice.rest.dto.AircraftDTO;
 import org.sergei.reservationservice.rest.hateoas.LinkUtil;
 import org.sergei.reservationservice.service.AircraftService;
-import org.sergei.reservationservice.service.IAircraftService;
+import org.sergei.reservationservice.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.hateoas.Resources;
@@ -47,7 +46,7 @@ import java.util.Map;
 public class AircraftController {
 
     private final LinkUtil linkUtil;
-    private final IAircraftService<AircraftDTO> aircraftService;
+    private final AircraftService<AircraftDTO> aircraftService;
 
     @Autowired
     public AircraftController(LinkUtil linkUtil, AircraftService aircraftService) {

@@ -17,10 +17,10 @@
 package org.sergei.reservationservice.rest;
 
 import io.swagger.annotations.*;
-import org.sergei.common.Constants;
 import org.sergei.reservationservice.rest.dto.CustomerDTO;
 import org.sergei.reservationservice.rest.hateoas.LinkUtil;
-import org.sergei.reservationservice.service.ICustomerService;
+import org.sergei.reservationservice.service.CustomerService;
+import org.sergei.reservationservice.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.hateoas.Resources;
@@ -45,10 +45,10 @@ import java.util.Map;
 public class CustomerController {
 
     private final LinkUtil linkUtil;
-    private final ICustomerService<CustomerDTO> customerService;
+    private final CustomerService<CustomerDTO> customerService;
 
     @Autowired
-    public CustomerController(LinkUtil linkUtil, ICustomerService<CustomerDTO> customerService) {
+    public CustomerController(LinkUtil linkUtil, CustomerService<CustomerDTO> customerService) {
         this.linkUtil = linkUtil;
         this.customerService = customerService;
     }

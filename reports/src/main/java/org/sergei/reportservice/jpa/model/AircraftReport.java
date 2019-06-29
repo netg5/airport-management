@@ -17,8 +17,9 @@
 package org.sergei.reportservice.jpa.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.Immutable;
 
 import javax.persistence.Column;
@@ -30,7 +31,8 @@ import java.math.BigDecimal;
 /**
  * @author Sergei Visotsky
  */
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
