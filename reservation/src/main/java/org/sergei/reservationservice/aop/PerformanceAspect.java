@@ -16,22 +16,21 @@
 
 package org.sergei.reservationservice.aop;
 
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.util.StopWatch;
 
 /**
  * @author Sergei Visotsky
  */
 @Aspect
+@Slf4j
 public class PerformanceAspect {
 
     private static final String LOG_MESSAGE_FORMAT = "%s.%s execution time: %d ms";
-    private static final Logger LOGGER = LoggerFactory.getLogger(LoggingAspect.class);
 
     /**
      * Pointcut that matches all Service annotations
@@ -76,6 +75,6 @@ public class PerformanceAspect {
         String logMessage = String.format(LOG_MESSAGE_FORMAT,
                 joinPoint.getTarget().getClass().getName(),
                 joinPoint.getSignature().getName(), stopWatch.getTotalTimeMillis());
-        LOGGER.info(logMessage);
+        log.info(logMessage);
     }
 }
