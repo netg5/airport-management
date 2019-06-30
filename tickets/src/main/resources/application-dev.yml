@@ -4,7 +4,7 @@ server:
     context-path: /ticket-api
 spring:
   application:
-    name: ticket-service
+    name: tickets
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/flight_reservation?allowPublicKeyRetrieval=true&useSSL=false

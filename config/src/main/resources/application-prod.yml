@@ -2,9 +2,9 @@ server:
   port: 8888
 spring:
   application:
-    name: config-service
+    name: config
   config:
-    name: config-service
+    name: config
   cloud:
     config:
       server:

@@ -2,7 +2,7 @@ server:
   port: 8080
 spring:
   application:
-    name: zuul-gateway
+    name: gateway
 eureka:
   instance:
     non-secure-port-enabled: false
@@ -33,33 +33,27 @@ zuul:
       service-id: service-resource
       url: http://localhost:8084
       sensitive-headers: true
-    doc-service:
-      path: /docs/**
-      service-id: doc-service
-      url: http://localhost:8085
-      strip-prefix: false
-      sensitive-headers: true
-    auth-service:
+    auth:
       path: /auth-api/**
-      service-id: auth-service
+      service-id: auth
       url: http://localhost:8082
       strip-prefix: false
       sensitive-headers: true
-    reservation-service:
+    reservations:
       path: /reservation-api/**
-      service-id: reservation-service
+      service-id: reservations
       url: http://localhost:8083
       strip-prefix: false
       sensitive-headers: true
-    ticket-service:
+    tickets:
       path: /ticket-api/**
-      service-id: ticket-service
+      service-id: tickets
       url: http://localhost:8086
       strip-prefix: false
       sensitive-headers: true
-    report-service:
+    reports:
       path: /report-api/**
-      service-id: report-service
+      service-id: reports
       url: http://localhost:8089
       strip-prefix: false
       sensitive-headers: true

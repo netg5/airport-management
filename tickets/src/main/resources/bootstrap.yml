@@ -1,9 +1,9 @@
 spring:
   cloud:
     config:
-      name: ticket-service
+      name: tickets
       uri: http://localhost:8888
       label: "master" # branch where config is located
       discovery:
         enabled: true
-        service-id: config-service
+        service-id: config

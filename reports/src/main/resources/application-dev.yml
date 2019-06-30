@@ -4,7 +4,7 @@ server:
     context-path: /report-api
 spring:
   application:
-    name: report-service
+    name: reports
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/flight_reservation?allowPublicKeyRetrieval=true&useSSL=true
