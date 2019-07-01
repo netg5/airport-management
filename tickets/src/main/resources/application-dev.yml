@@ -1,7 +1,7 @@
 server:
   port: 8086
   servlet:
-    context-path: /ticket-api
+    context-path: /tickets
 spring:
   application:
     name: tickets

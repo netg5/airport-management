@@ -1,7 +1,7 @@
 server:
   port: 8083
   servlet:
-    context-path: /reservation-api
+    context-path: /reservation
 spring:
   application:
     name: reservation
