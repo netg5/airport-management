@@ -30,21 +30,21 @@
     <!--Disabled due to the NumberFormatException what is caused by the bug in Swagger internals-->
     <logger name="io.swagger.models.parameters.AbstractSerializableParameter" level="ERROR"/>
 
-    <springProfile name="dev">
-        <logger name="org.sergei.authservice" level="info, debug"/>
+<!--    <springProfile name="dev">-->
+<!--        <logger name="org.sergei.authservice" level="info, debug"/>-->
 
         <root level="info, debug">
             <!--            <appender-ref ref="file"/>-->
             <appender-ref ref="stdout"/>
         </root>
-    </springProfile>
+<!--    </springProfile>-->
 
-    <springProfile name="prod">
-        <logger name="org.sergei.authservice" level="info"/>
+<!--    <springProfile name="prod">-->
+<!--        <logger name="org.sergei.authservice" level="info"/>-->
 
-        <root level="info">
+<!--        <root level="info">-->
             <!--            <appender-ref ref="file"/>-->
-            <appender-ref ref="stdout"/>
-        </root>
-    </springProfile>
+<!--            <appender-ref ref="stdout"/>-->
+<!--        </root>-->
+<!--    </springProfile>-->
 </configuration>

@@ -19,6 +19,8 @@ spring:
         hbm2ddl:
           auto: update
         generate-ddl: true
+        lob:
+          non_contextual_creation: true
   gateway:
     port: 8080
 security:
