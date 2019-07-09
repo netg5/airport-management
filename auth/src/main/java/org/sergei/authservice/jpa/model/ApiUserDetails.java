@@ -31,7 +31,7 @@ import java.util.List;
  */
 public class ApiUserDetails implements UserDetails {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -751244786587948564L;
     private Collection<? extends GrantedAuthority> authorities;
     private String password;
     private String username;
