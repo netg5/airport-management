@@ -1,5 +1,4 @@
-CREATE SCHEMA IF NOT EXISTS flight_reservation_oauth;
-CREATE TABLE IF NOT EXISTS flight_reservation_oauth.oauth_client_details
+CREATE TABLE IF NOT EXISTS oauth_client_details
 (
   client_id               VARCHAR(256) PRIMARY KEY,
   resource_ids            VARCHAR(256),
