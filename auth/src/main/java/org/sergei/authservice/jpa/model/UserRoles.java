@@ -33,7 +33,7 @@ import java.io.Serializable;
 @Table(name = "user_roles")
 public class UserRoles implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -8334128934150131617L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "role_seq")

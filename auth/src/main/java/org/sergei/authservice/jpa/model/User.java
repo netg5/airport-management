@@ -35,7 +35,7 @@ import java.util.List;
 @Table(name = "user")
 public class User implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -8573885834567480787L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
