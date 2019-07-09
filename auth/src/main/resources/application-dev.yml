@@ -5,24 +5,22 @@ server:
 spring:
   application:
     name: auth
-  main:
-    allow-bean-definition-overriding: true
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/flight_reservation_oauth?allowPublicKeyRetrieval=true&useSSL=false
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/flight_reservation
     username: flight
     password: flight
     initialization-mode: embedded
   jpa:
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL57InnoDBDialect
+        dialect: org.hibernate.dialect.PostgreSQLDialect
         show_sql: true
         hbm2ddl:
           auto: update
         generate-ddl: true
   gateway:
-    port: 9090
+    port: 8080
 security:
   oauth2:
     access-token-uri: http://localhost:8080/auth-api/oauth/token
