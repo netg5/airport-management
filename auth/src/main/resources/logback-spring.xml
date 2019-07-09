@@ -34,7 +34,7 @@
     <!--    <springProfile name="dev">-->
     <!--        <logger name="org.sergei.authservice" level="info, debug"/>-->
 
-    <root level="info, debug">
+    <root level="info">
         <!--            <appender-ref ref="file"/>-->
         <appender-ref ref="stdout"/>
     </root>
