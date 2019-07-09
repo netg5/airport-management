@@ -7,7 +7,7 @@ spring:
     name: auth
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/flight_reservation
+    url: jdbc:postgresql://localhost:5432/flight_reservation_oauth
     username: flight
     password: flight
     initialization-mode: embedded
