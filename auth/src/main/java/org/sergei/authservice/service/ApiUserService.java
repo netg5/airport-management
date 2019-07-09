@@ -16,13 +16,16 @@
 
 package org.sergei.authservice.service;
 
-import org.sergei.authservice.exceptions.ResourceNotFoundException;
+import org.sergei.authservice.exceptions.UserNotFoundException;
 import org.sergei.authservice.jpa.model.User;
+import org.sergei.authservice.jpa.model.UserRoles;
 import org.sergei.authservice.jpa.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -49,7 +52,7 @@ public class ApiUserService {
     public User findById(Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(
-                        () -> new ResourceNotFoundException(USER_NOT_FOUND)
+                        () -> new UserNotFoundException(USER_NOT_FOUND)
                 );
     }
 
@@ -62,12 +65,12 @@ public class ApiUserService {
     public User findByUsername(String username) {
         return userRepository.findByUsername(username)
                 .orElseThrow(
-                        () -> new ResourceNotFoundException(USER_NOT_FOUND)
+                        () -> new UserNotFoundException(USER_NOT_FOUND)
                 );
     }
 
     // Saving admin once! Hardcoded for dev purposes only!
-    /*@PostConstruct
+    @PostConstruct
     private void saveDefaultUser() {
         userRepository.save(
                 new User("admin",
@@ -78,5 +81,5 @@ public class ApiUserService {
                         )
                 )
         );
-    }*/
+    }
 }

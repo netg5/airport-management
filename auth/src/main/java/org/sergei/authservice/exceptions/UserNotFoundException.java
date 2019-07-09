@@ -16,18 +16,11 @@
 
 package org.sergei.authservice.exceptions;
 
-import lombok.*;
-
-import java.util.Date;
-
 /**
  * @author Sergei Visotsky
  */
-@Getter
-@Setter
-@AllArgsConstructor
-class ErrorDetails {
-    private Date timestamp;
-    private String message;
-    private String details;
+public class UserNotFoundException extends RuntimeException {
+    public UserNotFoundException(String message) {
+        super(message);
+    }
 }
