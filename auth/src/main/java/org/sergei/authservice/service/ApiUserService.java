@@ -70,7 +70,7 @@ public class ApiUserService {
     }
 
     // Saving admin once! Hardcoded for dev purposes only!
-    @PostConstruct
+    /*@PostConstruct
     private void saveDefaultUser() {
         userRepository.save(
                 new User("admin",
@@ -81,5 +81,5 @@ public class ApiUserService {
                         )
                 )
         );
-    }
+    }*/
 }
