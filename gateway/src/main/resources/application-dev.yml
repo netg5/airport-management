@@ -29,30 +29,30 @@ zuul:
   ssl-hostname-validation-enabled: false # No recommended in real production applications
   routes:
     service-resource:
-      path: /service-api/**
+      path: /service/**
       service-id: service-resource
       url: http://localhost:8084
       sensitive-headers: true
     auth:
-      path: /auth-api/**
+      path: /auth/**
       service-id: auth
       url: http://localhost:8082
       strip-prefix: false
       sensitive-headers: true
     reservations:
-      path: /reservation-api/**
+      path: /reservation/**
       service-id: reservations
       url: http://localhost:8083
       strip-prefix: false
       sensitive-headers: true
     tickets:
-      path: /ticket-api/**
+      path: /ticket/**
       service-id: tickets
       url: http://localhost:8086
       strip-prefix: false
       sensitive-headers: true
     reports:
-      path: /report-api/**
+      path: /reports/**
       service-id: reports
       url: http://localhost:8089
       strip-prefix: false
