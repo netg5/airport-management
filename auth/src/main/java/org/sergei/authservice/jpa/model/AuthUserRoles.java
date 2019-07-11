@@ -21,6 +21,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -31,20 +32,22 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Entity
 @Table(name = "user_roles")
-public class UserRoles implements Serializable {
+public class AuthUserRoles implements Serializable {
 
     private static final long serialVersionUID = -8334128934150131617L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "role_seq")
-    @SequenceGenerator(name = "role_seq", sequenceName = "role_seq", allocationSize = 1)
-    @Column(name = "role_id")
-    private Long roleId;
+    @NotNull
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+            generator = "auth_user_role_seq")
+    @SequenceGenerator(name = "auth_user_role_seq",
+            sequenceName = "auth_user_role_seq", allocationSize = 1)
+    private Long id;
 
     @Column(name = "role_name")
     private String roleName;
 
-    public UserRoles(String roleName) {
+    public AuthUserRoles(String roleName) {
         this.roleName = roleName;
     }
 }

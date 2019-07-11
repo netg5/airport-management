@@ -17,8 +17,8 @@
 package org.sergei.authservice.rest;
 
 import io.swagger.annotations.*;
-import org.sergei.authservice.jpa.model.User;
-import org.sergei.authservice.jpa.model.UserRoles;
+import org.sergei.authservice.jpa.model.AuthUser;
+import org.sergei.authservice.jpa.model.AuthUserRoles;
 import org.sergei.authservice.service.ApiUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -66,7 +66,7 @@ public class ApiUserController {
             notes = "Allowed for the ROLE_ADMIN only"
     )
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
+    public ResponseEntity<List<AuthUser>> getAllUsers() {
         return new ResponseEntity<>(apiUserService.findAll(), HttpStatus.OK);
     }
 
@@ -80,8 +80,8 @@ public class ApiUserController {
             }
     )
     @GetMapping("/{userId}")
-    public ResponseEntity<User> getUserById(@ApiParam(value = "ID of the user to be found", required = true)
-                                            @PathVariable("userId") Long userId) {
+    public ResponseEntity<AuthUser> getUserById(@ApiParam(value = "ID of the user to be found", required = true)
+                                                @PathVariable("userId") Long userId) {
         return new ResponseEntity<>(apiUserService.findById(userId), HttpStatus.OK);
     }
 
@@ -95,20 +95,20 @@ public class ApiUserController {
             }
     )
     @GetMapping(params = "username")
-    public ResponseEntity<User> getUserByUsername(@ApiParam(value = "username of the user to be found", required = true)
-                                                  @RequestParam("username") String username) {
+    public ResponseEntity<AuthUser> getUserByUsername(@ApiParam(value = "username of the user to be found", required = true)
+                                                      @RequestParam("username") String username) {
         return new ResponseEntity<>(apiUserService.findByUsername(username), HttpStatus.OK);
     }
 
     @ApiOperation(
-            value = "Method to create user",
+            value = "Method to create authUser",
             notes = "Allowed for the ROLE_ADMIN only"
     )
     @PostMapping(consumes = "application/json")
-    public ResponseEntity<User> createUser(@ApiParam(value = "User payload to be saved", required = true)
-                                           @RequestBody User user) {
-        user.setUserRoles(Collections.singletonList(new UserRoles("USER")));
-        User newUser = apiUserService.saveUser(user);
-        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
+    public ResponseEntity<AuthUser> createUser(@ApiParam(value = "AuthUser payload to be saved", required = true)
+                                               @RequestBody AuthUser authUser) {
+        authUser.setAuthUserRoles(Collections.singletonList(new AuthUserRoles("USER")));
+        AuthUser newAuthUser = apiUserService.saveUser(authUser);
+        return new ResponseEntity<>(newAuthUser, HttpStatus.CREATED);
     }
 }

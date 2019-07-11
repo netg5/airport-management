@@ -17,7 +17,7 @@
 package org.sergei.authservice.config.security;
 
 import lombok.extern.slf4j.Slf4j;
-import org.sergei.authservice.jpa.model.User;
+import org.sergei.authservice.jpa.model.AuthUser;
 import org.sergei.authservice.service.ApiUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
@@ -55,10 +55,10 @@ public class OAuth2TokenEnhancer implements TokenEnhancer {
                                      OAuth2Authentication oAuth2Authentication) {
         String username = oAuth2Authentication.getName();
 
-        User user = apiUserService.findByUsername(username);
-        log.debug("Found user is: {}", user.getUsername());
+        AuthUser authUser = apiUserService.findByUsername(username);
+        log.debug("Found user is: {}", authUser.getUsername());
         final Map<String, Object> additionalInfo = new HashMap<>();
-        additionalInfo.put("username", user.getUsername());
+        additionalInfo.put("username", authUser.getUsername());
         ((DefaultOAuth2AccessToken) oAuth2AccessToken).setAdditionalInformation(additionalInfo);
         return oAuth2AccessToken;
     }

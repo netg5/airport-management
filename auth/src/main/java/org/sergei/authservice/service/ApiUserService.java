@@ -17,8 +17,8 @@
 package org.sergei.authservice.service;
 
 import org.sergei.authservice.exceptions.UserNotFoundException;
-import org.sergei.authservice.jpa.model.User;
-import org.sergei.authservice.jpa.model.UserRoles;
+import org.sergei.authservice.jpa.model.AuthUser;
+import org.sergei.authservice.jpa.model.AuthUserRoles;
 import org.sergei.authservice.jpa.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -45,24 +45,24 @@ public class ApiUserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public List<User> findAll() {
+    public List<AuthUser> findAll() {
         return userRepository.findAll();
     }
 
-    public User findById(Long userId) {
+    public AuthUser findById(Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(
                         () -> new UserNotFoundException(USER_NOT_FOUND)
                 );
     }
 
-    public User saveUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
-        return user;
+    public AuthUser saveUser(AuthUser authUser) {
+        authUser.setPassword(passwordEncoder.encode(authUser.getPassword()));
+        userRepository.save(authUser);
+        return authUser;
     }
 
-    public User findByUsername(String username) {
+    public AuthUser findByUsername(String username) {
         return userRepository.findByUsername(username)
                 .orElseThrow(
                         () -> new UserNotFoundException(USER_NOT_FOUND)
@@ -70,16 +70,16 @@ public class ApiUserService {
     }
 
     // Saving admin once! Hardcoded for dev purposes only!
-    /*@PostConstruct
+    @PostConstruct
     private void saveDefaultUser() {
         userRepository.save(
-                new User("admin",
+                new AuthUser("admin",
                         passwordEncoder.encode("123456"),
                         Arrays.asList(
-                                new UserRoles("USER"),
-                                new UserRoles("ADMIN")
+                                new AuthUserRoles("USER"),
+                                new AuthUserRoles("ADMIN")
                         )
                 )
         );
-    }*/
+    }
 }

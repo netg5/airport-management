@@ -20,8 +20,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sergei.authservice.AuthApplication;
-import org.sergei.authservice.jpa.model.User;
-import org.sergei.authservice.jpa.model.UserRoles;
+import org.sergei.authservice.jpa.model.AuthUser;
+import org.sergei.authservice.jpa.model.AuthUserRoles;
 import org.sergei.authservice.jpa.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -44,19 +44,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 @TestPropertySource(locations = "classpath:application-test.properties")
 @EnableJpaRepositories(basePackages = "org.sergei.authservice.jpa.repository")
 @EntityScan(basePackages = "org.sergei.authservice.jpa.model")
-public class UserRepositoryTest {
+public class AuthUserRepositoryTest {
 
     @Autowired
     private UserRepository userRepository;
 
     @Test
     public void saveUserFindUser_thenReturnOk() {
-        List<UserRoles> userRoles = new LinkedList<>();
-        userRoles.add(new UserRoles("ROLE_ADMIN"));
-        User user = new User("john", "123456", userRoles);
-        userRepository.save(user);
-        List<User> foundUsers = userRepository.findAll();
-        assertThat(foundUsers).hasSize(1);
-        assertThat(foundUsers).contains(user);
+        List<AuthUserRoles> authUserRoles = new LinkedList<>();
+        authUserRoles.add(new AuthUserRoles("ROLE_ADMIN"));
+        AuthUser authUser = new AuthUser("john", "123456", authUserRoles);
+        userRepository.save(authUser);
+        List<AuthUser> foundAuthUsers = userRepository.findAll();
+        assertThat(foundAuthUsers).hasSize(1);
+        assertThat(foundAuthUsers).contains(authUser);
     }
 }

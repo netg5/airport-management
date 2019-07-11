@@ -29,28 +29,28 @@ import java.util.List;
  *
  * @author Sergei Visotsky
  */
-public class ApiUserDetails implements UserDetails {
+public class AuthUserDetails implements UserDetails {
 
     private static final long serialVersionUID = -751244786587948564L;
     private Collection<? extends GrantedAuthority> authorities;
     private String password;
     private String username;
 
-    public ApiUserDetails(User user) {
-        this.username = user.getUsername();
-        this.password = user.getPassword();
-        this.authorities = translateRoles(user.getUserRoles());
+    public AuthUserDetails(AuthUser authUser) {
+        this.username = authUser.getUsername();
+        this.password = authUser.getPassword();
+        this.authorities = translateRoles(authUser.getAuthUserRoles());
     }
 
     /**
      * Method to set 'ROLE_' prefix for each role for a particular user taken from the database
      *
-     * @param userRoles Takes a list of user roles from constructor as a parameter
+     * @param authUserRoles Takes a list of user roles from constructor as a parameter
      * @return a collection of authorities
      */
-    private Collection<? extends GrantedAuthority> translateRoles(List<UserRoles> userRoles) {
+    private Collection<? extends GrantedAuthority> translateRoles(List<AuthUserRoles> authUserRoles) {
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-        for (UserRoles role : userRoles) {
+        for (AuthUserRoles role : authUserRoles) {
             String name = role.getRoleName().toUpperCase();
             if (!name.startsWith("ROLE_")) {
                 name = "ROLE_" + name;

@@ -16,7 +16,7 @@
 
 package org.sergei.authservice.jpa.repository;
 
-import org.sergei.authservice.jpa.model.User;
+import org.sergei.authservice.jpa.model.AuthUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -26,6 +26,6 @@ import java.util.Optional;
  * @author Sergei Visotsky
  */
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
-    Optional<User> findByUsername(String username);
+public interface UserRepository extends JpaRepository<AuthUser, Long> {
+    Optional<AuthUser> findByUsername(String username);
 }

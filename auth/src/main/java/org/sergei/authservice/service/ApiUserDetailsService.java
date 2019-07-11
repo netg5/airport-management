@@ -17,7 +17,7 @@
 package org.sergei.authservice.service;
 
 import org.sergei.authservice.exceptions.UserNotFoundException;
-import org.sergei.authservice.jpa.model.ApiUserDetails;
+import org.sergei.authservice.jpa.model.AuthUserDetails;
 import org.sergei.authservice.jpa.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -39,7 +39,7 @@ public class ApiUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        return new ApiUserDetails(
+        return new AuthUserDetails(
                 userRepository.findByUsername(username)
                         .orElseThrow(
                                 () -> new UserNotFoundException("User not found")
