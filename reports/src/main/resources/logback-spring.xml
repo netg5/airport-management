@@ -2,7 +2,6 @@
 <configuration debug="true">
 
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
-    <property name="LOGS" value="./logs"/>
 
     <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -10,40 +9,7 @@
         </encoder>
     </appender>
 
-    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOGS}/report-service.log</file>
-        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <Pattern>%d %p %C{1.} [%t] %m%n</Pattern>
-        </encoder>
-
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!-- rollover daily and when the file reaches 10 MegaBytes -->
-            <fileNamePattern>${LOGS}/archived/report-service-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
-            <maxHistory>30</maxHistory>
-            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <maxFileSize>10MB</maxFileSize>
-            </timeBasedFileNamingAndTriggeringPolicy>
-        </rollingPolicy>
-    </appender>
-
-    <!--Disabled due to the NumberFormatException what is caused by the bug in Swagger internals-->
-    <logger name="io.swagger.models.parameters.AbstractSerializableParameter" level="ERROR"/>
-
-    <springProfile name="dev">
-        <logger name="org.sergei.reportservice" level="info, debug"/>
-
-        <root level="info, debug">
-            <appender-ref ref="file"/>
-            <appender-ref ref="stdout"/>
-        </root>
-    </springProfile>
-
-    <springProfile name="prod">
-        <logger name="org.sergei.reportservice" level="info"/>
-
-        <root level="info">
-            <appender-ref ref="file"/>
-            <appender-ref ref="stdout"/>
-        </root>
-    </springProfile>
+    <root level="info">
+        <appender-ref ref="stdout"/>
+    </root>
 </configuration>
