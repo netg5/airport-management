@@ -35,7 +35,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
                     "FROM\n" +
                     "    reservation r\n" +
                     "        LEFT JOIN\n" +
-                    "    aircraft_report_view ar ON r.route_id = ar.route_id\n" +
+                    "    aircraft_report_view ar ON r.id = ar.route_id\n" +
                     "WHERE\n" +
                     "    ar.route_id = ?1",
             nativeQuery = true
@@ -48,7 +48,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
                     "FROM\n" +
                     "    reservation r\n" +
                     "        LEFT JOIN\n" +
-                    "    customer c ON r.customer_id = c.customer_id\n" +
+                    "    customer c ON r.customer_id = c.id\n" +
                     "WHERE\n" +
                     "    r.customer_id = ?1",
             nativeQuery = true
