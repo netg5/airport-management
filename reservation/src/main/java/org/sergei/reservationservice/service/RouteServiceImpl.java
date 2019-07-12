@@ -87,7 +87,7 @@ public class RouteServiceImpl implements RouteService<RouteDTO, RouteExtendedDTO
 
         int counter = 0;
         for (RouteExtendedDTO routeExtendedDTO : routeExtendedDTOList) {
-            Aircraft aircraft = aircraftRepository.findById(routeList.get(counter).getAircraft().getAircraftId())
+            Aircraft aircraft = aircraftRepository.findById(routeList.get(counter).getAircraft().getId())
                     .orElseThrow(() ->
                             new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
                     );
@@ -113,7 +113,7 @@ public class RouteServiceImpl implements RouteService<RouteDTO, RouteExtendedDTO
         Page<RouteExtendedDTO> routeExtendedDTOList = mapAllPages(routePage, RouteExtendedDTO.class);
         int counter = 0;
         for (RouteExtendedDTO routeExtendedDTO : routeExtendedDTOList) {
-            Aircraft aircraft = aircraftRepository.findById(routePage.getContent().get(counter).getAircraft().getAircraftId())
+            Aircraft aircraft = aircraftRepository.findById(routePage.getContent().get(counter).getAircraft().getId())
                     .orElseThrow(() ->
                             new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
                     );
@@ -136,16 +136,16 @@ public class RouteServiceImpl implements RouteService<RouteDTO, RouteExtendedDTO
         Route route = map(routeDTO, Route.class);
 
         // Find aircraftDTO required in request body
-        Aircraft aircraft = aircraftRepository.findById(routeDTO.getAircraftId())
+        Aircraft aircraft = aircraftRepository.findById(routeDTO.getRouteId())
                 .orElseThrow(() ->
                         new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
                 );
-        log.debug("Found aircraft ID: {}", aircraft.getAircraftId());
+        log.debug("Found aircraft ID: {}", aircraft.getId());
         route.setAircraft(aircraft);
         Route savedRoute = routeRepository.save(route);
-        log.debug("Aircraft ID in saved route: {}", savedRoute.getAircraft().getAircraftId());
+        log.debug("Aircraft ID in saved route: {}", savedRoute.getAircraft().getId());
         RouteDTO savedRouteDTO = map(savedRoute, RouteDTO.class);
-        savedRouteDTO.setAircraftId(aircraft.getAircraftId());
+        savedRouteDTO.setAircraftId(aircraft.getId());
         return savedRouteDTO;
     }
 
@@ -171,7 +171,7 @@ public class RouteServiceImpl implements RouteService<RouteDTO, RouteExtendedDTO
         route.setPrice(routeDTO.getPrice());
         route.setPlace(routeDTO.getPlace());
         route.setAircraft(
-                aircraftRepository.findById(routeDTO.getAircraftId())
+                aircraftRepository.findById(routeDTO.getRouteId())
                         .orElseThrow(() ->
                                 new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
                         )
@@ -209,14 +209,14 @@ public class RouteServiceImpl implements RouteService<RouteDTO, RouteExtendedDTO
         if (params.get("place") != null) {
             route.setPlace(String.valueOf(params.get("place")));
         }
-        if (params.get("aircraftId") != null) {
-            route.setAircraft(aircraftRepository.findById(Long.valueOf(String.valueOf(params.get("aircraftId"))))
+        if (params.get("id") != null) {
+            route.setAircraft(aircraftRepository.findById(Long.valueOf(String.valueOf(params.get("id"))))
                     .orElseThrow(() ->
                             new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
                     ));
         }
         RouteDTO routeDTO = map(routeRepository.save(route), RouteDTO.class);
-        routeDTO.setAircraftId(route.getAircraft().getAircraftId());
+        routeDTO.setAircraftId(route.getAircraft().getId());
         return routeDTO;
     }
 

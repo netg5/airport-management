@@ -21,6 +21,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -37,15 +38,17 @@ import java.util.List;
 @Table(name = "route")
 public class Route implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -5365925665500006894L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "route_seq")
-    @SequenceGenerator(name = "route_seq", sequenceName = "route_seq", allocationSize = 1)
-    @Column(name = "route_id")
-    private Long routeId;
+    @NotNull
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+            generator = "aircraft_seq")
+    @SequenceGenerator(name = "aircraft_seq",
+            sequenceName = "aircraft_seq", allocationSize = 1)
+    private Long id;
 
-    @Column(name = "distance", nullable = false)
+    @Column(nullable = false)
     private Double distance;
 
     @Column(name = "departure_time", nullable = false)
@@ -54,10 +57,10 @@ public class Route implements Serializable {
     @Column(name = "arrival_time", nullable = false)
     private LocalDateTime arrivalTime;
 
-    @Column(name = "price", nullable = false)
+    @Column(nullable = false)
     private BigDecimal price;
 
-    @Column(name = "place", nullable = false)
+    @Column(nullable = false)
     private String place;
 
     @OneToOne(cascade = CascadeType.ALL)

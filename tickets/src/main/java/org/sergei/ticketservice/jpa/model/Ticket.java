@@ -47,12 +47,12 @@ import java.io.Serializable;
 @Table(name = "ticket_view")
 public class Ticket extends ResourceSupport implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1213518846387676066L;
 
     @ApiModelProperty("Customer ID whose ticket is returned")
     @JsonIgnore
-    @Column(name = "customer_id", updatable = false, nullable = false)
-    private Long customerId;
+    @Column(updatable = false, nullable = false)
+    private Long id;
 
     @ApiModelProperty("Customer first name whose ticket is returned")
     @Column(name = "first_name")

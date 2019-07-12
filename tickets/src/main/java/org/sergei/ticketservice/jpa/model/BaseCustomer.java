@@ -37,5 +37,5 @@ import javax.persistence.Table;
 public class BaseCustomer {
 
     @Id
-    private Long customerId;
+    private Long id;
 }

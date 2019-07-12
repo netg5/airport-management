@@ -21,6 +21,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
@@ -35,13 +36,15 @@ import java.util.List;
 @Table(name = "customer")
 public class Customer implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -1912889839898184066L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_seq")
-    @SequenceGenerator(name = "customer_seq", sequenceName = "customer_seq", allocationSize = 1)
-    @Column(name = "customer_id")
-    private Long customerId;
+    @NotNull
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+            generator = "aircraft_seq")
+    @SequenceGenerator(name = "aircraft_seq",
+            sequenceName = "aircraft_seq", allocationSize = 1)
+    private Long id;
 
     @Column(name = "first_name", nullable = false)
     private String firstName;
@@ -49,7 +52,7 @@ public class Customer implements Serializable {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(name = "age", nullable = false)
+    @Column(nullable = false)
     private Integer age;
 
     @OneToMany(

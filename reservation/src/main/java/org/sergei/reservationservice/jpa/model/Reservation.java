@@ -21,6 +21,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -34,13 +35,15 @@ import java.time.LocalDateTime;
 @Table(name = "reservation")
 public class Reservation implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -5534420368605880140L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "reservation_seq")
-    @SequenceGenerator(name = "reservation_seq", sequenceName = "reservation_seq", allocationSize = 1)
-    @Column(name = "reservation_id")
-    private Long reservationId;
+    @NotNull
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+            generator = "aircraft_seq")
+    @SequenceGenerator(name = "aircraft_seq",
+            sequenceName = "aircraft_seq", allocationSize = 1)
+    private Long id;
 
     @Column(name = "reservation_date", nullable = false)
     private LocalDateTime reservationDate;

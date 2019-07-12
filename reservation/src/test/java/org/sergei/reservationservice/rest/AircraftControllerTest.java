@@ -136,7 +136,7 @@ public class AircraftControllerTest {
                 .andExpect(jsonPath("$.aircraftName").value(aircraftName))
                 .andExpect(jsonPath("$.aircraftWeight").value(aircraftWeight))
                 .andExpect(jsonPath("$.maxPassengers").value(maxPassengers))
-                .andExpect(jsonPath("$._links.self.href", is(BASE_URL + "/" + aircraft.getAircraftId())))
+                .andExpect(jsonPath("$._links.self.href", is(BASE_URL + "/" + aircraft.getId())))
                 .andExpect(jsonPath("$._links.allAircrafts.href", is(BASE_URL)));
     }
 

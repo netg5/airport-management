@@ -21,6 +21,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -33,15 +34,16 @@ import java.io.Serializable;
 @Table(name = "aircraft")
 public class Aircraft implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -155783393887085614L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "aircraft_seq")
-    @SequenceGenerator(name = "aircraft_seq", sequenceName = "aircraft_seq", allocationSize = 1)
-    @Column(name = "aircraft_id")
-    private Long aircraftId;
+    @NotNull
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+            generator = "aircraft_seq")
+    @SequenceGenerator(name = "aircraft_seq",
+            sequenceName = "aircraft_seq", allocationSize = 1)
+    private Long id;
 
-    @Column(name = "model", nullable = false)
     private String model;
 
     @Column(name = "aircraft_name", nullable = false)

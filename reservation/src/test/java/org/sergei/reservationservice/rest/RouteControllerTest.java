@@ -185,7 +185,7 @@ public class RouteControllerTest {
         LOGGER.info("Departure time is (object): {}", route.getDepartureTime());
 
         mvc.perform(
-                get(BASE_URL + "/" + route.getRouteId())
+                get(BASE_URL + "/" + route.getId())
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.routeId").isNotEmpty())
@@ -194,7 +194,7 @@ public class RouteControllerTest {
                 .andExpect(jsonPath("$.arrivalTime").value("2018-09-28T22:00:00"))
                 .andExpect(jsonPath("$.price").value(price))
                 .andExpect(jsonPath("$.place").value(place))
-                .andExpect(jsonPath("$._links.self.href", is(BASE_URL + "/" + route.getRouteId())))
+                .andExpect(jsonPath("$._links.self.href", is(BASE_URL + "/" + route.getId())))
                 .andExpect(jsonPath("$._links.allRoutes.href", is(BASE_URL)))
                 .andExpect(jsonPath("$.aircraft.aircraftId").isNotEmpty())
                 .andExpect(jsonPath("$.aircraft.model", is(model)))
@@ -223,7 +223,7 @@ public class RouteControllerTest {
                 .put("arrivalTime", arrivalTime)
                 .put("price", price)
                 .put("place", place)
-                .put("aircraftId", aircraft.getAircraftId());
+                .put("aircraftId", aircraft.getId());
 
         mvc.perform(
                 post(BASE_URL)
@@ -236,7 +236,7 @@ public class RouteControllerTest {
                 .andExpect(jsonPath("$.arrivalTime").value(arrivalTime))
                 .andExpect(jsonPath("$.price").value(price))
                 .andExpect(jsonPath("$.place").value(place))
-                .andExpect(jsonPath("aircraftId").value(aircraft.getAircraftId()));
+                .andExpect(jsonPath("aircraftId").value(aircraft.getId()));
     }
 
     @Test
@@ -259,7 +259,7 @@ public class RouteControllerTest {
                 .put("arrivalTime", arrivalTime)
                 .put("price", price)
                 .put("place", place)
-                .put("aircraftId", aircraft.getAircraftId());
+                .put("aircraftId", aircraft.getId());
 
         mvc.perform(
                 post(BASE_URL)
@@ -272,7 +272,7 @@ public class RouteControllerTest {
                 .andExpect(jsonPath("$.arrivalTime").value(arrivalTime))
                 .andExpect(jsonPath("$.price").value(price))
                 .andExpect(jsonPath("$.place").value(place))
-                .andExpect(jsonPath("aircraftId").value(aircraft.getAircraftId()));
+                .andExpect(jsonPath("aircraftId").value(aircraft.getId()));
 
         final Double distanceAfter = 1000.0;
         final String departureTimeAfter = "2019-01-01T19:30:00";
@@ -286,7 +286,7 @@ public class RouteControllerTest {
                 .put("arrivalTime", arrivalTimeAfter)
                 .put("price", priceAfter)
                 .put("place", placeAfter)
-                .put("aircraftId", aircraft.getAircraftId());
+                .put("aircraftId", aircraft.getId());
 
         mvc.perform(
                 put(BASE_URL + "/2")
@@ -299,7 +299,7 @@ public class RouteControllerTest {
                 .andExpect(jsonPath("$.arrivalTime").value(arrivalTimeAfter))
                 .andExpect(jsonPath("$.price").value(priceAfter))
                 .andExpect(jsonPath("$.place").value(placeAfter))
-                .andExpect(jsonPath("aircraftId").value(aircraft.getAircraftId()));
+                .andExpect(jsonPath("aircraftId").value(aircraft.getId()));
     }
 
     @Test
@@ -322,7 +322,7 @@ public class RouteControllerTest {
                 .put("arrivalTime", arrivalTime)
                 .put("price", price)
                 .put("place", place)
-                .put("aircraftId", aircraft.getAircraftId());
+                .put("aircraftId", aircraft.getId());
         mvc.perform(
                 post(BASE_URL)
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -334,7 +334,7 @@ public class RouteControllerTest {
                 .andExpect(jsonPath("$.arrivalTime").value(arrivalTime))
                 .andExpect(jsonPath("$.price").value(price))
                 .andExpect(jsonPath("$.place").value(place))
-                .andExpect(jsonPath("aircraftId").value(aircraft.getAircraftId()));
+                .andExpect(jsonPath("aircraftId").value(aircraft.getId()));
 
         final Double distanceAfter = 1205.0;
         final String departureTimeAfter = "2018-01-01T08:15:00";
@@ -348,7 +348,7 @@ public class RouteControllerTest {
                 .put("arrivalTime", arrivalTimeAfter)
                 .put("price", priceAfter)
                 .put("place", placeAfter)
-                .put("aircraftId", aircraft.getAircraftId());
+                .put("aircraftId", aircraft.getId());
 
         mvc.perform(
                 patch(BASE_URL + "/2/patch")
@@ -361,7 +361,7 @@ public class RouteControllerTest {
                 .andExpect(jsonPath("$.arrivalTime").value(arrivalTimeAfter))
                 .andExpect(jsonPath("$.price").value(priceAfter))
                 .andExpect(jsonPath("$.place").value(placeAfter))
-                .andExpect(jsonPath("aircraftId").value(aircraft.getAircraftId()))
+                .andExpect(jsonPath("aircraftId").value(aircraft.getId()))
                 .andExpect(jsonPath("$._links.self.href", is(BASE_URL + "/2")))
                 .andExpect(jsonPath("$._links.allRoutes.href", is(BASE_URL)));
     }
@@ -386,7 +386,7 @@ public class RouteControllerTest {
                 .put("arrivalTime", arrivalTime)
                 .put("price", price)
                 .put("place", place)
-                .put("aircraftId", aircraft.getAircraftId());
+                .put("aircraftId", aircraft.getId());
         mvc.perform(
                 post(BASE_URL)
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -398,7 +398,7 @@ public class RouteControllerTest {
                 .andExpect(jsonPath("$.arrivalTime").value(arrivalTime))
                 .andExpect(jsonPath("$.price").value(price))
                 .andExpect(jsonPath("$.place").value(place))
-                .andExpect(jsonPath("aircraftId").value(aircraft.getAircraftId()));
+                .andExpect(jsonPath("aircraftId").value(aircraft.getId()));
 
         mvc.perform(
                 delete(BASE_URL + "/1"))

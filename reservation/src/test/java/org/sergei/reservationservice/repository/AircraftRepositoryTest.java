@@ -65,7 +65,7 @@ public class AircraftRepositoryTest {
         aircraftRepository.save(aircraft);
         Iterable<Aircraft> foundAll = aircraftRepository.findAll();
         assertThat(foundAll).hasSize(1);
-        aircraft.setAircraftId(1L);
+        aircraft.setId(1L);
         assertThat(foundAll).contains(aircraft);
     }
 
@@ -75,7 +75,7 @@ public class AircraftRepositoryTest {
         aircraftRepository.save(aircraft);
         Iterable<Aircraft> foundAll = aircraftRepository.findAll();
         Assertions.assertThat(foundAll).hasSize(1);
-        aircraft.setAircraftId(1L);
+        aircraft.setId(1L);
         Assertions.assertThat(foundAll).contains(aircraft);
         aircraftRepository.delete(aircraft);
         Iterable<Aircraft> aircraftList = aircraftRepository.findAll();

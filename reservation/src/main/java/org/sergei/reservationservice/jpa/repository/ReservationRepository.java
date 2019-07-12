@@ -43,9 +43,9 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
      * @param reservationId reservation which should be found
      * @return list of reservations
      */
-    @Query("SELECT f FROM Reservation f WHERE f.customer.customerId = :customerId AND f.reservationId = :reservationId")
-    Optional<Reservation> findOneForCustomer(@Param("customerId") Long customerId,
-                                             @Param("reservationId") Long reservationId);
+    @Query("SELECT f FROM Reservation f WHERE f.customer.id = :customerId AND f.id = :reservationId")
+    Optional<Reservation> findOneForCustomer(@Param("id") Long customerId,
+                                             @Param("id") Long reservationId);
 
     /**
      * Find all reservations by customer ID
@@ -53,8 +53,8 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
      * @param customerId whose reservation should be found
      * @return list of reservations
      */
-    @Query("SELECT f FROM Reservation f WHERE f.customer.customerId = :customerId")
-    Optional<List<Reservation>> findAllForCustomer(@Param("customerId") Long customerId);
+    @Query("SELECT f FROM Reservation f WHERE f.customer.id = :customerId")
+    Optional<List<Reservation>> findAllForCustomer(@Param("id") Long customerId);
 
     /**
      * Find all reservations by customer ID paginated
@@ -63,8 +63,8 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
      * @param pageable   page size and record quantity per page
      * @return list of reservations
      */
-    @Query("SELECT f FROM Reservation f WHERE f.customer.customerId = :customerId")
-    Optional<Page<Reservation>> findAllForCustomerPaginated(@Param("customerId") Long customerId, Pageable pageable);
+    @Query("SELECT f FROM Reservation f WHERE f.customer.id = :customerId")
+    Optional<Page<Reservation>> findAllForCustomerPaginated(@Param("id") Long customerId, Pageable pageable);
 
     /**
      * Method to delete reservation by customer and reservation found

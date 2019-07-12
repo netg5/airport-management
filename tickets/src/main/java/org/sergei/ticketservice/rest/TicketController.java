@@ -59,7 +59,7 @@ public class TicketController {
     })
     @GetMapping
     public ResponseEntity<Resources<Ticket>> findAllTickets(@ApiParam(value = "Customer ID whose ticket should be found", required = true)
-                                                            @RequestParam("customerId") Long customerId,
+                                                            @RequestParam("id") Long customerId,
                                                             @ApiParam(value = "Place with which ticket should be found")
                                                             @RequestParam(value = "place", required = false) String place,
                                                             @ApiParam(value = "Distance with which ticket should be found")
@@ -74,7 +74,7 @@ public class TicketController {
     })
     @GetMapping(params = {"page", "size"})
     public ResponseEntity<Resources<Ticket>> findAllTicketsPageable(@ApiParam(value = "Customer ID whose ticket should be found", required = true)
-                                                                    @RequestParam("customerId") Long customerId,
+                                                                    @RequestParam("id") Long customerId,
                                                                     @ApiParam(value = "Place with which ticket should be found")
                                                                     @RequestParam(value = "place", required = false) String place,
                                                                     @ApiParam(value = "Distance with which ticket should be found")

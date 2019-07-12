@@ -58,7 +58,7 @@ public class ServiceComponent {
         RouteExtendedDTO routeExtendedDTO = map(route, RouteExtendedDTO.class);
 
         // Find aircraftDTO by ID taken from the entity
-        Aircraft aircraft = aircraftRepository.findById(route.getAircraft().getAircraftId())
+        Aircraft aircraft = aircraftRepository.findById(route.getAircraft().getId())
                 .orElseThrow(() ->
                         new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
                 );
@@ -67,7 +67,7 @@ public class ServiceComponent {
 
         // Set links for the aircraft object in reservation JSON response
         Link aircraftSelfLink = linkTo(methodOn(AircraftController.class)
-                .getAircraftById(aircraft.getAircraftId())).withRel("aircraftSelf");
+                .getAircraftById(aircraft.getId())).withRel("aircraftSelf");
         aircraftDTO.add(aircraftSelfLink);
 
         // Set aircraftDTO DTO to the flight reservation extended DTO
@@ -75,7 +75,7 @@ public class ServiceComponent {
 
         // Set links for the route object in reservation JSON response
         Link routeSelfLink = linkTo(methodOn(RouteController.class)
-                .getRouteById(route.getRouteId())).withRel("routeSelf");
+                .getRouteById(route.getId())).withRel("routeSelf");
 
         routeExtendedDTO.add(routeSelfLink);
 

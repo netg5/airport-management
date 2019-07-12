@@ -103,7 +103,7 @@ public class ReservationRepositoryTest {
         reservationRepository.save(reservation);
         Iterable<Reservation> foundAll = reservationRepository.findAll();
         assertThat(foundAll).hasSize(1);
-        customer.setCustomerId(1L);
+        customer.setId(1L);
         assertThat(foundAll).contains(reservation);
     }
 
@@ -119,9 +119,9 @@ public class ReservationRepositoryTest {
         reservationRepository.save(reservation);
         Optional<Reservation> foundReservation =
                 reservationRepository.findOneForCustomer(
-                        customer.getCustomerId(), reservation.getReservationId());
-        assertEquals(reservation.getReservationId(), foundReservation.get().getReservationId());
-        assertEquals(customer.getCustomerId(), foundReservation.get().getCustomer().getCustomerId());
+                        customer.getId(), reservation.getId());
+        assertEquals(reservation.getId(), foundReservation.get().getId());
+        assertEquals(customer.getId(), foundReservation.get().getCustomer().getId());
         assertThat(foundReservation).contains(reservation);
     }
 
@@ -136,7 +136,7 @@ public class ReservationRepositoryTest {
         Reservation reservation = new Reservation( DEPARTURE_TIME, customer, route);
         reservationRepository.save(reservation);
         Optional<List<Reservation>> foundReservations =
-                reservationRepository.findAllForCustomer(customer.getCustomerId());
+                reservationRepository.findAllForCustomer(customer.getId());
         assertEquals(foundReservations.get().size(), 1);
     }
 }

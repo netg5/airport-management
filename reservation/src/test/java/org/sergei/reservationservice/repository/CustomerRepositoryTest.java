@@ -65,7 +65,7 @@ public class CustomerRepositoryTest {
         customerRepository.save(customer);
         Iterable<Customer> foundAll = customerRepository.findAll();
         assertThat(foundAll).hasSize(1);
-        customer.setCustomerId(1L);
+        customer.setId(1L);
         assertThat(foundAll).contains(customer);
     }
 
@@ -75,7 +75,7 @@ public class CustomerRepositoryTest {
         customerRepository.save(customer);
         Iterable<Customer> foundAll = customerRepository.findAll();
         assertThat(foundAll).hasSize(1);
-        customer.setCustomerId(1L);
+        customer.setId(1L);
         assertThat(foundAll).contains(customer);
         customerRepository.delete(customer);
         Iterable<Customer> customerList = customerRepository.findAll();

@@ -140,7 +140,7 @@ public class AircraftServiceImpl implements AircraftService<AircraftDTO> {
                         () -> new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
                 );
 
-        aircraft.setAircraftId(aircraftId);
+        aircraft.setId(aircraftId);
         aircraft.setAircraftName(aircraftDTO.getAircraftName());
         aircraft.setModel(aircraftDTO.getModel());
         aircraft.setAircraftWeight(aircraftDTO.getAircraftWeight());

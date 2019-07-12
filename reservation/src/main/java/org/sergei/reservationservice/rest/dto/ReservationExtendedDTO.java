@@ -30,7 +30,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonRootName("flightReservation")
-@JsonIgnoreProperties("routeId")
+@JsonIgnoreProperties("id")
 public class ReservationExtendedDTO extends ReservationDTO {
 
     @JsonProperty("reservedRoute")

@@ -25,7 +25,7 @@ public interface AircraftService<D> extends IService<D> {
 
     /**
      * Find aircraft by multiple parameters
-     * NOTE: There id no optional parameters
+     * NOTE: There routeId no optional parameters
      *
      * @param request of all requested parameters
      * @return DTO of found entity
