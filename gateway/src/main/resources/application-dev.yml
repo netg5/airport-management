@@ -39,9 +39,9 @@ zuul:
       url: http://localhost:8082
       strip-prefix: false
       sensitive-headers: true
-    reservations:
+    reservation:
       path: /reservation/**
-      service-id: reservations
+      service-id: reservation
       url: http://localhost:8083
       strip-prefix: false
       sensitive-headers: true

@@ -25,8 +25,8 @@ spring:
     port: 8080
 security:
   oauth2:
-    access-token-uri: http://localhost:8080/auth-api/oauth/token
-    user-authorization-uri: http://localhost:8080/auth-api/oauth/authorize
+    access-token-uri: http://localhost:8080/auth/oauth/token
+    user-authorization-uri: http://localhost:8080/auth/oauth/authorize
 eureka:
   instance:
     non-secure-port-enabled: false
