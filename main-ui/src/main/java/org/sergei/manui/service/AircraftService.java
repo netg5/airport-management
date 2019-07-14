@@ -30,7 +30,7 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class AircraftService {
 
-    private static final String RESERVATION_API_URI = "http://localhost:8080/reservation-api";
+    private static final String RESERVATION_API_URI = "http://localhost:8080/reservation";
     private static final String AIRCRAFTS_PATH = "/aircrafts/";
     private static final String ACCESS_TOKEN_PARAM = "?access_token=";
 
