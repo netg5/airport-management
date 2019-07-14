@@ -2,6 +2,9 @@ server:
   port: 8083
   servlet:
     context-path: /reservation
+  error:
+    whitelabel:
+      enabled: false
 spring:
   application:
     name: reservation
