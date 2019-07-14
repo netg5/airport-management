@@ -43,7 +43,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
      * @param reservationId reservation which should be found
      * @return list of reservations
      */
-    @Query("SELECT f FROM Reservation f WHERE f.customer.id = :customerId AND f.id = :reservationId")
+    @Query("SELECT r FROM Reservation r WHERE r.customer.id = :customerId AND r.id = :reservationId")
     Optional<Reservation> findOneForCustomer(@Param("customerId") Long customerId,
                                              @Param("reservationId") Long reservationId);
 
@@ -53,8 +53,8 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
      * @param customerId whose reservation should be found
      * @return list of reservations
      */
-    @Query("SELECT f FROM Reservation f WHERE f.customer.id = :customerId")
-    Optional<List<Reservation>> findAllForCustomer(@Param("id") Long customerId);
+    @Query("SELECT r FROM Reservation r WHERE r.customer.id = :customerId")
+    Optional<List<Reservation>> findAllForCustomer(@Param("customerId") Long customerId);
 
     /**
      * Find all reservations by customer ID paginated
@@ -63,9 +63,9 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
      * @param pageable   page size and record quantity per page
      * @return list of reservations
      */
-    @Query("SELECT f FROM Reservation f WHERE f.customer.id = :customerId")
-    Optional<Page<Reservation>> findAllForCustomerPaginated(@Param("customerId") Long customerId,
-                                                            Pageable pageable);
+    @Query("SELECT r FROM Reservation r WHERE r.customer.id = :customerId")
+    Page<Reservation> findAllForCustomerPaginated(@Param("customerId") Long customerId,
+                                                  Pageable pageable);
 
     /**
      * Method to delete reservation by customer and reservation found

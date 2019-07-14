@@ -72,9 +72,7 @@ public class ReservationServiceImpl implements ReservationService<ReservationExt
         );
 
         Reservation reservation = reservationRepository.findOneForCustomer(customerId, reservationId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(Constants.RESERVATION_NOT_FOUND)
-                );
+                .orElseThrow(() -> new ResourceNotFoundException(Constants.RESERVATION_NOT_FOUND));
         ReservationExtendedDTO reservationExtendedDTO = map(reservation, ReservationExtendedDTO.class);
         reservationExtendedDTO.setCustomerId(customer.getId());
 
@@ -107,9 +105,7 @@ public class ReservationServiceImpl implements ReservationService<ReservationExt
 
         // Find all flight reservation for the customer
         List<Reservation> reservation = reservationRepository.findAllForCustomer(customerId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(Constants.RESERVATIONS_NOT_FOUND)
-                );
+                .orElseThrow(() -> new ResourceNotFoundException(Constants.RESERVATIONS_NOT_FOUND));
         List<ReservationExtendedDTO> reservationExtendedDTOList = mapAll(reservation, ReservationExtendedDTO.class);
         int counter = 0;
         // For each DTO set customer ID, route extended DTO
@@ -150,10 +146,7 @@ public class ReservationServiceImpl implements ReservationService<ReservationExt
                 );
 
         // Find all flight reservation for the customer
-        Page<Reservation> reservation = reservationRepository.findAllForCustomerPaginated(customerId, PageRequest.of(page, size))
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(Constants.RESERVATIONS_NOT_FOUND)
-                );
+        Page<Reservation> reservation = reservationRepository.findAllForCustomerPaginated(customerId, PageRequest.of(page, size));
         Page<ReservationExtendedDTO> flightReservationExtendedDTOList =
                 mapAllPages(reservation, ReservationExtendedDTO.class);
         int counter = 0;
@@ -234,9 +227,7 @@ public class ReservationServiceImpl implements ReservationService<ReservationExt
                         new ResourceNotFoundException(Constants.CUSTOMER_NOT_FOUND)
                 );
         Reservation reservation = reservationRepository.findOneForCustomer(customerId, reservationId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Customer or reservation with this ID not found")
-                );
+                .orElseThrow(() -> new ResourceNotFoundException(Constants.RESERVATION_NOT_FOUND));
         reservation.setCustomer(customer);
         if (params.get("id") != null) {
             reservation.setRoute(

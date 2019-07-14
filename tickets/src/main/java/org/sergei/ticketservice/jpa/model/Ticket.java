@@ -52,7 +52,7 @@ public class Ticket extends ResourceSupport implements Serializable {
     @ApiModelProperty("Customer ID whose ticket is returned")
     @JsonIgnore
     @Column(updatable = false, nullable = false)
-    private Long id;
+    private Long ticketId;
 
     @ApiModelProperty("Customer first name whose ticket is returned")
     @Column(name = "first_name")

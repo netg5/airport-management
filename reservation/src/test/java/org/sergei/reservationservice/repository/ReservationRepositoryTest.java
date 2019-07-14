@@ -19,6 +19,7 @@ package org.sergei.reservationservice.repository;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.sergei.reservationservice.exceptions.ResourceNotFoundException;
 import org.sergei.reservationservice.jpa.model.Aircraft;
 import org.sergei.reservationservice.jpa.model.Customer;
 import org.sergei.reservationservice.jpa.model.Reservation;
@@ -42,7 +43,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
@@ -111,18 +111,17 @@ public class ReservationRepositoryTest {
     public void findOneForCustomer_thenGetOk() {
         Customer customer = new Customer("John", "Smith", 20, Collections.emptyList());
         customerRepository.save(customer);
-        Aircraft aircraft = new Aircraft( "T_50", "TestName", 2000.0, 3000);
+        Aircraft aircraft = new Aircraft("T_50", "TestName", 2000.0, 3000);
         aircraftRepository.save(aircraft);
         Route route = new Route(250.03, DEPARTURE_TIME, ARRIVAL_TIME, PRICE, "Riga", aircraft, Collections.emptyList());
         routeRepository.save(route);
         Reservation reservation = new Reservation(DEPARTURE_TIME, customer, route);
         reservationRepository.save(reservation);
-        Optional<Reservation> foundReservation =
+        Reservation foundReservation =
                 reservationRepository.findOneForCustomer(
-                        customer.getId(), reservation.getId());
-        assertEquals(reservation.getId(), foundReservation.get().getId());
-        assertEquals(customer.getId(), foundReservation.get().getCustomer().getId());
-        assertThat(foundReservation).contains(reservation);
+                        customer.getId(), reservation.getId()).orElseThrow(() -> new ResourceNotFoundException());
+        assertEquals(reservation.getId(), foundReservation.getId());
+        assertEquals(customer.getId(), foundReservation.getCustomer().getId());
     }
 
     @Test
@@ -133,10 +132,10 @@ public class ReservationRepositoryTest {
         aircraftRepository.save(aircraft);
         Route route = new Route(250.03, DEPARTURE_TIME, ARRIVAL_TIME, PRICE, "Riga", aircraft, Collections.emptyList());
         routeRepository.save(route);
-        Reservation reservation = new Reservation( DEPARTURE_TIME, customer, route);
+        Reservation reservation = new Reservation(DEPARTURE_TIME, customer, route);
         reservationRepository.save(reservation);
-        Optional<List<Reservation>> foundReservations =
-                reservationRepository.findAllForCustomer(customer.getId());
-        assertEquals(foundReservations.get().size(), 1);
+        List<Reservation> foundReservations =
+                reservationRepository.findAllForCustomer(customer.getId()).orElseThrow(() -> new ResourceNotFoundException());
+        assertEquals(foundReservations.size(), 1);
     }
 }

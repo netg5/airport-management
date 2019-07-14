@@ -43,9 +43,9 @@ public class Route implements Serializable {
     @Id
     @NotNull
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
-            generator = "aircraft_seq")
-    @SequenceGenerator(name = "aircraft_seq",
-            sequenceName = "aircraft_seq", allocationSize = 1)
+            generator = "route_seq")
+    @SequenceGenerator(name = "route_seq",
+            sequenceName = "route_seq", allocationSize = 1)
     private Long id;
 
     @Column(nullable = false)

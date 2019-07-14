@@ -40,9 +40,9 @@ public class Reservation implements Serializable {
     @Id
     @NotNull
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
-            generator = "aircraft_seq")
-    @SequenceGenerator(name = "aircraft_seq",
-            sequenceName = "aircraft_seq", allocationSize = 1)
+            generator = "reservation_seq")
+    @SequenceGenerator(name = "reservation_seq",
+            sequenceName = "reservation_seq", allocationSize = 1)
     private Long id;
 
     @Column(name = "reservation_date", nullable = false)
