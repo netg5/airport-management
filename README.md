@@ -199,5 +199,25 @@ docker inspect CONTAINER_NAME
 
 **__NOTE: `config` and `registry` should be run first due to all the configs are stored in the separate repository.__**
 
+## Jaeger trace
+
+Jaeger is an implementation of opentrace specification which gives us an ability to perform tracing of application, 
+see all the requests, how successful they are.
+
+Run Jaeger in Docker container:
+
+```$xslt
+docker run -d --name jaeger \
+  -e COLLECTOR_ZIPKIN_HTTP_PORT=9411 \
+  -p 5775:5775/udp \
+  -p 6831:6831/udp \
+  -p 6832:6832/udp \
+  -p 5778:5778 \
+  -p 16686:16686 \
+  -p 14268:14268 \
+  -p 9411:9411 \
+  jaegertracing/all-in-one:1.13
+```
+
 ## Architecture diagram
 <img src="architecture_design.svg" alt="architecture"/>
