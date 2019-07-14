@@ -39,7 +39,7 @@ import java.util.Collections;
 @Configuration
 @EnableAspectJAutoProxy
 @Import(SwaggerConfig.class)
-public class ReservationServiceConfig implements WebMvcConfigurer {
+public class ReservationConfig implements WebMvcConfigurer {
 
     @Bean
     public PerformanceAspect performanceAspect() {
