@@ -5,4 +5,4 @@ COPY ${DEPENDENCY}/BOOT-INF/lib /app/lib
 COPY ${DEPENDENCY}/META-INF /app/META-INF
 COPY ${DEPENDENCY}/BOOT-INF/classes /app
 EXPOSE 9094
-ENTRYPOINT ["java","-cp","app:app/lib/*","org.sergei.authservice.AuthServiceApplication"]
+ENTRYPOINT ["java","-cp","app:app/lib/*","org.sergei.auth.AuthServiceApplication"]

@@ -8,7 +8,7 @@
         </encoder>
     </appender>
 
-    <logger name="org.sergei.reservationservice" level="info"/>
+    <logger name="org.sergei.reservation" level="info"/>
 
     <root level="info">
         <appender-ref ref="stdout"/>

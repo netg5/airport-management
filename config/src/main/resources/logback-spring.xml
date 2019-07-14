@@ -27,7 +27,7 @@
     </appender>
 
     <springProfile name="dev">
-        <logger name="org.sergei.configservice" level="info, debug"/>
+        <logger name="org.sergei.config" level="info, debug"/>
 
         <root level="info, debug">
             <appender-ref ref="file"/>
@@ -36,7 +36,7 @@
     </springProfile>
 
     <springProfile name="prod">
-        <logger name="org.sergei.configservice" level="info"/>
+        <logger name="org.sergei.config" level="info"/>
 
         <root level="info">
             <appender-ref ref="file"/>
