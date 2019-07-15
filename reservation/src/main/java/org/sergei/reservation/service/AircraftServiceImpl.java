@@ -27,10 +27,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.sergei.reservation.utils.ObjectMapperUtil.*;
 
@@ -55,10 +52,7 @@ public class AircraftServiceImpl implements AircraftService {
      */
     @Override
     public AircraftDTO findOne(Long aircraftId) {
-        Aircraft aircraft = aircraftRepository.findById(aircraftId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
-                );
+        Optional<Aircraft> aircraft = aircraftRepository.findById(aircraftId);
         return map(aircraft, AircraftDTO.class);
     }
 
