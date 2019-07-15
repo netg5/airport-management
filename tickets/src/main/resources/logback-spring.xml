@@ -1,24 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  ~ Copyright 2018-2019 the original author.
-  ~
-  ~ Licensed under the Apache License, Version 2.0 (the "License");
-  ~ you may not use this file except in compliance with the License.
-  ~ You may obtain a copy of the License at
-  ~
-  ~     http://www.apache.org/licenses/LICENSE-2.0
-  ~
-  ~ Unless required by applicable law or agreed to in writing, software
-  ~ distributed under the License is distributed on an "AS IS" BASIS,
-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~ See the License for the specific language governing permissions and
-  ~ limitations under the License.
-  -->
-
 <configuration debug="true">
 
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
-    <property name="LOGS" value="./logs"/>
 
     <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -26,41 +9,7 @@
         </encoder>
     </appender>
 
-    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOGS}/ticket-service.log</file>
-        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <Pattern>%d %p %C{1.} [%t] %m%n</Pattern>
-        </encoder>
-
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!-- rollover daily and when the file reaches 10 MegaBytes -->
-            <fileNamePattern>${LOGS}/archived/ticket-service-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
-            <maxHistory>30</maxHistory>
-            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <maxFileSize>10MB</maxFileSize>
-            </timeBasedFileNamingAndTriggeringPolicy>
-        </rollingPolicy>
-    </appender>
-
-    <!--Disabled due to the NumberFormatException what is caused by the bug in Swagger internals-->
-    <logger name="io.swagger.models.parameters.AbstractSerializableParameter" level="ERROR"/>
-
-    <springProfile name="dev">
-        <logger name="org.sergei.ticketservice" level="info, debug"/>
-
-        <root level="info, debug">
-            <appender-ref ref="file"/>
-            <appender-ref ref="stdout"/>
-        </root>
-    </springProfile>
-
-    <springProfile name="prod">
-        <logger name="org.sergei.ticketservice" level="info"/>
-
-        <root level="info">
-            <appender-ref ref="file"/>
-            <appender-ref ref="stdout"/>
-        </root>
-    </springProfile>
-
+    <root level="info">
+        <appender-ref ref="stdout"/>
+    </root>
 </configuration>

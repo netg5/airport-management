@@ -14,7 +14,7 @@
     <packaging>jar</packaging>
     <version>2.3.4-SNAPSHOT</version>
 
-    <name>Authentication service</name>
+    <name>Authentication</name>
     <description>Authentication microservice</description>
 
     <properties>

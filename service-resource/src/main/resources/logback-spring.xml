@@ -9,10 +9,7 @@
         </encoder>
     </appender>
 
-    <logger name="org.sergei.serviceresource" level="info, debug"/>
-
-    <root level="info, debug">
+    <root level="info">
         <appender-ref ref="stdout"/>
     </root>
-
 </configuration>

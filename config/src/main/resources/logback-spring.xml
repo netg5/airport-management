@@ -2,7 +2,6 @@
 <configuration debug="true">
 
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
-    <property name="LOGS" value="./logs"/>
 
     <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -10,37 +9,7 @@
         </encoder>
     </appender>
 
-    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOGS}/config-service.log</file>
-        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <Pattern>%d %p %C{1.} [%t] %m%n</Pattern>
-        </encoder>
-
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!-- rollover daily and when the file reaches 10 MegaBytes -->
-            <fileNamePattern>${LOGS}/archived/config-service-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
-            <maxHistory>30</maxHistory>
-            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <maxFileSize>10MB</maxFileSize>
-            </timeBasedFileNamingAndTriggeringPolicy>
-        </rollingPolicy>
-    </appender>
-
-    <springProfile name="dev">
-        <logger name="org.sergei.configservice" level="info, debug"/>
-
-        <root level="info, debug">
-            <appender-ref ref="file"/>
-            <appender-ref ref="stdout"/>
-        </root>
-    </springProfile>
-
-    <springProfile name="prod">
-        <logger name="org.sergei.configservice" level="info"/>
-
-        <root level="info">
-            <appender-ref ref="file"/>
-            <appender-ref ref="stdout"/>
-        </root>
-    </springProfile>
+    <root level="info">
+        <appender-ref ref="stdout"/>
+    </root>
 </configuration>

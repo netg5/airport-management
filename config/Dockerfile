@@ -5,4 +5,4 @@ COPY ${DEPENDENCY}/BOOT-INF/lib /app/lib
 COPY ${DEPENDENCY}/META-INF /app/META-INF
 COPY ${DEPENDENCY}/BOOT-INF/classes /app
 EXPOSE 8888
-ENTRYPOINT ["java","-cp","app:app/lib/*","org.sergei.configservice.ConfigServiceApplication"]
+ENTRYPOINT ["java","-cp","app:app/lib/*","org.sergei.config.ConfigServiceApplication"]

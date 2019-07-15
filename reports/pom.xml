@@ -14,7 +14,7 @@
     <packaging>jar</packaging>
     <version>2.3.4-SNAPSHOT</version>
 
-    <name>Report service</name>
+    <name>Reports</name>
     <description>Service for reports</description>
 
     <properties>

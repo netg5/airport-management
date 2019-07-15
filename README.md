@@ -33,7 +33,7 @@ To access any resource authentication should be performed. By performing this re
 #### 1 way - using client credentials
 Client ID and client secret should be sent as a basic auth header.
 
-* URL: `http://localhost:8080/auth-api/oauth/token`
+* URL: `http://localhost:8080/auth/oauth/token`
 * Method: `POST`
 * Content-Type: `application/x-www-form-urlencoded`
 * Content-Options: `username=USERNAME&password=PASSWORD&grant_type=password`
@@ -53,13 +53,13 @@ _Response:_
 #### 2 way - using _authorization_code_ (more secured)
 1. Get authorization code sending credentials using method _GET_ in browser
 
-`http://localhost:8080/auth-api/oauth/authorize?
+`http://localhost:8080/auth/oauth/authorize?
 &client_id=CLIENT_ID&client_secret=CLIENT_SECRET&response_type=code&redirect_uri=REDIRECT_URI&scope=SCOPES`
 
 2. Authorization with code:
 Client ID and client secret should be sent as a basic auth header.
 
-* URL: `http://localhost:8080/auth-api/oauth/token`
+* URL: `http://localhost:8080/auth/oauth/token`
 * Method: `POST`
 * Content-Type: `application/x-www-form-urlencoded`
 * Content-Options: `redirect_uri=REDIRECT_URI&grant_type=authorization_code&code=CODE&scope=SCOPES`
@@ -78,11 +78,11 @@ _Response:_
 
 After authentication it is able to access any resource with an access token provided. As there is used JWT access and refresh tokens are pretty long.
 
-The next step is get an access to the resources. Example for the flight-api: `http://localhost:8080/flight-api/v1/customers?access_token=ACCESS_TOKEN`
+The next step is get an access to the resources. Example for the flight-api: `http://localhost:8080/reservation/v1/customers?access_token=ACCESS_TOKEN`
 
 In case if access token is expired refresh token should be used to renew access token.
 
-* URL: `http://localhost:8080/auth-api/oauth/token`
+* URL: `http://localhost:8080/auth/oauth/token`
 * Method: `POST`
 * Content-Type: `application/x-www-form-urlencoded`
 * Content-Options: `grant_type=refresh_token&refresh_token=REFRESH_TOKEN`
@@ -102,11 +102,11 @@ property `spring.cloud.config.server.git.uri`
 3. Change `server.port` for each service located in config repository mentioned in `1.` paragraph _(optional)_
 4. Change database driver for your database.
 
-_Example for MySQL:_
+_Example for PostgreSQL:_
 ```xml
 <dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
+    <groupId>org.postgresql</groupId>
+    <artifactId>postgresql</artifactId>
     <scope>runtime</scope>
 </dependency>
 ```
@@ -197,7 +197,7 @@ docker inspect CONTAINER_NAME
 docker inspect CONTAINER_NAME
 ```
 
-**__NOTE: `config-service` and `eureka-service` should be run first due to all the configs are stored in the separate repository.__**
+**__NOTE: `config` and `registry` should be run first due to all the configs are stored in the separate repository.__**
 
 ## Architecture diagram
-<img src="images/architecture_design.svg" alt="architecture"/>
+<img src="architecture_design.svg" alt="architecture"/>
