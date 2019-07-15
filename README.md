@@ -202,7 +202,7 @@ docker inspect CONTAINER_NAME
 ## Jaeger trace
 
 Jaeger is an implementation of opentrace specification which gives an ability to perform tracing of application, 
-see all the requests, see its quantity, how successful they are(status code) and more other useful features.
+see all the requests, see its quantity, how successful they are (status code) and more other useful features.
 
 Run Jaeger in Docker container:
 
