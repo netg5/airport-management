@@ -114,6 +114,13 @@
             <artifactId>lombok</artifactId>
         </dependency>
 
+        <!-- Guava library dependency -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>27.1-jre</version>
+        </dependency>
+
         <dependency>
             <groupId>org.modelmapper</groupId>
             <artifactId>modelmapper</artifactId>
