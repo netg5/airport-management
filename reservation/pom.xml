@@ -14,7 +14,7 @@
     <packaging>jar</packaging>
     <version>2.3.4-SNAPSHOT</version>
 
-    <name>Reservation service</name>
+    <name>Reservation</name>
     <description>Service to perform flight reservation</description>
 
     <properties>
@@ -137,6 +137,8 @@
             <artifactId>assertj-core</artifactId>
             <version>3.11.1</version>
         </dependency>
+
+        <!-- Swagger -->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
@@ -146,6 +148,12 @@
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
             <version>2.9.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.opentracing.contrib</groupId>
+            <artifactId>opentracing-spring-web-autoconfigure</artifactId>
+            <version>0.3.2</version>
         </dependency>
     </dependencies>
 
