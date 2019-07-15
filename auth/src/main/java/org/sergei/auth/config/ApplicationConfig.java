@@ -24,5 +24,5 @@ import org.springframework.context.annotation.Import;
  */
 @Configuration
 @Import(SwaggerConfig.class)
-public class AuthServiceConfig {
+public class ApplicationConfig {
 }

@@ -26,7 +26,7 @@ import org.springframework.context.annotation.Import;
  */
 @Configuration
 @Import(SwaggerConfig.class)
-public class ReservationAppConfig {
+public class ApplicationConfig {
 
     @Bean
     public ModelMapper modelMapper() {
