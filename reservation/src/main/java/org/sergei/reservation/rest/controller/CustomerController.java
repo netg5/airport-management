@@ -45,10 +45,10 @@ import java.util.Map;
 public class CustomerController {
 
     private final LinkUtil linkUtil;
-    private final CustomerService<CustomerDTO> customerService;
+    private final CustomerService customerService;
 
     @Autowired
-    public CustomerController(LinkUtil linkUtil, CustomerService<CustomerDTO> customerService) {
+    public CustomerController(LinkUtil linkUtil, CustomerService customerService) {
         this.linkUtil = linkUtil;
         this.customerService = customerService;
     }
@@ -91,8 +91,8 @@ public class CustomerController {
     @ApiOperation("Save customer")
     @PostMapping(consumes = "application/json")
     public ResponseEntity<CustomerDTO> saveCustomer(@ApiParam(value = "Saved customer", required = true)
-                                                    @RequestBody CustomerDTO customerDTO) {
-        return new ResponseEntity<>(customerService.save(customerDTO), HttpStatus.CREATED);
+                                                    @RequestBody CustomerDTO request) {
+        return new ResponseEntity<>(customerService.save(request), HttpStatus.CREATED);
     }
 
     @ApiOperation("Update customer data")
@@ -103,8 +103,8 @@ public class CustomerController {
     public ResponseEntity<CustomerDTO> updateCustomer(@ApiParam(value = "Customer ID which should be updated", required = true)
                                                       @PathVariable("customerId") Long customerId,
                                                       @ApiParam(value = "Updated customer", required = true)
-                                                      @RequestBody CustomerDTO customerDTO) {
-        CustomerDTO customer = customerService.update(customerId, customerDTO);
+                                                      @RequestBody CustomerDTO request) {
+        CustomerDTO customer = customerService.update(customerId, request);
         return new ResponseEntity<>(linkUtil.setLinksForCustomer(customer), HttpStatus.OK);
     }
 

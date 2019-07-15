@@ -1,53 +1,33 @@
-/*
- * Copyright 2018-2019 the original author.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.sergei.reservation.service;
 
+import org.sergei.reservation.rest.dto.RouteDTO;
+import org.sergei.reservation.rest.dto.RouteExtendedDTO;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
+import java.util.Map;
 
 /**
- * @param <D> Simple DTO
- * @param <E> Extended DTO
  * @author Sergei Visotsky
  */
-public interface RouteService<D, E> extends IService<D> {
+public interface RouteService {
+    RouteExtendedDTO findOneRoute(Long routeId);
 
-    /**
-     * Find one route
-     *
-     * @param aLong ID of the route to be found
-     * @return route body to be returned
-     */
-    E findOneRoute(Long aLong);
+    List<RouteExtendedDTO> findAllRoutes();
 
-    /**
-     * Find list of routes
-     *
-     * @return list of all routes found
-     */
-    List<E> findAllRoutes();
+    Page<RouteExtendedDTO> findAllRoutesPaginated(int page, int size);
 
-    /**
-     * Find all routed paginated
-     *
-     * @param page number of page to return
-     * @param size number of elements per page
-     * @return page of entities
-     */
-    Page<E> findAllRoutesPaginated(int page, int size);
+    RouteDTO save(RouteDTO routeDTO);
+
+    RouteDTO update(Long routeId, RouteDTO routeDTO);
+
+    RouteDTO patch(Long routeId, Map<String, Object> params);
+
+    RouteDTO delete(Long routeId);
+
+    RouteDTO findOne(Long aLong);
+
+    List<RouteDTO> findAll();
+
+    Page<RouteDTO> findAllPaginated(int page, int size);
 }

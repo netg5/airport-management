@@ -49,7 +49,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 public class ReservationController {
 
     private final LinkUtil linkUtil;
-    private final ReservationService<ReservationExtendedDTO, ReservationDTO> reservationService;
+    private final ReservationService reservationService;
 
     @Autowired
     public ReservationController(LinkUtil linkUtil, ReservationService reservationService) {

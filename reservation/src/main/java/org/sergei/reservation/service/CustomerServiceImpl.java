@@ -16,10 +16,10 @@
 
 package org.sergei.reservation.service;
 
-import org.sergei.reservation.rest.exceptions.ResourceNotFoundException;
 import org.sergei.reservation.jpa.model.Customer;
 import org.sergei.reservation.jpa.repository.CustomerRepository;
 import org.sergei.reservation.rest.dto.CustomerDTO;
+import org.sergei.reservation.rest.exceptions.ResourceNotFoundException;
 import org.sergei.reservation.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -35,7 +35,7 @@ import static org.sergei.reservation.utils.ObjectMapperUtil.*;
  * @author Sergei Visotsky
  */
 @Service
-public class CustomerServiceImpl implements CustomerService<CustomerDTO> {
+public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
 

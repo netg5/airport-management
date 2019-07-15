@@ -44,7 +44,7 @@ import static org.sergei.reservation.utils.ObjectMapperUtil.*;
  */
 @Slf4j
 @Service
-public class RouteServiceImpl implements RouteService<RouteDTO, RouteExtendedDTO> {
+public class RouteServiceImpl implements RouteService {
 
     private final AircraftRepository aircraftRepository;
     private final RouteRepository routeRepository;

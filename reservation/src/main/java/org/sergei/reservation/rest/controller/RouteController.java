@@ -46,7 +46,7 @@ import java.util.Map;
 public class RouteController {
 
     private final LinkUtil linkUtil;
-    private final RouteService<RouteDTO, RouteExtendedDTO> routeService;
+    private final RouteService routeService;
 
     @Autowired
     public RouteController(LinkUtil linkUtil, RouteService routeService) {
@@ -89,8 +89,8 @@ public class RouteController {
     @PostMapping(consumes = "application/json")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<RouteDTO> saveRoute(@ApiParam(value = "Saved route", required = true)
-                                              @RequestBody RouteDTO routeDTO) {
-        return new ResponseEntity<>(routeService.save(routeDTO), HttpStatus.CREATED);
+                                              @RequestBody RouteDTO request) {
+        return new ResponseEntity<>(routeService.save(request), HttpStatus.CREATED);
     }
 
     @ApiOperation(value = "Update route information", notes = "Operation allowed for the ROLE_ADMIN only")
@@ -102,8 +102,8 @@ public class RouteController {
     public ResponseEntity<RouteDTO> updateRoute(@ApiParam(value = "Route ID which should be updated", required = true)
                                                 @PathVariable("routeId") Long routeId,
                                                 @ApiParam(value = "Saved route", required = true)
-                                                @RequestBody RouteDTO routeDTO) {
-        RouteDTO route = routeService.update(routeId, routeDTO);
+                                                @RequestBody RouteDTO request) {
+        RouteDTO route = routeService.update(routeId, request);
         return new ResponseEntity<>(linkUtil.setLinksForRoute(route), HttpStatus.OK);
     }
 

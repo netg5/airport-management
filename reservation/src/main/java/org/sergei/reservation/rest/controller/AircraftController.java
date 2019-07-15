@@ -46,7 +46,7 @@ import java.util.Map;
 public class AircraftController {
 
     private final LinkUtil linkUtil;
-    private final AircraftService<AircraftDTO> aircraftService;
+    private final AircraftService aircraftService;
 
     @Autowired
     public AircraftController(LinkUtil linkUtil, AircraftService aircraftService) {

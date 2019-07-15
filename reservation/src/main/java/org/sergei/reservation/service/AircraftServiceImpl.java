@@ -16,10 +16,10 @@
 
 package org.sergei.reservation.service;
 
-import org.sergei.reservation.rest.exceptions.ResourceNotFoundException;
 import org.sergei.reservation.jpa.model.Aircraft;
 import org.sergei.reservation.jpa.repository.AircraftRepository;
 import org.sergei.reservation.rest.dto.AircraftDTO;
+import org.sergei.reservation.rest.exceptions.ResourceNotFoundException;
 import org.sergei.reservation.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -38,7 +38,7 @@ import static org.sergei.reservation.utils.ObjectMapperUtil.*;
  * @author Sergei Visotsky
  */
 @Service
-public class AircraftServiceImpl implements AircraftService<AircraftDTO> {
+public class AircraftServiceImpl implements AircraftService {
 
     private final AircraftRepository aircraftRepository;
 
