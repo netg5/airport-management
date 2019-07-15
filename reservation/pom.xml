@@ -14,7 +14,7 @@
     <packaging>jar</packaging>
     <version>2.3.4-SNAPSHOT</version>
 
-    <name>Reservation service</name>
+    <name>Reservation</name>
     <description>Service to perform flight reservation</description>
 
     <properties>
