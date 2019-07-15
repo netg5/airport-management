@@ -14,8 +14,10 @@
  * limitations under the License.
  */
 
-package org.sergei.auth.config;
+package org.sergei.reports.config;
 
+import org.modelmapper.ModelMapper;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
@@ -24,5 +26,11 @@ import org.springframework.context.annotation.Import;
  */
 @Configuration
 @Import(SwaggerConfig.class)
-public class AuthServiceConfig {
+public class ReportsAppConfig {
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
+
 }
