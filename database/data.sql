@@ -1,0 +1,2 @@
+INSERT INTO public.aircraft(id, aircraft_name, weight, max_passengers, model) VALUES (1, 'Boeing', 3450, 1000, '777-300ER');
+INSERT INTO public.aircraft(id, aircraft_name, weight, max_passengers, model) VALUES (2, 'Airbus', 43000, 5400, 'A220');
