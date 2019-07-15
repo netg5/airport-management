@@ -20,6 +20,7 @@ import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sergei.reservation.ReservationApplication;
+import org.sergei.reservation.rest.controller.RouteController;
 import org.sergei.reservation.jpa.model.Aircraft;
 import org.sergei.reservation.jpa.model.Route;
 import org.sergei.reservation.jpa.repository.AircraftRepository;

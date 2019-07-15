@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sergei.reports.rest;
+package org.sergei.reports.rest.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -37,7 +37,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Sergei Visotsky
  */
 @Api(
-        value = "/report-api/customers",
+        value = "/report-rest/customers",
         produces = "application/json"
 )
 @RestController

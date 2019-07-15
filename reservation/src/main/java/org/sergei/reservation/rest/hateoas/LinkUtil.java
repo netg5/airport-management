@@ -17,10 +17,10 @@
 package org.sergei.reservation.rest.hateoas;
 
 import org.sergei.reservation.config.properties.GatewayProperties;
-import org.sergei.reservation.rest.AircraftController;
-import org.sergei.reservation.rest.CustomerController;
-import org.sergei.reservation.rest.ReservationController;
-import org.sergei.reservation.rest.RouteController;
+import org.sergei.reservation.rest.controller.AircraftController;
+import org.sergei.reservation.rest.controller.CustomerController;
+import org.sergei.reservation.rest.controller.ReservationController;
+import org.sergei.reservation.rest.controller.RouteController;
 import org.sergei.reservation.rest.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
@@ -61,7 +61,7 @@ public class LinkUtil {
                     methodOn(ReservationController.class)
                             .getAllForCustomer(customer.getCustomerId())).withRel("reservations");
             Link ticketsLink = new Link("http://127.0.0.1:" + gatewayProperties.getPort() +
-                    "/ticket-api/tickets?routeId=" + customer.getCustomerId()).withRel("tickets");
+                    "/ticket-rest/tickets?routeId=" + customer.getCustomerId()).withRel("tickets");
             customer.add(link);
             customer.add(reservationsLink);
             customer.add(ticketsLink);
@@ -96,7 +96,7 @@ public class LinkUtil {
                 methodOn(ReservationController.class)
                         .getAllForCustomer(customerDTO.getCustomerId())).withRel("reservations");
         Link ticketsLink = new Link(
-                "http://127.0.0.1:" + gatewayProperties.getPort() + "/ticket-api/tickets?routeId=" +
+                "http://127.0.0.1:" + gatewayProperties.getPort() + "/ticket-rest/tickets?routeId=" +
                         customerDTO.getCustomerId()).withRel("tickets");
         Link link = linkTo(CustomerController.class).withRel("allCustomers");
         customerDTO.add(selfLink);

@@ -21,6 +21,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sergei.reservation.ReservationApplication;
+import org.sergei.reservation.rest.controller.ReservationController;
 import org.sergei.reservation.jpa.model.Aircraft;
 import org.sergei.reservation.jpa.model.Customer;
 import org.sergei.reservation.jpa.model.Reservation;

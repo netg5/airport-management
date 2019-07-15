@@ -16,7 +16,7 @@
 
 package org.sergei.reservation.service;
 
-import org.sergei.reservation.exceptions.ResourceNotFoundException;
+import org.sergei.reservation.rest.exceptions.ResourceNotFoundException;
 import org.sergei.reservation.jpa.model.Customer;
 import org.sergei.reservation.jpa.repository.CustomerRepository;
 import org.sergei.reservation.rest.dto.CustomerDTO;

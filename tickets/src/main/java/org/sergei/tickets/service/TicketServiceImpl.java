@@ -16,7 +16,7 @@
 
 package org.sergei.tickets.service;
 
-import org.sergei.tickets.exceptions.ResourceNotFoundException;
+import org.sergei.tickets.rest.exceptions.ResourceNotFoundException;
 import org.sergei.tickets.jpa.model.Ticket;
 import org.sergei.tickets.jpa.repository.CustomerRepository;
 import org.sergei.tickets.jpa.repository.TicketRepository;

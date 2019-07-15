@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sergei.reports.rest;
+package org.sergei.reports.rest.controller;
 
 import io.swagger.annotations.*;
 import org.sergei.reports.rest.dto.AircraftReportDTO;
@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.*;
  * @author Sergei Visotsky
  */
 @Api(
-        value = "/report-api/aircraft",
+        value = "/report-rest/aircraft",
         produces = "application/json"
 )
 @RestController

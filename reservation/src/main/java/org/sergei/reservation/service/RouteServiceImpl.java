@@ -17,7 +17,7 @@
 package org.sergei.reservation.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.sergei.reservation.exceptions.ResourceNotFoundException;
+import org.sergei.reservation.rest.exceptions.ResourceNotFoundException;
 import org.sergei.reservation.jpa.model.Aircraft;
 import org.sergei.reservation.jpa.model.Route;
 import org.sergei.reservation.jpa.repository.AircraftRepository;

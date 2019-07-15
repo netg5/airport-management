@@ -19,7 +19,7 @@ package org.sergei.reservation.repository;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.sergei.reservation.exceptions.ResourceNotFoundException;
+import org.sergei.reservation.rest.exceptions.ResourceNotFoundException;
 import org.sergei.reservation.jpa.model.Aircraft;
 import org.sergei.reservation.jpa.model.Customer;
 import org.sergei.reservation.jpa.model.Reservation;
