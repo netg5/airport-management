@@ -8,7 +8,7 @@
         </encoder>
     </appender>
 
-    <logger name="org.sergei.manui" level="info"/>
+    <logger name="org.sergei.mainui" level="info"/>
 
     <root level="info">
         <appender-ref ref="stdout"/>
