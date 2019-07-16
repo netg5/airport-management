@@ -16,8 +16,6 @@
 
 package org.sergei.manui;
 
-import org.sergei.manui.aop.LoggingAspect;
-import org.sergei.manui.aop.PerformanceAspect;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -30,17 +28,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 @EnableAspectJAutoProxy
-public class FrontEndConfig implements WebMvcConfigurer {
-
-    @Bean
-    public PerformanceAspect performanceAspect() {
-        return new PerformanceAspect();
-    }
-
-    @Bean
-    public LoggingAspect loggingAspect() {
-        return new LoggingAspect();
-    }
+public class ApplicationConfig implements WebMvcConfigurer {
 
     @Bean
     public RestTemplate restTemplate() {
