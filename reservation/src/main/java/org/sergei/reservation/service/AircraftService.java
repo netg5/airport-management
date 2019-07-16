@@ -19,7 +19,7 @@ public interface AircraftService {
 
     ResponseEntity<List<AircraftDTO>> findAll() throws ResourceNotFoundException;
 
-    ResponseEntity<Page<AircraftDTO>> findAllPaginated(int page, int size) throws ResourceNotFoundException;
+    ResponseEntity<List<AircraftDTO>> findAllPaginated(int page, int size) throws ResourceNotFoundException;
 
     ResponseEntity<AircraftDTO> save(AircraftDTO aircraftDTO) throws ResourceNotFoundException;
 

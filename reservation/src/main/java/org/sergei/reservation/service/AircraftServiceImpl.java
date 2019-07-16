@@ -22,7 +22,6 @@ import org.sergei.reservation.rest.dto.AircraftDTO;
 import org.sergei.reservation.rest.dto.mappers.AircraftDTOListMapper;
 import org.sergei.reservation.rest.dto.mappers.AircraftDTOMapper;
 import org.sergei.reservation.rest.exceptions.ResourceNotFoundException;
-import org.sergei.reservation.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -32,9 +31,6 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
-
-import static org.sergei.reservation.utils.ObjectMapperUtil.map;
-import static org.sergei.reservation.utils.ObjectMapperUtil.mapAllPages;
 
 /**
  * @author Sergei Visotsky
@@ -126,13 +122,13 @@ public class AircraftServiceImpl implements AircraftService {
      * @return collection of aircrafts
      */
     @Override
-    public ResponseEntity<Page<AircraftDTO>> findAllPaginated(int page, int size) throws ResourceNotFoundException {
+    public ResponseEntity<List<AircraftDTO>> findAllPaginated(int page, int size) throws ResourceNotFoundException {
         Page<Aircraft> aircraftList = aircraftRepository.findAll(PageRequest.of(page, size));
         if (aircraftList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
-//            Page<AircraftDTO> aircraftDTOList = aircraftDTOListMapper.apply(aircraftList);
-            return new ResponseEntity<>(null, HttpStatus.OK);
+            List<AircraftDTO> aircraftDTOList = aircraftDTOListMapper.apply(aircraftList.getContent());
+            return new ResponseEntity<>(aircraftDTOList, HttpStatus.OK);
         }
     }
 
@@ -144,9 +140,16 @@ public class AircraftServiceImpl implements AircraftService {
      */
     @Override
     public ResponseEntity<AircraftDTO> save(AircraftDTO aircraftDTO) throws ResourceNotFoundException {
-        Aircraft aircraft = map(aircraftDTO, Aircraft.class);
+        Aircraft aircraft = new Aircraft();
+
+        aircraft.setId(aircraftDTO.getAircraftId());
+        aircraft.setAircraftName(aircraft.getAircraftName());
+        aircraft.setAircraftWeight(aircraft.getAircraftWeight());
+        aircraft.setMaxPassengers(aircraft.getMaxPassengers());
+        aircraft.setModel(aircraft.getModel());
+
         Aircraft savedAircraft = aircraftRepository.save(aircraft);
-        return map(savedAircraft, AircraftDTO.class);
+        return new ResponseEntity<>(aircraftDTOMapper.apply(savedAircraft), HttpStatus.OK);
     }
 
     /**
@@ -160,20 +163,20 @@ public class AircraftServiceImpl implements AircraftService {
     public ResponseEntity<AircraftDTO> update(Long aircraftId, AircraftDTO aircraftDTO) throws ResourceNotFoundException {
         aircraftDTO.setAircraftId(aircraftId);
 
-        Aircraft aircraft = aircraftRepository.findById(aircraftId)
-                .orElseThrow(
-                        () -> new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
-                );
+        Optional<Aircraft> aircraft = aircraftRepository.findById(aircraftId);
 
-        aircraft.setId(aircraftId);
-        aircraft.setAircraftName(aircraftDTO.getAircraftName());
-        aircraft.setModel(aircraftDTO.getModel());
-        aircraft.setAircraftWeight(aircraftDTO.getAircraftWeight());
-        aircraft.setMaxPassengers(aircraftDTO.getMaxPassengers());
+        if (aircraft.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            aircraft.get().setId(aircraftId);
+            aircraft.get().setAircraftName(aircraftDTO.getAircraftName());
+            aircraft.get().setModel(aircraftDTO.getModel());
+            aircraft.get().setAircraftWeight(aircraftDTO.getAircraftWeight());
+            aircraft.get().setMaxPassengers(aircraftDTO.getMaxPassengers());
 
-        aircraftRepository.save(aircraft);
-
-        return aircraftDTO;
+            aircraftRepository.save(aircraft.get());
+            return new ResponseEntity<>(aircraftDTOMapper.apply(aircraft.get()), HttpStatus.OK);
+        }
     }
 
     /**
@@ -185,23 +188,26 @@ public class AircraftServiceImpl implements AircraftService {
      */
     @Override
     public ResponseEntity<AircraftDTO> patch(Long aircraftId, Map<String, Object> params) throws ResourceNotFoundException {
-        Aircraft aircraft = aircraftRepository.findById(aircraftId)
-                .orElseThrow(
-                        () -> new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
-                );
-        if (params.get("model") != null) {
-            aircraft.setModel(String.valueOf(params.get("model")));
+        Optional<Aircraft> aircraft = aircraftRepository.findById(aircraftId);
+
+        if (aircraft.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            if (params.get("model") != null) {
+                aircraft.get().setModel(String.valueOf(params.get("model")));
+            }
+            if (params.get("aircraftName") != null) {
+                aircraft.get().setAircraftName(String.valueOf(params.get("aircraftName")));
+            }
+            if (params.get("aircraftWeight") != null) {
+                aircraft.get().setAircraftWeight(Double.valueOf(String.valueOf(params.get("aircraftWeight"))));
+            }
+            if (params.get("maxPassengers") != null) {
+                aircraft.get().setMaxPassengers(Integer.valueOf(String.valueOf(params.get("maxPassengers"))));
+            }
+            return new ResponseEntity<>(
+                    aircraftDTOMapper.apply(aircraftRepository.save(aircraft.get())), HttpStatus.OK);
         }
-        if (params.get("aircraftName") != null) {
-            aircraft.setAircraftName(String.valueOf(params.get("aircraftName")));
-        }
-        if (params.get("aircraftWeight") != null) {
-            aircraft.setAircraftWeight(Double.valueOf(String.valueOf(params.get("aircraftWeight"))));
-        }
-        if (params.get("maxPassengers") != null) {
-            aircraft.setMaxPassengers(Integer.valueOf(String.valueOf(params.get("maxPassengers"))));
-        }
-        return map(aircraftRepository.save(aircraft), AircraftDTO.class);
     }
 
     /**
@@ -212,11 +218,14 @@ public class AircraftServiceImpl implements AircraftService {
      */
     @Override
     public ResponseEntity<AircraftDTO> delete(Long aircraftId) throws ResourceNotFoundException {
-        Aircraft aircraft = aircraftRepository.findById(aircraftId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
-                );
-        aircraftRepository.delete(aircraft);
-        return map(aircraft, AircraftDTO.class);
+        Optional<Aircraft> aircraft = aircraftRepository.findById(aircraftId);
+
+        if (aircraft.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            aircraftRepository.delete(aircraft.get());
+            return new ResponseEntity<>(aircraftDTOMapper.apply(aircraft.get()), HttpStatus.OK);
+
+        }
     }
 }

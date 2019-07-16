@@ -24,6 +24,7 @@ import org.sergei.reservation.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -51,7 +52,7 @@ public class CustomerServiceImpl implements CustomerService {
      * @return customer
      */
     @Override
-    public CustomerDTO findOne(Long customerId) {
+    public ResponseEntity<CustomerDTO> findOne(Long customerId) {
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(Constants.CUSTOMER_NOT_FOUND)
@@ -65,7 +66,7 @@ public class CustomerServiceImpl implements CustomerService {
      * @return list of customers
      */
     @Override
-    public List<CustomerDTO> findAll() {
+    public ResponseEntity<List<CustomerDTO>> findAll() {
         List<Customer> customerList = customerRepository.findAll();
         return mapAll(customerList, CustomerDTO.class);
     }
@@ -76,7 +77,7 @@ public class CustomerServiceImpl implements CustomerService {
      * @return list of IDs
      */
     @Override
-    public List<String> findIdsOfAllCustomers() {
+    public ResponseEntity<List<String>> findIdsOfAllCustomers() {
         return customerRepository.findIdsOfAllCustomers();
     }
 
@@ -88,7 +89,7 @@ public class CustomerServiceImpl implements CustomerService {
      * @return list with entities
      */
     @Override
-    public Page<CustomerDTO> findAllPaginated(int page, int size) {
+    public ResponseEntity<Page<CustomerDTO>> findAllPaginated(int page, int size) {
         Page<Customer> customerList = customerRepository.findAll(PageRequest.of(page, size));
         return mapAllPages(customerList, CustomerDTO.class);
     }
@@ -100,7 +101,7 @@ public class CustomerServiceImpl implements CustomerService {
      * @return customerDTO DTO as a response
      */
     @Override
-    public CustomerDTO save(CustomerDTO customerDTO) {
+    public ResponseEntity<CustomerDTO> save(CustomerDTO customerDTO) {
         Customer customer = map(customerDTO, Customer.class);
         Customer savedCustomer = customerRepository.save(customer);
         return map(savedCustomer, CustomerDTO.class);
@@ -114,7 +115,7 @@ public class CustomerServiceImpl implements CustomerService {
      * @return customerDTO DTO as a response
      */
     @Override
-    public CustomerDTO update(Long customerId, CustomerDTO customerDTO) {
+    public ResponseEntity<CustomerDTO> update(Long customerId, CustomerDTO customerDTO) {
         customerDTO.setCustomerId(customerId);
 
         Customer customer = customerRepository.findById(customerId)
@@ -138,7 +139,7 @@ public class CustomerServiceImpl implements CustomerService {
      * @return patched customer DTO
      */
     @Override
-    public CustomerDTO patch(Long customerId, Map<String, Object> params) {
+    public ResponseEntity<CustomerDTO> patch(Long customerId, Map<String, Object> params) {
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(Constants.CUSTOMER_NOT_FOUND)
@@ -162,7 +163,7 @@ public class CustomerServiceImpl implements CustomerService {
      * @return customer DTO as a response
      */
     @Override
-    public CustomerDTO delete(Long customerId) {
+    public ResponseEntity<CustomerDTO> delete(Long customerId) {
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(Constants.CUSTOMER_NOT_FOUND)
