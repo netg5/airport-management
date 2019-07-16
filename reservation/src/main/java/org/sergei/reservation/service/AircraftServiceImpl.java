@@ -19,6 +19,7 @@ package org.sergei.reservation.service;
 import org.sergei.reservation.jpa.model.Aircraft;
 import org.sergei.reservation.jpa.repository.AircraftRepository;
 import org.sergei.reservation.rest.dto.AircraftDTO;
+import org.sergei.reservation.rest.dto.mappers.AircraftDTOListMapper;
 import org.sergei.reservation.rest.dto.mappers.AircraftDTOMapper;
 import org.sergei.reservation.rest.exceptions.ResourceNotFoundException;
 import org.sergei.reservation.utils.Constants;
@@ -32,7 +33,8 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
-import static org.sergei.reservation.utils.ObjectMapperUtil.*;
+import static org.sergei.reservation.utils.ObjectMapperUtil.map;
+import static org.sergei.reservation.utils.ObjectMapperUtil.mapAllPages;
 
 /**
  * @author Sergei Visotsky
@@ -42,11 +44,15 @@ public class AircraftServiceImpl implements AircraftService {
 
     private final AircraftRepository aircraftRepository;
     private final AircraftDTOMapper aircraftDTOMapper;
+    private final AircraftDTOListMapper aircraftDTOListMapper;
 
     @Autowired
-    public AircraftServiceImpl(AircraftRepository aircraftRepository, AircraftDTOMapper aircraftDTOMapper) {
+    public AircraftServiceImpl(AircraftRepository aircraftRepository,
+                               AircraftDTOMapper aircraftDTOMapper,
+                               AircraftDTOListMapper aircraftDTOListMapper) {
         this.aircraftRepository = aircraftRepository;
         this.aircraftDTOMapper = aircraftDTOMapper;
+        this.aircraftDTOListMapper = aircraftDTOListMapper;
     }
 
     /**
@@ -81,15 +87,19 @@ public class AircraftServiceImpl implements AircraftService {
             String paramName = String.valueOf(enumeration.nextElement());
             requestParams.put(paramName, request.getParameter(paramName));
         }
-        Aircraft aircraft = aircraftRepository.findAircraftByMultipleParams(
+        Optional<Aircraft> aircraft = aircraftRepository.findAircraftByMultipleParams(
                 String.valueOf(requestParams.get("name")),
                 Double.valueOf(String.valueOf(requestParams.get("weight"))),
                 Integer.valueOf(String.valueOf(requestParams.get("passengers"))),
                 String.valueOf(requestParams.get("model"))
-        ).orElseThrow(
-                () -> new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
         );
-        return map(aircraft, AircraftDTO.class);
+
+        if (aircraft.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            AircraftDTO aircraftDTO = aircraftDTOMapper.apply(aircraft.get());
+            return new ResponseEntity<>(aircraftDTO, HttpStatus.OK);
+        }
     }
 
     /**
@@ -100,7 +110,12 @@ public class AircraftServiceImpl implements AircraftService {
     @Override
     public ResponseEntity<List<AircraftDTO>> findAll() throws ResourceNotFoundException {
         List<Aircraft> aircraftList = aircraftRepository.findAll();
-        return mapAll(aircraftList, AircraftDTO.class);
+        if (aircraftList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            List<AircraftDTO> aircraftDTOList = aircraftDTOListMapper.apply(aircraftList);
+            return new ResponseEntity<>(aircraftDTOList, HttpStatus.OK);
+        }
     }
 
     /**
@@ -111,9 +126,14 @@ public class AircraftServiceImpl implements AircraftService {
      * @return collection of aircrafts
      */
     @Override
-    public Page<AircraftDTO> findAllPaginated(int page, int size) throws ResourceNotFoundException {
+    public ResponseEntity<Page<AircraftDTO>> findAllPaginated(int page, int size) throws ResourceNotFoundException {
         Page<Aircraft> aircraftList = aircraftRepository.findAll(PageRequest.of(page, size));
-        return mapAllPages(aircraftList, AircraftDTO.class);
+        if (aircraftList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+//            Page<AircraftDTO> aircraftDTOList = aircraftDTOListMapper.apply(aircraftList);
+            return new ResponseEntity<>(null, HttpStatus.OK);
+        }
     }
 
     /**
