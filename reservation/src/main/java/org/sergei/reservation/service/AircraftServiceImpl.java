@@ -25,6 +25,8 @@ import org.sergei.reservation.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -54,9 +56,15 @@ public class AircraftServiceImpl implements AircraftService {
      * @return aircraftDTO DTO
      */
     @Override
-    public AircraftDTO findOne(Long aircraftId) throws ResourceNotFoundException {
+    public ResponseEntity<AircraftDTO> findOne(Long aircraftId) throws ResourceNotFoundException {
         Optional<Aircraft> aircraft = aircraftRepository.findById(aircraftId);
-        return map(aircraft, AircraftDTO.class);
+
+        if (aircraft.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            AircraftDTO aircraftDTO = aircraftDTOMapper.apply(aircraft.get());
+            return new ResponseEntity<>(aircraftDTO, HttpStatus.OK);
+        }
     }
 
     /**
@@ -66,7 +74,7 @@ public class AircraftServiceImpl implements AircraftService {
      * @return aircraft DTO
      */
     @Override
-    public AircraftDTO findOneByMultipleParams(HttpServletRequest request) throws ResourceNotFoundException {
+    public ResponseEntity<AircraftDTO> findOneByMultipleParams(HttpServletRequest request) throws ResourceNotFoundException {
         Enumeration enumeration = request.getParameterNames();
         Map<String, Object> requestParams = new HashMap<>();
         while (enumeration.hasMoreElements()) {
@@ -90,7 +98,7 @@ public class AircraftServiceImpl implements AircraftService {
      * @return list of Aircraft DTO
      */
     @Override
-    public List<AircraftDTO> findAll() throws ResourceNotFoundException {
+    public ResponseEntity<List<AircraftDTO>> findAll() throws ResourceNotFoundException {
         List<Aircraft> aircraftList = aircraftRepository.findAll();
         return mapAll(aircraftList, AircraftDTO.class);
     }
@@ -115,7 +123,7 @@ public class AircraftServiceImpl implements AircraftService {
      * @return Aircraft DTO
      */
     @Override
-    public AircraftDTO save(AircraftDTO aircraftDTO) throws ResourceNotFoundException {
+    public ResponseEntity<AircraftDTO> save(AircraftDTO aircraftDTO) throws ResourceNotFoundException {
         Aircraft aircraft = map(aircraftDTO, Aircraft.class);
         Aircraft savedAircraft = aircraftRepository.save(aircraft);
         return map(savedAircraft, AircraftDTO.class);
@@ -129,7 +137,7 @@ public class AircraftServiceImpl implements AircraftService {
      * @return aircraftDTO DTO
      */
     @Override
-    public AircraftDTO update(Long aircraftId, AircraftDTO aircraftDTO) throws ResourceNotFoundException {
+    public ResponseEntity<AircraftDTO> update(Long aircraftId, AircraftDTO aircraftDTO) throws ResourceNotFoundException {
         aircraftDTO.setAircraftId(aircraftId);
 
         Aircraft aircraft = aircraftRepository.findById(aircraftId)
@@ -156,7 +164,7 @@ public class AircraftServiceImpl implements AircraftService {
      * @return updated aircraft
      */
     @Override
-    public AircraftDTO patch(Long aircraftId, Map<String, Object> params) throws ResourceNotFoundException {
+    public ResponseEntity<AircraftDTO> patch(Long aircraftId, Map<String, Object> params) throws ResourceNotFoundException {
         Aircraft aircraft = aircraftRepository.findById(aircraftId)
                 .orElseThrow(
                         () -> new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
@@ -183,7 +191,7 @@ public class AircraftServiceImpl implements AircraftService {
      * @return aircraftDTO DTO as a response
      */
     @Override
-    public AircraftDTO delete(Long aircraftId) throws ResourceNotFoundException {
+    public ResponseEntity<AircraftDTO> delete(Long aircraftId) throws ResourceNotFoundException {
         Aircraft aircraft = aircraftRepository.findById(aircraftId)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
