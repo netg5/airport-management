@@ -19,16 +19,19 @@ package org.sergei.reservation.service;
 import org.sergei.reservation.jpa.model.Customer;
 import org.sergei.reservation.jpa.repository.CustomerRepository;
 import org.sergei.reservation.rest.dto.CustomerDTO;
+import org.sergei.reservation.rest.dto.mappers.CustomerDTOMapper;
 import org.sergei.reservation.rest.exceptions.ResourceNotFoundException;
 import org.sergei.reservation.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static org.sergei.reservation.utils.ObjectMapperUtil.*;
 
@@ -39,10 +42,12 @@ import static org.sergei.reservation.utils.ObjectMapperUtil.*;
 public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
+    private final CustomerDTOMapper customerDTOMapper;
 
     @Autowired
-    public CustomerServiceImpl(CustomerRepository customerRepository) {
+    public CustomerServiceImpl(CustomerRepository customerRepository, CustomerDTOMapper customerDTOMapper) {
         this.customerRepository = customerRepository;
+        this.customerDTOMapper = customerDTOMapper;
     }
 
     /**
@@ -53,11 +58,12 @@ public class CustomerServiceImpl implements CustomerService {
      */
     @Override
     public ResponseEntity<CustomerDTO> findOne(Long customerId) {
-        Customer customer = customerRepository.findById(customerId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(Constants.CUSTOMER_NOT_FOUND)
-                );
-        return map(customer, CustomerDTO.class);
+        Optional<Customer> customer = customerRepository.findById(customerId);
+        if (customer.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(customerDTOMapper.apply(customer.get()), HttpStatus.OK);
+        }
     }
 
     /**
