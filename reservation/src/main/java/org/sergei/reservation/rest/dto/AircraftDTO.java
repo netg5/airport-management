@@ -27,10 +27,9 @@ import org.springframework.hateoas.ResourceSupport;
 @ApiModel(value = "Aircraft", description = "Aircraft model")
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class AircraftDTO extends ResourceSupport {
+public class AircraftDTO {
 
     @ApiModelProperty("Aircraft ID")
     private Long aircraftId;

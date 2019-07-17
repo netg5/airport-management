@@ -18,8 +18,10 @@ package org.sergei.reservation.rest.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
-import org.springframework.hateoas.ResourceSupport;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
@@ -29,10 +31,9 @@ import java.time.LocalDateTime;
 @ApiModel(value = "Reservation", description = "Flight reservation meta data model")
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReservationDTO extends ResourceSupport {
+public class ReservationDTO {
 
     @ApiModelProperty("Reservation ID")
     private Long reservationId;

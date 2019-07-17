@@ -74,7 +74,7 @@ public class ReservationServiceImpl implements ReservationService {
         Reservation reservation = reservationRepository.findOneForCustomer(customerId, reservationId)
                 .orElseThrow(() -> new ResourceNotFoundException(Constants.RESERVATION_NOT_FOUND));
         ReservationExtendedDTO reservationExtendedDTO = map(reservation, ReservationExtendedDTO.class);
-        reservationExtendedDTO.setCustomerId(customer.getId());
+//        reservationExtendedDTO.setCustomerId(customer.getId());
 
         // Find route by ID
         Route route = routeRepository.findById(reservation.getRoute().getId())
@@ -111,7 +111,7 @@ public class ReservationServiceImpl implements ReservationService {
         // For each DTO set customer ID, route extended DTO
         for (ReservationExtendedDTO reservationExtendedDTO : reservationExtendedDTOList) {
             // Set customer ID in DTO response
-            reservationExtendedDTO.setCustomerId(customer.getId());
+//            reservationExtendedDTO.setCustomerId(customer.getId());
 
             // Find route by ID
             Route route = routeRepository.findById(reservation.get(counter).getRoute().getId())
@@ -153,7 +153,7 @@ public class ReservationServiceImpl implements ReservationService {
         // For each DTO set customer ID, route extended DTO
         for (ReservationExtendedDTO reservationExtendedDTO : flightReservationExtendedDTOList) {
             // Set customer ID in DTO response
-            reservationExtendedDTO.setCustomerId(customer.getId());
+//            reservationExtendedDTO.setCustomerId(customer.getId());
 
             // Find route by ID
             Route route = routeRepository.findById(reservation.getContent().get(counter).getRoute().getId())

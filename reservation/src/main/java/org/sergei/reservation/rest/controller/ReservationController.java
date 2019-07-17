@@ -93,12 +93,12 @@ public class ReservationController {
                                                                     @PathVariable("reservationId") Long reservationId) {
         ReservationExtendedDTO reservationExtendedDTO =
                 reservationService.findOneForCustomer(customerId, reservationId);
-        Link link = linkTo(
-                methodOn(CustomerController.class)
-                        .getCustomerById(customerId)).withRel("customer");
-        reservationExtendedDTO.add(link);
-        String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
-        reservationExtendedDTO.add(new Link(uriString, "self"));
+//        Link link = linkTo(
+//                methodOn(CustomerController.class)
+//                        .getCustomerById(customerId)).withRel("customer");
+//        reservationExtendedDTO.add(link);
+//        String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
+//        reservationExtendedDTO.add(new Link(uriString, "self"));
         return new ResponseEntity<>(reservationExtendedDTO, HttpStatus.OK);
     }
 
@@ -139,8 +139,9 @@ public class ReservationController {
                                                             @PathVariable("customerId") Long customerId,
                                                             @ApiParam(value = "Reservation ID which should be deleted", required = true)
                                                             @PathVariable("reservationId") Long reservationId) {
-        return new ResponseEntity<>(
-                reservationService.deleteReservation(customerId, reservationId),
-                HttpStatus.NO_CONTENT);
+//        return new ResponseEntity<>(
+//                reservationService.deleteReservation(customerId, reservationId),
+//                HttpStatus.NO_CONTENT);
+        return null;
     }
 }

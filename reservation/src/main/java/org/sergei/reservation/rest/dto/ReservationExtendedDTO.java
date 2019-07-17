@@ -19,19 +19,21 @@ package org.sergei.reservation.rest.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * @author Sergei Visotsky
  */
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonRootName("flightReservation")
 @JsonIgnoreProperties("id")
-public class ReservationExtendedDTO extends ReservationDTO {
+public class ReservationExtendedDTO {
 
     @JsonProperty("reservedRoute")
     private RouteExtendedDTO routeExtendedDTO;

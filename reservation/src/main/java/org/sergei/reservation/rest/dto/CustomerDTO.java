@@ -18,8 +18,10 @@ package org.sergei.reservation.rest.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
-import org.springframework.hateoas.ResourceSupport;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * @author Sergei Visotsky
@@ -27,10 +29,9 @@ import org.springframework.hateoas.ResourceSupport;
 @ApiModel(value = "Customer", description = "Customer model")
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class CustomerDTO extends ResourceSupport {
+public class CustomerDTO {
 
     @ApiModelProperty("Customer ID")
     private Long customerId;
