@@ -17,7 +17,6 @@
 package org.sergei.reservation.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.sergei.reservation.rest.exceptions.ResourceNotFoundException;
 import org.sergei.reservation.jpa.model.Aircraft;
 import org.sergei.reservation.jpa.model.Route;
 import org.sergei.reservation.jpa.repository.AircraftRepository;
@@ -25,6 +24,7 @@ import org.sergei.reservation.jpa.repository.RouteRepository;
 import org.sergei.reservation.rest.dto.AircraftDTO;
 import org.sergei.reservation.rest.dto.RouteDTO;
 import org.sergei.reservation.rest.dto.RouteExtendedDTO;
+import org.sergei.reservation.rest.exceptions.ResourceNotFoundException;
 import org.sergei.reservation.service.util.ServiceComponent;
 import org.sergei.reservation.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,7 +108,7 @@ public class RouteServiceImpl implements RouteService {
      * @return list of entities
      */
     @Override
-    public Page<RouteExtendedDTO> findAllRoutesPaginated(int page, int size) {
+    public List<RouteExtendedDTO> findAllRoutesPaginated(int page, int size) {
         Page<Route> routePage = routeRepository.findAll(PageRequest.of(page, size));
         Page<RouteExtendedDTO> routeExtendedDTOList = mapAllPages(routePage, RouteExtendedDTO.class);
         int counter = 0;
@@ -122,7 +122,8 @@ public class RouteServiceImpl implements RouteService {
             routeExtendedDTO.setAircraftDTO(aircraftDTO);
             counter++;
         }
-        return routeExtendedDTOList;
+        return null;
+//        return routeExtendedDTOList;
     }
 
     /**

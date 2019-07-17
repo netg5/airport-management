@@ -63,7 +63,7 @@ public class RouteController {
                                                                         @RequestParam("page") int page,
                                                                         @ApiParam("Maximum number of content blocks on the page")
                                                                         @RequestParam("size") int size) {
-        Page<RouteExtendedDTO> routes = routeService.findAllRoutesPaginated(page, size);
+        List<RouteExtendedDTO> routes = routeService.findAllRoutesPaginated(page, size);
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
 

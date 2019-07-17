@@ -15,7 +15,7 @@ public interface RouteService {
 
     List<RouteExtendedDTO> findAllRoutes();
 
-    Page<RouteExtendedDTO> findAllRoutesPaginated(int page, int size);
+    List<RouteExtendedDTO> findAllRoutesPaginated(int page, int size);
 
     RouteDTO save(RouteDTO routeDTO);
 
