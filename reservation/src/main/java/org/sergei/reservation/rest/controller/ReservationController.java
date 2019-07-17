@@ -39,7 +39,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
  * @author Sergei Visotsky
  */
 @Api(
-        value = "/flight-rest/customers/{customerId}/reservations/",
+        value = "/reservation/customers/{customerId}/reservations/",
         produces = "application/json",
         consumes = "application/json"
 )
@@ -47,12 +47,10 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @RequestMapping(value = "/customers", produces = "application/json")
 public class ReservationController {
 
-    private final Hateoas hateoas;
     private final ReservationService reservationService;
 
     @Autowired
-    public ReservationController(Hateoas hateoas, ReservationService reservationService) {
-        this.hateoas = hateoas;
+    public ReservationController(ReservationService reservationService) {
         this.reservationService = reservationService;
     }
 
@@ -61,11 +59,11 @@ public class ReservationController {
             @ApiResponse(code = 404, message = "Customer with this ID not found or no reservations made"),
     })
     @GetMapping("/{customerId}/reservations")
-    public ResponseEntity<Resources> getAllForCustomer(@ApiParam(value = "Customer ID whose reservations should be found", required = true)
-                                                       @PathVariable("customerId") Long customerId) {
+    public ResponseEntity<List<ReservationExtendedDTO>> getAllForCustomer(@ApiParam(value = "Customer ID whose reservations should be found", required = true)
+                                                                          @PathVariable("customerId") Long customerId) {
         List<ReservationExtendedDTO> reservations =
                 reservationService.findAllForCustomer(customerId);
-        return new ResponseEntity<>(hateoas.setLinksForAllReservations(reservations), HttpStatus.OK);
+        return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
 
     @ApiOperation("Get all reservations for customer")
@@ -73,15 +71,15 @@ public class ReservationController {
             @ApiResponse(code = 404, message = "Customer with this ID not found or no reservations made"),
     })
     @GetMapping(value = "/{customerId}/reservations", params = {"page", "size"})
-    public ResponseEntity<Resources> getAllForCustomerPaginated(@ApiParam(value = "Customer ID whose reservations should be found", required = true)
-                                                                @PathVariable("customerId") Long customerId,
-                                                                @ApiParam("Number of the page")
-                                                                @RequestParam("page") int page,
-                                                                @ApiParam("Maximum number of content blocks on the page")
-                                                                @RequestParam("size") int size) {
+    public ResponseEntity<List<ReservationExtendedDTO>> getAllForCustomerPaginated(@ApiParam(value = "Customer ID whose reservations should be found", required = true)
+                                                                                   @PathVariable("customerId") Long customerId,
+                                                                                   @ApiParam("Number of the page")
+                                                                                   @RequestParam("page") int page,
+                                                                                   @ApiParam("Maximum number of content blocks on the page")
+                                                                                   @RequestParam("size") int size) {
         Page<ReservationExtendedDTO> reservations =
                 reservationService.findAllForCustomerPaginated(customerId, page, size);
-        return new ResponseEntity<>(hateoas.setLinksForAllReservations(reservations), HttpStatus.OK);
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
     @ApiOperation("Get one reservation by ID for the customer")

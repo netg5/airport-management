@@ -23,7 +23,6 @@ import org.sergei.reservation.service.RouteService;
 import org.sergei.reservation.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -36,7 +35,7 @@ import java.util.Map;
  * @author Sergei Visotsky
  */
 @Api(
-        value = "/flight-rest/routes",
+        value = "/reservation/routes",
         produces = "application/json",
         consumes = "application/json"
 )
@@ -44,30 +43,28 @@ import java.util.Map;
 @RequestMapping(value = "/routes", produces = "application/json")
 public class RouteController {
 
-    private final Hateoas hateoas;
     private final RouteService routeService;
 
     @Autowired
-    public RouteController(Hateoas hateoas, RouteService routeService) {
-        this.hateoas = hateoas;
+    public RouteController(RouteService routeService) {
         this.routeService = routeService;
     }
 
     @ApiOperation("Get all existing routes")
     @GetMapping
-    public ResponseEntity<Resources> getAllRoutes() {
+    public ResponseEntity<List<RouteExtendedDTO>> getAllRoutes() {
         List<RouteExtendedDTO> routes = routeService.findAllRoutes();
-        return new ResponseEntity<>(hateoas.setLinksForEachRoute(routes), HttpStatus.OK);
+        return new ResponseEntity<>(routes, HttpStatus.OK);
     }
 
     @ApiOperation("Get all existing routes paginated")
     @GetMapping(params = {"page", "size"})
-    public ResponseEntity<Resources> getAllRoutesPaginated(@ApiParam("Number of the page")
-                                                           @RequestParam("page") int page,
-                                                           @ApiParam("Maximum number of content blocks on the page")
-                                                           @RequestParam("size") int size) {
+    public ResponseEntity<List<RouteExtendedDTO>> getAllRoutesPaginated(@ApiParam("Number of the page")
+                                                                        @RequestParam("page") int page,
+                                                                        @ApiParam("Maximum number of content blocks on the page")
+                                                                        @RequestParam("size") int size) {
         Page<RouteExtendedDTO> routes = routeService.findAllRoutesPaginated(page, size);
-        return new ResponseEntity<>(hateoas.setLinksForEachRoute(routes), HttpStatus.OK);
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
     @ApiOperation("Get route by ID")
@@ -78,7 +75,7 @@ public class RouteController {
     public ResponseEntity<RouteDTO> getRouteById(@ApiParam(value = "Route ID which should be found", required = true)
                                                  @PathVariable("routeId") Long routeId) {
         RouteDTO routeDTO = routeService.findOneRoute(routeId);
-        return new ResponseEntity<>(hateoas.setLinksForRoute(routeDTO), HttpStatus.OK);
+        return new ResponseEntity<>(routeDTO, HttpStatus.OK);
     }
 
     @ApiOperation(value = "Save route", notes = "Operation allowed for the ROLE_ADMIN only")
@@ -103,7 +100,7 @@ public class RouteController {
                                                 @ApiParam(value = "Saved route", required = true)
                                                 @RequestBody RouteDTO request) {
         RouteDTO route = routeService.update(routeId, request);
-        return new ResponseEntity<>(hateoas.setLinksForRoute(route), HttpStatus.OK);
+        return new ResponseEntity<>(route, HttpStatus.OK);
     }
 
     @ApiOperation(value = "Update one field for the route", notes = "Operation allowed for the ROLE_ADMIN only")
@@ -117,7 +114,7 @@ public class RouteController {
                                                @RequestBody Map<String, Object> params) {
 
         RouteDTO routeDTO = routeService.patch(routeId, params);
-        return new ResponseEntity<>(hateoas.setLinksForRoute(routeDTO), HttpStatus.OK);
+        return new ResponseEntity<>(routeDTO, HttpStatus.OK);
     }
 
     @ApiOperation(value = "Method to delete route", notes = "Operation allowed for the ROLE_ADMIN only")

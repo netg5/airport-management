@@ -34,7 +34,7 @@ import java.util.Map;
  * @author Sergei Visotsky
  */
 @Api(
-        value = "/flight-rest/aircrafts",
+        value = "/reservation/aircrafts",
         produces = "application/json",
         consumes = "application/json"
 )

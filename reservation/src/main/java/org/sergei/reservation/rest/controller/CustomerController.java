@@ -21,9 +21,6 @@ import org.sergei.reservation.rest.dto.CustomerDTO;
 import org.sergei.reservation.service.CustomerService;
 import org.sergei.reservation.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.hateoas.Resources;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +32,7 @@ import java.util.Map;
  * @author Sergei Visotsky
  */
 @Api(
-        value = "/flight-rest/customers",
+        value = "/reservation/customers",
         produces = "application/json",
         consumes = "application/json"
 )
@@ -52,26 +49,23 @@ public class CustomerController {
 
     @ApiOperation("Get all customers")
     @GetMapping
-    public ResponseEntity<Resources> getAllCustomers() {
-        ResponseEntity<List<CustomerDTO>> customerList = customerService.findAll();
-        return new ResponseEntity<>(hateoas.setLinksForAllCustomers(customerList), HttpStatus.OK);
+    public ResponseEntity<List<CustomerDTO>> getAllCustomers() {
+        return customerService.findAll();
     }
 
     @ApiOperation("Get IDs of all existing customers")
     @GetMapping("/ids")
-    public ResponseEntity<Resources> getIdsOfAllCustomers() {
-        ResponseEntity<List<String>> customerIdDTOList = customerService.findIdsOfAllCustomers();
-        return new ResponseEntity<>(hateoas.setLinksForIdsOfCustomers(customerIdDTOList), HttpStatus.OK);
+    public ResponseEntity<List<String>> getIdsOfAllCustomers() {
+        return customerService.findIdsOfAllCustomers();
     }
 
     @ApiOperation("Get all customers paginated")
     @GetMapping(params = {"page", "size"})
-    public ResponseEntity<Resources> getAllCustomersPaginated(@ApiParam(value = "Number of the page")
-                                                              @RequestParam("page") int page,
-                                                              @ApiParam(value = "Maximum number of content blocks on the page")
-                                                              @RequestParam("size") int size) {
-        ResponseEntity<List<CustomerDTO>> customerList = customerService.findAllPaginated(page, size);
-        return new ResponseEntity<>(hateoas.setLinksForAllCustomers(customerList), HttpStatus.OK);
+    public ResponseEntity<List<CustomerDTO>> getAllCustomersPaginated(@ApiParam(value = "Number of the page")
+                                                                      @RequestParam("page") int page,
+                                                                      @ApiParam(value = "Maximum number of content blocks on the page")
+                                                                      @RequestParam("size") int size) {
+        return customerService.findAllPaginated(page, size);
     }
 
     @ApiOperation("Get customer by ID")
@@ -81,15 +75,14 @@ public class CustomerController {
     @GetMapping("/{customerId}")
     public ResponseEntity<CustomerDTO> getCustomerById(@ApiParam(value = "Customer ID which should be found", required = true)
                                                        @PathVariable("customerId") Long customerId) {
-        ResponseEntity<CustomerDTO> customer = customerService.findOne(customerId);
-        return new ResponseEntity<>(customer, HttpStatus.OK);
+        return customerService.findOne(customerId);
     }
 
     @ApiOperation("Save customer")
     @PostMapping(consumes = "application/json")
     public ResponseEntity<CustomerDTO> saveCustomer(@ApiParam(value = "Saved customer", required = true)
                                                     @RequestBody CustomerDTO request) {
-        return new ResponseEntity<>(customerService.save(request), HttpStatus.CREATED);
+        return customerService.save(request);
     }
 
     @ApiOperation("Update customer data")
@@ -101,8 +94,7 @@ public class CustomerController {
                                                       @PathVariable("customerId") Long customerId,
                                                       @ApiParam(value = "Updated customer", required = true)
                                                       @RequestBody CustomerDTO request) {
-        ResponseEntity<CustomerDTO> customer = customerService.update(customerId, request);
-        return new ResponseEntity<>(customer, HttpStatus.OK);
+        return customerService.update(customerId, request);
     }
 
     @ApiOperation("Update one field for a customer")
@@ -113,8 +105,7 @@ public class CustomerController {
     public ResponseEntity<CustomerDTO> patchCustomer(@ApiParam(value = "Customer ID which should be updated", required = true)
                                                      @PathVariable("customerId") Long customerId,
                                                      @RequestBody Map<String, Object> params) {
-        ResponseEntity<CustomerDTO> customerDTO = customerService.patch(customerId, params);
-        return new ResponseEntity<>(customerDTO, HttpStatus.OK);
+        return customerService.patch(customerId, params);
     }
 
     @ApiOperation(value = "Delete customer data", notes = "Operation allowed for the ROLE_ADMIN only")
@@ -125,6 +116,6 @@ public class CustomerController {
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<CustomerDTO> deleteCustomer(@ApiParam(value = "Customer ID which should be deleted", required = true)
                                                       @PathVariable("customerId") Long customerId) {
-        return new ResponseEntity<>(customerService.delete(customerId), HttpStatus.NO_CONTENT);
+        return customerService.delete(customerId);
     }
 }
