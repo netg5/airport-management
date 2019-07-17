@@ -43,26 +43,24 @@ import java.util.Map;
 @RequestMapping(value = "/customers", produces = "application/json")
 public class CustomerController {
 
-    private final Hateoas hateoas;
     private final CustomerService customerService;
 
     @Autowired
-    public CustomerController(Hateoas hateoas, CustomerService customerService) {
-        this.hateoas = hateoas;
+    public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
     }
 
     @ApiOperation("Get all customers")
     @GetMapping
     public ResponseEntity<Resources> getAllCustomers() {
-        List<CustomerDTO> customerList = customerService.findAll();
+        ResponseEntity<List<CustomerDTO>> customerList = customerService.findAll();
         return new ResponseEntity<>(hateoas.setLinksForAllCustomers(customerList), HttpStatus.OK);
     }
 
     @ApiOperation("Get IDs of all existing customers")
     @GetMapping("/ids")
     public ResponseEntity<Resources> getIdsOfAllCustomers() {
-        List<String> customerIdDTOList = customerService.findIdsOfAllCustomers();
+        ResponseEntity<List<String>> customerIdDTOList = customerService.findIdsOfAllCustomers();
         return new ResponseEntity<>(hateoas.setLinksForIdsOfCustomers(customerIdDTOList), HttpStatus.OK);
     }
 
@@ -72,7 +70,7 @@ public class CustomerController {
                                                               @RequestParam("page") int page,
                                                               @ApiParam(value = "Maximum number of content blocks on the page")
                                                               @RequestParam("size") int size) {
-        Page<CustomerDTO> customerList = customerService.findAllPaginated(page, size);
+        ResponseEntity<List<CustomerDTO>> customerList = customerService.findAllPaginated(page, size);
         return new ResponseEntity<>(hateoas.setLinksForAllCustomers(customerList), HttpStatus.OK);
     }
 
@@ -83,8 +81,8 @@ public class CustomerController {
     @GetMapping("/{customerId}")
     public ResponseEntity<CustomerDTO> getCustomerById(@ApiParam(value = "Customer ID which should be found", required = true)
                                                        @PathVariable("customerId") Long customerId) {
-        CustomerDTO customer = customerService.findOne(customerId);
-        return new ResponseEntity<>(hateoas.setLinksForCustomer(customer), HttpStatus.OK);
+        ResponseEntity<CustomerDTO> customer = customerService.findOne(customerId);
+        return new ResponseEntity<>(customer, HttpStatus.OK);
     }
 
     @ApiOperation("Save customer")
@@ -103,8 +101,8 @@ public class CustomerController {
                                                       @PathVariable("customerId") Long customerId,
                                                       @ApiParam(value = "Updated customer", required = true)
                                                       @RequestBody CustomerDTO request) {
-        CustomerDTO customer = customerService.update(customerId, request);
-        return new ResponseEntity<>(hateoas.setLinksForCustomer(customer), HttpStatus.OK);
+        ResponseEntity<CustomerDTO> customer = customerService.update(customerId, request);
+        return new ResponseEntity<>(customer, HttpStatus.OK);
     }
 
     @ApiOperation("Update one field for a customer")
@@ -115,8 +113,8 @@ public class CustomerController {
     public ResponseEntity<CustomerDTO> patchCustomer(@ApiParam(value = "Customer ID which should be updated", required = true)
                                                      @PathVariable("customerId") Long customerId,
                                                      @RequestBody Map<String, Object> params) {
-        CustomerDTO customerDTO = customerService.patch(customerId, params);
-        return new ResponseEntity<>(hateoas.setLinksForCustomer(customerDTO), HttpStatus.OK);
+        ResponseEntity<CustomerDTO> customerDTO = customerService.patch(customerId, params);
+        return new ResponseEntity<>(customerDTO, HttpStatus.OK);
     }
 
     @ApiOperation(value = "Delete customer data", notes = "Operation allowed for the ROLE_ADMIN only")

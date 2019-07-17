@@ -17,7 +17,7 @@ public interface CustomerService {
 
     ResponseEntity<List<String>> findIdsOfAllCustomers();
 
-    ResponseEntity<Page<CustomerDTO>> findAllPaginated(int page, int size);
+    ResponseEntity<List<CustomerDTO>> findAllPaginated(int page, int size);
 
     ResponseEntity<CustomerDTO> save(CustomerDTO customerDTO);
 

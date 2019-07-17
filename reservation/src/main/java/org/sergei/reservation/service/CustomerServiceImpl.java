@@ -19,6 +19,7 @@ package org.sergei.reservation.service;
 import org.sergei.reservation.jpa.model.Customer;
 import org.sergei.reservation.jpa.repository.CustomerRepository;
 import org.sergei.reservation.rest.dto.CustomerDTO;
+import org.sergei.reservation.rest.dto.mappers.CustomerDTOListMapper;
 import org.sergei.reservation.rest.dto.mappers.CustomerDTOMapper;
 import org.sergei.reservation.rest.exceptions.ResourceNotFoundException;
 import org.sergei.reservation.utils.Constants;
@@ -33,7 +34,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static org.sergei.reservation.utils.ObjectMapperUtil.*;
+import static org.sergei.reservation.utils.ObjectMapperUtil.map;
 
 /**
  * @author Sergei Visotsky
@@ -43,11 +44,15 @@ public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
     private final CustomerDTOMapper customerDTOMapper;
+    private final CustomerDTOListMapper customerDTOListMapper;
 
     @Autowired
-    public CustomerServiceImpl(CustomerRepository customerRepository, CustomerDTOMapper customerDTOMapper) {
+    public CustomerServiceImpl(CustomerRepository customerRepository,
+                               CustomerDTOMapper customerDTOMapper,
+                               CustomerDTOListMapper customerDTOListMapper) {
         this.customerRepository = customerRepository;
         this.customerDTOMapper = customerDTOMapper;
+        this.customerDTOListMapper = customerDTOListMapper;
     }
 
     /**
@@ -74,7 +79,11 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public ResponseEntity<List<CustomerDTO>> findAll() {
         List<Customer> customerList = customerRepository.findAll();
-        return mapAll(customerList, CustomerDTO.class);
+        if (customerList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(customerDTOListMapper.apply(customerList), HttpStatus.OK);
+        }
     }
 
     /**
@@ -84,7 +93,12 @@ public class CustomerServiceImpl implements CustomerService {
      */
     @Override
     public ResponseEntity<List<String>> findIdsOfAllCustomers() {
-        return customerRepository.findIdsOfAllCustomers();
+        List<String> customerIds = customerRepository.findIdsOfAllCustomers();
+        if (customerIds.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(customerIds, HttpStatus.OK);
+        }
     }
 
     /**
@@ -95,9 +109,14 @@ public class CustomerServiceImpl implements CustomerService {
      * @return list with entities
      */
     @Override
-    public ResponseEntity<Page<CustomerDTO>> findAllPaginated(int page, int size) {
-        Page<Customer> customerList = customerRepository.findAll(PageRequest.of(page, size));
-        return mapAllPages(customerList, CustomerDTO.class);
+    public ResponseEntity<List<CustomerDTO>> findAllPaginated(int page, int size) {
+        Page<Customer> customersPage = customerRepository.findAll(PageRequest.of(page, size));
+        if (customersPage.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            List<CustomerDTO> customersList = customerDTOListMapper.apply(customersPage.getContent());
+            return new ResponseEntity<>(customersList, HttpStatus.OK);
+        }
     }
 
     /**
