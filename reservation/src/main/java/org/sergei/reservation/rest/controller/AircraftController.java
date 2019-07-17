@@ -18,7 +18,7 @@ package org.sergei.reservation.rest.controller;
 
 import io.swagger.annotations.*;
 import org.sergei.reservation.rest.dto.AircraftDTO;
-import org.sergei.reservation.rest.hateoas.LinkUtil;
+import org.sergei.reservation.service.hateoas.LinkUtil;
 import org.sergei.reservation.service.AircraftService;
 import org.sergei.reservation.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;

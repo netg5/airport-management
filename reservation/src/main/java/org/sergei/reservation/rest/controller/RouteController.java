@@ -19,7 +19,7 @@ package org.sergei.reservation.rest.controller;
 import io.swagger.annotations.*;
 import org.sergei.reservation.rest.dto.RouteDTO;
 import org.sergei.reservation.rest.dto.RouteExtendedDTO;
-import org.sergei.reservation.rest.hateoas.LinkUtil;
+import org.sergei.reservation.service.hateoas.LinkUtil;
 import org.sergei.reservation.service.RouteService;
 import org.sergei.reservation.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;

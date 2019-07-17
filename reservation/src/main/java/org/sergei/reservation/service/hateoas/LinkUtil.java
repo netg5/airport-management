@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sergei.reservation.rest.hateoas;
+package org.sergei.reservation.service.hateoas;
 
 import org.sergei.reservation.config.properties.GatewayProperties;
 import org.sergei.reservation.rest.controller.AircraftController;
