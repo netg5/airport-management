@@ -21,8 +21,6 @@ import org.sergei.reservation.jpa.repository.CustomerRepository;
 import org.sergei.reservation.rest.dto.CustomerDTO;
 import org.sergei.reservation.rest.dto.mappers.CustomerDTOListMapper;
 import org.sergei.reservation.rest.dto.mappers.CustomerDTOMapper;
-import org.sergei.reservation.rest.exceptions.ResourceNotFoundException;
-import org.sergei.reservation.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -33,8 +31,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
-import static org.sergei.reservation.utils.ObjectMapperUtil.map;
 
 /**
  * @author Sergei Visotsky
@@ -127,9 +123,16 @@ public class CustomerServiceImpl implements CustomerService {
      */
     @Override
     public ResponseEntity<CustomerDTO> save(CustomerDTO customerDTO) {
-        Customer customer = map(customerDTO, Customer.class);
+        Customer customer = new Customer();
+
+        customer.setId(customerDTO.getCustomerId());
+        customer.setFirstName(customerDTO.getFirstName());
+        customer.setLastName(customerDTO.getLastName());
+        customer.setAge(customerDTO.getAge());
+
         Customer savedCustomer = customerRepository.save(customer);
-        return map(savedCustomer, CustomerDTO.class);
+
+        return new ResponseEntity<>(customerDTOMapper.apply(savedCustomer), HttpStatus.CREATED);
     }
 
     /**
@@ -143,17 +146,17 @@ public class CustomerServiceImpl implements CustomerService {
     public ResponseEntity<CustomerDTO> update(Long customerId, CustomerDTO customerDTO) {
         customerDTO.setCustomerId(customerId);
 
-        Customer customer = customerRepository.findById(customerId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(Constants.CUSTOMER_NOT_FOUND)
-                );
-        customer.setFirstName(customerDTO.getFirstName());
-        customer.setLastName(customerDTO.getLastName());
-        customer.setAge(customerDTO.getAge());
+        Optional<Customer> customer = customerRepository.findById(customerId);
+        if (customer.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            customer.get().setFirstName(customerDTO.getFirstName());
+            customer.get().setLastName(customerDTO.getLastName());
+            customer.get().setAge(customerDTO.getAge());
+            customerRepository.save(customer.get());
 
-        customerRepository.save(customer);
-
-        return customerDTO;
+            return new ResponseEntity<>(customerDTOMapper.apply(customer.get()), HttpStatus.OK);
+        }
     }
 
     /**
@@ -165,20 +168,22 @@ public class CustomerServiceImpl implements CustomerService {
      */
     @Override
     public ResponseEntity<CustomerDTO> patch(Long customerId, Map<String, Object> params) {
-        Customer customer = customerRepository.findById(customerId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(Constants.CUSTOMER_NOT_FOUND)
-                );
-        if (params.get("firstName") != null) {
-            customer.setFirstName(String.valueOf(params.get("firstName")));
+        Optional<Customer> customer = customerRepository.findById(customerId);
+        if (customer.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            if (params.get("firstName") != null) {
+                customer.get().setFirstName(String.valueOf(params.get("firstName")));
+            }
+            if (params.get("lastName") != null) {
+                customer.get().setLastName(String.valueOf(params.get("lastName")));
+            }
+            if (params.get("age") != null) {
+                customer.get().setAge(Integer.valueOf(String.valueOf(params.get("age"))));
+            }
+            Customer savedCustomer = customerRepository.save(customer.get());
+            return new ResponseEntity<>(customerDTOMapper.apply(savedCustomer), HttpStatus.CREATED);
         }
-        if (params.get("lastName") != null) {
-            customer.setLastName(String.valueOf(params.get("lastName")));
-        }
-        if (params.get("age") != null) {
-            customer.setAge(Integer.valueOf(String.valueOf(params.get("age"))));
-        }
-        return map(customerRepository.save(customer), CustomerDTO.class);
     }
 
     /**
@@ -189,11 +194,12 @@ public class CustomerServiceImpl implements CustomerService {
      */
     @Override
     public ResponseEntity<CustomerDTO> delete(Long customerId) {
-        Customer customer = customerRepository.findById(customerId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(Constants.CUSTOMER_NOT_FOUND)
-                );
-        customerRepository.delete(customer);
-        return map(customer, CustomerDTO.class);
+        Optional<Customer> customer = customerRepository.findById(customerId);
+        if (customer.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            customerRepository.delete(customer.get());
+            return new ResponseEntity<>(customerDTOMapper.apply(customer.get()), HttpStatus.NO_CONTENT);
+        }
     }
 }

@@ -21,7 +21,6 @@ import org.sergei.reservation.jpa.repository.AircraftRepository;
 import org.sergei.reservation.rest.dto.AircraftDTO;
 import org.sergei.reservation.rest.dto.mappers.AircraftDTOListMapper;
 import org.sergei.reservation.rest.dto.mappers.AircraftDTOMapper;
-import org.sergei.reservation.rest.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -149,7 +148,7 @@ public class AircraftServiceImpl implements AircraftService {
         aircraft.setModel(aircraft.getModel());
 
         Aircraft savedAircraft = aircraftRepository.save(aircraft);
-        return new ResponseEntity<>(aircraftDTOMapper.apply(savedAircraft), HttpStatus.OK);
+        return new ResponseEntity<>(aircraftDTOMapper.apply(savedAircraft), HttpStatus.CREATED);
     }
 
     /**
@@ -224,7 +223,7 @@ public class AircraftServiceImpl implements AircraftService {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             aircraftRepository.delete(aircraft.get());
-            return new ResponseEntity<>(aircraftDTOMapper.apply(aircraft.get()), HttpStatus.OK);
+            return new ResponseEntity<>(aircraftDTOMapper.apply(aircraft.get()), HttpStatus.NO_CONTENT);
 
         }
     }
