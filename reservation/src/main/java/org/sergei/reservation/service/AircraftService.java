@@ -13,19 +13,19 @@ import java.util.Map;
  * @author Sergei Visotsky
  */
 public interface AircraftService {
-    ResponseEntity<AircraftDTO> findOne(Long aircraftId) throws ResourceNotFoundException;
+    ResponseEntity<AircraftDTO> findOne(Long aircraftId);
 
-    ResponseEntity<AircraftDTO> findOneByMultipleParams(HttpServletRequest request) throws ResourceNotFoundException;
+    ResponseEntity<AircraftDTO> findOneByMultipleParams(HttpServletRequest request);
 
-    ResponseEntity<List<AircraftDTO>> findAll() throws ResourceNotFoundException;
+    ResponseEntity<List<AircraftDTO>> findAll();
 
-    ResponseEntity<List<AircraftDTO>> findAllPaginated(int page, int size) throws ResourceNotFoundException;
+    ResponseEntity<List<AircraftDTO>> findAllPaginated(int page, int size);
 
-    ResponseEntity<AircraftDTO> save(AircraftDTO aircraftDTO) throws ResourceNotFoundException;
+    ResponseEntity<AircraftDTO> save(AircraftDTO aircraftDTO);
 
-    ResponseEntity<AircraftDTO> update(Long aircraftId, AircraftDTO aircraftDTO) throws ResourceNotFoundException;
+    ResponseEntity<AircraftDTO> update(Long aircraftId, AircraftDTO aircraftDTO);
 
-    ResponseEntity<AircraftDTO> patch(Long aircraftId, Map<String, Object> params) throws ResourceNotFoundException;
+    ResponseEntity<AircraftDTO> patch(Long aircraftId, Map<String, Object> params);
 
-    ResponseEntity<AircraftDTO> delete(Long aircraftId) throws ResourceNotFoundException;
+    ResponseEntity<AircraftDTO> delete(Long aircraftId);
 }

@@ -18,7 +18,6 @@ package org.sergei.reservation.rest.controller;
 
 import io.swagger.annotations.*;
 import org.sergei.reservation.rest.dto.CustomerDTO;
-import org.sergei.reservation.service.hateoas.LinkUtil;
 import org.sergei.reservation.service.CustomerService;
 import org.sergei.reservation.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,12 +43,12 @@ import java.util.Map;
 @RequestMapping(value = "/customers", produces = "application/json")
 public class CustomerController {
 
-    private final LinkUtil linkUtil;
+    private final Hateoas hateoas;
     private final CustomerService customerService;
 
     @Autowired
-    public CustomerController(LinkUtil linkUtil, CustomerService customerService) {
-        this.linkUtil = linkUtil;
+    public CustomerController(Hateoas hateoas, CustomerService customerService) {
+        this.hateoas = hateoas;
         this.customerService = customerService;
     }
 
@@ -57,14 +56,14 @@ public class CustomerController {
     @GetMapping
     public ResponseEntity<Resources> getAllCustomers() {
         List<CustomerDTO> customerList = customerService.findAll();
-        return new ResponseEntity<>(linkUtil.setLinksForAllCustomers(customerList), HttpStatus.OK);
+        return new ResponseEntity<>(hateoas.setLinksForAllCustomers(customerList), HttpStatus.OK);
     }
 
     @ApiOperation("Get IDs of all existing customers")
     @GetMapping("/ids")
     public ResponseEntity<Resources> getIdsOfAllCustomers() {
         List<String> customerIdDTOList = customerService.findIdsOfAllCustomers();
-        return new ResponseEntity<>(linkUtil.setLinksForIdsOfCustomers(customerIdDTOList), HttpStatus.OK);
+        return new ResponseEntity<>(hateoas.setLinksForIdsOfCustomers(customerIdDTOList), HttpStatus.OK);
     }
 
     @ApiOperation("Get all customers paginated")
@@ -74,7 +73,7 @@ public class CustomerController {
                                                               @ApiParam(value = "Maximum number of content blocks on the page")
                                                               @RequestParam("size") int size) {
         Page<CustomerDTO> customerList = customerService.findAllPaginated(page, size);
-        return new ResponseEntity<>(linkUtil.setLinksForAllCustomers(customerList), HttpStatus.OK);
+        return new ResponseEntity<>(hateoas.setLinksForAllCustomers(customerList), HttpStatus.OK);
     }
 
     @ApiOperation("Get customer by ID")
@@ -85,7 +84,7 @@ public class CustomerController {
     public ResponseEntity<CustomerDTO> getCustomerById(@ApiParam(value = "Customer ID which should be found", required = true)
                                                        @PathVariable("customerId") Long customerId) {
         CustomerDTO customer = customerService.findOne(customerId);
-        return new ResponseEntity<>(linkUtil.setLinksForCustomer(customer), HttpStatus.OK);
+        return new ResponseEntity<>(hateoas.setLinksForCustomer(customer), HttpStatus.OK);
     }
 
     @ApiOperation("Save customer")
@@ -105,7 +104,7 @@ public class CustomerController {
                                                       @ApiParam(value = "Updated customer", required = true)
                                                       @RequestBody CustomerDTO request) {
         CustomerDTO customer = customerService.update(customerId, request);
-        return new ResponseEntity<>(linkUtil.setLinksForCustomer(customer), HttpStatus.OK);
+        return new ResponseEntity<>(hateoas.setLinksForCustomer(customer), HttpStatus.OK);
     }
 
     @ApiOperation("Update one field for a customer")
@@ -117,7 +116,7 @@ public class CustomerController {
                                                      @PathVariable("customerId") Long customerId,
                                                      @RequestBody Map<String, Object> params) {
         CustomerDTO customerDTO = customerService.patch(customerId, params);
-        return new ResponseEntity<>(linkUtil.setLinksForCustomer(customerDTO), HttpStatus.OK);
+        return new ResponseEntity<>(hateoas.setLinksForCustomer(customerDTO), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Delete customer data", notes = "Operation allowed for the ROLE_ADMIN only")

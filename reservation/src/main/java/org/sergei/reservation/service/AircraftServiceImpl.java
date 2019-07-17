@@ -58,7 +58,7 @@ public class AircraftServiceImpl implements AircraftService {
      * @return aircraftDTO DTO
      */
     @Override
-    public ResponseEntity<AircraftDTO> findOne(Long aircraftId) throws ResourceNotFoundException {
+    public ResponseEntity<AircraftDTO> findOne(Long aircraftId) {
         Optional<Aircraft> aircraft = aircraftRepository.findById(aircraftId);
 
         if (aircraft.isEmpty()) {
@@ -76,7 +76,7 @@ public class AircraftServiceImpl implements AircraftService {
      * @return aircraft DTO
      */
     @Override
-    public ResponseEntity<AircraftDTO> findOneByMultipleParams(HttpServletRequest request) throws ResourceNotFoundException {
+    public ResponseEntity<AircraftDTO> findOneByMultipleParams(HttpServletRequest request) {
         Enumeration enumeration = request.getParameterNames();
         Map<String, Object> requestParams = new HashMap<>();
         while (enumeration.hasMoreElements()) {
@@ -104,7 +104,7 @@ public class AircraftServiceImpl implements AircraftService {
      * @return list of Aircraft DTO
      */
     @Override
-    public ResponseEntity<List<AircraftDTO>> findAll() throws ResourceNotFoundException {
+    public ResponseEntity<List<AircraftDTO>> findAll() {
         List<Aircraft> aircraftList = aircraftRepository.findAll();
         if (aircraftList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -122,7 +122,7 @@ public class AircraftServiceImpl implements AircraftService {
      * @return collection of aircrafts
      */
     @Override
-    public ResponseEntity<List<AircraftDTO>> findAllPaginated(int page, int size) throws ResourceNotFoundException {
+    public ResponseEntity<List<AircraftDTO>> findAllPaginated(int page, int size) {
         Page<Aircraft> aircraftList = aircraftRepository.findAll(PageRequest.of(page, size));
         if (aircraftList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -139,7 +139,7 @@ public class AircraftServiceImpl implements AircraftService {
      * @return Aircraft DTO
      */
     @Override
-    public ResponseEntity<AircraftDTO> save(AircraftDTO aircraftDTO) throws ResourceNotFoundException {
+    public ResponseEntity<AircraftDTO> save(AircraftDTO aircraftDTO) {
         Aircraft aircraft = new Aircraft();
 
         aircraft.setId(aircraftDTO.getAircraftId());
@@ -160,7 +160,7 @@ public class AircraftServiceImpl implements AircraftService {
      * @return aircraftDTO DTO
      */
     @Override
-    public ResponseEntity<AircraftDTO> update(Long aircraftId, AircraftDTO aircraftDTO) throws ResourceNotFoundException {
+    public ResponseEntity<AircraftDTO> update(Long aircraftId, AircraftDTO aircraftDTO) {
         aircraftDTO.setAircraftId(aircraftId);
 
         Optional<Aircraft> aircraft = aircraftRepository.findById(aircraftId);
@@ -187,7 +187,7 @@ public class AircraftServiceImpl implements AircraftService {
      * @return updated aircraft
      */
     @Override
-    public ResponseEntity<AircraftDTO> patch(Long aircraftId, Map<String, Object> params) throws ResourceNotFoundException {
+    public ResponseEntity<AircraftDTO> patch(Long aircraftId, Map<String, Object> params) {
         Optional<Aircraft> aircraft = aircraftRepository.findById(aircraftId);
 
         if (aircraft.isEmpty()) {
@@ -217,7 +217,7 @@ public class AircraftServiceImpl implements AircraftService {
      * @return aircraftDTO DTO as a response
      */
     @Override
-    public ResponseEntity<AircraftDTO> delete(Long aircraftId) throws ResourceNotFoundException {
+    public ResponseEntity<AircraftDTO> delete(Long aircraftId) {
         Optional<Aircraft> aircraft = aircraftRepository.findById(aircraftId);
 
         if (aircraft.isEmpty()) {

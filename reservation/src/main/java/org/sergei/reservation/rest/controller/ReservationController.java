@@ -19,7 +19,6 @@ package org.sergei.reservation.rest.controller;
 import io.swagger.annotations.*;
 import org.sergei.reservation.rest.dto.ReservationDTO;
 import org.sergei.reservation.rest.dto.ReservationExtendedDTO;
-import org.sergei.reservation.service.hateoas.LinkUtil;
 import org.sergei.reservation.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -48,12 +47,12 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @RequestMapping(value = "/customers", produces = "application/json")
 public class ReservationController {
 
-    private final LinkUtil linkUtil;
+    private final Hateoas hateoas;
     private final ReservationService reservationService;
 
     @Autowired
-    public ReservationController(LinkUtil linkUtil, ReservationService reservationService) {
-        this.linkUtil = linkUtil;
+    public ReservationController(Hateoas hateoas, ReservationService reservationService) {
+        this.hateoas = hateoas;
         this.reservationService = reservationService;
     }
 
@@ -66,7 +65,7 @@ public class ReservationController {
                                                        @PathVariable("customerId") Long customerId) {
         List<ReservationExtendedDTO> reservations =
                 reservationService.findAllForCustomer(customerId);
-        return new ResponseEntity<>(linkUtil.setLinksForAllReservations(reservations), HttpStatus.OK);
+        return new ResponseEntity<>(hateoas.setLinksForAllReservations(reservations), HttpStatus.OK);
     }
 
     @ApiOperation("Get all reservations for customer")
@@ -82,7 +81,7 @@ public class ReservationController {
                                                                 @RequestParam("size") int size) {
         Page<ReservationExtendedDTO> reservations =
                 reservationService.findAllForCustomerPaginated(customerId, page, size);
-        return new ResponseEntity<>(linkUtil.setLinksForAllReservations(reservations), HttpStatus.OK);
+        return new ResponseEntity<>(hateoas.setLinksForAllReservations(reservations), HttpStatus.OK);
     }
 
     @ApiOperation("Get one reservation by ID for the customer")

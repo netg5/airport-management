@@ -19,7 +19,6 @@ package org.sergei.reservation.rest.controller;
 import io.swagger.annotations.*;
 import org.sergei.reservation.rest.dto.RouteDTO;
 import org.sergei.reservation.rest.dto.RouteExtendedDTO;
-import org.sergei.reservation.service.hateoas.LinkUtil;
 import org.sergei.reservation.service.RouteService;
 import org.sergei.reservation.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,12 +44,12 @@ import java.util.Map;
 @RequestMapping(value = "/routes", produces = "application/json")
 public class RouteController {
 
-    private final LinkUtil linkUtil;
+    private final Hateoas hateoas;
     private final RouteService routeService;
 
     @Autowired
-    public RouteController(LinkUtil linkUtil, RouteService routeService) {
-        this.linkUtil = linkUtil;
+    public RouteController(Hateoas hateoas, RouteService routeService) {
+        this.hateoas = hateoas;
         this.routeService = routeService;
     }
 
@@ -58,7 +57,7 @@ public class RouteController {
     @GetMapping
     public ResponseEntity<Resources> getAllRoutes() {
         List<RouteExtendedDTO> routes = routeService.findAllRoutes();
-        return new ResponseEntity<>(linkUtil.setLinksForEachRoute(routes), HttpStatus.OK);
+        return new ResponseEntity<>(hateoas.setLinksForEachRoute(routes), HttpStatus.OK);
     }
 
     @ApiOperation("Get all existing routes paginated")
@@ -68,7 +67,7 @@ public class RouteController {
                                                            @ApiParam("Maximum number of content blocks on the page")
                                                            @RequestParam("size") int size) {
         Page<RouteExtendedDTO> routes = routeService.findAllRoutesPaginated(page, size);
-        return new ResponseEntity<>(linkUtil.setLinksForEachRoute(routes), HttpStatus.OK);
+        return new ResponseEntity<>(hateoas.setLinksForEachRoute(routes), HttpStatus.OK);
     }
 
     @ApiOperation("Get route by ID")
@@ -79,7 +78,7 @@ public class RouteController {
     public ResponseEntity<RouteDTO> getRouteById(@ApiParam(value = "Route ID which should be found", required = true)
                                                  @PathVariable("routeId") Long routeId) {
         RouteDTO routeDTO = routeService.findOneRoute(routeId);
-        return new ResponseEntity<>(linkUtil.setLinksForRoute(routeDTO), HttpStatus.OK);
+        return new ResponseEntity<>(hateoas.setLinksForRoute(routeDTO), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Save route", notes = "Operation allowed for the ROLE_ADMIN only")
@@ -104,7 +103,7 @@ public class RouteController {
                                                 @ApiParam(value = "Saved route", required = true)
                                                 @RequestBody RouteDTO request) {
         RouteDTO route = routeService.update(routeId, request);
-        return new ResponseEntity<>(linkUtil.setLinksForRoute(route), HttpStatus.OK);
+        return new ResponseEntity<>(hateoas.setLinksForRoute(route), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Update one field for the route", notes = "Operation allowed for the ROLE_ADMIN only")
@@ -118,7 +117,7 @@ public class RouteController {
                                                @RequestBody Map<String, Object> params) {
 
         RouteDTO routeDTO = routeService.patch(routeId, params);
-        return new ResponseEntity<>(linkUtil.setLinksForRoute(routeDTO), HttpStatus.OK);
+        return new ResponseEntity<>(hateoas.setLinksForRoute(routeDTO), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Method to delete route", notes = "Operation allowed for the ROLE_ADMIN only")
