@@ -1,4 +1,4 @@
-package org.sergei.reservation.rest.dto;
+package org.sergei.reservation.rest.dto.response;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class AircraftResponseDTO {
-    private List<String> errorList;
-    private List<AircraftDTO> aircraftList;
+public class ResponseDTO<T> {
+    private List<ResponseErrorDTO> errorList;
+    private List<T> response;
 }

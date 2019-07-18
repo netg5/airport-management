@@ -19,7 +19,7 @@ package org.sergei.reservation.service;
 import org.sergei.reservation.jpa.model.Aircraft;
 import org.sergei.reservation.jpa.repository.AircraftRepository;
 import org.sergei.reservation.rest.dto.AircraftDTO;
-import org.sergei.reservation.rest.dto.AircraftResponseDTO;
+import org.sergei.reservation.rest.dto.response.ResponseDTO;
 import org.sergei.reservation.rest.dto.mappers.AircraftDTOListMapper;
 import org.sergei.reservation.rest.dto.mappers.AircraftDTOMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,16 +58,16 @@ public class AircraftServiceImpl implements AircraftService {
      * @return aircraftDTO DTO
      */
     @Override
-    public ResponseEntity<AircraftResponseDTO> findOne(Long aircraftId) {
+    public ResponseEntity<ResponseDTO<AircraftDTO>> findOne(Long aircraftId) {
         Optional<Aircraft> aircraft = aircraftRepository.findById(aircraftId);
 
         if (aircraft.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             AircraftDTO aircraftDTO = aircraftDTOMapper.apply(aircraft.get());
-            AircraftResponseDTO response = new AircraftResponseDTO();
+            ResponseDTO<AircraftDTO> response = new ResponseDTO<>();
             response.setErrorList(List.of());
-            response.setAircraftList(List.of(aircraftDTO));
+            response.setResponse(List.of(aircraftDTO));
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
     }
@@ -79,8 +79,8 @@ public class AircraftServiceImpl implements AircraftService {
      * @return aircraft DTO
      */
     @Override
-    public ResponseEntity<AircraftResponseDTO> findOneByMultipleParams(HttpServletRequest request) {
-        Enumeration enumeration = request.getParameterNames();
+    public ResponseEntity<ResponseDTO<AircraftDTO>> findOneByMultipleParams(HttpServletRequest request) {
+        Enumeration<String> enumeration = request.getParameterNames();
         Map<String, Object> requestParams = new HashMap<>();
         while (enumeration.hasMoreElements()) {
             String paramName = String.valueOf(enumeration.nextElement());
@@ -97,9 +97,9 @@ public class AircraftServiceImpl implements AircraftService {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             AircraftDTO aircraftDTO = aircraftDTOMapper.apply(aircraft.get());
-            AircraftResponseDTO response = new AircraftResponseDTO();
+            ResponseDTO<AircraftDTO> response = new ResponseDTO<>();
             response.setErrorList(List.of());
-            response.setAircraftList(List.of(aircraftDTO));
+            response.setResponse(List.of(aircraftDTO));
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
     }
@@ -110,16 +110,16 @@ public class AircraftServiceImpl implements AircraftService {
      * @return list of Aircraft DTO
      */
     @Override
-    public ResponseEntity<AircraftResponseDTO> findAll() {
+    public ResponseEntity<ResponseDTO<AircraftDTO>> findAll() {
         List<Aircraft> aircraftList = aircraftRepository.findAll();
         if (aircraftList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             List<AircraftDTO> aircraftDTOList = aircraftDTOListMapper.apply(aircraftList);
 
-            AircraftResponseDTO response = new AircraftResponseDTO();
+            ResponseDTO<AircraftDTO> response = new ResponseDTO<>();
             response.setErrorList(List.of());
-            response.setAircraftList(aircraftDTOList);
+            response.setResponse(aircraftDTOList);
 
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
@@ -133,16 +133,16 @@ public class AircraftServiceImpl implements AircraftService {
      * @return collection of aircrafts
      */
     @Override
-    public ResponseEntity<AircraftResponseDTO> findAllPaginated(int page, int size) {
+    public ResponseEntity<ResponseDTO<AircraftDTO>> findAllPaginated(int page, int size) {
         Page<Aircraft> aircraftList = aircraftRepository.findAll(PageRequest.of(page, size));
         if (aircraftList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             List<AircraftDTO> aircraftDTOList = aircraftDTOListMapper.apply(aircraftList.getContent());
 
-            AircraftResponseDTO response = new AircraftResponseDTO();
+            ResponseDTO<AircraftDTO> response = new ResponseDTO<>();
             response.setErrorList(List.of());
-            response.setAircraftList(aircraftDTOList);
+            response.setResponse(aircraftDTOList);
 
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
@@ -155,7 +155,7 @@ public class AircraftServiceImpl implements AircraftService {
      * @return Aircraft DTO
      */
     @Override
-    public ResponseEntity<AircraftResponseDTO> save(AircraftDTO aircraftDTO) {
+    public ResponseEntity<ResponseDTO<AircraftDTO>> save(AircraftDTO aircraftDTO) {
         Aircraft aircraft = new Aircraft();
 
         aircraft.setId(aircraftDTO.getAircraftId());
@@ -168,9 +168,9 @@ public class AircraftServiceImpl implements AircraftService {
 
         AircraftDTO aircraftDTOResponse = aircraftDTOMapper.apply(savedAircraft);
 
-        AircraftResponseDTO response = new AircraftResponseDTO();
+        ResponseDTO<AircraftDTO> response = new ResponseDTO<>();
         response.setErrorList(List.of());
-        response.setAircraftList(List.of(aircraftDTOResponse));
+        response.setResponse(List.of(aircraftDTOResponse));
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
@@ -183,7 +183,7 @@ public class AircraftServiceImpl implements AircraftService {
      * @return aircraftDTO DTO
      */
     @Override
-    public ResponseEntity<AircraftResponseDTO> update(Long aircraftId, AircraftDTO aircraftDTO) {
+    public ResponseEntity<ResponseDTO<AircraftDTO>> update(Long aircraftId, AircraftDTO aircraftDTO) {
         aircraftDTO.setAircraftId(aircraftId);
 
         Optional<Aircraft> aircraft = aircraftRepository.findById(aircraftId);
@@ -201,9 +201,9 @@ public class AircraftServiceImpl implements AircraftService {
 
             AircraftDTO aircraftDTOResponse = aircraftDTOMapper.apply(savedAircraft);
 
-            AircraftResponseDTO response = new AircraftResponseDTO();
+            ResponseDTO<AircraftDTO> response = new ResponseDTO<AircraftDTO>();
             response.setErrorList(List.of());
-            response.setAircraftList(List.of(aircraftDTOResponse));
+            response.setResponse(List.of(aircraftDTOResponse));
 
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
@@ -217,7 +217,7 @@ public class AircraftServiceImpl implements AircraftService {
      * @return updated aircraft
      */
     @Override
-    public ResponseEntity<AircraftResponseDTO> patch(Long aircraftId, Map<String, Object> params) {
+    public ResponseEntity<ResponseDTO<AircraftDTO>> patch(Long aircraftId, Map<String, Object> params) {
         Optional<Aircraft> aircraft = aircraftRepository.findById(aircraftId);
 
         if (aircraft.isEmpty()) {
@@ -239,9 +239,9 @@ public class AircraftServiceImpl implements AircraftService {
 
             AircraftDTO aircraftDTOResponse = aircraftDTOMapper.apply(savedAircraft);
 
-            AircraftResponseDTO response = new AircraftResponseDTO();
+            ResponseDTO<AircraftDTO> response = new ResponseDTO<>();
             response.setErrorList(List.of());
-            response.setAircraftList(List.of(aircraftDTOResponse));
+            response.setResponse(List.of(aircraftDTOResponse));
 
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
@@ -254,7 +254,7 @@ public class AircraftServiceImpl implements AircraftService {
      * @return aircraftDTO DTO as a response
      */
     @Override
-    public ResponseEntity<AircraftResponseDTO> delete(Long aircraftId) {
+    public ResponseEntity<ResponseDTO<AircraftDTO>> delete(Long aircraftId) {
         Optional<Aircraft> aircraft = aircraftRepository.findById(aircraftId);
 
         if (aircraft.isEmpty()) {
@@ -264,9 +264,9 @@ public class AircraftServiceImpl implements AircraftService {
 
             AircraftDTO aircraftDTOResponse = aircraftDTOMapper.apply(aircraft.get());
 
-            AircraftResponseDTO response = new AircraftResponseDTO();
+            ResponseDTO<AircraftDTO> response = new ResponseDTO<>();
             response.setErrorList(List.of());
-            response.setAircraftList(List.of(aircraftDTOResponse));
+            response.setResponse(List.of(aircraftDTOResponse));
 
             return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
 

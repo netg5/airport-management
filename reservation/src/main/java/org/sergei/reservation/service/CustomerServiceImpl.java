@@ -21,6 +21,7 @@ import org.sergei.reservation.jpa.repository.CustomerRepository;
 import org.sergei.reservation.rest.dto.CustomerDTO;
 import org.sergei.reservation.rest.dto.mappers.CustomerDTOListMapper;
 import org.sergei.reservation.rest.dto.mappers.CustomerDTOMapper;
+import org.sergei.reservation.rest.dto.response.ResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -58,12 +59,16 @@ public class CustomerServiceImpl implements CustomerService {
      * @return customer
      */
     @Override
-    public ResponseEntity<CustomerDTO> findOne(Long customerId) {
+    public ResponseEntity<ResponseDTO<CustomerDTO>> findOne(Long customerId) {
         Optional<Customer> customer = customerRepository.findById(customerId);
         if (customer.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
-            return new ResponseEntity<>(customerDTOMapper.apply(customer.get()), HttpStatus.OK);
+            CustomerDTO customerDTO = customerDTOMapper.apply(customer.get());
+            ResponseDTO<CustomerDTO> response = new ResponseDTO<>();
+            response.setErrorList(List.of());
+            response.setResponse(List.of(customerDTO));
+            return new ResponseEntity<>(response, HttpStatus.OK);
         }
     }
 
@@ -73,12 +78,16 @@ public class CustomerServiceImpl implements CustomerService {
      * @return list of customers
      */
     @Override
-    public ResponseEntity<List<CustomerDTO>> findAll() {
+    public ResponseEntity<ResponseDTO<CustomerDTO>> findAll() {
         List<Customer> customerList = customerRepository.findAll();
         if (customerList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
-            return new ResponseEntity<>(customerDTOListMapper.apply(customerList), HttpStatus.OK);
+            List<CustomerDTO> customerDTOList = customerDTOListMapper.apply(customerList);
+            ResponseDTO<CustomerDTO> response = new ResponseDTO<>();
+            response.setErrorList(List.of());
+            response.setResponse(customerDTOList);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         }
     }
 
@@ -88,12 +97,15 @@ public class CustomerServiceImpl implements CustomerService {
      * @return list of IDs
      */
     @Override
-    public ResponseEntity<List<String>> findIdsOfAllCustomers() {
+    public ResponseEntity<ResponseDTO<String>> findIdsOfAllCustomers() {
         List<String> customerIds = customerRepository.findIdsOfAllCustomers();
         if (customerIds.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
-            return new ResponseEntity<>(customerIds, HttpStatus.OK);
+            ResponseDTO<String> response = new ResponseDTO<>();
+            response.setErrorList(List.of());
+            response.setResponse(customerIds);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         }
     }
 
@@ -105,13 +117,16 @@ public class CustomerServiceImpl implements CustomerService {
      * @return list with entities
      */
     @Override
-    public ResponseEntity<List<CustomerDTO>> findAllPaginated(int page, int size) {
+    public ResponseEntity<ResponseDTO<CustomerDTO>> findAllPaginated(int page, int size) {
         Page<Customer> customersPage = customerRepository.findAll(PageRequest.of(page, size));
         if (customersPage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
-            List<CustomerDTO> customersList = customerDTOListMapper.apply(customersPage.getContent());
-            return new ResponseEntity<>(customersList, HttpStatus.OK);
+            List<CustomerDTO> customerDTOList = customerDTOListMapper.apply(customersPage.getContent());
+            ResponseDTO<CustomerDTO> response = new ResponseDTO<>();
+            response.setErrorList(List.of());
+            response.setResponse(customerDTOList);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         }
     }
 
@@ -122,7 +137,7 @@ public class CustomerServiceImpl implements CustomerService {
      * @return customerDTO DTO as a response
      */
     @Override
-    public ResponseEntity<CustomerDTO> save(CustomerDTO customerDTO) {
+    public ResponseEntity<ResponseDTO<CustomerDTO>> save(CustomerDTO customerDTO) {
         Customer customer = new Customer();
 
         customer.setId(customerDTO.getCustomerId());
@@ -143,7 +158,7 @@ public class CustomerServiceImpl implements CustomerService {
      * @return customerDTO DTO as a response
      */
     @Override
-    public ResponseEntity<CustomerDTO> update(Long customerId, CustomerDTO customerDTO) {
+    public ResponseEntity<ResponseDTO<CustomerDTO>> update(Long customerId, CustomerDTO customerDTO) {
         customerDTO.setCustomerId(customerId);
 
         Optional<Customer> customer = customerRepository.findById(customerId);
@@ -167,7 +182,7 @@ public class CustomerServiceImpl implements CustomerService {
      * @return patched customer DTO
      */
     @Override
-    public ResponseEntity<CustomerDTO> patch(Long customerId, Map<String, Object> params) {
+    public ResponseEntity<ResponseDTO<CustomerDTO>> patch(Long customerId, Map<String, Object> params) {
         Optional<Customer> customer = customerRepository.findById(customerId);
         if (customer.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -193,7 +208,7 @@ public class CustomerServiceImpl implements CustomerService {
      * @return customer DTO as a response
      */
     @Override
-    public ResponseEntity<CustomerDTO> delete(Long customerId) {
+    public ResponseEntity<ResponseDTO<CustomerDTO>> delete(Long customerId) {
         Optional<Customer> customer = customerRepository.findById(customerId);
         if (customer.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
