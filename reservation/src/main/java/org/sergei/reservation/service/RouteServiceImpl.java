@@ -25,6 +25,8 @@ import org.sergei.reservation.rest.dto.AircraftDTO;
 import org.sergei.reservation.rest.dto.RouteDTO;
 import org.sergei.reservation.rest.dto.RouteExtendedDTO;
 import org.sergei.reservation.rest.dto.mappers.RouteDTOMapper;
+import org.sergei.reservation.rest.dto.mappers.RouteListDTOMapper;
+import org.sergei.reservation.rest.dto.response.ResponseDTO;
 import org.sergei.reservation.rest.exceptions.ResourceNotFoundException;
 import org.sergei.reservation.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +42,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static org.sergei.reservation.utils.ObjectMapperUtil.*;
+import static org.sergei.reservation.utils.ObjectMapperUtil.map;
+import static org.sergei.reservation.utils.ObjectMapperUtil.mapAllPages;
 
 /**
  * @author Sergei Visotsky
@@ -52,13 +55,17 @@ public class RouteServiceImpl implements RouteService {
     private final AircraftRepository aircraftRepository;
     private final RouteRepository routeRepository;
     private final RouteDTOMapper routeDTOMapper;
+    private final RouteListDTOMapper routeDTOListMapper;
 
     @Autowired
     public RouteServiceImpl(AircraftRepository aircraftRepository,
-                            RouteRepository routeRepository, RouteDTOMapper routeDTOMapper) {
+                            RouteRepository routeRepository,
+                            RouteDTOMapper routeDTOMapper,
+                            RouteListDTOMapper routeDTOListMapper) {
         this.aircraftRepository = aircraftRepository;
         this.routeRepository = routeRepository;
         this.routeDTOMapper = routeDTOMapper;
+        this.routeDTOListMapper = routeDTOListMapper;
     }
 
     /**
@@ -68,7 +75,7 @@ public class RouteServiceImpl implements RouteService {
      * @return route extended DTO
      */
     @Override
-    public ResponseEntity<RouteExtendedDTO> findOneRoute(Long routeId) {
+    public ResponseEntity<ResponseDTO<RouteExtendedDTO>> findOneRoute(Long routeId) {
         // Find route and map into the extended DTO
         Optional<Route> route = routeRepository.findById(routeId);
         if (route.isEmpty()) {
@@ -86,7 +93,11 @@ public class RouteServiceImpl implements RouteService {
                 // Set aircraftDTO DTO to the flight reservation extended DTO
                 routeExtendedDTO.setAircraftDTO(aircraftDTO);
 
-                return new ResponseEntity<>(routeExtendedDTO, HttpStatus.OK);
+                ResponseDTO<RouteExtendedDTO> response = new ResponseDTO<>();
+                response.setErrorList(List.of());
+                response.setResponse(List.of(routeExtendedDTO));
+
+                return new ResponseEntity<>(response, HttpStatus.OK);
             }
         }
     }
@@ -97,23 +108,29 @@ public class RouteServiceImpl implements RouteService {
      * @return list of route extended DTO
      */
     @Override
-    public ResponseEntity<List<RouteExtendedDTO>> findAllRoutes() {
+    public ResponseEntity<ResponseDTO<RouteExtendedDTO>> findAllRoutes() {
         List<Route> routeList = routeRepository.findAll();
-        List<RouteExtendedDTO> routeExtendedDTOList = mapAll(routeList, RouteExtendedDTO.class);
 
-        int counter = 0;
-        for (RouteExtendedDTO routeExtendedDTO : routeExtendedDTOList) {
-            Aircraft aircraft = aircraftRepository.findById(routeList.get(counter).getAircraft().getId())
-                    .orElseThrow(() ->
-                            new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
-                    );
+        if (routeList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
 
-            AircraftDTO aircraftDTO = map(aircraft, AircraftDTO.class);
-            routeExtendedDTO.setAircraftDTO(aircraftDTO);
-            counter++;
+            List<RouteExtendedDTO> routeExtendedDTOList = routeDTOListMapper.applyList(routeList);
+
+            int counter = 0;
+            for (RouteExtendedDTO routeExtendedDTO : routeExtendedDTOList) {
+                Aircraft aircraft = aircraftRepository.findById(routeList.get(counter).getAircraft().getId())
+                        .orElseThrow(() ->
+                                new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
+                        );
+
+                AircraftDTO aircraftDTO = map(aircraft, AircraftDTO.class);
+                routeExtendedDTO.setAircraftDTO(aircraftDTO);
+                counter++;
+            }
+
+            return routeExtendedDTOList;
         }
-
-        return routeExtendedDTOList;
     }
 
     /**
@@ -124,7 +141,7 @@ public class RouteServiceImpl implements RouteService {
      * @return list of entities
      */
     @Override
-    public ResponseEntity<List<RouteExtendedDTO>> findAllRoutesPaginated(int page, int size) {
+    public ResponseEntity<ResponseDTO<RouteExtendedDTO>> findAllRoutesPaginated(int page, int size) {
         Page<Route> routePage = routeRepository.findAll(PageRequest.of(page, size));
         Page<RouteExtendedDTO> routeExtendedDTOList = mapAllPages(routePage, RouteExtendedDTO.class);
         int counter = 0;
@@ -149,7 +166,7 @@ public class RouteServiceImpl implements RouteService {
      * @return route DTO as a response
      */
     @Override
-    public ResponseEntity<RouteDTO> save(RouteDTO routeDTO) {
+    public ResponseEntity<ResponseDTO<RouteDTO>> save(RouteDTO routeDTO) {
         Route route = map(routeDTO, Route.class);
 
         // Find aircraftDTO required in request body
@@ -174,7 +191,7 @@ public class RouteServiceImpl implements RouteService {
      * @return Route DTO as a response
      */
     @Override
-    public ResponseEntity<RouteDTO> update(Long routeId, RouteDTO routeDTO) {
+    public ResponseEntity<ResponseDTO<RouteDTO>> update(Long routeId, RouteDTO routeDTO) {
         routeDTO.setRouteId(routeId);
 
         Route route = routeRepository.findById(routeId)
@@ -206,7 +223,7 @@ public class RouteServiceImpl implements RouteService {
      * @return updated route
      */
     @Override
-    public ResponseEntity<RouteDTO> patch(Long routeId, Map<String, Object> params) {
+    public ResponseEntity<ResponseDTO<RouteDTO>> patch(Long routeId, Map<String, Object> params) {
         Route route = routeRepository.findById(routeId)
                 .orElseThrow(
                         () -> new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
@@ -244,7 +261,7 @@ public class RouteServiceImpl implements RouteService {
      * @return Route DTO asa response
      */
     @Override
-    public ResponseEntity<RouteDTO> delete(Long routeId) {
+    public ResponseEntity<ResponseDTO<RouteDTO>> delete(Long routeId) {
         Route route = routeRepository.findById(routeId)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(Constants.ROUTE_NOT_FOUND)

@@ -47,15 +47,13 @@ public class ReservationServiceImpl implements ReservationService {
     private final CustomerRepository customerRepository;
     private final RouteRepository routeRepository;
     private final ReservationRepository reservationRepository;
-    private final ServiceComponent serviceComponent;
 
     @Autowired
     public ReservationServiceImpl(CustomerRepository customerRepository, RouteRepository routeRepository,
-                                  ReservationRepository reservationRepository, ServiceComponent serviceComponent) {
+                                  ReservationRepository reservationRepository) {
         this.customerRepository = customerRepository;
         this.routeRepository = routeRepository;
         this.reservationRepository = reservationRepository;
-        this.serviceComponent = serviceComponent;
     }
 
     /**

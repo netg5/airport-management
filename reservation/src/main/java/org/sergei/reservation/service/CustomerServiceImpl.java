@@ -144,10 +144,14 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setFirstName(customerDTO.getFirstName());
         customer.setLastName(customerDTO.getLastName());
         customer.setAge(customerDTO.getAge());
-
         Customer savedCustomer = customerRepository.save(customer);
 
-        return new ResponseEntity<>(customerDTOMapper.apply(savedCustomer), HttpStatus.CREATED);
+        CustomerDTO customerDTOResp = customerDTOMapper.apply(savedCustomer);
+        ResponseDTO<CustomerDTO> response = new ResponseDTO<>();
+        response.setErrorList(List.of());
+        response.setResponse(List.of(customerDTOResp));
+
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     /**
@@ -168,9 +172,14 @@ public class CustomerServiceImpl implements CustomerService {
             customer.get().setFirstName(customerDTO.getFirstName());
             customer.get().setLastName(customerDTO.getLastName());
             customer.get().setAge(customerDTO.getAge());
-            customerRepository.save(customer.get());
+            Customer updatedCustomer = customerRepository.save(customer.get());
 
-            return new ResponseEntity<>(customerDTOMapper.apply(customer.get()), HttpStatus.OK);
+            CustomerDTO customerDTOResp = customerDTOMapper.apply(updatedCustomer);
+            ResponseDTO<CustomerDTO> response = new ResponseDTO<>();
+            response.setErrorList(List.of());
+            response.setResponse(List.of(customerDTOResp));
+
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
         }
     }
 
@@ -196,8 +205,14 @@ public class CustomerServiceImpl implements CustomerService {
             if (params.get("age") != null) {
                 customer.get().setAge(Integer.valueOf(String.valueOf(params.get("age"))));
             }
+
             Customer savedCustomer = customerRepository.save(customer.get());
-            return new ResponseEntity<>(customerDTOMapper.apply(savedCustomer), HttpStatus.CREATED);
+            CustomerDTO customerDTOResp = customerDTOMapper.apply(savedCustomer);
+            ResponseDTO<CustomerDTO> response = new ResponseDTO<>();
+            response.setErrorList(List.of());
+            response.setResponse(List.of(customerDTOResp));
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
         }
     }
 
@@ -214,7 +229,13 @@ public class CustomerServiceImpl implements CustomerService {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             customerRepository.delete(customer.get());
-            return new ResponseEntity<>(customerDTOMapper.apply(customer.get()), HttpStatus.NO_CONTENT);
+
+            CustomerDTO customerDTOResp = customerDTOMapper.apply(customer.get());
+            ResponseDTO<CustomerDTO> response = new ResponseDTO<>();
+            response.setErrorList(List.of());
+            response.setResponse(List.of(customerDTOResp));
+
+            return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
         }
     }
 }

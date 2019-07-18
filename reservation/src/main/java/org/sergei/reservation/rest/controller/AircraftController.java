@@ -50,16 +50,16 @@ public class AircraftController {
 
     @ApiOperation(value = "Get all existing aircrafts")
     @GetMapping
-    public ResponseEntity<ResponseDTO> getAllAircraft() {
+    public ResponseEntity<ResponseDTO<AircraftDTO>> getAllAircraft() {
         return aircraftService.findAll();
     }
 
     @ApiOperation(value = "Get all existing aircrafts paginated")
     @GetMapping(params = {"page", "size"})
-    public ResponseEntity<ResponseDTO> getAllAircraftPaginated(@ApiParam("Number of the page")
-                                                                       @RequestParam("page") int page,
-                                                               @ApiParam("Maximum number of content blocks on the page")
-                                                                       @RequestParam("size") int size) {
+    public ResponseEntity<ResponseDTO<AircraftDTO>> getAllAircraftPaginated(@ApiParam("Number of the page")
+                                                                            @RequestParam("page") int page,
+                                                                            @ApiParam("Maximum number of content blocks on the page")
+                                                                            @RequestParam("size") int size) {
         return aircraftService.findAllPaginated(page, size);
     }
 
@@ -68,8 +68,8 @@ public class AircraftController {
             @ApiResponse(code = 404, message = Constants.AIRCRAFT_NOT_FOUND)
     })
     @GetMapping("/{aircraftId}")
-    public ResponseEntity<ResponseDTO> getAircraftById(@ApiParam(value = "Aircraft ID which should be found", required = true)
-                                                               @PathVariable("aircraftId") Long aircraftId) {
+    public ResponseEntity<ResponseDTO<AircraftDTO>> getAircraftById(@ApiParam(value = "Aircraft ID which should be found", required = true)
+                                                                    @PathVariable("aircraftId") Long aircraftId) {
         return aircraftService.findOne(aircraftId);
     }
 
@@ -78,15 +78,15 @@ public class AircraftController {
             @ApiResponse(code = 404, message = Constants.AIRCRAFT_NOT_FOUND)
     })
     @GetMapping(params = {"name", "weight", "passengers", "model"})
-    public ResponseEntity<ResponseDTO> getAircraftByMultipleParams(HttpServletRequest request) {
+    public ResponseEntity<ResponseDTO<AircraftDTO>> getAircraftByMultipleParams(HttpServletRequest request) {
         return aircraftService.findOneByMultipleParams(request);
     }
 
     @ApiOperation(value = "Save aircraft", notes = "Operation allowed for the ROLE_ADMIN only")
     @PostMapping(consumes = "application/json")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<ResponseDTO> saveAircraft(@ApiParam(value = "Aircraft which should be saved", required = true)
-                                                            @RequestBody AircraftDTO aircraftDTO) {
+    public ResponseEntity<ResponseDTO<AircraftDTO>> saveAircraft(@ApiParam(value = "Aircraft which should be saved", required = true)
+                                                                 @RequestBody AircraftDTO aircraftDTO) {
         return aircraftService.save(aircraftDTO);
     }
 
@@ -96,10 +96,10 @@ public class AircraftController {
     })
     @PutMapping(value = "/{aircraftId}", consumes = "application/json")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<ResponseDTO> updateAircraft(@ApiParam(value = "Aircraft ID which should be updated", required = true)
-                                                              @PathVariable("aircraftId") Long aircraftId,
-                                                      @ApiParam(value = "Update aircraft", required = true)
-                                                              @RequestBody AircraftDTO aircraftDTO) {
+    public ResponseEntity<ResponseDTO<AircraftDTO>> updateAircraft(@ApiParam(value = "Aircraft ID which should be updated", required = true)
+                                                                   @PathVariable("aircraftId") Long aircraftId,
+                                                                   @ApiParam(value = "Update aircraft", required = true)
+                                                                   @RequestBody AircraftDTO aircraftDTO) {
         return aircraftService.update(aircraftId, aircraftDTO);
     }
 
@@ -109,9 +109,9 @@ public class AircraftController {
     })
     @PatchMapping(value = "/{aircraftId}/patch", consumes = "application/json")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<ResponseDTO> patchAircraft(@ApiParam(value = "Aircraft ID which should be updated", required = true)
-                                                             @PathVariable("aircraftId") Long aircraftId,
-                                                     @RequestBody Map<String, Object> params) {
+    public ResponseEntity<ResponseDTO<AircraftDTO>> patchAircraft(@ApiParam(value = "Aircraft ID which should be updated", required = true)
+                                                                  @PathVariable("aircraftId") Long aircraftId,
+                                                                  @RequestBody Map<String, Object> params) {
 
         return aircraftService.patch(aircraftId, params);
     }
@@ -122,8 +122,8 @@ public class AircraftController {
     })
     @DeleteMapping(value = "/{aircraftId}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<ResponseDTO> deleteAircraft(@ApiParam(value = "Aircraft ID which should be deleted", required = true)
-                                                              @PathVariable("aircraftId") Long aircraftId) {
+    public ResponseEntity<ResponseDTO<AircraftDTO>> deleteAircraft(@ApiParam(value = "Aircraft ID which should be deleted", required = true)
+                                                                   @PathVariable("aircraftId") Long aircraftId) {
         return aircraftService.delete(aircraftId);
     }
 }
