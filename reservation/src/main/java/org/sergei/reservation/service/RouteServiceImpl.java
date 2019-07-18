@@ -115,7 +115,7 @@ public class RouteServiceImpl implements RouteService {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
 
-            List<RouteExtendedDTO> routeExtendedDTOList = routeDTOListMapper.applyList(routeList);
+            List<RouteExtendedDTO> routeExtendedDTOList = routeDTOListMapper.apply(routeList);
 
             int counter = 0;
             for (RouteExtendedDTO routeExtendedDTO : routeExtendedDTOList) {
