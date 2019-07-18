@@ -23,6 +23,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 /**
  * @author Sergei Visotsky
  */
@@ -31,7 +33,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CustomerDTO {
+public class CustomerDTO implements Serializable {
+
+    private static final long serialVersionUID = 1601177547641029786L;
 
     @ApiModelProperty("Customer ID")
     private Long customerId;

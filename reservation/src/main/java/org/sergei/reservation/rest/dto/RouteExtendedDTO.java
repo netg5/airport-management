@@ -24,6 +24,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 /**
  * @author Sergei Visotsky
  */
@@ -33,7 +35,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @JsonRootName("route")
 @JsonIgnoreProperties("id")
-public class RouteExtendedDTO extends RouteDTO {
+public class RouteExtendedDTO extends RouteDTO implements Serializable {
+
+    private static final long serialVersionUID = 3142359787048180859L;
 
     @JsonProperty("aircraft")
     private AircraftDTO aircraftDTO;

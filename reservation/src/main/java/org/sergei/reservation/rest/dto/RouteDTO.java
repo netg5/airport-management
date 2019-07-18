@@ -23,6 +23,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -34,7 +35,9 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RouteDTO {
+public class RouteDTO implements Serializable {
+
+    private static final long serialVersionUID = -6688458044709501452L;
 
     @ApiModelProperty("Route ID")
     private Long routeId;

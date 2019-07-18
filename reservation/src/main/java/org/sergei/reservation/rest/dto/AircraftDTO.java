@@ -18,8 +18,12 @@ package org.sergei.reservation.rest.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
-import org.springframework.hateoas.ResourceSupport;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.io.Serializable;
 
 /**
  * @author Sergei Visotsky
@@ -29,7 +33,9 @@ import org.springframework.hateoas.ResourceSupport;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AircraftDTO {
+public class AircraftDTO implements Serializable {
+
+    private static final long serialVersionUID = -8398761845885572454L;
 
     @ApiModelProperty("Aircraft ID")
     private Long aircraftId;

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -12,7 +13,10 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ResponseDTO<T> {
+public class ResponseDTO<T> implements Serializable {
+
+    private static final long serialVersionUID = 8436537119496286158L;
+
     private List<ResponseErrorDTO> errorList;
     private List<T> response;
 }
