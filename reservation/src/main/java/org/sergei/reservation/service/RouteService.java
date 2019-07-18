@@ -2,7 +2,7 @@ package org.sergei.reservation.service;
 
 import org.sergei.reservation.rest.dto.RouteDTO;
 import org.sergei.reservation.rest.dto.RouteExtendedDTO;
-import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.Map;
@@ -11,23 +11,17 @@ import java.util.Map;
  * @author Sergei Visotsky
  */
 public interface RouteService {
-    RouteExtendedDTO findOneRoute(Long routeId);
+    ResponseEntity<RouteExtendedDTO> findOneRoute(Long routeId);
 
-    List<RouteExtendedDTO> findAllRoutes();
+    ResponseEntity<List<RouteExtendedDTO>> findAllRoutes();
 
-    List<RouteExtendedDTO> findAllRoutesPaginated(int page, int size);
+    ResponseEntity<List<RouteExtendedDTO>> findAllRoutesPaginated(int page, int size);
 
-    RouteDTO save(RouteDTO routeDTO);
+    ResponseEntity<RouteDTO> save(RouteDTO routeDTO);
 
-    RouteDTO update(Long routeId, RouteDTO routeDTO);
+    ResponseEntity<RouteDTO> update(Long routeId, RouteDTO routeDTO);
 
-    RouteDTO patch(Long routeId, Map<String, Object> params);
+    ResponseEntity<RouteDTO> patch(Long routeId, Map<String, Object> params);
 
-    RouteDTO delete(Long routeId);
-
-    RouteDTO findOne(Long aLong);
-
-    List<RouteDTO> findAll();
-
-    Page<RouteDTO> findAllPaginated(int page, int size);
+    ResponseEntity<RouteDTO> delete(Long routeId);
 }
