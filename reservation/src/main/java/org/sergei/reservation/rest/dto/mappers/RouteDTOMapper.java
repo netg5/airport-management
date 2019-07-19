@@ -2,7 +2,10 @@ package org.sergei.reservation.rest.dto.mappers;
 
 import org.sergei.reservation.jpa.model.Route;
 import org.sergei.reservation.rest.dto.RouteDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * @author Sergei Visotsky
@@ -10,12 +13,20 @@ import org.springframework.stereotype.Component;
 @Component
 public class RouteDTOMapper implements IMapper<Route, RouteDTO> {
 
+
+    private final AircraftDTOMapper aircraftDTOMapper;
+
+    @Autowired
+    public RouteDTOMapper(AircraftDTOMapper aircraftDTOMapper) {
+        this.aircraftDTOMapper = aircraftDTOMapper;
+    }
+
     @Override
     public RouteDTO apply(Route route) {
         RouteDTO routeDTO = new RouteDTO();
 
         routeDTO.setRouteId(route.getId());
-        routeDTO.setAircraftId(route.getAircraft().getId());
+        routeDTO.setAircraftDTOList(List.of(aircraftDTOMapper.apply(route.getAircraft())));
         routeDTO.setDepartureTime(route.getDepartureTime());
         routeDTO.setArrivalTime(route.getArrivalTime());
         routeDTO.setPlace(route.getPlace());

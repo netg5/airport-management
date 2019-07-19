@@ -18,17 +18,15 @@ package org.sergei.reservation.rest.controller;
 
 import io.swagger.annotations.*;
 import org.sergei.reservation.rest.dto.RouteDTO;
-import org.sergei.reservation.rest.dto.RouteExtendedDTO;
+import org.sergei.reservation.rest.dto.response.ResponseDTO;
 import org.sergei.reservation.service.RouteService;
 import org.sergei.reservation.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -52,19 +50,17 @@ public class RouteController {
 
     @ApiOperation("Get all existing routes")
     @GetMapping
-    public ResponseEntity<List<RouteExtendedDTO>> getAllRoutes() {
-        List<RouteExtendedDTO> routes = routeService.findAllRoutes();
-        return new ResponseEntity<>(routes, HttpStatus.OK);
+    public ResponseEntity<ResponseDTO<RouteDTO>> getAllRoutes() {
+        return routeService.findAllRoutes();
     }
 
     @ApiOperation("Get all existing routes paginated")
     @GetMapping(params = {"page", "size"})
-    public ResponseEntity<List<RouteExtendedDTO>> getAllRoutesPaginated(@ApiParam("Number of the page")
-                                                                        @RequestParam("page") int page,
-                                                                        @ApiParam("Maximum number of content blocks on the page")
-                                                                        @RequestParam("size") int size) {
-        List<RouteExtendedDTO> routes = routeService.findAllRoutesPaginated(page, size);
-        return new ResponseEntity<>(null, HttpStatus.OK);
+    public ResponseEntity<ResponseDTO<RouteDTO>> getAllRoutesPaginated(@ApiParam("Number of the page")
+                                                                       @RequestParam("page") int page,
+                                                                       @ApiParam("Maximum number of content blocks on the page")
+                                                                       @RequestParam("size") int size) {
+        return routeService.findAllRoutesPaginated(page, size);
     }
 
     @ApiOperation("Get route by ID")
