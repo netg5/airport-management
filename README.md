@@ -137,32 +137,6 @@ change property `spring.profiles.active` value from _prod_ to _dev_ and you can 
 #### 2 way - run into the Docker container
 As was mentioned earlier in Setup section `9.` paragraph each microservice contains _Dockerfile_ that allows to run it into the Docker container.
 
-More than that every container is described in _docker-compose.yml_ _(THE BEST WAY TO RUN 10+ CONTAINERS)_
-
-_Steps to get ready with docker-compose:_
-
-1. Build each microservice executing the following command foe each service:
-```text
-./mvnw clean package spring-boot:repackage
-```
-
-2. Next step: check docker-compose for syntax errors:
-```text
-docker-compose config
-```
-
-3. Let docker compose build each image:
-```text
-docker-compose up --build
-```
-
-4. When you are about to stop all containers remove from Docker and remove the connected networks and volumes from it perform the following command:
-```text
-docker-compose down
-``` 
-
-Another approach to run each docker container without _docker-compose.yml_. _(UGLIEST WAY EVER IN CASE YOU HAVE 10+ CONTAINERS, prefer docker-compose instead)_
-
 _Follow this steps:_
 
 1. Create image from _Dockerfile_:
@@ -170,12 +144,7 @@ _Follow this steps:_
 docker build --file=Dockerfile --tag=IMAGE_NAME:latest --rm=true .
 ```
 
-2. Create volume for mounting:
-```text
-docker volume create --name=VOLUME_NAME
-```
-
-3. Run Docker image:
+. Run Docker image:
 ```text
 docker run --name=CONTAINER_NAME --publish=8888:8888 --volume=VOLUME_NAME:/var/lib/project-root/service-dir IMAGE_NAME:latest
 ```
@@ -189,12 +158,22 @@ docker inspect CONTAINER_NAME
 
 5. Stop container
 ```text
-docker inspect CONTAINER_NAME
+docker stop CONTAINER_NAME
 ```
 
 6. Remove container:
 ```text
-docker inspect CONTAINER_NAME
+docker container rm CONTAINER_NAME
+```
+
+7. Observe Docker images:
+```text
+docker image ls
+```
+
+8. Delete Dcoker image:
+```text
+docker image rm IMAGE_ID
 ```
 
 **__NOTE: `config` and `registry` should be run first due to all the configs are stored in the separate repository.__**
