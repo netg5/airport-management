@@ -52,10 +52,10 @@ public class AircraftServiceImpl implements AircraftService {
     }
 
     /**
-     * Find aircraftDTOList by ID
+     * Find aircraftId by ID
      *
-     * @param aircraftId gets aircraftDTOList ID as parameter
-     * @return aircraftDTOList DTO
+     * @param aircraftId gets aircraftId ID as parameter
+     * @return aircraftId DTO
      */
     @Override
     public ResponseEntity<ResponseDTO<AircraftDTO>> findOne(Long aircraftId) {
@@ -149,9 +149,9 @@ public class AircraftServiceImpl implements AircraftService {
     }
 
     /**
-     * Save aircraftDTOList
+     * Save aircraftId
      *
-     * @param aircraftDTO get aircraftDTOList DTO as a parameter
+     * @param aircraftDTO get aircraftId DTO as a parameter
      * @return Aircraft DTO
      */
     @Override
@@ -178,9 +178,9 @@ public class AircraftServiceImpl implements AircraftService {
     /**
      * Update aicraft by ID
      *
-     * @param aircraftId  get aircraftDTOList ID as a parameter
-     * @param aircraftDTO get aircraftDTOList DTO as a parameter
-     * @return aircraftDTOList DTO
+     * @param aircraftId  get aircraftId ID as a parameter
+     * @param aircraftDTO get aircraftId DTO as a parameter
+     * @return aircraftId DTO
      */
     @Override
     public ResponseEntity<ResponseDTO<AircraftDTO>> update(Long aircraftId, AircraftDTO aircraftDTO) {
@@ -248,10 +248,10 @@ public class AircraftServiceImpl implements AircraftService {
     }
 
     /**
-     * Delete aircraftDTOList by ID
+     * Delete aircraftId by ID
      *
-     * @param aircraftId get aircraftDTOList ID as a parameter
-     * @return aircraftDTOList DTO as a response
+     * @param aircraftId get aircraftId ID as a parameter
+     * @return aircraftId DTO as a response
      */
     @Override
     public ResponseEntity<ResponseDTO<AircraftDTO>> delete(Long aircraftId) {

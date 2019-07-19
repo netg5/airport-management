@@ -81,12 +81,12 @@ public class AircraftControllerTest {
                 get(BASE_URL)
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$._embedded.aircraftDTOList[0].aircraftId").isNotEmpty())
-                .andExpect(jsonPath("$._embedded.aircraftDTOList[0].model").value(model))
-                .andExpect(jsonPath("$._embedded.aircraftDTOList[0].aircraftName").value(aircraftName))
-                .andExpect(jsonPath("$._embedded.aircraftDTOList[0].aircraftWeight").value(aircraftWeight))
-                .andExpect(jsonPath("$._embedded.aircraftDTOList[0].maxPassengers").value(maxPassengers))
-                .andExpect(jsonPath("$._embedded.aircraftDTOList[0]._links.self.href", is(BASE_URL + "/1")))
+                .andExpect(jsonPath("$._embedded.aircraftId[0].aircraftId").isNotEmpty())
+                .andExpect(jsonPath("$._embedded.aircraftId[0].model").value(model))
+                .andExpect(jsonPath("$._embedded.aircraftId[0].aircraftName").value(aircraftName))
+                .andExpect(jsonPath("$._embedded.aircraftId[0].aircraftWeight").value(aircraftWeight))
+                .andExpect(jsonPath("$._embedded.aircraftId[0].maxPassengers").value(maxPassengers))
+                .andExpect(jsonPath("$._embedded.aircraftId[0]._links.self.href", is(BASE_URL + "/1")))
                 .andExpect(jsonPath("$._links.self.href", is(BASE_URL)));
     }
 
@@ -111,12 +111,12 @@ public class AircraftControllerTest {
                 get(BASE_URL + page + size)
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$._embedded.aircraftDTOList[0].aircraftId").isNotEmpty())
-                .andExpect(jsonPath("$._embedded.aircraftDTOList[0].model").value(model))
-                .andExpect(jsonPath("$._embedded.aircraftDTOList[0].aircraftName").value(aircraftName))
-                .andExpect(jsonPath("$._embedded.aircraftDTOList[0].aircraftWeight").value(aircraftWeight))
-                .andExpect(jsonPath("$._embedded.aircraftDTOList[0].maxPassengers").value(maxPassengers))
-                .andExpect(jsonPath("$._embedded.aircraftDTOList[0]._links.self.href", is(BASE_URL + "/" + "2")))
+                .andExpect(jsonPath("$._embedded.aircraftId[0].aircraftId").isNotEmpty())
+                .andExpect(jsonPath("$._embedded.aircraftId[0].model").value(model))
+                .andExpect(jsonPath("$._embedded.aircraftId[0].aircraftName").value(aircraftName))
+                .andExpect(jsonPath("$._embedded.aircraftId[0].aircraftWeight").value(aircraftWeight))
+                .andExpect(jsonPath("$._embedded.aircraftId[0].maxPassengers").value(maxPassengers))
+                .andExpect(jsonPath("$._embedded.aircraftId[0]._links.self.href", is(BASE_URL + "/" + "2")))
                 .andExpect(jsonPath("$._links.self.href", is(BASE_URL + page + size)));
     }
 

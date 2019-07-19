@@ -1,6 +1,7 @@
 package org.sergei.reservation.service;
 
-import org.sergei.reservation.rest.dto.RouteDTO;
+import org.sergei.reservation.rest.dto.RouteRequestDTO;
+import org.sergei.reservation.rest.dto.RouteResponseDTO;
 import org.sergei.reservation.rest.dto.response.ResponseDTO;
 import org.springframework.http.ResponseEntity;
 
@@ -10,17 +11,17 @@ import java.util.Map;
  * @author Sergei Visotsky
  */
 public interface RouteService {
-    ResponseEntity<ResponseDTO<RouteDTO>> findOneRoute(Long routeId);
+    ResponseEntity<ResponseDTO<RouteResponseDTO>> findOneRoute(Long routeId);
 
-    ResponseEntity<ResponseDTO<RouteDTO>> findAllRoutes();
+    ResponseEntity<ResponseDTO<RouteResponseDTO>> findAllRoutes();
 
-    ResponseEntity<ResponseDTO<RouteDTO>> findAllRoutesPaginated(int page, int size);
+    ResponseEntity<ResponseDTO<RouteResponseDTO>> findAllRoutesPaginated(int page, int size);
 
-    ResponseEntity<ResponseDTO<RouteDTO>> save(RouteDTO routeDTO);
+    ResponseEntity<ResponseDTO<RouteResponseDTO>> save(RouteRequestDTO request);
 
-    ResponseEntity<ResponseDTO<RouteDTO>> update(Long routeId, RouteDTO routeDTO);
+    ResponseEntity<ResponseDTO<RouteResponseDTO>> update(Long routeId, RouteResponseDTO routeResponseDTO);
 
-    ResponseEntity<ResponseDTO<RouteDTO>> patch(Long routeId, Map<String, Object> params);
+    ResponseEntity<ResponseDTO<RouteResponseDTO>> patch(Long routeId, Map<String, Object> params);
 
-    ResponseEntity<ResponseDTO<RouteDTO>> delete(Long routeId);
+    ResponseEntity<ResponseDTO<RouteResponseDTO>> delete(Long routeId);
 }

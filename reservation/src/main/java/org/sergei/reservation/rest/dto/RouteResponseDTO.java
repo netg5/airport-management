@@ -37,7 +37,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RouteDTO implements Serializable {
+public class RouteResponseDTO implements Serializable {
 
     private static final long serialVersionUID = -6688458044709501452L;
 

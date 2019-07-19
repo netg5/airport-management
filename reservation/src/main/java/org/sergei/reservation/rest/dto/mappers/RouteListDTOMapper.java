@@ -1,7 +1,7 @@
 package org.sergei.reservation.rest.dto.mappers;
 
 import org.sergei.reservation.jpa.model.Route;
-import org.sergei.reservation.rest.dto.RouteDTO;
+import org.sergei.reservation.rest.dto.RouteResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +11,7 @@ import java.util.List;
  * @author Sergei Visotsky
  */
 @Component
-public class RouteListDTOMapper implements IMapper<List<Route>, List<RouteDTO>> {
+public class RouteListDTOMapper implements IMapper<List<Route>, List<RouteResponseDTO>> {
 
     private final RouteDTOMapper routeDTOMapper;
 
@@ -21,7 +21,7 @@ public class RouteListDTOMapper implements IMapper<List<Route>, List<RouteDTO>> 
     }
 
     @Override
-    public List<RouteDTO> apply(List<Route> routes) {
+    public List<RouteResponseDTO> apply(List<Route> routes) {
         return routeDTOMapper.applyList(routes);
     }
 }

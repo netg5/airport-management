@@ -1,7 +1,7 @@
 package org.sergei.reservation.rest.dto.mappers;
 
 import org.sergei.reservation.jpa.model.Route;
-import org.sergei.reservation.rest.dto.RouteDTO;
+import org.sergei.reservation.rest.dto.RouteResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +11,7 @@ import java.util.List;
  * @author Sergei Visotsky
  */
 @Component
-public class RouteDTOMapper implements IMapper<Route, RouteDTO> {
+public class RouteDTOMapper implements IMapper<Route, RouteResponseDTO> {
 
 
     private final AircraftDTOMapper aircraftDTOMapper;
@@ -22,17 +22,17 @@ public class RouteDTOMapper implements IMapper<Route, RouteDTO> {
     }
 
     @Override
-    public RouteDTO apply(Route route) {
-        RouteDTO routeDTO = new RouteDTO();
+    public RouteResponseDTO apply(Route route) {
+        RouteResponseDTO routeResponseDTO = new RouteResponseDTO();
 
-        routeDTO.setRouteId(route.getId());
-        routeDTO.setAircraftDTOList(List.of(aircraftDTOMapper.apply(route.getAircraft())));
-        routeDTO.setDepartureTime(route.getDepartureTime());
-        routeDTO.setArrivalTime(route.getArrivalTime());
-        routeDTO.setPlace(route.getPlace());
-        routeDTO.setPrice(route.getPrice());
-        routeDTO.setDistance(route.getDistance());
+        routeResponseDTO.setRouteId(route.getId());
+        routeResponseDTO.setAircraftDTOList(List.of(aircraftDTOMapper.apply(route.getAircraft())));
+        routeResponseDTO.setDepartureTime(route.getDepartureTime());
+        routeResponseDTO.setArrivalTime(route.getArrivalTime());
+        routeResponseDTO.setPlace(route.getPlace());
+        routeResponseDTO.setPrice(route.getPrice());
+        routeResponseDTO.setDistance(route.getDistance());
 
-        return routeDTO;
+        return routeResponseDTO;
     }
 }
