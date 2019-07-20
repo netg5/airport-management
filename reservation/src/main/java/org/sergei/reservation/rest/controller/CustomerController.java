@@ -18,6 +18,7 @@ package org.sergei.reservation.rest.controller;
 
 import io.swagger.annotations.*;
 import org.sergei.reservation.rest.dto.CustomerDTO;
+import org.sergei.reservation.rest.dto.CustomerUpdateRequestDTO;
 import org.sergei.reservation.rest.dto.response.ResponseDTO;
 import org.sergei.reservation.service.CustomerService;
 import org.sergei.reservation.utils.Constants;
@@ -37,7 +38,7 @@ import java.util.Map;
         consumes = "application/json"
 )
 @RestController
-@RequestMapping(value = "/customers", produces = "application/json")
+@RequestMapping("/customers")
 public class CustomerController {
 
     private final CustomerService customerService;
@@ -54,13 +55,13 @@ public class CustomerController {
     }
 
     @ApiOperation("Get IDs of all existing customers")
-    @GetMapping("/ids")
+    @GetMapping(value = "/ids", produces = "application/json", consumes = "application/json")
     public ResponseEntity<ResponseDTO<String>> getIdsOfAllCustomers() {
         return customerService.findIdsOfAllCustomers();
     }
 
     @ApiOperation("Get all customers paginated")
-    @GetMapping(params = {"page", "size"})
+    @GetMapping(params = {"page", "size"}, produces = "application/json", consumes = "application/json")
     public ResponseEntity<ResponseDTO<CustomerDTO>> getAllCustomersPaginated(@ApiParam(value = "Number of the page")
                                                                              @RequestParam("page") int page,
                                                                              @ApiParam(value = "Maximum number of content blocks on the page")
@@ -69,39 +70,31 @@ public class CustomerController {
     }
 
     @ApiOperation("Get customer by ID")
-    @ApiResponses({
-            @ApiResponse(code = 404, message = Constants.CUSTOMER_NOT_FOUND)
-    })
-    @GetMapping("/{customerId}")
+    @GetMapping(value = "/{customerId}", produces = "application/json", consumes = "application/json")
     public ResponseEntity<ResponseDTO<CustomerDTO>> getCustomerById(@ApiParam(value = "Customer ID which should be found", required = true)
                                                                     @PathVariable("customerId") Long customerId) {
         return customerService.findOne(customerId);
     }
 
     @ApiOperation("Save customer")
-    @PostMapping(consumes = "application/json")
+    @PostMapping(produces = "application/json", consumes = "application/json")
     public ResponseEntity<ResponseDTO<CustomerDTO>> saveCustomer(@ApiParam(value = "Saved customer", required = true)
                                                                  @RequestBody CustomerDTO request) {
         return customerService.save(request);
     }
 
     @ApiOperation("Update customer data")
-    @ApiResponses({
-            @ApiResponse(code = 404, message = Constants.CUSTOMER_NOT_FOUND)
-    })
-    @PutMapping(value = "/{customerId}", consumes = "application/json")
-    public ResponseEntity<ResponseDTO<CustomerDTO>> updateCustomer(@ApiParam(value = "Customer ID which should be updated", required = true)
-                                                                   @PathVariable("customerId") Long customerId,
-                                                                   @ApiParam(value = "Updated customer", required = true)
-                                                                   @RequestBody CustomerDTO request) {
-        return customerService.update(customerId, request);
+    @PostMapping(produces = "application/json", consumes = "application/json")
+    public ResponseEntity<ResponseDTO<CustomerDTO>> updateCustomer(@ApiParam(value = "Updated customer", required = true)
+                                                                   @RequestBody CustomerUpdateRequestDTO request) {
+        return customerService.update(request);
     }
 
     @ApiOperation("Update one field for a customer")
     @ApiResponses({
             @ApiResponse(code = 404, message = Constants.CUSTOMER_NOT_FOUND)
     })
-    @PatchMapping(value = "/{customerId}/patch", consumes = "application/json")
+    @PatchMapping(value = "/{customerId}/patch", produces = "application/json", consumes = "application/json")
     public ResponseEntity<ResponseDTO<CustomerDTO>> patchCustomer(@ApiParam(value = "Customer ID which should be updated", required = true)
                                                                   @PathVariable("customerId") Long customerId,
                                                                   @RequestBody Map<String, Object> params) {
@@ -112,7 +105,7 @@ public class CustomerController {
     @ApiResponses({
             @ApiResponse(code = 404, message = Constants.CUSTOMER_NOT_FOUND)
     })
-    @DeleteMapping(value = "/{customerId}")
+    @DeleteMapping(value = "/{customerId}", produces = "application/json", consumes = "application/json")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<ResponseDTO<CustomerDTO>> deleteCustomer(@ApiParam(value = "Customer ID which should be deleted", required = true)
                                                                    @PathVariable("customerId") Long customerId) {

@@ -19,9 +19,10 @@ package org.sergei.reservation.service;
 import org.sergei.reservation.jpa.model.Aircraft;
 import org.sergei.reservation.jpa.repository.AircraftRepository;
 import org.sergei.reservation.rest.dto.AircraftDTO;
-import org.sergei.reservation.rest.dto.response.ResponseDTO;
+import org.sergei.reservation.rest.dto.AircraftUpdateRequestDTO;
 import org.sergei.reservation.rest.dto.mappers.AircraftDTOListMapper;
 import org.sergei.reservation.rest.dto.mappers.AircraftDTOMapper;
+import org.sergei.reservation.rest.dto.response.ResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -176,26 +177,24 @@ public class AircraftServiceImpl implements AircraftService {
     }
 
     /**
-     * Update aicraft by ID
+     * Update aircraft by its ID
      *
-     * @param aircraftId  get aircraftId ID as a parameter
-     * @param aircraftDTO get aircraftId DTO as a parameter
-     * @return aircraftId DTO
+     * @param request aircraft DTO request with ID
+     * @return response with updated aircraft
      */
     @Override
-    public ResponseEntity<ResponseDTO<AircraftDTO>> update(Long aircraftId, AircraftDTO aircraftDTO) {
-        aircraftDTO.setAircraftId(aircraftId);
+    public ResponseEntity<ResponseDTO<AircraftDTO>> update(AircraftUpdateRequestDTO request) {
 
-        Optional<Aircraft> aircraft = aircraftRepository.findById(aircraftId);
+        Optional<Aircraft> aircraft = aircraftRepository.findById(request.getAircraftId());
 
         if (aircraft.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
-            aircraft.get().setId(aircraftId);
-            aircraft.get().setAircraftName(aircraftDTO.getAircraftName());
-            aircraft.get().setModel(aircraftDTO.getModel());
-            aircraft.get().setAircraftWeight(aircraftDTO.getAircraftWeight());
-            aircraft.get().setMaxPassengers(aircraftDTO.getMaxPassengers());
+            aircraft.get().setId(request.getAircraftId());
+            aircraft.get().setAircraftName(request.getAircraft().getAircraftName());
+            aircraft.get().setModel(request.getAircraft().getModel());
+            aircraft.get().setAircraftWeight(request.getAircraft().getAircraftWeight());
+            aircraft.get().setMaxPassengers(request.getAircraft().getMaxPassengers());
 
             Aircraft savedAircraft = aircraftRepository.save(aircraft.get());
 

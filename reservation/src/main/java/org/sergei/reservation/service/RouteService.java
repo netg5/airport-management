@@ -2,6 +2,7 @@ package org.sergei.reservation.service;
 
 import org.sergei.reservation.rest.dto.RouteRequestDTO;
 import org.sergei.reservation.rest.dto.RouteResponseDTO;
+import org.sergei.reservation.rest.dto.RouteUpdateRequestDTO;
 import org.sergei.reservation.rest.dto.response.ResponseDTO;
 import org.springframework.http.ResponseEntity;
 
@@ -19,7 +20,7 @@ public interface RouteService {
 
     ResponseEntity<ResponseDTO<RouteResponseDTO>> save(RouteRequestDTO request);
 
-    ResponseEntity<ResponseDTO<RouteResponseDTO>> update(Long routeId, RouteResponseDTO routeResponseDTO);
+    ResponseEntity<ResponseDTO<RouteResponseDTO>> update(RouteUpdateRequestDTO request);
 
     ResponseEntity<ResponseDTO<RouteResponseDTO>> patch(Long routeId, Map<String, Object> params);
 

@@ -19,6 +19,7 @@ package org.sergei.reservation.service;
 import org.sergei.reservation.jpa.model.Customer;
 import org.sergei.reservation.jpa.repository.CustomerRepository;
 import org.sergei.reservation.rest.dto.CustomerDTO;
+import org.sergei.reservation.rest.dto.CustomerUpdateRequestDTO;
 import org.sergei.reservation.rest.dto.mappers.CustomerDTOListMapper;
 import org.sergei.reservation.rest.dto.mappers.CustomerDTOMapper;
 import org.sergei.reservation.rest.dto.response.ResponseDTO;
@@ -131,6 +132,33 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     /**
+     * Method to update customerDTO details
+     *
+     * @param request with customer ID and cutomer DTO
+     * @return response with customer DTO
+     */
+    @Override
+    public ResponseEntity<ResponseDTO<CustomerDTO>> update(CustomerUpdateRequestDTO request) {
+
+        Optional<Customer> customer = customerRepository.findById(request.getCustomerId());
+        if (customer.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            customer.get().setFirstName(request.getCustomer().getFirstName());
+            customer.get().setLastName(request.getCustomer().getLastName());
+            customer.get().setAge(request.getCustomer().getAge());
+            Customer updatedCustomer = customerRepository.save(customer.get());
+
+            CustomerDTO customerDTOResp = customerDTOMapper.apply(updatedCustomer);
+            ResponseDTO<CustomerDTO> response = new ResponseDTO<>();
+            response.setErrorList(List.of());
+            response.setResponse(List.of(customerDTOResp));
+
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
+        }
+    }
+
+    /**
      * Save customerDTO
      *
      * @param customerDTO gets customerDTO DTO as a parameter
@@ -152,35 +180,6 @@ public class CustomerServiceImpl implements CustomerService {
         response.setResponse(List.of(customerDTOResp));
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
-    }
-
-    /**
-     * Method to update customerDTO details
-     *
-     * @param customerId  gets customer ID as a parameter
-     * @param customerDTO gets customerDTO DTO as a parameter
-     * @return customerDTO DTO as a response
-     */
-    @Override
-    public ResponseEntity<ResponseDTO<CustomerDTO>> update(Long customerId, CustomerDTO customerDTO) {
-        customerDTO.setCustomerId(customerId);
-
-        Optional<Customer> customer = customerRepository.findById(customerId);
-        if (customer.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            customer.get().setFirstName(customerDTO.getFirstName());
-            customer.get().setLastName(customerDTO.getLastName());
-            customer.get().setAge(customerDTO.getAge());
-            Customer updatedCustomer = customerRepository.save(customer.get());
-
-            CustomerDTO customerDTOResp = customerDTOMapper.apply(updatedCustomer);
-            ResponseDTO<CustomerDTO> response = new ResponseDTO<>();
-            response.setErrorList(List.of());
-            response.setResponse(List.of(customerDTOResp));
-
-            return new ResponseEntity<>(response, HttpStatus.CREATED);
-        }
     }
 
     /**

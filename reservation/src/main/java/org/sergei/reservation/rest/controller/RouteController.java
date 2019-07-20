@@ -16,14 +16,15 @@
 
 package org.sergei.reservation.rest.controller;
 
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.sergei.reservation.rest.dto.RouteRequestDTO;
 import org.sergei.reservation.rest.dto.RouteResponseDTO;
+import org.sergei.reservation.rest.dto.RouteUpdateRequestDTO;
 import org.sergei.reservation.rest.dto.response.ResponseDTO;
 import org.sergei.reservation.service.RouteService;
-import org.sergei.reservation.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +40,7 @@ import java.util.Map;
         consumes = "application/json"
 )
 @RestController
-@RequestMapping(value = "/routes", produces = "application/json")
+@RequestMapping("/routes")
 public class RouteController {
 
     private final RouteService routeService;
@@ -50,13 +51,13 @@ public class RouteController {
     }
 
     @ApiOperation("Get all existing routes")
-    @GetMapping
+    @GetMapping(produces = "application/json", consumes = "application/json")
     public ResponseEntity<ResponseDTO<RouteResponseDTO>> getAllRoutes() {
         return routeService.findAllRoutes();
     }
 
     @ApiOperation("Get all existing routes paginated")
-    @GetMapping(params = {"page", "size"})
+    @GetMapping(params = {"page", "size"}, produces = "application/json", consumes = "application/json")
     public ResponseEntity<ResponseDTO<RouteResponseDTO>> getAllRoutesPaginated(@ApiParam("Number of the page")
                                                                                @RequestParam("page") int page,
                                                                                @ApiParam("Maximum number of content blocks on the page")
@@ -65,20 +66,13 @@ public class RouteController {
     }
 
     @ApiOperation("Get route by ID")
-    @ApiResponses({
-            @ApiResponse(code = 404, message = Constants.ROUTE_NOT_FOUND)
-    })
-    @GetMapping("/{routeId}")
+    @GetMapping(value = "/{routeId}", produces = "application/json", consumes = "application/json")
     public ResponseEntity<ResponseDTO<RouteResponseDTO>> getRouteById(@ApiParam(value = "Route ID which should be found", required = true)
                                                                       @PathVariable("routeId") Long routeId) {
-        RouteResponseDTO routeResponseDTO = routeService.findOneRoute(routeId);
-        return new ResponseEntity<>(routeResponseDTO, HttpStatus.OK);
+        return routeService.findOneRoute(routeId);
     }
 
     @ApiOperation(value = "Save route", notes = "Operation allowed for the ROLE_ADMIN only")
-    @ApiResponses({
-            @ApiResponse(code = 404, message = Constants.AIRCRAFT_NOT_FOUND)
-    })
     @PostMapping(consumes = "application/json")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<ResponseDTO<RouteResponseDTO>> saveRoute(@ApiParam(value = "Saved route", required = true)
@@ -87,41 +81,27 @@ public class RouteController {
     }
 
     @ApiOperation(value = "Update route information", notes = "Operation allowed for the ROLE_ADMIN only")
-    @ApiResponses({
-            @ApiResponse(code = 404, message = "Route or aircraft with this ID not found")
-    })
-    @PutMapping(value = "/{routeId}", consumes = "application/json")
+    @PutMapping(produces = "application/json", consumes = "application/json")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<ResponseDTO<RouteResponseDTO>> updateRoute(@ApiParam(value = "Route ID which should be updated", required = true)
-                                                                     @PathVariable("routeId") Long routeId,
-                                                                     @ApiParam(value = "Saved route", required = true)
-                                                                     @RequestBody RouteResponseDTO request) {
-        RouteResponseDTO route = routeService.update(routeId, request);
-        return new ResponseEntity<>(route, HttpStatus.OK);
+    public ResponseEntity<ResponseDTO<RouteResponseDTO>> updateRoute(@RequestBody RouteUpdateRequestDTO request) {
+        return routeService.update(request);
     }
 
     @ApiOperation(value = "Update one field for the route", notes = "Operation allowed for the ROLE_ADMIN only")
-    @ApiResponses({
-            @ApiResponse(code = 404, message = "Route or aircraft with this ID not found")
-    })
-    @PatchMapping(value = "/{routeId}/patch", consumes = "application/json")
+    @PatchMapping(value = "/{routeId}/patch", produces = "application/json", consumes = "application/json")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<ResponseDTO<RouteResponseDTO>> patchRoute(@ApiParam(value = "Route ID which should be updated", required = true)
                                                                     @PathVariable("routeId") Long routeId,
                                                                     @RequestBody Map<String, Object> params) {
 
-        RouteResponseDTO routeResponseDTO = routeService.patch(routeId, params);
-        return new ResponseEntity<>(routeResponseDTO, HttpStatus.OK);
+        return routeService.patch(routeId, params);
     }
 
     @ApiOperation(value = "Method to delete route", notes = "Operation allowed for the ROLE_ADMIN only")
-    @ApiResponses({
-            @ApiResponse(code = 404, message = Constants.ROUTE_NOT_FOUND)
-    })
-    @DeleteMapping("/{routeId}")
+    @DeleteMapping(value = "/{routeId}", produces = "application/json", consumes = "application/json")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<ResponseDTO<RouteResponseDTO>> deleteRoute(@ApiParam(value = "Route ID which should be deleted", required = true)
                                                                      @PathVariable("routeId") Long routeId) {
-        return new ResponseEntity<>(routeService.delete(routeId), HttpStatus.NO_CONTENT);
+        return routeService.delete(routeId);
     }
 }

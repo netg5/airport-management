@@ -24,6 +24,7 @@ import org.sergei.reservation.jpa.repository.RouteRepository;
 import org.sergei.reservation.rest.dto.AircraftDTO;
 import org.sergei.reservation.rest.dto.RouteRequestDTO;
 import org.sergei.reservation.rest.dto.RouteResponseDTO;
+import org.sergei.reservation.rest.dto.RouteUpdateRequestDTO;
 import org.sergei.reservation.rest.dto.mappers.AircraftDTOMapper;
 import org.sergei.reservation.rest.dto.mappers.RouteDTOMapper;
 import org.sergei.reservation.rest.dto.mappers.RouteListDTOMapper;
@@ -207,35 +208,32 @@ public class RouteServiceImpl implements RouteService {
     }
 
     /**
-     * Update route data
+     * Update route
      *
-     * @param routeId          get route ID as an input argument
-     * @param routeResponseDTO Route DTO with updated data
-     * @return Route DTO as a response
+     * @param request
+     * @return
      */
     @Override
-    public ResponseEntity<ResponseDTO<RouteResponseDTO>> update(Long routeId, RouteResponseDTO routeResponseDTO) {
-        routeResponseDTO.setRouteId(routeId);
-
-        Route route = routeRepository.findById(routeId)
+    public ResponseEntity<ResponseDTO<RouteResponseDTO>> update(RouteUpdateRequestDTO request) {
+        Route route = routeRepository.findById(request.getRouteId())
                 .orElseThrow(() ->
                         new ResourceNotFoundException(Constants.ROUTE_NOT_FOUND)
                 );
-        route.setDistance(routeResponseDTO.getDistance());
-        route.setDepartureTime(routeResponseDTO.getDepartureTime());
-        route.setArrivalTime(routeResponseDTO.getArrivalTime());
-        route.setPrice(routeResponseDTO.getPrice());
-        route.setPrice(routeResponseDTO.getPrice());
-        route.setPlace(routeResponseDTO.getPlace());
+        route.setDistance(request.getRouteRequest().getDistance());
+        route.setDepartureTime(request.getRouteRequest().getDepartureTime());
+        route.setArrivalTime(request.getRouteRequest().getArrivalTime());
+        route.setPrice(request.getRouteRequest().getPrice());
+        route.setPrice(request.getRouteRequest().getPrice());
+        route.setPlace(request.getRouteRequest().getPlace());
         route.setAircraft(
-                aircraftRepository.findById(routeResponseDTO.getRouteId())
+                aircraftRepository.findById(request.getRouteRequest().getRouteId())
                         .orElseThrow(() ->
                                 new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
                         )
         );
         routeRepository.save(route);
 
-        return routeResponseDTO;
+        return null;
     }
 
     /**

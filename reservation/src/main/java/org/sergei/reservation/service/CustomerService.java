@@ -1,6 +1,7 @@
 package org.sergei.reservation.service;
 
 import org.sergei.reservation.rest.dto.CustomerDTO;
+import org.sergei.reservation.rest.dto.CustomerUpdateRequestDTO;
 import org.sergei.reservation.rest.dto.response.ResponseDTO;
 import org.springframework.http.ResponseEntity;
 
@@ -20,7 +21,7 @@ public interface CustomerService {
 
     ResponseEntity<ResponseDTO<CustomerDTO>> save(CustomerDTO customerDTO);
 
-    ResponseEntity<ResponseDTO<CustomerDTO>> update(Long customerId, CustomerDTO customerDTO);
+    ResponseEntity<ResponseDTO<CustomerDTO>> update(CustomerUpdateRequestDTO request);
 
     ResponseEntity<ResponseDTO<CustomerDTO>> patch(Long customerId, Map<String, Object> params);
 
