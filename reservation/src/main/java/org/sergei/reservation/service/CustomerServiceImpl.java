@@ -63,7 +63,7 @@ public class CustomerServiceImpl implements CustomerService {
     public ResponseEntity<ResponseDTO<CustomerDTO>> findOne(Long customerId) {
         Optional<Customer> customer = customerRepository.findById(customerId);
         if (customer.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
         } else {
             CustomerDTO customerDTO = customerDTOMapper.apply(customer.get());
             ResponseDTO<CustomerDTO> response = new ResponseDTO<>();
@@ -82,7 +82,7 @@ public class CustomerServiceImpl implements CustomerService {
     public ResponseEntity<ResponseDTO<CustomerDTO>> findAll() {
         List<Customer> customerList = customerRepository.findAll();
         if (customerList.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
         } else {
             List<CustomerDTO> customerDTOList = customerDTOListMapper.apply(customerList);
             ResponseDTO<CustomerDTO> response = new ResponseDTO<>();
@@ -101,7 +101,7 @@ public class CustomerServiceImpl implements CustomerService {
     public ResponseEntity<ResponseDTO<String>> findIdsOfAllCustomers() {
         List<String> customerIds = customerRepository.findIdsOfAllCustomers();
         if (customerIds.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
         } else {
             ResponseDTO<String> response = new ResponseDTO<>();
             response.setErrorList(List.of());
@@ -121,7 +121,7 @@ public class CustomerServiceImpl implements CustomerService {
     public ResponseEntity<ResponseDTO<CustomerDTO>> findAllPaginated(int page, int size) {
         Page<Customer> customersPage = customerRepository.findAll(PageRequest.of(page, size));
         if (customersPage.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
         } else {
             List<CustomerDTO> customerDTOList = customerDTOListMapper.apply(customersPage.getContent());
             ResponseDTO<CustomerDTO> response = new ResponseDTO<>();
@@ -142,7 +142,7 @@ public class CustomerServiceImpl implements CustomerService {
 
         Optional<Customer> customer = customerRepository.findById(request.getCustomerId());
         if (customer.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
         } else {
             customer.get().setFirstName(request.getCustomer().getFirstName());
             customer.get().setLastName(request.getCustomer().getLastName());
@@ -193,7 +193,7 @@ public class CustomerServiceImpl implements CustomerService {
     public ResponseEntity<ResponseDTO<CustomerDTO>> patch(Long customerId, Map<String, Object> params) {
         Optional<Customer> customer = customerRepository.findById(customerId);
         if (customer.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
         } else {
             if (params.get("firstName") != null) {
                 customer.get().setFirstName(String.valueOf(params.get("firstName")));
@@ -225,7 +225,7 @@ public class CustomerServiceImpl implements CustomerService {
     public ResponseEntity<ResponseDTO<CustomerDTO>> delete(Long customerId) {
         Optional<Customer> customer = customerRepository.findById(customerId);
         if (customer.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
         } else {
             customerRepository.delete(customer.get());
 

@@ -29,8 +29,6 @@ import org.sergei.reservation.rest.dto.mappers.AircraftDTOMapper;
 import org.sergei.reservation.rest.dto.mappers.RouteDTOMapper;
 import org.sergei.reservation.rest.dto.mappers.RouteListDTOMapper;
 import org.sergei.reservation.rest.dto.response.ResponseDTO;
-import org.sergei.reservation.rest.exceptions.ResourceNotFoundException;
-import org.sergei.reservation.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -43,8 +41,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
-import static org.sergei.reservation.utils.ObjectMapperUtil.map;
 
 /**
  * @author Sergei Visotsky
@@ -63,7 +59,8 @@ public class RouteServiceImpl implements RouteService {
     public RouteServiceImpl(AircraftRepository aircraftRepository,
                             RouteRepository routeRepository,
                             RouteDTOMapper routeDTOMapper,
-                            RouteListDTOMapper routeDTOListMapper, AircraftDTOMapper aircraftDTOMapper) {
+                            RouteListDTOMapper routeDTOListMapper,
+                            AircraftDTOMapper aircraftDTOMapper) {
         this.aircraftRepository = aircraftRepository;
         this.routeRepository = routeRepository;
         this.routeDTOMapper = routeDTOMapper;
@@ -82,14 +79,14 @@ public class RouteServiceImpl implements RouteService {
         // Find route and map into the extended DTO
         Optional<Route> route = routeRepository.findById(routeId);
         if (route.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
         } else {
             RouteResponseDTO routeResponseDTO = routeDTOMapper.apply(route.get());
 
             // Find aircraftId by ID taken from the entity
             Optional<Aircraft> aircraft = aircraftRepository.findById(route.get().getAircraft().getId());
             if (aircraft.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
             } else {
                 AircraftDTO aircraftDTO = aircraftDTOMapper.apply(aircraft.get());
                 // Set aircraftId DTO to the flight reservation extended DTO
@@ -114,7 +111,7 @@ public class RouteServiceImpl implements RouteService {
         List<Route> routeList = routeRepository.findAll();
 
         if (routeList.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
         } else {
 
             List<RouteResponseDTO> routeResponseDTOList = routeDTOListMapper.apply(routeList);
@@ -123,7 +120,7 @@ public class RouteServiceImpl implements RouteService {
             for (RouteResponseDTO routeResponseDTO : routeResponseDTOList) {
                 Optional<Aircraft> aircraft = aircraftRepository.findById(routeList.get(counter).getAircraft().getId());
                 if (aircraft.isEmpty()) {
-                    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                    return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
                 } else {
                     AircraftDTO aircraftDTO = aircraftDTOMapper.apply(aircraft.get());
                     routeResponseDTO.setAircraftDTOList(List.of(aircraftDTO));
@@ -150,7 +147,7 @@ public class RouteServiceImpl implements RouteService {
     public ResponseEntity<ResponseDTO<RouteResponseDTO>> findAllRoutesPaginated(int page, int size) {
         Page<Route> routePage = routeRepository.findAll(PageRequest.of(page, size));
         if (routePage.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
         } else {
             List<RouteResponseDTO> routeResponseDTOList = routeDTOListMapper.apply(routePage.getContent());
 
@@ -158,7 +155,7 @@ public class RouteServiceImpl implements RouteService {
             for (RouteResponseDTO routeResponseDTO : routeResponseDTOList) {
                 Optional<Aircraft> aircraft = aircraftRepository.findById(routePage.getContent().get(counter).getAircraft().getId());
                 if (aircraft.isEmpty()) {
-                    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                    return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
                 } else {
                     AircraftDTO aircraftDTO = aircraftDTOMapper.apply(aircraft.get());
                     routeResponseDTO.setAircraftDTOList(List.of(aircraftDTO));
@@ -184,7 +181,7 @@ public class RouteServiceImpl implements RouteService {
     public ResponseEntity<ResponseDTO<RouteResponseDTO>> save(RouteRequestDTO request) {
         Optional<Aircraft> aircraft = aircraftRepository.findById(request.getRouteId());
         if (aircraft.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
         } else {
             Route route = new Route();
 
@@ -215,25 +212,26 @@ public class RouteServiceImpl implements RouteService {
      */
     @Override
     public ResponseEntity<ResponseDTO<RouteResponseDTO>> update(RouteUpdateRequestDTO request) {
-        Route route = routeRepository.findById(request.getRouteId())
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(Constants.ROUTE_NOT_FOUND)
-                );
-        route.setDistance(request.getRouteRequest().getDistance());
-        route.setDepartureTime(request.getRouteRequest().getDepartureTime());
-        route.setArrivalTime(request.getRouteRequest().getArrivalTime());
-        route.setPrice(request.getRouteRequest().getPrice());
-        route.setPrice(request.getRouteRequest().getPrice());
-        route.setPlace(request.getRouteRequest().getPlace());
-        route.setAircraft(
-                aircraftRepository.findById(request.getRouteRequest().getRouteId())
-                        .orElseThrow(() ->
-                                new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
-                        )
-        );
-        routeRepository.save(route);
+        Optional<Route> route = routeRepository.findById(request.getRouteId());
+        if (route.isEmpty()) {
+            return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+        } else {
+            Optional<Aircraft> aircraft = aircraftRepository.findById(request.getRouteRequest().getAircraftId());
+            if (aircraft.isEmpty()) {
+                return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+            } else {
+                request.getRouteRequest().setDistance(request.getRouteRequest().getDistance());
+                request.getRouteRequest().setDepartureTime(request.getRouteRequest().getDepartureTime());
+                request.getRouteRequest().setArrivalTime(request.getRouteRequest().getArrivalTime());
+                request.getRouteRequest().setPrice(request.getRouteRequest().getPrice());
+                request.getRouteRequest().setPrice(request.getRouteRequest().getPrice());
+                request.getRouteRequest().setPlace(request.getRouteRequest().getPlace());
+                request.getRouteRequest().setAircraftId(aircraft.get().getId());
+                routeRepository.save(route.get());
 
-        return null;
+                return setRouteResponse(route.get());
+            }
+        }
     }
 
     /**
@@ -245,35 +243,47 @@ public class RouteServiceImpl implements RouteService {
      */
     @Override
     public ResponseEntity<ResponseDTO<RouteResponseDTO>> patch(Long routeId, Map<String, Object> params) {
-        Route route = routeRepository.findById(routeId)
-                .orElseThrow(
-                        () -> new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
-                );
-        if (params.get("distance") != null) {
-            route.setDistance(Double.valueOf(String.valueOf(params.get("distance"))));
+        Optional<Route> route = routeRepository.findById(routeId);
+        ResponseDTO<RouteResponseDTO> response = new ResponseDTO<>();
+        if (route.isEmpty()) {
+            return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+        } else {
+            if (params.get("distance") != null) {
+                route.get().setDistance(Double.valueOf(String.valueOf(params.get("distance"))));
+            }
+            if (params.get("departureTime") != null) {
+                route.get().setDepartureTime(LocalDateTime.parse(String.valueOf(params.get("departureTime"))));
+            }
+            if (params.get("arrivalTime") != null) {
+                route.get().setArrivalTime(LocalDateTime.parse(String.valueOf(params.get("arrivalTime"))));
+            }
+            if (params.get("price") != null) {
+                route.get().setPrice(BigDecimal.valueOf(Long.parseLong(String.valueOf(params.get("price")))));
+            }
+            if (params.get("place") != null) {
+                route.get().setPlace(String.valueOf(params.get("place")));
+            }
+            if (params.get("id") != null) {
+                Optional<Aircraft> aircraft = aircraftRepository.findById(Long.valueOf(String.valueOf(params.get("id"))));
+                if (aircraft.isEmpty()) {
+                    return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+                } else {
+                    route.get().setAircraft(aircraft.get());
+
+                    Route savedRoute = routeRepository.save(route.get());
+                    RouteResponseDTO routeResponseDTO = routeDTOMapper.apply(savedRoute);
+                    AircraftDTO aircraftDTO = aircraftDTOMapper.apply(aircraft.get());
+                    routeResponseDTO.setAircraftDTOList(List.of(aircraftDTO));
+
+                    response.setErrorList(List.of());
+                    response.setResponse(List.of(routeResponseDTO));
+                }
+            }
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
         }
-        if (params.get("departureTime") != null) {
-            route.setDepartureTime(LocalDateTime.parse(String.valueOf(params.get("departureTime"))));
-        }
-        if (params.get("arrivalTime") != null) {
-            route.setArrivalTime(LocalDateTime.parse(String.valueOf(params.get("arrivalTime"))));
-        }
-        if (params.get("price") != null) {
-            route.setPrice(BigDecimal.valueOf(Long.parseLong(String.valueOf(params.get("price")))));
-        }
-        if (params.get("place") != null) {
-            route.setPlace(String.valueOf(params.get("place")));
-        }
-        if (params.get("id") != null) {
-            route.setAircraft(aircraftRepository.findById(Long.valueOf(String.valueOf(params.get("id"))))
-                    .orElseThrow(() ->
-                            new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
-                    ));
-        }
-        RouteResponseDTO routeResponseDTO = map(routeRepository.save(route), RouteResponseDTO.class);
-        routeResponseDTO.setAircraftId(route.getAircraft().getId());
-        return routeResponseDTO;
     }
+
 
     /**
      * Delete route by ID
@@ -283,11 +293,22 @@ public class RouteServiceImpl implements RouteService {
      */
     @Override
     public ResponseEntity<ResponseDTO<RouteResponseDTO>> delete(Long routeId) {
-        Route route = routeRepository.findById(routeId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(Constants.ROUTE_NOT_FOUND)
-                );
-        routeRepository.delete(route);
-        return map(route, RouteResponseDTO.class);
+        Optional<Route> route = routeRepository.findById(routeId);
+        if (route.isEmpty()) {
+            return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+        } else {
+            routeRepository.delete(route.get());
+            return setRouteResponse(route.get());
+        }
+    }
+
+    private ResponseEntity<ResponseDTO<RouteResponseDTO>> setRouteResponse(Route route) {
+        RouteResponseDTO routeResponseDTO = routeDTOMapper.apply(route);
+
+        ResponseDTO<RouteResponseDTO> response = new ResponseDTO<>();
+        response.setErrorList(List.of());
+        response.setResponse(List.of(routeResponseDTO));
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

@@ -1,5 +1,6 @@
 package org.sergei.reservation.rest.dto.response;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,6 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class ResponseDTO<T> implements Serializable {
 
     private static final long serialVersionUID = 8436537119496286158L;
