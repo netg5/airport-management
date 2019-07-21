@@ -126,34 +126,7 @@ public class ReservationServiceImpl implements ReservationService {
         } else {
             // Find all flight reservation for the customer
             List<Reservation> reservation = reservationRepository.findAllForCustomer(customerId);
-            if (reservation.isEmpty()) {
-                return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
-            } else {
-                List<ReservationResponseDTO> reservationResponseList = reservationDTOListMapper.apply(reservation);
-                int counter = 0;
-                // For each DTO set customer ID, route extended DTO
-                for (ReservationResponseDTO reservationResponseDTO : reservationResponseList) {
-                    // Set customer ID in DTO response
-                    reservationResponseDTO.setCustomerId(customer.get().getId());
-                    // Find route by ID
-                    Optional<Route> route = routeRepository.findById(reservation.get(counter).getRoute().getId());
-
-                    if (route.isEmpty()) {
-                        return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
-                    } else {
-                        RouteResponseDTO routeResponseDTO = routeDTOMapper.apply(route.get());
-                        reservationResponseDTO.setRoutes(routeResponseDTO);
-                    }
-                    counter++;
-                }
-
-                ResponseDTO<ReservationResponseDTO> response = new ResponseDTO<>();
-                response.setErrorList(List.of());
-                response.setResponse(reservationResponseList);
-
-                // Returns extended flight reservation DTO
-                return new ResponseEntity<>(response, HttpStatus.OK);
-            }
+            return populateReservationResponse(reservation, customer.get());
         }
     }
 
@@ -177,34 +150,7 @@ public class ReservationServiceImpl implements ReservationService {
             List<Reservation> reservation =
                     reservationRepository.findAllForCustomerPaginated(
                             customerId, PageRequest.of(page, size)).getContent();
-            if (reservation.isEmpty()) {
-                return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
-            } else {
-                List<ReservationResponseDTO> reservationResponseList = reservationDTOListMapper.apply(reservation);
-                int counter = 0;
-                // For each DTO set customer ID, route extended DTO
-                for (ReservationResponseDTO reservationResponseDTO : reservationResponseList) {
-                    // Set customer ID in DTO response
-                    reservationResponseDTO.setCustomerId(customer.get().getId());
-                    // Find route by ID
-                    Optional<Route> route = routeRepository.findById(reservation.get(counter).getRoute().getId());
-
-                    if (route.isEmpty()) {
-                        return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
-                    } else {
-                        RouteResponseDTO routeResponseDTO = routeDTOMapper.apply(route.get());
-                        reservationResponseDTO.setRoutes(routeResponseDTO);
-                    }
-                    counter++;
-                }
-
-                ResponseDTO<ReservationResponseDTO> response = new ResponseDTO<>();
-                response.setErrorList(List.of());
-                response.setResponse(reservationResponseList);
-
-                // Returns extended flight reservation DTO
-                return new ResponseEntity<>(response, HttpStatus.OK);
-            }
+            return populateReservationResponse(reservation, customer.get());
         }
     }
 
@@ -304,6 +250,45 @@ public class ReservationServiceImpl implements ReservationService {
                 reservationRepository.deleteByCustomerIdAndReservationId(customer.get(), reservation.get());
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
+        }
+    }
+
+    /**
+     * Helper method to populate reservations response and perform more functionality
+     *
+     * @param reservations collection os reservations
+     * @param customer     who made reservation
+     * @return response entity
+     */
+    private ResponseEntity<ResponseDTO<ReservationResponseDTO>>
+    populateReservationResponse(List<Reservation> reservations, Customer customer) {
+        if (reservations.isEmpty()) {
+            return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+        } else {
+            List<ReservationResponseDTO> reservationResponseList = reservationDTOListMapper.apply(reservations);
+            int counter = 0;
+            // For each DTO set customer ID, route extended DTO
+            for (ReservationResponseDTO reservationResponseDTO : reservationResponseList) {
+                // Set customer ID in DTO response
+                reservationResponseDTO.setCustomerId(customer.getId());
+                // Find route by ID
+                Optional<Route> route = routeRepository.findById(reservations.get(counter).getRoute().getId());
+
+                if (route.isEmpty()) {
+                    return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+                } else {
+                    RouteResponseDTO routeResponseDTO = routeDTOMapper.apply(route.get());
+                    reservationResponseDTO.setRoutes(routeResponseDTO);
+                }
+                counter++;
+            }
+
+            ResponseDTO<ReservationResponseDTO> response = new ResponseDTO<>();
+            response.setErrorList(List.of());
+            response.setResponse(reservationResponseList);
+
+            // Returns extended flight reservations DTO
+            return new ResponseEntity<>(response, HttpStatus.OK);
         }
     }
 }
