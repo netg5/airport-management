@@ -78,7 +78,7 @@ _Response:_
 
 After authentication it is able to access any resource with an access token provided. As there is used JWT access and refresh tokens are pretty long.
 
-The next step is get an access to the resources. Example for the flight-api: `http://localhost:8080/reservation/v1/customers?access_token=ACCESS_TOKEN`
+The next step is get an access to the resources. Example for the flight-api: `http://localhost:8080/reservation/customers?access_token=ACCESS_TOKEN`
 
 In case if access token is expired refresh token should be used to renew access token.
 
@@ -97,7 +97,7 @@ For endpoint documentation is used Swagger which is accessible by the url - `htt
 to clone all the necessary config files
 2. Copy all the property files into the config folder locally and replace property `spring.cloud.config.server.git.uri` 
 with `spring.cloud.config.server.native.searchLocations: file:///${user.home}/config-repo` in `bootstrap.yml` config 
-file in `config-service` or create another repository and change the path to it by changing 
+file in `config` or create another repository and change the path to it by changing 
 property `spring.cloud.config.server.git.uri`
 3. Change `server.port` for each service located in config repository mentioned in `1.` paragraph _(optional)_
 4. Change database driver for your database.
@@ -118,8 +118,8 @@ called `flight-reservation-config` for each service which communicates with data
 9. Change SQL dialect modifying this property: `spring.jpa.properties.hibernate.dialect`
 10. Open SQL file `oauth_schema.sql` script located in auth-service under `resources/sql` and change database name to yours
 11. Open directory `database` and execute all SQL located there
-12. Open `application-prod.yml` config file located in config repository for this services `flight-service`, `ticket service` 
-and `auth-service` and setup your database url and credentials or in each service `application-dev.yml` in case of _dev_ profile
+12. Open `application-prod.yml` config file located in config repository for this services `reservation`, `tickets` 
+and `auth` and setup your database url and credentials or in each service `application-dev.yml` in case of _dev_ profile
 13. Application port and port in `security.oauth2.resource.accessTokenUri` property might be changed in your case
 14. Open `logback-spring.xml` for each microservice and setup directory where all your logging files are going to saved
 15. Each service has additional dev profile config file and in case you want to use it you should 
@@ -132,36 +132,10 @@ change property `spring.profiles.active` value from _prod_ to _dev_ and you can 
 #### 1 way - using maven or java command
 * Perform command `$ ./mvnw spring-boot:run` or compile each microservice into the .jar and perform command `java -jar target/SERVICE-NAME-VERSION.jar`
 
-**__NOTE: `config-service` and `eureka-service` should be run first due to all the configs are stored in the separate repository.__**
+**__NOTE: `config` and `eureka` services should be run first due to all the configs are stored in the separate repository.__**
 
 #### 2 way - run into the Docker container
-As was mentioned earlier in Setup section `9.` paragraph each microservice contains _Dockerfile_ that allows to run it into the Docker container.
-
-More than that every container is described in _docker-compose.yml_ _(THE BEST WAY TO RUN 10+ CONTAINERS)_
-
-_Steps to get ready with docker-compose:_
-
-1. Build each microservice executing the following command foe each service:
-```text
-./mvnw clean package spring-boot:repackage
-```
-
-2. Next step: check docker-compose for syntax errors:
-```text
-docker-compose config
-```
-
-3. Let docker compose build each image:
-```text
-docker-compose up --build
-```
-
-4. When you are about to stop all containers remove from Docker and remove the connected networks and volumes from it perform the following command:
-```text
-docker-compose down
-``` 
-
-Another approach to run each docker container without _docker-compose.yml_. _(UGLIEST WAY EVER IN CASE YOU HAVE 10+ CONTAINERS, prefer docker-compose instead)_
+As was mentioned earlier in Setup section `9.` paragraph each service contains _Dockerfile_ that allows to run it into the Docker container.
 
 _Follow this steps:_
 
@@ -170,12 +144,7 @@ _Follow this steps:_
 docker build --file=Dockerfile --tag=IMAGE_NAME:latest --rm=true .
 ```
 
-2. Create volume for mounting:
-```text
-docker volume create --name=VOLUME_NAME
-```
-
-3. Run Docker image:
+. Run Docker image:
 ```text
 docker run --name=CONTAINER_NAME --publish=8888:8888 --volume=VOLUME_NAME:/var/lib/project-root/service-dir IMAGE_NAME:latest
 ```
@@ -189,17 +158,29 @@ docker inspect CONTAINER_NAME
 
 5. Stop container
 ```text
-docker inspect CONTAINER_NAME
+docker stop CONTAINER_NAME
 ```
 
 6. Remove container:
 ```text
-docker inspect CONTAINER_NAME
+docker container rm CONTAINER_NAME
+```
+
+7. Observe Docker images:
+```text
+docker image ls
+```
+
+8. Delete Dcoker image:
+```text
+docker image rm IMAGE_ID
 ```
 
 **__NOTE: `config` and `registry` should be run first due to all the configs are stored in the separate repository.__**
 
 ## Jaeger trace
+
+For tracing application uses Jaeger.
 
 Jaeger is an implementation of opentrace specification which gives an ability to perform tracing of application, 
 see all the requests, see its quantity, how successful they are (status code) and more other useful features.
