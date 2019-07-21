@@ -42,8 +42,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static org.sergei.reservation.utils.ObjectMapperUtil.map;
-
 /**
  * @author Sergei Visotsky
  */
