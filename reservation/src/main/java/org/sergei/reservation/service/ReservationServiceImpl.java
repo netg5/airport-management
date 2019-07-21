@@ -154,42 +154,36 @@ public class ReservationServiceImpl implements ReservationService {
 
     /**
      * Method to save reservation for customer
-     *
-     * @param customerId             Gets customer ID
-     * @param reservationResponseDTO get flight reservation DTO from controller
+     * @param request to make reservation
      * @return flight reservation DTO as a response
      */
     @Override
     public ResponseEntity<ResponseDTO<ReservationResponseDTO>> saveReservation(ReservationRequestDTO request) {
         // Find customer by ID
-        Customer customer = customerRepository.findById(customerId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(Constants.CUSTOMER_NOT_FOUND)
-                );
+        Optional<Customer> customer = customerRepository.findById(request.getCustomerId());
+        if (customer.isEmpty()) {
+            return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+        } else {
+            // Find route by route ID
+            Optional<Route> route = routeRepository.findById(request.getRouteId());
+            if (route.isEmpty()) {
+                return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+            } else {
+                Reservation reservation = new Reservation();
+                reservation.setCustomer(customer.get());
+                reservation.setRoute(route.get());
+                request.setReservationDate(request.getReservationDate());
 
-        // Find route by route ID
-        Route route = routeRepository.findById(reservationResponseDTO.getReservationId())
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(Constants.ROUTE_NOT_FOUND)
-                );
+                Reservation savedReservation = reservationRepository.save(reservation);
+                ReservationResponseDTO savedReservationResponseDTO = reservationDTOMapper.apply(savedReservation);
 
-        final Long customerEntityId = customer.getId();
-        final Long routeEntityId = route.getId();
+                ResponseDTO<ReservationResponseDTO> response = new ResponseDTO<>();
+                response.setErrorList(List.of());
+                response.setResponse(List.of(savedReservationResponseDTO));
 
-        // Set customer ID and route into the flight reservation DTO
-        reservationResponseDTO.setCustomerId(customerEntityId);
-        reservationResponseDTO.setRouteId(routeEntityId);
-
-        Reservation reservation = map(reservationResponseDTO, Reservation.class);
-        reservation.setCustomer(customer);
-        reservation.setRoute(route);
-
-        Reservation savedReservation = reservationRepository.save(reservation);
-        ReservationResponseDTO savedReservationResponseDTO = map(savedReservation, ReservationResponseDTO.class);
-        savedReservationResponseDTO.setCustomerId(customerEntityId);
-        savedReservationResponseDTO.setRouteId(routeEntityId);
-
-        return savedReservationResponseDTO;
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
+        }
     }
 
     /**
@@ -220,10 +214,11 @@ public class ReservationServiceImpl implements ReservationService {
         if (params.get("reservationDate") != null) {
             reservation.setReservationDate(LocalDateTime.parse(String.valueOf(params.get("reservationDate"))));
         }
-        ReservationResponseDTO reservationResponseDTO = map(reservationRepository.save(reservation), ReservationResponseDTO.class);
-        reservationResponseDTO.setRouteId(reservation.getRoute().getId());
-        reservationResponseDTO.setCustomerId(customer.getId());
-        return reservationResponseDTO;
+//        ReservationResponseDTO reservationResponseDTO = map(reservationRepository.save(reservation), ReservationResponseDTO.class);
+//        reservationResponseDTO.setRouteId(reservation.getRoute().getId());
+//        reservationResponseDTO.setCustomerId(customer.getId());
+//        return reservationResponseDTO;
+        return null;
     }
 
 

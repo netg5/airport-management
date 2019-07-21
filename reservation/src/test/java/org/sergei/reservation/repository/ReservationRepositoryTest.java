@@ -135,7 +135,7 @@ public class ReservationRepositoryTest {
         Reservation reservation = new Reservation(DEPARTURE_TIME, customer, route);
         reservationRepository.save(reservation);
         List<Reservation> foundReservations =
-                reservationRepository.findAllForCustomer(customer.getId()).orElseThrow(() -> new ResourceNotFoundException());
+                reservationRepository.findAllForCustomer(customer.getId());
         assertEquals(foundReservations.size(), 1);
     }
 }

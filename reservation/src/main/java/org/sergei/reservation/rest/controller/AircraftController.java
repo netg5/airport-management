@@ -57,41 +57,46 @@ public class AircraftController {
 
     @ApiOperation(value = "Get all existing aircrafts paginated")
     @GetMapping(params = {"page", "size"}, produces = "application/json", consumes = "application/json")
-    public ResponseEntity<ResponseDTO<AircraftResponseDTO>> getAllAircraftPaginated(@ApiParam("Number of the page")
-                                                                            @RequestParam("page") int page,
-                                                                                    @ApiParam("Maximum number of content blocks on the page")
-                                                                            @RequestParam("size") int size) {
+    public ResponseEntity<ResponseDTO<AircraftResponseDTO>>
+    getAllAircraftPaginated(@ApiParam("Number of the page")
+                            @RequestParam("page") int page,
+                            @ApiParam("Maximum number of content blocks on the page")
+                            @RequestParam("size") int size) {
         return aircraftService.findAllPaginated(page, size);
     }
 
     @ApiOperation("Get aircraftDTO by ID")
     @GetMapping(value = "/{aircraftId}", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<ResponseDTO<AircraftResponseDTO>> getAircraftById(@ApiParam(value = "Aircraft ID which should be found", required = true)
-                                                                    @PathVariable("aircraftId") Long aircraftId) {
+    public ResponseEntity<ResponseDTO<AircraftResponseDTO>>
+    getAircraftById(@ApiParam(value = "Aircraft ID which should be found", required = true)
+                    @PathVariable("aircraftId") Long aircraftId) {
         return aircraftService.findOne(aircraftId);
     }
 
     @ApiOperation(value = "Save aircraft", notes = "Operation allowed for the ROLE_ADMIN only")
     @PostMapping(produces = "application/json", consumes = "application/json")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<ResponseDTO<AircraftResponseDTO>> saveAircraft(@ApiParam(value = "Aircraft which should be saved", required = true)
-                                                                 @RequestBody AircraftResponseDTO aircraftDTO) {
+    public ResponseEntity<ResponseDTO<AircraftResponseDTO>>
+    saveAircraft(@ApiParam(value = "Aircraft which should be saved", required = true)
+                 @RequestBody AircraftResponseDTO aircraftDTO) {
         return aircraftService.save(aircraftDTO);
     }
 
     @ApiOperation(value = "Update aircraft data", notes = "Operation allowed for the ROLE_ADMIN only")
     @PutMapping(produces = "application/json", consumes = "application/json")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<ResponseDTO<AircraftResponseDTO>> updateAircraft(@RequestBody AircraftUpdateRequestDTO request) {
+    public ResponseEntity<ResponseDTO<AircraftResponseDTO>>
+    updateAircraft(@RequestBody AircraftUpdateRequestDTO request) {
         return aircraftService.update(request);
     }
 
     @ApiOperation(value = "Update one field of the aircraft", notes = "Operation allowed for the ROLE_ADMIN only")
     @PatchMapping(value = "/{aircraftId}/patch", produces = "application/json", consumes = "application/json")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<ResponseDTO<AircraftResponseDTO>> patchAircraft(@ApiParam(value = "Aircraft ID which should be updated", required = true)
-                                                                  @PathVariable("aircraftId") Long aircraftId,
-                                                                          @RequestBody Map<String, Object> params) {
+    public ResponseEntity<ResponseDTO<AircraftResponseDTO>>
+    patchAircraft(@ApiParam(value = "Aircraft ID which should be updated", required = true)
+                  @PathVariable("aircraftId") Long aircraftId,
+                  @RequestBody Map<String, Object> params) {
 
         return aircraftService.patch(aircraftId, params);
     }
@@ -99,8 +104,9 @@ public class AircraftController {
     @ApiOperation(value = "Delete aircraft", notes = "Operation allowed for the ROLE_ADMIN only")
     @DeleteMapping(value = "/{aircraftId}", produces = "application/json", consumes = "application/json")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<ResponseDTO<AircraftResponseDTO>> deleteAircraft(@ApiParam(value = "Aircraft ID which should be deleted", required = true)
-                                                                   @PathVariable("aircraftId") Long aircraftId) {
+    public ResponseEntity<ResponseDTO<AircraftResponseDTO>>
+    deleteAircraft(@ApiParam(value = "Aircraft ID which should be deleted", required = true)
+                   @PathVariable("aircraftId") Long aircraftId) {
         return aircraftService.delete(aircraftId);
     }
 }
