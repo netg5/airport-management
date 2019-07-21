@@ -90,7 +90,7 @@ public class RouteServiceImpl implements RouteService {
             } else {
                 AircraftResponseDTO aircraftDTO = aircraftDTOMapper.apply(aircraft.get());
                 // Set aircraftId DTO to the flight reservation extended DTO
-                routeResponseDTO.setAircraftDTOList(List.of(aircraftDTO));
+                routeResponseDTO.setAircraftDTO(aircraftDTO);
 
                 ResponseDTO<RouteResponseDTO> response = new ResponseDTO<>();
                 response.setErrorList(List.of());
@@ -123,7 +123,7 @@ public class RouteServiceImpl implements RouteService {
                     return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
                 } else {
                     AircraftResponseDTO aircraftDTO = aircraftDTOMapper.apply(aircraft.get());
-                    routeResponseDTO.setAircraftDTOList(List.of(aircraftDTO));
+                    routeResponseDTO.setAircraftDTO(aircraftDTO);
                     counter++;
                 }
             }
@@ -158,7 +158,7 @@ public class RouteServiceImpl implements RouteService {
                     return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
                 } else {
                     AircraftResponseDTO aircraftDTO = aircraftDTOMapper.apply(aircraft.get());
-                    routeResponseDTO.setAircraftDTOList(List.of(aircraftDTO));
+                    routeResponseDTO.setAircraftDTO(aircraftDTO);
                     counter++;
                 }
             }
@@ -273,7 +273,7 @@ public class RouteServiceImpl implements RouteService {
                     Route savedRoute = routeRepository.save(route.get());
                     RouteResponseDTO routeResponseDTO = routeDTOMapper.apply(savedRoute);
                     AircraftResponseDTO aircraftDTO = aircraftDTOMapper.apply(aircraft.get());
-                    routeResponseDTO.setAircraftDTOList(List.of(aircraftDTO));
+                    routeResponseDTO.setAircraftDTO(aircraftDTO);
 
                     response.setErrorList(List.of());
                     response.setResponse(List.of(routeResponseDTO));
