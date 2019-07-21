@@ -49,19 +49,19 @@ public class CustomerController {
     }
 
     @ApiOperation("Get all customers")
-    @GetMapping
+    @GetMapping(produces = "application/json")
     public ResponseEntity<ResponseDTO<CustomerResponseDTO>> getAllCustomers() {
         return customerService.findAll();
     }
 
     @ApiOperation("Get IDs of all existing customers")
-    @GetMapping(value = "/ids", produces = "application/json", consumes = "application/json")
+    @GetMapping(value = "/ids", produces = "application/json")
     public ResponseEntity<ResponseDTO<String>> getIdsOfAllCustomers() {
         return customerService.findIdsOfAllCustomers();
     }
 
     @ApiOperation("Get all customers paginated")
-    @GetMapping(params = {"page", "size"}, produces = "application/json", consumes = "application/json")
+    @GetMapping(params = {"page", "size"}, produces = "application/json")
     public ResponseEntity<ResponseDTO<CustomerResponseDTO>>
     getAllCustomersPaginated(@ApiParam(value = "Number of the page")
                              @RequestParam("page") int page,
@@ -71,7 +71,7 @@ public class CustomerController {
     }
 
     @ApiOperation("Get customer by ID")
-    @GetMapping(value = "/{customerId}", produces = "application/json", consumes = "application/json")
+    @GetMapping(value = "/{customerId}", produces = "application/json")
     public ResponseEntity<ResponseDTO<CustomerResponseDTO>>
     getCustomerById(@ApiParam(value = "Customer ID which should be found", required = true)
                     @PathVariable("customerId") Long customerId) {
@@ -110,7 +110,7 @@ public class CustomerController {
     @ApiResponses({
             @ApiResponse(code = 404, message = Constants.CUSTOMER_NOT_FOUND)
     })
-    @DeleteMapping(value = "/{customerId}", produces = "application/json", consumes = "application/json")
+    @DeleteMapping("/{customerId}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<ResponseDTO<CustomerResponseDTO>>
     deleteCustomer(@ApiParam(value = "Customer ID which should be deleted", required = true)

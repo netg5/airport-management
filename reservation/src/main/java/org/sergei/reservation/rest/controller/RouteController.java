@@ -51,13 +51,13 @@ public class RouteController {
     }
 
     @ApiOperation("Get all existing routes")
-    @GetMapping
+    @GetMapping(produces = "application/json")
     public ResponseEntity<ResponseDTO<RouteResponseDTO>> getAllRoutes() {
         return routeService.findAllRoutes();
     }
 
     @ApiOperation("Get all existing routes paginated")
-    @GetMapping(params = {"page", "size"}, produces = "application/json", consumes = "application/json")
+    @GetMapping(params = {"page", "size"}, produces = "application/json")
     public ResponseEntity<ResponseDTO<RouteResponseDTO>>
     getAllRoutesPaginated(@ApiParam("Number of the page")
                           @RequestParam("page") int page,
@@ -67,7 +67,7 @@ public class RouteController {
     }
 
     @ApiOperation("Get route by ID")
-    @GetMapping(value = "/{routeId}", produces = "application/json", consumes = "application/json")
+    @GetMapping(value = "/{routeId}", produces = "application/json")
     public ResponseEntity<ResponseDTO<RouteResponseDTO>>
     getRouteById(@ApiParam(value = "Route ID which should be found", required = true)
                  @PathVariable("routeId") Long routeId) {

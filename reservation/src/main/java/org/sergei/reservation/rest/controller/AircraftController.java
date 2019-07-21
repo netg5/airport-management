@@ -50,13 +50,13 @@ public class AircraftController {
     }
 
     @ApiOperation(value = "Get all existing aircrafts", produces = "application/json", consumes = "application/json")
-    @GetMapping
+    @GetMapping(produces = "application/json")
     public ResponseEntity<ResponseDTO<AircraftResponseDTO>> getAllAircraft() {
         return aircraftService.findAll();
     }
 
     @ApiOperation(value = "Get all existing aircrafts paginated")
-    @GetMapping(params = {"page", "size"}, produces = "application/json", consumes = "application/json")
+    @GetMapping(params = {"page", "size"}, produces = "application/json")
     public ResponseEntity<ResponseDTO<AircraftResponseDTO>>
     getAllAircraftPaginated(@ApiParam("Number of the page")
                             @RequestParam("page") int page,
@@ -66,7 +66,7 @@ public class AircraftController {
     }
 
     @ApiOperation("Get aircraftDTO by ID")
-    @GetMapping(value = "/{aircraftId}", produces = "application/json", consumes = "application/json")
+    @GetMapping(value = "/{aircraftId}", produces = "application/json")
     public ResponseEntity<ResponseDTO<AircraftResponseDTO>>
     getAircraftById(@ApiParam(value = "Aircraft ID which should be found", required = true)
                     @PathVariable("aircraftId") Long aircraftId) {
@@ -102,7 +102,7 @@ public class AircraftController {
     }
 
     @ApiOperation(value = "Delete aircraft", notes = "Operation allowed for the ROLE_ADMIN only")
-    @DeleteMapping(value = "/{aircraftId}", produces = "application/json", consumes = "application/json")
+    @DeleteMapping(value = "/{aircraftId}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<ResponseDTO<AircraftResponseDTO>>
     deleteAircraft(@ApiParam(value = "Aircraft ID which should be deleted", required = true)
