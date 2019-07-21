@@ -10,7 +10,7 @@ pipeline {
         stage('Compilation') {
             steps {
                 echo '-=- compiling project -=-'
-                sh 'mvn clean compile'
+                sh 'mvn clean compile -DskipTests=true'
             }
         }
         stage('Testing') {
@@ -22,13 +22,13 @@ pipeline {
         stage('Installation') {
             steps {
                 echo '-=- installing project -=-'
-                sh 'mvn clean install -DskipTests'
+                sh 'mvn clean install -DskipTests=true'
             }
         }
         stage('Packaging') {
             steps {
                 echo '-=- packaging project -=-'
-                sh 'mvn package -DskipTests'
+                sh 'mvn package -DskipTests=true'
             }
         }
         stage('Code inspection & quality gate') {
