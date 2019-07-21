@@ -16,6 +16,7 @@
 
 package org.sergei.reservation.rest.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -27,7 +28,6 @@ import lombok.Setter;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * @author Sergei Visotsky
@@ -61,5 +61,5 @@ public class RouteResponseDTO implements Serializable {
 
     @ApiModelProperty("Aircraft ID to fly with")
     @JsonProperty("aircraft")
-    private List<AircraftResponseDTO> aircraftDTOList;
+    private AircraftResponseDTO aircraftDTO;
 }
