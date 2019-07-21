@@ -127,7 +127,7 @@ public class ReservationServiceImpl implements ReservationService {
             return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
         } else {
             // Find all flight reservation for the customer
-            Optional<List<Reservation>> reservation = reservationRepository.findAllForCustomer(customerId);
+            List<Reservation> reservation = reservationRepository.findAllForCustomer(customerId);
             if (reservation.isEmpty()) {
                 return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
             } else {

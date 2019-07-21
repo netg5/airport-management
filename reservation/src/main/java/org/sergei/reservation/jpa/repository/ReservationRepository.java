@@ -54,7 +54,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
      * @return list of reservations
      */
     @Query("SELECT r FROM Reservation r WHERE r.customer.id = :customerId")
-    Optional<List<Reservation>> findAllForCustomer(@Param("customerId") Long customerId);
+    List<Reservation> findAllForCustomer(@Param("customerId") Long customerId);
 
     /**
      * Find all reservations by customer ID paginated
