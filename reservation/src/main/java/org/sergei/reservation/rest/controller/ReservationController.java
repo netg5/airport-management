@@ -98,6 +98,6 @@ public class ReservationController {
                                                                                  @PathVariable("customerId") Long customerId,
                                                                                  @ApiParam(value = "Reservation ID which should be deleted", required = true)
                                                                                  @PathVariable("reservationId") Long reservationId) {
-        return reservationService.deleteReservation(customerId, reservationId),
+        return reservationService.deleteReservation(customerId, reservationId);
     }
 }
