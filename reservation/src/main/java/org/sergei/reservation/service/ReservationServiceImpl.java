@@ -137,9 +137,8 @@ public class ReservationServiceImpl implements ReservationService {
                 for (ReservationResponseDTO reservationResponseDTO : reservationResponseList) {
                     // Set customer ID in DTO response
                     reservationResponseDTO.setCustomerId(customer.get().getId());
-
                     // Find route by ID
-                    Optional<Route> route = routeRepository.findById(reservation.get().getRoute().getId());
+                    Optional<Route> route = routeRepository.findById(reservation.get(counter).getRoute().getId());
 
                     if (route.isEmpty()) {
                         return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
@@ -147,11 +146,15 @@ public class ReservationServiceImpl implements ReservationService {
                         RouteResponseDTO routeResponseDTO = routeDTOMapper.apply(route.get());
                         reservationResponseDTO.setRoutes(routeResponseDTO);
                     }
-
                     counter++;
                 }
+
+                ResponseDTO<ReservationResponseDTO> response = new ResponseDTO<>();
+                response.setErrorList(List.of());
+                response.setResponse(reservationResponseList);
+
                 // Returns extended flight reservation DTO
-                return reservationResponseList;
+                return new ResponseEntity<>(response, HttpStatus.OK);
 
             }
         }
