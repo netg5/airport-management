@@ -19,7 +19,7 @@ package org.sergei.reservation.repository;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.sergei.reservation.exceptions.ResourceNotFoundException;
+import org.sergei.reservation.rest.exceptions.ResourceNotFoundException;
 import org.sergei.reservation.jpa.model.Aircraft;
 import org.sergei.reservation.jpa.model.Customer;
 import org.sergei.reservation.jpa.model.Reservation;
@@ -135,7 +135,7 @@ public class ReservationRepositoryTest {
         Reservation reservation = new Reservation(DEPARTURE_TIME, customer, route);
         reservationRepository.save(reservation);
         List<Reservation> foundReservations =
-                reservationRepository.findAllForCustomer(customer.getId()).orElseThrow(() -> new ResourceNotFoundException());
+                reservationRepository.findAllForCustomer(customer.getId());
         assertEquals(foundReservations.size(), 1);
     }
 }

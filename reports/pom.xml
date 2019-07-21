@@ -14,7 +14,7 @@
     <packaging>jar</packaging>
     <version>2.3.4-SNAPSHOT</version>
 
-    <name>Report service</name>
+    <name>Reports</name>
     <description>Service for reports</description>
 
     <properties>
@@ -62,10 +62,6 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
         <dependency>
@@ -92,10 +88,10 @@
             <artifactId>modelmapper</artifactId>
             <version>2.1.1</version>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -137,6 +133,8 @@
             <artifactId>assertj-core</artifactId>
             <version>3.11.1</version>
         </dependency>
+
+        <!-- Swagger -->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
@@ -146,6 +144,13 @@
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
             <version>2.9.1</version>
+        </dependency>
+
+        <!-- Needs for Jaeger opentrace -->
+        <dependency>
+            <groupId>io.opentracing.contrib</groupId>
+            <artifactId>opentracing-spring-jaeger-web-starter</artifactId>
+            <version>2.0.0</version>
         </dependency>
     </dependencies>
 
@@ -162,6 +167,7 @@
     </dependencyManagement>
 
     <build>
+        <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

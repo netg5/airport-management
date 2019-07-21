@@ -1,8 +1,6 @@
 FROM openjdk:8-jdk-alpine
-VOLUME /tmp
-ARG DEPENDENCY=target/dependency
-COPY ${DEPENDENCY}/BOOT-INF/lib /app/lib
-COPY ${DEPENDENCY}/META-INF /app/META-INF
-COPY ${DEPENDENCY}/BOOT-INF/classes /app
-EXPOSE 9091
-ENTRYPOINT ["java","-cp","app:app/lib/*","org.sergei.reports.ReportServiceApplication"]
+ENV TZ=Europe/Riga
+ADD target/reports.jar /home/reports.jar
+EXPOSE 9091:9091
+ENV JAVA_OPTIONS="-Dspring.profiles.active=dev"
+CMD java $JAVA_OPTIONS -jar /home/reports.jar

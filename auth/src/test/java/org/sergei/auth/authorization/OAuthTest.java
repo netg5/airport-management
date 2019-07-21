@@ -57,7 +57,7 @@ public class OAuthTest {
     private static final String RESOURCE_URL = "http://localhost";
     private static final String OAUTH_ENDPOINT = "/oauth/token";
     private static final String GATEWAY_URL = "https://localhost:9090";
-    private static final String RESERVATION_RES_PATH = "/reservation-api";
+    private static final String RESERVATION_RES_PATH = "/reservation-rest";
     private static final String CUSTOMERS_PATH = "/customers";
 
     @Autowired
