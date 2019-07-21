@@ -25,6 +25,7 @@ import org.sergei.reservation.jpa.repository.RouteRepository;
 import org.sergei.reservation.rest.dto.ReservationRequestDTO;
 import org.sergei.reservation.rest.dto.ReservationResponseDTO;
 import org.sergei.reservation.rest.dto.RouteResponseDTO;
+import org.sergei.reservation.rest.dto.mappers.ReservationDTOListMapper;
 import org.sergei.reservation.rest.dto.mappers.ReservationDTOMapper;
 import org.sergei.reservation.rest.dto.mappers.RouteDTOMapper;
 import org.sergei.reservation.rest.dto.response.ResponseDTO;
@@ -42,7 +43,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static org.sergei.reservation.utils.ObjectMapperUtil.*;
+import static org.sergei.reservation.utils.ObjectMapperUtil.map;
+import static org.sergei.reservation.utils.ObjectMapperUtil.mapAllPages;
 
 /**
  * @author Sergei Visotsky
@@ -54,6 +56,7 @@ public class ReservationServiceImpl implements ReservationService {
     private final RouteRepository routeRepository;
     private final ReservationRepository reservationRepository;
     private final ReservationDTOMapper reservationDTOMapper;
+    private final ReservationDTOListMapper reservationDTOListMapper;
     private final RouteDTOMapper routeDTOMapper;
 
     @Autowired
@@ -61,11 +64,13 @@ public class ReservationServiceImpl implements ReservationService {
                                   RouteRepository routeRepository,
                                   ReservationRepository reservationRepository,
                                   ReservationDTOMapper reservationDTOMapper,
+                                  ReservationDTOListMapper reservationDTOListMapper,
                                   RouteDTOMapper routeDTOMapper) {
         this.customerRepository = customerRepository;
         this.routeRepository = routeRepository;
         this.reservationRepository = reservationRepository;
         this.reservationDTOMapper = reservationDTOMapper;
+        this.reservationDTOListMapper = reservationDTOListMapper;
         this.routeDTOMapper = routeDTOMapper;
     }
 
@@ -116,35 +121,40 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public ResponseEntity<ResponseDTO<ReservationResponseDTO>> findAllForCustomer(Long customerId) {
         // Find customer
-        Customer customer = customerRepository.findById(customerId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(Constants.CUSTOMER_NOT_FOUND)
-                );
+        Optional<Customer> customer = customerRepository.findById(customerId);
 
-        // Find all flight reservation for the customer
-        List<Reservation> reservation = reservationRepository.findAllForCustomer(customerId)
-                .orElseThrow(() -> new ResourceNotFoundException(Constants.RESERVATIONS_NOT_FOUND));
-        List<ReservationExtendedDTO> reservationExtendedDTOList = mapAll(reservation, ReservationExtendedDTO.class);
-        int counter = 0;
-        // For each DTO set customer ID, route extended DTO
-        for (ReservationExtendedDTO reservationExtendedDTO : reservationExtendedDTOList) {
-            // Set customer ID in DTO response
-//            reservationExtendedDTO.setCustomerId(customer.getId());
+        if (customer.isEmpty()) {
+            return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+        } else {
+            // Find all flight reservation for the customer
+            Optional<List<Reservation>> reservation = reservationRepository.findAllForCustomer(customerId);
+            if (reservation.isEmpty()) {
+                return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+            } else {
+                List<ReservationResponseDTO> reservationResponseList = reservationDTOListMapper.apply(reservation.get());
+                int counter = 0;
+                // For each DTO set customer ID, route extended DTO
+                for (ReservationResponseDTO reservationResponseDTO : reservationResponseList) {
+                    // Set customer ID in DTO response
+                    reservationResponseDTO.setCustomerId(customer.get().getId());
 
-            // Find route by ID
-            Route route = routeRepository.findById(reservation.get(counter).getRoute().getId())
-                    .orElseThrow(() ->
-                            new ResourceNotFoundException(Constants.ROUTE_NOT_FOUND)
-                    );
+                    // Find route by ID
+                    Optional<Route> route = routeRepository.findById(reservation.get().getRoute().getId());
 
-            reservationExtendedDTO.setRouteExtendedDTO(
-                    serviceComponent.setExtendedRoute(route)
-            );
-            counter++;
+                    if (route.isEmpty()) {
+                        return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+                    } else {
+                        RouteResponseDTO routeResponseDTO = routeDTOMapper.apply(route.get());
+                        reservationResponseDTO.setRoutes(routeResponseDTO);
+                    }
+
+                    counter++;
+                }
+                // Returns extended flight reservation DTO
+                return reservationResponseList;
+
+            }
         }
-
-        // Returns extended flight reservation DTO
-        return reservationExtendedDTOList;
     }
 
 
