@@ -19,7 +19,7 @@ package org.sergei.reservation.rest.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.sergei.reservation.rest.dto.AircraftDTO;
+import org.sergei.reservation.rest.dto.AircraftResponseDTO;
 import org.sergei.reservation.rest.dto.AircraftUpdateRequestDTO;
 import org.sergei.reservation.rest.dto.response.ResponseDTO;
 import org.sergei.reservation.service.AircraftService;
@@ -51,22 +51,22 @@ public class AircraftController {
 
     @ApiOperation(value = "Get all existing aircrafts", produces = "application/json", consumes = "application/json")
     @GetMapping
-    public ResponseEntity<ResponseDTO<AircraftDTO>> getAllAircraft() {
+    public ResponseEntity<ResponseDTO<AircraftResponseDTO>> getAllAircraft() {
         return aircraftService.findAll();
     }
 
     @ApiOperation(value = "Get all existing aircrafts paginated")
     @GetMapping(params = {"page", "size"}, produces = "application/json", consumes = "application/json")
-    public ResponseEntity<ResponseDTO<AircraftDTO>> getAllAircraftPaginated(@ApiParam("Number of the page")
+    public ResponseEntity<ResponseDTO<AircraftResponseDTO>> getAllAircraftPaginated(@ApiParam("Number of the page")
                                                                             @RequestParam("page") int page,
-                                                                            @ApiParam("Maximum number of content blocks on the page")
+                                                                                    @ApiParam("Maximum number of content blocks on the page")
                                                                             @RequestParam("size") int size) {
         return aircraftService.findAllPaginated(page, size);
     }
 
     @ApiOperation("Get aircraftDTO by ID")
     @GetMapping(value = "/{aircraftId}", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<ResponseDTO<AircraftDTO>> getAircraftById(@ApiParam(value = "Aircraft ID which should be found", required = true)
+    public ResponseEntity<ResponseDTO<AircraftResponseDTO>> getAircraftById(@ApiParam(value = "Aircraft ID which should be found", required = true)
                                                                     @PathVariable("aircraftId") Long aircraftId) {
         return aircraftService.findOne(aircraftId);
     }
@@ -74,24 +74,24 @@ public class AircraftController {
     @ApiOperation(value = "Save aircraft", notes = "Operation allowed for the ROLE_ADMIN only")
     @PostMapping(produces = "application/json", consumes = "application/json")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<ResponseDTO<AircraftDTO>> saveAircraft(@ApiParam(value = "Aircraft which should be saved", required = true)
-                                                                 @RequestBody AircraftDTO aircraftDTO) {
+    public ResponseEntity<ResponseDTO<AircraftResponseDTO>> saveAircraft(@ApiParam(value = "Aircraft which should be saved", required = true)
+                                                                 @RequestBody AircraftResponseDTO aircraftDTO) {
         return aircraftService.save(aircraftDTO);
     }
 
     @ApiOperation(value = "Update aircraft data", notes = "Operation allowed for the ROLE_ADMIN only")
     @PutMapping(produces = "application/json", consumes = "application/json")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<ResponseDTO<AircraftDTO>> updateAircraft(@RequestBody AircraftUpdateRequestDTO request) {
+    public ResponseEntity<ResponseDTO<AircraftResponseDTO>> updateAircraft(@RequestBody AircraftUpdateRequestDTO request) {
         return aircraftService.update(request);
     }
 
     @ApiOperation(value = "Update one field of the aircraft", notes = "Operation allowed for the ROLE_ADMIN only")
     @PatchMapping(value = "/{aircraftId}/patch", produces = "application/json", consumes = "application/json")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<ResponseDTO<AircraftDTO>> patchAircraft(@ApiParam(value = "Aircraft ID which should be updated", required = true)
+    public ResponseEntity<ResponseDTO<AircraftResponseDTO>> patchAircraft(@ApiParam(value = "Aircraft ID which should be updated", required = true)
                                                                   @PathVariable("aircraftId") Long aircraftId,
-                                                                  @RequestBody Map<String, Object> params) {
+                                                                          @RequestBody Map<String, Object> params) {
 
         return aircraftService.patch(aircraftId, params);
     }
@@ -99,7 +99,7 @@ public class AircraftController {
     @ApiOperation(value = "Delete aircraft", notes = "Operation allowed for the ROLE_ADMIN only")
     @DeleteMapping(value = "/{aircraftId}", produces = "application/json", consumes = "application/json")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<ResponseDTO<AircraftDTO>> deleteAircraft(@ApiParam(value = "Aircraft ID which should be deleted", required = true)
+    public ResponseEntity<ResponseDTO<AircraftResponseDTO>> deleteAircraft(@ApiParam(value = "Aircraft ID which should be deleted", required = true)
                                                                    @PathVariable("aircraftId") Long aircraftId) {
         return aircraftService.delete(aircraftId);
     }

@@ -28,24 +28,27 @@ import java.io.Serializable;
 /**
  * @author Sergei Visotsky
  */
-@ApiModel(value = "Customer", description = "Customer model")
+@ApiModel(value = "Aircraft", description = "Aircraft model")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CustomerDTO implements Serializable {
+public class AircraftResponseDTO implements Serializable {
 
-    private static final long serialVersionUID = 1601177547641029786L;
+    private static final long serialVersionUID = -8398761845885572454L;
 
-    @ApiModelProperty("Customer ID")
-    private Long customerId;
+    @ApiModelProperty("Aircraft ID")
+    private Long aircraftId;
 
-    @ApiModelProperty("Customer first name")
-    private String firstName;
+    @ApiModelProperty("Aircraft model")
+    private String model;
 
-    @ApiModelProperty("Customer last name")
-    private String lastName;
+    @ApiModelProperty("Aircraft name")
+    private String aircraftName;
 
-    @ApiModelProperty("Customer age")
-    private Integer age;
+    @ApiModelProperty("Aircraft name")
+    private Double aircraftWeight;
+
+    @ApiModelProperty("Maximum passengers in aircraft")
+    private Integer maxPassengers;
 }

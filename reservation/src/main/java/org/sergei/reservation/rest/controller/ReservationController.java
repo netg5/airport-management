@@ -17,23 +17,18 @@
 package org.sergei.reservation.rest.controller;
 
 import io.swagger.annotations.*;
-import org.sergei.reservation.rest.dto.ReservationDTO;
-import org.sergei.reservation.rest.dto.ReservationExtendedDTO;
+import org.sergei.reservation.rest.dto.ReservationResponseDTO;
 import org.sergei.reservation.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.hateoas.Link;
-import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
 import java.util.Map;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 /**
  * @author Sergei Visotsky
@@ -107,12 +102,12 @@ public class ReservationController {
             @ApiResponse(code = 404, message = "Customer or route with this ID not found")
     })
     @PostMapping(value = "/{customerId}/reservations", consumes = "application/json")
-    public ResponseEntity<ReservationDTO> createReservation(@ApiParam(value = "Customer ID for whom reservation should be created", required = true)
+    public ResponseEntity<ReservationResponseDTO> createReservation(@ApiParam(value = "Customer ID for whom reservation should be created", required = true)
                                                             @PathVariable("customerId") Long customerId,
-                                                            @ApiParam(value = "Created reservation", required = true)
-                                                            @RequestBody ReservationDTO reservationDTO) {
+                                                                    @ApiParam(value = "Created reservation", required = true)
+                                                            @RequestBody ReservationResponseDTO reservationResponseDTO) {
         return new ResponseEntity<>(
-                reservationService.saveReservation(customerId, reservationDTO),
+                reservationService.saveReservation(customerId, reservationResponseDTO),
                 HttpStatus.CREATED);
     }
 
@@ -121,13 +116,13 @@ public class ReservationController {
             @ApiResponse(code = 404, message = "Customer or route with this ID not found")
     })
     @PatchMapping(value = "/{customerId}/reservations/{reservationId}", consumes = "application/json")
-    public ResponseEntity<ReservationDTO> updateReservation(@ApiParam(value = "Customer ID who made reservation", required = true)
+    public ResponseEntity<ReservationResponseDTO> updateReservation(@ApiParam(value = "Customer ID who made reservation", required = true)
                                                             @PathVariable("customerId") Long customerId,
-                                                            @ApiParam(value = "Reservation ID which should be updated", required = true)
+                                                                    @ApiParam(value = "Reservation ID which should be updated", required = true)
                                                             @PathVariable("reservationId") Long reservationId,
-                                                            @RequestBody Map<String, Object> params) {
-        ReservationDTO reservationDTO = reservationService.updateReservation(customerId, reservationId, params);
-        return new ResponseEntity<>(reservationDTO, HttpStatus.OK);
+                                                                    @RequestBody Map<String, Object> params) {
+        ReservationResponseDTO reservationResponseDTO = reservationService.updateReservation(customerId, reservationId, params);
+        return new ResponseEntity<>(reservationResponseDTO, HttpStatus.OK);
     }
 
     @ApiOperation("Delete reservation")
@@ -135,9 +130,9 @@ public class ReservationController {
             @ApiResponse(code = 404, message = "Customer with this ID not found or no reservations made")
     })
     @DeleteMapping("/{customerId}/reservations/{reservationId}")
-    public ResponseEntity<ReservationDTO> deleteReservation(@ApiParam(value = "Customer ID who made reservation", required = true)
+    public ResponseEntity<ReservationResponseDTO> deleteReservation(@ApiParam(value = "Customer ID who made reservation", required = true)
                                                             @PathVariable("customerId") Long customerId,
-                                                            @ApiParam(value = "Reservation ID which should be deleted", required = true)
+                                                                    @ApiParam(value = "Reservation ID which should be deleted", required = true)
                                                             @PathVariable("reservationId") Long reservationId) {
 //        return new ResponseEntity<>(
 //                reservationService.deleteReservation(customerId, reservationId),

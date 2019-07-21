@@ -16,29 +16,40 @@
 
 package org.sergei.reservation.rest.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonRootName;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * @author Sergei Visotsky
  */
+@ApiModel(
+        value = "Reservation",
+        description = "Flight reservation meta data model"
+)
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonRootName("flightReservation")
-@JsonIgnoreProperties("id")
-public class ReservationExtendedDTO implements Serializable {
+public class ReservationResponseDTO implements Serializable {
 
-    private static final long serialVersionUID = 3892963019639678135L;
+    private static final long serialVersionUID = -2808793016869498675L;
 
-    @JsonProperty("reservedRoute")
-    private RouteExtendedDTO routeExtendedDTO;
+    @ApiModelProperty("Reservation ID")
+    private Long reservationId;
+
+    @ApiModelProperty("Customer ID who made reservation")
+    private Long customerId;
+
+    @ApiModelProperty("Flight reservation date")
+    private LocalDateTime reservationDate;
+
+    @ApiModelProperty("Route which is reserved")
+    private RouteResponseDTO routes;
 }

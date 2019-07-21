@@ -1,26 +1,27 @@
 package org.sergei.reservation.service;
 
-import org.sergei.reservation.rest.dto.ReservationDTO;
-import org.sergei.reservation.rest.dto.ReservationExtendedDTO;
-import org.springframework.data.domain.Page;
+import org.sergei.reservation.rest.dto.ReservationRequestDTO;
+import org.sergei.reservation.rest.dto.ReservationResponseDTO;
+import org.sergei.reservation.rest.dto.response.ResponseDTO;
+import org.springframework.http.ResponseEntity;
 
-import java.util.List;
 import java.util.Map;
 
 /**
  * @author Sergei Visotsky
  */
 public interface ReservationService {
-    ReservationExtendedDTO findOneForCustomer(Long customerId, Long reservationId);
+    ResponseEntity<ResponseDTO<ReservationResponseDTO>> findOneForCustomer(Long customerId, Long reservationId);
 
-    List<ReservationExtendedDTO> findAllForCustomer(Long customerId);
+    ResponseEntity<ResponseDTO<ReservationResponseDTO>> findAllForCustomer(Long customerId);
 
-    Page<ReservationExtendedDTO> findAllForCustomerPaginated(Long customerId, int page, int size);
+    ResponseEntity<ResponseDTO<ReservationResponseDTO>> findAllForCustomerPaginated(Long customerId,
+                                                                                    int page, int size);
 
-    ReservationDTO saveReservation(Long customerId,
-                                   ReservationDTO reservationDTO);
+    ResponseEntity<ResponseDTO<ReservationResponseDTO>> saveReservation(ReservationRequestDTO request);
 
-    ReservationDTO updateReservation(Long customerId, Long reservationId, Map<String, Object> params);
+    ResponseEntity<ResponseDTO<ReservationResponseDTO>> updateReservation(Long customerId, Long reservationId,
+                                                                          Map<String, Object> params);
 
-    ReservationExtendedDTO deleteReservation(Long customerId, Long reservationId);
+    ResponseEntity<ResponseDTO<ReservationResponseDTO>> deleteReservation(Long customerId, Long reservationId);
 }

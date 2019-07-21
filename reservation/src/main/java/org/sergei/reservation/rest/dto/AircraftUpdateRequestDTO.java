@@ -12,5 +12,5 @@ import lombok.Setter;
 @NoArgsConstructor
 public class AircraftUpdateRequestDTO {
     private Long aircraftId;
-    private AircraftDTO aircraft;
+    private AircraftResponseDTO aircraft;
 }

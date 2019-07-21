@@ -1,7 +1,7 @@
 package org.sergei.reservation.rest.dto.mappers;
 
 import org.sergei.reservation.jpa.model.Aircraft;
-import org.sergei.reservation.rest.dto.AircraftDTO;
+import org.sergei.reservation.rest.dto.AircraftResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +11,7 @@ import java.util.List;
  * @author Sergei Visotsky
  */
 @Component
-public class AircraftDTOListMapper implements IMapper<List<Aircraft>, List<AircraftDTO>> {
+public class AircraftDTOListMapper implements IMapper<List<Aircraft>, List<AircraftResponseDTO>> {
 
     private final AircraftDTOMapper aircraftDTOMapper;
 
@@ -21,7 +21,7 @@ public class AircraftDTOListMapper implements IMapper<List<Aircraft>, List<Aircr
     }
 
     @Override
-    public List<AircraftDTO> apply(List<Aircraft> aircrafts) {
+    public List<AircraftResponseDTO> apply(List<Aircraft> aircrafts) {
         return aircraftDTOMapper.applyList(aircrafts);
     }
 }
