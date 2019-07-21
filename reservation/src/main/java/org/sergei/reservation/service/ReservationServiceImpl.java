@@ -32,7 +32,6 @@ import org.sergei.reservation.rest.dto.response.ResponseDTO;
 import org.sergei.reservation.rest.exceptions.ResourceNotFoundException;
 import org.sergei.reservation.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,7 +43,6 @@ import java.util.Map;
 import java.util.Optional;
 
 import static org.sergei.reservation.utils.ObjectMapperUtil.map;
-import static org.sergei.reservation.utils.ObjectMapperUtil.mapAllPages;
 
 /**
  * @author Sergei Visotsky
@@ -131,7 +129,7 @@ public class ReservationServiceImpl implements ReservationService {
             if (reservation.isEmpty()) {
                 return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
             } else {
-                List<ReservationResponseDTO> reservationResponseList = reservationDTOListMapper.apply(reservation.get());
+                List<ReservationResponseDTO> reservationResponseList = reservationDTOListMapper.apply(reservation);
                 int counter = 0;
                 // For each DTO set customer ID, route extended DTO
                 for (ReservationResponseDTO reservationResponseDTO : reservationResponseList) {
@@ -155,7 +153,6 @@ public class ReservationServiceImpl implements ReservationService {
 
                 // Returns extended flight reservation DTO
                 return new ResponseEntity<>(response, HttpStatus.OK);
-
             }
         }
     }
@@ -171,35 +168,44 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public ResponseEntity<ResponseDTO<ReservationResponseDTO>> findAllForCustomerPaginated(Long customerId, int page, int size) {
         // Find customer
-        Customer customer = customerRepository.findById(customerId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(Constants.CUSTOMER_NOT_FOUND)
-                );
+        Optional<Customer> customer = customerRepository.findById(customerId);
 
-        // Find all flight reservation for the customer
-        Page<Reservation> reservation = reservationRepository.findAllForCustomerPaginated(customerId, PageRequest.of(page, size));
-        Page<ReservationExtendedDTO> flightReservationExtendedDTOList =
-                mapAllPages(reservation, ReservationExtendedDTO.class);
-        int counter = 0;
-        // For each DTO set customer ID, route extended DTO
-        for (ReservationExtendedDTO reservationExtendedDTO : flightReservationExtendedDTOList) {
-            // Set customer ID in DTO response
-//            reservationExtendedDTO.setCustomerId(customer.getId());
+        if (customer.isEmpty()) {
+            return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+        } else {
+            // Find all flight reservation for the customer
+            List<Reservation> reservation =
+                    reservationRepository.findAllForCustomerPaginated(
+                            customerId, PageRequest.of(page, size)).getContent();
+            if (reservation.isEmpty()) {
+                return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+            } else {
+                List<ReservationResponseDTO> reservationResponseList = reservationDTOListMapper.apply(reservation);
+                int counter = 0;
+                // For each DTO set customer ID, route extended DTO
+                for (ReservationResponseDTO reservationResponseDTO : reservationResponseList) {
+                    // Set customer ID in DTO response
+                    reservationResponseDTO.setCustomerId(customer.get().getId());
+                    // Find route by ID
+                    Optional<Route> route = routeRepository.findById(reservation.get(counter).getRoute().getId());
 
-            // Find route by ID
-            Route route = routeRepository.findById(reservation.getContent().get(counter).getRoute().getId())
-                    .orElseThrow(() ->
-                            new ResourceNotFoundException(Constants.ROUTE_NOT_FOUND)
-                    );
+                    if (route.isEmpty()) {
+                        return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+                    } else {
+                        RouteResponseDTO routeResponseDTO = routeDTOMapper.apply(route.get());
+                        reservationResponseDTO.setRoutes(routeResponseDTO);
+                    }
+                    counter++;
+                }
 
-            reservationExtendedDTO.setRouteExtendedDTO(
-                    serviceComponent.setExtendedRoute(route)
-            );
-            counter++;
+                ResponseDTO<ReservationResponseDTO> response = new ResponseDTO<>();
+                response.setErrorList(List.of());
+                response.setResponse(reservationResponseList);
+
+                // Returns extended flight reservation DTO
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
         }
-
-        // Returns extended flight reservation DTO
-        return flightReservationExtendedDTOList;
     }
 
     /**
@@ -282,19 +288,22 @@ public class ReservationServiceImpl implements ReservationService {
      *
      * @param customerId    customer who made reservation
      * @param reservationId reservation ID to be deleted
-     * @return deleted reservation DTO
+     * @return response entity
      */
     @Override
     public ResponseEntity<ResponseDTO<ReservationResponseDTO>> deleteReservation(Long customerId, Long reservationId) {
-        Customer customer = customerRepository.findById(customerId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(Constants.CUSTOMER_NOT_FOUND)
-                );
-        Reservation reservation = reservationRepository.findById(reservationId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(Constants.RESERVATION_NOT_FOUND)
-                );
-        reservationRepository.deleteByCustomerIdAndReservationId(customer, reservation);
-        return map(reservation, ReservationExtendedDTO.class);
+        Optional<Customer> customer = customerRepository.findById(customerId);
+
+        if (customer.isEmpty()) {
+            return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+        } else {
+            Optional<Reservation> reservation = reservationRepository.findById(reservationId);
+            if (reservation.isEmpty()) {
+                return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+            } else {
+                reservationRepository.deleteByCustomerIdAndReservationId(customer.get(), reservation.get());
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+        }
     }
 }

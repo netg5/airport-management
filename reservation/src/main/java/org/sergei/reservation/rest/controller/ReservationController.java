@@ -16,19 +16,18 @@
 
 package org.sergei.reservation.rest.controller;
 
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import org.sergei.reservation.rest.dto.ReservationRequestDTO;
 import org.sergei.reservation.rest.dto.ReservationResponseDTO;
+import org.sergei.reservation.rest.dto.response.ResponseDTO;
 import org.sergei.reservation.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
-
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
 /**
  * @author Sergei Visotsky
@@ -39,7 +38,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
         consumes = "application/json"
 )
 @RestController
-@RequestMapping(value = "/customers", produces = "application/json")
+@RequestMapping(value = "/customers")
 public class ReservationController {
 
     private final ReservationService reservationService;
@@ -50,93 +49,55 @@ public class ReservationController {
     }
 
     @ApiOperation("Get all reservations for customer")
-    @ApiResponses({
-            @ApiResponse(code = 404, message = "Customer with this ID not found or no reservations made"),
-    })
-    @GetMapping("/{customerId}/reservations")
-    public ResponseEntity<List<ReservationExtendedDTO>> getAllForCustomer(@ApiParam(value = "Customer ID whose reservations should be found", required = true)
-                                                                          @PathVariable("customerId") Long customerId) {
-        List<ReservationExtendedDTO> reservations =
-                reservationService.findAllForCustomer(customerId);
-        return new ResponseEntity<>(reservations, HttpStatus.OK);
+    @GetMapping(value = "/{customerId}/reservations", produces = "application/json", consumes = "application/json")
+    public ResponseEntity<ResponseDTO<ReservationResponseDTO>> getAllForCustomer(@ApiParam(value = "Customer ID whose reservations should be found", required = true)
+                                                                                 @PathVariable("customerId") Long customerId) {
+        return reservationService.findAllForCustomer(customerId);
     }
 
     @ApiOperation("Get all reservations for customer")
-    @ApiResponses({
-            @ApiResponse(code = 404, message = "Customer with this ID not found or no reservations made"),
-    })
-    @GetMapping(value = "/{customerId}/reservations", params = {"page", "size"})
-    public ResponseEntity<List<ReservationExtendedDTO>> getAllForCustomerPaginated(@ApiParam(value = "Customer ID whose reservations should be found", required = true)
-                                                                                   @PathVariable("customerId") Long customerId,
-                                                                                   @ApiParam("Number of the page")
-                                                                                   @RequestParam("page") int page,
-                                                                                   @ApiParam("Maximum number of content blocks on the page")
-                                                                                   @RequestParam("size") int size) {
-        Page<ReservationExtendedDTO> reservations =
-                reservationService.findAllForCustomerPaginated(customerId, page, size);
-        return new ResponseEntity<>(null, HttpStatus.OK);
+    @GetMapping(value = "/{customerId}/reservations", params = {"page", "size"}, produces = "application/json", consumes = "application/json")
+    public ResponseEntity<ResponseDTO<ReservationResponseDTO>> getAllForCustomerPaginated(@ApiParam(value = "Customer ID whose reservations should be found", required = true)
+                                                                                          @PathVariable("customerId") Long customerId,
+                                                                                          @ApiParam("Number of the page")
+                                                                                          @RequestParam("page") int page,
+                                                                                          @ApiParam("Maximum number of content blocks on the page")
+                                                                                          @RequestParam("size") int size) {
+        return reservationService.findAllForCustomerPaginated(customerId, page, size);
     }
 
     @ApiOperation("Get one reservation by ID for the customer")
-    @ApiResponses({
-            @ApiResponse(code = 404, message = "Customer with this ID not found or no reservations made"),
-    })
-    @GetMapping("/{customerId}/reservations/{reservationId}")
-    public ResponseEntity<ReservationExtendedDTO> getOneForCustomer(@ApiParam(value = "Customer ID who made a reservation", required = true)
-                                                                    @PathVariable("customerId") Long customerId,
-                                                                    @ApiParam(value = "Reservation ID which which was made", required = true)
-                                                                    @PathVariable("reservationId") Long reservationId) {
-        ReservationExtendedDTO reservationExtendedDTO =
-                reservationService.findOneForCustomer(customerId, reservationId);
-//        Link link = linkTo(
-//                methodOn(CustomerController.class)
-//                        .getCustomerById(customerId)).withRel("customer");
-//        reservationExtendedDTO.add(link);
-//        String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
-//        reservationExtendedDTO.add(new Link(uriString, "self"));
-        return new ResponseEntity<>(reservationExtendedDTO, HttpStatus.OK);
+    @GetMapping(value = "/{customerId}/reservations/{reservationId}", produces = "application/json", consumes = "application/json")
+    public ResponseEntity<ResponseDTO<ReservationResponseDTO>> getOneForCustomer(@ApiParam(value = "Customer ID who made a reservation", required = true)
+                                                                                 @PathVariable("customerId") Long customerId,
+                                                                                 @ApiParam(value = "Reservation ID which which was made", required = true)
+                                                                                 @PathVariable("reservationId") Long reservationId) {
+        return reservationService.findOneForCustomer(customerId, reservationId);
     }
 
     @ApiOperation("Create reservation for customer")
-    @ApiResponses({
-            @ApiResponse(code = 404, message = "Customer or route with this ID not found")
-    })
-    @PostMapping(value = "/{customerId}/reservations", consumes = "application/json")
-    public ResponseEntity<ReservationResponseDTO> createReservation(@ApiParam(value = "Customer ID for whom reservation should be created", required = true)
-                                                            @PathVariable("customerId") Long customerId,
-                                                                    @ApiParam(value = "Created reservation", required = true)
-                                                            @RequestBody ReservationResponseDTO reservationResponseDTO) {
-        return new ResponseEntity<>(
-                reservationService.saveReservation(customerId, reservationResponseDTO),
-                HttpStatus.CREATED);
+    @PostMapping(value = "/{customerId}/reservations", produces = "application/json", consumes = "application/json")
+    public ResponseEntity<ResponseDTO<ReservationResponseDTO>> createReservation(@ApiParam(value = "Request to delete reservation", required = true)
+                                                                                 @RequestBody ReservationRequestDTO request) {
+        return reservationService.saveReservation(request);
     }
 
     @ApiOperation(value = "Update reservation by customer ID")
-    @ApiResponses({
-            @ApiResponse(code = 404, message = "Customer or route with this ID not found")
-    })
-    @PatchMapping(value = "/{customerId}/reservations/{reservationId}", consumes = "application/json")
-    public ResponseEntity<ReservationResponseDTO> updateReservation(@ApiParam(value = "Customer ID who made reservation", required = true)
-                                                            @PathVariable("customerId") Long customerId,
-                                                                    @ApiParam(value = "Reservation ID which should be updated", required = true)
-                                                            @PathVariable("reservationId") Long reservationId,
-                                                                    @RequestBody Map<String, Object> params) {
-        ReservationResponseDTO reservationResponseDTO = reservationService.updateReservation(customerId, reservationId, params);
-        return new ResponseEntity<>(reservationResponseDTO, HttpStatus.OK);
+    @PatchMapping(value = "/{customerId}/reservations/{reservationId}", produces = "application/json", consumes = "application/json")
+    public ResponseEntity<ResponseDTO<ReservationResponseDTO>> updateReservation(@ApiParam(value = "Customer ID who made reservation", required = true)
+                                                                                 @PathVariable("customerId") Long customerId,
+                                                                                 @ApiParam(value = "Reservation ID which should be updated", required = true)
+                                                                                 @PathVariable("reservationId") Long reservationId,
+                                                                                 @RequestBody Map<String, Object> params) {
+        return reservationService.updateReservation(customerId, reservationId, params);
     }
 
     @ApiOperation("Delete reservation")
-    @ApiResponses({
-            @ApiResponse(code = 404, message = "Customer with this ID not found or no reservations made")
-    })
-    @DeleteMapping("/{customerId}/reservations/{reservationId}")
-    public ResponseEntity<ReservationResponseDTO> deleteReservation(@ApiParam(value = "Customer ID who made reservation", required = true)
-                                                            @PathVariable("customerId") Long customerId,
-                                                                    @ApiParam(value = "Reservation ID which should be deleted", required = true)
-                                                            @PathVariable("reservationId") Long reservationId) {
-//        return new ResponseEntity<>(
-//                reservationService.deleteReservation(customerId, reservationId),
-//                HttpStatus.NO_CONTENT);
-        return null;
+    @DeleteMapping(value = "/{customerId}/reservations/{reservationId}", produces = "application/json", consumes = "application/json")
+    public ResponseEntity<ResponseDTO<ReservationResponseDTO>> deleteReservation(@ApiParam(value = "Customer ID who made reservation", required = true)
+                                                                                 @PathVariable("customerId") Long customerId,
+                                                                                 @ApiParam(value = "Reservation ID which should be deleted", required = true)
+                                                                                 @PathVariable("reservationId") Long reservationId) {
+        return reservationService.deleteReservation(customerId, reservationId),
     }
 }

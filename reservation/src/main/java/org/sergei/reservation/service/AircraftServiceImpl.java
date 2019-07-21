@@ -260,15 +260,7 @@ public class AircraftServiceImpl implements AircraftService {
             return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
         } else {
             aircraftRepository.delete(aircraft.get());
-
-            AircraftResponseDTO aircraftDTOResponse = aircraftDTOMapper.apply(aircraft.get());
-
-            ResponseDTO<AircraftResponseDTO> response = new ResponseDTO<>();
-            response.setErrorList(List.of());
-            response.setResponse(List.of(aircraftDTOResponse));
-
-            return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
-
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
 }

@@ -228,13 +228,7 @@ public class CustomerServiceImpl implements CustomerService {
             return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
         } else {
             customerRepository.delete(customer.get());
-
-            CustomerResponseDTO customerResponseDTOResp = customerDTOMapper.apply(customer.get());
-            ResponseDTO<CustomerResponseDTO> response = new ResponseDTO<>();
-            response.setErrorList(List.of());
-            response.setResponse(List.of(customerResponseDTOResp));
-
-            return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
 }
