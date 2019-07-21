@@ -17,6 +17,7 @@
 package org.sergei.reservation.rest;
 
 import org.json.JSONObject;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sergei.reservation.ReservationApplication;
@@ -47,6 +48,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  *
  * @author Sergei Visotsky
  */
+@Ignore
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ReservationApplication.class)
 @TestPropertySource(locations = "classpath:application-test.properties")
