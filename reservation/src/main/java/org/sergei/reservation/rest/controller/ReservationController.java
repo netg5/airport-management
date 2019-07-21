@@ -76,7 +76,7 @@ public class ReservationController {
     }
 
     @ApiOperation("Create reservation for customer")
-    @PostMapping(value = "/{customerId}/reservations", produces = "application/json", consumes = "application/json")
+    @PostMapping(value = "/reservations", produces = "application/json", consumes = "application/json")
     public ResponseEntity<ResponseDTO<ReservationResponseDTO>> createReservation(@ApiParam(value = "Request to delete reservation", required = true)
                                                                                  @RequestBody ReservationRequestDTO request) {
         return reservationService.saveReservation(request);
