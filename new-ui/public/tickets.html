@@ -16,7 +16,7 @@
         <a class="navbar-brand" href="/">Flight reservation</a>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
+                <li class="nav-item active">
                     <a class="nav-link" href="/customers/1">Customer</a>
                 </li>
                 <li class="nav-item">
@@ -31,15 +31,18 @@
 </header>
 <main role="main" class="flex-shrink-0">
     <div class="container">
-        <p>
-            <a href="/customers/1">1st customer data</a>
-        </p>
-        <p>
-            <a href="/aircrafts/1">1st aircraft data</a>
-        </p>
-        <p>
-            <a href="/routes/31">31st route data</a>
-        </p>
+        <h1>All customer tickets:</h1>
+        <div class="row mb-3">
+            <!--<div th:each="ticket : ${tickets}" class="col-4 themed-grid-col margin-top">
+                <div>Route ID: [[${ticket.firstName}]]</div>
+                <div>Distance: [[${ticket.lastName}]]</div>
+                <div>Departure time: [[${ticket.routeId}]]</div>
+                <div>Arrival time: [[${ticket.place}]]</div>
+                <div>Price: [[${ticket.distance}]]</div>
+                <div>Place: [[${ticket.price}]]</div>
+                <div>Place: [[${ticket.aircraftName}]]</div>
+            </div>-->
+        </div>
     </div>
 </main>
 <footer class="footer mt-auto py-3">

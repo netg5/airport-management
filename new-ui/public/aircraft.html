@@ -19,7 +19,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/customers/1">Customer</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item active">
                     <a class="nav-link" href="/aircrafts/1">Aircraft</a>
                 </li>
                 <li class="nav-item">
@@ -31,15 +31,38 @@
 </header>
 <main role="main" class="flex-shrink-0">
     <div class="container">
-        <p>
-            <a href="/customers/1">1st customer data</a>
-        </p>
-        <p>
-            <a href="/aircrafts/1">1st aircraft data</a>
-        </p>
-        <p>
-            <a href="/routes/31">31st route data</a>
-        </p>
+
+        <h1>Aircraft:</h1>
+        <div>Aircraft ID: [[${aircraft.aircraftId}]]</div>
+        <div>Model: [[${aircraft.model}]]</div>
+        <div>Aircraft name: [[${aircraft.aircraftName}]]</div>
+        <div>Aircraft weight: [[${aircraft.aircraftWeight}]]</div>
+        <div>Maximum passengers: [[${aircraft.maxPassengers}]]</div>
+
+        <h6>Add a new aircraft:</h6>
+        <!--<form th:action="@{/aircrafts}" th:object="${aircraftPost}" method="post">
+            <p>
+                <label>
+                    <input type="text" class="form-control" placeholder="Model" th:field="*{model}">
+                </label>
+            </p>
+            <p>
+                <label>
+                    <input type="text" class="form-control" placeholder="Aircraft name" th:field="*{aircraftName}">
+                </label>
+            </p>
+            <p>
+                <label>
+                    <input type="number" class="form-control" placeholder="Weight" th:field="*{aircraftWeight}">
+                </label>
+            </p>
+            <p>
+                <label>
+                    <input type="number" class="form-control" placeholder="Max. passengers" th:field="*{maxPassengers}">
+                </label>
+            </p>
+            <button class="btn btn-primary">Submit</button>
+        </form>-->
     </div>
 </main>
 <footer class="footer mt-auto py-3">

@@ -22,7 +22,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/aircrafts/1">Aircraft</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item active">
                     <a class="nav-link" href="/routes/31">Route</a>
                 </li>
             </ul>
@@ -31,15 +31,50 @@
 </header>
 <main role="main" class="flex-shrink-0">
     <div class="container">
-        <p>
-            <a href="/customers/1">1st customer data</a>
-        </p>
-        <p>
-            <a href="/aircrafts/1">1st aircraft data</a>
-        </p>
-        <p>
-            <a href="/routes/31">31st route data</a>
-        </p>
+
+        <h1>Route:</h1>
+        <div>Route ID: [[${route.routeId}]]</div>
+        <div>Distance: [[${route.distance}]]</div>
+        <div>Departure time: [[${route.departureTime}]]</div>
+        <div>Arrival time: [[${route.arrivalTime}]]</div>
+        <div>Price: [[${route.price}]]</div>
+        <div>Place: [[${route.place}]]</div>
+
+        <h6>Create a new route:</h6>
+        <!--<form th:action="@{/routes}" th:object="${routePost}" method="post">
+            <p>
+                <label>
+                    <input type="number" class="form-control" placeholder="Aircraft ID which flies"
+                           th:field="*{aircraftId}">
+                </label>
+            </p>
+            <p>
+                <label>
+                    <input type="number" class="form-control" placeholder="Distance to fly" th:field="*{distance}">
+                </label>
+            </p>
+            <p>
+                <label>
+                    <input type="datetime-local" class="form-control" placeholder="Departure time" th:field="*{departureTime}">
+                </label>
+            </p>
+            <p>
+                <label>
+                    <input type="datetime-local" class="form-control" placeholder="Arrival time" th:field="*{arrivalTime}">
+                </label>
+            </p>
+            <p>
+                <label>
+                    <input type="number" class="form-control" placeholder="Route price" th:field="*{price}">
+                </label>
+            </p>
+            <p>
+                <label>
+                    <input type="text" class="form-control" placeholder="Place to fly" th:field="*{place}">
+                </label>
+            </p>
+            <button class="btn btn-primary">Submit</button>
+        </form>-->
     </div>
 </main>
 <footer class="footer mt-auto py-3">

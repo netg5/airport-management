@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" class="h-100">
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Flight reservation</title>
     <meta charset="utf-8">
@@ -16,7 +16,7 @@
         <a class="navbar-brand" href="/">Flight reservation</a>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
+                <li class="nav-item active">
                     <a class="nav-link" href="/customers/1">Customer</a>
                 </li>
                 <li class="nav-item">
@@ -31,15 +31,39 @@
 </header>
 <main role="main" class="flex-shrink-0">
     <div class="container">
+
+        <h1>Customer:</h1>
+        <div>Customer ID: [[${customer.customerId}]]</div>
+        <div>Fist name: [[${customer.firstName}]]</div>
+        <div>Last name: [[${customer.lastName}]]</div>
+        <div>Age: [[${customer.age}]]</div>
+
         <p>
-            <a href="/customers/1">1st customer data</a>
+            <a href="/customers/1/reservations">Reservations for the first customer</a>
         </p>
         <p>
-            <a href="/aircrafts/1">1st aircraft data</a>
+            <a href="/customers/1/tickets">Tickets for this customer</a>
         </p>
-        <p>
-            <a href="/routes/31">31st route data</a>
-        </p>
+
+        <h6>Add a new customer:</h6>
+        <form th:action="@{/customers}" th:object="${customerPost}" method="post">
+            <p>
+                <label>
+                    <input type="text" class="form-control" placeholder="First name" th:field="*{firstName}">
+                </label>
+            </p>
+            <p>
+                <label>
+                    <input type="text" class="form-control" placeholder="Last name" th:field="*{lastName}">
+                </label>
+            </p>
+            <p>
+                <label>
+                    <input type="number" class="form-control" placeholder="Age" th:field="*{age}">
+                </label>
+            </p>
+            <button class="btn btn-primary">Submit</button>
+        </form>
     </div>
 </main>
 <footer class="footer mt-auto py-3">
