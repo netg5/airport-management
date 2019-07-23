@@ -16,10 +16,8 @@
 
 package org.sergei.tickets.service;
 
-import org.sergei.tickets.jpa.model.Ticket;
-import org.springframework.data.domain.Page;
-
-import java.util.List;
+import org.sergei.tickets.rest.dto.ResponseDTO;
+import org.springframework.http.ResponseEntity;
 
 /**
  * @author Sergei Visotsky
@@ -34,7 +32,7 @@ public interface TicketService {
      * @param distance   Up to the point
      * @return collection of tickets
      */
-    List<Ticket> findAllTickets(Long customerId, String place, Double distance);
+    ResponseEntity<ResponseDTO> findAllTickets(Long customerId, String place, Double distance);
 
     /**
      * Method to find tickets for customer paginated
@@ -46,5 +44,5 @@ public interface TicketService {
      * @param size       element quantity per page
      * @return Collection of tickets
      */
-    Page<Ticket> findAllTicketsPageable(Long customerId, String place, Double distance, int page, int size);
+    ResponseEntity<ResponseDTO> findAllTicketsPageable(Long customerId, String place, Double distance, int page, int size);
 }

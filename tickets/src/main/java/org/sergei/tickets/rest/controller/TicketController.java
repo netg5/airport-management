@@ -16,11 +16,12 @@
 
 package org.sergei.tickets.rest.controller;
 
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.sergei.tickets.jpa.model.Ticket;
 import org.sergei.tickets.rest.hateoas.LinkUtil;
 import org.sergei.tickets.service.TicketService;
-import org.sergei.tickets.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.hateoas.Resources;
@@ -54,9 +55,6 @@ public class TicketController {
     }
 
     @ApiOperation("Get ticket for customer by ID")
-    @ApiResponses({
-            @ApiResponse(code = 404, message = Constants.TICKETS_NOT_FOUND)
-    })
     @GetMapping
     public ResponseEntity<Resources<Ticket>> findAllTickets(@ApiParam(value = "Customer ID whose ticket should be found", required = true)
                                                             @RequestParam("id") Long customerId,
@@ -69,9 +67,6 @@ public class TicketController {
     }
 
     @ApiOperation("Get ticket for customer by ID")
-    @ApiResponses({
-            @ApiResponse(code = 404, message = "Customer has no tickets")
-    })
     @GetMapping(params = {"page", "size"})
     public ResponseEntity<Resources<Ticket>> findAllTicketsPageable(@ApiParam(value = "Customer ID whose ticket should be found", required = true)
                                                                     @RequestParam("id") Long customerId,
