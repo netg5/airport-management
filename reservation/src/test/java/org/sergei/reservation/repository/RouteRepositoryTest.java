@@ -16,6 +16,7 @@
 
 package org.sergei.reservation.repository;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sergei.reservation.jpa.model.Aircraft;
@@ -45,6 +46,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * @author Sergei Visotsky
  */
+@Ignore
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @TestPropertySource(locations = "classpath:application-test.properties")

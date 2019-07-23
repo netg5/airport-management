@@ -46,7 +46,7 @@ zuul:
       strip-prefix: false
       sensitive-headers: true
     tickets:
-      path: /ticket/**
+      path: /tickets/**
       service-id: tickets
       url: http://localhost:8086
       strip-prefix: false

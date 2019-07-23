@@ -16,11 +16,10 @@
 
 package org.sergei.mainui.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.sergei.mainui.model.AuthTokenInfo;
 import org.sergei.mainui.properties.OAuthClientProperties;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.*;
@@ -33,10 +32,9 @@ import java.util.LinkedHashMap;
 /**
  * @author Sergei Visotsky
  */
+@Slf4j
 @Service
 public class TokenRetrievalService {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(CustomerService.class);
 
     private static final String AUTH_SERVER = "http://localhost:8080/auth/oauth/token";
     private static final String PASSWORD_GRANT = "?grant_type=password";
@@ -104,7 +102,7 @@ public class TokenRetrievalService {
             tokenInfo.setExpiresIn((int) map.get("expires_in"));
             tokenInfo.setScope((String) map.get("scope"));
         } else {
-            LOGGER.debug("User does not exist");
+            log.debug("User does not exist");
         }
         return tokenInfo;
     }

@@ -16,8 +16,8 @@
 
 package org.sergei.reports.rest.hateoas;
 
-import org.sergei.reports.rest.AircraftReportController;
-import org.sergei.reports.rest.CustomerReportController;
+import org.sergei.reports.rest.controller.AircraftReportController;
+import org.sergei.reports.rest.controller.CustomerReportController;
 import org.sergei.reports.rest.dto.AircraftReportDTO;
 import org.sergei.reports.rest.dto.CustomerReportDTO;
 import org.sergei.reports.jpa.model.Reservation;
@@ -109,7 +109,7 @@ public class LinkUtil {
         int index = 0;
         for (Reservation reservation : reservationList) {
             Link reservationLink = new Link(
-                    "http://127.0.0.1:" + gatewayProperties.getPort() + "/reservation-api/customers/" +
+                    "http://127.0.0.1:" + gatewayProperties.getPort() + "/reservation-rest/customers/" +
                             reservationList.get(index).getReservationId()).withRel("reportSelf");
             reservation.add(reservationLink);
             index++;

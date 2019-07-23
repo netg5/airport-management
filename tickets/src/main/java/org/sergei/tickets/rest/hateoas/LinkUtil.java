@@ -49,7 +49,7 @@ public class LinkUtil {
         String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
         resources.add(new Link(uriString, "self"));
         resources.add(new Link("http://127.0.0.1:" +
-                gatewayProperties.getPort() + "/flight-api/customers/" + customerId, "customer"));
+                gatewayProperties.getPort() + "/flight-rest/customers/" + customerId, "customer"));
         return resources;
     }
 }

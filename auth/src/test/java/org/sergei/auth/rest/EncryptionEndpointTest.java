@@ -16,6 +16,7 @@
 
 package org.sergei.auth.rest;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sergei.auth.AuthApplication;
@@ -47,6 +48,7 @@ public class EncryptionEndpointTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @Ignore
     @Test
     public void getEncryptedPassword_thenAssertEquals() throws Exception {
         mockMvc.perform(

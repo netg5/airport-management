@@ -1,53 +1,28 @@
-/*
- * Copyright 2018-2019 the original author.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.sergei.reservation.service;
 
-import org.springframework.data.domain.Page;
+import org.sergei.reservation.rest.dto.RouteRequestDTO;
+import org.sergei.reservation.rest.dto.RouteResponseDTO;
+import org.sergei.reservation.rest.dto.RouteUpdateRequestDTO;
+import org.sergei.reservation.rest.dto.response.ResponseDTO;
+import org.springframework.http.ResponseEntity;
 
-import java.util.List;
+import java.util.Map;
 
 /**
- * @param <D> Simple DTO
- * @param <E> Extended DTO
  * @author Sergei Visotsky
  */
-public interface RouteService<D, E> extends IService<D> {
+public interface RouteService {
+    ResponseEntity<ResponseDTO<RouteResponseDTO>> findOneRoute(Long routeId);
 
-    /**
-     * Find one route
-     *
-     * @param aLong ID of the route to be found
-     * @return route body to be returned
-     */
-    E findOneRoute(Long aLong);
+    ResponseEntity<ResponseDTO<RouteResponseDTO>> findAllRoutes();
 
-    /**
-     * Find list of routes
-     *
-     * @return list of all routes found
-     */
-    List<E> findAllRoutes();
+    ResponseEntity<ResponseDTO<RouteResponseDTO>> findAllRoutesPaginated(int page, int size);
 
-    /**
-     * Find all routed paginated
-     *
-     * @param page number of page to return
-     * @param size number of elements per page
-     * @return page of entities
-     */
-    Page<E> findAllRoutesPaginated(int page, int size);
+    ResponseEntity<ResponseDTO<RouteResponseDTO>> save(RouteRequestDTO request);
+
+    ResponseEntity<ResponseDTO<RouteResponseDTO>> update(RouteUpdateRequestDTO request);
+
+    ResponseEntity<ResponseDTO<RouteResponseDTO>> patch(Long routeId, Map<String, Object> params);
+
+    ResponseEntity<ResponseDTO<RouteResponseDTO>> delete(Long routeId);
 }
