@@ -38,15 +38,15 @@ pipeline {
                 sh "mvn ${POM_LOCATION} package -DskipTests=true"
             }
         }
-        stage('Code inspection & quality gate') {
-            steps {
-                withSonarQubeEnv('sergei-sonar') {
-                    echo '-=- run code inspection & check quality gate -=-'
-                    sh "mvn ${POM_LOCATION} sonar:sonar " +
-                            "-Dsonar.host.url=http://79.135.149.36:9000 " +
-                            "-Dsonar.login=b18abeedf7353813275264a410d0acbc771219cd"
-                }
-            }
-        }
+//        stage('Code inspection & quality gate') {
+//            steps {
+//                withSonarQubeEnv('sergei-sonar') {
+//                    echo '-=- run code inspection & check quality gate -=-'
+//                    sh "mvn ${POM_LOCATION} sonar:sonar " +
+//                            "-Dsonar.host.url=http://79.135.149.36:9000 " +
+//                            "-Dsonar.login=b18abeedf7353813275264a410d0acbc771219cd"
+//                }
+//            }
+//        }
     }
 }
