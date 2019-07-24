@@ -20,17 +20,14 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.sergei.tickets.jpa.model.Ticket;
-import org.sergei.tickets.rest.hateoas.LinkUtil;
+import org.sergei.tickets.rest.dto.TicketRequestDTO;
 import org.sergei.tickets.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -45,40 +42,28 @@ import java.util.List;
 @RequestMapping(value = "/tickets", produces = "application/json")
 public class TicketController {
 
-    private final LinkUtil linkUtil;
     private final TicketService ticketService;
 
     @Autowired
-    public TicketController(LinkUtil linkUtil, TicketService ticketService) {
-        this.linkUtil = linkUtil;
+    public TicketController(TicketService ticketService) {
         this.ticketService = ticketService;
     }
 
     @ApiOperation("Get ticket for customer by ID")
     @GetMapping
-    public ResponseEntity<Resources<Ticket>> findAllTickets(@ApiParam(value = "Customer ID whose ticket should be found", required = true)
-                                                            @RequestParam("id") Long customerId,
-                                                            @ApiParam(value = "Place with which ticket should be found")
-                                                            @RequestParam(value = "place", required = false) String place,
-                                                            @ApiParam(value = "Distance with which ticket should be found")
-                                                            @RequestParam(value = "distance", required = false) Double distance) {
-        List<Ticket> ticketList = ticketService.findAllTickets(customerId, place, distance);
+    public ResponseEntity<Resources<Ticket>> findAllTickets(@RequestBody TicketRequestDTO request) {
+        List<Ticket> ticketList = ticketService.findAllTickets(request);
         return new ResponseEntity<>(linkUtil.setLinksForTicket(ticketList, customerId), HttpStatus.OK);
     }
 
     @ApiOperation("Get ticket for customer by ID")
     @GetMapping(params = {"page", "size"})
-    public ResponseEntity<Resources<Ticket>> findAllTicketsPageable(@ApiParam(value = "Customer ID whose ticket should be found", required = true)
-                                                                    @RequestParam("id") Long customerId,
-                                                                    @ApiParam(value = "Place with which ticket should be found")
-                                                                    @RequestParam(value = "place", required = false) String place,
-                                                                    @ApiParam(value = "Distance with which ticket should be found")
-                                                                    @RequestParam(value = "distance", required = false) Double distance,
+    public ResponseEntity<Resources<Ticket>> findAllTicketsPageable(@RequestBody TicketRequestDTO request,
                                                                     @ApiParam("Number of page")
                                                                     @RequestParam("page") int page,
                                                                     @ApiParam("Number of elements per page")
                                                                     @RequestParam("size") int size) {
-        Page<Ticket> ticketList = ticketService.findAllTicketsPageable(customerId, place, distance, page, size);
+        Page<Ticket> ticketList = ticketService.findAllTicketsPageable(request, page, size);
         return new ResponseEntity<>(linkUtil.setLinksForTicket(ticketList, customerId), HttpStatus.OK);
     }
 }
