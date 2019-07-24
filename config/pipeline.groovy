@@ -1,19 +1,19 @@
-def  POM_LOCATION = '-f tickets/pom.xml'
+def  POM_LOCATION = '-f config/pom.xml'
 pipeline {
     agent any
     tools {
         maven 'maven_3_6_1'
     }
     stages {
-        stage('Checkout Git repository') {
-            steps {
-                git branch: 'master',
-                        credentialsId: '0e7fa70a-ecc7-43e6-b55a-80c8c45673ab',
-                        url: 'https://github.com/sergeivisotsky/flight-reservation.git'
-
-                sh "ls -lat"
-            }
-        }
+//        stage('Checkout Git repository') {
+//            steps {
+//                git branch: 'master',
+//                        credentialsId: '0e7fa70a-ecc7-43e6-b55a-80c8c45673ab',
+//                        url: 'https://github.com/sergeivisotsky/flight-reservation.git'
+//
+//                sh "ls -lat"
+//            }
+//        }
         stage('Compilation') {
             steps {
                 echo '-=- compiling project -=-'

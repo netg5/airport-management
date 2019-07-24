@@ -22,8 +22,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.sergei.reports.rest.dto.CustomerReportDTO;
 import org.sergei.reports.rest.hateoas.LinkUtil;
-import org.sergei.reports.service.CustomerReportService;
-import org.sergei.reports.service.IReportService;
+import org.sergei.reports.service.CustomerReportServiceImpl;
 import org.sergei.reports.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -49,7 +48,7 @@ public class CustomerReportController {
 
     @Autowired
     public CustomerReportController(LinkUtil linkUtil,
-                                    CustomerReportService iReportService) {
+                                    CustomerReportServiceImpl iReportService) {
         this.linkUtil = linkUtil;
         this.reportService = iReportService;
     }

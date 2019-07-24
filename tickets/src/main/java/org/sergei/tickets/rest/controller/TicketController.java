@@ -19,17 +19,13 @@ package org.sergei.tickets.rest.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.sergei.tickets.jpa.model.Ticket;
+import org.sergei.tickets.rest.dto.TicketDTO;
 import org.sergei.tickets.rest.dto.TicketRequestDTO;
+import org.sergei.tickets.rest.dto.response.ResponseDTO;
 import org.sergei.tickets.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.hateoas.Resources;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * @author Sergei Visotsky
@@ -51,19 +47,17 @@ public class TicketController {
 
     @ApiOperation("Get ticket for customer by ID")
     @GetMapping
-    public ResponseEntity<Resources<Ticket>> findAllTickets(@RequestBody TicketRequestDTO request) {
-        List<Ticket> ticketList = ticketService.findAllTickets(request);
-        return new ResponseEntity<>(linkUtil.setLinksForTicket(ticketList, customerId), HttpStatus.OK);
+    public ResponseEntity<ResponseDTO<TicketDTO>> findAllTickets(@RequestBody TicketRequestDTO request) {
+        return ticketService.findAllTickets(request);
     }
 
     @ApiOperation("Get ticket for customer by ID")
     @GetMapping(params = {"page", "size"})
-    public ResponseEntity<Resources<Ticket>> findAllTicketsPageable(@RequestBody TicketRequestDTO request,
-                                                                    @ApiParam("Number of page")
-                                                                    @RequestParam("page") int page,
-                                                                    @ApiParam("Number of elements per page")
-                                                                    @RequestParam("size") int size) {
-        Page<Ticket> ticketList = ticketService.findAllTicketsPageable(request, page, size);
-        return new ResponseEntity<>(linkUtil.setLinksForTicket(ticketList, customerId), HttpStatus.OK);
+    public ResponseEntity<ResponseDTO<TicketDTO>> findAllTicketsPageable(@RequestBody TicketRequestDTO request,
+                                                                         @ApiParam("Number of page")
+                                                                         @RequestParam("page") int page,
+                                                                         @ApiParam("Number of elements per page")
+                                                                         @RequestParam("size") int size) {
+        return ticketService.findAllTicketsPageable(request, page, size);
     }
 }
