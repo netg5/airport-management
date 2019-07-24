@@ -16,14 +16,18 @@
 
 package org.sergei.tickets.service;
 
-import org.sergei.tickets.exceptions.ResourceNotFoundException;
 import org.sergei.tickets.jpa.model.Ticket;
 import org.sergei.tickets.jpa.repository.CustomerRepository;
 import org.sergei.tickets.jpa.repository.TicketRepository;
+import org.sergei.tickets.rest.dto.TicketDTO;
+import org.sergei.tickets.rest.dto.TicketRequestDTO;
+import org.sergei.tickets.rest.dto.response.ResponseDTO;
+import org.sergei.tickets.rest.exceptions.ResourceNotFoundException;
 import org.sergei.tickets.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -52,7 +56,7 @@ public class TicketServiceImpl implements TicketService {
      * @return collection of tickets
      */
     @Override
-    public List<Ticket> findAllTickets(Long customerId, String place, Double distance) {
+    public ResponseEntity<ResponseDTO<TicketDTO>> findAllTickets(TicketRequestDTO request) {
         List<Ticket> ticketList = ticketRepository.findAllTickets(customerId, place, distance);
         if (customerRepository.findById(customerId).isPresent()) {
             if (ticketList.isEmpty()) {
@@ -75,8 +79,7 @@ public class TicketServiceImpl implements TicketService {
      * @return Collection of tickets
      */
     @Override
-    public Page<Ticket> findAllTicketsPageable(Long customerId, String place,
-                                               Double distance, int page, int size) {
+    public ResponseEntity<ResponseDTO<TicketDTO>> findAllTicketsPageable(TicketRequestDTO request, int page, int size) {
         Page<Ticket> ticketList = ticketRepository
                 .findAllTicketsPageable(customerId, place, distance, PageRequest.of(page, size));
         if (ticketList.isEmpty()) {

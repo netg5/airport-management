@@ -16,7 +16,7 @@
 
 package org.sergei.reports.service;
 
-import org.sergei.reports.exceptions.ResourceNotFoundException;
+import org.sergei.reports.rest.exceptions.ResourceNotFoundException;
 import org.sergei.reports.jpa.model.CustomerReport;
 import org.sergei.reports.jpa.model.Reservation;
 import org.sergei.reports.jpa.repository.CustomerReportRepository;

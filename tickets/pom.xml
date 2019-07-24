@@ -130,6 +130,13 @@
             <version>2.9.1</version>
         </dependency>
 
+        <!-- Guava library dependency -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>27.1-jre</version>
+        </dependency>
+
         <!-- Needs for Jaeger opentrace -->
         <dependency>
             <groupId>io.opentracing.contrib</groupId>
