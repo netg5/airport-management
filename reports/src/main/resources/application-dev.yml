@@ -21,6 +21,8 @@ spring:
         generate-ddl: true
   gateway:
     port: 8080
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
 eureka:
   instance:
     non-secure-port-enabled: false
