@@ -11,7 +11,7 @@ class CusotmerApi extends Component {
         return ();
     }
 
-    getCustomerById(cusomerId) {
+    static getCustomerById(cusomerId) {
         const url = 'http://localhost:8080/reservations/customers/' + cusomerId;
         return axios
             .get(url)
