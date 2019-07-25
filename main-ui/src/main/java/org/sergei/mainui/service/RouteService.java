@@ -16,11 +16,10 @@
 
 package org.sergei.mainui.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.sergei.mainui.model.AuthTokenInfo;
 import org.sergei.mainui.model.Route;
 import org.sergei.mainui.model.RoutePost;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -31,10 +30,9 @@ import org.springframework.web.client.RestTemplate;
 /**
  * @author Sergei Visotsky
  */
+@Slf4j
 @Service
 public class RouteService {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(RouteService.class);
 
     private static final String RESERVATION_API_URI = "http://localhost:8080/reservation";
     private static final String ROUTES_PATH = "/routes/";
@@ -72,7 +70,7 @@ public class RouteService {
     public RoutePost save(RoutePost routePost) {
         AuthTokenInfo tokenInfo = tokenRetrievalService.sendTokenRequest();
         HttpEntity<RoutePost> request = new HttpEntity<>(routePost, tokenRetrievalService.getHeaders());
-        LOGGER.debug("Aircraft ID which flies by this route: {}", routePost.getAircraftId());
+        log.debug("Aircraft ID which flies by this route: {}", routePost.getAircraftId());
         return this.restTemplate.postForObject(RESERVATION_API_URI + ROUTES_PATH +
                 ACCESS_TOKEN_PARAM + tokenInfo.getAccessToken(), request, RoutePost.class);
     }

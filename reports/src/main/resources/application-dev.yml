@@ -21,6 +21,8 @@ spring:
         generate-ddl: true
   gateway:
     port: 8080
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
 eureka:
   instance:
     non-secure-port-enabled: false
@@ -32,7 +34,7 @@ eureka:
     lease-renewal-interval-in-seconds: 10 # intervalSeconds between subsequent heartbeats sent to Eureka server
     lease-expiration-duration-in-seconds: 20 # time that Eureka server waits since it received last heartbeat before it can evict this instance
     metadata-map:
-      swagger_url: http://localhost:${server.port}/${server.servlet.context-path}/v2/api-docs
+      swagger_url: http://localhost:${server.port}/${server.servlet.context-path}/v2/rest-docs
   client:
     enabled: true
     register-with-eureka: true

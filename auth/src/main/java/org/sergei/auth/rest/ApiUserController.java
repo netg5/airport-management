@@ -34,7 +34,7 @@ import java.util.List;
  * @author Sergei Visotsky
  */
 @Api(
-        value = "/auth-api/users",
+        value = "/auth-rest/users",
         produces = "application/json",
         consumes = "application/json"
 )

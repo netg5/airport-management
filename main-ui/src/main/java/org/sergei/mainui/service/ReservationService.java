@@ -19,9 +19,8 @@ package org.sergei.mainui.service;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.sergei.mainui.model.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONException;
@@ -40,10 +39,9 @@ import java.util.List;
 /**
  * @author Sergei Visotsky
  */
+@Slf4j
 @Service
 public class ReservationService {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(ReservationService.class);
 
     private static final String RESERVATION_API_URI = "http://localhost:8080/reservation";
     private static final String CUSTOMERS_PATH = "/customers/";
@@ -85,7 +83,7 @@ public class ReservationService {
 
         // Extract data after [ /_embedded/reservationExtendedDTOList ] tags
         String nodeAt = jsonNode.at("/_embedded/reservationExtendedDTOList").toString();
-        LOGGER.debug("Node at is: {}", nodeAt);
+        log.debug("Node at is: {}", nodeAt);
 
         JSONArray jsonArray = new JSONArray(nodeAt);
 
@@ -149,8 +147,8 @@ public class ReservationService {
      * @return saved reservation
      */
     public ReservationPost save(ReservationPost reservationPost) {
-        LOGGER.debug("Route ID for which reservation was made: {}", reservationPost.getRouteId());
-        LOGGER.debug("Date of the reservation: {}", reservationPost.getReservationDate());
+        log.debug("Route ID for which reservation was made: {}", reservationPost.getRouteId());
+        log.debug("Date of the reservation: {}", reservationPost.getReservationDate());
         AuthTokenInfo tokenInfo = tokenRetrievalService.sendTokenRequest();
         HttpEntity<ReservationPost> request = new HttpEntity<>(reservationPost, tokenRetrievalService.getHeaders());
         long customerId = reservationPost.getCustomerId();

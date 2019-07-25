@@ -16,14 +16,18 @@
 
 package org.sergei.tickets.service;
 
-import org.sergei.tickets.exceptions.ResourceNotFoundException;
 import org.sergei.tickets.jpa.model.Ticket;
 import org.sergei.tickets.jpa.repository.CustomerRepository;
 import org.sergei.tickets.jpa.repository.TicketRepository;
-import org.sergei.tickets.utils.Constants;
+import org.sergei.tickets.rest.dto.TicketDTO;
+import org.sergei.tickets.rest.dto.TicketRequestDTO;
+import org.sergei.tickets.rest.dto.mappers.TicketDTOListMapper;
+import org.sergei.tickets.rest.dto.response.ResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,52 +40,71 @@ public class TicketServiceImpl implements TicketService {
 
     private final TicketRepository ticketRepository;
     private final CustomerRepository customerRepository;
+    private final TicketDTOListMapper ticketDTOListMapper;
 
     @Autowired
-    public TicketServiceImpl(TicketRepository ticketRepository, CustomerRepository customerRepository) {
+    public TicketServiceImpl(TicketRepository ticketRepository,
+                             CustomerRepository customerRepository,
+                             TicketDTOListMapper ticketDTOListMapper) {
         this.ticketRepository = ticketRepository;
         this.customerRepository = customerRepository;
+        this.ticketDTOListMapper = ticketDTOListMapper;
     }
 
     /**
      * Method to find tickets for customer
      *
-     * @param customerId whose tickets should be found
-     * @param place      Where customer should fly
-     * @param distance   Up to the point
+     * @param request Request payload with params to find tickets
      * @return collection of tickets
      */
     @Override
-    public List<Ticket> findAllTickets(Long customerId, String place, Double distance) {
-        List<Ticket> ticketList = ticketRepository.findAllTickets(customerId, place, distance);
-        if (customerRepository.findById(customerId).isPresent()) {
-            if (ticketList.isEmpty()) {
-                throw new ResourceNotFoundException(Constants.TICKETS_NOT_FOUND);
-            }
+    public ResponseEntity<ResponseDTO<TicketDTO>> findAllTickets(TicketRequestDTO request) {
+        Long customerId = request.getCustomerId();
+        String place = request.getPlace();
+        Double distance = request.getDistance();
+        if (customerRepository.findById(customerId).isEmpty()) {
+            return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
         } else {
-            throw new ResourceNotFoundException(Constants.CUSTOMER_NOT_FOUND);
+            List<Ticket> ticketList = ticketRepository.findAllTickets(customerId, place, distance);
+            if (ticketList.isEmpty()) {
+                return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+            } else {
+                List<TicketDTO> ticketDTOList = ticketDTOListMapper.apply(ticketList);
+                ResponseDTO<TicketDTO> response = new ResponseDTO<>();
+                response.setErrorList(List.of());
+                response.setResponse(ticketDTOList);
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
         }
-        return ticketList;
     }
 
     /**
      * Method to find tickets for customer paginated
      *
-     * @param customerId whose tickets should be found
-     * @param place      Where customer should fly
-     * @param distance   Up to the point
-     * @param page       number of page to show
-     * @param size       element quantity per page
+     * @param request request Request payload with params to find tickets
+     * @param page    number of page to show
+     * @param size    element quantity per page
      * @return Collection of tickets
      */
     @Override
-    public Page<Ticket> findAllTicketsPageable(Long customerId, String place,
-                                               Double distance, int page, int size) {
-        Page<Ticket> ticketList = ticketRepository
-                .findAllTicketsPageable(customerId, place, distance, PageRequest.of(page, size));
-        if (ticketList.isEmpty()) {
-            throw new ResourceNotFoundException(Constants.TICKETS_NOT_FOUND);
+    public ResponseEntity<ResponseDTO<TicketDTO>> findAllTicketsPageable(TicketRequestDTO request, int page, int size) {
+        Long customerId = request.getCustomerId();
+        String place = request.getPlace();
+        Double distance = request.getDistance();
+        if (customerRepository.findById(customerId).isEmpty()) {
+            return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+        } else {
+            Page<Ticket> ticketList = ticketRepository
+                    .findAllTicketsPageable(customerId, place, distance, PageRequest.of(page, size));
+            if (ticketList.isEmpty()) {
+                return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+            } else {
+                List<TicketDTO> ticketDTOList = ticketDTOListMapper.apply(ticketList.getContent());
+                ResponseDTO<TicketDTO> response = new ResponseDTO<>();
+                response.setErrorList(List.of());
+                response.setResponse(ticketDTOList);
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
         }
-        return ticketList;
     }
 }
