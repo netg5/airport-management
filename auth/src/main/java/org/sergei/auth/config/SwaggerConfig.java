@@ -20,7 +20,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.*;
@@ -48,34 +47,17 @@ public class SwaggerConfig {
     @Value("${security.oauth2.access-token-uri}")
     private String authServer;
 
-    @Value("${spring.gateway.port}")
-    private int port;
-
     private static final String CLIENT_SECRET = "client_secret";
 
     @Bean
     public Docket api() {
-        log.debug("Server port id: {}", port);
         return new Docket(DocumentationType.SWAGGER_2)
-                .host("localhost:" + port)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("org.sergei.auth.rest"))
                 .paths(PathSelectors.any())
                 .build()
                 .securitySchemes(Collections.singletonList(securitySchema()))
-                .securityContexts(Collections.singletonList(securityContext()))
-                .apiInfo(apiInfo());
-    }
-
-    private ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-                .title("Authentication API methods")
-                .description("User authentication and management resources")
-                .version("1.0")
-                .license("Apache 2.0")
-                .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
-                .contact(new Contact("", "", "sergei.visotsky@gmail.com"))
-                .build();
+                .securityContexts(Collections.singletonList(securityContext()));
     }
 
     @Bean

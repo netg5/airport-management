@@ -17,12 +17,9 @@
 package org.sergei.tickets.config;
 
 import lombok.extern.slf4j.Slf4j;
-import org.sergei.tickets.config.properties.GatewayProperties;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.*;
@@ -52,35 +49,15 @@ public class SwaggerConfig {
 
     private static final String CLIENT_SECRET = "client_secret";
 
-    private final GatewayProperties gatewayProperties;
-
-    @Autowired
-    public SwaggerConfig(GatewayProperties gatewayProperties) {
-        this.gatewayProperties = gatewayProperties;
-    }
-
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .host("localhost:" + gatewayProperties.getPort())
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("org.sergei.tickets.rest"))
                 .paths(PathSelectors.any())
                 .build()
                 .securitySchemes(Collections.singletonList(securitySchema()))
-                .securityContexts(Collections.singletonList(securityContext()))
-                .apiInfo(apiInfo());
-    }
-
-    private ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-                .title("Ticket service API methods")
-                .description("Methods needed to retrieve, add and modify data")
-                .version("1.0")
-                .license("Apache 2.0")
-                .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
-                .contact(new Contact("", "", "sergei.visotsky@gmail.com"))
-                .build();
+                .securityContexts(Collections.singletonList(securityContext()));
     }
 
     @Bean
@@ -100,7 +77,7 @@ public class SwaggerConfig {
         authorizationScopeList.add(new AuthorizationScope("write", "write all"));
 
         List<GrantType> grantTypes = new ArrayList<>();
-        log.debug("OAuth2 token URI id: {}", authServer);
+        log.debug("OAuth2 token URI is: {}", authServer);
         GrantType grantType = new ResourceOwnerPasswordCredentialsGrant(authServer);
         grantTypes.add(grantType);
 

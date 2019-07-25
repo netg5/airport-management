@@ -17,12 +17,9 @@
 package org.sergei.reports.config;
 
 import lombok.extern.slf4j.Slf4j;
-import org.sergei.reports.config.properties.GatewayProperties;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.*;
@@ -52,36 +49,15 @@ public class SwaggerConfig {
 
     private static final String CLIENT_SECRET = "client_secret";
 
-    private final GatewayProperties gatewayProperties;
-
-    @Autowired
-    public SwaggerConfig(GatewayProperties gatewayProperties) {
-        this.gatewayProperties = gatewayProperties;
-    }
-
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .host("localhost:" + gatewayProperties.getPort())
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("org.sergei.reports.rest"))
                 .paths(PathSelectors.any())
                 .build()
                 .securitySchemes(Collections.singletonList(securitySchema()))
-                .securityContexts(Collections.singletonList(securityContext()))
-                .apiInfo(apiInfo());
-    }
-
-    private ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-                .title("Report service API methods")
-                .description("Methods needed to retrieve all data to create reports for a specific model " +
-                        "\n API accessible for the ROLE_ADMIN only")
-                .version("1.0")
-                .license("Apache 2.0")
-                .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
-                .contact(new Contact("", "", "sergei.visotsky@gmail.com"))
-                .build();
+                .securityContexts(Collections.singletonList(securityContext()));
     }
 
     @Bean
