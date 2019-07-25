@@ -23,6 +23,8 @@ spring:
     port: 8080
   liquibase:
     enabled: false
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
 eureka:
   instance:
     non-secure-port-enabled: false
