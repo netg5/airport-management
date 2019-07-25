@@ -2,6 +2,9 @@ server:
   port: 8083
   servlet:
     context-path: /reservation
+  error:
+    whitelabel:
+      enabled: false
 spring:
   application:
     name: reservation
@@ -21,6 +24,8 @@ spring:
         generate-ddl: true
   gateway:
     port: 9090
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
 eureka:
   instance:
     non-secure-port-enabled: false
