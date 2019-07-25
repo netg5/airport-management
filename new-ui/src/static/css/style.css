@@ -14,30 +14,27 @@
  * limitations under the License.
  */
 
-package org.sergei.reports.service;
+.margin-top {
+    margin-top: 30px;
+}
 
-import org.springframework.data.domain.Page;
+.margin-top {
+    margin-top: 50px;
+}
 
-/**
- * @param <D> Data Transfer Object
- * @author Sergei Visotsky
- */
-public interface IReportService<D> {
+main > .container {
+    padding: 60px 15px 50px;
+}
 
-    /**
-     * Find all existing reports
-     *
-     * @param page number of page to show
-     * @param size number of elements per page
-     * @return list of existing reports
-     */
-    Page<D> findAll(int page, int size);
+.footer {
+    background-color: #f5f5f5;
+}
 
-    /**
-     * Find one report by ID
-     *
-     * @param id identity of the report that should be found
-     * @return Report entity
-     */
-    D findById(Long id);
+.footer > .container {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+code {
+    font-size: 80%;
 }

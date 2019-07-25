@@ -5,15 +5,15 @@ pipeline {
         maven 'maven_3_6_1'
     }
     stages {
-        stage('Checkout Git repository') {
-            steps {
-                git branch: 'master',
-                        credentialsId: '0e7fa70a-ecc7-43e6-b55a-80c8c45673ab',
-                        url: 'https://github.com/sergeivisotsky/flight-reservation.git'
-
-                sh "ls -lat"
-            }
-        }
+//        stage('Checkout Git repository') {
+//            steps {
+//                git branch: 'master',
+//                        credentialsId: '0e7fa70a-ecc7-43e6-b55a-80c8c45673ab',
+//                        url: 'https://github.com/sergeivisotsky/flight-reservation.git'
+//
+//                sh "ls -lat"
+//            }
+//        }
         stage('Compilation') {
             steps {
                 echo '-=- compiling project -=-'
@@ -38,15 +38,15 @@ pipeline {
                 sh "mvn ${POM_LOCATION} package -DskipTests=true"
             }
         }
-        stage('Code inspection & quality gate') {
-            steps {
-                withSonarQubeEnv('sergei-sonar') {
-                    echo '-=- run code inspection & check quality gate -=-'
-                    sh "mvn ${POM_LOCATION} sonar:sonar " +
-                            "-Dsonar.host.url=http://79.135.149.36:9000 " +
-                            "-Dsonar.login=b18abeedf7353813275264a410d0acbc771219cd"
-                }
-            }
-        }
+//        stage('Code inspection & quality gate') {
+//            steps {
+//                withSonarQubeEnv('sergei-sonar') {
+//                    echo '-=- run code inspection & check quality gate -=-'
+//                    sh "mvn ${POM_LOCATION} sonar:sonar " +
+//                            "-Dsonar.host.url=http://79.135.149.36:9000 " +
+//                            "-Dsonar.login=b18abeedf7353813275264a410d0acbc771219cd"
+//                }
+//            }
+//        }
     }
 }

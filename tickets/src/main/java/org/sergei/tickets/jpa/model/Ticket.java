@@ -16,9 +16,6 @@
 
 package org.sergei.tickets.jpa.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,7 +34,6 @@ import java.io.Serializable;
  *
  * @author Sergei Visotsky
  */
-@ApiModel(value = "Ticket", description = "Ticket model")
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
@@ -49,37 +45,28 @@ public class Ticket extends ResourceSupport implements Serializable {
 
     private static final long serialVersionUID = 1213518846387676066L;
 
-    @ApiModelProperty("Customer ID whose ticket is returned")
-    @JsonIgnore
     @Column(updatable = false, nullable = false)
     private Long customerId;
 
-    @ApiModelProperty("Customer first name whose ticket is returned")
     @Column(name = "first_name")
     private String firstName;
 
-    @ApiModelProperty("Customer first name whose ticket is returned")
     @Column(name = "last_name")
     private String lastName;
 
-    @ApiModelProperty("Route ID")
     @Id
     @Column(name = "route_id")
     private Long routeId;
 
-    @ApiModelProperty("Place to fly")
     @Column(name = "place")
     private String place;
 
-    @ApiModelProperty("Flight distance")
     @Column(name = "distance")
     private Double distance;
 
-    @ApiModelProperty("Flight price")
     @Column(name = "price")
     private Float price;
 
-    @ApiModelProperty("Aircraft name")
     @Column(name = "aircraft_name")
     private String aircraftName;
 }

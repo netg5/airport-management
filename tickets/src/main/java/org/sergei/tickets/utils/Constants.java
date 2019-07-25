@@ -20,7 +20,9 @@ package org.sergei.tickets.utils;
  * Constants that are used in service layer
  *
  * @author Sergei Visotsky
+ * @deprecated Due to all errors are going to tbe moved into the database
  */
+@Deprecated(forRemoval = true)
 public final class Constants {
 
     /**
