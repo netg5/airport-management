@@ -20,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.*;
@@ -42,6 +43,7 @@ import static org.springframework.security.oauth2.provider.token.AccessTokenConv
 @Slf4j
 @Configuration
 @EnableSwagger2
+@Profile({"dev"})
 public class SwaggerConfig {
 
     @Value("${security.oauth2.access-token-uri}")
