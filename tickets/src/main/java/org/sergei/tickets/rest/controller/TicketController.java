@@ -25,7 +25,10 @@ import org.sergei.tickets.rest.dto.response.ResponseDTO;
 import org.sergei.tickets.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author Sergei Visotsky
@@ -35,7 +38,6 @@ import org.springframework.web.bind.annotation.*;
         produces = "application/json"
 )
 @RestController
-@RequestMapping(value = "/tickets", produces = "application/json")
 public class TicketController {
 
     private final TicketService ticketService;
@@ -46,13 +48,13 @@ public class TicketController {
     }
 
     @ApiOperation("Get ticket for customer by ID")
-    @GetMapping
+    @PostMapping(produces = "application/json")
     public ResponseEntity<ResponseDTO<TicketDTO>> findAllTickets(@RequestBody TicketRequestDTO request) {
         return ticketService.findAllTickets(request);
     }
 
     @ApiOperation("Get ticket for customer by ID")
-    @GetMapping(params = {"page", "size"})
+    @PostMapping(params = {"page", "size"}, produces = "application/json")
     public ResponseEntity<ResponseDTO<TicketDTO>> findAllTicketsPageable(@RequestBody TicketRequestDTO request,
                                                                          @ApiParam("Number of page")
                                                                          @RequestParam("page") int page,
