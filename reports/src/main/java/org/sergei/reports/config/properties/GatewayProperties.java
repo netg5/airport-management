@@ -24,7 +24,10 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Configuration;
 
 /**
+ * Should be removed after LinkUtil removal
+ *
  * @author Sergei Visotsky
+ * @deprecated
  */
 @Getter
 @Setter
@@ -32,6 +35,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @EnableConfigurationProperties(GatewayProperties.class)
 @ConfigurationProperties(prefix = "spring.gateway")
+@Deprecated(forRemoval = true)
 public class GatewayProperties {
     private int port;
 }
