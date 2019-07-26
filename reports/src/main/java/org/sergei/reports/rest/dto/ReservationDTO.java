@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -17,7 +18,9 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReservationDTO {
+public class ReservationDTO implements Serializable {
+
+    private static final long serialVersionUID = 6494848725186245628L;
 
     @ApiModelProperty("Reservation ID")
     private Long reservationId;

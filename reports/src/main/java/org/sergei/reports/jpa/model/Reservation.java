@@ -16,14 +16,17 @@
 
 package org.sergei.reports.jpa.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.Immutable;
-import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -31,13 +34,14 @@ import java.time.LocalDateTime;
  */
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "reservation")
 @Immutable
-public class Reservation extends ResourceSupport {
+public class Reservation implements Serializable {
+
+    private static final long serialVersionUID = 9190764869830738796L;
 
     @Id
     @Column(name = "reservation_id")

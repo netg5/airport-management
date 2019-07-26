@@ -26,6 +26,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
@@ -38,7 +39,9 @@ import java.math.BigDecimal;
 @Entity
 @Immutable
 @Table(name = "aircraft_report_view")
-public class AircraftReport {
+public class AircraftReport implements Serializable {
+
+    private static final long serialVersionUID = 6500229837354308138L;
 
     @Id
     @Column(name = "aircraft_id")

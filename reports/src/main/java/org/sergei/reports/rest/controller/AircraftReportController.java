@@ -16,16 +16,14 @@
 
 package org.sergei.reports.rest.controller;
 
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.sergei.reports.rest.dto.AircraftReportDTO;
-import org.sergei.reports.rest.hateoas.LinkUtil;
+import org.sergei.reports.rest.dto.response.ResponseDTO;
 import org.sergei.reports.service.AircraftReportService;
 import org.sergei.reports.service.AircraftReportServiceImpl;
-import org.sergei.reports.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.hateoas.Resources;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,33 +38,26 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/aircrafts")
 public class AircraftReportController {
 
-    private final LinkUtil linkUtil;
     private final AircraftReportService aircraftReportService;
 
     @Autowired
-    public AircraftReportController(LinkUtil linkUtil, AircraftReportServiceImpl aircraftReportService) {
-        this.linkUtil = linkUtil;
+    public AircraftReportController(AircraftReportServiceImpl aircraftReportService) {
         this.aircraftReportService = aircraftReportService;
     }
 
     @ApiOperation("Get all existing reports in paginated way")
     @GetMapping(params = {"page", "size"})
-    public ResponseEntity<Resources> findAllReports(@ApiParam("Number of the page to show")
-                                                    @RequestParam("page") int page,
-                                                    @ApiParam("Number of elements per page")
-                                                    @RequestParam("size") int size) {
-        Page<AircraftReportDTO> aircraftReports = aircraftReportService.findAll(page, size);
-        return new ResponseEntity<>(linkUtil.setLinksForAllReports(aircraftReports), HttpStatus.OK);
+    public ResponseEntity<ResponseDTO<AircraftReportDTO>> findAllReports(@ApiParam("Number of the page to show")
+                                                                         @RequestParam("page") int page,
+                                                                         @ApiParam("Number of elements per page")
+                                                                         @RequestParam("size") int size) {
+        return aircraftReportService.findAll(page, size);
     }
 
     @ApiOperation("Get report for the aircraft by ID")
-    @ApiResponses({
-            @ApiResponse(code = 404, message = Constants.AIRCRAFT_NOT_FOUND)
-    })
     @GetMapping("/{aircraftId}")
-    public ResponseEntity<AircraftReportDTO> findByAircraftId(@ApiParam("Aircraft ID to find the report")
-                                                              @PathVariable("aircraftId") Long aircraftId) {
-        AircraftReportDTO aircraftReportDTO = aircraftReportService.findById(aircraftId);
-        return new ResponseEntity<>(linkUtil.setLinksForAircraftReport(aircraftReportDTO), HttpStatus.OK);
+    public ResponseEntity<ResponseDTO<AircraftReportDTO>> findByAircraftId(@ApiParam("Aircraft ID to find the report")
+                                                                           @PathVariable("aircraftId") Long aircraftId) {
+        return aircraftReportService.findById(aircraftId);
     }
 }

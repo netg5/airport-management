@@ -21,10 +21,11 @@ import org.sergei.reports.jpa.model.Reservation;
 import org.sergei.reports.jpa.repository.CustomerReportRepository;
 import org.sergei.reports.jpa.repository.ReservationRepository;
 import org.sergei.reports.rest.dto.CustomerReportDTO;
+import org.sergei.reports.rest.dto.response.ResponseDTO;
 import org.sergei.reports.rest.exceptions.ResourceNotFoundException;
 import org.sergei.reports.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -48,7 +49,7 @@ public class CustomerReportServiceImpl implements CustomerReportService {
     }
 
     @Override
-    public CustomerReportDTO findById(Long id) {
+    public ResponseEntity<ResponseDTO<CustomerReportDTO>> findById(Long id) {
         CustomerReport customerReport = customerReportRepository.findById(id)
                 .orElseThrow(
                         () -> new ResourceNotFoundException(Constants.CUSTOMER_NOT_FOUND)
@@ -61,7 +62,7 @@ public class CustomerReportServiceImpl implements CustomerReportService {
     }
 
     @Override
-    public Page<CustomerReportDTO> findAll(int page, int size) {
+    public ResponseEntity<ResponseDTO<CustomerReportDTO>> findAll(int page, int size) {
         return null;
     }
 }
