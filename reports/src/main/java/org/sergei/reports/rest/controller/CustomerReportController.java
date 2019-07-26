@@ -21,7 +21,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.sergei.reports.rest.dto.CustomerReportDTO;
-import org.sergei.reports.rest.hateoas.LinkUtil;
+import org.sergei.reports.rest.dto.response.ResponseDTO;
 import org.sergei.reports.service.CustomerReportService;
 import org.sergei.reports.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,23 +43,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/customers")
 public class CustomerReportController {
 
-    private final LinkUtil linkUtil;
     private final CustomerReportService customerReportService;
 
     @Autowired
-    public CustomerReportController(LinkUtil linkUtil,
-                                    CustomerReportService customerReportService) {
-        this.linkUtil = linkUtil;
+    public CustomerReportController(CustomerReportService customerReportService) {
         this.customerReportService = customerReportService;
     }
 
     @ApiOperation("Get report for a specific customer")
-    @ApiResponses({
-            @ApiResponse(code = 404, message = Constants.CUSTOMER_NOT_FOUND)
-    })
-    @GetMapping("/{customerId}")
-    public ResponseEntity<CustomerReportDTO> findReportByCustomerId(@PathVariable Long customerId) {
-        CustomerReportDTO customerReportDTO = customerReportService.findById(customerId);
-        return new ResponseEntity<>(linkUtil.setLinksForCustomerReport(customerReportDTO), HttpStatus.OK);
+    @GetMapping(value = "/{customerId}", produces = "application/json")
+    public ResponseEntity<ResponseDTO<CustomerReportDTO>> findReportByCustomerId(@PathVariable Long customerId) {
+        return customerReportService.findById(customerId);
     }
 }

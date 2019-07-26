@@ -21,16 +21,16 @@ import org.sergei.reports.jpa.model.Reservation;
 import org.sergei.reports.jpa.repository.CustomerReportRepository;
 import org.sergei.reports.jpa.repository.ReservationRepository;
 import org.sergei.reports.rest.dto.CustomerReportDTO;
+import org.sergei.reports.rest.dto.mappers.CustomerReportDTOMapper;
+import org.sergei.reports.rest.dto.mappers.ReservationDTOListMapper;
 import org.sergei.reports.rest.dto.response.ResponseDTO;
-import org.sergei.reports.rest.exceptions.ResourceNotFoundException;
-import org.sergei.reports.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
-import static org.sergei.reports.utils.ObjectMapperUtil.map;
+import java.util.Optional;
 
 /**
  * @author Sergei Visotsky
@@ -40,25 +40,41 @@ public class CustomerReportServiceImpl implements CustomerReportService {
 
     private final CustomerReportRepository customerReportRepository;
     private final ReservationRepository reservationRepository;
+    private final CustomerReportDTOMapper customerReportDTOMapper;
+    private final ReservationDTOListMapper reservationDTOListMapper;
 
     @Autowired
     public CustomerReportServiceImpl(CustomerReportRepository customerReportRepository,
-                                     ReservationRepository reservationRepository) {
+                                     ReservationRepository reservationRepository,
+                                     CustomerReportDTOMapper customerReportDTOMapper,
+                                     ReservationDTOListMapper reservationDTOListMapper) {
         this.customerReportRepository = customerReportRepository;
         this.reservationRepository = reservationRepository;
+        this.customerReportDTOMapper = customerReportDTOMapper;
+        this.reservationDTOListMapper = reservationDTOListMapper;
     }
 
     @Override
     public ResponseEntity<ResponseDTO<CustomerReportDTO>> findById(Long id) {
-        CustomerReport customerReport = customerReportRepository.findById(id)
-                .orElseThrow(
-                        () -> new ResourceNotFoundException(Constants.CUSTOMER_NOT_FOUND)
-                );
-        CustomerReportDTO customerReportDTO = map(customerReport, CustomerReportDTO.class);
-        List<Reservation> reservations =
-                reservationRepository.findAllByCustomerId(customerReportDTO.getCustomerId());
-        customerReportDTO.setReservations(reservations);
-        return customerReportDTO;
+        Optional<CustomerReport> customerReport = customerReportRepository.findById(id);
+        if (customerReport.isEmpty()) {
+            return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+        } else {
+            CustomerReportDTO customerReportDTO = customerReportDTOMapper.apply(customerReport.get());
+            List<Reservation> reservations =
+                    reservationRepository.findAllByCustomerId(customerReportDTO.getCustomerId());
+            if (reservations.isEmpty()) {
+                return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+            } else {
+                customerReportDTO.setReservations(reservationDTOListMapper.apply(reservations));
+
+                ResponseDTO<CustomerReportDTO> response = new ResponseDTO<>();
+                response.setErrorList(List.of());
+                response.setResponse(List.of(customerReportDTO));
+
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
+        }
     }
 
     @Override

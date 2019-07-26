@@ -21,19 +21,22 @@ import org.sergei.reports.jpa.model.Reservation;
 import org.sergei.reports.jpa.repository.AircraftReportRepository;
 import org.sergei.reports.jpa.repository.ReservationRepository;
 import org.sergei.reports.rest.dto.AircraftReportDTO;
+import org.sergei.reports.rest.dto.ReservationDTO;
+import org.sergei.reports.rest.dto.mappers.AircraftReportDTOListMapper;
+import org.sergei.reports.rest.dto.mappers.AircraftReportDTOMapper;
+import org.sergei.reports.rest.dto.mappers.ReservationDTOListMapper;
 import org.sergei.reports.rest.dto.response.ResponseDTO;
-import org.sergei.reports.rest.exceptions.ResourceNotFoundException;
-import org.sergei.reports.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.sergei.reports.utils.ObjectMapperUtil.map;
-import static org.sergei.reports.utils.ObjectMapperUtil.mapAllPages;
 
 /**
  * @author Sergei Visotsky
@@ -43,12 +46,21 @@ public class AircraftReportServiceImpl implements AircraftReportService {
 
     private final AircraftReportRepository aircraftReportRepository;
     private final ReservationRepository reservationRepository;
+    private final AircraftReportDTOMapper aircraftReportDTOMapper;
+    private final AircraftReportDTOListMapper aircraftReportDTOListMapper;
+    private final ReservationDTOListMapper reservationDTOListMapper;
 
     @Autowired
     public AircraftReportServiceImpl(AircraftReportRepository aircraftReportRepository,
-                                     ReservationRepository reservationRepository) {
+                                     ReservationRepository reservationRepository,
+                                     AircraftReportDTOMapper aircraftReportDTOMapper,
+                                     AircraftReportDTOListMapper aircraftReportDTOListMapper,
+                                     ReservationDTOListMapper reservationDTOListMapper) {
         this.aircraftReportRepository = aircraftReportRepository;
         this.reservationRepository = reservationRepository;
+        this.aircraftReportDTOMapper = aircraftReportDTOMapper;
+        this.aircraftReportDTOListMapper = aircraftReportDTOListMapper;
+        this.reservationDTOListMapper = reservationDTOListMapper;
     }
 
     /**
@@ -62,16 +74,25 @@ public class AircraftReportServiceImpl implements AircraftReportService {
     public ResponseEntity<ResponseDTO<AircraftReportDTO>> findAll(int page, int size) {
         Page<AircraftReport> aircraftReports =
                 aircraftReportRepository.findAll(PageRequest.of(page, size));
+        if (aircraftReports.isEmpty()) {
+            return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+        } else {
 
-        Page<AircraftReportDTO> aircraftReportDTOS =
-                mapAllPages(aircraftReports, AircraftReportDTO.class);
+            List<AircraftReportDTO> aircraftReportDTO = aircraftReportDTOListMapper.apply(aircraftReports.getContent());
 
-        aircraftReportDTOS.forEach(reportDTO -> {
-            List<Reservation> reservationList =
-                    reservationRepository.findAllByRouteId(reportDTO.getRouteId());
-            reportDTO.setReservations(reservationList);
-        });
-        return aircraftReportDTOS;
+            aircraftReportDTO.forEach(reportDTO -> {
+                List<Reservation> reservationList =
+                        reservationRepository.findAllByRouteId(reportDTO.getRouteId());
+                if (reservationList.isEmpty()) {
+                    return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+                } else {
+
+                    List<ReservationDTO> reservationDTOList = reservationDTOListMapper.apply(reservationList);
+                    reportDTO.setReservations(reservationDTOList);
+                }
+            });
+            return aircraftReportDTOS;
+        }
     }
 
     /**
@@ -82,13 +103,14 @@ public class AircraftReportServiceImpl implements AircraftReportService {
      */
     @Override
     public ResponseEntity<ResponseDTO<AircraftReportDTO>> findById(Long aircraftId) {
-        AircraftReport aircraftReport = aircraftReportRepository.findById(aircraftId)
-                .orElseThrow(
-                        () -> new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)
-                );
-        List<Reservation> reservationList = reservationRepository.findAllByRouteId(aircraftReport.getRouteId());
-        AircraftReportDTO aircraftReportDTO = map(aircraftReport, AircraftReportDTO.class);
-        aircraftReportDTO.setReservations(reservationList);
-        return aircraftReportDTO;
+        Optional<AircraftReport> aircraftReport = aircraftReportRepository.findById(aircraftId);
+        if (aircraftReport.isEmpty()) {
+            return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+        } else {
+            List<Reservation> reservationList = reservationRepository.findAllByRouteId(aircraftReport.get().getRouteId());
+            AircraftReportDTO aircraftReportDTO = aircraftReportDTOMapper.apply(aircraftReport.get());
+            aircraftReportDTO.setReservations(reservationList);
+            return aircraftReportDTO;
+        }
     }
 }

@@ -49,5 +49,5 @@ public class CustomerReportDTO implements Serializable {
     private String lastName;
 
     @ApiModelProperty("Collection of reservations made by customer")
-    private List<Reservation> reservations;
+    private List<ReservationDTO> reservations;
 }
