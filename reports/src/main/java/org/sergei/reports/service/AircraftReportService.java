@@ -1,7 +1,9 @@
 package org.sergei.reports.service;
 
 import org.sergei.reports.rest.dto.AircraftReportDTO;
+import org.sergei.reports.rest.dto.response.ResponseDTO;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 /**
@@ -9,7 +11,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public interface AircraftReportService {
-    Page<AircraftReportDTO> findAll(int page, int size);
+    ResponseEntity<ResponseDTO<AircraftReportDTO>> findAll(int page, int size);
 
-    AircraftReportDTO findById(Long aircraftId);
+    ResponseEntity<ResponseDTO<AircraftReportDTO>> findById(Long aircraftId);
 }

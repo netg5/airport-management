@@ -24,6 +24,7 @@ import org.springframework.data.annotation.Immutable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 /**
  * @author Sergei Visotsky
@@ -34,7 +35,9 @@ import javax.persistence.Table;
 @Immutable
 @Entity
 @Table(name = "customer")
-public class BaseCustomer {
+public class BaseCustomer implements Serializable {
+
+    private static final long serialVersionUID = 6973333612898495544L;
 
     @Id
     private Long id;

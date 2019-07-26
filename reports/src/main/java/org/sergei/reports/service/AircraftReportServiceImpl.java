@@ -21,11 +21,13 @@ import org.sergei.reports.jpa.model.Reservation;
 import org.sergei.reports.jpa.repository.AircraftReportRepository;
 import org.sergei.reports.jpa.repository.ReservationRepository;
 import org.sergei.reports.rest.dto.AircraftReportDTO;
+import org.sergei.reports.rest.dto.response.ResponseDTO;
 import org.sergei.reports.rest.exceptions.ResourceNotFoundException;
 import org.sergei.reports.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -57,7 +59,7 @@ public class AircraftReportServiceImpl implements AircraftReportService {
      * @return list of existing reports
      */
     @Override
-    public Page<AircraftReportDTO> findAll(int page, int size) {
+    public ResponseEntity<ResponseDTO<AircraftReportDTO>> findAll(int page, int size) {
         Page<AircraftReport> aircraftReports =
                 aircraftReportRepository.findAll(PageRequest.of(page, size));
 
@@ -79,7 +81,7 @@ public class AircraftReportServiceImpl implements AircraftReportService {
      * @return Report entity
      */
     @Override
-    public AircraftReportDTO findById(Long aircraftId) {
+    public ResponseEntity<ResponseDTO<AircraftReportDTO>> findById(Long aircraftId) {
         AircraftReport aircraftReport = aircraftReportRepository.findById(aircraftId)
                 .orElseThrow(
                         () -> new ResourceNotFoundException(Constants.AIRCRAFT_NOT_FOUND)

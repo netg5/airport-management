@@ -16,46 +16,43 @@
 
 package org.sergei.reports.jpa.model;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.Immutable;
-import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
  * @author Sergei Visotsky
  */
-@ApiModel(value = "Reservation", description = "Reservation made")
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "reservation")
 @Immutable
-public class Reservation extends ResourceSupport {
+public class Reservation implements Serializable {
 
-    @ApiModelProperty("Reservation ID")
+    private static final long serialVersionUID = 9190764869830738796L;
+
     @Id
     @Column(name = "reservation_id")
     private Long reservationId;
 
-    @ApiModelProperty("Date when reservation was made")
     @Column(name = "reservation_date")
     private LocalDateTime reservationDate;
 
-    @ApiModelProperty("Customer ID who made reservation")
     @Column(name = "customer_id")
     private Long customerId;
 
-    @ApiModelProperty("Destination route I")
     @Column(name = "route_id")
     private Long routeId;
 }

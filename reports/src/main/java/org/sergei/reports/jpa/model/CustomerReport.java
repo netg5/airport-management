@@ -26,6 +26,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 /**
  * @author Sergei Visotsky
@@ -37,7 +38,9 @@ import javax.persistence.Table;
 @Immutable
 @Entity
 @Table(name = "customer_report_view")
-public class CustomerReport {
+public class CustomerReport implements Serializable {
+
+    private static final long serialVersionUID = 5290919900867685466L;
 
     @Id
     @Column(name = "customer_id")

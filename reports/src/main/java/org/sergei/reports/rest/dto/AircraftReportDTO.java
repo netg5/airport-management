@@ -18,12 +18,13 @@ package org.sergei.reports.rest.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
-import org.sergei.reports.jpa.model.Reservation;
-import org.springframework.hateoas.ResourceSupport;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -32,10 +33,11 @@ import java.util.List;
 @ApiModel(value = "AircraftReport", description = "Aircraft report model")
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class AircraftReportDTO extends ResourceSupport {
+public class AircraftReportDTO implements Serializable {
+
+    private static final long serialVersionUID = 3339446631856128623L;
 
     @ApiModelProperty("Aircraft ID whoose report is shown")
     private Long aircraftId;
@@ -59,5 +61,5 @@ public class AircraftReportDTO extends ResourceSupport {
     private BigDecimal price;
 
     @ApiModelProperty("Collection of reservation made for specific aircraft")
-    private List<Reservation> reservations = new LinkedList<>();
+    private List<ReservationDTO> reservations;
 }

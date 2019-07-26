@@ -1,7 +1,8 @@
 package org.sergei.reports.service;
 
 import org.sergei.reports.rest.dto.CustomerReportDTO;
-import org.springframework.data.domain.Page;
+import org.sergei.reports.rest.dto.response.ResponseDTO;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 /**
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public interface CustomerReportService {
-    CustomerReportDTO findById(Long id);
+    ResponseEntity<ResponseDTO<CustomerReportDTO>> findById(Long id);
 
-    Page<CustomerReportDTO> findAll(int page, int size);
+    ResponseEntity<ResponseDTO<CustomerReportDTO>> findAll(int page, int size);
 }

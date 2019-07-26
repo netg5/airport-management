@@ -18,11 +18,13 @@ package org.sergei.reports.rest.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.sergei.reports.jpa.model.Reservation;
-import org.springframework.hateoas.ResourceSupport;
 
-import java.util.LinkedList;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -31,10 +33,11 @@ import java.util.List;
 @ApiModel(value = "CustomerReport", description = "Customer report model")
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class CustomerReportDTO extends ResourceSupport {
+public class CustomerReportDTO implements Serializable {
+
+    private static final long serialVersionUID = 8914288724752543722L;
 
     @ApiModelProperty("Customer ID who made reservation")
     private Long customerId;
@@ -46,5 +49,5 @@ public class CustomerReportDTO extends ResourceSupport {
     private String lastName;
 
     @ApiModelProperty("Collection of reservations made by customer")
-    private List<Reservation> reservations = new LinkedList<>();
+    private List<Reservation> reservations;
 }
