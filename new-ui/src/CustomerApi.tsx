@@ -7,14 +7,14 @@ const jsonHeader = {
 };
 
 class CusotmerApi extends Component {
-    render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
-        return ();
-    }
-
-    static getCustomerById(cusomerId) {
-        const url = 'http://localhost:8080/reservations/customers/' + cusomerId;
-        return axios
-            .get(url)
-            .then(response => response.data);
-    }
+    // render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
+    //     return ();
+    // }
+    //
+    // static getCustomerById(cusomerId) {
+    //     const url = 'http://localhost:8080/reservations/customers/' + cusomerId;
+    //     return axios
+    //         .get(url)
+    //         .then(response => response.data);
+    // }
 }

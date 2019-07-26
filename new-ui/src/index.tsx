@@ -2,7 +2,7 @@ import {Component} from "react";
 import axios from "axios";
 
 class App extends Component {
-    static getCustomerById(cusomerId) {
+    static getCustomerById(cusomerId : any) {
         const url = 'http://localhost:8080/reservations/customers/' + cusomerId;
         return axios
             .get(url)
@@ -13,10 +13,10 @@ class App extends Component {
         return (<div className="container">
 
             <h1>Customer:</h1>
-            <div>Customer ID: {customer.customerId}</div>
-            <div>Fist name: {customer.firstName}</div>
-            <div>Last name: {customer.lastName}</div>
-            <div>Age: {customer.age}</div>
+            {/*<div>Customer ID: {customer.customerId}</div>*/}
+            {/*<div>Fist name: {customer.firstName}</div>*/}
+            {/*<div>Last name: {customer.lastName}</div>*/}
+            {/*<div>Age: {customer.age}</div>*/}
 
             <p>
                 <a href="/customers/1/reservations">Reservations for the first customer</a>
