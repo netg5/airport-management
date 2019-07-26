@@ -154,13 +154,15 @@ public class ReservationServiceImpl implements ReservationService {
 
     /**
      * Method to save reservation for customer
-     * @param request to make reservation
+     *
+     * @param customerId who make reservation
+     * @param request    to make reservation
      * @return flight reservation DTO as a response
      */
     @Override
-    public ResponseEntity<ResponseDTO<ReservationResponseDTO>> saveReservation(ReservationRequestDTO request) {
+    public ResponseEntity<ResponseDTO<ReservationResponseDTO>> saveReservation(Long customerId, ReservationRequestDTO request) {
         // Find customer by ID
-        Optional<Customer> customer = customerRepository.findById(request.getCustomerId());
+        Optional<Customer> customer = customerRepository.findById(customerId);
         if (customer.isEmpty()) {
             return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
         } else {

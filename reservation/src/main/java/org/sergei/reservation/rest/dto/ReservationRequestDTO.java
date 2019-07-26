@@ -19,9 +19,6 @@ import java.time.LocalDateTime;
 public class ReservationRequestDTO implements Serializable {
     private static final long serialVersionUID = -128622388504108631L;
 
-    @ApiModelProperty("Customer ID who made reservation")
-    private Long customerId;
-
     @ApiModelProperty("Reserved route ID")
     private Long routeId;
 

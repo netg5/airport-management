@@ -79,11 +79,12 @@ public class ReservationController {
     }
 
     @ApiOperation("Create reservation for customer")
-    @PostMapping(value = "/reservations", produces = "application/json", consumes = "application/json")
+    @PostMapping(value = "/{customerId}/reservation", produces = "application/json", consumes = "application/json")
     public ResponseEntity<ResponseDTO<ReservationResponseDTO>>
-    createReservation(@ApiParam(value = "Request to delete reservation", required = true)
+    createReservation(@PathVariable Long customerId,
+                      @ApiParam(value = "Request to delete reservation", required = true)
                       @RequestBody ReservationRequestDTO request) {
-        return reservationService.saveReservation(request);
+        return reservationService.saveReservation(customerId, request);
     }
 
     @ApiOperation(value = "Update reservation by customer ID")
