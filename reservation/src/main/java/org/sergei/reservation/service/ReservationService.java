@@ -18,7 +18,7 @@ public interface ReservationService {
     ResponseEntity<ResponseDTO<ReservationResponseDTO>> findAllForCustomerPaginated(Long customerId,
                                                                                     int page, int size);
 
-    ResponseEntity<ResponseDTO<ReservationResponseDTO>> saveReservation(ReservationRequestDTO request);
+    ResponseEntity<ResponseDTO<ReservationResponseDTO>> saveReservation(Long customerId, ReservationRequestDTO request);
 
     ResponseEntity<ResponseDTO<ReservationResponseDTO>> updateReservation(Long customerId, Long reservationId,
                                                                           Map<String, Object> params);
