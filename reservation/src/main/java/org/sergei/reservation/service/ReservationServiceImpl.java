@@ -174,7 +174,7 @@ public class ReservationServiceImpl implements ReservationService {
                 Reservation reservation = new Reservation();
                 reservation.setCustomer(customer.get());
                 reservation.setRoute(route.get());
-                request.setReservationDate(request.getReservationDate());
+                reservation.setReservationDate(request.getReservationDate());
 
                 Reservation savedReservation = reservationRepository.save(reservation);
                 ReservationResponseDTO savedReservationResponseDTO = reservationDTOMapper.apply(savedReservation);
