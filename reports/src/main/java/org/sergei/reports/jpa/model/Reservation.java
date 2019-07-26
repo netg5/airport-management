@@ -16,8 +16,6 @@
 
 package org.sergei.reports.jpa.model;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.hibernate.annotations.Immutable;
 import org.springframework.hateoas.ResourceSupport;
@@ -31,7 +29,6 @@ import java.time.LocalDateTime;
 /**
  * @author Sergei Visotsky
  */
-@ApiModel(value = "Reservation", description = "Reservation made")
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
@@ -42,20 +39,16 @@ import java.time.LocalDateTime;
 @Immutable
 public class Reservation extends ResourceSupport {
 
-    @ApiModelProperty("Reservation ID")
     @Id
     @Column(name = "reservation_id")
     private Long reservationId;
 
-    @ApiModelProperty("Date when reservation was made")
     @Column(name = "reservation_date")
     private LocalDateTime reservationDate;
 
-    @ApiModelProperty("Customer ID who made reservation")
     @Column(name = "customer_id")
     private Long customerId;
 
-    @ApiModelProperty("Destination route I")
     @Column(name = "route_id")
     private Long routeId;
 }

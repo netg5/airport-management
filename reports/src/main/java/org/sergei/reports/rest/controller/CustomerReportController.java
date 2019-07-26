@@ -22,6 +22,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.sergei.reports.rest.dto.CustomerReportDTO;
 import org.sergei.reports.rest.hateoas.LinkUtil;
+import org.sergei.reports.service.CustomerReportService;
 import org.sergei.reports.service.CustomerReportServiceImpl;
 import org.sergei.reports.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,13 +45,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class CustomerReportController {
 
     private final LinkUtil linkUtil;
-    private final IReportService<CustomerReportDTO> reportService;
+    private final CustomerReportService customerReportService;
 
     @Autowired
     public CustomerReportController(LinkUtil linkUtil,
                                     CustomerReportServiceImpl iReportService) {
         this.linkUtil = linkUtil;
-        this.reportService = iReportService;
+        this.customerReportService = iReportService;
     }
 
     @ApiOperation("Get report for a specific customer")
@@ -59,7 +60,7 @@ public class CustomerReportController {
     })
     @GetMapping("/{customerId}")
     public ResponseEntity<CustomerReportDTO> findReportByCustomerId(@PathVariable Long customerId) {
-        CustomerReportDTO customerReportDTO = reportService.findById(customerId);
+        CustomerReportDTO customerReportDTO = customerReportService.findById(customerId);
         return new ResponseEntity<>(linkUtil.setLinksForCustomerReport(customerReportDTO), HttpStatus.OK);
     }
 }
