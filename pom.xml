@@ -13,7 +13,6 @@
 
     <modules>
         <module>config</module>
-        <module>service-resource</module>
         <module>auth</module>
         <module>registry</module>
         <module>gateway</module>
