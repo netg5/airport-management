@@ -36,8 +36,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-import static org.sergei.reports.utils.ObjectMapperUtil.map;
-
 /**
  * @author Sergei Visotsky
  */
@@ -77,21 +75,23 @@ public class AircraftReportServiceImpl implements AircraftReportService {
         if (aircraftReports.isEmpty()) {
             return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
         } else {
-
-            List<AircraftReportDTO> aircraftReportDTO = aircraftReportDTOListMapper.apply(aircraftReports.getContent());
-
-            aircraftReportDTO.forEach(reportDTO -> {
+            List<AircraftReportDTO> aircraftReportDTOList = aircraftReportDTOListMapper.apply(aircraftReports.getContent());
+            for (AircraftReportDTO aircraftReport : aircraftReportDTOList) {
                 List<Reservation> reservationList =
-                        reservationRepository.findAllByRouteId(reportDTO.getRouteId());
+                        reservationRepository.findAllByRouteId(aircraftReport.getRouteId());
                 if (reservationList.isEmpty()) {
                     return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
                 } else {
-
                     List<ReservationDTO> reservationDTOList = reservationDTOListMapper.apply(reservationList);
-                    reportDTO.setReservations(reservationDTOList);
+                    aircraftReport.setReservations(reservationDTOList);
                 }
-            });
-            return aircraftReportDTOS;
+            }
+
+            ResponseDTO<AircraftReportDTO> response = new ResponseDTO<>();
+            response.setErrorList(List.of());
+            response.setResponse(aircraftReportDTOList);
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
         }
     }
 
@@ -107,10 +107,20 @@ public class AircraftReportServiceImpl implements AircraftReportService {
         if (aircraftReport.isEmpty()) {
             return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
         } else {
-            List<Reservation> reservationList = reservationRepository.findAllByRouteId(aircraftReport.get().getRouteId());
             AircraftReportDTO aircraftReportDTO = aircraftReportDTOMapper.apply(aircraftReport.get());
-            aircraftReportDTO.setReservations(reservationList);
-            return aircraftReportDTO;
+            List<Reservation> reservationList = reservationRepository.findAllByRouteId(aircraftReport.get().getRouteId());
+            if (reservationList.isEmpty()) {
+                return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+            } else {
+                List<ReservationDTO> reservationDTOList = reservationDTOListMapper.apply(reservationList);
+                aircraftReportDTO.setReservations(reservationDTOList);
+
+                ResponseDTO<AircraftReportDTO> response = new ResponseDTO<>();
+                response.setErrorList(List.of());
+                response.setResponse(List.of(aircraftReportDTO));
+
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
         }
     }
 }
