@@ -27,11 +27,6 @@ import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 public class GatewayApplication {
 
     public static void main(String[] args) {
-
-        if (System.getProperty("spring.profiles.active") == null) {
-            System.setProperty("spring.profiles.active", "prod");
-        }
-
         SpringApplication.run(GatewayApplication.class, args);
     }
 

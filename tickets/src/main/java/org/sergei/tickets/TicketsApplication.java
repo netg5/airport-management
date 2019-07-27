@@ -25,11 +25,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 public class TicketsApplication {
 
     public static void main(String[] args) {
-
-        if (System.getProperty("spring.profiles.active") == null) {
-            System.setProperty("spring.profiles.active", "prod");
-        }
-
         SpringApplication.run(TicketsApplication.class, args);
     }
 
