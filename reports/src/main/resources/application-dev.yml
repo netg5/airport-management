@@ -12,7 +12,6 @@ spring:
 
 # DataSource configuration
 datasource:
-#  driver-class-name: org.postgresql.Driver
   jdbc-url: jdbc:postgresql://localhost:5432/flight_reservation
   type: com.zaxxer.hikari.HikariDataSource
   username: flight
