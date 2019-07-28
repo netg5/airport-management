@@ -218,7 +218,7 @@ public class ReservationServiceImpl implements ReservationService {
         }
 //        ReservationResponseDTO reservationResponseDTO = map(reservationRepository.save(reservation), ReservationResponseDTO.class);
 //        reservationResponseDTO.setRouteId(reservation.getRoute().getId());
-//        reservationResponseDTO.setCustomerId(passenger.getId());
+//        reservationResponseDTO.setPassengerId(passenger.getId());
 //        return reservationResponseDTO;
         return null;
     }

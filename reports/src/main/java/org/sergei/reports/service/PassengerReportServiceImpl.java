@@ -62,7 +62,7 @@ public class PassengerReportServiceImpl implements PassengerReportService {
         } else {
             PassengerReportDTO passengerReportDTO = passengerReportDTOMapper.apply(customerReport.get());
             List<Reservation> reservations =
-                    reservationRepository.findAllByCustomerId(passengerReportDTO.getCustomerId());
+                    reservationRepository.findAllByCustomerId(passengerReportDTO.getPassengerId());
             if (reservations.isEmpty()) {
                 return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
             } else {

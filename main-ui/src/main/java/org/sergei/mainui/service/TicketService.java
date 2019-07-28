@@ -40,7 +40,7 @@ public class TicketService {
 
     private static final String TICKET_API_URI = "http://localhost:8080/tickets";
     private static final String TICKETS_PATH = "/tickets/";
-    private static final String CUSTOMER_ID_PARAM = "?customerId=";
+    private static final String CUSTOMER_ID_PARAM = "?passengerId=";
     private static final String ACCESS_TOKEN_PARAM = "&access_token=";
 
     private final RestTemplate restTemplate;

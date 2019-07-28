@@ -47,8 +47,8 @@ public class PassengerReportController {
     }
 
     @ApiOperation("Get report for a specific passenger")
-    @GetMapping(value = "/{customerId}", produces = "application/json")
-    public ResponseEntity<ResponseDTO<PassengerReportDTO>> findReportByCustomerId(@PathVariable Long customerId) {
-        return passengerReportService.findById(customerId);
+    @GetMapping(value = "/{passengerId}", produces = "application/json")
+    public ResponseEntity<ResponseDTO<PassengerReportDTO>> findReportByCustomerId(@PathVariable Long passengerId) {
+        return passengerReportService.findById(passengerId);
     }
 }

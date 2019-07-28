@@ -56,12 +56,12 @@ public class PassengerServiceImpl implements PassengerService {
     /**
      * Find passenger by ID
      *
-     * @param customerId get passenger ID as a parameter
+     * @param passengerId get passenger ID as a parameter
      * @return passenger
      */
     @Override
-    public ResponseEntity<ResponseDTO<PassengerResponseDTO>> findOne(Long customerId) {
-        Optional<Passenger> customer = customerRepository.findById(customerId);
+    public ResponseEntity<ResponseDTO<PassengerResponseDTO>> findOne(Long passengerId) {
+        Optional<Passenger> customer = customerRepository.findById(passengerId);
         if (customer.isEmpty()) {
             return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
         } else {
@@ -99,13 +99,13 @@ public class PassengerServiceImpl implements PassengerService {
      */
     @Override
     public ResponseEntity<ResponseDTO<String>> findIdsOfAllCustomers() {
-        List<String> customerIds = customerRepository.findIdsOfAllCustomers();
-        if (customerIds.isEmpty()) {
+        List<String> passengerIds = customerRepository.findIdsOfAllCustomers();
+        if (passengerIds.isEmpty()) {
             return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
         } else {
             ResponseDTO<String> response = new ResponseDTO<>();
             response.setErrorList(List.of());
-            response.setResponse(customerIds);
+            response.setResponse(passengerIds);
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
     }
@@ -140,7 +140,7 @@ public class PassengerServiceImpl implements PassengerService {
     @Override
     public ResponseEntity<ResponseDTO<PassengerResponseDTO>> update(PassengerUpdateRequestDTO request) {
 
-        Optional<Passenger> customer = customerRepository.findById(request.getCustomerId());
+        Optional<Passenger> customer = customerRepository.findById(request.getPassengerId());
         if (customer.isEmpty()) {
             return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
         } else {
@@ -168,7 +168,7 @@ public class PassengerServiceImpl implements PassengerService {
     public ResponseEntity<ResponseDTO<PassengerResponseDTO>> save(PassengerResponseDTO passengerResponseDTO) {
         Passenger passenger = new Passenger();
 
-        passenger.setId(passengerResponseDTO.getCustomerId());
+        passenger.setId(passengerResponseDTO.getPassengerId());
         passenger.setFirstName(passengerResponseDTO.getFirstName());
         passenger.setLastName(passengerResponseDTO.getLastName());
         passenger.setAge(passengerResponseDTO.getAge());
@@ -185,13 +185,13 @@ public class PassengerServiceImpl implements PassengerService {
     /**
      * Patch specific field of the passenger
      *
-     * @param customerId passenger ID which field should be updated
-     * @param params     List of params that should be updated
+     * @param passengerId passenger ID which field should be updated
+     * @param params      List of params that should be updated
      * @return patched passenger DTO
      */
     @Override
-    public ResponseEntity<ResponseDTO<PassengerResponseDTO>> patch(Long customerId, Map<String, Object> params) {
-        Optional<Passenger> customer = customerRepository.findById(customerId);
+    public ResponseEntity<ResponseDTO<PassengerResponseDTO>> patch(Long passengerId, Map<String, Object> params) {
+        Optional<Passenger> customer = customerRepository.findById(passengerId);
         if (customer.isEmpty()) {
             return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
         } else {
@@ -218,12 +218,12 @@ public class PassengerServiceImpl implements PassengerService {
     /**
      * Delete passenger
      *
-     * @param customerId get passenger ID as a parameter
+     * @param passengerId get passenger ID as a parameter
      * @return passenger DTO as a response
      */
     @Override
-    public ResponseEntity<ResponseDTO<PassengerResponseDTO>> delete(Long customerId) {
-        Optional<Passenger> customer = customerRepository.findById(customerId);
+    public ResponseEntity<ResponseDTO<PassengerResponseDTO>> delete(Long passengerId) {
+        Optional<Passenger> customer = customerRepository.findById(passengerId);
         if (customer.isEmpty()) {
             return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
         } else {

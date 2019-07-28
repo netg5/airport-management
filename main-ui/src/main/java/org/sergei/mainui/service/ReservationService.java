@@ -92,7 +92,7 @@ public class ReservationService {
         // Puts each reservation to a collection
         for (int i = 0; i < jsonArray.length(); i++) {
             Long reservationId = Long.valueOf(jsonArray.getJSONObject(i).get("reservationId").toString());
-            Long customerIdParsed = Long.valueOf(jsonArray.getJSONObject(i).get("customerId").toString());
+            Long customerIdParsed = Long.valueOf(jsonArray.getJSONObject(i).get("passengerId").toString());
             LocalDateTime reservationDate = LocalDateTime.parse(
                     jsonArray.getJSONObject(i).get("reservationDate").toString()
             );

@@ -24,7 +24,7 @@ public class PassengerReportDTOMapper implements IMapper<CustomerReport, Passeng
     public PassengerReportDTO apply(CustomerReport customer) {
 
         PassengerReportDTO passengerReportDTO = new PassengerReportDTO();
-        passengerReportDTO.setCustomerId(customer.getCustomerId());
+        passengerReportDTO.setPassengerId(customer.getCustomerId());
         passengerReportDTO.setFirstName(customer.getFirstName());
         passengerReportDTO.setLastName(customer.getLastName());
         passengerReportDTO.setReservations(List.of());

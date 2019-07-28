@@ -38,7 +38,7 @@ public class PassengerResponseDTO implements Serializable {
     private static final long serialVersionUID = 1601177547641029786L;
 
     @ApiModelProperty("Passenger ID")
-    private Long customerId;
+    private Long passengerId;
 
     @ApiModelProperty("Passenger first name")
     private String firstName;

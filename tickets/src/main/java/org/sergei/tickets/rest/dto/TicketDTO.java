@@ -22,14 +22,14 @@ public class TicketDTO implements Serializable {
 
     private static final long serialVersionUID = 4746464867827649037L;
 
-    @ApiModelProperty("Customer ID whose ticket is returned")
+    @ApiModelProperty("Passenger ID whose ticket is returned")
     @JsonIgnore
-    private Long customerId;
+    private Long passengerId;
 
-    @ApiModelProperty("Customer first name whose ticket is returned")
+    @ApiModelProperty("Passenger first name whose ticket is returned")
     private String firstName;
 
-    @ApiModelProperty("Customer first name whose ticket is returned")
+    @ApiModelProperty("Passenger first name whose ticket is returned")
     private String lastName;
 
     @ApiModelProperty("Route ID")

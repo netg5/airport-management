@@ -11,6 +11,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class PassengerUpdateRequestDTO {
-    private Long customerId;
+    private Long passengerId;
     private PassengerResponseDTO customer;
 }

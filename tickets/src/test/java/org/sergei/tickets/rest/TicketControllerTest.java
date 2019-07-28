@@ -53,7 +53,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class TicketControllerTest {
 
     private static final String BASE_URL = "http://localhost/tickets";
-    private static final String CUSTOMER_ID_PARAM = "?customerId=";
+    private static final String CUSTOMER_ID_PARAM = "?passengerId=";
 
     @Autowired
     private MockMvc mvc;

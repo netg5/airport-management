@@ -11,7 +11,7 @@ import java.util.Map;
  * @author Sergei Visotsky
  */
 public interface PassengerService {
-    ResponseEntity<ResponseDTO<PassengerResponseDTO>> findOne(Long customerId);
+    ResponseEntity<ResponseDTO<PassengerResponseDTO>> findOne(Long passengerId);
 
     ResponseEntity<ResponseDTO<PassengerResponseDTO>> findAll();
 
@@ -23,7 +23,7 @@ public interface PassengerService {
 
     ResponseEntity<ResponseDTO<PassengerResponseDTO>> update(PassengerUpdateRequestDTO request);
 
-    ResponseEntity<ResponseDTO<PassengerResponseDTO>> patch(Long customerId, Map<String, Object> params);
+    ResponseEntity<ResponseDTO<PassengerResponseDTO>> patch(Long passengerId, Map<String, Object> params);
 
-    ResponseEntity<ResponseDTO<PassengerResponseDTO>> delete(Long customerId);
+    ResponseEntity<ResponseDTO<PassengerResponseDTO>> delete(Long passengerId);
 }

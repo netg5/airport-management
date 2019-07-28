@@ -22,7 +22,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.sergei.reports.jpa.model.Reservation;
 
 import java.io.Serializable;
 import java.util.List;
@@ -39,8 +38,8 @@ public class PassengerReportDTO implements Serializable {
 
     private static final long serialVersionUID = 8914288724752543722L;
 
-    @ApiModelProperty("Customer ID who made reservation")
-    private Long customerId;
+    @ApiModelProperty("Passenger ID who made reservation")
+    private Long passengerId;
 
     @ApiModelProperty("First name of passenger who made reservation")
     private String firstName;
