@@ -18,9 +18,9 @@ package org.sergei.reports.rest.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.sergei.reports.rest.dto.CustomerReportDTO;
+import org.sergei.reports.rest.dto.PassengerReportDTO;
 import org.sergei.reports.rest.dto.response.ResponseDTO;
-import org.sergei.reports.service.CustomerReportService;
+import org.sergei.reports.service.PassengerReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,18 +37,18 @@ import org.springframework.web.bind.annotation.RestController;
 )
 @RestController
 @RequestMapping("/customers")
-public class CustomerReportController {
+public class PassengerReportController {
 
-    private final CustomerReportService customerReportService;
+    private final PassengerReportService passengerReportService;
 
     @Autowired
-    public CustomerReportController(CustomerReportService customerReportService) {
-        this.customerReportService = customerReportService;
+    public PassengerReportController(PassengerReportService passengerReportService) {
+        this.passengerReportService = passengerReportService;
     }
 
-    @ApiOperation("Get report for a specific customer")
+    @ApiOperation("Get report for a specific passenger")
     @GetMapping(value = "/{customerId}", produces = "application/json")
-    public ResponseEntity<ResponseDTO<CustomerReportDTO>> findReportByCustomerId(@PathVariable Long customerId) {
-        return customerReportService.findById(customerId);
+    public ResponseEntity<ResponseDTO<PassengerReportDTO>> findReportByCustomerId(@PathVariable Long customerId) {
+        return passengerReportService.findById(customerId);
     }
 }

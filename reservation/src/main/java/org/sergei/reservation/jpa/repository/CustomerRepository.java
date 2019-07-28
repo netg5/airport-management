@@ -16,7 +16,7 @@
 
 package org.sergei.reservation.jpa.repository;
 
-import org.sergei.reservation.jpa.model.Customer;
+import org.sergei.reservation.jpa.model.Passenger;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -27,10 +27,10 @@ import java.util.List;
  * @author Sergei Visotsky
  */
 @Repository
-public interface CustomerRepository extends JpaRepository<Customer, Long> {
+public interface CustomerRepository extends JpaRepository<Passenger, Long> {
 
     /**
-     * Find ID of each customer in one JSON response as a list
+     * Find ID of each passenger in one JSON response as a list
      * <p>
      * new keyword is used to create projection into the DTO,
      * e.g. to extract just only IDs from the model object in this case.

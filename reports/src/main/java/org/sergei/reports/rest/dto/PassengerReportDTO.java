@@ -35,19 +35,19 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CustomerReportDTO implements Serializable {
+public class PassengerReportDTO implements Serializable {
 
     private static final long serialVersionUID = 8914288724752543722L;
 
     @ApiModelProperty("Customer ID who made reservation")
     private Long customerId;
 
-    @ApiModelProperty("First name of customer who made reservation")
+    @ApiModelProperty("First name of passenger who made reservation")
     private String firstName;
 
-    @ApiModelProperty("Last name of the customer who made reservation")
+    @ApiModelProperty("Last name of the passenger who made reservation")
     private String lastName;
 
-    @ApiModelProperty("Collection of reservations made by customer")
+    @ApiModelProperty("Collection of reservations made by passenger")
     private List<ReservationDTO> reservations;
 }

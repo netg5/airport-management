@@ -17,10 +17,10 @@
 package org.sergei.reservation.rest.controller;
 
 import io.swagger.annotations.*;
-import org.sergei.reservation.rest.dto.CustomerResponseDTO;
-import org.sergei.reservation.rest.dto.CustomerUpdateRequestDTO;
+import org.sergei.reservation.rest.dto.PassengerResponseDTO;
+import org.sergei.reservation.rest.dto.PassengerUpdateRequestDTO;
 import org.sergei.reservation.rest.dto.response.ResponseDTO;
-import org.sergei.reservation.service.CustomerService;
+import org.sergei.reservation.service.PassengerService;
 import org.sergei.reservation.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -39,82 +39,82 @@ import java.util.Map;
 )
 @RestController
 @RequestMapping("/customers")
-public class CustomerController {
+public class PassengerController {
 
-    private final CustomerService customerService;
+    private final PassengerService passengerService;
 
     @Autowired
-    public CustomerController(CustomerService customerService) {
-        this.customerService = customerService;
+    public PassengerController(PassengerService passengerService) {
+        this.passengerService = passengerService;
     }
 
     @ApiOperation("Get all customers")
     @GetMapping(produces = "application/json")
-    public ResponseEntity<ResponseDTO<CustomerResponseDTO>> getAllCustomers() {
-        return customerService.findAll();
+    public ResponseEntity<ResponseDTO<PassengerResponseDTO>> getAllCustomers() {
+        return passengerService.findAll();
     }
 
     @ApiOperation("Get IDs of all existing customers")
     @GetMapping(value = "/ids", produces = "application/json")
     public ResponseEntity<ResponseDTO<String>> getIdsOfAllCustomers() {
-        return customerService.findIdsOfAllCustomers();
+        return passengerService.findIdsOfAllCustomers();
     }
 
     @ApiOperation("Get all customers paginated")
     @GetMapping(params = {"page", "size"}, produces = "application/json")
-    public ResponseEntity<ResponseDTO<CustomerResponseDTO>>
+    public ResponseEntity<ResponseDTO<PassengerResponseDTO>>
     getAllCustomersPaginated(@ApiParam(value = "Number of the page")
                              @RequestParam("page") int page,
                              @ApiParam(value = "Maximum number of content blocks on the page")
                              @RequestParam("size") int size) {
-        return customerService.findAllPaginated(page, size);
+        return passengerService.findAllPaginated(page, size);
     }
 
-    @ApiOperation("Get customer by ID")
+    @ApiOperation("Get passenger by ID")
     @GetMapping(value = "/{customerId}", produces = "application/json")
-    public ResponseEntity<ResponseDTO<CustomerResponseDTO>>
-    getCustomerById(@ApiParam(value = "Customer ID which should be found", required = true)
+    public ResponseEntity<ResponseDTO<PassengerResponseDTO>>
+    getCustomerById(@ApiParam(value = "Passenger ID which should be found", required = true)
                     @PathVariable("customerId") Long customerId) {
-        return customerService.findOne(customerId);
+        return passengerService.findOne(customerId);
     }
 
-    @ApiOperation("Save customer")
+    @ApiOperation("Save passenger")
     @PostMapping(produces = "application/json", consumes = "application/json")
-    public ResponseEntity<ResponseDTO<CustomerResponseDTO>>
-    saveCustomer(@ApiParam(value = "Saved customer", required = true)
-                 @RequestBody CustomerResponseDTO request) {
-        return customerService.save(request);
+    public ResponseEntity<ResponseDTO<PassengerResponseDTO>>
+    saveCustomer(@ApiParam(value = "Saved passenger", required = true)
+                 @RequestBody PassengerResponseDTO request) {
+        return passengerService.save(request);
     }
 
-    @ApiOperation("Update customer data")
+    @ApiOperation("Update passenger data")
     @PutMapping(produces = "application/json", consumes = "application/json")
-    public ResponseEntity<ResponseDTO<CustomerResponseDTO>>
-    updateCustomer(@ApiParam(value = "Updated customer", required = true)
-                   @RequestBody CustomerUpdateRequestDTO request) {
-        return customerService.update(request);
+    public ResponseEntity<ResponseDTO<PassengerResponseDTO>>
+    updateCustomer(@ApiParam(value = "Updated passenger", required = true)
+                   @RequestBody PassengerUpdateRequestDTO request) {
+        return passengerService.update(request);
     }
 
-    @ApiOperation("Update one field for a customer")
+    @ApiOperation("Update one field for a passenger")
     @ApiResponses({
             @ApiResponse(code = 404, message = Constants.CUSTOMER_NOT_FOUND)
     })
     @PatchMapping(value = "/{customerId}/patch", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<ResponseDTO<CustomerResponseDTO>>
-    patchCustomer(@ApiParam(value = "Customer ID which should be updated", required = true)
+    public ResponseEntity<ResponseDTO<PassengerResponseDTO>>
+    patchCustomer(@ApiParam(value = "Passenger ID which should be updated", required = true)
                   @PathVariable("customerId") Long customerId,
                   @RequestBody Map<String, Object> params) {
-        return customerService.patch(customerId, params);
+        return passengerService.patch(customerId, params);
     }
 
-    @ApiOperation(value = "Delete customer data", notes = "Operation allowed for the ROLE_ADMIN only")
+    @ApiOperation(value = "Delete passenger data", notes = "Operation allowed for the ROLE_ADMIN only")
     @ApiResponses({
             @ApiResponse(code = 404, message = Constants.CUSTOMER_NOT_FOUND)
     })
     @DeleteMapping("/{customerId}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<ResponseDTO<CustomerResponseDTO>>
-    deleteCustomer(@ApiParam(value = "Customer ID which should be deleted", required = true)
+    public ResponseEntity<ResponseDTO<PassengerResponseDTO>>
+    deleteCustomer(@ApiParam(value = "Passenger ID which should be deleted", required = true)
                    @PathVariable("customerId") Long customerId) {
-        return customerService.delete(customerId);
+        return passengerService.delete(customerId);
     }
 }

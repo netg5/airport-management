@@ -51,6 +51,6 @@ public class CustomerControllerTest {
         mockMvc.perform(
                 get(BASE_URL + 1))
                 .andExpect(status().isOk())
-                .andExpect(view().name("customer"));
+                .andExpect(view().name("passenger"));
     }
 }

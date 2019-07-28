@@ -20,8 +20,8 @@ import org.sergei.reports.jpa.model.CustomerReport;
 import org.sergei.reports.jpa.model.Reservation;
 import org.sergei.reports.jpa.repository.CustomerReportRepository;
 import org.sergei.reports.jpa.repository.ReservationRepository;
-import org.sergei.reports.rest.dto.CustomerReportDTO;
-import org.sergei.reports.rest.dto.mappers.CustomerReportDTOMapper;
+import org.sergei.reports.rest.dto.PassengerReportDTO;
+import org.sergei.reports.rest.dto.mappers.PassengerReportDTOMapper;
 import org.sergei.reports.rest.dto.mappers.ReservationDTOListMapper;
 import org.sergei.reports.rest.dto.response.ResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,41 +36,41 @@ import java.util.Optional;
  * @author Sergei Visotsky
  */
 @Service
-public class CustomerReportServiceImpl implements CustomerReportService {
+public class PassengerReportServiceImpl implements PassengerReportService {
 
     private final CustomerReportRepository customerReportRepository;
     private final ReservationRepository reservationRepository;
-    private final CustomerReportDTOMapper customerReportDTOMapper;
+    private final PassengerReportDTOMapper passengerReportDTOMapper;
     private final ReservationDTOListMapper reservationDTOListMapper;
 
     @Autowired
-    public CustomerReportServiceImpl(CustomerReportRepository customerReportRepository,
-                                     ReservationRepository reservationRepository,
-                                     CustomerReportDTOMapper customerReportDTOMapper,
-                                     ReservationDTOListMapper reservationDTOListMapper) {
+    public PassengerReportServiceImpl(CustomerReportRepository customerReportRepository,
+                                      ReservationRepository reservationRepository,
+                                      PassengerReportDTOMapper passengerReportDTOMapper,
+                                      ReservationDTOListMapper reservationDTOListMapper) {
         this.customerReportRepository = customerReportRepository;
         this.reservationRepository = reservationRepository;
-        this.customerReportDTOMapper = customerReportDTOMapper;
+        this.passengerReportDTOMapper = passengerReportDTOMapper;
         this.reservationDTOListMapper = reservationDTOListMapper;
     }
 
     @Override
-    public ResponseEntity<ResponseDTO<CustomerReportDTO>> findById(Long id) {
+    public ResponseEntity<ResponseDTO<PassengerReportDTO>> findById(Long id) {
         Optional<CustomerReport> customerReport = customerReportRepository.findById(id);
         if (customerReport.isEmpty()) {
             return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
         } else {
-            CustomerReportDTO customerReportDTO = customerReportDTOMapper.apply(customerReport.get());
+            PassengerReportDTO passengerReportDTO = passengerReportDTOMapper.apply(customerReport.get());
             List<Reservation> reservations =
-                    reservationRepository.findAllByCustomerId(customerReportDTO.getCustomerId());
+                    reservationRepository.findAllByCustomerId(passengerReportDTO.getCustomerId());
             if (reservations.isEmpty()) {
                 return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
             } else {
-                customerReportDTO.setReservations(reservationDTOListMapper.apply(reservations));
+                passengerReportDTO.setReservations(reservationDTOListMapper.apply(reservations));
 
-                ResponseDTO<CustomerReportDTO> response = new ResponseDTO<>();
+                ResponseDTO<PassengerReportDTO> response = new ResponseDTO<>();
                 response.setErrorList(List.of());
-                response.setResponse(List.of(customerReportDTO));
+                response.setResponse(List.of(passengerReportDTO));
 
                 return new ResponseEntity<>(response, HttpStatus.OK);
             }
@@ -78,7 +78,7 @@ public class CustomerReportServiceImpl implements CustomerReportService {
     }
 
     @Override
-    public ResponseEntity<ResponseDTO<CustomerReportDTO>> findAll(int page, int size) {
+    public ResponseEntity<ResponseDTO<PassengerReportDTO>> findAll(int page, int size) {
         return null;
     }
 }
