@@ -195,17 +195,29 @@ public class AircraftServiceImpl implements AircraftService {
         if (aircraft.isEmpty()) {
             return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
         } else {
-            if (params.get("model") != null) {
+            if (params.get("manufacturerCode") != null) {
+                aircraft.get().setManufacturerCode(String.valueOf(params.get("manufacturerCode")));
+            }
+            if (params.get("ownerId") != null) {
+//                aircraft.get().(String.valueOf(params.get("modelNumber")));
+            }
+            if (params.get("registrationNumber") != null) {
+                aircraft.get().setRegistrationNumber(String.valueOf(params.get("registrationNumber")));
+            }
+            if (params.get("modelNumber") != null) {
                 aircraft.get().setModelNumber(String.valueOf(params.get("modelNumber")));
             }
             if (params.get("aircraftName") != null) {
                 aircraft.get().setAircraftName(String.valueOf(params.get("aircraftName")));
             }
+            if (params.get("capacity") != null) {
+                aircraft.get().setCapacity(Integer.valueOf(String.valueOf(params.get("capacity"))));
+            }
             if (params.get("weight") != null) {
                 aircraft.get().setWeight(Double.valueOf(String.valueOf(params.get("weight"))));
             }
-            if (params.get("capacity") != null) {
-                aircraft.get().setCapacity(Integer.valueOf(String.valueOf(params.get("capacity"))));
+            if (params.get("exploitationPeriod") != null) {
+                aircraft.get().setExploitationPeriod(Integer.valueOf(String.valueOf(params.get("exploitationPeriod"))));
             }
             Aircraft savedAircraft = aircraftRepository.save(aircraft.get());
 

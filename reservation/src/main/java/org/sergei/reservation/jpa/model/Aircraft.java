@@ -47,6 +47,9 @@ public class Aircraft implements Serializable {
     @Column(name = "manufacturer_code")
     private String manufacturerCode;
 
+    @Column(name = "registration_number")
+    private String registrationNumber;
+
     @Column(name = "model_number")
     private String modelNumber;
 
@@ -59,5 +62,9 @@ public class Aircraft implements Serializable {
 
     @Column(name = "exploitation_period")
     private Integer exploitationPeriod;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id")
+    private Owner owner;
 
 }

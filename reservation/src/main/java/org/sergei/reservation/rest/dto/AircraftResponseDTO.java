@@ -36,6 +36,7 @@ public class AircraftResponseDTO implements Serializable {
     private static final long serialVersionUID = -8398761845885572454L;
     private Long aircraftId;
     private String manufacturerCode;
+    private String registrationNumber;
     private String modelNumber;
     private String aircraftName;
     private Integer capacity;
