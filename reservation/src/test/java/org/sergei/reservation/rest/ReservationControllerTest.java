@@ -27,7 +27,7 @@ import org.sergei.reservation.jpa.model.Aircraft;
 import org.sergei.reservation.jpa.model.Reservation;
 import org.sergei.reservation.jpa.model.Route;
 import org.sergei.reservation.jpa.repository.AircraftRepository;
-import org.sergei.reservation.jpa.repository.CustomerRepository;
+import org.sergei.reservation.jpa.repository.PassengerRepository;
 import org.sergei.reservation.jpa.repository.RouteRepository;
 import org.sergei.reservation.testconfig.ResourceServerConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,7 +78,7 @@ public class ReservationControllerTest {
     private MockMvc mvc;
 
     @Autowired
-    private CustomerRepository customerRepository;
+    private PassengerRepository passengerRepository;
 
     @Autowired
     private RouteRepository routeRepository;
@@ -326,7 +326,7 @@ public class ReservationControllerTest {
         passenger.setAge(age);
         passenger.setReservations(Collections.emptyList());
 
-        return customerRepository.save(passenger);
+        return passengerRepository.save(passenger);
     }
 
     private Route setupRoute(Double distance, LocalDateTime departureTime,

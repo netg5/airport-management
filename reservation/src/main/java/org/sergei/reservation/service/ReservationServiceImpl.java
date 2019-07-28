@@ -19,7 +19,7 @@ package org.sergei.reservation.service;
 import org.sergei.reservation.jpa.model.Passenger;
 import org.sergei.reservation.jpa.model.Reservation;
 import org.sergei.reservation.jpa.model.Route;
-import org.sergei.reservation.jpa.repository.CustomerRepository;
+import org.sergei.reservation.jpa.repository.PassengerRepository;
 import org.sergei.reservation.jpa.repository.ReservationRepository;
 import org.sergei.reservation.jpa.repository.RouteRepository;
 import org.sergei.reservation.rest.dto.ReservationRequestDTO;
@@ -48,7 +48,7 @@ import java.util.Optional;
 @Service
 public class ReservationServiceImpl implements ReservationService {
 
-    private final CustomerRepository customerRepository;
+    private final PassengerRepository passengerRepository;
     private final RouteRepository routeRepository;
     private final ReservationRepository reservationRepository;
     private final ReservationDTOMapper reservationDTOMapper;
@@ -56,13 +56,13 @@ public class ReservationServiceImpl implements ReservationService {
     private final RouteDTOMapper routeDTOMapper;
 
     @Autowired
-    public ReservationServiceImpl(CustomerRepository customerRepository,
+    public ReservationServiceImpl(PassengerRepository passengerRepository,
                                   RouteRepository routeRepository,
                                   ReservationRepository reservationRepository,
                                   ReservationDTOMapper reservationDTOMapper,
                                   ReservationDTOListMapper reservationDTOListMapper,
                                   RouteDTOMapper routeDTOMapper) {
-        this.customerRepository = customerRepository;
+        this.passengerRepository = passengerRepository;
         this.routeRepository = routeRepository;
         this.reservationRepository = reservationRepository;
         this.reservationDTOMapper = reservationDTOMapper;
@@ -79,7 +79,7 @@ public class ReservationServiceImpl implements ReservationService {
      */
     @Override
     public ResponseEntity<ResponseDTO<ReservationResponseDTO>> findOneForCustomer(Long customerId, Long reservationId) {
-        Optional<Passenger> customer = customerRepository.findById(customerId);
+        Optional<Passenger> customer = passengerRepository.findById(customerId);
 
         if (customer.isEmpty()) {
             return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
@@ -117,7 +117,7 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public ResponseEntity<ResponseDTO<ReservationResponseDTO>> findAllForCustomer(Long customerId) {
         // Find passenger
-        Optional<Passenger> customer = customerRepository.findById(customerId);
+        Optional<Passenger> customer = passengerRepository.findById(customerId);
 
         if (customer.isEmpty()) {
             return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
@@ -139,7 +139,7 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public ResponseEntity<ResponseDTO<ReservationResponseDTO>> findAllForCustomerPaginated(Long customerId, int page, int size) {
         // Find passenger
-        Optional<Passenger> customer = customerRepository.findById(customerId);
+        Optional<Passenger> customer = passengerRepository.findById(customerId);
 
         if (customer.isEmpty()) {
             return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
@@ -162,7 +162,7 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public ResponseEntity<ResponseDTO<ReservationResponseDTO>> saveReservation(Long customerId, ReservationRequestDTO request) {
         // Find passenger by ID
-        Optional<Passenger> customer = customerRepository.findById(customerId);
+        Optional<Passenger> customer = passengerRepository.findById(customerId);
         if (customer.isEmpty()) {
             return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
         } else {
@@ -199,7 +199,7 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public ResponseEntity<ResponseDTO<ReservationResponseDTO>> updateReservation(Long customerId,
                                                                                  Long reservationId, Map<String, Object> params) {
-        Passenger passenger = customerRepository.findById(customerId)
+        Passenger passenger = passengerRepository.findById(customerId)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(Constants.CUSTOMER_NOT_FOUND)
                 );
@@ -233,7 +233,7 @@ public class ReservationServiceImpl implements ReservationService {
      */
     @Override
     public ResponseEntity<ResponseDTO<ReservationResponseDTO>> deleteReservation(Long customerId, Long reservationId) {
-        Optional<Passenger> customer = customerRepository.findById(customerId);
+        Optional<Passenger> customer = passengerRepository.findById(customerId);
 
         if (customer.isEmpty()) {
             return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
@@ -242,7 +242,7 @@ public class ReservationServiceImpl implements ReservationService {
             if (reservation.isEmpty()) {
                 return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
             } else {
-                reservationRepository.deleteByCustomerIdAndReservationId(customer.get(), reservation.get());
+                reservationRepository.deleteByPassengerIdAndReservationId(customer.get(), reservation.get());
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
         }

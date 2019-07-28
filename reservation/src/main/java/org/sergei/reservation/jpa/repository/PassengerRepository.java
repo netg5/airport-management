@@ -27,7 +27,7 @@ import java.util.List;
  * @author Sergei Visotsky
  */
 @Repository
-public interface CustomerRepository extends JpaRepository<Passenger, Long> {
+public interface PassengerRepository extends JpaRepository<Passenger, Long> {
 
     /**
      * Find ID of each passenger in one JSON response as a list
@@ -38,7 +38,7 @@ public interface CustomerRepository extends JpaRepository<Passenger, Long> {
      * @return list of IDs
      */
     @Query(
-            value = "SELECT c.customer_id FROM customer c",
+            value = "SELECT p.id FROM passenger p",
             nativeQuery = true)
     List<String> findIdsOfAllCustomers();
 }

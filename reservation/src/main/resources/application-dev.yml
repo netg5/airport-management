@@ -2,30 +2,22 @@ server:
   port: 8083
   servlet:
     context-path: /reservation
-  error:
-    whitelabel:
-      enabled: false
+
+# Spring specific configuration
 spring:
   application:
-    name: reservation
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/flight_reservation
-    username: flight
-    password: flight
-    initialization-mode: embedded
-  jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-        show_sql: true
-        hbm2ddl:
-          auto: update
-        generate-ddl: true
-  gateway:
-    port: 9090
+    name: reports
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+
+# DataSource configuration
+datasource:
+  jdbc-url: jdbc:postgresql://localhost:5432/flight_reservation_new
+  type: com.zaxxer.hikari.HikariDataSource
+  username: flight
+  password: flight
+
+# Eureka configuration
 eureka:
   instance:
     non-secure-port-enabled: false

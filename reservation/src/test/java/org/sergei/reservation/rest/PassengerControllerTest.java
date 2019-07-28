@@ -23,7 +23,7 @@ import org.junit.runner.RunWith;
 import org.sergei.reservation.ReservationApplication;
 import org.sergei.reservation.jpa.model.Passenger;
 import org.sergei.reservation.rest.controller.PassengerController;
-import org.sergei.reservation.jpa.repository.CustomerRepository;
+import org.sergei.reservation.jpa.repository.PassengerRepository;
 import org.sergei.reservation.testconfig.ResourceServerConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -66,7 +66,7 @@ public class PassengerControllerTest {
     private MockMvc mvc;
 
     @Autowired
-    private CustomerRepository customerRepository;
+    private PassengerRepository passengerRepository;
 
     @Test
     public void getAllCustomers_thenReturnOk() throws Exception {
@@ -285,6 +285,6 @@ public class PassengerControllerTest {
         passenger.setAge(age);
         passenger.setReservations(Collections.emptyList());
 
-        return customerRepository.save(passenger);
+        return passengerRepository.save(passenger);
     }
 }
