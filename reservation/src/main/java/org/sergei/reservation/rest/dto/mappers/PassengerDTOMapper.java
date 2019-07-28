@@ -19,6 +19,8 @@ public class PassengerDTOMapper implements IMapper<Passenger, PassengerResponseD
         passengerResponseDTO.setFirstName(passenger.getFirstName());
         passengerResponseDTO.setLastName(passenger.getLastName());
         passengerResponseDTO.setAge(passenger.getAge());
+        passengerResponseDTO.setGender(passenger.getGender());
+        passengerResponseDTO.setPhone(passenger.getPhone());
 
         return passengerResponseDTO;
     }

@@ -112,8 +112,8 @@ public class RouteControllerTest {
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.aircraftId", is(2)))
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.model").value(model))
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.aircraftName").value(aircraftName))
-                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.aircraftWeight").value(aircraftWeight))
-                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.maxPassengers").value(maxPassengers))
+                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.weight").value(aircraftWeight))
+                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.capacity").value(maxPassengers))
                 .andExpect(jsonPath("$._links.self.href", is(BASE_URL)));
     }
 
@@ -164,8 +164,8 @@ public class RouteControllerTest {
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.aircraftId", is(3)))
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.model").value(model))
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.aircraftName").value(aircraftName))
-                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.aircraftWeight").value(aircraftWeight))
-                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.maxPassengers").value(maxPassengers))
+                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.weight").value(aircraftWeight))
+                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.capacity").value(maxPassengers))
                 .andExpect(jsonPath("$._links.self.href", is(BASE_URL + page + size)));
     }
 
@@ -202,8 +202,8 @@ public class RouteControllerTest {
                 .andExpect(jsonPath("$.aircraft.aircraftId").isNotEmpty())
                 .andExpect(jsonPath("$.aircraft.model", is(model)))
                 .andExpect(jsonPath("$.aircraft.aircraftName", is(aircraftName)))
-                .andExpect(jsonPath("$.aircraft.aircraftWeight", is(aircraftWeight)))
-                .andExpect(jsonPath("$.aircraft.maxPassengers", is(maxPassengers)));
+                .andExpect(jsonPath("$.aircraft.weight", is(aircraftWeight)))
+                .andExpect(jsonPath("$.aircraft.capacity", is(maxPassengers)));
     }
 
     @Test
@@ -413,8 +413,8 @@ public class RouteControllerTest {
         Aircraft aircraft = new Aircraft();
         aircraft.setModel(model);
         aircraft.setAircraftName(aircraftName);
-        aircraft.setAircraftWeight(aircraftWeight);
-        aircraft.setMaxPassengers(maxPassengers);
+        aircraft.setWeight(aircraftWeight);
+        aircraft.setCapacity(maxPassengers);
         return aircraftRepository.save(aircraft);
     }
 

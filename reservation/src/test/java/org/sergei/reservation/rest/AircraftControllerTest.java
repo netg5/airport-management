@@ -85,8 +85,8 @@ public class AircraftControllerTest {
                 .andExpect(jsonPath("$._embedded.aircraftId[0].aircraftId").isNotEmpty())
                 .andExpect(jsonPath("$._embedded.aircraftId[0].model").value(model))
                 .andExpect(jsonPath("$._embedded.aircraftId[0].aircraftName").value(aircraftName))
-                .andExpect(jsonPath("$._embedded.aircraftId[0].aircraftWeight").value(aircraftWeight))
-                .andExpect(jsonPath("$._embedded.aircraftId[0].maxPassengers").value(maxPassengers))
+                .andExpect(jsonPath("$._embedded.aircraftId[0].weight").value(aircraftWeight))
+                .andExpect(jsonPath("$._embedded.aircraftId[0].capacity").value(maxPassengers))
                 .andExpect(jsonPath("$._embedded.aircraftId[0]._links.self.href", is(BASE_URL + "/1")))
                 .andExpect(jsonPath("$._links.self.href", is(BASE_URL)));
     }
@@ -115,8 +115,8 @@ public class AircraftControllerTest {
                 .andExpect(jsonPath("$._embedded.aircraftId[0].aircraftId").isNotEmpty())
                 .andExpect(jsonPath("$._embedded.aircraftId[0].model").value(model))
                 .andExpect(jsonPath("$._embedded.aircraftId[0].aircraftName").value(aircraftName))
-                .andExpect(jsonPath("$._embedded.aircraftId[0].aircraftWeight").value(aircraftWeight))
-                .andExpect(jsonPath("$._embedded.aircraftId[0].maxPassengers").value(maxPassengers))
+                .andExpect(jsonPath("$._embedded.aircraftId[0].weight").value(aircraftWeight))
+                .andExpect(jsonPath("$._embedded.aircraftId[0].capacity").value(maxPassengers))
                 .andExpect(jsonPath("$._embedded.aircraftId[0]._links.self.href", is(BASE_URL + "/" + "2")))
                 .andExpect(jsonPath("$._links.self.href", is(BASE_URL + page + size)));
     }
@@ -136,8 +136,8 @@ public class AircraftControllerTest {
                 .andExpect(jsonPath("$.aircraftId").isNotEmpty())
                 .andExpect(jsonPath("$.model").value(model))
                 .andExpect(jsonPath("$.aircraftName").value(aircraftName))
-                .andExpect(jsonPath("$.aircraftWeight").value(aircraftWeight))
-                .andExpect(jsonPath("$.maxPassengers").value(maxPassengers))
+                .andExpect(jsonPath("$.weight").value(aircraftWeight))
+                .andExpect(jsonPath("$.capacity").value(maxPassengers))
                 .andExpect(jsonPath("$._links.self.href", is(BASE_URL + "/" + aircraft.getId())))
                 .andExpect(jsonPath("$._links.allAircrafts.href", is(BASE_URL)));
     }
@@ -152,8 +152,8 @@ public class AircraftControllerTest {
         JSONObject jsonObject = new JSONObject()
                 .put("model", model)
                 .put("aircraftName", aircraftName)
-                .put("aircraftWeight", aircraftWeight)
-                .put("maxPassengers", maxPassengers);
+                .put("weight", aircraftWeight)
+                .put("capacity", maxPassengers);
         mvc.perform(
                 post(BASE_URL)
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -162,8 +162,8 @@ public class AircraftControllerTest {
                 .andExpect(jsonPath("$.aircraftId").isNotEmpty())
                 .andExpect(jsonPath("$.model").value(model))
                 .andExpect(jsonPath("$.aircraftName").value(aircraftName))
-                .andExpect(jsonPath("$.aircraftWeight").value(aircraftWeight))
-                .andExpect(jsonPath("$.maxPassengers").value(maxPassengers));
+                .andExpect(jsonPath("$.weight").value(aircraftWeight))
+                .andExpect(jsonPath("$.capacity").value(maxPassengers));
     }
 
     @Test
@@ -176,8 +176,8 @@ public class AircraftControllerTest {
         JSONObject jsonObject = new JSONObject()
                 .put("model", model)
                 .put("aircraftName", aircraftName)
-                .put("aircraftWeight", aircraftWeight)
-                .put("maxPassengers", maxPassengers);
+                .put("weight", aircraftWeight)
+                .put("capacity", maxPassengers);
         mvc.perform(
                 post(BASE_URL)
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -186,8 +186,8 @@ public class AircraftControllerTest {
                 .andExpect(jsonPath("$.aircraftId").isNotEmpty())
                 .andExpect(jsonPath("$.model").value(model))
                 .andExpect(jsonPath("$.aircraftName").value(aircraftName))
-                .andExpect(jsonPath("$.aircraftWeight").value(aircraftWeight))
-                .andExpect(jsonPath("$.maxPassengers").value(maxPassengers));
+                .andExpect(jsonPath("$.weight").value(aircraftWeight))
+                .andExpect(jsonPath("$.capacity").value(maxPassengers));
 
         final String putModel = "747-400";
         final String putAircraft = "Boeing";
@@ -196,8 +196,8 @@ public class AircraftControllerTest {
         JSONObject putJsonObject = new JSONObject()
                 .put("model", putModel)
                 .put("aircraftName", putAircraft)
-                .put("aircraftWeight", putAircraftWeight)
-                .put("maxPassengers", putMaxPassengers);
+                .put("weight", putAircraftWeight)
+                .put("capacity", putMaxPassengers);
 
         mvc.perform(
                 put(BASE_URL + "/1")
@@ -207,8 +207,8 @@ public class AircraftControllerTest {
                 .andExpect(jsonPath("$.aircraftId").isNotEmpty())
                 .andExpect(jsonPath("$.model").value(putModel))
                 .andExpect(jsonPath("$.aircraftName").value(putAircraft))
-                .andExpect(jsonPath("$.aircraftWeight").value(putAircraftWeight))
-                .andExpect(jsonPath("$.maxPassengers").value(putMaxPassengers));
+                .andExpect(jsonPath("$.weight").value(putAircraftWeight))
+                .andExpect(jsonPath("$.capacity").value(putMaxPassengers));
     }
 
     @Test
@@ -221,8 +221,8 @@ public class AircraftControllerTest {
         JSONObject jsonObject = new JSONObject()
                 .put("model", model)
                 .put("aircraftName", aircraftName)
-                .put("aircraftWeight", aircraftWeight)
-                .put("maxPassengers", maxPassengers);
+                .put("weight", aircraftWeight)
+                .put("capacity", maxPassengers);
         mvc.perform(
                 post(BASE_URL)
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -231,8 +231,8 @@ public class AircraftControllerTest {
                 .andExpect(jsonPath("$.aircraftId").isNotEmpty())
                 .andExpect(jsonPath("$.model").value(model))
                 .andExpect(jsonPath("$.aircraftName").value(aircraftName))
-                .andExpect(jsonPath("$.aircraftWeight").value(aircraftWeight))
-                .andExpect(jsonPath("$.maxPassengers").value(maxPassengers));
+                .andExpect(jsonPath("$.weight").value(aircraftWeight))
+                .andExpect(jsonPath("$.capacity").value(maxPassengers));
 
         final String putModel = "747-400";
         final String putAircraft = "Boeing";
@@ -241,8 +241,8 @@ public class AircraftControllerTest {
         JSONObject putJsonObject = new JSONObject()
                 .put("model", putModel)
                 .put("aircraftName", putAircraft)
-                .put("aircraftWeight", putAircraftWeight)
-                .put("maxPassengers", putMaxPassengers);
+                .put("weight", putAircraftWeight)
+                .put("capacity", putMaxPassengers);
 
         mvc.perform(
                 patch(BASE_URL + "/1/patch")
@@ -252,8 +252,8 @@ public class AircraftControllerTest {
                 .andExpect(jsonPath("$.aircraftId").isNotEmpty())
                 .andExpect(jsonPath("$.model").value(putModel))
                 .andExpect(jsonPath("$.aircraftName").value(putAircraft))
-                .andExpect(jsonPath("$.aircraftWeight").value(putAircraftWeight))
-                .andExpect(jsonPath("$.maxPassengers").value(putMaxPassengers));
+                .andExpect(jsonPath("$.weight").value(putAircraftWeight))
+                .andExpect(jsonPath("$.capacity").value(putMaxPassengers));
     }
 
     @Ignore
@@ -269,8 +269,8 @@ public class AircraftControllerTest {
                 .put("aircraftId", aircraftId)
                 .put("model", model)
                 .put("aircraftName", aircraftName)
-                .put("aircraftWeight", aircraftWeight)
-                .put("maxPassengers", maxPassengers);
+                .put("weight", aircraftWeight)
+                .put("capacity", maxPassengers);
         mvc.perform(
                 post(BASE_URL)
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -279,8 +279,8 @@ public class AircraftControllerTest {
                 .andExpect(jsonPath("$.aircraftId").isNotEmpty())
                 .andExpect(jsonPath("$.model").value(model))
                 .andExpect(jsonPath("$.aircraftName").value(aircraftName))
-                .andExpect(jsonPath("$.aircraftWeight").value(aircraftWeight))
-                .andExpect(jsonPath("$.maxPassengers").value(maxPassengers));
+                .andExpect(jsonPath("$.weight").value(aircraftWeight))
+                .andExpect(jsonPath("$.capacity").value(maxPassengers));
         LOGGER.info("Aircraft ID: {}", aircraftId);
 
         mvc.perform(delete(BASE_URL + "/" + aircraftId))
@@ -292,8 +292,8 @@ public class AircraftControllerTest {
         Aircraft aircraft = new Aircraft();
         aircraft.setModel(model);
         aircraft.setAircraftName(aircraftName);
-        aircraft.setAircraftWeight(aircraftWeight);
-        aircraft.setMaxPassengers(maxPassengers);
+        aircraft.setWeight(aircraftWeight);
+        aircraft.setCapacity(maxPassengers);
         return aircraftRepository.save(aircraft);
     }
 }

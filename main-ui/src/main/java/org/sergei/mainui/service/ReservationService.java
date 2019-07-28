@@ -124,12 +124,12 @@ public class ReservationService {
             Double aircraftWeight =
                     Double.valueOf(
                             jsonArray.getJSONObject(i)
-                                    .getJSONObject(ROUTE_JSON_PATH).getJSONObject(AIRCRAFT_JSON_PATH).get("aircraftWeight").toString()
+                                    .getJSONObject(ROUTE_JSON_PATH).getJSONObject(AIRCRAFT_JSON_PATH).get("weight").toString()
                     );
             Integer maxPassengers =
                     Integer.valueOf(
                             jsonArray.getJSONObject(i)
-                                    .getJSONObject(ROUTE_JSON_PATH).getJSONObject(AIRCRAFT_JSON_PATH).get("maxPassengers").toString()
+                                    .getJSONObject(ROUTE_JSON_PATH).getJSONObject(AIRCRAFT_JSON_PATH).get("capacity").toString()
                     );
             Aircraft aircraft = new Aircraft(aircraftId, model, aircraftName, aircraftWeight, maxPassengers);
             Route route = new Route(routeId, distance, departureTime, arrivalTime, price, place, aircraft);

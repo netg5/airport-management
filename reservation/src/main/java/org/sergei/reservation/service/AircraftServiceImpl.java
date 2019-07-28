@@ -161,9 +161,9 @@ public class AircraftServiceImpl implements AircraftService {
 
         aircraft.setId(aircraftDTO.getAircraftId());
         aircraft.setAircraftName(aircraft.getAircraftName());
-        aircraft.setAircraftWeight(aircraft.getAircraftWeight());
-        aircraft.setMaxPassengers(aircraft.getMaxPassengers());
-        aircraft.setModel(aircraft.getModel());
+        aircraft.setWeight(aircraft.getWeight());
+        aircraft.setCapacity(aircraft.getCapacity());
+        aircraft.setModelNumber(aircraft.getModelNumber());
 
         Aircraft savedAircraft = aircraftRepository.save(aircraft);
 
@@ -192,9 +192,9 @@ public class AircraftServiceImpl implements AircraftService {
         } else {
             aircraft.get().setId(request.getAircraftId());
             aircraft.get().setAircraftName(request.getAircraft().getAircraftName());
-            aircraft.get().setModel(request.getAircraft().getModel());
-            aircraft.get().setAircraftWeight(request.getAircraft().getAircraftWeight());
-            aircraft.get().setMaxPassengers(request.getAircraft().getMaxPassengers());
+            aircraft.get().setModelNumber(request.getAircraft().getModel());
+            aircraft.get().setWeight(request.getAircraft().getAircraftWeight());
+            aircraft.get().setCapacity(request.getAircraft().getMaxPassengers());
 
             Aircraft savedAircraft = aircraftRepository.save(aircraft.get());
 
@@ -223,16 +223,16 @@ public class AircraftServiceImpl implements AircraftService {
             return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
         } else {
             if (params.get("model") != null) {
-                aircraft.get().setModel(String.valueOf(params.get("model")));
+                aircraft.get().setModelNumber(String.valueOf(params.get("modelNumber")));
             }
             if (params.get("aircraftName") != null) {
                 aircraft.get().setAircraftName(String.valueOf(params.get("aircraftName")));
             }
-            if (params.get("aircraftWeight") != null) {
-                aircraft.get().setAircraftWeight(Double.valueOf(String.valueOf(params.get("aircraftWeight"))));
+            if (params.get("weight") != null) {
+                aircraft.get().setWeight(Double.valueOf(String.valueOf(params.get("weight"))));
             }
-            if (params.get("maxPassengers") != null) {
-                aircraft.get().setMaxPassengers(Integer.valueOf(String.valueOf(params.get("maxPassengers"))));
+            if (params.get("capacity") != null) {
+                aircraft.get().setCapacity(Integer.valueOf(String.valueOf(params.get("capacity"))));
             }
             Aircraft savedAircraft = aircraftRepository.save(aircraft.get());
 

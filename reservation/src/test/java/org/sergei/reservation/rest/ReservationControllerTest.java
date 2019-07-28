@@ -128,8 +128,8 @@ public class ReservationControllerTest {
                 .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservedRoute.place.aircraft.aircraftId").isNotEmpty())
                 .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservedRoute.place.aircraft.model").value(model))
                 .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservedRoute.place.aircraft.aircraftName").value(aircraftName))
-                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservedRoute.place.aircraft.aircraftWeight").value(aircraftWeight))
-                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservedRoute.place.aircraft.maxPassengers").value(maxPassengers))
+                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservedRoute.place.aircraft.weight").value(aircraftWeight))
+                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservedRoute.place.aircraft.capacity").value(maxPassengers))
                 .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].aircraft._links.aircraftSelf.href",
                         is(BASE_URL + RESERVATIONS_PATH + AIRCRAFTS_PATH + "/" + aircraft.getId())))
                 .andExpect(jsonPath("$._links.self.href", is(BASE_URL + "/1" + RESERVATIONS_PATH)));
@@ -178,8 +178,8 @@ public class ReservationControllerTest {
                 .andExpect(jsonPath("$.reservedRoute.place.aircraft.aircraftId").isNotEmpty())
                 .andExpect(jsonPath("$.reservedRoute.place.aircraft.model").value(model))
                 .andExpect(jsonPath("$.reservedRoute.place.aircraft.aircraftName").value(aircraftName))
-                .andExpect(jsonPath("$.reservedRoute.place.aircraft.aircraftWeight").value(aircraftWeight))
-                .andExpect(jsonPath("$.reservedRoute.place.aircraft.maxPassengers").value(maxPassengers))
+                .andExpect(jsonPath("$.reservedRoute.place.aircraft.weight").value(aircraftWeight))
+                .andExpect(jsonPath("$.reservedRoute.place.aircraft.capacity").value(maxPassengers))
                 .andExpect(jsonPath("$.reservedRoute.aircraft._links.aircraftSelf.href",
                         is(BASE_URL + RESERVATIONS_PATH + AIRCRAFTS_PATH + "/" + aircraft.getId())));
     }
@@ -347,8 +347,8 @@ public class ReservationControllerTest {
         Aircraft aircraft = new Aircraft();
         aircraft.setModel(model);
         aircraft.setAircraftName(aircraftName);
-        aircraft.setAircraftWeight(aircraftWeight);
-        aircraft.setMaxPassengers(maxPassengers);
+        aircraft.setWeight(aircraftWeight);
+        aircraft.setCapacity(maxPassengers);
         return aircraftRepository.save(aircraft);
     }
 }

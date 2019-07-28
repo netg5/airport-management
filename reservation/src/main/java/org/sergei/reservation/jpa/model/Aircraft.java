@@ -44,21 +44,20 @@ public class Aircraft implements Serializable {
             sequenceName = "aircraft_seq", allocationSize = 1)
     private Long id;
 
-    private String model;
+    @Column(name = "manufacturer_code")
+    private String manufacturerCode;
+
+    @Column(name = "model_number")
+    private String modelNumber;
 
     @Column(name = "aircraft_name", nullable = false)
     private String aircraftName;
 
-    @Column(name = "weight", nullable = false)
-    private Double aircraftWeight;
+    private Integer capacity;
 
-    @Column(name = "max_passengers", nullable = false)
-    private Integer maxPassengers;
+    private Double weight;
 
-    public Aircraft(String model, String aircraftName, Double aircraftWeight, Integer maxPassengers) {
-        this.model = model;
-        this.aircraftName = aircraftName;
-        this.aircraftWeight = aircraftWeight;
-        this.maxPassengers = maxPassengers;
-    }
+    @Column(name = "exploitation_period")
+    private Integer exploitationPeriod;
+
 }

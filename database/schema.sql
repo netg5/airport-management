@@ -107,7 +107,7 @@ CREATE TABLE reservation
     arrival_time   TIMESTAMP NOT NULL,
     hours_flying   INTEGER   NOT NULL,
     CONSTRAINT reservation_pk PRIMARY KEY (id),
-    CONSTRAINT customer_id_fk FOREIGN KEY (passenger_id) REFERENCES passenger (id),
+    CONSTRAINT passenger_id_fk FOREIGN KEY (passenger_id) REFERENCES passenger (id),
     CONSTRAINT aircraft_id_fk FOREIGN KEY (aircraft_id) REFERENCES aircraft (id)
 );
 

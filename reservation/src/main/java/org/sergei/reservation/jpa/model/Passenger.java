@@ -16,6 +16,7 @@
 
 package org.sergei.reservation.jpa.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,8 +24,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * @author Sergei Visotsky
@@ -32,6 +31,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "passenger")
 public class Passenger implements Serializable {
@@ -52,21 +52,9 @@ public class Passenger implements Serializable {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(nullable = false)
     private Integer age;
 
-    @OneToMany(
-            fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    @JoinColumn(name = "reservation_id")
-    private List<Reservation> reservations = new LinkedList<>();
+    private String gender;
 
-    public Passenger(String firstName, String lastName, Integer age, List<Reservation> reservations) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.age = age;
-        this.reservations = reservations;
-    }
+    private Integer phone;
 }

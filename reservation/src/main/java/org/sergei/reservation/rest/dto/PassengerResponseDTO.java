@@ -48,4 +48,8 @@ public class PassengerResponseDTO implements Serializable {
 
     @ApiModelProperty("Passenger age")
     private Integer age;
+
+    private String gender;
+
+    private Integer phone;
 }
