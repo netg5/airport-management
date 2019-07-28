@@ -17,7 +17,6 @@
 package org.sergei.reservation.rest.dto;
 
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,21 +33,12 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AircraftResponseDTO implements Serializable {
-
     private static final long serialVersionUID = -8398761845885572454L;
-
-    @ApiModelProperty("Aircraft ID")
     private Long aircraftId;
-
-    @ApiModelProperty("Aircraft model")
-    private String model;
-
-    @ApiModelProperty("Aircraft name")
+    private String manufacturerCode;
+    private String modelNumber;
     private String aircraftName;
-
-    @ApiModelProperty("Aircraft name")
-    private Double aircraftWeight;
-
-    @ApiModelProperty("Maximum passengers in aircraft")
-    private Integer maxPassengers;
+    private Integer capacity;
+    private Double weight;
+    private Integer exploitationPeriod;
 }

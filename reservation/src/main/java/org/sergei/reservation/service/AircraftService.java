@@ -5,7 +5,6 @@ import org.sergei.reservation.rest.dto.AircraftUpdateRequestDTO;
 import org.sergei.reservation.rest.dto.response.ResponseDTO;
 import org.springframework.http.ResponseEntity;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
@@ -13,8 +12,6 @@ import java.util.Map;
  */
 public interface AircraftService {
     ResponseEntity<ResponseDTO<AircraftResponseDTO>> findOne(Long aircraftId);
-
-    ResponseEntity<ResponseDTO<AircraftResponseDTO>> findOneByMultipleParams(HttpServletRequest request);
 
     ResponseEntity<ResponseDTO<AircraftResponseDTO>> findAll();
 

@@ -30,8 +30,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author Sergei Visotsky
@@ -61,38 +62,6 @@ public class AircraftServiceImpl implements AircraftService {
     @Override
     public ResponseEntity<ResponseDTO<AircraftResponseDTO>> findOne(Long aircraftId) {
         Optional<Aircraft> aircraft = aircraftRepository.findById(aircraftId);
-
-        if (aircraft.isEmpty()) {
-            return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
-        } else {
-            AircraftResponseDTO aircraftDTO = aircraftDTOMapper.apply(aircraft.get());
-            ResponseDTO<AircraftResponseDTO> response = new ResponseDTO<>();
-            response.setErrorList(List.of());
-            response.setResponse(List.of(aircraftDTO));
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        }
-    }
-
-    /**
-     * Get aircraft by multiple parameters
-     *
-     * @param request Request of parameters
-     * @return aircraft DTO
-     */
-    @Override
-    public ResponseEntity<ResponseDTO<AircraftResponseDTO>> findOneByMultipleParams(HttpServletRequest request) {
-        Enumeration<String> enumeration = request.getParameterNames();
-        Map<String, Object> requestParams = new HashMap<>();
-        while (enumeration.hasMoreElements()) {
-            String paramName = String.valueOf(enumeration.nextElement());
-            requestParams.put(paramName, request.getParameter(paramName));
-        }
-        Optional<Aircraft> aircraft = aircraftRepository.findAircraftByMultipleParams(
-                String.valueOf(requestParams.get("name")),
-                Double.valueOf(String.valueOf(requestParams.get("weight"))),
-                Integer.valueOf(String.valueOf(requestParams.get("passengers"))),
-                String.valueOf(requestParams.get("model"))
-        );
 
         if (aircraft.isEmpty()) {
             return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
@@ -160,10 +129,12 @@ public class AircraftServiceImpl implements AircraftService {
         Aircraft aircraft = new Aircraft();
 
         aircraft.setId(aircraftDTO.getAircraftId());
-        aircraft.setAircraftName(aircraft.getAircraftName());
-        aircraft.setWeight(aircraft.getWeight());
-        aircraft.setCapacity(aircraft.getCapacity());
+        aircraft.setManufacturerCode(aircraft.getManufacturerCode());
         aircraft.setModelNumber(aircraft.getModelNumber());
+        aircraft.setAircraftName(aircraft.getAircraftName());
+        aircraft.setCapacity(aircraft.getCapacity());
+        aircraft.setWeight(aircraft.getWeight());
+        aircraft.setExploitationPeriod(aircraft.getExploitationPeriod());
 
         Aircraft savedAircraft = aircraftRepository.save(aircraft);
 
@@ -190,11 +161,13 @@ public class AircraftServiceImpl implements AircraftService {
         if (aircraft.isEmpty()) {
             return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
         } else {
-            aircraft.get().setId(request.getAircraftId());
+            aircraft.get().setId(request.getAircraft().getAircraftId());
+            aircraft.get().setManufacturerCode(request.getAircraft().getManufacturerCode());
+            aircraft.get().setModelNumber(request.getAircraft().getModelNumber());
             aircraft.get().setAircraftName(request.getAircraft().getAircraftName());
-            aircraft.get().setModelNumber(request.getAircraft().getModel());
-            aircraft.get().setWeight(request.getAircraft().getAircraftWeight());
-            aircraft.get().setCapacity(request.getAircraft().getMaxPassengers());
+            aircraft.get().setCapacity(request.getAircraft().getCapacity());
+            aircraft.get().setWeight(request.getAircraft().getWeight());
+            aircraft.get().setExploitationPeriod(request.getAircraft().getExploitationPeriod());
 
             Aircraft savedAircraft = aircraftRepository.save(aircraft.get());
 
