@@ -16,9 +16,7 @@
 
 package org.sergei.reservation.rest.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -42,16 +40,11 @@ public class ReservationResponseDTO implements Serializable {
 
     private static final long serialVersionUID = -2808793016869498675L;
 
-    @ApiModelProperty("Reservation ID")
-    private Long reservationId;
-
-    @ApiModelProperty("Passenger ID who made reservation")
-    private Long customerId;
-
-    @ApiModelProperty("Flight reservation date")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private LocalDateTime reservationDate;
-
-    @ApiModelProperty("Route which is reserved")
-    private RouteResponseDTO routes;
+    private Long id;
+    private LocalDateTime dateOfFlying;
+    private LocalDateTime departureTime;
+    private LocalDateTime arrivalTime;
+    private Integer hoursFlying;
+    private PassengerResponseDTO passenger;
+    private AircraftResponseDTO aircraft;
 }

@@ -51,7 +51,6 @@ CREATE TABLE route
     distance       DOUBLE PRECISION            NOT NULL,
     place          VARCHAR(45)                 NOT NULL,
     price          NUMERIC(19, 2)              NOT NULL,
-    aircraft_id    BIGINT,
     CONSTRAINT route_pk PRIMARY KEY (id)
 );
 

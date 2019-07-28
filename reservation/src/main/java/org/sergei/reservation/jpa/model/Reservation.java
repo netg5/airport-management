@@ -16,6 +16,7 @@
 
 package org.sergei.reservation.jpa.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -31,6 +32,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "reservation")
 public class Reservation implements Serializable {
@@ -45,20 +47,24 @@ public class Reservation implements Serializable {
             sequenceName = "reservation_seq", allocationSize = 1)
     private Long id;
 
-    @Column(name = "reservation_date", nullable = false)
-    private LocalDateTime reservationDate;
+    @Column(name = "date_of_flying", nullable = false)
+    private LocalDateTime dateOfFlying;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = false)
+    @Column(name = "departure_time", nullable = false)
+    private LocalDateTime departureTime;
+
+    @Column(name = "arrival_time", nullable = false)
+    private LocalDateTime arrivalTime;
+
+    @Column(name = "hours_flying")
+    private Integer hoursFlying;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "passenger_id", nullable = false)
     private Passenger passenger;
 
-    @ManyToOne
-    @JoinColumn(name = "route_id", nullable = false)
-    private Route route;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "aircraft_id", nullable = false)
+    private Aircraft aircraft;
 
-    public Reservation(LocalDateTime reservationDate, Passenger passenger, Route route) {
-        this.reservationDate = reservationDate;
-        this.passenger = passenger;
-        this.route = route;
-    }
 }

@@ -16,6 +16,7 @@
 
 package org.sergei.reservation.jpa.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,6 +31,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "aircraft")
 public class Aircraft implements Serializable {
@@ -63,7 +65,10 @@ public class Aircraft implements Serializable {
     @Column(name = "exploitation_period")
     private Integer exploitationPeriod;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL
+    )
     @JoinColumn(name = "id")
     private Owner owner;
 

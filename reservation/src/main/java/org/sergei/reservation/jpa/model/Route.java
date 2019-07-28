@@ -16,6 +16,7 @@
 
 package org.sergei.reservation.jpa.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -34,6 +35,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "route")
 public class Route implements Serializable {
@@ -69,20 +71,9 @@ public class Route implements Serializable {
 
     @OneToMany(
             fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
+            cascade = CascadeType.ALL
     )
     @JoinColumn(name = "reservation_id")
     private List<Reservation> reservationList = new LinkedList<>();
 
-    public Route(Double distance, LocalDateTime departureTime, LocalDateTime arrivalTime, BigDecimal price,
-                 String place, Aircraft aircraft, List<Reservation> reservationList) {
-        this.distance = distance;
-        this.departureTime = departureTime;
-        this.arrivalTime = arrivalTime;
-        this.price = price;
-        this.place = place;
-        this.aircraft = aircraft;
-        this.reservationList = reservationList;
-    }
 }

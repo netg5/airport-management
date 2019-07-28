@@ -11,21 +11,27 @@ import org.springframework.stereotype.Component;
 @Component
 public class ReservationDTOMapper implements IMapper<Reservation, ReservationResponseDTO> {
 
-    private final RouteDTOMapper routeDTOMapper;
+    private final PassengerDTOMapper passengerDTOMapper;
+    private final AircraftDTOMapper aircraftDTOMapper;
 
     @Autowired
-    public ReservationDTOMapper(RouteDTOMapper routeDTOMapper) {
-        this.routeDTOMapper = routeDTOMapper;
+    public ReservationDTOMapper(PassengerDTOMapper passengerDTOMapper,
+                                AircraftDTOMapper aircraftDTOMapper) {
+        this.passengerDTOMapper = passengerDTOMapper;
+        this.aircraftDTOMapper = aircraftDTOMapper;
     }
 
     @Override
     public ReservationResponseDTO apply(Reservation reservation) {
         ReservationResponseDTO reservationResponseDTO = new ReservationResponseDTO();
 
-        reservationResponseDTO.setReservationId(reservation.getId());
-        reservationResponseDTO.setCustomerId(reservation.getPassenger().getId());
-        reservationResponseDTO.setReservationDate(reservation.getReservationDate());
-        reservationResponseDTO.setRoutes(routeDTOMapper.apply(reservation.getRoute()));
+        reservationResponseDTO.setId(reservation.getId());
+        reservationResponseDTO.setDateOfFlying(reservation.getDateOfFlying());
+        reservationResponseDTO.setDepartureTime(reservation.getDepartureTime());
+        reservationResponseDTO.setArrivalTime(reservation.getArrivalTime());
+        reservationResponseDTO.setHoursFlying(reservation.getHoursFlying());
+        reservationResponseDTO.setAircraft(aircraftDTOMapper.apply(reservation.getAircraft()));
+        reservationResponseDTO.setPassenger(passengerDTOMapper.apply(reservation.getPassenger()));
 
         return reservationResponseDTO;
     }
