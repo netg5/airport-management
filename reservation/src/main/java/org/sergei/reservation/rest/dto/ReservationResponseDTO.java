@@ -45,7 +45,7 @@ public class ReservationResponseDTO implements Serializable {
     @ApiModelProperty("Reservation ID")
     private Long reservationId;
 
-    @ApiModelProperty("Customer ID who made reservation")
+    @ApiModelProperty("Passenger ID who made reservation")
     private Long customerId;
 
     @ApiModelProperty("Flight reservation date")

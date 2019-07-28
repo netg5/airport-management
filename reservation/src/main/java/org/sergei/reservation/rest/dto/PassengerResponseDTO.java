@@ -28,24 +28,24 @@ import java.io.Serializable;
 /**
  * @author Sergei Visotsky
  */
-@ApiModel(value = "Customer", description = "Customer model")
+@ApiModel(value = "Passenger", description = "Passenger model")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CustomerResponseDTO implements Serializable {
+public class PassengerResponseDTO implements Serializable {
 
     private static final long serialVersionUID = 1601177547641029786L;
 
-    @ApiModelProperty("Customer ID")
+    @ApiModelProperty("Passenger ID")
     private Long customerId;
 
-    @ApiModelProperty("Customer first name")
+    @ApiModelProperty("Passenger first name")
     private String firstName;
 
-    @ApiModelProperty("Customer last name")
+    @ApiModelProperty("Passenger last name")
     private String lastName;
 
-    @ApiModelProperty("Customer age")
+    @ApiModelProperty("Passenger age")
     private Integer age;
 }

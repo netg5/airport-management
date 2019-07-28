@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CustomerUpdateRequestDTO {
+public class PassengerUpdateRequestDTO {
     private Long customerId;
-    private CustomerResponseDTO customer;
+    private PassengerResponseDTO customer;
 }

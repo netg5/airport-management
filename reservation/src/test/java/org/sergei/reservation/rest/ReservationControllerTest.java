@@ -21,9 +21,9 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sergei.reservation.ReservationApplication;
+import org.sergei.reservation.jpa.model.Passenger;
 import org.sergei.reservation.rest.controller.ReservationController;
 import org.sergei.reservation.jpa.model.Aircraft;
-import org.sergei.reservation.jpa.model.Customer;
 import org.sergei.reservation.jpa.model.Reservation;
 import org.sergei.reservation.jpa.model.Route;
 import org.sergei.reservation.jpa.repository.AircraftRepository;
@@ -91,7 +91,7 @@ public class ReservationControllerTest {
         final String firstName = "John";
         final String lastName = "Smith";
         final int age = 20;
-        Customer customer = setupCustomer(firstName, lastName, age);
+        Passenger passenger = setupCustomer(firstName, lastName, age);
 
         final String model = "747-400";
         final String aircraftName = "Boeing";
@@ -107,14 +107,14 @@ public class ReservationControllerTest {
         Route route = new Route(distance, departureTime, arrivalTime, price, place, aircraft, Collections.emptyList());
 
         final LocalDateTime reservationDate = LocalDateTime.parse("2018-09-28T22:00:00", FORMATTER);
-        setupReservation(reservationDate, customer, route);
+        setupReservation(reservationDate, passenger, route);
 
         mvc.perform(
-                get(BASE_URL + "/" + customer.getId() + RESERVATIONS_PATH)
+                get(BASE_URL + "/" + passenger.getId() + RESERVATIONS_PATH)
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservationId").isNotEmpty())
-                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].customerId").value(customer.getId()))
+                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].customerId").value(passenger.getId()))
                 .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservationDate").value(reservationDate))
                 .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0]._links.reservation.href", is(BASE_URL + "/2" + RESERVATIONS_PATH + "/1")))
                 .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservedRoute.routeId").isNotEmpty())
@@ -146,7 +146,7 @@ public class ReservationControllerTest {
         final String firstName = "John";
         final String lastName = "Smith";
         final int age = 20;
-        Customer customer = setupCustomer(firstName, lastName, age);
+        Passenger passenger = setupCustomer(firstName, lastName, age);
 
         final Double distance = 3600.0;
         final LocalDateTime departureTime = LocalDateTime.parse("2018-09-28T22:00:00", FORMATTER);
@@ -156,16 +156,16 @@ public class ReservationControllerTest {
         Route route = new Route(distance, departureTime, arrivalTime, price, place, aircraft, Collections.emptyList());
 
         final LocalDateTime reservationDate = LocalDateTime.parse("2018-09-28T22:00:00", FORMATTER);
-        Reservation reservation = setupReservation(reservationDate, customer, route);
+        Reservation reservation = setupReservation(reservationDate, passenger, route);
 
         mvc.perform(
                 get(BASE_URL + "/1" + RESERVATIONS_PATH)
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.reservationId").isNotEmpty())
-                .andExpect(jsonPath("$.customerId").value(customer.getId()))
+                .andExpect(jsonPath("$.customerId").value(passenger.getId()))
                 .andExpect(jsonPath("$.reservationDate").value(reservationDate))
-                .andExpect(jsonPath("$._links.customer.href", is(BASE_URL + "/2")))
+                .andExpect(jsonPath("$._links.passenger.href", is(BASE_URL + "/2")))
                 .andExpect(jsonPath("$._links.reservation.href", is(BASE_URL + "/2/" + RESERVATIONS_PATH + "/1")))
                 .andExpect(jsonPath("$.reservedRoute.routeId").isNotEmpty())
                 .andExpect(jsonPath("$.reservedRoute.distance").value(distance))
@@ -189,7 +189,7 @@ public class ReservationControllerTest {
         final String firstName = "John";
         final String lastName = "Smith";
         final int age = 20;
-        Customer customer = setupCustomer(firstName, lastName, age);
+        Passenger passenger = setupCustomer(firstName, lastName, age);
 
         final String model = "747-400";
         final String aircraftName = "Boeing";
@@ -225,7 +225,7 @@ public class ReservationControllerTest {
         final String firstName = "John";
         final String lastName = "Smith";
         final int age = 20;
-        Customer customer = setupCustomer(firstName, lastName, age);
+        Passenger passenger = setupCustomer(firstName, lastName, age);
 
         final String model = "747-400";
         final String aircraftName = "Boeing";
@@ -251,7 +251,7 @@ public class ReservationControllerTest {
                         .content(jsonObject.toString()))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("reservationId").isNotEmpty())
-                .andExpect(jsonPath("customerId").value(customer.getId()))
+                .andExpect(jsonPath("customerId").value(passenger.getId()))
                 .andExpect(jsonPath("routeId").value(route.getId()))
                 .andExpect(jsonPath("reservationDate").value(reservationDate));
 
@@ -265,7 +265,7 @@ public class ReservationControllerTest {
                         .content(jsonObjectAfter.toString()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("reservationId").isNotEmpty())
-                .andExpect(jsonPath("customerId").value(customer.getId()))
+                .andExpect(jsonPath("customerId").value(passenger.getId()))
                 .andExpect(jsonPath("routeId").value(route.getId()))
                 .andExpect(jsonPath("reservationDate").value(reservationDateAfter));
     }
@@ -275,7 +275,7 @@ public class ReservationControllerTest {
         final String firstName = "John";
         final String lastName = "Smith";
         final int age = 20;
-        Customer customer = setupCustomer(firstName, lastName, age);
+        Passenger passenger = setupCustomer(firstName, lastName, age);
 
         final String model = "747-400";
         final String aircraftName = "Boeing";
@@ -308,25 +308,25 @@ public class ReservationControllerTest {
         mvc.perform(delete(BASE_URL + "/1")).andExpect(status().isNoContent());
     }
 
-    private Reservation setupReservation(LocalDateTime reservationDate, Customer customer, Route route) {
+    private Reservation setupReservation(LocalDateTime reservationDate, Passenger passenger, Route route) {
         Reservation reservation = new Reservation();
 
         reservation.setReservationDate(reservationDate);
-        reservation.setCustomer(customer);
+        reservation.setPassenger(passenger);
         reservation.setRoute(route);
 
         return reservation;
     }
 
-    private Customer setupCustomer(String firstName, String lastName, int age) {
-        Customer customer = new Customer();
+    private Passenger setupCustomer(String firstName, String lastName, int age) {
+        Passenger passenger = new Passenger();
 
-        customer.setFirstName(firstName);
-        customer.setLastName(lastName);
-        customer.setAge(age);
-        customer.setReservations(Collections.emptyList());
+        passenger.setFirstName(firstName);
+        passenger.setLastName(lastName);
+        passenger.setAge(age);
+        passenger.setReservations(Collections.emptyList());
 
-        return customerRepository.save(customer);
+        return customerRepository.save(passenger);
     }
 
     private Route setupRoute(Double distance, LocalDateTime departureTime,

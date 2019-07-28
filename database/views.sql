@@ -16,7 +16,7 @@ CREATE VIEW customer_report_view AS
 SELECT c.id         AS customer_id,
        c.first_name AS first_name,
        c.last_name  AS last_name
-FROM customer c;
+FROM passenger c;
 
 -- Ticket view
 CREATE VIEW ticket_view AS
@@ -28,10 +28,10 @@ SELECT c.id            AS customer_id,
        rt.distance     AS distance,
        rt.price        AS price,
        a.aircraft_name AS aircraft_name
-FROM customer c
-       JOIN
+FROM passenger c
+         JOIN
      reservation r ON c.id = r.customer_id
-       JOIN
+         JOIN
      route rt ON r.id = rt.id
-       JOIN
+         JOIN
      aircraft a ON rt.id = a.id;

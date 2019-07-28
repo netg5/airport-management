@@ -27,7 +27,7 @@ import org.springframework.http.ResponseEntity;
 public interface TicketService {
 
     /**
-     * Method to find tickets for customer
+     * Method to find tickets for passenger
      *
      * @param request Request payload with params to find tickets
      * @return collection of tickets
@@ -35,7 +35,7 @@ public interface TicketService {
     ResponseEntity<ResponseDTO<TicketDTO>> findAllTickets(TicketRequestDTO request);
 
     /**
-     * Method to find tickets for customer paginated
+     * Method to find tickets for passenger paginated
      *
      * @param request request Request payload with params to find tickets
      * @param page    number of page to show

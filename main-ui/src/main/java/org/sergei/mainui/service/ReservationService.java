@@ -60,10 +60,10 @@ public class ReservationService {
     }
 
     /**
-     * Get collection of reservations for a specific customer
+     * Get collection of reservations for a specific passenger
      *
      * @param customerId whose reservations should be found
-     * @return collection of customer reservations
+     * @return collection of passenger reservations
      * @throws IOException   IO exceptions and JSONException
      * @throws JSONException in case we have any JSON parsing problems
      */
@@ -141,7 +141,7 @@ public class ReservationService {
     }
 
     /**
-     * Method to make reservation for customer
+     * Method to make reservation for passenger
      *
      * @param reservationPost reservation model to be saved
      * @return saved reservation

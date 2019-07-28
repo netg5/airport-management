@@ -34,7 +34,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Immutable
 @Entity
-@Table(name = "customer")
+@Table(name = "passenger")
 public class BaseCustomer implements Serializable {
 
     private static final long serialVersionUID = 6973333612898495544L;

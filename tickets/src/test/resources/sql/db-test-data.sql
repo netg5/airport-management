@@ -1,4 +1,4 @@
-insert into flight_reservation.customer(customer_id, first_name, last_name, age)
+insert into flight_reservation.passenger(customer_id, first_name, last_name, age)
 values (1, 'John', 'Smith', 20);
 insert into flight_reservation.aircraft(aircraft_id, aircraft_name, weight, max_passengers, model)
 values (1, 'Boeing', 2000, 2300, '123-897');

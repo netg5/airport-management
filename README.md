@@ -1,6 +1,6 @@
 # Flight reservation
-Flight reservation application based on the microservice architecture which allows to add customer, aircraft and route, 
-reserve flight and see all tickets for a particular customer.
+Flight reservation application based on the microservice architecture which allows to add passenger, aircraft and route, 
+reserve flight and see all tickets for a particular passenger.
 
 ## Technologies
 * Java 11
@@ -23,7 +23,7 @@ reserve flight and see all tickets for a particular customer.
 * service-resource - service to experiment with the new features
 * gateway - entry point of the all services
 * reservation - service which allows to reserve flight
-* tickets - service where all customer tickets can be seen
+* tickets - service where all passenger tickets can be seen
 * reports - service to get all reports for a specific purpose (e.g. route report)
 * main-ui - user interface service (Thymeleaf + Twitter Bootstrap)
 
@@ -78,7 +78,7 @@ _Response:_
 
 After authentication it is able to access any resource with an access token provided. As there is used JWT access and refresh tokens are pretty long.
 
-The next step is get an access to the resources. Example for the flight-api: `http://localhost:8080/reservation/customers?access_token=ACCESS_TOKEN`
+The next step is get an access to the resources. Example for the flight-api: `http://localhost:8080/reservation/passengers?access_token=ACCESS_TOKEN`
 
 In case if access token is expired refresh token should be used to renew access token.
 

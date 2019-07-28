@@ -48,18 +48,18 @@ public class ReservationController {
         this.reservationService = reservationService;
     }
 
-    @ApiOperation("Get all reservations for customer")
+    @ApiOperation("Get all reservations for passenger")
     @GetMapping(value = "/{customerId}/reservations", produces = "application/json")
     public ResponseEntity<ResponseDTO<ReservationResponseDTO>>
-    getAllForCustomer(@ApiParam(value = "Customer ID whose reservations should be found", required = true)
+    getAllForCustomer(@ApiParam(value = "Passenger ID whose reservations should be found", required = true)
                       @PathVariable("customerId") Long customerId) {
         return reservationService.findAllForCustomer(customerId);
     }
 
-    @ApiOperation("Get all reservations for customer")
+    @ApiOperation("Get all reservations for passenger")
     @GetMapping(value = "/{customerId}/reservations", params = {"page", "size"}, produces = "application/json")
     public ResponseEntity<ResponseDTO<ReservationResponseDTO>>
-    getAllForCustomerPaginated(@ApiParam(value = "Customer ID whose reservations should be found", required = true)
+    getAllForCustomerPaginated(@ApiParam(value = "Passenger ID whose reservations should be found", required = true)
                                @PathVariable("customerId") Long customerId,
                                @ApiParam("Number of the page")
                                @RequestParam("page") int page,
@@ -68,17 +68,17 @@ public class ReservationController {
         return reservationService.findAllForCustomerPaginated(customerId, page, size);
     }
 
-    @ApiOperation("Get one reservation by ID for the customer")
+    @ApiOperation("Get one reservation by ID for the passenger")
     @GetMapping(value = "/{customerId}/reservations/{reservationId}", produces = "application/json")
     public ResponseEntity<ResponseDTO<ReservationResponseDTO>>
-    getOneForCustomer(@ApiParam(value = "Customer ID who made a reservation", required = true)
+    getOneForCustomer(@ApiParam(value = "Passenger ID who made a reservation", required = true)
                       @PathVariable("customerId") Long customerId,
                       @ApiParam(value = "Reservation ID which which was made", required = true)
                       @PathVariable("reservationId") Long reservationId) {
         return reservationService.findOneForCustomer(customerId, reservationId);
     }
 
-    @ApiOperation("Create reservation for customer")
+    @ApiOperation("Create reservation for passenger")
     @PostMapping(value = "/{customerId}/reservation", produces = "application/json", consumes = "application/json")
     public ResponseEntity<ResponseDTO<ReservationResponseDTO>>
     createReservation(@PathVariable Long customerId,
@@ -87,10 +87,10 @@ public class ReservationController {
         return reservationService.saveReservation(customerId, request);
     }
 
-    @ApiOperation(value = "Update reservation by customer ID")
+    @ApiOperation(value = "Update reservation by passenger ID")
     @PatchMapping(value = "/{customerId}/reservations/{reservationId}", produces = "application/json", consumes = "application/json")
     public ResponseEntity<ResponseDTO<ReservationResponseDTO>>
-    updateReservation(@ApiParam(value = "Customer ID who made reservation", required = true)
+    updateReservation(@ApiParam(value = "Passenger ID who made reservation", required = true)
                       @PathVariable("customerId") Long customerId,
                       @ApiParam(value = "Reservation ID which should be updated", required = true)
                       @PathVariable("reservationId") Long reservationId,
@@ -101,7 +101,7 @@ public class ReservationController {
     @ApiOperation("Delete reservation")
     @DeleteMapping("/{customerId}/reservations/{reservationId}")
     public ResponseEntity<ResponseDTO<ReservationResponseDTO>>
-    deleteReservation(@ApiParam(value = "Customer ID who made reservation", required = true)
+    deleteReservation(@ApiParam(value = "Passenger ID who made reservation", required = true)
                       @PathVariable("customerId") Long customerId,
                       @ApiParam(value = "Reservation ID which should be deleted", required = true)
                       @PathVariable("reservationId") Long reservationId) {

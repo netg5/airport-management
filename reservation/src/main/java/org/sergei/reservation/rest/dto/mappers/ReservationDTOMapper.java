@@ -23,7 +23,7 @@ public class ReservationDTOMapper implements IMapper<Reservation, ReservationRes
         ReservationResponseDTO reservationResponseDTO = new ReservationResponseDTO();
 
         reservationResponseDTO.setReservationId(reservation.getId());
-        reservationResponseDTO.setCustomerId(reservation.getCustomer().getId());
+        reservationResponseDTO.setCustomerId(reservation.getPassenger().getId());
         reservationResponseDTO.setReservationDate(reservation.getReservationDate());
         reservationResponseDTO.setRoutes(routeDTOMapper.apply(reservation.getRoute()));
 

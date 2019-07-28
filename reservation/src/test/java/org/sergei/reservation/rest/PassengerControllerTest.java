@@ -21,8 +21,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sergei.reservation.ReservationApplication;
-import org.sergei.reservation.rest.controller.CustomerController;
-import org.sergei.reservation.jpa.model.Customer;
+import org.sergei.reservation.jpa.model.Passenger;
+import org.sergei.reservation.rest.controller.PassengerController;
 import org.sergei.reservation.jpa.repository.CustomerRepository;
 import org.sergei.reservation.testconfig.ResourceServerConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +44,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Test for {@link CustomerController}
+ * Test for {@link PassengerController}
  *
  * @author Sergei Visotsky
  */
@@ -57,7 +57,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ContextConfiguration(classes = {ResourceServerConfiguration.class})
 @EnableJpaRepositories(basePackages = "org.sergei.reservation.jpa.repository")
 @EntityScan(basePackages = "org.sergei.reservation.jpa.model")
-public class CustomerControllerTest {
+public class PassengerControllerTest {
 
     private static final String BASE_URL = "http://localhost/customers";
     private static final String RESERVATIONS_PATH = "/reservations";
@@ -96,12 +96,12 @@ public class CustomerControllerTest {
         final String firstName = "John";
         final String lastName = "Smith";
         final int age = 20;
-        Customer customer = setupCustomer(firstName, lastName, age);
+        Passenger passenger = setupCustomer(firstName, lastName, age);
 
         final String secondFirstName = "Jane";
         final String secondLastName = "Test";
         final int secondAge = 30;
-        Customer secondCustomer = setupCustomer(secondFirstName, secondLastName, secondAge);
+        Passenger secondPassenger = setupCustomer(secondFirstName, secondLastName, secondAge);
 
         mvc.perform(
                 get(BASE_URL + page + size)
@@ -277,14 +277,14 @@ public class CustomerControllerTest {
                 .andExpect(status().isNoContent());
     }
 
-    private Customer setupCustomer(String firstName, String lastName, int age) {
-        Customer customer = new Customer();
+    private Passenger setupCustomer(String firstName, String lastName, int age) {
+        Passenger passenger = new Passenger();
 
-        customer.setFirstName(firstName);
-        customer.setLastName(lastName);
-        customer.setAge(age);
-        customer.setReservations(Collections.emptyList());
+        passenger.setFirstName(firstName);
+        passenger.setLastName(lastName);
+        passenger.setAge(age);
+        passenger.setReservations(Collections.emptyList());
 
-        return customerRepository.save(customer);
+        return customerRepository.save(passenger);
     }
 }

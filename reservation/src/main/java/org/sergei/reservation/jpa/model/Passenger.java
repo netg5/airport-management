@@ -33,8 +33,8 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "customer")
-public class Customer implements Serializable {
+@Table(name = "passenger")
+public class Passenger implements Serializable {
 
     private static final long serialVersionUID = -1912889839898184066L;
 
@@ -63,7 +63,7 @@ public class Customer implements Serializable {
     @JoinColumn(name = "reservation_id")
     private List<Reservation> reservations = new LinkedList<>();
 
-    public Customer(String firstName, String lastName, Integer age, List<Reservation> reservations) {
+    public Passenger(String firstName, String lastName, Integer age, List<Reservation> reservations) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;

@@ -50,15 +50,15 @@ public class Reservation implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
-    private Customer customer;
+    private Passenger passenger;
 
     @ManyToOne
     @JoinColumn(name = "route_id", nullable = false)
     private Route route;
 
-    public Reservation(LocalDateTime reservationDate, Customer customer, Route route) {
+    public Reservation(LocalDateTime reservationDate, Passenger passenger, Route route) {
         this.reservationDate = reservationDate;
-        this.customer = customer;
+        this.passenger = passenger;
         this.route = route;
     }
 }

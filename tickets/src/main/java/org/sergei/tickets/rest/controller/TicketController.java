@@ -47,13 +47,13 @@ public class TicketController {
         this.ticketService = ticketService;
     }
 
-    @ApiOperation("Get ticket for customer by ID")
+    @ApiOperation("Get ticket for passenger by ID")
     @PostMapping(produces = "application/json")
     public ResponseEntity<ResponseDTO<TicketDTO>> findAllTickets(@RequestBody TicketRequestDTO request) {
         return ticketService.findAllTickets(request);
     }
 
-    @ApiOperation("Get ticket for customer by ID")
+    @ApiOperation("Get ticket for passenger by ID")
     @PostMapping(params = {"page", "size"}, produces = "application/json")
     public ResponseEntity<ResponseDTO<TicketDTO>> findAllTicketsPageable(@RequestBody TicketRequestDTO request,
                                                                          @ApiParam("Number of page")

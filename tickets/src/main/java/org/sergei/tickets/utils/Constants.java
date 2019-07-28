@@ -35,6 +35,6 @@ public final class Constants {
     public static final String CUSTOMER_NOT_FOUND = "Customer with this ID not found";
     public static final String ROUTE_NOT_FOUND = "Route with this ID not found";
     public static final String RESERVATION_NOT_FOUND = "Reservation with this ID not found";
-    public static final String RESERVATIONS_NOT_FOUND = "This customer has no reservations made";
+    public static final String RESERVATIONS_NOT_FOUND = "This passenger has no reservations made";
     public static final String TICKETS_NOT_FOUND = "Customer has no tickets";
 }

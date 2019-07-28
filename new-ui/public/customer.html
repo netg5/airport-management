@@ -17,7 +17,7 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="/customers/1">Customer</a>
+                    <a class="nav-link" href="/passengers/1">Customer</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/aircrafts/1">Aircraft</a>
@@ -33,20 +33,20 @@
     <div class="container">
 
         <h1>Customer:</h1>
-        <div>Customer ID: [[${customer.customerId}]]</div>
-        <div>Fist name: [[${customer.firstName}]]</div>
-        <div>Last name: [[${customer.lastName}]]</div>
-        <div>Age: [[${customer.age}]]</div>
+        <div>Customer ID: [[${passenger.customerId}]]</div>
+        <div>Fist name: [[${passenger.firstName}]]</div>
+        <div>Last name: [[${passenger.lastName}]]</div>
+        <div>Age: [[${passenger.age}]]</div>
 
         <p>
-            <a href="/customers/1/reservations">Reservations for the first customer</a>
+            <a href="/passengers/1/reservations">Reservations for the first passenger</a>
         </p>
         <p>
-            <a href="/customers/1/tickets">Tickets for this customer</a>
+            <a href="/passengers/1/tickets">Tickets for this passenger</a>
         </p>
 
-        <h6>Add a new customer:</h6>
-        <form th:action="@{/customers}" th:object="${customerPost}" method="post">
+        <h6>Add a new passenger:</h6>
+        <form th:action="@{/passengers}" th:object="${customerPost}" method="post">
             <p>
                 <label>
                     <input type="text" class="form-control" placeholder="First name" th:field="*{firstName}">

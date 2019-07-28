@@ -1,5 +1,5 @@
 create schema flight_reservation;
-CREATE TABLE flight_reservation.customer
+CREATE TABLE flight_reservation.passenger
 (
   customer_id bigint(20)   NOT NULL,
   first_name  varchar(255) NOT NULL,
@@ -53,7 +53,7 @@ CREATE TABLE flight_reservation.reservation
   customer_id      bigint(20) NOT NULL,
   route_id         bigint(20) NOT NULL,
   PRIMARY KEY (reservation_id),
-  FOREIGN KEY (customer_id) REFERENCES customer (customer_id) ON DELETE CASCADE,
+  FOREIGN KEY (customer_id) REFERENCES passenger (customer_id) ON DELETE CASCADE,
   FOREIGN KEY (route_id) REFERENCES route (route_id) ON DELETE CASCADE
 );
 
@@ -71,7 +71,7 @@ SELECT c.customer_id   AS customer_id,
        rt.distance     AS distance,
        rt.price        AS price,
        a.aircraft_name AS aircraft_name
-FROM (((flight_reservation.customer c
+FROM (((flight_reservation.passenger c
   JOIN flight_reservation.reservation r)
   JOIN flight_reservation.route rt)
        JOIN flight_reservation.aircraft a)

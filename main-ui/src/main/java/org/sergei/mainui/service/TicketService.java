@@ -53,7 +53,7 @@ public class TicketService {
     }
 
     /**
-     * Method to find all existing tickets for customer
+     * Method to find all existing tickets for passenger
      *
      * @param customerId whose tickets should be found
      * @return list of tickets found

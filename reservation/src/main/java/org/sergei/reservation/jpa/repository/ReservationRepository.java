@@ -16,7 +16,7 @@
 
 package org.sergei.reservation.jpa.repository;
 
-import org.sergei.reservation.jpa.model.Customer;
+import org.sergei.reservation.jpa.model.Passenger;
 import org.sergei.reservation.jpa.model.Reservation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,44 +37,44 @@ import java.util.Optional;
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 
     /**
-     * Find reservation for customer by ID
+     * Find reservation for passenger by ID
      *
      * @param customerId    whose reservation should be found
      * @param reservationId reservation which should be found
      * @return list of reservations
      */
-    @Query("SELECT r FROM Reservation r WHERE r.customer.id = :customerId AND r.id = :reservationId")
+    @Query("SELECT r FROM Reservation r WHERE r.getPassenger.id = :customerId AND r.id = :reservationId")
     Optional<Reservation> findOneForCustomer(@Param("customerId") Long customerId,
                                              @Param("reservationId") Long reservationId);
 
     /**
-     * Find all reservations by customer ID
+     * Find all reservations by passenger ID
      *
      * @param customerId whose reservation should be found
      * @return list of reservations
      */
-    @Query("SELECT r FROM Reservation r WHERE r.customer.id = :customerId")
+    @Query("SELECT r FROM Reservation r WHERE r.getPassenger.id = :customerId")
     List<Reservation> findAllForCustomer(@Param("customerId") Long customerId);
 
     /**
-     * Find all reservations by customer ID paginated
+     * Find all reservations by passenger ID paginated
      *
      * @param customerId whose reservations should be found
      * @param pageable   page size and record quantity per page
      * @return list of reservations
      */
-    @Query("SELECT r FROM Reservation r WHERE r.customer.id = :customerId")
+    @Query("SELECT r FROM Reservation r WHERE r.getPassenger.id = :customerId")
     Page<Reservation> findAllForCustomerPaginated(@Param("customerId") Long customerId,
                                                   Pageable pageable);
 
     /**
-     * Method to delete reservation by customer and reservation found
+     * Method to delete reservation by passenger and reservation found
      *
-     * @param customer    customer found and given as a parameter
+     * @param passenger    passenger found and given as a parameter
      * @param reservation reservation found and given as a parameter
      */
     @Transactional
     @Modifying
-    @Query("DELETE FROM Reservation r WHERE r.customer = ?1 AND r = ?2")
-    void deleteByCustomerIdAndReservationId(Customer customer, Reservation reservation);
+    @Query("DELETE FROM Reservation r WHERE r.getPassenger = ?1 AND r = ?2")
+    void deleteByCustomerIdAndReservationId(Passenger passenger, Reservation reservation);
 }
