@@ -44,6 +44,7 @@ public class Passenger implements Serializable {
             generator = "passenger_id_seq")
     @SequenceGenerator(name = "passenger_id_seq",
             sequenceName = "passenger_id_seq", allocationSize = 1)
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "first_name", nullable = false)

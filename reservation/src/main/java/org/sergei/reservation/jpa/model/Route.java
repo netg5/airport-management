@@ -48,6 +48,7 @@ public class Route implements Serializable {
             generator = "route_id_seq")
     @SequenceGenerator(name = "route_id_seq",
             sequenceName = "route_id_seq", allocationSize = 1)
+    @Column(name = "id")
     private Long id;
 
     @Column(nullable = false)
@@ -69,15 +70,15 @@ public class Route implements Serializable {
     @JoinColumn(name = "id")
     private Aircraft aircraft;
 
-    @OneToMany(
-            fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL
-    )
-    @JoinColumn(
-            name = "reservation_id",
-            referencedColumnName = "id",
-            nullable = false
-    )
-    private List<Reservation> reservationList = new LinkedList<>();
+//    @OneToMany(
+//            fetch = FetchType.LAZY,
+//            cascade = CascadeType.ALL
+//    )
+//    @JoinColumn(
+//            name = "id",
+//            referencedColumnName = "id",
+//            nullable = false
+//    )
+//    private List<Reservation> reservationList = new LinkedList<>();
 
 }

@@ -49,7 +49,7 @@ public class ReservationController {
     }
 
     @ApiOperation("Get all reservations for passenger")
-    @GetMapping(value = "/{passengerId}/reservations", produces = "application/json")
+    @GetMapping(value = "/{passengerId}/reservation", produces = "application/json")
     public ResponseEntity<ResponseDTO<ReservationResponseDTO>>
     getAllForCustomer(@ApiParam(value = "Passenger ID whose reservations should be found", required = true)
                       @PathVariable("passengerId") Long passengerId) {
@@ -57,7 +57,7 @@ public class ReservationController {
     }
 
     @ApiOperation("Get all reservations for passenger")
-    @GetMapping(value = "/{passengerId}/reservations", params = {"page", "size"}, produces = "application/json")
+    @GetMapping(value = "/{passengerId}/reservation", params = {"page", "size"}, produces = "application/json")
     public ResponseEntity<ResponseDTO<ReservationResponseDTO>>
     getAllForCustomerPaginated(@ApiParam(value = "Passenger ID whose reservations should be found", required = true)
                                @PathVariable("passengerId") Long passengerId,
@@ -69,7 +69,7 @@ public class ReservationController {
     }
 
     @ApiOperation("Get one reservation by ID for the passenger")
-    @GetMapping(value = "/{passengerId}/reservations/{reservationId}", produces = "application/json")
+    @GetMapping(value = "/{passengerId}/reservation/{reservationId}", produces = "application/json")
     public ResponseEntity<ResponseDTO<ReservationResponseDTO>>
     getOneForCustomer(@ApiParam(value = "Passenger ID who made a reservation", required = true)
                       @PathVariable("passengerId") Long passengerId,
@@ -88,7 +88,7 @@ public class ReservationController {
     }
 
     @ApiOperation(value = "Update reservation by passenger ID")
-    @PatchMapping(value = "/{passengerId}/reservations/{reservationId}", produces = "application/json", consumes = "application/json")
+    @PatchMapping(value = "/{passengerId}/reservation/{reservationId}", produces = "application/json", consumes = "application/json")
     public ResponseEntity<ResponseDTO<ReservationResponseDTO>>
     updateReservation(@ApiParam(value = "Passenger ID who made reservation", required = true)
                       @PathVariable("passengerId") Long passengerId,
@@ -99,7 +99,7 @@ public class ReservationController {
     }
 
     @ApiOperation("Delete reservation")
-    @DeleteMapping("/{passengerId}/reservations/{reservationId}")
+    @DeleteMapping("/{passengerId}/reservation/{reservationId}")
     public ResponseEntity<ResponseDTO<ReservationResponseDTO>>
     deleteReservation(@ApiParam(value = "Passenger ID who made reservation", required = true)
                       @PathVariable("passengerId") Long passengerId,

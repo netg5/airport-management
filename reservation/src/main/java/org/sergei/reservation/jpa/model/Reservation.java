@@ -45,6 +45,7 @@ public class Reservation implements Serializable {
             generator = "reservation_id_seq")
     @SequenceGenerator(name = "reservation_id_seq",
             sequenceName = "reservation_id_seq", allocationSize = 1)
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "date_of_flying", nullable = false)

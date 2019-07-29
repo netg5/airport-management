@@ -33,7 +33,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "aircraftId")
+@Table(name = "aircraft")
 public class Aircraft implements Serializable {
 
     private static final long serialVersionUID = -155783393887085614L;
@@ -44,6 +44,7 @@ public class Aircraft implements Serializable {
             generator = "aircraft_id_seq")
     @SequenceGenerator(name = "aircraft_id_seq",
             sequenceName = "aircraft_id_seq", allocationSize = 1)
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "manufacturer_code")
