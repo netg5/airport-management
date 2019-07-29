@@ -43,7 +43,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
             "    Ticket t\n" +
             "WHERE\n" +
             "    t.passengerId = ?1\n" +
-            "        AND (?2 IS NULL OR t.getDateOfFlying = ?2)")
+            "        AND (?2 IS NULL OR t.dateOfFlying = ?2)")
     List<Ticket> findAllTickets(Long passengerId);
 
     /**
