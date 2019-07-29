@@ -1,4 +1,6 @@
-def  POM_LOCATION = '-f config/pom.xml'
+#!groovy
+
+def  POM_LOCATION = '-f reports/pom.xml'
 pipeline {
     agent any
     tools {
