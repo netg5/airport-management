@@ -41,9 +41,9 @@ public class Aircraft implements Serializable {
     @Id
     @NotNull
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
-            generator = "aircraft_seq")
-    @SequenceGenerator(name = "aircraft_seq",
-            sequenceName = "aircraft_seq", allocationSize = 1)
+            generator = "aircraft_id_seq")
+    @SequenceGenerator(name = "aircraft_id_seq",
+            sequenceName = "aircraft_id_seq", allocationSize = 1)
     private Long id;
 
     @Column(name = "manufacturer_code")
@@ -69,7 +69,11 @@ public class Aircraft implements Serializable {
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL
     )
-    @JoinColumn(name = "customerId")
+    @JoinColumn(
+            name = "owner_id",
+            referencedColumnName = "id",
+            nullable = false
+    )
     private Owner owner;
 
 }

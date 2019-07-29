@@ -41,9 +41,9 @@ public class Passenger implements Serializable {
     @Id
     @NotNull
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
-            generator = "customer_seq")
-    @SequenceGenerator(name = "customer_seq",
-            sequenceName = "customer_seq", allocationSize = 1)
+            generator = "passenger_id_seq")
+    @SequenceGenerator(name = "passenger_id_seq",
+            sequenceName = "passenger_id_seq", allocationSize = 1)
     private Long id;
 
     @Column(name = "first_name", nullable = false)

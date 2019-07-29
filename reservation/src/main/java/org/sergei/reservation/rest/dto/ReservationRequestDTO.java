@@ -20,7 +20,7 @@ public class ReservationRequestDTO implements Serializable {
     private static final long serialVersionUID = -128622388504108631L;
 
     @ApiModelProperty("Reserved route ID")
-    private Long routeId;
+    private Long aircraftId;
 
     @ApiModelProperty("Flight reservation date")
     private LocalDateTime dateOfFlying;

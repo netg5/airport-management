@@ -42,9 +42,9 @@ public class Reservation implements Serializable {
     @Id
     @NotNull
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
-            generator = "reservation_seq")
-    @SequenceGenerator(name = "reservation_seq",
-            sequenceName = "reservation_seq", allocationSize = 1)
+            generator = "reservation_id_seq")
+    @SequenceGenerator(name = "reservation_id_seq",
+            sequenceName = "reservation_id_seq", allocationSize = 1)
     private Long id;
 
     @Column(name = "date_of_flying", nullable = false)
@@ -60,11 +60,19 @@ public class Reservation implements Serializable {
     private Integer hoursFlying;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "passenger_id", nullable = false)
+    @JoinColumn(
+            name = "passenger_id",
+            referencedColumnName = "id",
+            nullable = false
+    )
     private Passenger passenger;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "aircraft_id", nullable = false)
+    @JoinColumn(
+            name = "aircraft_id",
+            referencedColumnName = "id",
+            nullable = false
+    )
     private Aircraft aircraft;
 
 }

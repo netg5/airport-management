@@ -81,9 +81,9 @@ public class ReservationController {
     @ApiOperation("Create reservation for passenger")
     @PostMapping(value = "/{passengerId}/reservation", produces = "application/json", consumes = "application/json")
     public ResponseEntity<ResponseDTO<ReservationResponseDTO>>
-    createReservation(@PathVariable Long passengerId,
-                      @ApiParam(value = "Request to delete reservation", required = true)
-                      @RequestBody ReservationRequestDTO request) {
+    makeReservation(@PathVariable Long passengerId,
+                    @ApiParam(value = "Request to delete reservation", required = true)
+                    @RequestBody ReservationRequestDTO request) {
         return reservationService.saveReservation(passengerId, request);
     }
 

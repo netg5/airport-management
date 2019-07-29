@@ -25,9 +25,9 @@ public class Owner implements Serializable {
     @Id
     @NotNull
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
-            generator = "owner_seq")
-    @SequenceGenerator(name = "owner_seq",
-            sequenceName = "owner_seq", allocationSize = 1)
+            generator = "owner_id_seq")
+    @SequenceGenerator(name = "owner_id_seq",
+            sequenceName = "owner_id_seq", allocationSize = 1)
     private Long id;
 
     @Column(name = "first_name", nullable = false)

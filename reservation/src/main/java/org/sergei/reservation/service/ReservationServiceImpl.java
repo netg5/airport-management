@@ -35,6 +35,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -164,7 +165,7 @@ public class ReservationServiceImpl implements ReservationService {
             return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
         } else {
             // Find aircraftId by aircraftId ID
-            Optional<Aircraft> aircraft = aircraftRepository.findById(request.getRouteId());
+            Optional<Aircraft> aircraft = aircraftRepository.findById(request.getAircraftId());
             if (aircraft.isEmpty()) {
                 return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
             } else {
@@ -207,24 +208,34 @@ public class ReservationServiceImpl implements ReservationService {
         } else {
             Optional<Reservation> reservation = reservationRepository.findOneForPassenger(passengerId, reservationId);
             if (reservation.isEmpty()) {
-//                reservation.get().getAircraft(passenger);
-//                if (params.get("id") != null) {
-//                    reservation.setRoute(
-//                            routeRepository.findById(Long.valueOf(String.valueOf(params.get("id"))))
-//                                    .orElseThrow(() ->
-//                                            new ResourceNotFoundException(Constants.ROUTE_NOT_FOUND)
-//                                    ));
-//                }
-//                if (params.get("dateOfFlying") != null) {
-//                    reservation.setReservationDate(LocalDateTime.parse(String.valueOf(params.get("dateOfFlying"))));
-//                }
-//                ReservationResponseDTO reservationResponseDTO = map(reservationRepository.save(reservation), ReservationResponseDTO.class);
-//                reservationResponseDTO.setRouteId(reservation.getRoute().getCustomerId());
-//                reservationResponseDTO.setPassengerId(passenger.getCustomerId());
-//                return reservationResponseDTO;
-//            }
+                return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+            } else {
+                if (params.get("aircraftId") != null) {
+                    Optional<Aircraft> aircraft = aircraftRepository.findById(Long.parseLong(String.valueOf(params.get("aircraftId"))));
+                    if (aircraft.isEmpty()) {
+                        return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+                    } else {
+                        reservation.get().setAircraft(aircraft.get());
+                    }
+                }
+                if (params.get("departureTime") != null) {
+                    reservation.get().setDepartureTime(LocalDateTime.parse(String.valueOf(params.get("departureTime"))));
+                }
+                if (params.get("dateOfFlying") != null) {
+                    reservation.get().setDateOfFlying(LocalDateTime.parse(String.valueOf(params.get("dateOfFlying"))));
+                }
+                if (params.get("hoursFlying") != null) {
+                    reservation.get().setHoursFlying(Integer.parseInt(String.valueOf(params.get("hoursFlying"))));
+                }
+                Reservation savedReservation = reservationRepository.save(reservation.get());
+                ReservationResponseDTO reservationResponseDTO = reservationDTOMapper.apply(savedReservation);
+
+                ResponseDTO<ReservationResponseDTO> response = new ResponseDTO<>();
+                response.setErrorList(List.of());
+                response.setResponse(List.of(reservationResponseDTO));
+
+                return new ResponseEntity<>(response, HttpStatus.OK);
             }
-            return null;
         }
     }
 
