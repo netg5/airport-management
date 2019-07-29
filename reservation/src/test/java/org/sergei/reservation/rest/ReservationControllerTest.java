@@ -115,7 +115,7 @@ public class ReservationControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservationId").isNotEmpty())
                 .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].passengerId").value(passenger.getId()))
-                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservationDate").value(reservationDate))
+                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].dateOfFlying").value(reservationDate))
                 .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0]._links.reservation.href", is(BASE_URL + "/2" + RESERVATIONS_PATH + "/1")))
                 .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservedRoute.routeId").isNotEmpty())
                 .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservedRoute.distance").value(distance))
@@ -124,13 +124,13 @@ public class ReservationControllerTest {
                 .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservedRoute.place").value(place))
                 .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservedRoute._links.routeSelf.href",
                         is(BASE_URL + RESERVATIONS_PATH + ROUTES_PATH + "/" + route.getId())))
-                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservedRoute.aircraft").value(place))
-                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservedRoute.place.aircraft.aircraftId").isNotEmpty())
-                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservedRoute.place.aircraft.model").value(model))
-                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservedRoute.place.aircraft.aircraftName").value(aircraftName))
-                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservedRoute.place.aircraft.weight").value(aircraftWeight))
-                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservedRoute.place.aircraft.capacity").value(maxPassengers))
-                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].aircraft._links.aircraftSelf.href",
+                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservedRoute.aircraftId").value(place))
+                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservedRoute.place.aircraftId.aircraftId").isNotEmpty())
+                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservedRoute.place.aircraftId.model").value(model))
+                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservedRoute.place.aircraftId.aircraftName").value(aircraftName))
+                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservedRoute.place.aircraftId.weight").value(aircraftWeight))
+                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].reservedRoute.place.aircraftId.capacity").value(maxPassengers))
+                .andExpect(jsonPath("$._embedded.reservationExtendedDTOList[0].aircraftId._links.aircraftSelf.href",
                         is(BASE_URL + RESERVATIONS_PATH + AIRCRAFTS_PATH + "/" + aircraft.getId())))
                 .andExpect(jsonPath("$._links.self.href", is(BASE_URL + "/1" + RESERVATIONS_PATH)));
     }
@@ -164,7 +164,7 @@ public class ReservationControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.reservationId").isNotEmpty())
                 .andExpect(jsonPath("$.passengerId").value(passenger.getId()))
-                .andExpect(jsonPath("$.reservationDate").value(reservationDate))
+                .andExpect(jsonPath("$.dateOfFlying").value(reservationDate))
                 .andExpect(jsonPath("$._links.passenger.href", is(BASE_URL + "/2")))
                 .andExpect(jsonPath("$._links.reservation.href", is(BASE_URL + "/2/" + RESERVATIONS_PATH + "/1")))
                 .andExpect(jsonPath("$.reservedRoute.routeId").isNotEmpty())
@@ -174,13 +174,13 @@ public class ReservationControllerTest {
                 .andExpect(jsonPath("$.reservedRoute.place").value(place))
                 .andExpect(jsonPath("$.reservedRoute._links.routeSelf.href",
                         is(BASE_URL + RESERVATIONS_PATH + ROUTES_PATH + "/" + route.getId())))
-                .andExpect(jsonPath("$.reservedRoute.aircraft").value(place))
-                .andExpect(jsonPath("$.reservedRoute.place.aircraft.aircraftId").isNotEmpty())
-                .andExpect(jsonPath("$.reservedRoute.place.aircraft.model").value(model))
-                .andExpect(jsonPath("$.reservedRoute.place.aircraft.aircraftName").value(aircraftName))
-                .andExpect(jsonPath("$.reservedRoute.place.aircraft.weight").value(aircraftWeight))
-                .andExpect(jsonPath("$.reservedRoute.place.aircraft.capacity").value(maxPassengers))
-                .andExpect(jsonPath("$.reservedRoute.aircraft._links.aircraftSelf.href",
+                .andExpect(jsonPath("$.reservedRoute.aircraftId").value(place))
+                .andExpect(jsonPath("$.reservedRoute.place.aircraftId.aircraftId").isNotEmpty())
+                .andExpect(jsonPath("$.reservedRoute.place.aircraftId.model").value(model))
+                .andExpect(jsonPath("$.reservedRoute.place.aircraftId.aircraftName").value(aircraftName))
+                .andExpect(jsonPath("$.reservedRoute.place.aircraftId.weight").value(aircraftWeight))
+                .andExpect(jsonPath("$.reservedRoute.place.aircraftId.capacity").value(maxPassengers))
+                .andExpect(jsonPath("$.reservedRoute.aircraftId._links.aircraftSelf.href",
                         is(BASE_URL + RESERVATIONS_PATH + AIRCRAFTS_PATH + "/" + aircraft.getId())));
     }
 
@@ -208,7 +208,7 @@ public class ReservationControllerTest {
 
         JSONObject jsonObject = new JSONObject()
                 .put("routeId", route.getId())
-                .put("reservationDate", reservationDate);
+                .put("dateOfFlying", reservationDate);
         mvc.perform(
                 post(BASE_URL)
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -217,7 +217,7 @@ public class ReservationControllerTest {
                 .andExpect(jsonPath("reservationId").isNotEmpty())
                 .andExpect(jsonPath("passengerId").value(1))
                 .andExpect(jsonPath("routeId").value(route.getId()))
-                .andExpect(jsonPath("reservationDate").value(reservationDate));
+                .andExpect(jsonPath("dateOfFlying").value(reservationDate));
     }
 
     @Test
@@ -244,7 +244,7 @@ public class ReservationControllerTest {
 
         JSONObject jsonObject = new JSONObject()
                 .put("routeId", route.getId())
-                .put("reservationDate", reservationDate);
+                .put("dateOfFlying", reservationDate);
         mvc.perform(
                 post(BASE_URL)
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -253,12 +253,12 @@ public class ReservationControllerTest {
                 .andExpect(jsonPath("reservationId").isNotEmpty())
                 .andExpect(jsonPath("passengerId").value(passenger.getId()))
                 .andExpect(jsonPath("routeId").value(route.getId()))
-                .andExpect(jsonPath("reservationDate").value(reservationDate));
+                .andExpect(jsonPath("dateOfFlying").value(reservationDate));
 
         final String reservationDateAfter = "2019-01-01T15:27:05";
         JSONObject jsonObjectAfter = new JSONObject()
                 .put("routeId", route.getId())
-                .put("reservationDate", reservationDateAfter);
+                .put("dateOfFlying", reservationDateAfter);
         mvc.perform(
                 patch(BASE_URL + "/1")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -267,7 +267,7 @@ public class ReservationControllerTest {
                 .andExpect(jsonPath("reservationId").isNotEmpty())
                 .andExpect(jsonPath("passengerId").value(passenger.getId()))
                 .andExpect(jsonPath("routeId").value(route.getId()))
-                .andExpect(jsonPath("reservationDate").value(reservationDateAfter));
+                .andExpect(jsonPath("dateOfFlying").value(reservationDateAfter));
     }
 
     @Test
@@ -294,7 +294,7 @@ public class ReservationControllerTest {
 
         JSONObject jsonObject = new JSONObject()
                 .put("routeId", route.getId())
-                .put("reservationDate", reservationDate);
+                .put("dateOfFlying", reservationDate);
         mvc.perform(
                 post(BASE_URL)
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -303,7 +303,7 @@ public class ReservationControllerTest {
                 .andExpect(jsonPath("reservationId").isNotEmpty())
                 .andExpect(jsonPath("passengerId").value(1))
                 .andExpect(jsonPath("routeId").value(route.getId()))
-                .andExpect(jsonPath("reservationDate").value(reservationDate));
+                .andExpect(jsonPath("dateOfFlying").value(reservationDate));
 
         mvc.perform(delete(BASE_URL + "/1")).andExpect(status().isNoContent());
     }

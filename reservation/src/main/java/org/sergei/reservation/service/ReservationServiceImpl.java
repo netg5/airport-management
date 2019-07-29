@@ -16,18 +16,18 @@
 
 package org.sergei.reservation.service;
 
+import org.sergei.reservation.jpa.model.Aircraft;
 import org.sergei.reservation.jpa.model.Passenger;
 import org.sergei.reservation.jpa.model.Reservation;
-import org.sergei.reservation.jpa.model.Route;
+import org.sergei.reservation.jpa.repository.AircraftRepository;
 import org.sergei.reservation.jpa.repository.PassengerRepository;
 import org.sergei.reservation.jpa.repository.ReservationRepository;
-import org.sergei.reservation.jpa.repository.RouteRepository;
+import org.sergei.reservation.rest.dto.AircraftResponseDTO;
 import org.sergei.reservation.rest.dto.ReservationRequestDTO;
 import org.sergei.reservation.rest.dto.ReservationResponseDTO;
-import org.sergei.reservation.rest.dto.RouteResponseDTO;
+import org.sergei.reservation.rest.dto.mappers.AircraftDTOMapper;
 import org.sergei.reservation.rest.dto.mappers.ReservationDTOListMapper;
 import org.sergei.reservation.rest.dto.mappers.ReservationDTOMapper;
-import org.sergei.reservation.rest.dto.mappers.RouteDTOMapper;
 import org.sergei.reservation.rest.dto.response.ResponseDTO;
 import org.sergei.reservation.rest.exceptions.ResourceNotFoundException;
 import org.sergei.reservation.utils.Constants;
@@ -37,7 +37,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -49,54 +48,54 @@ import java.util.Optional;
 public class ReservationServiceImpl implements ReservationService {
 
     private final PassengerRepository passengerRepository;
-    private final RouteRepository routeRepository;
+    private final AircraftRepository aircraftRepository;
     private final ReservationRepository reservationRepository;
     private final ReservationDTOMapper reservationDTOMapper;
     private final ReservationDTOListMapper reservationDTOListMapper;
-    private final RouteDTOMapper routeDTOMapper;
+    private final AircraftDTOMapper aircraftDTOMapper;
 
     @Autowired
     public ReservationServiceImpl(PassengerRepository passengerRepository,
-                                  RouteRepository routeRepository,
+                                  AircraftRepository aircraftRepository,
                                   ReservationRepository reservationRepository,
                                   ReservationDTOMapper reservationDTOMapper,
                                   ReservationDTOListMapper reservationDTOListMapper,
-                                  RouteDTOMapper routeDTOMapper) {
+                                  AircraftDTOMapper aircraftDTOMapper) {
         this.passengerRepository = passengerRepository;
-        this.routeRepository = routeRepository;
+        this.aircraftRepository = aircraftRepository;
         this.reservationRepository = reservationRepository;
         this.reservationDTOMapper = reservationDTOMapper;
         this.reservationDTOListMapper = reservationDTOListMapper;
-        this.routeDTOMapper = routeDTOMapper;
+        this.aircraftDTOMapper = aircraftDTOMapper;
     }
 
     /**
      * Method to get flight reservation for the passenger by reservation ID
      *
-     * @param customerId    gets passenger ID as a parameter
+     * @param passengerId   gets passenger ID as a parameter
      * @param reservationId gets flight reservation ID as a parameter
      * @return Flight reservation extended DTO
      */
     @Override
-    public ResponseEntity<ResponseDTO<ReservationResponseDTO>> findOneForCustomer(Long customerId, Long reservationId) {
-        Optional<Passenger> customer = passengerRepository.findById(customerId);
+    public ResponseEntity<ResponseDTO<ReservationResponseDTO>> findOneForPassenger(Long passengerId, Long reservationId) {
+        Optional<Passenger> customer = passengerRepository.findById(passengerId);
 
         if (customer.isEmpty()) {
             return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
         } else {
-            Optional<Reservation> reservation = reservationRepository.findOneForCustomer(customerId, reservationId);
+            Optional<Reservation> reservation = reservationRepository.findOneForPassenger(passengerId, reservationId);
             if (reservation.isEmpty()) {
                 return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
             } else {
                 ReservationResponseDTO reservationResponseDTO = reservationDTOMapper.apply(reservation.get());
-                // Find route by ID
-                Optional<Route> route = routeRepository.findById(reservation.get().getRoute().getId());
+                // Find aircraftId by ID
+                Optional<Aircraft> aircraft = aircraftRepository.findById(reservation.get().getAircraft().getId());
 
-                if (route.isEmpty()) {
+                if (aircraft.isEmpty()) {
                     return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
                 } else {
-                    RouteResponseDTO routeResponseDTO = routeDTOMapper.apply(route.get());
-                    reservationResponseDTO.setRoutes(routeResponseDTO);
+                    AircraftResponseDTO aircraftResponseDTO = aircraftDTOMapper.apply(aircraft.get());
+                    reservationResponseDTO.setAircraftId(aircraftResponseDTO.getAircraftId());
 
                     ResponseDTO<ReservationResponseDTO> response = new ResponseDTO<>();
                     response.setErrorList(List.of());
@@ -111,20 +110,20 @@ public class ReservationServiceImpl implements ReservationService {
     /**
      * Method to get all flight reservations for the passenger
      *
-     * @param customerId gets passenger ID
+     * @param passengerId gets passenger ID
      * @return extended flight reservation DTO
      */
     @Override
-    public ResponseEntity<ResponseDTO<ReservationResponseDTO>> findAllForCustomer(Long customerId) {
+    public ResponseEntity<ResponseDTO<ReservationResponseDTO>> findAllForPassenger(Long passengerId) {
         // Find passenger
-        Optional<Passenger> customer = passengerRepository.findById(customerId);
+        Optional<Passenger> passenger = passengerRepository.findById(passengerId);
 
-        if (customer.isEmpty()) {
+        if (passenger.isEmpty()) {
             return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
         } else {
             // Find all flight reservation for the passenger
-            List<Reservation> reservation = reservationRepository.findAllForCustomer(customerId);
-            return populateReservationResponse(reservation, customer.get());
+            List<Reservation> reservation = reservationRepository.findAllForPassenger(passengerId);
+            return populateReservationResponse(reservation, passenger.get());
         }
     }
 
@@ -137,44 +136,48 @@ public class ReservationServiceImpl implements ReservationService {
      * @return list of found entities
      */
     @Override
-    public ResponseEntity<ResponseDTO<ReservationResponseDTO>> findAllForCustomerPaginated(Long customerId, int page, int size) {
+    public ResponseEntity<ResponseDTO<ReservationResponseDTO>> findAllForPassengerPaginated(Long passengerId, int page, int size) {
         // Find passenger
-        Optional<Passenger> customer = passengerRepository.findById(customerId);
+        Optional<Passenger> passenger = passengerRepository.findById(passengerId);
 
-        if (customer.isEmpty()) {
+        if (passenger.isEmpty()) {
             return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
         } else {
             // Find all flight reservation for the passenger
             List<Reservation> reservation =
-                    reservationRepository.findAllForCustomerPaginated(
-                            customerId, PageRequest.of(page, size)).getContent();
-            return populateReservationResponse(reservation, customer.get());
+                    reservationRepository.findAllForPassengerPaginated(
+                            passengerId, PageRequest.of(page, size)).getContent();
+            return populateReservationResponse(reservation, passenger.get());
         }
     }
 
     /**
      * Method to save reservation for passenger
      *
-     * @param customerId who make reservation
-     * @param request    to make reservation
+     * @param passengerId who make reservation
+     * @param request     to make reservation
      * @return flight reservation DTO as a response
      */
     @Override
-    public ResponseEntity<ResponseDTO<ReservationResponseDTO>> saveReservation(Long customerId, ReservationRequestDTO request) {
+    public ResponseEntity<ResponseDTO<ReservationResponseDTO>> saveReservation(Long passengerId, ReservationRequestDTO request) {
         // Find passenger by ID
-        Optional<Passenger> customer = passengerRepository.findById(customerId);
-        if (customer.isEmpty()) {
+        Optional<Passenger> passenger = passengerRepository.findById(passengerId);
+        if (passenger.isEmpty()) {
             return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
         } else {
-            // Find route by route ID
-            Optional<Route> route = routeRepository.findById(request.getRouteId());
-            if (route.isEmpty()) {
+            // Find aircraftId by aircraftId ID
+            Optional<Aircraft> aircraft = aircraftRepository.findById(request.getRouteId());
+            if (aircraft.isEmpty()) {
                 return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
             } else {
                 Reservation reservation = new Reservation();
-                reservation.setPassenger(customer.get());
-                reservation.setRoute(route.get());
-                reservation.setReservationDate(request.getReservationDate());
+
+                reservation.setPassenger(passenger.get());
+                reservation.setAircraft(aircraft.get());
+                reservation.setDateOfFlying(request.getDateOfFlying());
+                reservation.setDepartureTime(request.getDepartureTime());
+                reservation.setArrivalTime(request.getArrivalTime());
+                reservation.setHoursFlying(request.getHoursFlying());
 
                 Reservation savedReservation = reservationRepository.save(reservation);
                 ReservationResponseDTO savedReservationResponseDTO = reservationDTOMapper.apply(savedReservation);
@@ -191,36 +194,38 @@ public class ReservationServiceImpl implements ReservationService {
     /**
      * Update reservation details
      *
-     * @param customerId    passenger who made reservation
+     * @param passengerId   passenger who made reservation
      * @param reservationId reservation ID to be patched
      * @param params        Field(-s) to be patched
      * @return patched reservation
      */
     @Override
-    public ResponseEntity<ResponseDTO<ReservationResponseDTO>> updateReservation(Long customerId,
+    public ResponseEntity<ResponseDTO<ReservationResponseDTO>> updateReservation(Long passengerId,
                                                                                  Long reservationId, Map<String, Object> params) {
-        Passenger passenger = passengerRepository.findById(customerId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(Constants.CUSTOMER_NOT_FOUND)
-                );
-        Reservation reservation = reservationRepository.findOneForCustomer(customerId, reservationId)
-                .orElseThrow(() -> new ResourceNotFoundException(Constants.RESERVATION_NOT_FOUND));
-        reservation.setPassenger(passenger);
-        if (params.get("id") != null) {
-            reservation.setRoute(
-                    routeRepository.findById(Long.valueOf(String.valueOf(params.get("id"))))
-                            .orElseThrow(() ->
-                                    new ResourceNotFoundException(Constants.ROUTE_NOT_FOUND)
-                            ));
-        }
-        if (params.get("reservationDate") != null) {
-            reservation.setReservationDate(LocalDateTime.parse(String.valueOf(params.get("reservationDate"))));
-        }
+        // Find passenger by ID
+        Optional<Passenger> passenger = passengerRepository.findById(passengerId);
+        if (passenger.isEmpty()) {
+            return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+        } else {
+            Reservation reservation = reservationRepository.findOneForPassenger(passengerId, reservationId)
+                    .orElseThrow(() -> new ResourceNotFoundException(Constants.RESERVATION_NOT_FOUND));
+//            reservation.setPassenger(passenger);
+//            if (params.get("id") != null) {
+//                reservation.setRoute(
+//                        routeRepository.findById(Long.valueOf(String.valueOf(params.get("id"))))
+//                                .orElseThrow(() ->
+//                                        new ResourceNotFoundException(Constants.ROUTE_NOT_FOUND)
+//                                ));
+//            }
+//            if (params.get("dateOfFlying") != null) {
+//                reservation.setReservationDate(LocalDateTime.parse(String.valueOf(params.get("dateOfFlying"))));
+//            }
 //        ReservationResponseDTO reservationResponseDTO = map(reservationRepository.save(reservation), ReservationResponseDTO.class);
-//        reservationResponseDTO.setRouteId(reservation.getRoute().getId());
-//        reservationResponseDTO.setPassengerId(passenger.getId());
+//        reservationResponseDTO.setRouteId(reservation.getRoute().getCustomerId());
+//        reservationResponseDTO.setPassengerId(passenger.getCustomerId());
 //        return reservationResponseDTO;
-        return null;
+            return null;
+        }
     }
 
 
@@ -252,7 +257,7 @@ public class ReservationServiceImpl implements ReservationService {
      * Helper method to populate reservations response and perform more functionality
      *
      * @param reservations collection os reservations
-     * @param passenger     who made reservation
+     * @param passenger    who made reservation
      * @return response entity
      */
     private ResponseEntity<ResponseDTO<ReservationResponseDTO>>
@@ -265,15 +270,15 @@ public class ReservationServiceImpl implements ReservationService {
             // For each DTO set passenger ID, route extended DTO
             for (ReservationResponseDTO reservationResponseDTO : reservationResponseList) {
                 // Set passenger ID in DTO response
-                reservationResponseDTO.setCustomerId(passenger.getId());
-                // Find route by ID
-                Optional<Route> route = routeRepository.findById(reservations.get(counter).getRoute().getId());
+                reservationResponseDTO.setAircraftId(passenger.getId());
+                // Find aircraft by ID
+                Optional<Aircraft> aircraft = aircraftRepository.findById(reservations.get(counter).getAircraft().getId());
 
-                if (route.isEmpty()) {
+                if (aircraft.isEmpty()) {
                     return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
                 } else {
-                    RouteResponseDTO routeResponseDTO = routeDTOMapper.apply(route.get());
-                    reservationResponseDTO.setRoutes(routeResponseDTO);
+                    AircraftResponseDTO aircraftResponseDTO = aircraftDTOMapper.apply(aircraft.get());
+                    reservationResponseDTO.setAircraftId(aircraftResponseDTO.getAircraftId());
                 }
                 counter++;
             }

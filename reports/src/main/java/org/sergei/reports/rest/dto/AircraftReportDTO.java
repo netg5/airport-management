@@ -60,6 +60,6 @@ public class AircraftReportDTO implements Serializable {
     @ApiModelProperty("Flight price")
     private BigDecimal price;
 
-    @ApiModelProperty("Collection of reservation made for specific aircraft")
+    @ApiModelProperty("Collection of reservation made for specific aircraftId")
     private List<ReservationDTO> reservations;
 }

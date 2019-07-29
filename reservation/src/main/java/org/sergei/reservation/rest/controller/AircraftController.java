@@ -73,7 +73,7 @@ public class AircraftController {
         return aircraftService.findOne(aircraftId);
     }
 
-    @ApiOperation(value = "Save aircraft", notes = "Operation allowed for the ROLE_ADMIN only")
+    @ApiOperation(value = "Save aircraftId", notes = "Operation allowed for the ROLE_ADMIN only")
     @PostMapping(produces = "application/json", consumes = "application/json")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<ResponseDTO<AircraftResponseDTO>>
@@ -82,7 +82,7 @@ public class AircraftController {
         return aircraftService.save(aircraftDTO);
     }
 
-    @ApiOperation(value = "Update aircraft data", notes = "Operation allowed for the ROLE_ADMIN only")
+    @ApiOperation(value = "Update aircraftId data", notes = "Operation allowed for the ROLE_ADMIN only")
     @PutMapping(produces = "application/json", consumes = "application/json")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<ResponseDTO<AircraftResponseDTO>>
@@ -90,7 +90,7 @@ public class AircraftController {
         return aircraftService.update(request);
     }
 
-    @ApiOperation(value = "Update one field of the aircraft", notes = "Operation allowed for the ROLE_ADMIN only")
+    @ApiOperation(value = "Update one field of the aircraftId", notes = "Operation allowed for the ROLE_ADMIN only")
     @PatchMapping(value = "/{aircraftId}/patch", produces = "application/json", consumes = "application/json")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<ResponseDTO<AircraftResponseDTO>>
@@ -101,7 +101,7 @@ public class AircraftController {
         return aircraftService.patch(aircraftId, params);
     }
 
-    @ApiOperation(value = "Delete aircraft", notes = "Operation allowed for the ROLE_ADMIN only")
+    @ApiOperation(value = "Delete aircraftId", notes = "Operation allowed for the ROLE_ADMIN only")
     @DeleteMapping(value = "/{aircraftId}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<ResponseDTO<AircraftResponseDTO>>

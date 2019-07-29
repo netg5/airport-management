@@ -148,10 +148,10 @@ public class AircraftServiceImpl implements AircraftService {
     }
 
     /**
-     * Update aircraft by its ID
+     * Update aircraftId by its ID
      *
-     * @param request aircraft DTO request with ID
-     * @return response with updated aircraft
+     * @param request aircraftId DTO request with ID
+     * @return response with updated aircraftId
      */
     @Override
     public ResponseEntity<ResponseDTO<AircraftResponseDTO>> update(AircraftUpdateRequestDTO request) {
@@ -182,11 +182,11 @@ public class AircraftServiceImpl implements AircraftService {
     }
 
     /**
-     * Method to update one field of the aircraft
+     * Method to update one field of the aircraftId
      *
-     * @param aircraftId ID for aircraft that should be updated
+     * @param aircraftId ID for aircraftId that should be updated
      * @param params     list of params that should be updated
-     * @return updated aircraft
+     * @return updated aircraftId
      */
     @Override
     public ResponseEntity<ResponseDTO<AircraftResponseDTO>> patch(Long aircraftId, Map<String, Object> params) {
@@ -199,7 +199,7 @@ public class AircraftServiceImpl implements AircraftService {
                 aircraft.get().setManufacturerCode(String.valueOf(params.get("manufacturerCode")));
             }
             if (params.get("ownerId") != null) {
-//                aircraft.get().(String.valueOf(params.get("modelNumber")));
+//                aircraftId.get().(String.valueOf(params.get("modelNumber")));
             }
             if (params.get("registrationNumber") != null) {
                 aircraft.get().setRegistrationNumber(String.valueOf(params.get("registrationNumber")));

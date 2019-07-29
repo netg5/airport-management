@@ -40,11 +40,10 @@ public class ReservationResponseDTO implements Serializable {
 
     private static final long serialVersionUID = -2808793016869498675L;
 
-    private Long id;
+    private Long customerId;
     private LocalDateTime dateOfFlying;
     private LocalDateTime departureTime;
     private LocalDateTime arrivalTime;
     private Integer hoursFlying;
-    private PassengerResponseDTO passenger;
-    private AircraftResponseDTO aircraft;
+    private Long aircraftId;
 }

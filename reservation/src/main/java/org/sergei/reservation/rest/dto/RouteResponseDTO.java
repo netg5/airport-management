@@ -62,6 +62,6 @@ public class RouteResponseDTO implements Serializable {
     private String place;
 
     @ApiModelProperty("Aircraft ID to fly with")
-    @JsonProperty("aircraft")
+    @JsonProperty("aircraftId")
     private AircraftResponseDTO aircraftDTO;
 }

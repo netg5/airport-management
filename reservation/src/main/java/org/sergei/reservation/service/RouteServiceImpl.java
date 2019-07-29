@@ -191,7 +191,6 @@ public class RouteServiceImpl implements RouteService {
             route.setArrivalTime(request.getArrivalTime());
             route.setPlace(request.getPlace());
             route.setPrice(request.getPrice());
-            route.setAircraft(aircraft.get());
 
             Route savedRoute = routeRepository.save(route);
             RouteResponseDTO savedRouteResponseDTO = routeDTOMapper.apply(savedRoute);
@@ -226,7 +225,6 @@ public class RouteServiceImpl implements RouteService {
                 request.getRouteRequest().setPrice(request.getRouteRequest().getPrice());
                 request.getRouteRequest().setPrice(request.getRouteRequest().getPrice());
                 request.getRouteRequest().setPlace(request.getRouteRequest().getPlace());
-                request.getRouteRequest().setAircraftId(aircraft.get().getId());
                 routeRepository.save(route.get());
 
                 return setRouteResponse(route.get());

@@ -44,10 +44,10 @@ public class AircraftService {
     }
 
     /**
-     * Method to get aircraft by ID
+     * Method to get aircraftId by ID
      *
      * @param aircraftId which should be found
-     * @return aircraft response to be shown in view
+     * @return aircraftId response to be shown in view
      */
     public ResponseEntity<Aircraft> getAircraftById(Long aircraftId) {
         AuthTokenInfo tokenInfo = tokenRetrievalService.sendTokenRequest();
@@ -57,10 +57,10 @@ public class AircraftService {
     }
 
     /**
-     * Method to save aircraft
+     * Method to save aircraftId
      *
-     * @param aircraft aircraft entity taken from the front-end
-     * @return saved aircraft entity
+     * @param aircraft aircraftId entity taken from the front-end
+     * @return saved aircraftId entity
      */
     public Aircraft save(Aircraft aircraft) {
         AuthTokenInfo tokenInfo = tokenRetrievalService.sendTokenRequest();

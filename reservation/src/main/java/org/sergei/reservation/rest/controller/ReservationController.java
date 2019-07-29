@@ -53,7 +53,7 @@ public class ReservationController {
     public ResponseEntity<ResponseDTO<ReservationResponseDTO>>
     getAllForCustomer(@ApiParam(value = "Passenger ID whose reservations should be found", required = true)
                       @PathVariable("customerId") Long customerId) {
-        return reservationService.findAllForCustomer(customerId);
+        return reservationService.findAllForPassenger(customerId);
     }
 
     @ApiOperation("Get all reservations for passenger")
@@ -65,7 +65,7 @@ public class ReservationController {
                                @RequestParam("page") int page,
                                @ApiParam("Maximum number of content blocks on the page")
                                @RequestParam("size") int size) {
-        return reservationService.findAllForCustomerPaginated(customerId, page, size);
+        return reservationService.findAllForPassengerPaginated(customerId, page, size);
     }
 
     @ApiOperation("Get one reservation by ID for the passenger")
@@ -75,7 +75,7 @@ public class ReservationController {
                       @PathVariable("customerId") Long customerId,
                       @ApiParam(value = "Reservation ID which which was made", required = true)
                       @PathVariable("reservationId") Long reservationId) {
-        return reservationService.findOneForCustomer(customerId, reservationId);
+        return reservationService.findOneForPassenger(customerId, reservationId);
     }
 
     @ApiOperation("Create reservation for passenger")

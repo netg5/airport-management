@@ -23,5 +23,9 @@ public class ReservationRequestDTO implements Serializable {
     private Long routeId;
 
     @ApiModelProperty("Flight reservation date")
-    private LocalDateTime reservationDate;
+    private LocalDateTime dateOfFlying;
+
+    private LocalDateTime departureTime;
+    private LocalDateTime arrivalTime;
+    private Integer hoursFlying;
 }

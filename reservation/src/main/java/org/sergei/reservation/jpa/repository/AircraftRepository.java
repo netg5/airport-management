@@ -30,13 +30,13 @@ import java.util.Optional;
 public interface AircraftRepository extends JpaRepository<Aircraft, Long> {
 
     /**
-     * Method to get aircraft by multiple parameters
+     * Method to get aircraftId by multiple parameters
      *
-     * @param aircraftName  aircraft name
-     * @param weight        aircraft weight
-     * @param maxPassengers maximum passengers per aircraft
-     * @param model         aircraft model
-     * @return aircraft entity
+     * @param aircraftName  aircraftId name
+     * @param weight        aircraftId weight
+     * @param maxPassengers maximum passengers per aircraftId
+     * @param model         aircraftId model
+     * @return aircraftId entity
      */
     @Query("SELECT \n" +
             "    a\n" +

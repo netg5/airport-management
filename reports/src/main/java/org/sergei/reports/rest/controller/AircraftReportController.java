@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.*;
  * @author Sergei Visotsky
  */
 @Api(
-        value = "/report-rest/aircraft",
+        value = "/report-rest/aircraftId",
         produces = "application/json"
 )
 @RestController
@@ -54,7 +54,7 @@ public class AircraftReportController {
         return aircraftReportService.findAll(page, size);
     }
 
-    @ApiOperation("Get report for the aircraft by ID")
+    @ApiOperation("Get report for the aircraftId by ID")
     @GetMapping("/{aircraftId}")
     public ResponseEntity<ResponseDTO<AircraftReportDTO>> findByAircraftId(@ApiParam("Aircraft ID to find the report")
                                                                            @PathVariable("aircraftId") Long aircraftId) {

@@ -33,7 +33,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "aircraft")
+@Table(name = "aircraftId")
 public class Aircraft implements Serializable {
 
     private static final long serialVersionUID = -155783393887085614L;
@@ -69,7 +69,7 @@ public class Aircraft implements Serializable {
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL
     )
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "customerId")
     private Owner owner;
 
 }

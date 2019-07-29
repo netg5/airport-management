@@ -50,6 +50,6 @@ public class AircraftControllerTest {
         mockMvc.perform(
                 get(BASE_URL + 1))
                 .andExpect(status().isOk())
-                .andExpect(view().name("aircraft"));
+                .andExpect(view().name("aircraftId"));
     }
 }

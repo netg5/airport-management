@@ -109,11 +109,11 @@ public class RouteControllerTest {
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].price").value(price))
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].place").value(place))
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0]._links.self.href", is(BASE_URL + "/2")))
-                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.aircraftId", is(2)))
-                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.model").value(model))
-                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.aircraftName").value(aircraftName))
-                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.weight").value(aircraftWeight))
-                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.capacity").value(maxPassengers))
+                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraftId.aircraftId", is(2)))
+                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraftId.model").value(model))
+                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraftId.aircraftName").value(aircraftName))
+                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraftId.weight").value(aircraftWeight))
+                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraftId.capacity").value(maxPassengers))
                 .andExpect(jsonPath("$._links.self.href", is(BASE_URL)));
     }
 
@@ -161,11 +161,11 @@ public class RouteControllerTest {
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].price").value(price))
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].place").value(place))
                 .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0]._links.self.href", is(BASE_URL + "/3")))
-                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.aircraftId", is(3)))
-                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.model").value(model))
-                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.aircraftName").value(aircraftName))
-                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.weight").value(aircraftWeight))
-                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraft.capacity").value(maxPassengers))
+                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraftId.aircraftId", is(3)))
+                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraftId.model").value(model))
+                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraftId.aircraftName").value(aircraftName))
+                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraftId.weight").value(aircraftWeight))
+                .andExpect(jsonPath("$._embedded.routeExtendedDTOList[0].aircraftId.capacity").value(maxPassengers))
                 .andExpect(jsonPath("$._links.self.href", is(BASE_URL + page + size)));
     }
 
@@ -199,11 +199,11 @@ public class RouteControllerTest {
                 .andExpect(jsonPath("$.place").value(place))
                 .andExpect(jsonPath("$._links.self.href", is(BASE_URL + "/" + route.getId())))
                 .andExpect(jsonPath("$._links.allRoutes.href", is(BASE_URL)))
-                .andExpect(jsonPath("$.aircraft.aircraftId").isNotEmpty())
-                .andExpect(jsonPath("$.aircraft.model", is(model)))
-                .andExpect(jsonPath("$.aircraft.aircraftName", is(aircraftName)))
-                .andExpect(jsonPath("$.aircraft.weight", is(aircraftWeight)))
-                .andExpect(jsonPath("$.aircraft.capacity", is(maxPassengers)));
+                .andExpect(jsonPath("$.aircraftId.aircraftId").isNotEmpty())
+                .andExpect(jsonPath("$.aircraftId.model", is(model)))
+                .andExpect(jsonPath("$.aircraftId.aircraftName", is(aircraftName)))
+                .andExpect(jsonPath("$.aircraftId.weight", is(aircraftWeight)))
+                .andExpect(jsonPath("$.aircraftId.capacity", is(maxPassengers)));
     }
 
     @Test
