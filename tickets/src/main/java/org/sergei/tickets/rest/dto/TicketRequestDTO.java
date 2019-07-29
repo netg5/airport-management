@@ -17,6 +17,4 @@ import java.io.Serializable;
 public class TicketRequestDTO implements Serializable {
     private static final long serialVersionUID = -5198283871926597190L;
     private Long passengerId;
-    private String place;
-    private Double distance;
 }

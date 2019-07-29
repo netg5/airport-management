@@ -1,14 +1,13 @@
 package org.sergei.tickets.rest.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * @author Sergei Visotsky
@@ -22,28 +21,13 @@ public class TicketDTO implements Serializable {
 
     private static final long serialVersionUID = 4746464867827649037L;
 
-    @ApiModelProperty("Passenger ID whose ticket is returned")
-    @JsonIgnore
     private Long passengerId;
-
-    @ApiModelProperty("Passenger first name whose ticket is returned")
     private String firstName;
-
-    @ApiModelProperty("Passenger first name whose ticket is returned")
     private String lastName;
-
-    @ApiModelProperty("Route ID")
-    private Long routeId;
-
-    @ApiModelProperty("Place to fly")
-    private String place;
-
-    @ApiModelProperty("Flight distance")
-    private Double distance;
-
-    @ApiModelProperty("Flight price")
-    private Float price;
-
-    @ApiModelProperty("Aircraft name")
+    private Long aircraftId;
+    private LocalDateTime dateOfFlying;
+    private LocalDateTime arrivalTime;
+    private Integer hoursFlying;
     private String aircraftName;
+    private String model;
 }

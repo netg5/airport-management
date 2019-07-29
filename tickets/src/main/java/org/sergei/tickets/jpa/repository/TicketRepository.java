@@ -34,9 +34,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
     /**
      * Find ticket by passenger ID, place or/and distance
      *
-     * @param customerId whose ticket should be found
-     * @param place      by which ticket should be found for a passenger
-     * @param distance   distance by which ticket should be found
+     * @param passengerId whose ticket should be found
      * @return list of the found tickets
      */
     @Query("SELECT \n" +
@@ -44,18 +42,15 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
             "FROM\n" +
             "    Ticket t\n" +
             "WHERE\n" +
-            "    t.getPassengerId = ?1\n" +
-            "        AND (?2 IS NULL OR t.place = ?2)\n" +
-            "        AND (?3 IS NULL OR t.distance = ?3)")
-    List<Ticket> findAllTickets(Long customerId, String place, Double distance);
+            "    t.passengerId = ?1\n" +
+            "        AND (?2 IS NULL OR t.getDateOfFlying = ?2)")
+    List<Ticket> findAllTickets(Long passengerId);
 
     /**
      * Find ticket by passenger ID, place or/and distance with pagination
      *
-     * @param customerId whose ticket should be found
-     * @param place      by which ticket should be found for a passenger
-     * @param distance   distance by which ticket should be found
-     * @param pageable   page number and element quantity per page
+     * @param passengerId whose ticket should be found
+     * @param pageable    page number and element quantity per page
      * @return list of found tickets
      */
     @Query("SELECT \n" +
@@ -63,9 +58,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
             "FROM\n" +
             "    Ticket t\n" +
             "WHERE\n" +
-            "    t.getPassengerId = ?1\n" +
-            "        AND (?2 IS NULL OR t.place = ?2)\n" +
-            "        AND (?3 IS NULL OR t.distance = ?3)")
-    Page<Ticket> findAllTicketsPageable(Long customerId, String place,
-                                        Double distance, Pageable pageable);
+            "    t.passengerId = ?1\n" +
+            "        AND (?2 IS NULL OR t.dateOfFlying = ?2)")
+    Page<Ticket> findAllTicketsPageable(Long passengerId, Pageable pageable);
 }

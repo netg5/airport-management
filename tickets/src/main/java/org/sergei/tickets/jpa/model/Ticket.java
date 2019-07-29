@@ -16,18 +16,17 @@
 
 package org.sergei.tickets.jpa.model;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Immutable;
-import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * Takes data from ticket_view located in MySQL server
@@ -36,12 +35,11 @@ import java.io.Serializable;
  */
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @Entity
 @Immutable
 @Table(name = "ticket_view")
-public class Ticket extends ResourceSupport implements Serializable {
+public class Ticket implements Serializable {
 
     private static final long serialVersionUID = 1213518846387676066L;
 
@@ -56,17 +54,20 @@ public class Ticket extends ResourceSupport implements Serializable {
 
     @Id
     @Column(name = "aircraft_id")
-    private Long aircraft_id;
+    private Long aircraftId;
 
-    @Column(name = "place")
-    private String place;
+    @Column(name = "date_of_flying")
+    private LocalDateTime dateOfFlying;
 
-    @Column(name = "distance")
-    private Double distance;
+    @Column(name = "arrival_time")
+    private LocalDateTime arrivalTime;
 
-    @Column(name = "price")
-    private Float price;
+    @Column(name = "hours_flying")
+    private Integer hoursFlying;
 
     @Column(name = "aircraft_name")
     private String aircraftName;
+
+    @Column(name = "model")
+    private String model;
 }

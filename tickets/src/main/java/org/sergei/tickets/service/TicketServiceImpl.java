@@ -60,12 +60,10 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public ResponseEntity<ResponseDTO<TicketDTO>> findAllTickets(TicketRequestDTO request) {
         Long passengerId = request.getPassengerId();
-        String place = request.getPlace();
-        Double distance = request.getDistance();
         if (customerRepository.findById(passengerId).isEmpty()) {
             return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
         } else {
-            List<Ticket> ticketList = ticketRepository.findAllTickets(passengerId, place, distance);
+            List<Ticket> ticketList = ticketRepository.findAllTickets(passengerId);
             if (ticketList.isEmpty()) {
                 return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
             } else {
@@ -89,13 +87,11 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public ResponseEntity<ResponseDTO<TicketDTO>> findAllTicketsPageable(TicketRequestDTO request, int page, int size) {
         Long passengerId = request.getPassengerId();
-        String place = request.getPlace();
-        Double distance = request.getDistance();
         if (customerRepository.findById(passengerId).isEmpty()) {
             return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
         } else {
             Page<Ticket> ticketList = ticketRepository
-                    .findAllTicketsPageable(passengerId, place, distance, PageRequest.of(page, size));
+                    .findAllTicketsPageable(passengerId, PageRequest.of(page, size));
             if (ticketList.isEmpty()) {
                 return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
             } else {

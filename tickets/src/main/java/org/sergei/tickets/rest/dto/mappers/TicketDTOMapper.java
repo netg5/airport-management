@@ -14,14 +14,15 @@ public class TicketDTOMapper implements IMapper<Ticket, TicketDTO> {
     public TicketDTO apply(Ticket ticket) {
         TicketDTO ticketDTO = new TicketDTO();
 
-        ticketDTO.setCustomerId(ticket.getPassengerId());
+        ticketDTO.setPassengerId(ticket.getPassengerId());
         ticketDTO.setAircraftName(ticket.getAircraftName());
         ticketDTO.setFirstName(ticket.getFirstName());
         ticketDTO.setLastName(ticket.getLastName());
-        ticketDTO.setDistance(ticket.getDistance());
-        ticketDTO.setPlace(ticket.getPlace());
-        ticketDTO.setRouteId(ticket.getRouteId());
-        ticketDTO.setPrice(ticket.getPrice());
+        ticketDTO.setDateOfFlying(ticket.getDateOfFlying());
+        ticketDTO.setArrivalTime(ticket.getArrivalTime());
+        ticketDTO.setHoursFlying(ticket.getHoursFlying());
+        ticketDTO.setAircraftName(ticket.getAircraftName());
+        ticketDTO.setModel(ticket.getModel());
 
         return ticketDTO;
     }
