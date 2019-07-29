@@ -3,13 +3,13 @@ CREATE VIEW aircraft_report_view AS
 SELECT a.id            AS aircraft_id,
        a.aircraft_name AS aircraft_name,
        a.model         AS model,
-       rt.id           AS route_id,
-       rt.distance     AS distance,
-       rt.place        AS place,
-       rt.price        AS price
+       o.first_name    AS first_name,
+       o.last_name     AS last_name,
+       o.address       AS adress,
+       o.email         AS email
 FROM aircraft a
          LEFT OUTER JOIN
-     route rt ON a.id = rt.aircraft_id;
+     owner o ON a.owner_id = o.id;
 
 -- Customer report view
 CREATE VIEW customer_report_view AS
@@ -20,18 +20,19 @@ FROM passenger c;
 
 -- Ticket view
 CREATE VIEW ticket_view AS
-SELECT c.id            AS customer_id,
-       c.first_name    AS first_name,
-       c.last_name     AS last_name,
-       r.id            AS route_id,
-       rt.place        AS place,
-       rt.distance     AS distance,
-       rt.price        AS price,
-       a.aircraft_name AS aircraft_name
-FROM passenger c
+SELECT p.id             AS passenger_id,
+       p.first_name     AS first_name,
+       p.last_name      AS last_name,
+       r.id             AS aircraft_id,
+       r.date_of_flying AS date_of_flying,
+       r.arrival_time   AS arrival_time,
+       r.hours_flying   AS hours_flying,
+       a.aircraft_name  AS aircraft_name,
+       a.model_number   AS model_number
+FROM passenger p
          JOIN
-     reservation r ON c.id = r.customer_id
+     reservation r ON p.id = r.passenger_id
          JOIN
      route rt ON r.id = rt.id
          JOIN
-     aircraft a ON rt.id = a.id;
+     aircraft a ON r.aircraft_id = a.id;

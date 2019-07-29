@@ -46,7 +46,7 @@ public class Ticket extends ResourceSupport implements Serializable {
     private static final long serialVersionUID = 1213518846387676066L;
 
     @Column(updatable = false, nullable = false)
-    private Long customerId;
+    private Long passengerId;
 
     @Column(name = "first_name")
     private String firstName;
@@ -55,8 +55,8 @@ public class Ticket extends ResourceSupport implements Serializable {
     private String lastName;
 
     @Id
-    @Column(name = "route_id")
-    private Long routeId;
+    @Column(name = "aircraft_id")
+    private Long aircraft_id;
 
     @Column(name = "place")
     private String place;

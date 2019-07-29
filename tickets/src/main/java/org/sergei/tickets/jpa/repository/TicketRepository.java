@@ -44,7 +44,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
             "FROM\n" +
             "    Ticket t\n" +
             "WHERE\n" +
-            "    t.customerId = ?1\n" +
+            "    t.getPassengerId = ?1\n" +
             "        AND (?2 IS NULL OR t.place = ?2)\n" +
             "        AND (?3 IS NULL OR t.distance = ?3)")
     List<Ticket> findAllTickets(Long customerId, String place, Double distance);
@@ -63,7 +63,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
             "FROM\n" +
             "    Ticket t\n" +
             "WHERE\n" +
-            "    t.customerId = ?1\n" +
+            "    t.getPassengerId = ?1\n" +
             "        AND (?2 IS NULL OR t.place = ?2)\n" +
             "        AND (?3 IS NULL OR t.distance = ?3)")
     Page<Ticket> findAllTicketsPageable(Long customerId, String place,

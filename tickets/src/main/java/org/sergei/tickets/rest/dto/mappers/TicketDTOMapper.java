@@ -14,7 +14,7 @@ public class TicketDTOMapper implements IMapper<Ticket, TicketDTO> {
     public TicketDTO apply(Ticket ticket) {
         TicketDTO ticketDTO = new TicketDTO();
 
-        ticketDTO.setCustomerId(ticket.getCustomerId());
+        ticketDTO.setCustomerId(ticket.getPassengerId());
         ticketDTO.setAircraftName(ticket.getAircraftName());
         ticketDTO.setFirstName(ticket.getFirstName());
         ticketDTO.setLastName(ticket.getLastName());

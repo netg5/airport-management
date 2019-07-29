@@ -26,8 +26,6 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * @author Sergei Visotsky
@@ -69,16 +67,4 @@ public class Route implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id")
     private Aircraft aircraft;
-
-//    @OneToMany(
-//            fetch = FetchType.LAZY,
-//            cascade = CascadeType.ALL
-//    )
-//    @JoinColumn(
-//            name = "id",
-//            referencedColumnName = "id",
-//            nullable = false
-//    )
-//    private List<Reservation> reservationList = new LinkedList<>();
-
 }
