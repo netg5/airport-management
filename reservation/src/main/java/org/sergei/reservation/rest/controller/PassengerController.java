@@ -38,7 +38,7 @@ import java.util.Map;
         consumes = "application/json"
 )
 @RestController
-@RequestMapping("/customers")
+@RequestMapping("/passengers")
 public class PassengerController {
 
     private final PassengerService passengerService;
@@ -71,11 +71,11 @@ public class PassengerController {
     }
 
     @ApiOperation("Get passenger by ID")
-    @GetMapping(value = "/{customerId}", produces = "application/json")
+    @GetMapping(value = "/{passengerId}", produces = "application/json")
     public ResponseEntity<ResponseDTO<PassengerResponseDTO>>
     getCustomerById(@ApiParam(value = "Passenger ID which should be found", required = true)
-                    @PathVariable("customerId") Long customerId) {
-        return passengerService.findOne(customerId);
+                    @PathVariable("passengerId") Long passengerId) {
+        return passengerService.findOne(passengerId);
     }
 
     @ApiOperation("Save passenger")
@@ -98,23 +98,23 @@ public class PassengerController {
     @ApiResponses({
             @ApiResponse(code = 404, message = Constants.CUSTOMER_NOT_FOUND)
     })
-    @PatchMapping(value = "/{customerId}/patch", produces = "application/json", consumes = "application/json")
+    @PatchMapping(value = "/{passengerId}/patch", produces = "application/json", consumes = "application/json")
     public ResponseEntity<ResponseDTO<PassengerResponseDTO>>
     patchCustomer(@ApiParam(value = "Passenger ID which should be updated", required = true)
-                  @PathVariable("customerId") Long customerId,
+                  @PathVariable("passengerId") Long passengerId,
                   @RequestBody Map<String, Object> params) {
-        return passengerService.patch(customerId, params);
+        return passengerService.patch(passengerId, params);
     }
 
     @ApiOperation(value = "Delete passenger data", notes = "Operation allowed for the ROLE_ADMIN only")
     @ApiResponses({
             @ApiResponse(code = 404, message = Constants.CUSTOMER_NOT_FOUND)
     })
-    @DeleteMapping("/{customerId}")
+    @DeleteMapping("/{passengerId}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<ResponseDTO<PassengerResponseDTO>>
     deleteCustomer(@ApiParam(value = "Passenger ID which should be deleted", required = true)
-                   @PathVariable("customerId") Long customerId) {
-        return passengerService.delete(customerId);
+                   @PathVariable("passengerId") Long passengerId) {
+        return passengerService.delete(passengerId);
     }
 }

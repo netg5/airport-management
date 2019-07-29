@@ -29,8 +29,6 @@ import org.sergei.reservation.rest.dto.mappers.AircraftDTOMapper;
 import org.sergei.reservation.rest.dto.mappers.ReservationDTOListMapper;
 import org.sergei.reservation.rest.dto.mappers.ReservationDTOMapper;
 import org.sergei.reservation.rest.dto.response.ResponseDTO;
-import org.sergei.reservation.rest.exceptions.ResourceNotFoundException;
-import org.sergei.reservation.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -207,23 +205,25 @@ public class ReservationServiceImpl implements ReservationService {
         if (passenger.isEmpty()) {
             return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
         } else {
-            Reservation reservation = reservationRepository.findOneForPassenger(passengerId, reservationId)
-                    .orElseThrow(() -> new ResourceNotFoundException(Constants.RESERVATION_NOT_FOUND));
-//            reservation.setPassenger(passenger);
-//            if (params.get("id") != null) {
-//                reservation.setRoute(
-//                        routeRepository.findById(Long.valueOf(String.valueOf(params.get("id"))))
-//                                .orElseThrow(() ->
-//                                        new ResourceNotFoundException(Constants.ROUTE_NOT_FOUND)
-//                                ));
+            Optional<Reservation> reservation = reservationRepository.findOneForPassenger(passengerId, reservationId);
+            if (reservation.isEmpty()) {
+//                reservation.get().getAircraft(passenger);
+//                if (params.get("id") != null) {
+//                    reservation.setRoute(
+//                            routeRepository.findById(Long.valueOf(String.valueOf(params.get("id"))))
+//                                    .orElseThrow(() ->
+//                                            new ResourceNotFoundException(Constants.ROUTE_NOT_FOUND)
+//                                    ));
+//                }
+//                if (params.get("dateOfFlying") != null) {
+//                    reservation.setReservationDate(LocalDateTime.parse(String.valueOf(params.get("dateOfFlying"))));
+//                }
+//                ReservationResponseDTO reservationResponseDTO = map(reservationRepository.save(reservation), ReservationResponseDTO.class);
+//                reservationResponseDTO.setRouteId(reservation.getRoute().getCustomerId());
+//                reservationResponseDTO.setPassengerId(passenger.getCustomerId());
+//                return reservationResponseDTO;
 //            }
-//            if (params.get("dateOfFlying") != null) {
-//                reservation.setReservationDate(LocalDateTime.parse(String.valueOf(params.get("dateOfFlying"))));
-//            }
-//        ReservationResponseDTO reservationResponseDTO = map(reservationRepository.save(reservation), ReservationResponseDTO.class);
-//        reservationResponseDTO.setRouteId(reservation.getRoute().getCustomerId());
-//        reservationResponseDTO.setPassengerId(passenger.getCustomerId());
-//        return reservationResponseDTO;
+            }
             return null;
         }
     }
@@ -232,13 +232,13 @@ public class ReservationServiceImpl implements ReservationService {
     /**
      * Delete reservation by ID and passenger ID
      *
-     * @param customerId    passenger who made reservation
+     * @param passengerId   passenger who made reservation
      * @param reservationId reservation ID to be deleted
      * @return response entity
      */
     @Override
-    public ResponseEntity<ResponseDTO<ReservationResponseDTO>> deleteReservation(Long customerId, Long reservationId) {
-        Optional<Passenger> customer = passengerRepository.findById(customerId);
+    public ResponseEntity<ResponseDTO<ReservationResponseDTO>> deleteReservation(Long passengerId, Long reservationId) {
+        Optional<Passenger> customer = passengerRepository.findById(passengerId);
 
         if (customer.isEmpty()) {
             return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);

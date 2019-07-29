@@ -283,7 +283,7 @@ public class PassengerControllerTest {
         passenger.setFirstName(firstName);
         passenger.setLastName(lastName);
         passenger.setAge(age);
-        passenger.setReservations(Collections.emptyList());
+//        passenger.setReservations(Collections.emptyList());
 
         return passengerRepository.save(passenger);
     }

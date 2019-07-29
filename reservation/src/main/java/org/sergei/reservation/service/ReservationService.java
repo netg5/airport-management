@@ -11,17 +11,17 @@ import java.util.Map;
  * @author Sergei Visotsky
  */
 public interface ReservationService {
-    ResponseEntity<ResponseDTO<ReservationResponseDTO>> findOneForPassenger(Long customerId, Long reservationId);
+    ResponseEntity<ResponseDTO<ReservationResponseDTO>> findOneForPassenger(Long passengerId, Long reservationId);
 
-    ResponseEntity<ResponseDTO<ReservationResponseDTO>> findAllForPassenger(Long customerId);
+    ResponseEntity<ResponseDTO<ReservationResponseDTO>> findAllForPassenger(Long passengerId);
 
-    ResponseEntity<ResponseDTO<ReservationResponseDTO>> findAllForPassengerPaginated(Long customerId,
+    ResponseEntity<ResponseDTO<ReservationResponseDTO>> findAllForPassengerPaginated(Long passengerId,
                                                                                      int page, int size);
 
-    ResponseEntity<ResponseDTO<ReservationResponseDTO>> saveReservation(Long customerId, ReservationRequestDTO request);
+    ResponseEntity<ResponseDTO<ReservationResponseDTO>> saveReservation(Long passengerId, ReservationRequestDTO request);
 
-    ResponseEntity<ResponseDTO<ReservationResponseDTO>> updateReservation(Long customerId, Long reservationId,
+    ResponseEntity<ResponseDTO<ReservationResponseDTO>> updateReservation(Long passengerId, Long reservationId,
                                                                           Map<String, Object> params);
 
-    ResponseEntity<ResponseDTO<ReservationResponseDTO>> deleteReservation(Long customerId, Long reservationId);
+    ResponseEntity<ResponseDTO<ReservationResponseDTO>> deleteReservation(Long passengerId, Long reservationId);
 }

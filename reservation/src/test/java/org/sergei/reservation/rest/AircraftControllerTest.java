@@ -290,7 +290,7 @@ public class AircraftControllerTest {
     private Aircraft setupAircraft(String model, String aircraftName,
                                    Double aircraftWeight, Integer maxPassengers) {
         Aircraft aircraft = new Aircraft();
-        aircraft.setModel(model);
+//        aircraft.setModel(model);
         aircraft.setAircraftName(aircraftName);
         aircraft.setWeight(aircraftWeight);
         aircraft.setCapacity(maxPassengers);
