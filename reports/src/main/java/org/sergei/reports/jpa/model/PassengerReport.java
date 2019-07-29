@@ -37,7 +37,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Immutable
 @Entity
-@Table(name = "customer_report_view")
+@Table(name = "passenger_report_view")
 public class PassengerReport implements Serializable {
 
     private static final long serialVersionUID = 5290919900867685466L;

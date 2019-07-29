@@ -11,12 +11,12 @@ FROM aircraft a
          LEFT OUTER JOIN
      owner o ON a.owner_id = o.id;
 
--- Customer report view
-CREATE VIEW customer_report_view AS
-SELECT c.id         AS customer_id,
-       c.first_name AS first_name,
-       c.last_name  AS last_name
-FROM passenger c;
+-- Passenger report view
+CREATE VIEW passenger_report_view AS
+SELECT p.id         AS passenger_id,
+       p.first_name AS first_name,
+       p.last_name  AS last_name
+FROM passenger p;
 
 -- Ticket view
 CREATE VIEW ticket_view AS

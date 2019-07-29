@@ -18,9 +18,11 @@ package org.sergei.reports.jpa.repository;
 
 import org.sergei.reports.jpa.model.PassengerReport;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author Sergei Visotsky
  */
+@Repository
 public interface PassengerReportRepository extends JpaRepository<PassengerReport, Long> {
 }
