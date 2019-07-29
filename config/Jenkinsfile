@@ -1,4 +1,6 @@
-def  POM_LOCATION = '-f auth/pom.xml'
+#!groovy
+
+def  POM_LOCATION = '-f config/pom.xml'
 pipeline {
     agent any
     tools {
@@ -40,11 +42,11 @@ pipeline {
         }
 //        stage('Code inspection & quality gate') {
 //            steps {
-//                withSonarQubeEnv('sonar') {
+//                withSonarQubeEnv('sergei-sonar') {
 //                    echo '-=- run code inspection & check quality gate -=-'
 //                    sh "mvn ${POM_LOCATION} sonar:sonar " +
 //                            "-Dsonar.host.url=http://79.135.149.36:9000 " +
-//                            "-Dsonar.login=44f87ea38cda252594b6c8215e097fc39a0f58d0"
+//                            "-Dsonar.login=b18abeedf7353813275264a410d0acbc771219cd"
 //                }
 //            }
 //        }
