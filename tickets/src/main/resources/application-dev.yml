@@ -12,7 +12,7 @@ spring:
 
 # DataSource configuration
 datasource:
-  jdbc-url: jdbc:postgresql://localhost:5432/flight_reservation
+  jdbc-url: jdbc:postgresql://localhost:5432/flight_reservation_new
   type: com.zaxxer.hikari.HikariDataSource
   username: flight
   password: flight

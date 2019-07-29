@@ -36,7 +36,7 @@ import org.springframework.web.bind.annotation.RestController;
         produces = "application/json"
 )
 @RestController
-@RequestMapping("/customers")
+@RequestMapping("/passengers")
 public class PassengerReportController {
 
     private final PassengerReportService passengerReportService;

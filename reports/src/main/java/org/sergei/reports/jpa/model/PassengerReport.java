@@ -38,13 +38,13 @@ import java.io.Serializable;
 @Immutable
 @Entity
 @Table(name = "customer_report_view")
-public class CustomerReport implements Serializable {
+public class PassengerReport implements Serializable {
 
     private static final long serialVersionUID = 5290919900867685466L;
 
     @Id
-    @Column(name = "customer_id")
-    private Long customerId;
+    @Column(name = "passenger_id")
+    private Long passengerId;
 
     @Column(name = "first_name")
     private String firstName;

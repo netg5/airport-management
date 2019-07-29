@@ -22,7 +22,7 @@ public class TicketDTOMapper implements IMapper<Ticket, TicketDTO> {
         ticketDTO.setArrivalTime(ticket.getArrivalTime());
         ticketDTO.setHoursFlying(ticket.getHoursFlying());
         ticketDTO.setAircraftName(ticket.getAircraftName());
-        ticketDTO.setModel(ticket.getModel());
+        ticketDTO.setModelNumber(ticket.getModel_number());
 
         return ticketDTO;
     }

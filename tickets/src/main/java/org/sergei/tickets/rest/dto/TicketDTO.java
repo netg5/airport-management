@@ -1,5 +1,6 @@
 package org.sergei.tickets.rest.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,9 +26,13 @@ public class TicketDTO implements Serializable {
     private String firstName;
     private String lastName;
     private Long aircraftId;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime dateOfFlying;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime arrivalTime;
     private Integer hoursFlying;
     private String aircraftName;
-    private String model;
+    private String modelNumber;
 }

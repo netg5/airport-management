@@ -42,8 +42,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
             "FROM\n" +
             "    Ticket t\n" +
             "WHERE\n" +
-            "    t.passengerId = ?1\n" +
-            "        AND (?2 IS NULL OR t.dateOfFlying = ?2)")
+            "    t.passengerId = ?1")
     List<Ticket> findAllTickets(Long passengerId);
 
     /**
@@ -58,7 +57,6 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
             "FROM\n" +
             "    Ticket t\n" +
             "WHERE\n" +
-            "    t.passengerId = ?1\n" +
-            "        AND (?2 IS NULL OR t.dateOfFlying = ?2)")
+            "    t.passengerId = ?1")
     Page<Ticket> findAllTicketsPageable(Long passengerId, Pageable pageable);
 }

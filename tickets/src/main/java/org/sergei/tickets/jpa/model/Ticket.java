@@ -68,6 +68,6 @@ public class Ticket implements Serializable {
     @Column(name = "aircraft_name")
     private String aircraftName;
 
-    @Column(name = "model")
-    private String model;
+    @Column(name = "model_number")
+    private String model_number;
 }

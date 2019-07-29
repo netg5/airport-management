@@ -1,6 +1,6 @@
 package org.sergei.reports.rest.dto.mappers;
 
-import org.sergei.reports.jpa.model.CustomerReport;
+import org.sergei.reports.jpa.model.PassengerReport;
 import org.sergei.reports.rest.dto.PassengerReportDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -11,7 +11,7 @@ import java.util.List;
  * @author Sergei Visotsky
  */
 @Component
-public class PassengerReportDTOMapper implements IMapper<CustomerReport, PassengerReportDTO> {
+public class PassengerReportDTOMapper implements IMapper<PassengerReport, PassengerReportDTO> {
 
     private final ReservationDTOListMapper reservationDTOListMapper;
 
@@ -21,10 +21,10 @@ public class PassengerReportDTOMapper implements IMapper<CustomerReport, Passeng
     }
 
     @Override
-    public PassengerReportDTO apply(CustomerReport customer) {
+    public PassengerReportDTO apply(PassengerReport customer) {
 
         PassengerReportDTO passengerReportDTO = new PassengerReportDTO();
-        passengerReportDTO.setPassengerId(customer.getCustomerId());
+        passengerReportDTO.setPassengerId(customer.getPassengerId());
         passengerReportDTO.setFirstName(customer.getFirstName());
         passengerReportDTO.setLastName(customer.getLastName());
         passengerReportDTO.setReservations(List.of());

@@ -16,9 +16,9 @@
 
 package org.sergei.reports.service;
 
-import org.sergei.reports.jpa.model.CustomerReport;
+import org.sergei.reports.jpa.model.PassengerReport;
 import org.sergei.reports.jpa.model.Reservation;
-import org.sergei.reports.jpa.repository.CustomerReportRepository;
+import org.sergei.reports.jpa.repository.PassengerReportRepository;
 import org.sergei.reports.jpa.repository.ReservationRepository;
 import org.sergei.reports.rest.dto.PassengerReportDTO;
 import org.sergei.reports.rest.dto.mappers.PassengerReportDTOMapper;
@@ -38,17 +38,17 @@ import java.util.Optional;
 @Service
 public class PassengerReportServiceImpl implements PassengerReportService {
 
-    private final CustomerReportRepository customerReportRepository;
+    private final PassengerReportRepository passengerReportRepository;
     private final ReservationRepository reservationRepository;
     private final PassengerReportDTOMapper passengerReportDTOMapper;
     private final ReservationDTOListMapper reservationDTOListMapper;
 
     @Autowired
-    public PassengerReportServiceImpl(CustomerReportRepository customerReportRepository,
+    public PassengerReportServiceImpl(PassengerReportRepository passengerReportRepository,
                                       ReservationRepository reservationRepository,
                                       PassengerReportDTOMapper passengerReportDTOMapper,
                                       ReservationDTOListMapper reservationDTOListMapper) {
-        this.customerReportRepository = customerReportRepository;
+        this.passengerReportRepository = passengerReportRepository;
         this.reservationRepository = reservationRepository;
         this.passengerReportDTOMapper = passengerReportDTOMapper;
         this.reservationDTOListMapper = reservationDTOListMapper;
@@ -56,11 +56,11 @@ public class PassengerReportServiceImpl implements PassengerReportService {
 
     @Override
     public ResponseEntity<ResponseDTO<PassengerReportDTO>> findById(Long id) {
-        Optional<CustomerReport> customerReport = customerReportRepository.findById(id);
-        if (customerReport.isEmpty()) {
+        Optional<PassengerReport> passengerReport = passengerReportRepository.findById(id);
+        if (passengerReport.isEmpty()) {
             return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
         } else {
-            PassengerReportDTO passengerReportDTO = passengerReportDTOMapper.apply(customerReport.get());
+            PassengerReportDTO passengerReportDTO = passengerReportDTOMapper.apply(passengerReport.get());
             List<Reservation> reservations =
                     reservationRepository.findAllByCustomerId(passengerReportDTO.getPassengerId());
             if (reservations.isEmpty()) {

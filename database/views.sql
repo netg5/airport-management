@@ -2,7 +2,7 @@
 CREATE VIEW aircraft_report_view AS
 SELECT a.id            AS aircraft_id,
        a.aircraft_name AS aircraft_name,
-       a.model         AS model,
+       a.model_number  AS model,
        o.first_name    AS first_name,
        o.last_name     AS last_name,
        o.address       AS adress,

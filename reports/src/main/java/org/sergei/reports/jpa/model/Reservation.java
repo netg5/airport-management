@@ -50,8 +50,8 @@ public class Reservation implements Serializable {
     @Column(name = "reservation_date")
     private LocalDateTime reservationDate;
 
-    @Column(name = "customer_id")
-    private Long customerId;
+    @Column(name = "passenger_id")
+    private Long passengerId;
 
     @Column(name = "route_id")
     private Long routeId;

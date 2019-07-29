@@ -17,7 +17,7 @@
 package org.sergei.tickets.service;
 
 import org.sergei.tickets.jpa.model.Ticket;
-import org.sergei.tickets.jpa.repository.CustomerRepository;
+import org.sergei.tickets.jpa.repository.PassengerRepository;
 import org.sergei.tickets.jpa.repository.TicketRepository;
 import org.sergei.tickets.rest.dto.TicketDTO;
 import org.sergei.tickets.rest.dto.TicketRequestDTO;
@@ -39,15 +39,15 @@ import java.util.List;
 public class TicketServiceImpl implements TicketService {
 
     private final TicketRepository ticketRepository;
-    private final CustomerRepository customerRepository;
+    private final PassengerRepository passengerRepository;
     private final TicketDTOListMapper ticketDTOListMapper;
 
     @Autowired
     public TicketServiceImpl(TicketRepository ticketRepository,
-                             CustomerRepository customerRepository,
+                             PassengerRepository passengerRepository,
                              TicketDTOListMapper ticketDTOListMapper) {
         this.ticketRepository = ticketRepository;
-        this.customerRepository = customerRepository;
+        this.passengerRepository = passengerRepository;
         this.ticketDTOListMapper = ticketDTOListMapper;
     }
 
@@ -60,7 +60,7 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public ResponseEntity<ResponseDTO<TicketDTO>> findAllTickets(TicketRequestDTO request) {
         Long passengerId = request.getPassengerId();
-        if (customerRepository.findById(passengerId).isEmpty()) {
+        if (passengerRepository.findById(passengerId).isEmpty()) {
             return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
         } else {
             List<Ticket> ticketList = ticketRepository.findAllTickets(passengerId);
@@ -87,7 +87,7 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public ResponseEntity<ResponseDTO<TicketDTO>> findAllTicketsPageable(TicketRequestDTO request, int page, int size) {
         Long passengerId = request.getPassengerId();
-        if (customerRepository.findById(passengerId).isEmpty()) {
+        if (passengerRepository.findById(passengerId).isEmpty()) {
             return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
         } else {
             Page<Ticket> ticketList = ticketRepository

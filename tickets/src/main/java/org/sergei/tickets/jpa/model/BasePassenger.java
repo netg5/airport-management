@@ -21,6 +21,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Immutable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -35,10 +36,11 @@ import java.io.Serializable;
 @Immutable
 @Entity
 @Table(name = "passenger")
-public class BaseCustomer implements Serializable {
+public class BasePassenger implements Serializable {
 
     private static final long serialVersionUID = 6973333612898495544L;
 
     @Id
+    @Column(name = "id")
     private Long id;
 }
