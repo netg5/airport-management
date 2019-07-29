@@ -5,28 +5,21 @@ server:
 spring:
   application:
     name: auth
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/flight_reservation_oauth
-    username: flight
-    password: flight
-    initialization-mode: embedded
-  jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-        show_sql: true
-        hbm2ddl:
-          auto: update
-        generate-ddl: true
-        lob:
-          non_contextual_creation: true
-  gateway:
-    port: 8080
+
+# DataSource configuration
+datasource:
+  jdbc-url: jdbc:postgresql://localhost:5432/flight_reservation_new
+  type: com.zaxxer.hikari.HikariDataSource
+  username: flight
+  password: flight
+
+# security specific configuration
 security:
   oauth2:
     access-token-uri: http://localhost:8080/auth/oauth/token
     user-authorization-uri: http://localhost:8080/auth/oauth/authorize
+
+# Eureka configuration
 eureka:
   instance:
     non-secure-port-enabled: false

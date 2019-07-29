@@ -31,7 +31,7 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "user_roles")
+@Table(name = "auth_user_roles")
 public class AuthUserRoles implements Serializable {
 
     private static final long serialVersionUID = -8334128934150131617L;
