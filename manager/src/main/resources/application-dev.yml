@@ -1,0 +1,50 @@
+server:
+  port: 8088
+  servlet:
+    context-path: /manager
+
+# Spring specific configuration
+spring:
+  application:
+    name: reports
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+
+# DataSource configuration
+datasource:
+  jdbc-url: jdbc:postgresql://localhost:5432/flight_reservation
+  type: com.zaxxer.hikari.HikariDataSource
+  username: flight
+  password: flight
+
+# Eureka configuration
+eureka:
+  instance:
+    non-secure-port-enabled: false
+    secure-port-enabled: true
+    secure-port: ${server.port}
+    status-page-url-path: http://localhost:${server.port}/${server.servlet.context-path}/actuator/info
+    health-check-url-path: http://localhost:${server.port}/${server.servlet.context-path}/actuator/health
+    home-page-url: http://localhost:${server.port}
+    lease-renewal-interval-in-seconds: 10 # intervalSeconds between subsequent heartbeats sent to Eureka server
+    lease-expiration-duration-in-seconds: 20 # time that Eureka server waits since it received last heartbeat before it can evict this instance
+    metadata-map:
+      swagger_url: http://localhost:${server.port}/${server.servlet.context-path}/v2/rest-docs
+  client:
+    enabled: true
+    register-with-eureka: true
+    fetch-registry: true
+    registry-fetch-interval-seconds: 10 # how often to fetch the registry from Eureka server
+    instance-info-replication-interval-seconds: 10 # how often to replicate instance changes to be replicated to Eureka server
+    serviceUrl:
+      defaulZone: http://localhost:8761/eureka/
+security:
+  oauth2:
+    resource:
+      user-info-uri: http://localhost:8080/auth/users/authenticate
+    access-token-uri: http://localhost:8080/auth/oauth/token
+    user-authorization-uri: http://localhost:8080/auth/oauth/authorize
+management:
+  endpoint:
+    health:
+      show-details: always
