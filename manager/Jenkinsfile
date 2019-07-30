@@ -1,4 +1,4 @@
-def POM_LOCATION = '-f reservation/pom.xml'
+def POM_LOCATION = '-f manager/pom.xml'
 pipeline {
     agent any
     tools {
