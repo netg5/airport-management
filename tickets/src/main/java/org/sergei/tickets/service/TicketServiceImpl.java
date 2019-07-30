@@ -23,6 +23,7 @@ import org.sergei.tickets.rest.dto.TicketDTO;
 import org.sergei.tickets.rest.dto.TicketRequestDTO;
 import org.sergei.tickets.rest.dto.mappers.TicketDTOListMapper;
 import org.sergei.tickets.rest.dto.response.ResponseDTO;
+import org.sergei.tickets.rest.dto.response.ResponseErrorDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -41,14 +42,17 @@ public class TicketServiceImpl implements TicketService {
     private final TicketRepository ticketRepository;
     private final PassengerRepository passengerRepository;
     private final TicketDTOListMapper ticketDTOListMapper;
+    private final ResponseMessageService responseMessageService;
 
     @Autowired
     public TicketServiceImpl(TicketRepository ticketRepository,
                              PassengerRepository passengerRepository,
-                             TicketDTOListMapper ticketDTOListMapper) {
+                             TicketDTOListMapper ticketDTOListMapper,
+                             ResponseMessageService responseMessageService) {
         this.ticketRepository = ticketRepository;
         this.passengerRepository = passengerRepository;
         this.ticketDTOListMapper = ticketDTOListMapper;
+        this.responseMessageService = responseMessageService;
     }
 
     /**
@@ -61,11 +65,13 @@ public class TicketServiceImpl implements TicketService {
     public ResponseEntity<ResponseDTO<TicketDTO>> findAllTickets(TicketRequestDTO request) {
         Long passengerId = request.getPassengerId();
         if (passengerRepository.findById(passengerId).isEmpty()) {
-            return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+            List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("AIR-001");
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
         } else {
             List<Ticket> ticketList = ticketRepository.findAllTickets(passengerId);
             if (ticketList.isEmpty()) {
-                return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+                List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("PAS-001");
+                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
             } else {
                 List<TicketDTO> ticketDTOList = ticketDTOListMapper.apply(ticketList);
                 ResponseDTO<TicketDTO> response = new ResponseDTO<>();
@@ -88,12 +94,14 @@ public class TicketServiceImpl implements TicketService {
     public ResponseEntity<ResponseDTO<TicketDTO>> findAllTicketsPageable(TicketRequestDTO request, int page, int size) {
         Long passengerId = request.getPassengerId();
         if (passengerRepository.findById(passengerId).isEmpty()) {
-            return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+            List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("PAS-001");
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
         } else {
             Page<Ticket> ticketList = ticketRepository
                     .findAllTicketsPageable(passengerId, PageRequest.of(page, size));
             if (ticketList.isEmpty()) {
-                return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+                List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("AIR-001");
+                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
             } else {
                 List<TicketDTO> ticketDTOList = ticketDTOListMapper.apply(ticketList.getContent());
                 ResponseDTO<TicketDTO> response = new ResponseDTO<>();

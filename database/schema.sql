@@ -3,8 +3,8 @@ CREATE TABLE pilot
     id             BIGINT           NOT NULL,
     license_number VARCHAR(150)     NOT NULL,
     ssn            VARCHAR(15)      NOT NULL,
-    first_name     VARCHAR(100)     NOT NULL,
-    last_name      VARCHAR(100)     NOT NULL,
+    first_name     VARCHAR(45)      NOT NULL,
+    last_name      VARCHAR(45)      NOT NULL,
     gender         VARCHAR(6)       NOT NULL,
     weight         DOUBLE PRECISION NOT NULL,
     date_of_birth  DATE             NOT NULL,
@@ -18,8 +18,8 @@ CREATE TABLE pilot
 CREATE TABLE owner
 (
     id         BIGINT       NOT NULL,
-    first_name VARCHAR(100) NOT NULL,
-    last_name  VARCHAR(100) NOT NULL,
+    first_name VARCHAR(45)  NOT NULL,
+    last_name  VARCHAR(45)  NOT NULL,
     gender     VARCHAR(6)   NOT NULL,
     address    VARCHAR(100) NOT NULL,
     country    VARCHAR(45)  NOT NULL,
@@ -114,8 +114,8 @@ CREATE TABLE manager
 (
     id         BIGINT       NOT NULL,
     ssn        VARCHAR(15)  NOT NULL,
-    first_name VARCHAR(100) NOT NULL,
-    last_name  VARCHAR(100) NOT NULL,
+    first_name VARCHAR(45)  NOT NULL,
+    last_name  VARCHAR(45)  NOT NULL,
     gender     VARCHAR(6)   NOT NULL,
     address    VARCHAR(100) NOT NULL,
     country    VARCHAR(45)  NOT NULL,
@@ -134,7 +134,8 @@ CREATE TABLE actual_flight
     departure_time TIMESTAMP    NOT NULL,
     arrival_time   TIMESTAMP    NOT NULL,
     hours_flying   INTEGER      NOT NULL,
-    last_name      VARCHAR(100) NOT NULL,
+    first_name     VARCHAR(45)  NOT NULL,
+    last_name      VARCHAR(45)  NOT NULL,
     gender         VARCHAR(6)   NOT NULL,
     address        VARCHAR(100) NOT NULL,
     country        VARCHAR(45)  NOT NULL,
@@ -224,6 +225,15 @@ CREATE TABLE auth_user_auth_user_roles
     auth_user_roles_id BIGINT NOT NULL,
     CONSTRAINT auth_user_fk FOREIGN KEY (auth_user_id) REFERENCES auth_user (id),
     CONSTRAINT auth_user_roles_fk FOREIGN KEY (auth_user_roles_id) REFERENCES auth_user_roles (id)
+);
+
+-- Response message storage
+CREATE TABLE response_messages
+(
+    id          BIGINT        NOT NULL,
+    code        VARCHAR(10)   NOT NULL,
+    description VARCHAR(1000) NOT NULL,
+    CONSTRAINT response_msg_pk PRIMARY KEY (id)
 );
 
 -- Sequences

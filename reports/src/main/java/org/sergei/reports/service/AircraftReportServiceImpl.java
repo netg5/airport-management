@@ -26,6 +26,7 @@ import org.sergei.reports.rest.dto.mappers.AircraftReportDTOListMapper;
 import org.sergei.reports.rest.dto.mappers.AircraftReportDTOMapper;
 import org.sergei.reports.rest.dto.mappers.ReservationDTOListMapper;
 import org.sergei.reports.rest.dto.response.ResponseDTO;
+import org.sergei.reports.rest.dto.response.ResponseErrorDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -47,18 +48,21 @@ public class AircraftReportServiceImpl implements AircraftReportService {
     private final AircraftReportDTOMapper aircraftReportDTOMapper;
     private final AircraftReportDTOListMapper aircraftReportDTOListMapper;
     private final ReservationDTOListMapper reservationDTOListMapper;
+    private final ResponseMessageService responseMessageService;
 
     @Autowired
     public AircraftReportServiceImpl(AircraftReportRepository aircraftReportRepository,
                                      ReservationRepository reservationRepository,
                                      AircraftReportDTOMapper aircraftReportDTOMapper,
                                      AircraftReportDTOListMapper aircraftReportDTOListMapper,
-                                     ReservationDTOListMapper reservationDTOListMapper) {
+                                     ReservationDTOListMapper reservationDTOListMapper,
+                                     ResponseMessageService responseMessageService) {
         this.aircraftReportRepository = aircraftReportRepository;
         this.reservationRepository = reservationRepository;
         this.aircraftReportDTOMapper = aircraftReportDTOMapper;
         this.aircraftReportDTOListMapper = aircraftReportDTOListMapper;
         this.reservationDTOListMapper = reservationDTOListMapper;
+        this.responseMessageService = responseMessageService;
     }
 
     /**
@@ -73,14 +77,16 @@ public class AircraftReportServiceImpl implements AircraftReportService {
         Page<AircraftReport> aircraftReports =
                 aircraftReportRepository.findAll(PageRequest.of(page, size));
         if (aircraftReports.isEmpty()) {
-            return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+            List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("AIR-001");
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
         } else {
             List<AircraftReportDTO> aircraftReportDTOList = aircraftReportDTOListMapper.apply(aircraftReports.getContent());
             for (AircraftReportDTO aircraftReport : aircraftReportDTOList) {
                 List<Reservation> reservationList =
                         reservationRepository.findAllByRouteId(aircraftReport.getRouteId());
                 if (reservationList.isEmpty()) {
-                    return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+                    List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("RES-001");
+                    return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
                 } else {
                     List<ReservationDTO> reservationDTOList = reservationDTOListMapper.apply(reservationList);
                     aircraftReport.setReservations(reservationDTOList);
@@ -105,12 +111,14 @@ public class AircraftReportServiceImpl implements AircraftReportService {
     public ResponseEntity<ResponseDTO<AircraftReportDTO>> findById(Long aircraftId) {
         Optional<AircraftReport> aircraftReport = aircraftReportRepository.findById(aircraftId);
         if (aircraftReport.isEmpty()) {
-            return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+            List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("AIR-001");
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
         } else {
             AircraftReportDTO aircraftReportDTO = aircraftReportDTOMapper.apply(aircraftReport.get());
             List<Reservation> reservationList = reservationRepository.findAllByRouteId(aircraftReport.get().getRouteId());
             if (reservationList.isEmpty()) {
-                return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+                List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("RES-001");
+                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
             } else {
                 List<ReservationDTO> reservationDTOList = reservationDTOListMapper.apply(reservationList);
                 aircraftReportDTO.setReservations(reservationDTOList);

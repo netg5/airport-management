@@ -24,6 +24,7 @@ import org.sergei.reports.rest.dto.PassengerReportDTO;
 import org.sergei.reports.rest.dto.mappers.PassengerReportDTOMapper;
 import org.sergei.reports.rest.dto.mappers.ReservationDTOListMapper;
 import org.sergei.reports.rest.dto.response.ResponseDTO;
+import org.sergei.reports.rest.dto.response.ResponseErrorDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,29 +43,34 @@ public class PassengerReportServiceImpl implements PassengerReportService {
     private final ReservationRepository reservationRepository;
     private final PassengerReportDTOMapper passengerReportDTOMapper;
     private final ReservationDTOListMapper reservationDTOListMapper;
+    private final ResponseMessageService responseMessageService;
 
     @Autowired
     public PassengerReportServiceImpl(PassengerReportRepository passengerReportRepository,
                                       ReservationRepository reservationRepository,
                                       PassengerReportDTOMapper passengerReportDTOMapper,
-                                      ReservationDTOListMapper reservationDTOListMapper) {
+                                      ReservationDTOListMapper reservationDTOListMapper,
+                                      ResponseMessageService responseMessageService) {
         this.passengerReportRepository = passengerReportRepository;
         this.reservationRepository = reservationRepository;
         this.passengerReportDTOMapper = passengerReportDTOMapper;
         this.reservationDTOListMapper = reservationDTOListMapper;
+        this.responseMessageService = responseMessageService;
     }
 
     @Override
     public ResponseEntity<ResponseDTO<PassengerReportDTO>> findById(Long id) {
         Optional<PassengerReport> passengerReport = passengerReportRepository.findById(id);
         if (passengerReport.isEmpty()) {
-            return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+            List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("PAS-001");
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
         } else {
             PassengerReportDTO passengerReportDTO = passengerReportDTOMapper.apply(passengerReport.get());
             List<Reservation> reservations =
                     reservationRepository.findAllByPassengerId(passengerReportDTO.getPassengerId());
             if (reservations.isEmpty()) {
-                return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+                List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("RES-001");
+                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
             } else {
                 passengerReportDTO.setReservations(reservationDTOListMapper.apply(reservations));
 
