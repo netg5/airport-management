@@ -16,12 +16,13 @@
 
 package org.sergei.reservation.rest.controller;
 
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.sergei.reservation.rest.dto.PassengerResponseDTO;
 import org.sergei.reservation.rest.dto.PassengerUpdateRequestDTO;
 import org.sergei.reservation.rest.dto.response.ResponseDTO;
 import org.sergei.reservation.service.PassengerService;
-import org.sergei.reservation.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -95,9 +96,6 @@ public class PassengerController {
     }
 
     @ApiOperation("Update one field for a passenger")
-    @ApiResponses({
-            @ApiResponse(code = 404, message = Constants.CUSTOMER_NOT_FOUND)
-    })
     @PatchMapping(value = "/{passengerId}/patch", produces = "application/json", consumes = "application/json")
     public ResponseEntity<ResponseDTO<PassengerResponseDTO>>
     patchCustomer(@ApiParam(value = "Passenger ID which should be updated", required = true)
@@ -107,9 +105,6 @@ public class PassengerController {
     }
 
     @ApiOperation(value = "Delete passenger data", notes = "Operation allowed for the ROLE_ADMIN only")
-    @ApiResponses({
-            @ApiResponse(code = 404, message = Constants.CUSTOMER_NOT_FOUND)
-    })
     @DeleteMapping("/{passengerId}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<ResponseDTO<PassengerResponseDTO>>

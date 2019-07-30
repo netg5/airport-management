@@ -1,7 +1,5 @@
 server:
   port: 8088
-#  servlet:
-#    context-path: /manager
 
 # Spring specific configuration
 spring:
@@ -23,8 +21,6 @@ eureka:
     non-secure-port-enabled: false
     secure-port-enabled: true
     secure-port: ${server.port}
-    #    status-page-url-path: http://localhost:${server.port}/${server.servlet.context-path}/actuator/info
-    #    health-check-url-path: http://localhost:${server.port}/${server.servlet.context-path}/actuator/health
     status-page-url-path: http://localhost:${server.port}/actuator/info
     health-check-url-path: http://localhost:${server.port}/actuator/health
     home-page-url: http://localhost:${server.port}

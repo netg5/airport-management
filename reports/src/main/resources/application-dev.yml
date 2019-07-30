@@ -1,7 +1,5 @@
 server:
   port: 8089
-  servlet:
-    context-path: /reports
 
 # Spring specific configuration
 spring:
@@ -23,13 +21,11 @@ eureka:
     non-secure-port-enabled: false
     secure-port-enabled: true
     secure-port: ${server.port}
-    status-page-url-path: http://localhost:${server.port}/${server.servlet.context-path}/actuator/info
-    health-check-url-path: http://localhost:${server.port}/${server.servlet.context-path}/actuator/health
+    status-page-url-path: http://localhost:${server.port}/actuator/info
+    health-check-url-path: http://localhost:${server.port}/actuator/health
     home-page-url: http://localhost:${server.port}
     lease-renewal-interval-in-seconds: 10 # intervalSeconds between subsequent heartbeats sent to Eureka server
     lease-expiration-duration-in-seconds: 20 # time that Eureka server waits since it received last heartbeat before it can evict this instance
-    metadata-map:
-      swagger_url: http://localhost:${server.port}/${server.servlet.context-path}/v2/rest-docs
   client:
     enabled: true
     register-with-eureka: true
