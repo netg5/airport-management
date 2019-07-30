@@ -29,3 +29,11 @@ INSERT INTO auth_user_roles VALUES (2, 'ADMIN');
 INSERT INTO auth_user_auth_user_roles VALUES (1, 1);
 INSERT INTO auth_user_auth_user_roles VALUES (1, 2) ;
 INSERT INTO public.oauth_client_details VALUES('trusted-client', '', '$2a$10$K9.dtdouoTm1tlhQTTQu4OEV1HPlV0IpNjUsNu/8ZBiesIkSXafmK', 'read,write,trust', 'refresh_token,password', 'http://www.google.com', 'ROLE_CLIENT,ROLE_TRUSTED_CLIENT,ROLE_ADMIN', 3600, 86400, '', '');
+
+-- Errors
+INSERT INTO response_error VALUES('R0001', 'Aircraft with this ID not found', 'response');
+INSERT INTO response_error VALUES('R0002', 'Passenger with this ID not found', 'response');
+INSERT INTO response_error VALUES('R0003', 'Route with this ID not found', 'response');
+INSERT INTO response_error VALUES('R0004', 'Reservation with this ID not found', 'response');
+INSERT INTO response_error VALUES('R0005', 'This passenger has no reservations made', 'response');
+INSERT INTO response_error VALUES('R0006', 'Passenger has no tickets', 'response');

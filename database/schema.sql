@@ -226,6 +226,15 @@ CREATE TABLE auth_user_auth_user_roles
     CONSTRAINT auth_user_roles_fk FOREIGN KEY (auth_user_roles_id) REFERENCES auth_user_roles (id)
 );
 
+-- Errors
+CREATE TABLE response_error
+(
+    error_code        VARCHAR(5)    NOT NULL,
+    error_description VARCHAR(1000) NOT NULL,
+    error_type        VARCHAR(45)   NOT NULL,
+    CONSTRAINT response_error_pk PRIMARY KEY (error_code)
+);
+
 -- Sequences
 CREATE SEQUENCE pilot_id_seq;
 CREATE SEQUENCE owner_id_seq;
