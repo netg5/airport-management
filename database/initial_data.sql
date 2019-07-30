@@ -31,9 +31,9 @@ INSERT INTO auth_user_auth_user_roles VALUES (1, 2) ;
 INSERT INTO public.oauth_client_details VALUES('trusted-client', '', '$2a$10$K9.dtdouoTm1tlhQTTQu4OEV1HPlV0IpNjUsNu/8ZBiesIkSXafmK', 'read,write,trust', 'refresh_token,password', 'http://www.google.com', 'ROLE_CLIENT,ROLE_TRUSTED_CLIENT,ROLE_ADMIN', 3600, 86400, '', '');
 
 -- Errors
-INSERT INTO response_messages VALUES(1, 'R0001', 'Aircraft with this ID not found');
-INSERT INTO response_messages VALUES(2, 'R0002', 'Passenger with this ID not found');
-INSERT INTO response_messages VALUES(3, 'R0003', 'Route with this ID not found');
-INSERT INTO response_messages VALUES(4, 'R0004', 'Reservation with this ID not found');
-INSERT INTO response_messages VALUES(5, 'R0005', 'This passenger has no reservations made');
-INSERT INTO response_messages VALUES(6, 'R0006', 'Passenger has no tickets');
+INSERT INTO response_messages VALUES(1, 'AIR-001', 'Aircraft with this ID not found');
+INSERT INTO response_messages VALUES(2, 'PAS-001', 'Passenger with this ID not found');
+INSERT INTO response_messages VALUES(3, 'RT-001', 'Route with this ID not found');
+INSERT INTO response_messages VALUES(4, 'RES-001', 'Reservation with this ID not found');
+INSERT INTO response_messages VALUES(5, 'PR-001', 'This passenger has no reservations made');
+INSERT INTO response_messages VALUES(6, 'PT-001', 'Passenger has no tickets');
