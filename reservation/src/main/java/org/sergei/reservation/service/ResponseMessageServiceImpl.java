@@ -28,7 +28,7 @@ public class ResponseMessageServiceImpl implements ResponseMessageService {
 
         List<ResponseErrorDTO> responseErrorList = new ArrayList<>();
         for (ResponseMessage responseMessage : responseMessageList) {
-            responseErrorList.add(new ResponseErrorDTO(responseMessage.getCode(), responseMessage.getDescription(), "Error"));
+            responseErrorList.add(new ResponseErrorDTO(responseMessage.getCode(), responseMessage.getDescription(), "ERROR"));
         }
 
         return responseErrorList;

@@ -37,3 +37,7 @@ INSERT INTO response_messages VALUES(3, 'RT-001', 'Route with this ID not found'
 INSERT INTO response_messages VALUES(4, 'RES-001', 'Reservation with this ID not found');
 INSERT INTO response_messages VALUES(5, 'PR-001', 'This passenger has no reservations made');
 INSERT INTO response_messages VALUES(6, 'PT-001', 'Passenger has no tickets');
+INSERT INTO response_messages VALUES(7, 'PIL-001', 'Pilot with this ID not found');
+INSERT INTO response_messages VALUES(8, 'PIL-002', 'Pilot table is empty');
+INSERT INTO response_messages VALUES(9, 'RP-001', 'Required parameter is not present');
+INSERT INTO response_messages VALUES(10, 'PIL-003', 'Pilot weight is greater than expected');

@@ -66,8 +66,8 @@ public class PassengerServiceImpl implements PassengerService {
     @Override
     public ResponseEntity<ResponseDTO<PassengerResponseDTO>> findOne(Long passengerId) {
         Optional<Passenger> passenger = passengerRepository.findById(passengerId);
-        List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("PAS-001");
         if (passenger.isEmpty()) {
+            List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("PAS-001");
             return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
         } else {
             PassengerResponseDTO passengerResponseDTO = passengerDTOMapper.apply(passenger.get());

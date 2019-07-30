@@ -1,6 +1,7 @@
 package org.sergei.manager.service;
 
 import org.sergei.manager.rest.dto.PilotDTO;
+import org.sergei.manager.rest.dto.PilotRequestDTO;
 import org.sergei.manager.rest.dto.response.ResponseDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -21,10 +22,10 @@ public interface PilotService {
     /**
      * Find one pilot by ID
      *
-     * @param pilotId by which pilot should be found
+     * @param request pilot ID holder
      * @return response with pilot
      */
-    ResponseEntity<ResponseDTO<PilotDTO>> findById(Long pilotId);
+    ResponseEntity<ResponseDTO<PilotDTO>> findById(PilotRequestDTO request);
 
     /**
      * Save a new pilot
