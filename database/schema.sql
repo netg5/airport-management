@@ -11,7 +11,7 @@ CREATE TABLE pilot
     address        VARCHAR(100)     NOT NULL,
     country        VARCHAR(45)      NOT NULL,
     email          VARCHAR(45)      NOT NULL,
-    phone          NUMERIC(45)      NOT NULL,
+    phone          VARCHAR(45)      NOT NULL,
     CONSTRAINT pilot_pk PRIMARY KEY (id)
 );
 
