@@ -57,5 +57,5 @@ public class Passenger implements Serializable {
 
     private String gender;
 
-    private Integer phone;
+    private String phone;
 }

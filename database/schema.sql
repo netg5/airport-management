@@ -24,7 +24,7 @@ CREATE TABLE owner
     address    VARCHAR(100) NOT NULL,
     country    VARCHAR(45)  NOT NULL,
     email      VARCHAR(45)  NOT NULL,
-    phone      NUMERIC(25)  NOT NULL,
+    phone      VARCHAR(45)  NOT NULL,
     CONSTRAINT owner_pk PRIMARY KEY (id)
 );
 
@@ -71,7 +71,7 @@ CREATE TABLE airport
     contact_name VARCHAR(45) NOT NULL,
     contact_job  VARCHAR(45) NOT NULL,
     email        VARCHAR(45) NOT NULL,
-    phone        NUMERIC(25) NOT NULL,
+    phone        VARCHAR(45) NOT NULL,
     CONSTRAINT airport_pk PRIMARY KEY (id)
 );
 
@@ -92,7 +92,7 @@ CREATE TABLE passenger
     last_name  VARCHAR(45) NOT NULL,
     age        INTEGER     NOT NULL,
     gender     VARCHAR(10) NOT NULL,
-    phone      NUMERIC(25) NOT NULL,
+    phone      VARCHAR(45) NOT NULL,
     CONSTRAINT passenger_pk PRIMARY KEY (id)
 );
 
@@ -120,7 +120,7 @@ CREATE TABLE manager
     address    VARCHAR(100) NOT NULL,
     country    VARCHAR(45)  NOT NULL,
     email      VARCHAR(45)  NOT NULL,
-    phone      NUMERIC(25)  NOT NULL,
+    phone      VARCHAR(45)  NOT NULL,
     CONSTRAINT manager_pk PRIMARY KEY (id)
 );
 
@@ -140,7 +140,7 @@ CREATE TABLE actual_flight
     address        VARCHAR(100) NOT NULL,
     country        VARCHAR(45)  NOT NULL,
     email          VARCHAR(45)  NOT NULL,
-    phone          NUMERIC(25)  NOT NULL,
+    phone          VARCHAR(45)  NOT NULL,
     CONSTRAINT actual_flight_pk PRIMARY KEY (id),
     CONSTRAINT aircraft_ft FOREIGN KEY (aircraft_id) REFERENCES aircraft (id),
     CONSTRAINT pilot_id_fk FOREIGN KEY (pilot_id) REFERENCES pilot (id),
