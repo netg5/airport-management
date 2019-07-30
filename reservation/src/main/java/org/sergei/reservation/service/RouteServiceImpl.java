@@ -21,7 +21,8 @@ import org.sergei.reservation.jpa.model.Aircraft;
 import org.sergei.reservation.jpa.model.Route;
 import org.sergei.reservation.jpa.repository.AircraftRepository;
 import org.sergei.reservation.jpa.repository.RouteRepository;
-import org.sergei.reservation.rest.dto.AircraftResponseDTO;
+import org.sergei.reservation.rest.dto.AircraftDTO;
+import org.sergei.reservation.rest.dto.AircraftDTO;
 import org.sergei.reservation.rest.dto.RouteRequestDTO;
 import org.sergei.reservation.rest.dto.RouteResponseDTO;
 import org.sergei.reservation.rest.dto.RouteUpdateRequestDTO;
@@ -94,7 +95,7 @@ public class RouteServiceImpl implements RouteService {
                 List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("AIR-001");
                 return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
             } else {
-                AircraftResponseDTO aircraftDTO = aircraftDTOMapper.apply(aircraft.get());
+                AircraftDTO aircraftDTO = aircraftDTOMapper.apply(aircraft.get());
                 // Set aircraftId DTO to the flight reservation extended DTO
                 routeResponseDTO.setAircraftDTO(aircraftDTO);
 
@@ -130,7 +131,7 @@ public class RouteServiceImpl implements RouteService {
                     List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("AIR-001");
                     return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
                 } else {
-                    AircraftResponseDTO aircraftDTO = aircraftDTOMapper.apply(aircraft.get());
+                    AircraftDTO aircraftDTO = aircraftDTOMapper.apply(aircraft.get());
                     routeResponseDTO.setAircraftDTO(aircraftDTO);
                     counter++;
                 }
@@ -167,7 +168,7 @@ public class RouteServiceImpl implements RouteService {
                     List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("AIR-001");
                     return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
                 } else {
-                    AircraftResponseDTO aircraftDTO = aircraftDTOMapper.apply(aircraft.get());
+                    AircraftDTO aircraftDTO = aircraftDTOMapper.apply(aircraft.get());
                     routeResponseDTO.setAircraftDTO(aircraftDTO);
                     counter++;
                 }
@@ -284,7 +285,7 @@ public class RouteServiceImpl implements RouteService {
 
                     Route savedRoute = routeRepository.save(route.get());
                     RouteResponseDTO routeResponseDTO = routeDTOMapper.apply(savedRoute);
-                    AircraftResponseDTO aircraftDTO = aircraftDTOMapper.apply(aircraft.get());
+                    AircraftDTO aircraftDTO = aircraftDTOMapper.apply(aircraft.get());
                     routeResponseDTO.setAircraftDTO(aircraftDTO);
 
                     response.setErrorList(List.of());

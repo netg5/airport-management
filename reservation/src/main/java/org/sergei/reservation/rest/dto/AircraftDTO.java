@@ -32,7 +32,7 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AircraftResponseDTO implements Serializable {
+public class AircraftDTO implements Serializable {
     private static final long serialVersionUID = -8398761845885572454L;
     private Long aircraftId;
     private String manufacturerCode;

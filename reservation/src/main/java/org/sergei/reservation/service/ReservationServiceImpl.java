@@ -22,7 +22,7 @@ import org.sergei.reservation.jpa.model.Reservation;
 import org.sergei.reservation.jpa.repository.AircraftRepository;
 import org.sergei.reservation.jpa.repository.PassengerRepository;
 import org.sergei.reservation.jpa.repository.ReservationRepository;
-import org.sergei.reservation.rest.dto.AircraftResponseDTO;
+import org.sergei.reservation.rest.dto.AircraftDTO;
 import org.sergei.reservation.rest.dto.ReservationRequestDTO;
 import org.sergei.reservation.rest.dto.ReservationResponseDTO;
 import org.sergei.reservation.rest.dto.mappers.AircraftDTOMapper;
@@ -100,7 +100,7 @@ public class ReservationServiceImpl implements ReservationService {
                     List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("AIR-001");
                     return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
                 } else {
-                    AircraftResponseDTO aircraftResponseDTO = aircraftDTOMapper.apply(aircraft.get());
+                    AircraftDTO aircraftResponseDTO = aircraftDTOMapper.apply(aircraft.get());
                     reservationResponseDTO.setAircraftId(aircraftResponseDTO.getAircraftId());
 
                     ResponseDTO<ReservationResponseDTO> response = new ResponseDTO<>();
@@ -305,7 +305,7 @@ public class ReservationServiceImpl implements ReservationService {
                     List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("AIR-001");
                     return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
                 } else {
-                    AircraftResponseDTO aircraftResponseDTO = aircraftDTOMapper.apply(aircraft.get());
+                    AircraftDTO aircraftResponseDTO = aircraftDTOMapper.apply(aircraft.get());
                     reservationResponseDTO.setAircraftId(aircraftResponseDTO.getAircraftId());
                 }
                 counter++;

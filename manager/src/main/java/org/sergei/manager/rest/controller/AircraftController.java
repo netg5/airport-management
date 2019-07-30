@@ -14,23 +14,25 @@
  * limitations under the License.
  */
 
-package org.sergei.reservation.rest.controller;
+package org.sergei.manager.rest.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.sergei.reservation.rest.dto.AircraftDTO;
-import org.sergei.reservation.rest.dto.AircraftRequestDTO;
-import org.sergei.reservation.rest.dto.response.ResponseDTO;
-import org.sergei.reservation.service.AircraftService;
+import io.swagger.annotations.ApiParam;
+import org.sergei.manager.rest.dto.AircraftDTO;
+import org.sergei.manager.rest.dto.AircraftRequestDTO;
+import org.sergei.manager.rest.dto.response.ResponseDTO;
+import org.sergei.manager.service.AircraftService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Sergei Visotsky
  */
 @Api(
-        value = "/reservation/aircrafts",
+        value = "/aircrafts",
         produces = "application/json",
         consumes = "application/json"
 )
@@ -56,5 +58,28 @@ public class AircraftController {
     public ResponseEntity<ResponseDTO<AircraftDTO>>
     getAircraftById(@RequestBody AircraftRequestDTO request) {
         return aircraftService.findOne(request);
+    }
+
+    @PostMapping(produces = "application/json", consumes = "application/json")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<ResponseDTO<AircraftDTO>>
+    saveAircraft(@ApiParam(value = "Aircraft which should be saved", required = true)
+                 @RequestBody AircraftDTO aircraftDTO) {
+        return aircraftService.save(aircraftDTO);
+    }
+
+    @PutMapping(produces = "application/json", consumes = "application/json")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<ResponseDTO<AircraftDTO>>
+    updateAircraft(@RequestBody AircraftDTO request) {
+        return aircraftService.update(request);
+    }
+
+    @DeleteMapping(value = "/{aircraftId}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<ResponseDTO<AircraftDTO>>
+    deleteAircraft(@ApiParam(value = "Aircraft ID which should be deleted", required = true)
+                   @PathVariable("aircraftId") Long aircraftId) {
+        return aircraftService.delete(aircraftId);
     }
 }

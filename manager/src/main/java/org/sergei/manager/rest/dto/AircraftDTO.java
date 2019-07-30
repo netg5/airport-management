@@ -14,15 +14,30 @@
  * limitations under the License.
  */
 
-package org.sergei.reservation.jpa.repository;
+package org.sergei.manager.rest.dto;
 
-import org.sergei.reservation.jpa.model.Aircraft;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 
 /**
  * @author Sergei Visotsky
  */
-@Repository
-public interface AircraftRepository extends JpaRepository<Aircraft, Long> {
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class AircraftDTO implements Serializable {
+    private static final long serialVersionUID = -8398761845885572454L;
+    private Long aircraftId;
+    private String manufacturerCode;
+    private String registrationNumber;
+    private String modelNumber;
+    private String aircraftName;
+    private Integer capacity;
+    private Double weight;
+    private Integer exploitationPeriod;
 }

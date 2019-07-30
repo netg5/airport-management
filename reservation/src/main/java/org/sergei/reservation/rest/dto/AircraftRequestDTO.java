@@ -1,5 +1,6 @@
 package org.sergei.reservation.rest.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class AircraftUpdateRequestDTO {
+@AllArgsConstructor
+public class AircraftRequestDTO {
     private Long aircraftId;
-    private AircraftResponseDTO aircraft;
 }

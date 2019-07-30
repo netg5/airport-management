@@ -76,7 +76,8 @@ public class PilotServiceImpl implements PilotService {
 
     @Override
     public ResponseEntity<ResponseDTO<PilotDTO>> save(PilotDTO pilotDTO) {
-        if (pilotDTO.getWeight() > 72) {
+        Double pilotWeight = pilotDTO.getWeight();
+        if (pilotWeight > 72) {
             List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("PIL-003");
             return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.OK);
         } else {
@@ -89,12 +90,41 @@ public class PilotServiceImpl implements PilotService {
 
     @Override
     public ResponseEntity<ResponseDTO<PilotDTO>> update(PilotDTO pilotDTO) {
-        return null;
+        Long pilotId = pilotDTO.getId();
+        Double pilotWeight = pilotDTO.getWeight();
+        if (pilotWeight > 72) {
+            List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("PIL-003");
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.OK);
+        } else {
+            Optional<Pilot> pilot = pilotRepository.findById(pilotId);
+            if (pilot.isEmpty()) {
+                List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("PIL-001");
+                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.OK);
+            } else {
+                Pilot pilotUpdated = pilotModelMapper(pilotDTO);
+                Pilot savedPilot = pilotRepository.save(pilotUpdated);
+                PilotDTO savedPilotDTO = pilotDTOMapper.apply(savedPilot);
+                return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of(savedPilotDTO)), HttpStatus.OK);
+            }
+        }
     }
 
     @Override
-    public ResponseEntity<ResponseDTO<PilotDTO>> delete(PilotDTO pilotDTO) {
-        return null;
+    public ResponseEntity<ResponseDTO> delete(PilotRequestDTO request) {
+        Long pilotId = request.getPilotId();
+        if (pilotId == null) {
+            List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("RP-002");
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+        } else {
+            Optional<Pilot> pilot = pilotRepository.findById(pilotId);
+            if (pilot.isEmpty()) {
+                List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("PIL-001");
+                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.OK);
+            } else {
+                pilotRepository.delete(pilot.get());
+                return new ResponseEntity<>(new ResponseDTO(), HttpStatus.OK);
+            }
+        }
     }
 
     private Pilot pilotModelMapper(PilotDTO pilotDTO) {

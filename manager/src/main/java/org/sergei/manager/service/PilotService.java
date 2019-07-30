@@ -46,9 +46,9 @@ public interface PilotService {
     /**
      * Delete pilot
      *
-     * @param pilotDTO to delete
+     * @param request to delete
      * @return response
      */
-    ResponseEntity<ResponseDTO<PilotDTO>> delete(PilotDTO pilotDTO);
+    ResponseEntity<ResponseDTO> delete(PilotRequestDTO request);
 
 }
