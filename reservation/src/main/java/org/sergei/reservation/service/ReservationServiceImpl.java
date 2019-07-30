@@ -29,6 +29,7 @@ import org.sergei.reservation.rest.dto.mappers.AircraftDTOMapper;
 import org.sergei.reservation.rest.dto.mappers.ReservationDTOListMapper;
 import org.sergei.reservation.rest.dto.mappers.ReservationDTOMapper;
 import org.sergei.reservation.rest.dto.response.ResponseDTO;
+import org.sergei.reservation.rest.dto.response.ResponseErrorDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -52,6 +53,7 @@ public class ReservationServiceImpl implements ReservationService {
     private final ReservationDTOMapper reservationDTOMapper;
     private final ReservationDTOListMapper reservationDTOListMapper;
     private final AircraftDTOMapper aircraftDTOMapper;
+    private final ResponseMessageService responseMessageService;
 
     @Autowired
     public ReservationServiceImpl(PassengerRepository passengerRepository,
@@ -59,13 +61,15 @@ public class ReservationServiceImpl implements ReservationService {
                                   ReservationRepository reservationRepository,
                                   ReservationDTOMapper reservationDTOMapper,
                                   ReservationDTOListMapper reservationDTOListMapper,
-                                  AircraftDTOMapper aircraftDTOMapper) {
+                                  AircraftDTOMapper aircraftDTOMapper,
+                                  ResponseMessageService responseMessageService) {
         this.passengerRepository = passengerRepository;
         this.aircraftRepository = aircraftRepository;
         this.reservationRepository = reservationRepository;
         this.reservationDTOMapper = reservationDTOMapper;
         this.reservationDTOListMapper = reservationDTOListMapper;
         this.aircraftDTOMapper = aircraftDTOMapper;
+        this.responseMessageService = responseMessageService;
     }
 
     /**
@@ -77,21 +81,24 @@ public class ReservationServiceImpl implements ReservationService {
      */
     @Override
     public ResponseEntity<ResponseDTO<ReservationResponseDTO>> findOneForPassenger(Long passengerId, Long reservationId) {
-        Optional<Passenger> customer = passengerRepository.findById(passengerId);
+        Optional<Passenger> passenger = passengerRepository.findById(passengerId);
 
-        if (customer.isEmpty()) {
-            return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+        if (passenger.isEmpty()) {
+            List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("PAS-001");
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
         } else {
             Optional<Reservation> reservation = reservationRepository.findOneForPassenger(passengerId, reservationId);
             if (reservation.isEmpty()) {
-                return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+                List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("RES-001");
+                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
             } else {
                 ReservationResponseDTO reservationResponseDTO = reservationDTOMapper.apply(reservation.get());
                 // Find aircraftId by ID
                 Optional<Aircraft> aircraft = aircraftRepository.findById(reservation.get().getAircraft().getId());
 
                 if (aircraft.isEmpty()) {
-                    return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+                    List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("AIR-001");
+                    return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
                 } else {
                     AircraftResponseDTO aircraftResponseDTO = aircraftDTOMapper.apply(aircraft.get());
                     reservationResponseDTO.setAircraftId(aircraftResponseDTO.getAircraftId());
@@ -118,7 +125,8 @@ public class ReservationServiceImpl implements ReservationService {
         Optional<Passenger> passenger = passengerRepository.findById(passengerId);
 
         if (passenger.isEmpty()) {
-            return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+            List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("PAS-001");
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
         } else {
             // Find all flight reservation for the passenger
             List<Reservation> reservation = reservationRepository.findAllForPassenger(passengerId);
@@ -140,7 +148,8 @@ public class ReservationServiceImpl implements ReservationService {
         Optional<Passenger> passenger = passengerRepository.findById(passengerId);
 
         if (passenger.isEmpty()) {
-            return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+            List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("PAS-001");
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
         } else {
             // Find all flight reservation for the passenger
             List<Reservation> reservation =
@@ -162,12 +171,14 @@ public class ReservationServiceImpl implements ReservationService {
         // Find passenger by ID
         Optional<Passenger> passenger = passengerRepository.findById(passengerId);
         if (passenger.isEmpty()) {
-            return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+            List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("PAS-001");
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
         } else {
             // Find aircraftId by aircraftId ID
             Optional<Aircraft> aircraft = aircraftRepository.findById(request.getAircraftId());
             if (aircraft.isEmpty()) {
-                return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+                List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("AIR-001");
+                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
             } else {
                 Reservation reservation = new Reservation();
 
@@ -204,11 +215,13 @@ public class ReservationServiceImpl implements ReservationService {
         // Find passenger by ID
         Optional<Passenger> passenger = passengerRepository.findById(passengerId);
         if (passenger.isEmpty()) {
-            return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+            List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("PAS-001");
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
         } else {
             Optional<Reservation> reservation = reservationRepository.findOneForPassenger(passengerId, reservationId);
             if (reservation.isEmpty()) {
-                return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+                List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("RES-001");
+                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
             } else {
                 if (params.get("aircraftId") != null) {
                     Optional<Aircraft> aircraft = aircraftRepository.findById(Long.parseLong(String.valueOf(params.get("aircraftId"))));
@@ -249,16 +262,18 @@ public class ReservationServiceImpl implements ReservationService {
      */
     @Override
     public ResponseEntity<ResponseDTO<ReservationResponseDTO>> deleteReservation(Long passengerId, Long reservationId) {
-        Optional<Passenger> customer = passengerRepository.findById(passengerId);
+        Optional<Passenger> passenger = passengerRepository.findById(passengerId);
 
-        if (customer.isEmpty()) {
-            return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+        if (passenger.isEmpty()) {
+            List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("PAS-001");
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
         } else {
             Optional<Reservation> reservation = reservationRepository.findById(reservationId);
             if (reservation.isEmpty()) {
-                return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+                List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("RES-001");
+                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
             } else {
-                reservationRepository.deleteByPassengerIdAndReservationId(customer.get(), reservation.get());
+                reservationRepository.deleteByPassengerIdAndReservationId(passenger.get(), reservation.get());
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
         }
@@ -274,7 +289,8 @@ public class ReservationServiceImpl implements ReservationService {
     private ResponseEntity<ResponseDTO<ReservationResponseDTO>>
     populateReservationResponse(List<Reservation> reservations, Passenger passenger) {
         if (reservations.isEmpty()) {
-            return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+            List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("RES-001");
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
         } else {
             List<ReservationResponseDTO> reservationResponseList = reservationDTOListMapper.apply(reservations);
             int counter = 0;
@@ -286,7 +302,8 @@ public class ReservationServiceImpl implements ReservationService {
                 Optional<Aircraft> aircraft = aircraftRepository.findById(reservations.get(counter).getAircraft().getId());
 
                 if (aircraft.isEmpty()) {
-                    return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+                    List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("AIR-001");
+                    return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
                 } else {
                     AircraftResponseDTO aircraftResponseDTO = aircraftDTOMapper.apply(aircraft.get());
                     reservationResponseDTO.setAircraftId(aircraftResponseDTO.getAircraftId());
