@@ -6,7 +6,7 @@ server:
 # Spring specific configuration
 spring:
   application:
-    name: reports
+    name: manager
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
 
@@ -45,6 +45,10 @@ security:
     access-token-uri: http://localhost:8080/auth/oauth/token
     user-authorization-uri: http://localhost:8080/auth/oauth/authorize
 management:
-  endpoint:
-    health:
-      show-details: always
+  endpoint.health.show-details: always
+info:
+  app:
+    name: Management service
+    version: 1.0
+    profile: dev
+    descripton: Service to perform airport management operations e.g. save aircraft, pilot, calendar and other administrative data

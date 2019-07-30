@@ -16,7 +16,10 @@
     <version>0.0.1-SNAPSHOT</version>
 
     <name>manager</name>
-    <description>Service to manage airport</description>
+    <description>
+        Service to perform airport management operations e.g. save aircraft, pilot, calendar and other
+        administrative data
+    </description>
 
     <properties>
         <java.version>11</java.version>
@@ -92,12 +95,6 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
         </dependency>
 
         <!-- Swagger -->
