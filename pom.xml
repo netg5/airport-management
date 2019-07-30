@@ -19,7 +19,6 @@
         <module>reservation</module>
         <module>tickets</module>
         <module>reports</module>
-        <module>manager</module>
         <module>main-ui</module>
     </modules>
 
