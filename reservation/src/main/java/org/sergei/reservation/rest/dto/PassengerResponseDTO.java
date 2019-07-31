@@ -51,5 +51,5 @@ public class PassengerResponseDTO implements Serializable {
 
     private String gender;
 
-    private Integer phone;
+    private String phone;
 }
