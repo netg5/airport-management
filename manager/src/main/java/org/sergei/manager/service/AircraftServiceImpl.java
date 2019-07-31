@@ -61,7 +61,7 @@ public class AircraftServiceImpl implements AircraftService {
      * @return aircraftId DTO
      */
     @Override
-    public ResponseEntity<ResponseDTO<AircraftDTO>> findOne(AircraftRequestDTO request) {
+    public ResponseEntity<ResponseDTO<AircraftDTO>> findById(AircraftRequestDTO request) {
         Long aircraftId = request.getAircraftId();
         if (aircraftId == null) {
             List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("RP-001");
@@ -163,13 +163,18 @@ public class AircraftServiceImpl implements AircraftService {
      */
     @Override
     public ResponseEntity<ResponseDTO<AircraftDTO>> delete(Long aircraftId) {
-        Optional<Aircraft> aircraft = aircraftRepository.findById(aircraftId);
-        if (aircraft.isEmpty()) {
-            List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("AIR-001");
+        if (aircraftId == null) {
+            List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("RP-001");
             return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
         } else {
-            aircraftRepository.delete(aircraft.get());
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            Optional<Aircraft> aircraft = aircraftRepository.findById(aircraftId);
+            if (aircraft.isEmpty()) {
+                List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("AIR-001");
+                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+            } else {
+                aircraftRepository.delete(aircraft.get());
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
         }
     }
 

@@ -46,8 +46,8 @@ public interface OwnerService {
     /**
      * Delete owner by ID
      *
-     * @param request request with ID
+     * @param ownerId request with ID
      * @return response
      */
-    ResponseEntity<ResponseDTO> delete(OwnerRequestDTO request);
+    ResponseEntity<ResponseDTO> delete(Long ownerId);
 }

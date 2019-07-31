@@ -12,7 +12,7 @@ public interface AircraftService {
 
     ResponseEntity<ResponseDTO<AircraftDTO>> findAll();
 
-    ResponseEntity<ResponseDTO<AircraftDTO>> findOne(AircraftRequestDTO request);
+    ResponseEntity<ResponseDTO<AircraftDTO>> findById(AircraftRequestDTO request);
 
     ResponseEntity<ResponseDTO<AircraftDTO>> save(AircraftDTO aircraftDTO);
 

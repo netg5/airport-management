@@ -31,13 +31,9 @@ import org.springframework.web.bind.annotation.*;
 /**
  * @author Sergei Visotsky
  */
-@Api(
-        value = "/aircrafts",
-        produces = "application/json",
-        consumes = "application/json"
-)
 @RestController
 @RequestMapping("/aircrafts")
+@Api(tags = {"aircraftCrudOperations"})
 public class AircraftController {
 
     private final AircraftService aircraftService;
@@ -57,7 +53,7 @@ public class AircraftController {
     @PostMapping(produces = "application/json", consumes = "application/json")
     public ResponseEntity<ResponseDTO<AircraftDTO>>
     getAircraftById(@RequestBody AircraftRequestDTO request) {
-        return aircraftService.findOne(request);
+        return aircraftService.findById(request);
     }
 
     @PostMapping(produces = "application/json", consumes = "application/json")
@@ -75,7 +71,7 @@ public class AircraftController {
         return aircraftService.update(request);
     }
 
-    @DeleteMapping(value = "/{aircraftId}")
+    @DeleteMapping("/{aircraftId}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<ResponseDTO<AircraftDTO>>
     deleteAircraft(@ApiParam(value = "Aircraft ID which should be deleted", required = true)

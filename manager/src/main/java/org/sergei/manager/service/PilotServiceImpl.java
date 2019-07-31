@@ -115,8 +115,7 @@ public class PilotServiceImpl implements PilotService {
     }
 
     @Override
-    public ResponseEntity<ResponseDTO> delete(PilotRequestDTO request) {
-        Long pilotId = request.getPilotId();
+    public ResponseEntity<ResponseDTO<PilotDTO>> delete(Long pilotId) {
         if (pilotId == null) {
             List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("RP-002");
             return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
@@ -127,7 +126,7 @@ public class PilotServiceImpl implements PilotService {
                 return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.OK);
             } else {
                 pilotRepository.delete(pilot.get());
-                return new ResponseEntity<>(new ResponseDTO(), HttpStatus.OK);
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
         }
     }

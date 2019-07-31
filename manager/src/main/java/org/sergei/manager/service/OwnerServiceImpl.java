@@ -40,12 +40,40 @@ public class OwnerServiceImpl implements OwnerService {
 
     @Override
     public ResponseEntity<ResponseDTO<OwnerDTO>> findAll() {
-        return null;
+        List<Owner> ownerList = ownerRepository.findAll();
+        if (ownerList.isEmpty()) {
+            List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("AIR-001");
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+        } else {
+            List<OwnerDTO> aircraftDTOList = ownerDTOListMapper.apply(ownerList);
+
+            ResponseDTO<OwnerDTO> response = new ResponseDTO<>();
+            response.setErrorList(List.of());
+            response.setResponse(aircraftDTOList);
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
     }
 
     @Override
     public ResponseEntity<ResponseDTO<OwnerDTO>> findById(OwnerRequestDTO request) {
-        return null;
+        Long ownerId = request.getOwnerId();
+        if (ownerId == null) {
+            List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("OW-001");
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+        }
+
+        Optional<Owner> owner = ownerRepository.findById(ownerId);
+        if (owner.isEmpty()) {
+            List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("AIR-001");
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+        } else {
+            OwnerDTO ownerDTO = ownerDTOMapper.apply(owner.get());
+            ResponseDTO<OwnerDTO> response = new ResponseDTO<>();
+            response.setErrorList(List.of());
+            response.setResponse(List.of(ownerDTO));
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
     }
 
     @Override
@@ -82,8 +110,20 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     @Override
-    public ResponseEntity<ResponseDTO> delete(OwnerRequestDTO request) {
-        return null;
+    public ResponseEntity<ResponseDTO> delete(Long ownerId) {
+        if (ownerId == null) {
+            List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("RP-001");
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+        } else {
+            Optional<Owner> owner = ownerRepository.findById(ownerId);
+            if (owner.isEmpty()) {
+                List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("AIR-001");
+                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+            } else {
+                ownerRepository.delete(owner.get());
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+        }
     }
 
     private Owner ownerModelMapper(OwnerDTO ownerDTO) {
