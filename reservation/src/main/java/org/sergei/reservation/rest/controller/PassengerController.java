@@ -33,13 +33,9 @@ import java.util.Map;
 /**
  * @author Sergei Visotsky
  */
-@Api(
-        value = "/reservation/customers",
-        produces = "application/json",
-        consumes = "application/json"
-)
 @RestController
 @RequestMapping("/passengers")
+@Api(tags = {"passengerCrudOperations"})
 public class PassengerController {
 
     private final PassengerService passengerService;
@@ -80,7 +76,7 @@ public class PassengerController {
     }
 
     @ApiOperation("Save passenger")
-    @PostMapping(produces = "application/json", consumes = "application/json")
+    @PostMapping(value = "/save", produces = "application/json", consumes = "application/json")
     public ResponseEntity<ResponseDTO<PassengerResponseDTO>>
     saveCustomer(@ApiParam(value = "Saved passenger", required = true)
                  @RequestBody PassengerResponseDTO request) {
@@ -88,7 +84,7 @@ public class PassengerController {
     }
 
     @ApiOperation("Update passenger data")
-    @PutMapping(produces = "application/json", consumes = "application/json")
+    @PostMapping(value = "/update", produces = "application/json", consumes = "application/json")
     public ResponseEntity<ResponseDTO<PassengerResponseDTO>>
     updateCustomer(@ApiParam(value = "Updated passenger", required = true)
                    @RequestBody PassengerUpdateRequestDTO request) {

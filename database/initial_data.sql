@@ -6,9 +6,17 @@ INSERT INTO owner VALUES (1, 'Alexey', 'Vishnyakov', 'male', '3rd Kennedy str, N
 INSERT INTO owner VALUES (2, 'John', 'Denny', 'male', '5rd Avenue str, New-York', 'USA', 'someowner@somewhere.com', '1234567');
 INSERT INTO owner VALUES (3, 'Jane', 'Smith', 'female', '12th Elizabeth str, London', 'England', 'someowner@somewhere.com', '1234567');
 
-INSERT INTO aircraft VALUES (1, '123D', 1, '213D34', '777-300ER', 'Boeing', 3450, 1000, 3);
-INSERT INTO aircraft VALUES (2, '12dc3', 2, '23d', 'A220', 'Airbus', 43000, 5400, 6);
-INSERT INTO aircraft VALUES (3, '82497Df', 3, '38fc12', 'B30', 'Airbus', 42007, 3200, 7);
+INSERT INTO manufacturer values(1, '213213d', 'Airbus Corporate Jets', 'New-zeland');
+INSERT INTO manufacturer values(2, 'fsdf32', 'Boeing Business Jets', 'USA');
+INSERT INTO manufacturer values(3, 'd3r35v', 'Embraer-Empresa Brasileira DR AeronÁutica', 'Arab-Emirants');
+
+INSERT INTO hangar VALUES(1, '2131234', 3, 'New-York');
+INSERT INTO hangar VALUES(2, 'fsaf33522', 1, 'Riga');
+INSERT INTO hangar VALUES(3, 'f341tg', 3, 'London');
+
+INSERT INTO aircraft VALUES (1, 1, 1, 1, '123D', '777-300ER', 'Boeing', 3450, 1000, 3);
+INSERT INTO aircraft VALUES (2, 2, 2, 2, '12dc3', 'A220', 'Airbus', 43000, 5400, 6);
+INSERT INTO aircraft VALUES (3, 3, 3, 3, '82497Df', 'B30', 'Airbus', 42007, 3200, 7);
 
 INSERT INTO route VALUES (2, '2019-07-02', '2019-07-01', 1000, 'Riga', 123);
 INSERT INTO route VALUES (3, '2019-08-23', '2019-08-22', 3600, 'Singapoore', 3400);

@@ -29,13 +29,9 @@ import org.springframework.web.bind.annotation.*;
 /**
  * @author Sergei Visotsky
  */
-@Api(
-        value = "/reservation/aircrafts",
-        produces = "application/json",
-        consumes = "application/json"
-)
 @RestController
 @RequestMapping("/aircrafts")
+@Api(tags = {"getAircraftData"})
 public class AircraftController {
 
     private final AircraftService aircraftService;

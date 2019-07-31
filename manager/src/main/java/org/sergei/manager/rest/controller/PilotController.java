@@ -34,12 +34,12 @@ public class PilotController {
         return pilotService.findById(request);
     }
 
-    @PostMapping(produces = "application/json", consumes = "application/json")
+    @PostMapping(value = "/save", produces = "application/json", consumes = "application/json")
     public ResponseEntity<ResponseDTO<PilotDTO>> savePilot(@RequestBody PilotDTO request) {
         return pilotService.save(request);
     }
 
-    @PostMapping(produces = "application/json", consumes = "application/json")
+    @PostMapping(value = "/update", produces = "application/json", consumes = "application/json")
     public ResponseEntity<ResponseDTO<PilotDTO>> updatePilot(@RequestBody PilotDTO pilotDTO) {
         return pilotService.update(pilotDTO);
     }

@@ -110,7 +110,7 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     @Override
-    public ResponseEntity<ResponseDTO> delete(Long ownerId) {
+    public ResponseEntity<ResponseDTO<OwnerDTO>> delete(Long ownerId) {
         if (ownerId == null) {
             List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("RP-001");
             return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);

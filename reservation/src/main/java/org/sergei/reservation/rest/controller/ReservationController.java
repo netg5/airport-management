@@ -32,13 +32,9 @@ import java.util.Map;
 /**
  * @author Sergei Visotsky
  */
-@Api(
-        value = "/reservation/customers/{passengerId}/reservations/",
-        produces = "application/json",
-        consumes = "application/json"
-)
 @RestController
 @RequestMapping(value = "/passengers")
+@Api(tags = {"reservationCrudOperations"})
 public class ReservationController {
 
     private final ReservationService reservationService;

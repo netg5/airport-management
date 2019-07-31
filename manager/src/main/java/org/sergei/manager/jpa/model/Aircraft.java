@@ -67,6 +67,25 @@ public class Aircraft implements Serializable {
 
     @Column(name = "exploitation_period")
     private Integer exploitationPeriod;
+    @OneToOne(
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL
+    )
+    @JoinColumn(
+            name = "manufacturer_id",
+            referencedColumnName = "id"
+    )
+    private Manufacturer manufacturer;
+
+    @OneToOne(
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL
+    )
+    @JoinColumn(
+            name = "hangar_id",
+            referencedColumnName = "id"
+    )
+    private Hangar hangar;
 
     @ManyToOne(
             fetch = FetchType.LAZY,
@@ -74,8 +93,7 @@ public class Aircraft implements Serializable {
     )
     @JoinColumn(
             name = "owner_id",
-            referencedColumnName = "id",
-            nullable = false
+            referencedColumnName = "id"
     )
     private Owner owner;
 

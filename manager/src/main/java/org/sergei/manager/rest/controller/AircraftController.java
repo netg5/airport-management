@@ -56,7 +56,7 @@ public class AircraftController {
         return aircraftService.findById(request);
     }
 
-    @PostMapping(produces = "application/json", consumes = "application/json")
+    @PostMapping(value = "/save", produces = "application/json", consumes = "application/json")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<ResponseDTO<AircraftDTO>>
     saveAircraft(@ApiParam(value = "Aircraft which should be saved", required = true)
@@ -64,7 +64,7 @@ public class AircraftController {
         return aircraftService.save(aircraftDTO);
     }
 
-    @PutMapping(produces = "application/json", consumes = "application/json")
+    @PostMapping(value = "/update", produces = "application/json", consumes = "application/json")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<ResponseDTO<AircraftDTO>>
     updateAircraft(@RequestBody AircraftDTO request) {

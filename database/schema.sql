@@ -28,11 +28,30 @@ CREATE TABLE owner
     CONSTRAINT owner_pk PRIMARY KEY (id)
 );
 
+CREATE TABLE manufacturer
+(
+    id                BIGINT      NOT NULL,
+    manufacturer_code VARCHAR(60) NOT NULL,
+    manufacturer_name VARCHAR(45) NOT NULL,
+    location          VARCHAR(45) NOT NULL,
+    CONSTRAINT manufacturer_pk PRIMARY KEY (id)
+);
+
+CREATE TABLE hangar
+(
+    id              BIGINT      NOT NULL,
+    hangar_number   VARCHAR(45) NOT NULL,
+    hangar_capacity INTEGER     NOT NULL,
+    hangar_location VARCHAR(45) NOT NULL,
+    CONSTRAINT hangar_pk PRIMARY KEY (id)
+);
+
 CREATE TABLE aircraft
 (
     id                  BIGINT           NOT NULL,
-    manufacturer_code   VARCHAR(45)      NOT NULL,
+    manufacturer_id     BIGINT           NOT NULL,
     owner_id            BIGINT           NOT NULL,
+    hangar_id           BIGINT           NOT NULL,
     registration_number VARCHAR(45)      NOT NULL,
     model_number        VARCHAR(10)      NOT NULL,
     aircraft_name       VARCHAR(45)      NOT NULL,
@@ -40,7 +59,9 @@ CREATE TABLE aircraft
     weight              DOUBLE PRECISION NOT NULL,
     exploitation_period INTEGER          NOT NULL,
     CONSTRAINT aircraft_pk PRIMARY KEY (id),
-    CONSTRAINT owner_fk FOREIGN KEY (owner_id) REFERENCES owner (id)
+    CONSTRAINT manufacturer_fk FOREIGN KEY (manufacturer_id) REFERENCES manufacturer (id),
+    CONSTRAINT owner_fk FOREIGN KEY (owner_id) REFERENCES owner (id),
+    CONSTRAINT hangar_fk FOREIGN KEY (hangar_id) REFERENCES hangar (id)
 );
 
 CREATE TABLE route
@@ -54,14 +75,6 @@ CREATE TABLE route
     CONSTRAINT route_pk PRIMARY KEY (id)
 );
 
-CREATE TABLE manufacturer
-(
-    manufacturer_code VARCHAR(60) NOT NULL,
-    manufacturer_name VARCHAR(45) NOT NULL,
-    location          VARCHAR(45) NOT NULL,
-    CONSTRAINT manufacturer_pk PRIMARY KEY (manufacturer_code)
-);
-
 CREATE TABLE airport
 (
     id           BIGINT      NOT NULL,
@@ -73,16 +86,6 @@ CREATE TABLE airport
     email        VARCHAR(45) NOT NULL,
     phone        VARCHAR(45) NOT NULL,
     CONSTRAINT airport_pk PRIMARY KEY (id)
-);
-
-CREATE TABLE hangar
-(
-    hangar_number   VARCHAR(45)      NOT NULL,
-    airport_id      BIGINT           NOT NULL,
-    hanger_capacity DOUBLE PRECISION NOT NULL,
-    hanger_location VARCHAR(45)      NOT NULL,
-    CONSTRAINT hangar_pk PRIMARY KEY (hangar_number),
-    CONSTRAINT airport_id_fk FOREIGN KEY (airport_id) REFERENCES airport (id)
 );
 
 CREATE TABLE passenger
@@ -163,9 +166,9 @@ CREATE TABLE airport_management_facts
     aircraft_id       BIGINT      NOT NULL,
     airport_id        BIGINT      NOT NULL,
     calendar_entry_id BIGINT      NOT NULL,
-    hanger_number     VARCHAR(45) NOT NULL,
+    hangar_id         BIGINT      NOT NULL,
     manager_id        BIGINT      NOT NULL,
-    manufacturer_code VARCHAR(45) NOT NULL,
+    manufacturer_id   BIGINT      NOT NULL,
     owner_id          BIGINT      NOT NULL,
     pilot_id          BIGINT      NOT NULL,
     date_of_flying    DATE        NOT NULL,
@@ -180,9 +183,9 @@ CREATE TABLE airport_management_facts
     CONSTRAINT aircraft_fk FOREIGN KEY (aircraft_id) REFERENCES aircraft (id),
     CONSTRAINT airport_fk FOREIGN KEY (airport_id) REFERENCES airport (id),
     CONSTRAINT calendar_entry_fk FOREIGN KEY (calendar_entry_id) REFERENCES calendar_entry (id),
-    CONSTRAINT hanger_fk FOREIGN KEY (hanger_number) REFERENCES hangar (hangar_number),
-    CONSTRAINT manager_fk FOREIGN KEY (manager_id) REFERENCES MANAGER (id),
-    CONSTRAINT manufacturer_fd FOREIGN KEY (manufacturer_code) REFERENCES manufacturer (manufacturer_code),
+    CONSTRAINT hanger_fk FOREIGN KEY (hangar_id) REFERENCES hangar (id),
+    CONSTRAINT manager_fk FOREIGN KEY (manager_id) REFERENCES manager (id),
+    CONSTRAINT manufacturer_fd FOREIGN KEY (manufacturer_id) REFERENCES manufacturer (id),
     CONSTRAINT owner_fk FOREIGN KEY (owner_id) REFERENCES OWNER (id),
     CONSTRAINT pilot_fk FOREIGN KEY (pilot_id) REFERENCES pilot (id)
 );
