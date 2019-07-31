@@ -92,19 +92,24 @@ public class PilotServiceImpl implements PilotService {
     public ResponseEntity<ResponseDTO<PilotDTO>> update(PilotDTO pilotDTO) {
         Long pilotId = pilotDTO.getId();
         Double pilotWeight = pilotDTO.getWeight();
-        if (pilotWeight > 72) {
-            List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("PIL-003");
-            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.OK);
+        if (pilotId == null) {
+            List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("RP-002");
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
         } else {
-            Optional<Pilot> pilot = pilotRepository.findById(pilotId);
-            if (pilot.isEmpty()) {
-                List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("PIL-001");
+            if (pilotWeight > 72) {
+                List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("PIL-003");
                 return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.OK);
             } else {
-                Pilot pilotUpdated = pilotModelMapper(pilotDTO);
-                Pilot savedPilot = pilotRepository.save(pilotUpdated);
-                PilotDTO savedPilotDTO = pilotDTOMapper.apply(savedPilot);
-                return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of(savedPilotDTO)), HttpStatus.OK);
+                Optional<Pilot> pilot = pilotRepository.findById(pilotId);
+                if (pilot.isEmpty()) {
+                    List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("PIL-001");
+                    return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.OK);
+                } else {
+                    Pilot pilotUpdated = pilotModelMapper(pilotDTO);
+                    Pilot savedPilot = pilotRepository.save(pilotUpdated);
+                    PilotDTO savedPilotDTO = pilotDTOMapper.apply(savedPilot);
+                    return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of(savedPilotDTO)), HttpStatus.OK);
+                }
             }
         }
     }

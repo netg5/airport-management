@@ -3,6 +3,7 @@ package org.sergei.manager.rest.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
@@ -11,6 +12,7 @@ import java.io.Serializable;
  * @author Sergei Visotsky
  */
 @Builder
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class OwnerDTO implements Serializable {

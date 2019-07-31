@@ -66,18 +66,18 @@ public class AircraftServiceImpl implements AircraftService {
         if (aircraftId == null) {
             List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("RP-001");
             return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+        }
+
+        Optional<Aircraft> aircraft = aircraftRepository.findById(aircraftId);
+        if (aircraft.isEmpty()) {
+            List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("AIR-001");
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
         } else {
-            Optional<Aircraft> aircraft = aircraftRepository.findById(aircraftId);
-            if (aircraft.isEmpty()) {
-                List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("AIR-001");
-                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
-            } else {
-                AircraftDTO aircraftDTO = aircraftDTOMapper.apply(aircraft.get());
-                ResponseDTO<AircraftDTO> response = new ResponseDTO<>();
-                response.setErrorList(List.of());
-                response.setResponse(List.of(aircraftDTO));
-                return new ResponseEntity<>(response, HttpStatus.OK);
-            }
+            AircraftDTO aircraftDTO = aircraftDTOMapper.apply(aircraft.get());
+            ResponseDTO<AircraftDTO> response = new ResponseDTO<>();
+            response.setErrorList(List.of());
+            response.setResponse(List.of(aircraftDTO));
+            return new ResponseEntity<>(response, HttpStatus.OK);
         }
     }
 
@@ -136,19 +136,21 @@ public class AircraftServiceImpl implements AircraftService {
         if (aircraftId == null) {
             List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("RP-001");
             return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
-        } else if (exploitationPeriod >= 10) {
-            List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("AEP-001");
-            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.OK);
         } else {
-            Optional<Aircraft> aircraft = aircraftRepository.findById(aircraftId);
-            if (aircraft.isEmpty()) {
-                List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("AIR-001");
-                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+            if (exploitationPeriod >= 10) {
+                List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("AEP-001");
+                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.OK);
             } else {
-                Aircraft aircraftUpdated = aircraftModelMapper(request);
-                Aircraft savedAircraft = aircraftRepository.save(aircraftUpdated);
-                AircraftDTO aircraftDTOResponse = aircraftDTOMapper.apply(savedAircraft);
-                return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of(aircraftDTOResponse)), HttpStatus.OK);
+                Optional<Aircraft> aircraft = aircraftRepository.findById(aircraftId);
+                if (aircraft.isEmpty()) {
+                    List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("AIR-001");
+                    return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+                } else {
+                    Aircraft aircraftUpdated = aircraftModelMapper(request);
+                    Aircraft savedAircraft = aircraftRepository.save(aircraftUpdated);
+                    AircraftDTO aircraftDTOResponse = aircraftDTOMapper.apply(savedAircraft);
+                    return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of(aircraftDTOResponse)), HttpStatus.OK);
+                }
             }
         }
     }

@@ -42,3 +42,4 @@ INSERT INTO response_messages VALUES(8, 'PIL-002', 'Pilot table is empty');
 INSERT INTO response_messages VALUES(9, 'RP-001', 'Required parameter is not present');
 INSERT INTO response_messages VALUES(10, 'PIL-003', 'Pilot weight is greater than expected');
 INSERT INTO response_messages VALUES(11, 'AEP-001', 'Aircraft exploitation period is greater than 10 required years');
+INSERT INTO response_messages VALUES(12, 'OW-001', 'Owner with this ID not found');
