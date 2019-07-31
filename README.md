@@ -7,13 +7,13 @@ reserve flight and see all tickets for a particular passenger.
 * Spring Boot
 * Spring Cloud
 * JPA
-* Apache Maven
+* Maven
 * MySQL
-* ModelMapper
 * Jackson
 * Swagger
 * Thymeleaf
 * Twitter Bootstrap
+* Jaeger
 
 ## Services
 * config - serivce which makes calls to the repository where all configurations are stored - 
