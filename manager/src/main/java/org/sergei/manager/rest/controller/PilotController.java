@@ -2,7 +2,7 @@ package org.sergei.manager.rest.controller;
 
 import io.swagger.annotations.Api;
 import org.sergei.manager.rest.dto.PilotDTO;
-import org.sergei.manager.rest.dto.PilotRequestDTO;
+import org.sergei.manager.rest.dto.request.PilotRequestDTO;
 import org.sergei.manager.rest.dto.response.ResponseDTO;
 import org.sergei.manager.service.PilotService;
 import org.springframework.beans.factory.annotation.Autowired;

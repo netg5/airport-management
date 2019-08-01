@@ -37,7 +37,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RouteResponseDTO implements Serializable {
+public class RouteDTO implements Serializable {
 
     private static final long serialVersionUID = -6688458044709501452L;
 

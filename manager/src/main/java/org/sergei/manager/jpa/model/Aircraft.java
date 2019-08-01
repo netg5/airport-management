@@ -86,15 +86,4 @@ public class Aircraft implements Serializable {
             referencedColumnName = "id"
     )
     private Hangar hangar;
-
-    @ManyToOne(
-            fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL
-    )
-    @JoinColumn(
-            name = "owner_id",
-            referencedColumnName = "id"
-    )
-    private Owner owner;
-
 }

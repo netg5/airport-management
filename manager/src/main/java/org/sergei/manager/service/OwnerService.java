@@ -1,7 +1,7 @@
 package org.sergei.manager.service;
 
 import org.sergei.manager.rest.dto.OwnerDTO;
-import org.sergei.manager.rest.dto.OwnerRequestDTO;
+import org.sergei.manager.rest.dto.request.OwnerRequestDTO;
 import org.sergei.manager.rest.dto.response.ResponseDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;

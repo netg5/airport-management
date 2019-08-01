@@ -20,7 +20,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.sergei.manager.rest.dto.AircraftDTO;
-import org.sergei.manager.rest.dto.AircraftRequestDTO;
+import org.sergei.manager.rest.dto.request.AircraftRequestDTO;
 import org.sergei.manager.rest.dto.response.ResponseDTO;
 import org.sergei.manager.service.AircraftService;
 import org.springframework.beans.factory.annotation.Autowired;

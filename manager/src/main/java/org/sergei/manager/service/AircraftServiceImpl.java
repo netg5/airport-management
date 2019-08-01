@@ -19,7 +19,7 @@ package org.sergei.manager.service;
 import org.sergei.manager.jpa.model.Aircraft;
 import org.sergei.manager.jpa.repository.AircraftRepository;
 import org.sergei.manager.rest.dto.AircraftDTO;
-import org.sergei.manager.rest.dto.AircraftRequestDTO;
+import org.sergei.manager.rest.dto.request.AircraftRequestDTO;
 import org.sergei.manager.rest.dto.mappers.AircraftDTOListMapper;
 import org.sergei.manager.rest.dto.mappers.AircraftDTOMapper;
 import org.sergei.manager.rest.dto.response.ResponseDTO;

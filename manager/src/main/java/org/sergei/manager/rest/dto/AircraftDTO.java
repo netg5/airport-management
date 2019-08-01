@@ -20,6 +20,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.sergei.manager.jpa.model.Manufacturer;
 
 import java.io.Serializable;
 
@@ -40,4 +41,6 @@ public class AircraftDTO implements Serializable {
     private Integer capacity;
     private Double weight;
     private Integer exploitationPeriod;
+    private Long hangarId;
+    private ManufacturerDTO manufacturer;
 }

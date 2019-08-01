@@ -1,7 +1,7 @@
 package org.sergei.manager.service;
 
 import org.sergei.manager.rest.dto.AircraftDTO;
-import org.sergei.manager.rest.dto.AircraftRequestDTO;
+import org.sergei.manager.rest.dto.request.AircraftRequestDTO;
 import org.sergei.manager.rest.dto.response.ResponseDTO;
 import org.springframework.http.ResponseEntity;
 

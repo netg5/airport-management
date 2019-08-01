@@ -3,7 +3,7 @@ package org.sergei.manager.service;
 import org.sergei.manager.jpa.model.Pilot;
 import org.sergei.manager.jpa.repository.PilotRepository;
 import org.sergei.manager.rest.dto.PilotDTO;
-import org.sergei.manager.rest.dto.PilotRequestDTO;
+import org.sergei.manager.rest.dto.request.PilotRequestDTO;
 import org.sergei.manager.rest.dto.mappers.PilotDTOListMapper;
 import org.sergei.manager.rest.dto.mappers.PilotDTOMapper;
 import org.sergei.manager.rest.dto.response.ResponseDTO;

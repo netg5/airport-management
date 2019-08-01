@@ -2,7 +2,7 @@ package org.sergei.manager.rest.controller;
 
 import io.swagger.annotations.Api;
 import org.sergei.manager.rest.dto.OwnerDTO;
-import org.sergei.manager.rest.dto.OwnerRequestDTO;
+import org.sergei.manager.rest.dto.request.OwnerRequestDTO;
 import org.sergei.manager.rest.dto.response.ResponseDTO;
 import org.sergei.manager.service.OwnerService;
 import org.springframework.beans.factory.annotation.Autowired;

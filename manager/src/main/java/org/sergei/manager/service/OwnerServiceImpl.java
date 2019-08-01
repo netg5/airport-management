@@ -3,7 +3,7 @@ package org.sergei.manager.service;
 import org.sergei.manager.jpa.model.Owner;
 import org.sergei.manager.jpa.repository.OwnerRepository;
 import org.sergei.manager.rest.dto.OwnerDTO;
-import org.sergei.manager.rest.dto.OwnerRequestDTO;
+import org.sergei.manager.rest.dto.request.OwnerRequestDTO;
 import org.sergei.manager.rest.dto.mappers.OwnerDTOListMapper;
 import org.sergei.manager.rest.dto.mappers.OwnerDTOMapper;
 import org.sergei.manager.rest.dto.response.ResponseDTO;

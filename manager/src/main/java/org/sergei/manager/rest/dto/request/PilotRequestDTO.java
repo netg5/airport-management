@@ -1,4 +1,4 @@
-package org.sergei.manager.rest.dto;
+package org.sergei.manager.rest.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,7 +1,7 @@
 package org.sergei.manager.service;
 
 import org.sergei.manager.rest.dto.PilotDTO;
-import org.sergei.manager.rest.dto.PilotRequestDTO;
+import org.sergei.manager.rest.dto.request.PilotRequestDTO;
 import org.sergei.manager.rest.dto.response.ResponseDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
