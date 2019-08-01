@@ -19,9 +19,9 @@ package org.sergei.manager.service;
 import org.sergei.manager.jpa.model.Aircraft;
 import org.sergei.manager.jpa.repository.AircraftRepository;
 import org.sergei.manager.rest.dto.AircraftDTO;
-import org.sergei.manager.rest.dto.request.AircraftRequestDTO;
 import org.sergei.manager.rest.dto.mappers.AircraftDTOListMapper;
 import org.sergei.manager.rest.dto.mappers.AircraftDTOMapper;
+import org.sergei.manager.rest.dto.request.AircraftRequestDTO;
 import org.sergei.manager.rest.dto.response.ResponseDTO;
 import org.sergei.manager.rest.dto.response.ResponseErrorDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,16 +42,19 @@ public class AircraftServiceImpl implements AircraftService {
     private final AircraftDTOMapper aircraftDTOMapper;
     private final AircraftDTOListMapper aircraftDTOListMapper;
     private final MessageService messageService;
+    private final ManufacturerService manufacturerService;
 
     @Autowired
     public AircraftServiceImpl(AircraftRepository aircraftRepository,
                                AircraftDTOMapper aircraftDTOMapper,
                                AircraftDTOListMapper aircraftDTOListMapper,
-                               MessageService messageService) {
+                               MessageService messageService,
+                               ManufacturerService manufacturerService) {
         this.aircraftRepository = aircraftRepository;
         this.aircraftDTOMapper = aircraftDTOMapper;
         this.aircraftDTOListMapper = aircraftDTOListMapper;
         this.messageService = messageService;
+        this.manufacturerService = manufacturerService;
     }
 
     /**
@@ -66,18 +69,18 @@ public class AircraftServiceImpl implements AircraftService {
         if (aircraftId == null) {
             List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("RP-001");
             return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
-        }
-
-        Optional<Aircraft> aircraft = aircraftRepository.findById(aircraftId);
-        if (aircraft.isEmpty()) {
-            List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("AIR-001");
-            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
         } else {
-            AircraftDTO aircraftDTO = aircraftDTOMapper.apply(aircraft.get());
-            ResponseDTO<AircraftDTO> response = new ResponseDTO<>();
-            response.setErrorList(List.of());
-            response.setResponse(List.of(aircraftDTO));
-            return new ResponseEntity<>(response, HttpStatus.OK);
+            Optional<Aircraft> aircraft = aircraftRepository.findById(aircraftId);
+            if (aircraft.isEmpty()) {
+                List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("AIR-001");
+                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+            } else {
+                AircraftDTO aircraftDTO = aircraftDTOMapper.apply(aircraft.get());
+                ResponseDTO<AircraftDTO> response = new ResponseDTO<>();
+                response.setErrorList(List.of());
+                response.setResponse(List.of(aircraftDTO));
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
         }
     }
 

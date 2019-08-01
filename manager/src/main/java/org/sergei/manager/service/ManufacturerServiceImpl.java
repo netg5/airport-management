@@ -60,7 +60,7 @@ public class ManufacturerServiceImpl implements ManufacturerService {
     public ResponseEntity<ResponseDTO<ManufacturerDTO>> findByCode(ManufacturerRequestDTO request) {
         String manufacturerCode = request.getManufacturerCode();
         if (manufacturerCode == null) {
-            List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("MAN-001");
+            List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("RP-001");
             return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
         } else {
             Optional<Manufacturer> manufacturer = manufacturerRepository.findByCode(manufacturerCode);
@@ -81,16 +81,56 @@ public class ManufacturerServiceImpl implements ManufacturerService {
 
     @Override
     public ResponseEntity<ResponseDTO<ManufacturerDTO>> saveManufacturer(ManufacturerDTO request) {
-        throw new UnsupportedOperationException();
+        Manufacturer manufacturer = manufacturerModelMapper(request);
+        Manufacturer savedManufacturer = manufacturerRepository.save(manufacturer);
+        ManufacturerDTO manufacturerResponse = manufacturerDTOMapper.apply(savedManufacturer);
+        return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of(manufacturerResponse)), HttpStatus.CREATED);
     }
+
 
     @Override
     public ResponseEntity<ResponseDTO<ManufacturerDTO>> updateManufacturer(ManufacturerDTO request) {
-        throw new UnsupportedOperationException();
+        String code = request.getManufacturerCode();
+        if (code == null) {
+            List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("RP-001");
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+        } else {
+            Optional<Manufacturer> manufacturer = manufacturerRepository.findByCode(code);
+            if (manufacturer.isEmpty()) {
+                List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("MAN-001");
+                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+            } else {
+                Manufacturer updatedManufacturer = manufacturerModelMapper(request);
+                Manufacturer savedManufacturer = manufacturerRepository.save(updatedManufacturer);
+                ManufacturerDTO manufacturerDTOResponse = manufacturerDTOMapper.apply(savedManufacturer);
+                return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of(manufacturerDTOResponse)), HttpStatus.OK);
+            }
+        }
     }
 
     @Override
-    public ResponseEntity<ResponseDTO<ManufacturerDTO>> deleteManufacturer(ManufacturerRequestDTO request) {
-        throw new UnsupportedOperationException();
+    public ResponseEntity<ResponseDTO<ManufacturerDTO>> deleteManufacturer(String code) {
+        if (code == null) {
+            List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("RP-001");
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+        } else {
+            Optional<Manufacturer> manufacturer = manufacturerRepository.findByCode(code);
+            if (manufacturer.isEmpty()) {
+                List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("MAN-001");
+                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+            } else {
+                manufacturerRepository.delete(manufacturer.get());
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+        }
+    }
+
+    private Manufacturer manufacturerModelMapper(ManufacturerDTO request) {
+        return Manufacturer.builder()
+                .id(request.getId())
+                .manufacturerName(request.getManufacturerName())
+                .manufacturerCode(request.getManufacturerCode())
+                .location(request.getLocation())
+                .build();
     }
 }
