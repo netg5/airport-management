@@ -184,7 +184,6 @@ public class AircraftServiceImpl implements AircraftService {
     private Aircraft aircraftModelMapper(AircraftDTO aircraftDTO) {
         return Aircraft.builder()
                 .id(aircraftDTO.getAircraftId())
-                .manufacturerCode(aircraftDTO.getManufacturerCode())
                 .registrationNumber(aircraftDTO.getRegistrationNumber())
                 .modelNumber(aircraftDTO.getModelNumber())
                 .aircraftName(aircraftDTO.getAircraftName())

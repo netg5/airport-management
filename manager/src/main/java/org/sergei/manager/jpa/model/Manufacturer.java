@@ -1,5 +1,6 @@
 package org.sergei.manager.jpa.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,7 @@ import java.io.Serializable;
 @Builder
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "manufacturer")
 public class Manufacturer implements Serializable {
@@ -23,9 +25,9 @@ public class Manufacturer implements Serializable {
     @Id
     @NotNull
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
-            generator = "aircraft_id_seq")
-    @SequenceGenerator(name = "aircraft_id_seq",
-            sequenceName = "aircraft_id_seq", allocationSize = 1)
+            generator = "manufacturer_id_seq")
+    @SequenceGenerator(name = "manufacturer_id_seq",
+            sequenceName = "manufacturer_id_seq", allocationSize = 1)
     @Column(name = "id")
     private Long id;
 

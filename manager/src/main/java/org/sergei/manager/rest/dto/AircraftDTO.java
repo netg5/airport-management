@@ -34,7 +34,6 @@ import java.io.Serializable;
 public class AircraftDTO implements Serializable {
     private static final long serialVersionUID = -8398761845885572454L;
     private Long aircraftId;
-    private String manufacturerCode;
     private String registrationNumber;
     private String modelNumber;
     private String aircraftName;

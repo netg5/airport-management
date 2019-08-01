@@ -22,7 +22,6 @@ public class AircraftDTOMapper implements IMapper<Aircraft, AircraftDTO> {
     public AircraftDTO apply(Aircraft aircraft) {
         return AircraftDTO.builder()
                 .aircraftId(aircraft.getId())
-                .manufacturerCode(aircraft.getManufacturerCode())
                 .registrationNumber(aircraft.getRegistrationNumber())
                 .modelNumber(aircraft.getModelNumber())
                 .aircraftName(aircraft.getAircraftName())
