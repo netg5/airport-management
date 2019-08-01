@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 /**
  * @author Sergei Visotsky
  */
@@ -13,5 +15,5 @@ import org.springframework.stereotype.Repository;
 public interface ManufacturerRepository extends JpaRepository<Manufacturer, Long> {
 
     @Query("SELECT m FROM Manufacturer m WHERE m.manufacturerCode = :code")
-    Manufacturer findByCode(@Param("code") String code);
+    Optional<Manufacturer> findByCode(@Param("code") String code);
 }

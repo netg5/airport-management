@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Sergei Visotsky
@@ -42,7 +43,7 @@ public class ManufacturerServiceImpl implements ManufacturerService {
     public ResponseEntity<ResponseDTO<ManufacturerDTO>> findAll() {
         List<Manufacturer> manufacturerList = manufacturerRepository.findAll();
         if (manufacturerList.isEmpty()) {
-            List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("AIR-001");
+            List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("MAN-001");
             return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
         } else {
             List<ManufacturerDTO> manufacturerDTOList = manufacturerDTOListMapper.apply(manufacturerList);
@@ -57,7 +58,25 @@ public class ManufacturerServiceImpl implements ManufacturerService {
 
     @Override
     public ResponseEntity<ResponseDTO<ManufacturerDTO>> findByCode(ManufacturerRequestDTO request) {
-        throw new UnsupportedOperationException();
+        String manufacturerCode = request.getManufacturerCode();
+        if (manufacturerCode == null) {
+            List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("MAN-001");
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+        } else {
+            Optional<Manufacturer> manufacturer = manufacturerRepository.findByCode(manufacturerCode);
+            if (manufacturer.isEmpty()) {
+                List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("MAN-001");
+                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+            } else {
+                ManufacturerDTO manufacturerDTO = manufacturerDTOMapper.apply(manufacturer.get());
+
+                ResponseDTO<ManufacturerDTO> response = new ResponseDTO<>();
+                response.setErrorList(List.of());
+                response.setResponse(List.of(manufacturerDTO));
+
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
+        }
     }
 
     @Override
