@@ -51,3 +51,4 @@ INSERT INTO response_messages VALUES(9, 'RP-001', 'Required parameter is not pre
 INSERT INTO response_messages VALUES(10, 'PIL-003', 'Pilot weight is greater than expected');
 INSERT INTO response_messages VALUES(11, 'AEP-001', 'Aircraft exploitation period is greater than 10 required years');
 INSERT INTO response_messages VALUES(12, 'OW-001', 'Owner with this ID not found');
+INSERT INTO response_messages VALUES(13, 'MAN-001', 'Manufacturer with this ID not found');
