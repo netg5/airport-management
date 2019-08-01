@@ -50,7 +50,6 @@ CREATE TABLE aircraft
 (
     id                  BIGINT           NOT NULL,
     manufacturer_id     BIGINT           NOT NULL,
-    owner_id            BIGINT           NOT NULL,
     hangar_id           BIGINT           NOT NULL,
     registration_number VARCHAR(45)      NOT NULL,
     model_number        VARCHAR(10)      NOT NULL,
@@ -60,7 +59,6 @@ CREATE TABLE aircraft
     exploitation_period INTEGER          NOT NULL,
     CONSTRAINT aircraft_pk PRIMARY KEY (id),
     CONSTRAINT manufacturer_fk FOREIGN KEY (manufacturer_id) REFERENCES manufacturer (id),
-    CONSTRAINT owner_fk FOREIGN KEY (owner_id) REFERENCES owner (id),
     CONSTRAINT hangar_fk FOREIGN KEY (hangar_id) REFERENCES hangar (id)
 );
 
@@ -145,7 +143,7 @@ CREATE TABLE actual_flight
     email          VARCHAR(45)  NOT NULL,
     phone          VARCHAR(45)  NOT NULL,
     CONSTRAINT actual_flight_pk PRIMARY KEY (id),
-    CONSTRAINT aircraft_ft FOREIGN KEY (aircraft_id) REFERENCES aircraft (id),
+    CONSTRAINT aircraft_fk FOREIGN KEY (aircraft_id) REFERENCES aircraft (id),
     CONSTRAINT pilot_id_fk FOREIGN KEY (pilot_id) REFERENCES pilot (id),
     CONSTRAINT route_id_fk FOREIGN KEY (route_id) REFERENCES route (id)
 );
