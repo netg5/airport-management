@@ -17,10 +17,9 @@
 package org.sergei.manager.service;
 
 import org.sergei.manager.jpa.model.Aircraft;
-import org.sergei.manager.jpa.model.Manufacturer;
+import org.sergei.manager.jpa.model.mappers.AircraftModelMapper;
 import org.sergei.manager.jpa.repository.AircraftRepository;
 import org.sergei.manager.rest.dto.AircraftDTO;
-import org.sergei.manager.rest.dto.ManufacturerDTO;
 import org.sergei.manager.rest.dto.mappers.AircraftDTOListMapper;
 import org.sergei.manager.rest.dto.mappers.AircraftDTOMapper;
 import org.sergei.manager.rest.dto.request.AircraftRequestDTO;
@@ -41,6 +40,7 @@ import java.util.Optional;
 public class AircraftServiceImpl implements AircraftService {
 
     private final AircraftRepository aircraftRepository;
+    private final AircraftModelMapper aircraftModelMapper;
     private final AircraftDTOMapper aircraftDTOMapper;
     private final AircraftDTOListMapper aircraftDTOListMapper;
     private final MessageService messageService;
@@ -48,11 +48,13 @@ public class AircraftServiceImpl implements AircraftService {
 
     @Autowired
     public AircraftServiceImpl(AircraftRepository aircraftRepository,
+                               AircraftModelMapper aircraftModelMapper,
                                AircraftDTOMapper aircraftDTOMapper,
                                AircraftDTOListMapper aircraftDTOListMapper,
                                MessageService messageService,
                                ManufacturerService manufacturerService) {
         this.aircraftRepository = aircraftRepository;
+        this.aircraftModelMapper = aircraftModelMapper;
         this.aircraftDTOMapper = aircraftDTOMapper;
         this.aircraftDTOListMapper = aircraftDTOListMapper;
         this.messageService = messageService;
@@ -121,7 +123,7 @@ public class AircraftServiceImpl implements AircraftService {
             List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("AEP-001");
             return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.OK);
         } else {
-            Aircraft aircraft = aircraftModelMapper(request);
+            Aircraft aircraft = aircraftModelMapper.apply(request);
             Aircraft savedAircraft = aircraftRepository.save(aircraft);
             AircraftDTO aircraftDTOResponse = aircraftDTOMapper.apply(savedAircraft);
             return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of(aircraftDTOResponse)), HttpStatus.CREATED);
@@ -151,7 +153,7 @@ public class AircraftServiceImpl implements AircraftService {
                     List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("AIR-001");
                     return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
                 } else {
-                    Aircraft aircraftUpdated = aircraftModelMapper(request);
+                    Aircraft aircraftUpdated = aircraftModelMapper.apply(request);
                     Aircraft savedAircraft = aircraftRepository.save(aircraftUpdated);
                     AircraftDTO aircraftDTOResponse = aircraftDTOMapper.apply(savedAircraft);
                     return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of(aircraftDTOResponse)), HttpStatus.OK);
@@ -181,27 +183,5 @@ public class AircraftServiceImpl implements AircraftService {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
         }
-    }
-
-    private Aircraft aircraftModelMapper(AircraftDTO aircraftDTO) {
-        return Aircraft.builder()
-                .id(aircraftDTO.getAircraftId())
-                .registrationNumber(aircraftDTO.getRegistrationNumber())
-                .modelNumber(aircraftDTO.getModelNumber())
-                .aircraftName(aircraftDTO.getAircraftName())
-                .capacity(aircraftDTO.getCapacity())
-                .weight(aircraftDTO.getWeight())
-                .exploitationPeriod(aircraftDTO.getExploitationPeriod())
-                .manufacturer(manufacturerModelMapper(aircraftDTO.getManufacturer()))
-                .build();
-    }
-
-    private Manufacturer manufacturerModelMapper(ManufacturerDTO request) {
-        return Manufacturer.builder()
-                .id(request.getId())
-                .manufacturerName(request.getManufacturerName())
-                .manufacturerCode(request.getManufacturerCode())
-                .location(request.getLocation())
-                .build();
     }
 }

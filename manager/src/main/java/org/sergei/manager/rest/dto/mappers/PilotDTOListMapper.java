@@ -2,6 +2,7 @@ package org.sergei.manager.rest.dto.mappers;
 
 import org.sergei.manager.jpa.model.Pilot;
 import org.sergei.manager.rest.dto.PilotDTO;
+import org.sergei.manager.utils.IMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

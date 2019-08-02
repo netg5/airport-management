@@ -1,11 +1,12 @@
 package org.sergei.manager.service;
 
 import org.sergei.manager.jpa.model.Pilot;
+import org.sergei.manager.jpa.model.mappers.PilotModelMapper;
 import org.sergei.manager.jpa.repository.PilotRepository;
 import org.sergei.manager.rest.dto.PilotDTO;
-import org.sergei.manager.rest.dto.request.PilotRequestDTO;
 import org.sergei.manager.rest.dto.mappers.PilotDTOListMapper;
 import org.sergei.manager.rest.dto.mappers.PilotDTOMapper;
+import org.sergei.manager.rest.dto.request.PilotRequestDTO;
 import org.sergei.manager.rest.dto.response.ResponseDTO;
 import org.sergei.manager.rest.dto.response.ResponseErrorDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,16 +25,19 @@ public class PilotServiceImpl implements PilotService {
 
     private final PilotRepository pilotRepository;
     private final MessageService messageService;
+    private final PilotModelMapper pilotModelMapper;
     private final PilotDTOMapper pilotDTOMapper;
     private final PilotDTOListMapper pilotDTOListMapper;
 
     @Autowired
     public PilotServiceImpl(PilotRepository pilotRepository,
                             MessageService messageService,
+                            PilotModelMapper pilotModelMapper,
                             PilotDTOMapper pilotDTOMapper,
                             PilotDTOListMapper pilotDTOListMapper) {
         this.pilotRepository = pilotRepository;
         this.messageService = messageService;
+        this.pilotModelMapper = pilotModelMapper;
         this.pilotDTOMapper = pilotDTOMapper;
         this.pilotDTOListMapper = pilotDTOListMapper;
     }
@@ -81,7 +85,7 @@ public class PilotServiceImpl implements PilotService {
             List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("PIL-003");
             return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.OK);
         } else {
-            Pilot pilot = pilotModelMapper(pilotDTO);
+            Pilot pilot = pilotModelMapper.apply(pilotDTO);
             Pilot savedPilot = pilotRepository.save(pilot);
             PilotDTO savedPilotDTO = pilotDTOMapper.apply(savedPilot);
             return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of(savedPilotDTO)), HttpStatus.OK);
@@ -105,7 +109,7 @@ public class PilotServiceImpl implements PilotService {
                     List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("PIL-001");
                     return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.OK);
                 } else {
-                    Pilot pilotUpdated = pilotModelMapper(pilotDTO);
+                    Pilot pilotUpdated = pilotModelMapper.apply(pilotDTO);
                     Pilot savedPilot = pilotRepository.save(pilotUpdated);
                     PilotDTO savedPilotDTO = pilotDTOMapper.apply(savedPilot);
                     return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of(savedPilotDTO)), HttpStatus.OK);
@@ -129,21 +133,5 @@ public class PilotServiceImpl implements PilotService {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
         }
-    }
-
-    private Pilot pilotModelMapper(PilotDTO pilotDTO) {
-        return Pilot.builder()
-                .licenseNumber(pilotDTO.getLicenseNumber())
-                .ssn(pilotDTO.getSsn())
-                .firstName(pilotDTO.getFirstName())
-                .lastName(pilotDTO.getLastName())
-                .gender(pilotDTO.getGender())
-                .weight(pilotDTO.getWeight())
-                .dateOfBirth(pilotDTO.getDateOfBirth())
-                .address(pilotDTO.getAddress())
-                .country(pilotDTO.getCountry())
-                .email(pilotDTO.getEmail())
-                .phone(pilotDTO.getPhone())
-                .build();
     }
 }

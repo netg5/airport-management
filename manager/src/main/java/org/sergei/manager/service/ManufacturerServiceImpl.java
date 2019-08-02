@@ -1,6 +1,7 @@
 package org.sergei.manager.service;
 
 import org.sergei.manager.jpa.model.Manufacturer;
+import org.sergei.manager.jpa.model.mappers.ManufacturerModelMapper;
 import org.sergei.manager.jpa.repository.ManufacturerRepository;
 import org.sergei.manager.rest.dto.ManufacturerDTO;
 import org.sergei.manager.rest.dto.mappers.ManufacturerDTOListMapper;
@@ -25,16 +26,19 @@ public class ManufacturerServiceImpl implements ManufacturerService {
 
     private final ManufacturerRepository manufacturerRepository;
     private final MessageService messageService;
+    private final ManufacturerModelMapper manufacturerModelMapper;
     private final ManufacturerDTOMapper manufacturerDTOMapper;
     private final ManufacturerDTOListMapper manufacturerDTOListMapper;
 
     @Autowired
     public ManufacturerServiceImpl(ManufacturerRepository manufacturerRepository,
                                    MessageService messageService,
+                                   ManufacturerModelMapper manufacturerModelMapper,
                                    ManufacturerDTOMapper manufacturerDTOMapper,
                                    ManufacturerDTOListMapper manufacturerDTOListMapper) {
         this.manufacturerRepository = manufacturerRepository;
         this.messageService = messageService;
+        this.manufacturerModelMapper = manufacturerModelMapper;
         this.manufacturerDTOMapper = manufacturerDTOMapper;
         this.manufacturerDTOListMapper = manufacturerDTOListMapper;
     }
@@ -81,7 +85,7 @@ public class ManufacturerServiceImpl implements ManufacturerService {
 
     @Override
     public ResponseEntity<ResponseDTO<ManufacturerDTO>> saveManufacturer(ManufacturerDTO request) {
-        Manufacturer manufacturer = manufacturerModelMapper(request);
+        Manufacturer manufacturer = manufacturerModelMapper.apply(request);
         Manufacturer savedManufacturer = manufacturerRepository.save(manufacturer);
         ManufacturerDTO manufacturerResponse = manufacturerDTOMapper.apply(savedManufacturer);
         return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of(manufacturerResponse)), HttpStatus.CREATED);
@@ -100,7 +104,7 @@ public class ManufacturerServiceImpl implements ManufacturerService {
                 List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("MAN-001");
                 return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
             } else {
-                Manufacturer updatedManufacturer = manufacturerModelMapper(request);
+                Manufacturer updatedManufacturer = manufacturerModelMapper.apply(request);
                 Manufacturer savedManufacturer = manufacturerRepository.save(updatedManufacturer);
                 ManufacturerDTO manufacturerDTOResponse = manufacturerDTOMapper.apply(savedManufacturer);
                 return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of(manufacturerDTOResponse)), HttpStatus.OK);
@@ -123,14 +127,5 @@ public class ManufacturerServiceImpl implements ManufacturerService {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
         }
-    }
-
-    private Manufacturer manufacturerModelMapper(ManufacturerDTO request) {
-        return Manufacturer.builder()
-                .id(request.getId())
-                .manufacturerName(request.getManufacturerName())
-                .manufacturerCode(request.getManufacturerCode())
-                .location(request.getLocation())
-                .build();
     }
 }

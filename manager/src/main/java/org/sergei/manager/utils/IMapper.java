@@ -1,4 +1,4 @@
-package org.sergei.manager.rest.dto.mappers;
+package org.sergei.manager.utils;
 
 import com.google.common.collect.ImmutableList;
 

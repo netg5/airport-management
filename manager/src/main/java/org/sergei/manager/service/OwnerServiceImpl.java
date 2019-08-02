@@ -1,11 +1,12 @@
 package org.sergei.manager.service;
 
 import org.sergei.manager.jpa.model.Owner;
+import org.sergei.manager.jpa.model.mappers.OwnerModelMapper;
 import org.sergei.manager.jpa.repository.OwnerRepository;
 import org.sergei.manager.rest.dto.OwnerDTO;
-import org.sergei.manager.rest.dto.request.OwnerRequestDTO;
 import org.sergei.manager.rest.dto.mappers.OwnerDTOListMapper;
 import org.sergei.manager.rest.dto.mappers.OwnerDTOMapper;
+import org.sergei.manager.rest.dto.request.OwnerRequestDTO;
 import org.sergei.manager.rest.dto.response.ResponseDTO;
 import org.sergei.manager.rest.dto.response.ResponseErrorDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,16 +25,19 @@ public class OwnerServiceImpl implements OwnerService {
 
     private final MessageService messageService;
     private final OwnerRepository ownerRepository;
+    private final OwnerModelMapper ownerModelMapper;
     private final OwnerDTOMapper ownerDTOMapper;
     private final OwnerDTOListMapper ownerDTOListMapper;
 
     @Autowired
     public OwnerServiceImpl(MessageService messageService,
                             OwnerRepository ownerRepository,
+                            OwnerModelMapper ownerModelMapper,
                             OwnerDTOMapper ownerDTOMapper,
                             OwnerDTOListMapper ownerDTOListMapper) {
         this.messageService = messageService;
         this.ownerRepository = ownerRepository;
+        this.ownerModelMapper = ownerModelMapper;
         this.ownerDTOMapper = ownerDTOMapper;
         this.ownerDTOListMapper = ownerDTOListMapper;
     }
@@ -78,7 +82,7 @@ public class OwnerServiceImpl implements OwnerService {
 
     @Override
     public ResponseEntity<ResponseDTO<OwnerDTO>> save(OwnerDTO ownerDTO) {
-        Owner owner = ownerModelMapper(ownerDTO);
+        Owner owner = ownerModelMapper.apply(ownerDTO);
         Owner savedOwner = ownerRepository.save(owner);
         OwnerDTO savedOwnerDTO = ownerDTOMapper.apply(savedOwner);
         return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of(savedOwnerDTO)), HttpStatus.OK);
@@ -96,7 +100,7 @@ public class OwnerServiceImpl implements OwnerService {
                 List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("OW-001");
                 return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.OK);
             } else {
-                Owner ownerUpdated = ownerModelMapper(ownerDTO);
+                Owner ownerUpdated = ownerModelMapper.apply(ownerDTO);
                 Owner ownerSaved = ownerRepository.save(ownerUpdated);
                 OwnerDTO ownerSavedDTO = ownerDTOMapper.apply(ownerSaved);
 
@@ -124,17 +128,5 @@ public class OwnerServiceImpl implements OwnerService {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
         }
-    }
-
-    private Owner ownerModelMapper(OwnerDTO ownerDTO) {
-        return Owner.builder()
-                .firstName(ownerDTO.getFirstName())
-                .lastName(ownerDTO.getLastName())
-                .gender(ownerDTO.getGender())
-                .address(ownerDTO.getAddress())
-                .country(ownerDTO.getCountry())
-                .email(ownerDTO.getEmail())
-                .phone(ownerDTO.getPhone())
-                .build();
     }
 }

@@ -1,12 +1,9 @@
 package org.sergei.manager.service;
 
-import org.sergei.manager.rest.dto.request.RouteRequestDTO;
 import org.sergei.manager.rest.dto.RouteDTO;
-import org.sergei.manager.rest.dto.request.RouteUpdateRequestDTO;
+import org.sergei.manager.rest.dto.request.RouteRequestDTO;
 import org.sergei.manager.rest.dto.response.ResponseDTO;
 import org.springframework.http.ResponseEntity;
-
-import java.util.Map;
 
 /**
  * @author Sergei Visotsky
@@ -18,11 +15,9 @@ public interface RouteService {
 
     ResponseEntity<ResponseDTO<RouteDTO>> findAllRoutesPaginated(int page, int size);
 
-    ResponseEntity<ResponseDTO<RouteDTO>> save(RouteRequestDTO request);
+    ResponseEntity<ResponseDTO<RouteDTO>> save(RouteDTO request);
 
-    ResponseEntity<ResponseDTO<RouteDTO>> update(RouteUpdateRequestDTO request);
-
-    ResponseEntity<ResponseDTO<RouteDTO>> patch(Long routeId, Map<String, Object> params);
+    ResponseEntity<ResponseDTO<RouteDTO>> update(RouteDTO request);
 
     ResponseEntity<ResponseDTO<RouteDTO>> delete(Long routeId);
 }

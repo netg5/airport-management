@@ -2,6 +2,7 @@ package org.sergei.manager.rest.dto.mappers;
 
 import org.sergei.manager.jpa.model.Owner;
 import org.sergei.manager.rest.dto.OwnerDTO;
+import org.sergei.manager.utils.IMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
