@@ -14,9 +14,9 @@ INSERT INTO hangar VALUES(1, '2131234', 3, 'New-York');
 INSERT INTO hangar VALUES(2, 'fsaf33522', 1, 'Riga');
 INSERT INTO hangar VALUES(3, 'f341tg', 3, 'London');
 
-INSERT INTO aircraft VALUES (1, 1, 1, 1, '123D', '777-300ER', 'Boeing', 3450, 1000, 3);
-INSERT INTO aircraft VALUES (2, 2, 2, 2, '12dc3', 'A220', 'Airbus', 43000, 5400, 6);
-INSERT INTO aircraft VALUES (3, 3, 3, 3, '82497Df', 'B30', 'Airbus', 42007, 3200, 7);
+INSERT INTO aircraft VALUES (1, 1, 1, '123D', '777-300ER', 'Boeing', 3450, 1000, 3);
+INSERT INTO aircraft VALUES (2, 2, 2, '12dc3', 'A220', 'Airbus', 43000, 5400, 6);
+INSERT INTO aircraft VALUES (3, 3, 3, '82497Df', 'B30', 'Airbus', 42007, 3200, 7);
 
 INSERT INTO route VALUES (2, '2019-07-02', '2019-07-01', 1000, 'Riga', 123);
 INSERT INTO route VALUES (3, '2019-08-23', '2019-08-22', 3600, 'Singapoore', 3400);

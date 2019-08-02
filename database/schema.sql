@@ -1,4 +1,4 @@
-CREATE TABLE pilot
+CREATE TABLE IF NOT EXISTS pilot
 (
     id             BIGINT           NOT NULL,
     license_number VARCHAR(150)     NOT NULL,
@@ -15,7 +15,7 @@ CREATE TABLE pilot
     CONSTRAINT pilot_pk PRIMARY KEY (id)
 );
 
-CREATE TABLE owner
+CREATE TABLE IF NOT EXISTS owner
 (
     id         BIGINT       NOT NULL,
     first_name VARCHAR(45)  NOT NULL,
@@ -28,7 +28,7 @@ CREATE TABLE owner
     CONSTRAINT owner_pk PRIMARY KEY (id)
 );
 
-CREATE TABLE manufacturer
+CREATE TABLE IF NOT EXISTS manufacturer
 (
     id                BIGINT      NOT NULL,
     manufacturer_code VARCHAR(60) NOT NULL,
@@ -37,7 +37,7 @@ CREATE TABLE manufacturer
     CONSTRAINT manufacturer_pk PRIMARY KEY (id)
 );
 
-CREATE TABLE hangar
+CREATE TABLE IF NOT EXISTS hangar
 (
     id              BIGINT      NOT NULL,
     hangar_number   VARCHAR(45) NOT NULL,
@@ -46,7 +46,7 @@ CREATE TABLE hangar
     CONSTRAINT hangar_pk PRIMARY KEY (id)
 );
 
-CREATE TABLE aircraft
+CREATE TABLE IF NOT EXISTS aircraft
 (
     id                  BIGINT           NOT NULL,
     manufacturer_id     BIGINT           NOT NULL,
@@ -62,7 +62,7 @@ CREATE TABLE aircraft
     CONSTRAINT hangar_fk FOREIGN KEY (hangar_id) REFERENCES hangar (id)
 );
 
-CREATE TABLE route
+CREATE TABLE IF NOT EXISTS route
 (
     id             BIGINT                      NOT NULL,
     arrival_time   TIMESTAMP                   NOT NULL,
@@ -73,7 +73,7 @@ CREATE TABLE route
     CONSTRAINT route_pk PRIMARY KEY (id)
 );
 
-CREATE TABLE airport
+CREATE TABLE IF NOT EXISTS airport
 (
     id           BIGINT      NOT NULL,
     airport_name VARCHAR(45) NOT NULL,
@@ -86,7 +86,7 @@ CREATE TABLE airport
     CONSTRAINT airport_pk PRIMARY KEY (id)
 );
 
-CREATE TABLE passenger
+CREATE TABLE IF NOT EXISTS passenger
 (
     id         BIGINT      NOT NULL,
     first_name VARCHAR(45) NOT NULL,
@@ -97,7 +97,7 @@ CREATE TABLE passenger
     CONSTRAINT passenger_pk PRIMARY KEY (id)
 );
 
-CREATE TABLE reservation
+CREATE TABLE IF NOT EXISTS reservation
 (
     id             BIGINT    NOT NULL,
     passenger_id   BIGINT    NOT NULL,
@@ -111,7 +111,7 @@ CREATE TABLE reservation
     CONSTRAINT aircraft_id_fk FOREIGN KEY (aircraft_id) REFERENCES aircraft (id)
 );
 
-CREATE TABLE manager
+CREATE TABLE IF NOT EXISTS manager
 (
     id         BIGINT       NOT NULL,
     ssn        VARCHAR(15)  NOT NULL,
@@ -125,7 +125,7 @@ CREATE TABLE manager
     CONSTRAINT manager_pk PRIMARY KEY (id)
 );
 
-CREATE TABLE actual_flight
+CREATE TABLE IF NOT EXISTS actual_flight
 (
     id             BIGINT       NOT NULL,
     aircraft_id    BIGINT       NOT NULL,
@@ -148,7 +148,7 @@ CREATE TABLE actual_flight
     CONSTRAINT route_id_fk FOREIGN KEY (route_id) REFERENCES route (id)
 );
 
-CREATE TABLE calendar_entry
+CREATE TABLE IF NOT EXISTS calendar_entry
 (
     id            BIGINT    NOT NULL,
     day_number    INTEGER   NOT NULL,
@@ -157,7 +157,7 @@ CREATE TABLE calendar_entry
     CONSTRAINT calendar_entry_pk PRIMARY KEY (id)
 );
 
-CREATE TABLE airport_management_facts
+CREATE TABLE IF NOT EXISTS airport_management_facts
 (
     id                BIGINT      NOT NULL,
     actual_flight_id  BIGINT      NOT NULL,
@@ -188,68 +188,11 @@ CREATE TABLE airport_management_facts
     CONSTRAINT pilot_fk FOREIGN KEY (pilot_id) REFERENCES pilot (id)
 );
 
--- User service schema
-CREATE TABLE IF NOT EXISTS oauth_client_details
-(
-    client_id               VARCHAR(256),
-    resource_ids            VARCHAR(256),
-    client_secret           VARCHAR(256),
-    scope                   VARCHAR(256),
-    authorized_grant_types  VARCHAR(256),
-    web_server_redirect_uri VARCHAR(256),
-    authorities             VARCHAR(256),
-    access_token_validity   INTEGER,
-    refresh_token_validity  INTEGER,
-    additional_information  VARCHAR(4096),
-    autoapprove             VARCHAR(256),
-    CONSTRAINT oauth_client_details_pk PRIMARY KEY (client_id)
-);
-
-CREATE TABLE auth_user
-(
-    id       BIGINT       NOT NULL,
-    username VARCHAR(45)  NOT NULL,
-    password VARCHAR(300) NOT NULL,
-    CONSTRAINT auth_user_pk PRIMARY KEY (id)
-);
-
-CREATE TABLE auth_user_roles
-(
-    id        BIGINT      NOT NULL,
-    role_name VARCHAR(45) NOT NULL,
-    CONSTRAINT auth_user_role_pk PRIMARY KEY (id)
-);
-
-CREATE TABLE auth_user_auth_user_roles
-(
-    auth_user_id       BIGINT NOT NULL,
-    auth_user_roles_id BIGINT NOT NULL,
-    CONSTRAINT auth_user_fk FOREIGN KEY (auth_user_id) REFERENCES auth_user (id),
-    CONSTRAINT auth_user_roles_fk FOREIGN KEY (auth_user_roles_id) REFERENCES auth_user_roles (id)
-);
-
 -- Response message storage
-CREATE TABLE response_messages
+CREATE TABLE IF NOT EXISTS response_messages
 (
     id          BIGINT        NOT NULL,
     code        VARCHAR(10)   NOT NULL,
     description VARCHAR(1000) NOT NULL,
     CONSTRAINT response_msg_pk PRIMARY KEY (id)
 );
-
--- Sequences
-CREATE SEQUENCE pilot_id_seq;
-CREATE SEQUENCE owner_id_seq;
-CREATE SEQUENCE aircraft_id_seq;
-CREATE SEQUENCE route_id_seq;
-CREATE SEQUENCE manufacturer_id_seq;
-CREATE SEQUENCE airport_id_seq;
-CREATE SEQUENCE hangar_id_seq;
-CREATE SEQUENCE passenger_id_seq;
-CREATE SEQUENCE reservation_id_seq;
-CREATE SEQUENCE manager_id_seq;
-CREATE SEQUENCE actual_flight_id_seq;
-CREATE SEQUENCE calendar_entry_id_seq;
-CREATE SEQUENCE airport_management_facts_id_seq;
-CREATE SEQUENCE auth_user_id_seq;
-CREATE SEQUENCE auth_user_auth_user_roles_id_seq;
