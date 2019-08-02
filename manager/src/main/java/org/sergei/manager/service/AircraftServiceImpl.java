@@ -17,8 +17,10 @@
 package org.sergei.manager.service;
 
 import org.sergei.manager.jpa.model.Aircraft;
+import org.sergei.manager.jpa.model.Manufacturer;
 import org.sergei.manager.jpa.repository.AircraftRepository;
 import org.sergei.manager.rest.dto.AircraftDTO;
+import org.sergei.manager.rest.dto.ManufacturerDTO;
 import org.sergei.manager.rest.dto.mappers.AircraftDTOListMapper;
 import org.sergei.manager.rest.dto.mappers.AircraftDTOMapper;
 import org.sergei.manager.rest.dto.request.AircraftRequestDTO;
@@ -190,6 +192,16 @@ public class AircraftServiceImpl implements AircraftService {
                 .capacity(aircraftDTO.getCapacity())
                 .weight(aircraftDTO.getWeight())
                 .exploitationPeriod(aircraftDTO.getExploitationPeriod())
+                .manufacturer(manufacturerModelMapper(aircraftDTO.getManufacturer()))
+                .build();
+    }
+
+    private Manufacturer manufacturerModelMapper(ManufacturerDTO request) {
+        return Manufacturer.builder()
+                .id(request.getId())
+                .manufacturerName(request.getManufacturerName())
+                .manufacturerCode(request.getManufacturerCode())
+                .location(request.getLocation())
                 .build();
     }
 }

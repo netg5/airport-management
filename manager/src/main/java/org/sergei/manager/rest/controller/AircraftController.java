@@ -25,7 +25,6 @@ import org.sergei.manager.rest.dto.response.ResponseDTO;
 import org.sergei.manager.service.AircraftService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -57,7 +56,6 @@ public class AircraftController {
     }
 
     @PostMapping(value = "/save", produces = "application/json", consumes = "application/json")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<ResponseDTO<AircraftDTO>>
     saveAircraft(@ApiParam(value = "Aircraft which should be saved", required = true)
                  @RequestBody AircraftDTO aircraftDTO) {
@@ -65,14 +63,12 @@ public class AircraftController {
     }
 
     @PostMapping(value = "/update", produces = "application/json", consumes = "application/json")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<ResponseDTO<AircraftDTO>>
     updateAircraft(@RequestBody AircraftDTO request) {
         return aircraftService.update(request);
     }
 
     @DeleteMapping("/{aircraftId}")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<ResponseDTO<AircraftDTO>>
     deleteAircraft(@ApiParam(value = "Aircraft ID which should be deleted", required = true)
                    @PathVariable("aircraftId") Long aircraftId) {
