@@ -40,15 +40,17 @@ INSERT INTO oauth_client_details VALUES('trusted-client', '', '$2a$10$K9.dtdouoT
 
 -- Errors
 INSERT INTO response_messages VALUES(1, 'AIR-001', 'Aircraft with this ID not found');
-INSERT INTO response_messages VALUES(2, 'PAS-001', 'Passenger with this ID not found');
-INSERT INTO response_messages VALUES(3, 'RT-001', 'Route with this ID not found');
-INSERT INTO response_messages VALUES(4, 'RES-001', 'Reservation with this ID not found');
-INSERT INTO response_messages VALUES(5, 'PR-001', 'This passenger has no reservations made');
-INSERT INTO response_messages VALUES(6, 'PT-001', 'Passenger has no tickets');
-INSERT INTO response_messages VALUES(7, 'PIL-001', 'Pilot with this ID not found');
-INSERT INTO response_messages VALUES(8, 'PIL-002', 'Pilot table is empty');
-INSERT INTO response_messages VALUES(9, 'RP-001', 'Required parameter is not present');
-INSERT INTO response_messages VALUES(10, 'PIL-003', 'Pilot weight is greater than expected');
-INSERT INTO response_messages VALUES(11, 'AEP-001', 'Aircraft exploitation period is greater than 10 required years');
-INSERT INTO response_messages VALUES(12, 'OW-001', 'Owner with this ID not found');
-INSERT INTO response_messages VALUES(13, 'MAN-001', 'Manufacturer with this ID not found');
+INSERT INTO response_messages VALUES(2, 'AIR-002', 'Aircraft exploitation period is greater than 10 required years');
+INSERT INTO response_messages VALUES(3, 'AIR-003', 'Aircraft with this model number not found');
+INSERT INTO response_messages VALUES(4, 'PAS-001', 'Passenger with this ID not found');
+INSERT INTO response_messages VALUES(5, 'PAS-002', 'This passenger has no reservations made');
+INSERT INTO response_messages VALUES(6, 'RT-001', 'Route with this ID not found');
+INSERT INTO response_messages VALUES(7, 'RES-001', 'Reservation with this ID not found');
+INSERT INTO response_messages VALUES(8, 'PT-001', 'Passenger has no tickets');
+INSERT INTO response_messages VALUES(9, 'PIL-001', 'Pilot with this ID not found');
+INSERT INTO response_messages VALUES(10, 'PIL-002', 'Pilot table is empty');
+INSERT INTO response_messages VALUES(11, 'RP-001', 'Required parameter is not present');
+INSERT INTO response_messages VALUES(12, 'PIL-003', 'Pilot weight is greater than expected');
+INSERT INTO response_messages VALUES(13, 'OW-001', 'Owner with this ID not found');
+INSERT INTO response_messages VALUES(14, 'MAN-001', 'Manufacturer with this ID not found');
+INSERT INTO response_messages VALUES(15, 'HAN-001', 'Hangar not found');

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
  * @author Sergei Visotsky
  */
 @RestController
-@RequestMapping("/manufacturers")
 @Api(tags = {"manufacturerCrudOperations"})
 public class ManufacturerController {
 
@@ -24,27 +23,27 @@ public class ManufacturerController {
         this.manufacturerService = manufacturerService;
     }
 
-    @GetMapping(produces = "application/json")
+    @GetMapping(value = "/getAllManufacturers")
     public ResponseEntity<ResponseDTO<ManufacturerDTO>> getAllManufacturers() {
         return manufacturerService.findAll();
     }
 
-    @PostMapping(produces = "application/json", consumes = "application/json")
+    @PostMapping(value = "/getManufacturerByCode")
     public ResponseEntity<ResponseDTO<ManufacturerDTO>> getManufacturerByCode(@RequestBody ManufacturerRequestDTO request) {
         return manufacturerService.findByCode(request);
     }
 
-    @PostMapping(value = "/save", produces = "application/json", consumes = "application/json")
+    @PostMapping(value = "/saveManufacturer")
     public ResponseEntity<ResponseDTO<ManufacturerDTO>> saveManufacturer(@RequestBody ManufacturerDTO request) {
         return manufacturerService.saveManufacturer(request);
     }
 
-    @PostMapping(value = "/update", produces = "application/json", consumes = "application/json")
+    @PostMapping(value = "/updateManufacturer")
     public ResponseEntity<ResponseDTO<ManufacturerDTO>> updateManufacturer(@RequestBody ManufacturerDTO request) {
         return manufacturerService.updateManufacturer(request);
     }
 
-    @DeleteMapping(value = "/{code}")
+    @DeleteMapping(value = "/deleteManufacturer/{code}")
     public ResponseEntity<ResponseDTO<ManufacturerDTO>> deleteManufacturer(@PathVariable String code) {
         return manufacturerService.deleteManufacturer(code);
     }

@@ -19,6 +19,7 @@ package org.sergei.manager.jpa.repository;
 import org.sergei.manager.jpa.model.Aircraft;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -29,23 +30,6 @@ import java.util.Optional;
 @Repository
 public interface AircraftRepository extends JpaRepository<Aircraft, Long> {
 
-    /**
-     * Method to get aircraftId by multiple parameters
-     *
-     * @param aircraftName  aircraftId name
-     * @param weight        aircraftId weight
-     * @param maxPassengers maximum passengers per aircraftId
-     * @param model         aircraftId model
-     * @return aircraftId entity
-     */
-    @Query("SELECT \n" +
-            "    a\n" +
-            "FROM\n" +
-            "    Aircraft a\n" +
-            "WHERE\n" +
-            "    aircraftName = ?1 AND aircraftWeight = ?2\n" +
-            "        AND maxPassengers = ?3\n" +
-            "        AND model = ?4")
-    Optional<Aircraft> findAircraftByMultipleParams(String aircraftName, Double weight,
-                                                    Integer maxPassengers, String model);
+    @Query("SELECT a FROM Aircraft a WHERE a.modelNumber = :modelNumber")
+    Optional<Aircraft> findByModelNumber(@Param("modelNumber") String modelNumber);
 }

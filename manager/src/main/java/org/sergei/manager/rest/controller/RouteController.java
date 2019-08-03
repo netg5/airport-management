@@ -1,8 +1,6 @@
 package org.sergei.manager.rest.controller;
 
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import org.sergei.manager.rest.dto.RouteDTO;
 import org.sergei.manager.rest.dto.response.ResponseDTO;
 import org.sergei.manager.service.RouteService;
@@ -13,13 +11,8 @@ import org.springframework.web.bind.annotation.*;
 /**
  * @author Sergei Visotsky
  */
-@Api(
-        value = "/reservation/routes",
-        produces = "application/json",
-        consumes = "application/json"
-)
 @RestController
-@RequestMapping("/routes")
+@Api(tags = {"routeCrudOperations"})
 public class RouteController {
 
     private final RouteService routeService;
@@ -29,49 +22,34 @@ public class RouteController {
         this.routeService = routeService;
     }
 
-    @ApiOperation("Get all existing routes")
-    @GetMapping(produces = "application/json")
+    @GetMapping(value = "/getAllRoutes")
     public ResponseEntity<ResponseDTO<RouteDTO>> getAllRoutes() {
         return routeService.findAllRoutes();
     }
 
-    @ApiOperation("Get all existing routes paginated")
-    @GetMapping(params = {"page", "size"}, produces = "application/json")
-    public ResponseEntity<ResponseDTO<RouteDTO>>
-    getAllRoutesPaginated(@ApiParam("Number of the page")
-                          @RequestParam("page") int page,
-                          @ApiParam("Maximum number of content blocks on the page")
-                          @RequestParam("size") int size) {
+    @GetMapping(value = "/getAllRoutesPaginated", params = {"page", "size"})
+    public ResponseEntity<ResponseDTO<RouteDTO>> getAllRoutesPaginated(@RequestParam("page") int page,
+                                                                       @RequestParam("size") int size) {
         return routeService.findAllRoutesPaginated(page, size);
     }
 
-    @ApiOperation("Get route by ID")
-    @GetMapping(value = "/{routeId}", produces = "application/json")
-    public ResponseEntity<ResponseDTO<RouteDTO>>
-    getRouteById(@ApiParam(value = "Route ID which should be found", required = true)
-                 @PathVariable("routeId") Long routeId) {
+    @GetMapping(value = "/getRouteById/{routeId}")
+    public ResponseEntity<ResponseDTO<RouteDTO>> getRouteById(@PathVariable("routeId") Long routeId) {
         return routeService.findOneRoute(routeId);
     }
 
-    @ApiOperation(value = "Save route", notes = "Operation allowed for the ROLE_ADMIN only")
-    @PostMapping(consumes = "application/json")
-    public ResponseEntity<ResponseDTO<RouteDTO>>
-    saveRoute(@ApiParam(value = "Saved route", required = true)
-              @RequestBody RouteDTO request) {
+    @PostMapping(value = "/saveRoute")
+    public ResponseEntity<ResponseDTO<RouteDTO>> saveRoute(@RequestBody RouteDTO request) {
         return routeService.save(request);
     }
 
-    @ApiOperation(value = "Update route information", notes = "Operation allowed for the ROLE_ADMIN only")
-    @PutMapping(value = "/update", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<ResponseDTO<RouteDTO>>
-    updateRoute(@RequestBody RouteDTO request) {
+    @PutMapping(value = "/updateRoute")
+    public ResponseEntity<ResponseDTO<RouteDTO>> updateRoute(@RequestBody RouteDTO request) {
         return routeService.update(request);
     }
 
-    @DeleteMapping(value = "/{routeId}", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<ResponseDTO<RouteDTO>>
-    deleteRoute(@ApiParam(value = "Route ID which should be deleted", required = true)
-                @PathVariable("routeId") Long routeId) {
+    @DeleteMapping(value = "/deleteRoute/{routeId}")
+    public ResponseEntity<ResponseDTO<RouteDTO>> deleteRoute(@PathVariable("routeId") Long routeId) {
         return routeService.delete(routeId);
     }
 }

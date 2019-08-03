@@ -16,6 +16,7 @@
 
 package org.sergei.manager.rest.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -40,6 +41,7 @@ public class AircraftDTO implements Serializable {
     private Integer capacity;
     private Double weight;
     private Integer exploitationPeriod;
+    @JsonIgnoreProperties(value = "aircraft")
     private HangarDTO hangar;
     private ManufacturerDTO manufacturer;
 }

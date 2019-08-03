@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
  * @author Sergei Visotsky
  */
 @RestController
-@RequestMapping("/owners")
 @Api(tags = {"ownerCrudOperations"})
 public class OwnerController {
 
@@ -24,27 +23,27 @@ public class OwnerController {
         this.ownerService = ownerService;
     }
 
-    @GetMapping(produces = "application/json")
-    public ResponseEntity<ResponseDTO<OwnerDTO>> findAll() {
+    @GetMapping(value = "/findAllOwners")
+    public ResponseEntity<ResponseDTO<OwnerDTO>> findAllOwners() {
         return ownerService.findAll();
     }
 
-    @PostMapping(consumes = "application/json", produces = "application/json")
+    @PostMapping(value = "/findOwnerById")
     public ResponseEntity<ResponseDTO<OwnerDTO>> findOwnerById(@RequestBody OwnerRequestDTO request) {
         return ownerService.findById(request);
     }
 
-    @PostMapping(value = "/save", consumes = "application/json", produces = "application/json")
+    @PostMapping(value = "/saveOwner")
     public ResponseEntity<ResponseDTO<OwnerDTO>> saveOwner(@RequestBody OwnerDTO request) {
         return ownerService.save(request);
     }
 
-    @PostMapping(value = "/update", consumes = "application/json", produces = "application/json")
+    @PostMapping(value = "/updateOwner")
     public ResponseEntity<ResponseDTO<OwnerDTO>> updateOwner(@RequestBody OwnerDTO request) {
         return ownerService.update(request);
     }
 
-    @DeleteMapping(value = "/{ownerId}", consumes = "application/json", produces = "application/json")
+    @DeleteMapping(value = "/deleteOwner/{ownerId}")
     public ResponseEntity<ResponseDTO<OwnerDTO>> deleteOwner(@PathVariable Long ownerId) {
         return ownerService.delete(ownerId);
     }

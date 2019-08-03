@@ -49,7 +49,7 @@ public class Route implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "distance")
     private Double distance;
 
     @Column(name = "departure_time")
@@ -58,9 +58,9 @@ public class Route implements Serializable {
     @Column(name = "arrival_time")
     private LocalDateTime arrivalTime;
 
-    @Column(nullable = false)
+    @Column(name = "price")
     private BigDecimal price;
 
-    @Column(nullable = false)
+    @Column(name = "place")
     private String place;
 }

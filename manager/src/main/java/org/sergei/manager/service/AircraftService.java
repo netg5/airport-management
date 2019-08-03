@@ -12,11 +12,7 @@ public interface AircraftService {
 
     ResponseEntity<ResponseDTO<AircraftDTO>> findAll();
 
-    ResponseEntity<ResponseDTO<AircraftDTO>> findById(AircraftRequestDTO request);
+    ResponseEntity<ResponseDTO<AircraftDTO>> findByModelNumber(AircraftRequestDTO request);
 
     ResponseEntity<ResponseDTO<AircraftDTO>> save(AircraftDTO aircraftDTO);
-
-    ResponseEntity<ResponseDTO<AircraftDTO>> update(AircraftDTO request);
-
-    ResponseEntity<ResponseDTO<AircraftDTO>> delete(Long aircraftId);
 }

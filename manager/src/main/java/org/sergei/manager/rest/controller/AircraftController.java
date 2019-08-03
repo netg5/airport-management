@@ -17,21 +17,21 @@
 package org.sergei.manager.rest.controller;
 
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import org.sergei.manager.rest.dto.AircraftDTO;
 import org.sergei.manager.rest.dto.request.AircraftRequestDTO;
 import org.sergei.manager.rest.dto.response.ResponseDTO;
 import org.sergei.manager.service.AircraftService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author Sergei Visotsky
  */
 @RestController
-@RequestMapping("/aircrafts")
 @Api(tags = {"aircraftCrudOperations"})
 public class AircraftController {
 
@@ -42,36 +42,18 @@ public class AircraftController {
         this.aircraftService = aircraftService;
     }
 
-    @ApiOperation(value = "Get all existing aircrafts", produces = "application/json", consumes = "application/json")
-    @GetMapping(produces = "application/json")
+    @GetMapping(value = "/getAllAircrafts")
     public ResponseEntity<ResponseDTO<AircraftDTO>> getAllAircraft() {
         return aircraftService.findAll();
     }
 
-    @ApiOperation("Get aircraftDTO by ID")
-    @PostMapping(produces = "application/json", consumes = "application/json")
-    public ResponseEntity<ResponseDTO<AircraftDTO>>
-    getAircraftById(@RequestBody AircraftRequestDTO request) {
-        return aircraftService.findById(request);
+    @PostMapping(value = "/getAircraftByModelNumber")
+    public ResponseEntity<ResponseDTO<AircraftDTO>> getAircraftByModelNumber(@RequestBody AircraftRequestDTO request) {
+        return aircraftService.findByModelNumber(request);
     }
 
-    @PostMapping(value = "/save", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<ResponseDTO<AircraftDTO>>
-    saveAircraft(@ApiParam(value = "Aircraft which should be saved", required = true)
-                 @RequestBody AircraftDTO aircraftDTO) {
+    @PostMapping(value = "/saveAircraft")
+    public ResponseEntity<ResponseDTO<AircraftDTO>> saveAircraft(@RequestBody AircraftDTO aircraftDTO) {
         return aircraftService.save(aircraftDTO);
-    }
-
-    @PostMapping(value = "/update", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<ResponseDTO<AircraftDTO>>
-    updateAircraft(@RequestBody AircraftDTO request) {
-        return aircraftService.update(request);
-    }
-
-    @DeleteMapping("/{aircraftId}")
-    public ResponseEntity<ResponseDTO<AircraftDTO>>
-    deleteAircraft(@ApiParam(value = "Aircraft ID which should be deleted", required = true)
-                   @PathVariable("aircraftId") Long aircraftId) {
-        return aircraftService.delete(aircraftId);
     }
 }

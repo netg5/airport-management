@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
  * @author Sergei Visotsky
  */
 @RestController
-@RequestMapping("/pilots")
 @Api(tags = {"pilotCrudOperations"})
 public class PilotController {
 
@@ -24,27 +23,27 @@ public class PilotController {
         this.pilotService = pilotService;
     }
 
-    @GetMapping(produces = "application/json")
-    public ResponseEntity<ResponseDTO<PilotDTO>> findAll() {
+    @GetMapping(value = "/findAllPilots")
+    public ResponseEntity<ResponseDTO<PilotDTO>> findAllPilots() {
         return pilotService.findAll();
     }
 
-    @PostMapping(produces = "application/json", consumes = "application/json")
+    @PostMapping(value = "/findPilotById")
     public ResponseEntity<ResponseDTO<PilotDTO>> findPilotById(@RequestBody PilotRequestDTO request) {
         return pilotService.findById(request);
     }
 
-    @PostMapping(value = "/save", produces = "application/json", consumes = "application/json")
+    @PostMapping(value = "/savePilot")
     public ResponseEntity<ResponseDTO<PilotDTO>> savePilot(@RequestBody PilotDTO request) {
         return pilotService.save(request);
     }
 
-    @PostMapping(value = "/update", produces = "application/json", consumes = "application/json")
+    @PostMapping(value = "/updatePilot")
     public ResponseEntity<ResponseDTO<PilotDTO>> updatePilot(@RequestBody PilotDTO pilotDTO) {
         return pilotService.update(pilotDTO);
     }
 
-    @DeleteMapping("/{pilotId}")
+    @DeleteMapping(value = "/deletePilot/{pilotId}")
     public ResponseEntity<ResponseDTO<PilotDTO>> deletePilot(@PathVariable Long pilotId) {
         return pilotService.delete(pilotId);
     }

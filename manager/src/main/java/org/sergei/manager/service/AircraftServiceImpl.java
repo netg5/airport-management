@@ -44,21 +44,18 @@ public class AircraftServiceImpl implements AircraftService {
     private final AircraftDTOMapper aircraftDTOMapper;
     private final AircraftDTOListMapper aircraftDTOListMapper;
     private final MessageService messageService;
-    private final ManufacturerService manufacturerService;
 
     @Autowired
     public AircraftServiceImpl(AircraftRepository aircraftRepository,
                                AircraftModelMapper aircraftModelMapper,
                                AircraftDTOMapper aircraftDTOMapper,
                                AircraftDTOListMapper aircraftDTOListMapper,
-                               MessageService messageService,
-                               ManufacturerService manufacturerService) {
+                               MessageService messageService) {
         this.aircraftRepository = aircraftRepository;
         this.aircraftModelMapper = aircraftModelMapper;
         this.aircraftDTOMapper = aircraftDTOMapper;
         this.aircraftDTOListMapper = aircraftDTOListMapper;
         this.messageService = messageService;
-        this.manufacturerService = manufacturerService;
     }
 
     /**
@@ -68,15 +65,15 @@ public class AircraftServiceImpl implements AircraftService {
      * @return aircraftId DTO
      */
     @Override
-    public ResponseEntity<ResponseDTO<AircraftDTO>> findById(AircraftRequestDTO request) {
-        Long aircraftId = request.getAircraftId();
-        if (aircraftId == null) {
+    public ResponseEntity<ResponseDTO<AircraftDTO>> findByModelNumber(AircraftRequestDTO request) {
+        String modelNumber = request.getModelNumber();
+        if (modelNumber == null) {
             List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("RP-001");
             return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
         } else {
-            Optional<Aircraft> aircraft = aircraftRepository.findById(aircraftId);
+            Optional<Aircraft> aircraft = aircraftRepository.findByModelNumber(modelNumber);
             if (aircraft.isEmpty()) {
-                List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("AIR-001");
+                List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("AIR-003");
                 return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
             } else {
                 AircraftDTO aircraftDTO = aircraftDTOMapper.apply(aircraft.get());
@@ -120,68 +117,13 @@ public class AircraftServiceImpl implements AircraftService {
     public ResponseEntity<ResponseDTO<AircraftDTO>> save(AircraftDTO request) {
         Integer exploitationPeriod = request.getExploitationPeriod();
         if (exploitationPeriod >= 10) {
-            List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("AEP-001");
+            List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("AIR-001");
             return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.OK);
         } else {
             Aircraft aircraft = aircraftModelMapper.apply(request);
             Aircraft savedAircraft = aircraftRepository.save(aircraft);
             AircraftDTO aircraftDTOResponse = aircraftDTOMapper.apply(savedAircraft);
             return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of(aircraftDTOResponse)), HttpStatus.CREATED);
-        }
-    }
-
-    /**
-     * Update aircraftId by its ID
-     *
-     * @param request aircraftId DTO request with ID
-     * @return response with updated aircraftId
-     */
-    @Override
-    public ResponseEntity<ResponseDTO<AircraftDTO>> update(AircraftDTO request) {
-        Long aircraftId = request.getAircraftId();
-        Integer exploitationPeriod = request.getExploitationPeriod();
-        if (aircraftId == null) {
-            List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("RP-001");
-            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
-        } else {
-            if (exploitationPeriod >= 10) {
-                List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("AEP-001");
-                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.OK);
-            } else {
-                Optional<Aircraft> aircraft = aircraftRepository.findById(aircraftId);
-                if (aircraft.isEmpty()) {
-                    List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("AIR-001");
-                    return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
-                } else {
-                    Aircraft aircraftUpdated = aircraftModelMapper.apply(request);
-                    Aircraft savedAircraft = aircraftRepository.save(aircraftUpdated);
-                    AircraftDTO aircraftDTOResponse = aircraftDTOMapper.apply(savedAircraft);
-                    return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of(aircraftDTOResponse)), HttpStatus.OK);
-                }
-            }
-        }
-    }
-
-    /**
-     * Delete aircraftId by ID
-     *
-     * @param aircraftId get aircraftId ID as a parameter
-     * @return aircraftId DTO as a response
-     */
-    @Override
-    public ResponseEntity<ResponseDTO<AircraftDTO>> delete(Long aircraftId) {
-        if (aircraftId == null) {
-            List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("RP-001");
-            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
-        } else {
-            Optional<Aircraft> aircraft = aircraftRepository.findById(aircraftId);
-            if (aircraft.isEmpty()) {
-                List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("AIR-001");
-                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
-            } else {
-                aircraftRepository.delete(aircraft.get());
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
         }
     }
 }

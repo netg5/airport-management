@@ -14,5 +14,5 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class AircraftRequestDTO implements Serializable {
     private static final long serialVersionUID = 7739511086581969345L;
-    private Long aircraftId;
+    private String modelNumber;
 }
