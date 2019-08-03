@@ -42,3 +42,10 @@ management:
   endpoint:
     health:
       show-details: always
+logging:
+  file: C:/tmp/auth.log
+  level:
+    ROOT: INFO
+    org:
+      sergei:
+        auth: DEBUG

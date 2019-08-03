@@ -32,3 +32,10 @@ eureka:
     instance-info-replication-interval-seconds: 10 # how often to replicate instance changes to be replicated to Eureka server
     serviceUrl:
       defaulZone: http://localhost:8761/eureka/
+logging:
+  file: C:/tmp/config.log
+  level:
+    ROOT: INFO
+    org:
+      sergei:
+        config: DEBUG

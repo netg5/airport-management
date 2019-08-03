@@ -44,3 +44,10 @@ management:
   endpoint:
     health:
       show-details: always
+logging:
+  file: C:/tmp/tickets.log
+  level:
+    ROOT: INFO
+    org:
+      sergei:
+        tickets: DEBUG
