@@ -13,7 +13,7 @@ import java.util.Map;
 public interface PassengerService {
     ResponseEntity<ResponseDTO<PassengerResponseDTO>> findOne(Long passengerId);
 
-    ResponseEntity<ResponseDTO<PassengerResponseDTO>> findAll();
+    ResponseEntity<ResponseDTO<PassengerResponseDTO>> findAll(int page, int size);
 
     ResponseEntity<ResponseDTO<String>> findIdsOfAllCustomers();
 

@@ -84,7 +84,7 @@ public class PassengerServiceImpl implements PassengerService {
      * @return list of customers
      */
     @Override
-    public ResponseEntity<ResponseDTO<PassengerResponseDTO>> findAll() {
+    public ResponseEntity<ResponseDTO<PassengerResponseDTO>> findAll(int page, int size) {
         List<Passenger> passengerList = passengerRepository.findAll();
         if (passengerList.isEmpty()) {
             List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("PAS-001");

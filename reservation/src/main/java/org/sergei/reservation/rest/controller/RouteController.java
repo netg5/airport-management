@@ -45,16 +45,15 @@ public class RouteController {
     }
 
     @ApiOperation("Get all existing routes")
-    @GetMapping(produces = "application/json")
+    @GetMapping(value = "/getAllRoutes")
     public ResponseEntity<ResponseDTO<RouteResponseDTO>> getAllRoutes() {
         return routeService.findAllRoutes();
     }
 
     @ApiOperation("Get route by ID")
-    @GetMapping(value = "/{routeId}", produces = "application/json")
-    public ResponseEntity<ResponseDTO<RouteResponseDTO>>
-    getRouteById(@ApiParam(value = "Route ID which should be found", required = true)
-                 @PathVariable("routeId") Long routeId) {
+    @GetMapping(value = "/getRouteById/{routeId}")
+    public ResponseEntity<ResponseDTO<RouteResponseDTO>> getRouteById(@ApiParam(value = "Route ID which should be found", required = true)
+                                                                      @PathVariable("routeId") Long routeId) {
         return routeService.findOneRoute(routeId);
     }
 }

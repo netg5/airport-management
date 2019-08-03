@@ -34,7 +34,6 @@ import java.util.Map;
  * @author Sergei Visotsky
  */
 @RestController
-@RequestMapping("/passengers")
 @Api(tags = {"passengerCrudOperations"})
 public class PassengerController {
 
@@ -46,29 +45,22 @@ public class PassengerController {
     }
 
     @ApiOperation("Get all customers")
-    @GetMapping(produces = "application/json")
-    public ResponseEntity<ResponseDTO<PassengerResponseDTO>> getAllCustomers() {
-        return passengerService.findAll();
+    @GetMapping(value = "/getAllCustomers")
+    public ResponseEntity<ResponseDTO<PassengerResponseDTO>> getAllCustomers(@ApiParam(value = "Number of the page")
+                                                                             @RequestParam("page") int page,
+                                                                             @ApiParam(value = "Maximum number of content blocks on the page")
+                                                                             @RequestParam("size") int size) {
+        return passengerService.findAll(page, size);
     }
 
     @ApiOperation("Get IDs of all existing customers")
-    @GetMapping(value = "/ids", produces = "application/json")
+    @GetMapping(value = "/getIdsOfAllCustomers")
     public ResponseEntity<ResponseDTO<String>> getIdsOfAllCustomers() {
         return passengerService.findIdsOfAllCustomers();
     }
 
-    @ApiOperation("Get all customers paginated")
-    @GetMapping(params = {"page", "size"}, produces = "application/json")
-    public ResponseEntity<ResponseDTO<PassengerResponseDTO>>
-    getAllCustomersPaginated(@ApiParam(value = "Number of the page")
-                             @RequestParam("page") int page,
-                             @ApiParam(value = "Maximum number of content blocks on the page")
-                             @RequestParam("size") int size) {
-        return passengerService.findAllPaginated(page, size);
-    }
-
     @ApiOperation("Get passenger by ID")
-    @GetMapping(value = "/{passengerId}", produces = "application/json")
+    @GetMapping(value = "/getCustomerById/{passengerId}", produces = "application/json")
     public ResponseEntity<ResponseDTO<PassengerResponseDTO>>
     getCustomerById(@ApiParam(value = "Passenger ID which should be found", required = true)
                     @PathVariable("passengerId") Long passengerId) {
@@ -76,7 +68,7 @@ public class PassengerController {
     }
 
     @ApiOperation("Save passenger")
-    @PostMapping(value = "/save", produces = "application/json", consumes = "application/json")
+    @PostMapping(value = "/saveCustomer", produces = "application/json", consumes = "application/json")
     public ResponseEntity<ResponseDTO<PassengerResponseDTO>>
     saveCustomer(@ApiParam(value = "Saved passenger", required = true)
                  @RequestBody PassengerResponseDTO request) {
@@ -84,24 +76,15 @@ public class PassengerController {
     }
 
     @ApiOperation("Update passenger data")
-    @PostMapping(value = "/update", produces = "application/json", consumes = "application/json")
+    @PostMapping(value = "/updateCustomer", produces = "application/json", consumes = "application/json")
     public ResponseEntity<ResponseDTO<PassengerResponseDTO>>
     updateCustomer(@ApiParam(value = "Updated passenger", required = true)
                    @RequestBody PassengerUpdateRequestDTO request) {
         return passengerService.update(request);
     }
 
-    @ApiOperation("Update one field for a passenger")
-    @PatchMapping(value = "/{passengerId}/patch", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<ResponseDTO<PassengerResponseDTO>>
-    patchCustomer(@ApiParam(value = "Passenger ID which should be updated", required = true)
-                  @PathVariable("passengerId") Long passengerId,
-                  @RequestBody Map<String, Object> params) {
-        return passengerService.patch(passengerId, params);
-    }
-
     @ApiOperation(value = "Delete passenger data", notes = "Operation allowed for the ROLE_ADMIN only")
-    @DeleteMapping("/{passengerId}")
+    @DeleteMapping("/deleteCustomer/{passengerId}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<ResponseDTO<PassengerResponseDTO>>
     deleteCustomer(@ApiParam(value = "Passenger ID which should be deleted", required = true)

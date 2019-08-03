@@ -30,7 +30,6 @@ import org.springframework.web.bind.annotation.*;
  * @author Sergei Visotsky
  */
 @RestController
-@RequestMapping("/aircrafts")
 @Api(tags = {"getAircraftData"})
 public class AircraftController {
 
@@ -42,15 +41,14 @@ public class AircraftController {
     }
 
     @ApiOperation(value = "Get all existing aircrafts", produces = "application/json", consumes = "application/json")
-    @GetMapping(produces = "application/json")
+    @GetMapping(value = "/getAllAircrafts", produces = "application/json")
     public ResponseEntity<ResponseDTO<AircraftDTO>> getAllAircraft() {
         return aircraftService.findAll();
     }
 
     @ApiOperation("Get aircraftDTO by ID")
-    @PostMapping(produces = "application/json", consumes = "application/json")
-    public ResponseEntity<ResponseDTO<AircraftDTO>>
-    getAircraftById(@RequestBody AircraftRequestDTO request) {
+    @PostMapping(value = "/getAircraftById")
+    public ResponseEntity<ResponseDTO<AircraftDTO>> getAircraftById(@RequestBody AircraftRequestDTO request) {
         return aircraftService.findOne(request);
     }
 }
