@@ -30,3 +30,10 @@ oauth:
   client-secret: trusted-client-secret
   username: admin
   password: 123456
+logging:
+  file: C:/tmp/main-ui.log
+  level:
+    ROOT: INFO
+    org:
+      sergei:
+        registry: DEBUG

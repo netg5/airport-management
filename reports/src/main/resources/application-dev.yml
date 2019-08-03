@@ -48,3 +48,10 @@ management:
   endpoint:
     health:
       show-details: always
+logging:
+  file: C:/tmp/reports.log
+  level:
+    ROOT: INFO
+    org:
+      sergei:
+        reports: DEBUG

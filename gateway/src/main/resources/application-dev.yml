@@ -57,3 +57,10 @@ management:
   endpoint:
     health:
       show-details: always
+logging:
+  file: C:/tmp/gaeway.log
+  level:
+    ROOT: INFO
+    org:
+      sergei:
+        gateway: DEBUG

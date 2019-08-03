@@ -48,3 +48,10 @@ management:
   endpoint:
     health:
       show-details: always
+logging:
+  file: C:/tmp/reservation.log
+  level:
+    ROOT: INFO
+    org:
+      sergei:
+        reservation: DEBUG
