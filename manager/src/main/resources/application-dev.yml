@@ -34,12 +34,23 @@ eureka:
     instance-info-replication-interval-seconds: 10 # how often to replicate instance changes to be replicated to Eureka server
     serviceUrl:
       defaulZone: http://localhost:8761/eureka/
+
 security:
   oauth2:
     resource:
       user-info-uri: http://localhost:8080/auth/users/authenticate
+
 management:
   endpoint.health.show-details: always
+
+logging:
+  file: C:/tmp/manager.log
+  level:
+    ROOT: INFO
+    org:
+      sergei:
+        manager: DEBUG
+
 info:
   app:
     name: Management service
