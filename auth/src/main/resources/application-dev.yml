@@ -28,8 +28,6 @@ eureka:
     home-page-url: http://localhost:${server.port}
     lease-renewal-interval-in-seconds: 10 # intervalSeconds between subsequent heartbeats sent to Eureka server
     lease-expiration-duration-in-seconds: 20 # time that Eureka server waits since it received last heartbeat before it can evict this instance
-    metadata-map:
-      swagger_url: http://localhost:${server.port}/v2/rest-docs
   client:
     enabled: true
     register-with-eureka: true

@@ -6,11 +6,6 @@ spring:
 zuul:
   ssl-hostname-validation-enabled: false # No recommended in real production applications
   routes:
-    service-resource:
-      path: /service/**
-      service-id: service-resource
-      url: http://localhost:8084
-      sensitive-headers: true
     auth:
       path: /auth/**
       service-id: auth
@@ -59,7 +54,7 @@ management:
     health:
       show-details: always
 logging:
-  file: C:/tmp/gaeway.log
+  file: C:/tmp/gateway.log
   level:
     ROOT: INFO
     org:
