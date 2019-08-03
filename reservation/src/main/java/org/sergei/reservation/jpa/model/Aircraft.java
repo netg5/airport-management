@@ -56,7 +56,7 @@ public class Aircraft implements Serializable {
     @Column(name = "model_number")
     private String modelNumber;
 
-    @Column(name = "aircraft_name", nullable = false)
+    @Column(name = "aircraft_name")
     private String aircraftName;
 
     private Integer capacity;
@@ -72,8 +72,7 @@ public class Aircraft implements Serializable {
     )
     @JoinColumn(
             name = "owner_id",
-            referencedColumnName = "id",
-            nullable = false
+            referencedColumnName = "id"
     )
     private Owner owner;
 
