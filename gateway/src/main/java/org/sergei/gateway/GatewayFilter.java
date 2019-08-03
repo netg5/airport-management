@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sergei.gateway.filter;
+package org.sergei.gateway;
 
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;

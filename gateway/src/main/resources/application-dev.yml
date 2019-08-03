@@ -31,6 +31,11 @@ zuul:
       service-id: reports
       url: http://localhost:8089
       sensitive-headers: true
+    manager:
+      path: /manager/**
+      service-id: manager
+      url: http://localhost:8088
+      sensitive-headers: true
 eureka:
   instance:
     non-secure-port-enabled: false
