@@ -25,18 +25,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author Sergei Visotsky
  */
-@Api(
-        value = "/report-rest/customers",
-        produces = "application/json"
-)
 @RestController
-@RequestMapping("/passengers")
+@Api(tags = {"passengerReports"})
 public class PassengerReportController {
 
     private final PassengerReportService passengerReportService;
@@ -47,8 +42,8 @@ public class PassengerReportController {
     }
 
     @ApiOperation("Get report for a specific passenger")
-    @GetMapping(value = "/{passengerId}", produces = "application/json")
-    public ResponseEntity<ResponseDTO<PassengerReportDTO>> findReportByCustomerId(@PathVariable Long passengerId) {
+    @GetMapping(value = "/findReportByPassengerId/{passengerId}")
+    public ResponseEntity<ResponseDTO<PassengerReportDTO>> findReportByPassengerId(@PathVariable Long passengerId) {
         return passengerReportService.findById(passengerId);
     }
 }

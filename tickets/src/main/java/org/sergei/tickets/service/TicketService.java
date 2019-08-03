@@ -17,7 +17,6 @@
 package org.sergei.tickets.service;
 
 import org.sergei.tickets.rest.dto.TicketDTO;
-import org.sergei.tickets.rest.dto.TicketRequestDTO;
 import org.sergei.tickets.rest.dto.response.ResponseDTO;
 import org.springframework.http.ResponseEntity;
 
@@ -29,18 +28,8 @@ public interface TicketService {
     /**
      * Method to find tickets for passenger
      *
-     * @param request Request payload with params to find tickets
+     * @param passengerId Request payload with params to find tickets
      * @return collection of tickets
      */
-    ResponseEntity<ResponseDTO<TicketDTO>> findAllTickets(TicketRequestDTO request);
-
-    /**
-     * Method to find tickets for passenger paginated
-     *
-     * @param request request Request payload with params to find tickets
-     * @param page    number of page to show
-     * @param size    element quantity per page
-     * @return Collection of tickets
-     */
-    ResponseEntity<ResponseDTO<TicketDTO>> findAllTicketsPageable(TicketRequestDTO request, int page, int size);
+    ResponseEntity<ResponseDTO<TicketDTO>> findAllTickets(Long passengerId);
 }
