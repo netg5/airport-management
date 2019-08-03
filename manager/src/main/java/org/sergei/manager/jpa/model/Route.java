@@ -16,7 +16,10 @@
 
 package org.sergei.manager.jpa.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -49,10 +52,10 @@ public class Route implements Serializable {
     @Column(nullable = false)
     private Double distance;
 
-    @Column(name = "departure_time", nullable = false)
+    @Column(name = "departure_time")
     private LocalDateTime departureTime;
 
-    @Column(name = "arrival_time", nullable = false)
+    @Column(name = "arrival_time")
     private LocalDateTime arrivalTime;
 
     @Column(nullable = false)
@@ -60,8 +63,4 @@ public class Route implements Serializable {
 
     @Column(nullable = false)
     private String place;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id")
-    private Aircraft aircraft;
 }

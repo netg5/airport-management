@@ -1,7 +1,7 @@
 package org.sergei.manager.jpa.model.mappers;
 
 import org.sergei.manager.jpa.model.Route;
-import org.sergei.manager.rest.dto.request.RouteRequestDTO;
+import org.sergei.manager.rest.dto.RouteDTO;
 import org.sergei.manager.utils.IMapper;
 import org.springframework.stereotype.Component;
 
@@ -9,10 +9,10 @@ import org.springframework.stereotype.Component;
  * @author Sergei Visotsky
  */
 @Component
-public class RouteModelMapper implements IMapper<RouteRequestDTO, Route> {
+public class RouteModelMapper implements IMapper<RouteDTO, Route> {
 
     @Override
-    public Route apply(RouteRequestDTO routeDTO) {
+    public Route apply(RouteDTO routeDTO) {
         return Route.builder()
                 .id(routeDTO.getRouteId())
                 .departureTime(routeDTO.getDepartureTime())

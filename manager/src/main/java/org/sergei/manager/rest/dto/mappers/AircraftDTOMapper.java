@@ -13,10 +13,13 @@ import org.springframework.stereotype.Component;
 public class AircraftDTOMapper implements IMapper<Aircraft, AircraftDTO> {
 
     private final ManufacturerDTOMapper manufacturerDTOMapper;
+    private final HangarDTOMapper hangarDTOMapper;
 
     @Autowired
-    public AircraftDTOMapper(ManufacturerDTOMapper manufacturerDTOMapper) {
+    public AircraftDTOMapper(ManufacturerDTOMapper manufacturerDTOMapper,
+                             HangarDTOMapper hangarDTOMapper) {
         this.manufacturerDTOMapper = manufacturerDTOMapper;
+        this.hangarDTOMapper = hangarDTOMapper;
     }
 
     @Override
@@ -29,7 +32,7 @@ public class AircraftDTOMapper implements IMapper<Aircraft, AircraftDTO> {
                 .capacity(aircraft.getCapacity())
                 .weight(aircraft.getWeight())
                 .exploitationPeriod(aircraft.getExploitationPeriod())
-                .hangarId(aircraft.getHangar().getId())
+                .hangar(hangarDTOMapper.apply(aircraft.getHangar()))
                 .manufacturer(manufacturerDTOMapper.apply(aircraft.getManufacturer()))
                 .build();
     }

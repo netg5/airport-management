@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.sql.Date;
 
@@ -23,6 +24,7 @@ public class Pilot implements Serializable {
     private static final long serialVersionUID = 6495063085987376539L;
 
     @Id
+    @NotNull
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
             generator = "pilot_id_seq")
     @SequenceGenerator(name = "pilot_id_seq",

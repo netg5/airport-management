@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -22,6 +23,7 @@ public class Owner implements Serializable {
     private static final long serialVersionUID = 5143473865196849344L;
 
     @Id
+    @NotNull
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
             generator = "owner_id_seq")
     @SequenceGenerator(name = "owner_id_seq",
