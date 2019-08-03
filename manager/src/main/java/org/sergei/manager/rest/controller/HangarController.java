@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -30,7 +31,9 @@ public class HangarController {
     }
 
     @GetMapping(value = "/findHangarsByCapacityWithAircrafts/{capacity}")
-    public ResponseEntity<ResponseDTO<HangarDTO>> findHangarsByCapacityWithAircrafts(@PathVariable("capacity") Integer capacity) {
-        return hangarService.findHangarsByCapacityWithAircrafts(capacity);
+    public ResponseEntity<ResponseDTO<HangarDTO>> findHangarsByCapacityWithAircrafts(@PathVariable("capacity") Integer capacity,
+                                                                                     @RequestParam("page") int page,
+                                                                                     @RequestParam("size") int size) {
+        return hangarService.findHangarsByCapacityWithAircrafts(capacity, page, size);
     }
 }

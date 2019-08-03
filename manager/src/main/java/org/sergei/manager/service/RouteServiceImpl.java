@@ -19,17 +19,13 @@ package org.sergei.manager.service;
 import lombok.extern.slf4j.Slf4j;
 import org.sergei.manager.jpa.model.Route;
 import org.sergei.manager.jpa.model.mappers.RouteModelMapper;
-import org.sergei.manager.jpa.repository.AircraftRepository;
 import org.sergei.manager.jpa.repository.RouteRepository;
 import org.sergei.manager.rest.dto.RouteDTO;
-import org.sergei.manager.rest.dto.mappers.AircraftDTOMapper;
 import org.sergei.manager.rest.dto.mappers.RouteDTOMapper;
 import org.sergei.manager.rest.dto.mappers.RouteListDTOMapper;
 import org.sergei.manager.rest.dto.response.ResponseDTO;
 import org.sergei.manager.rest.dto.response.ResponseErrorDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -44,28 +40,22 @@ import java.util.Optional;
 @Service
 public class RouteServiceImpl implements RouteService {
 
-    private final AircraftRepository aircraftRepository;
     private final RouteRepository routeRepository;
     private final RouteModelMapper routeModelMapper;
     private final RouteDTOMapper routeDTOMapper;
     private final RouteListDTOMapper routeDTOListMapper;
-    private final AircraftDTOMapper aircraftDTOMapper;
     private final MessageService messageService;
 
     @Autowired
-    public RouteServiceImpl(AircraftRepository aircraftRepository,
-                            RouteRepository routeRepository,
+    public RouteServiceImpl(RouteRepository routeRepository,
                             RouteModelMapper routeModelMapper,
                             RouteDTOMapper routeDTOMapper,
                             RouteListDTOMapper routeDTOListMapper,
-                            AircraftDTOMapper aircraftDTOMapper,
                             MessageService messageService) {
-        this.aircraftRepository = aircraftRepository;
         this.routeRepository = routeRepository;
         this.routeModelMapper = routeModelMapper;
         this.routeDTOMapper = routeDTOMapper;
         this.routeDTOListMapper = routeDTOListMapper;
-        this.aircraftDTOMapper = aircraftDTOMapper;
         this.messageService = messageService;
     }
 
@@ -111,30 +101,6 @@ public class RouteServiceImpl implements RouteService {
             return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
         } else {
             List<RouteDTO> routeDTOList = routeDTOListMapper.apply(routeList);
-
-            ResponseDTO<RouteDTO> response = new ResponseDTO<>();
-            response.setErrorList(List.of());
-            response.setResponse(routeDTOList);
-
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        }
-    }
-
-    /**
-     * Find paginated routes
-     *
-     * @param page number of pages shown
-     * @param size number of elements on the page
-     * @return list of entities
-     */
-    @Override
-    public ResponseEntity<ResponseDTO<RouteDTO>> findAllRoutesPaginated(int page, int size) {
-        Page<Route> routePage = routeRepository.findAll(PageRequest.of(page, size));
-        if (routePage.isEmpty()) {
-            List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("RT-001");
-            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
-        } else {
-            List<RouteDTO> routeDTOList = routeDTOListMapper.apply(routePage.getContent());
 
             ResponseDTO<RouteDTO> response = new ResponseDTO<>();
             response.setErrorList(List.of());

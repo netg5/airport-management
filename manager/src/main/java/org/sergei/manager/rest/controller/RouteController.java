@@ -27,12 +27,6 @@ public class RouteController {
         return routeService.findAllRoutes();
     }
 
-    @GetMapping(value = "/getAllRoutesPaginated", params = {"page", "size"})
-    public ResponseEntity<ResponseDTO<RouteDTO>> getAllRoutesPaginated(@RequestParam("page") int page,
-                                                                       @RequestParam("size") int size) {
-        return routeService.findAllRoutesPaginated(page, size);
-    }
-
     @GetMapping(value = "/getRouteById/{routeId}")
     public ResponseEntity<ResponseDTO<RouteDTO>> getRouteById(@PathVariable("routeId") Long routeId) {
         return routeService.findOneRoute(routeId);

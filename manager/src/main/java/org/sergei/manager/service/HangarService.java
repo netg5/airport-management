@@ -13,6 +13,6 @@ public interface HangarService {
 
     ResponseEntity<ResponseDTO<HangarDTO>> findHangarsByCapacity(Integer capacity);
 
-    ResponseEntity<ResponseDTO<HangarDTO>> findHangarsByCapacityWithAircrafts(Integer capacity);
+    ResponseEntity<ResponseDTO<HangarDTO>> findHangarsByCapacityWithAircrafts(Integer capacity, int page, int size);
 
 }

@@ -1,6 +1,8 @@
 package org.sergei.manager.jpa.repository;
 
 import org.sergei.manager.jpa.model.Hangar;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -25,5 +27,5 @@ public interface HangarRepository extends JpaRepository<Hangar, Long> {
             " WHERE h.capacity = :capacity"
 
     )
-    List<Hangar> findHangarsByCapacityWithAircrafts(@Param("capacity") Integer capacity);
+    Page<Hangar> findHangarsByCapacityWithAircrafts(@Param("capacity") Integer capacity, Pageable var1);
 }
