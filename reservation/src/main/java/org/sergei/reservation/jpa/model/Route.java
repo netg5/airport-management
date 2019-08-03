@@ -52,10 +52,10 @@ public class Route implements Serializable {
     @Column(nullable = false)
     private Double distance;
 
-    @Column(name = "departure_time", nullable = false)
+    @Column(name = "departure_time")
     private LocalDateTime departureTime;
 
-    @Column(name = "arrival_time", nullable = false)
+    @Column(name = "arrival_time")
     private LocalDateTime arrivalTime;
 
     @Column(nullable = false)

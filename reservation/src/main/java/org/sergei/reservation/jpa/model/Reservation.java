@@ -48,13 +48,13 @@ public class Reservation implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "date_of_flying", nullable = false)
+    @Column(name = "date_of_flying")
     private LocalDateTime dateOfFlying;
 
-    @Column(name = "departure_time", nullable = false)
+    @Column(name = "departure_time")
     private LocalDateTime departureTime;
 
-    @Column(name = "arrival_time", nullable = false)
+    @Column(name = "arrival_time")
     private LocalDateTime arrivalTime;
 
     @Column(name = "hours_flying")
@@ -63,16 +63,14 @@ public class Reservation implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "passenger_id",
-            referencedColumnName = "id",
-            nullable = false
+            referencedColumnName = "id"
     )
     private Passenger passenger;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "aircraft_id",
-            referencedColumnName = "id",
-            nullable = false
+            referencedColumnName = "id"
     )
     private Aircraft aircraft;
 

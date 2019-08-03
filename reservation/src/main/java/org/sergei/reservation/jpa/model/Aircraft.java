@@ -74,8 +74,7 @@ public class Aircraft implements Serializable {
     )
     @JoinColumn(
             name = "owner_id",
-            referencedColumnName = "id",
-            nullable = false
+            referencedColumnName = "id"
     )
     private Owner owner;
 
