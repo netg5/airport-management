@@ -17,10 +17,9 @@
 package org.sergei.tickets.jpa.repository;
 
 import org.sergei.tickets.jpa.model.Ticket;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -42,21 +41,6 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
             "FROM\n" +
             "    Ticket t\n" +
             "WHERE\n" +
-            "    t.passengerId = ?1")
-    List<Ticket> findAllTickets(Long passengerId);
-
-    /**
-     * Find ticket by passenger ID, place or/and distance with pagination
-     *
-     * @param passengerId whose ticket should be found
-     * @param pageable    page number and element quantity per page
-     * @return list of found tickets
-     */
-    @Query("SELECT \n" +
-            "    t\n" +
-            "FROM\n" +
-            "    Ticket t\n" +
-            "WHERE\n" +
-            "    t.passengerId = ?1")
-    Page<Ticket> findAllTicketsPageable(Long passengerId, Pageable pageable);
+            "    t.passengerId = :passengerId")
+    List<Ticket> findAllTickets(@Param("passengerId") Long passengerId);
 }

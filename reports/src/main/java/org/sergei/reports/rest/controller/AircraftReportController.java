@@ -25,17 +25,16 @@ import org.sergei.reports.service.AircraftReportService;
 import org.sergei.reports.service.AircraftReportServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author Sergei Visotsky
  */
-@Api(
-        value = "/report-rest/aircraftId",
-        produces = "application/json"
-)
 @RestController
-@RequestMapping("/aircrafts")
+@Api(tags = {"aircraftReports"})
 public class AircraftReportController {
 
     private final AircraftReportService aircraftReportService;
@@ -45,8 +44,7 @@ public class AircraftReportController {
         this.aircraftReportService = aircraftReportService;
     }
 
-    @ApiOperation("Get all existing reports in paginated way")
-    @GetMapping(params = {"page", "size"})
+    @GetMapping(value = "/findAllReports")
     public ResponseEntity<ResponseDTO<AircraftReportDTO>> findAllReports(@ApiParam("Number of the page to show")
                                                                          @RequestParam("page") int page,
                                                                          @ApiParam("Number of elements per page")
@@ -55,7 +53,7 @@ public class AircraftReportController {
     }
 
     @ApiOperation("Get report for the aircraftId by ID")
-    @GetMapping("/{aircraftId}")
+    @GetMapping("/findReportByAircraft/{aircraftId}")
     public ResponseEntity<ResponseDTO<AircraftReportDTO>> findByAircraftId(@ApiParam("Aircraft ID to find the report")
                                                                            @PathVariable("aircraftId") Long aircraftId) {
         return aircraftReportService.findById(aircraftId);
