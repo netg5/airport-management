@@ -6,7 +6,7 @@
     <groupId>org.sergei</groupId>
     <artifactId>flight-reservation</artifactId>
     <packaging>pom</packaging>
-    <version>3.0.0-SNAPSHOT</version>
+    <version>3.0.0</version>
 
     <name>Flight reservation</name>
     <description>Application to reserve flights based on the microservice architecture</description>
