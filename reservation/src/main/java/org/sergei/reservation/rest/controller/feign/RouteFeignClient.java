@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 /**
  * @author Sergei Visotsky
  */
-@FeignClient(value = "route", url = "http://localhost:8088/")
+@FeignClient(value = "route", url = "${feign.route-url}")
 @Component
 public interface RouteFeignClient {
 

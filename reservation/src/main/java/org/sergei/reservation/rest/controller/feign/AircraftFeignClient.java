@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 /**
  * @author Sergei Visotsky
  */
-@FeignClient(value = "aircraft", url = "http://localhost:8088/")
+@FeignClient(value = "aircraft", url = "${feign.route-url}")
 @Component
 public interface AircraftFeignClient {
 
