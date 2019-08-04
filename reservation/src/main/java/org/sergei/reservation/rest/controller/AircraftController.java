@@ -43,7 +43,7 @@ public class AircraftController {
     }
 
     @GetMapping(value = "/getAllAircrafts")
-    public ResponseEntity<ResponseDTO<AircraftDTO>> getAllAircraft() {
+    public ResponseEntity<ResponseDTO<AircraftDTO>> getAllAircrafts() {
         return aircraftService.findAll();
     }
 
