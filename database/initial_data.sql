@@ -30,6 +30,8 @@ INSERT INTO manager VALUES (1, '12-34-56', 'John', 'Smith', 'male', '3rd Kennedy
 INSERT INTO manager VALUES (2, '90-A1-9K', 'Janis', 'Priede', 'male', '5th Barona str, Riga', 'Latvia','someowner@somewhere.com', '34534625');
 INSERT INTO manager VALUES (3, '1Q-3B-23', 'Fiona', 'Pridaine', 'female', '1st Amerino str, Berlin', 'Germany','someowner@somewhere.com', '437372342');
 
+INSERT INTO airport VALUES(1, 'Los Angeles International Airport', '1st Avenue, Los Angeles', 'USA', 'John Smith', 'Supervisor', 'jahn@example.com', '+124579');
+
 -- User service data - 1st user password: 123456
 INSERT INTO auth_user VALUES (1, 'admin', '$2a$10$sHzvSELmDqDxAI8GN.yyb.bRLDhWNB03zJfGWc9M5dQelX05GMACm');
 INSERT INTO auth_user_roles VALUES (1, 'USER');
@@ -54,3 +56,5 @@ INSERT INTO response_messages VALUES(12, 'PIL-003', 'Pilot weight is greater tha
 INSERT INTO response_messages VALUES(13, 'OW-001', 'Owner with this ID not found');
 INSERT INTO response_messages VALUES(14, 'MAN-001', 'Manufacturer with this ID not found');
 INSERT INTO response_messages VALUES(15, 'HAN-001', 'Hangar not found');
+INSERT INTO response_messages VALUES(16, 'APT-001', 'Airport with this name not found');
+INSERT INTO response_messages VALUES(17, 'APT-002', 'No airport contact found by this parameter');

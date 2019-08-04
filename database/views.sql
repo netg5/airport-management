@@ -23,7 +23,7 @@ CREATE VIEW ticket_view AS
 SELECT p.id             AS passenger_id,
        p.first_name     AS first_name,
        p.last_name      AS last_name,
-       r.id             AS aircraft_id,
+       r.aircraft_id    AS aircraft_id,
        r.date_of_flying AS date_of_flying,
        r.arrival_time   AS arrival_time,
        r.hours_flying   AS hours_flying,
