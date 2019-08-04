@@ -32,7 +32,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -79,53 +78,14 @@ public class PassengerServiceImpl implements PassengerService {
     }
 
     /**
-     * Find all customers
-     *
-     * @return list of customers
-     */
-    @Override
-    public ResponseEntity<ResponseDTO<PassengerResponseDTO>> findAll(int page, int size) {
-        List<Passenger> passengerList = passengerRepository.findAll();
-        if (passengerList.isEmpty()) {
-            List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("PAS-001");
-            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
-        } else {
-            List<PassengerResponseDTO> passengerResponseDTOList = passengerDTOListMapper.apply(passengerList);
-            ResponseDTO<PassengerResponseDTO> response = new ResponseDTO<>();
-            response.setErrorList(List.of());
-            response.setResponse(passengerResponseDTOList);
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        }
-    }
-
-    /**
-     * Find ID of each passenger in one JSON response as a list
-     *
-     * @return list of IDs
-     */
-    @Override
-    public ResponseEntity<ResponseDTO<String>> findIdsOfAllCustomers() {
-        List<String> passengerIds = passengerRepository.findIdsOfAllCustomers();
-        if (passengerIds.isEmpty()) {
-            List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("PAS-001");
-            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
-        } else {
-            ResponseDTO<String> response = new ResponseDTO<>();
-            response.setErrorList(List.of());
-            response.setResponse(passengerIds);
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        }
-    }
-
-    /**
-     * Find all customers with pagination
+     * Find all passengers with pagination
      *
      * @param page how many pages to show
      * @param size number of elements per page
      * @return list with entities
      */
     @Override
-    public ResponseEntity<ResponseDTO<PassengerResponseDTO>> findAllPaginated(int page, int size) {
+    public ResponseEntity<ResponseDTO<PassengerResponseDTO>> findAllPassengers(int page, int size) {
         Page<Passenger> passengersPage = passengerRepository.findAll(PageRequest.of(page, size));
         if (passengersPage.isEmpty()) {
             List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("PAS-001");
@@ -189,40 +149,6 @@ public class PassengerServiceImpl implements PassengerService {
         response.setResponse(List.of(passengerResponseDTOResp));
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
-    }
-
-    /**
-     * Patch specific field of the passenger
-     *
-     * @param passengerId passenger ID which field should be updated
-     * @param params      List of params that should be updated
-     * @return patched passenger DTO
-     */
-    @Override
-    public ResponseEntity<ResponseDTO<PassengerResponseDTO>> patch(Long passengerId, Map<String, Object> params) {
-        Optional<Passenger> customer = passengerRepository.findById(passengerId);
-        if (customer.isEmpty()) {
-            List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("PAS-001");
-            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
-        } else {
-            if (params.get("firstName") != null) {
-                customer.get().setFirstName(String.valueOf(params.get("firstName")));
-            }
-            if (params.get("lastName") != null) {
-                customer.get().setLastName(String.valueOf(params.get("lastName")));
-            }
-            if (params.get("age") != null) {
-                customer.get().setAge(Integer.valueOf(String.valueOf(params.get("age"))));
-            }
-
-            Passenger savedPassenger = passengerRepository.save(customer.get());
-            PassengerResponseDTO passengerResponseDTOResp = passengerDTOMapper.apply(savedPassenger);
-            ResponseDTO<PassengerResponseDTO> response = new ResponseDTO<>();
-            response.setErrorList(List.of());
-            response.setResponse(List.of(passengerResponseDTOResp));
-
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        }
     }
 
     /**

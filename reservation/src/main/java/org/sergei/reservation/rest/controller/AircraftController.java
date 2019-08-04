@@ -17,14 +17,16 @@
 package org.sergei.reservation.rest.controller;
 
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import org.sergei.reservation.rest.dto.AircraftDTO;
 import org.sergei.reservation.rest.dto.AircraftRequestDTO;
 import org.sergei.reservation.rest.dto.response.ResponseDTO;
 import org.sergei.reservation.service.AircraftService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author Sergei Visotsky
@@ -40,13 +42,11 @@ public class AircraftController {
         this.aircraftService = aircraftService;
     }
 
-    @ApiOperation(value = "Get all existing aircrafts", produces = "application/json", consumes = "application/json")
-    @GetMapping(value = "/getAllAircrafts", produces = "application/json")
+    @GetMapping(value = "/getAllAircrafts")
     public ResponseEntity<ResponseDTO<AircraftDTO>> getAllAircraft() {
         return aircraftService.findAll();
     }
 
-    @ApiOperation("Get aircraftDTO by ID")
     @PostMapping(value = "/getAircraftById")
     public ResponseEntity<ResponseDTO<AircraftDTO>> getAircraftById(@RequestBody AircraftRequestDTO request) {
         return aircraftService.findOne(request);

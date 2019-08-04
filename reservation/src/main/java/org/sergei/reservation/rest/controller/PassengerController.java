@@ -25,10 +25,7 @@ import org.sergei.reservation.rest.dto.response.ResponseDTO;
 import org.sergei.reservation.service.PassengerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 /**
  * @author Sergei Visotsky
@@ -46,49 +43,45 @@ public class PassengerController {
 
     @ApiOperation("Get all customers")
     @GetMapping(value = "/getAllCustomers")
-    public ResponseEntity<ResponseDTO<PassengerResponseDTO>> getAllCustomers(@ApiParam(value = "Number of the page")
-                                                                             @RequestParam("page") int page,
-                                                                             @ApiParam(value = "Maximum number of content blocks on the page")
+    public ResponseEntity<ResponseDTO<PassengerResponseDTO>> getAllCustomers(@RequestParam("page") int page,
                                                                              @RequestParam("size") int size) {
-        return passengerService.findAll(page, size);
-    }
-
-    @ApiOperation("Get IDs of all existing customers")
-    @GetMapping(value = "/getIdsOfAllCustomers")
-    public ResponseEntity<ResponseDTO<String>> getIdsOfAllCustomers() {
-        return passengerService.findIdsOfAllCustomers();
+        return passengerService.findAllPassengers(page, size);
     }
 
     @ApiOperation("Get passenger by ID")
-    @GetMapping(value = "/getCustomerById/{passengerId}", produces = "application/json")
-    public ResponseEntity<ResponseDTO<PassengerResponseDTO>>
-    getCustomerById(@ApiParam(value = "Passenger ID which should be found", required = true)
-                    @PathVariable("passengerId") Long passengerId) {
+    @GetMapping(value = "/getPassengerById/{passengerId}")
+    public ResponseEntity<ResponseDTO<PassengerResponseDTO>> getPassengerById(@PathVariable("passengerId") Long passengerId) {
         return passengerService.findOne(passengerId);
     }
 
+    /**
+     * Should be done during the reservation
+     *
+     * @param request
+     * @return
+     */
+    @Deprecated(forRemoval = true)
     @ApiOperation("Save passenger")
-    @PostMapping(value = "/saveCustomer", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<ResponseDTO<PassengerResponseDTO>>
-    saveCustomer(@ApiParam(value = "Saved passenger", required = true)
-                 @RequestBody PassengerResponseDTO request) {
+    @PostMapping(value = "/saveCustomer")
+    public ResponseEntity<ResponseDTO<PassengerResponseDTO>> savePassenger(@ApiParam(value = "Saved passenger", required = true)
+                                                                           @RequestBody PassengerResponseDTO request) {
         return passengerService.save(request);
     }
 
-    @ApiOperation("Update passenger data")
-    @PostMapping(value = "/updateCustomer", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<ResponseDTO<PassengerResponseDTO>>
-    updateCustomer(@ApiParam(value = "Updated passenger", required = true)
-                   @RequestBody PassengerUpdateRequestDTO request) {
+    @PostMapping(value = "/updatePassenger")
+    public ResponseEntity<ResponseDTO<PassengerResponseDTO>> updatePassenger(@RequestBody PassengerUpdateRequestDTO request) {
         return passengerService.update(request);
     }
 
-    @ApiOperation(value = "Delete passenger data", notes = "Operation allowed for the ROLE_ADMIN only")
-    @DeleteMapping("/deleteCustomer/{passengerId}")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<ResponseDTO<PassengerResponseDTO>>
-    deleteCustomer(@ApiParam(value = "Passenger ID which should be deleted", required = true)
-                   @PathVariable("passengerId") Long passengerId) {
+    /**
+     * Should be done during the reservation deletion
+     *
+     * @param passengerId
+     * @return
+     */
+    @Deprecated(forRemoval = true)
+    @DeleteMapping(value = "/deletePassenger/{passengerId}")
+    public ResponseEntity<ResponseDTO<PassengerResponseDTO>> deletePassenger(@PathVariable("passengerId") Long passengerId) {
         return passengerService.delete(passengerId);
     }
 }
