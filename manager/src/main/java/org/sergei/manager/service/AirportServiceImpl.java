@@ -1,6 +1,8 @@
 package org.sergei.manager.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.sergei.manager.jpa.model.Airport;
+import org.sergei.manager.jpa.model.mappers.AirportModelMapper;
 import org.sergei.manager.jpa.repository.AirportRepository;
 import org.sergei.manager.rest.dto.AirportContactDTO;
 import org.sergei.manager.rest.dto.AirportDTO;
@@ -23,6 +25,7 @@ import java.util.Optional;
  * @author Sergei Visotsky
  */
 @Service
+@Slf4j
 public class AirportServiceImpl implements AirportService {
 
     @PersistenceContext
@@ -31,13 +34,17 @@ public class AirportServiceImpl implements AirportService {
     private final AirportRepository airportRepository;
     private final MessageService messageService;
     private final AirportDOTMapper airportDOTMapper;
+    private final AirportModelMapper airportModelMapper;
 
     @Autowired
     public AirportServiceImpl(AirportRepository airportRepository,
-                              MessageService messageService, AirportDOTMapper airportDOTMapper) {
+                              MessageService messageService,
+                              AirportDOTMapper airportDOTMapper,
+                              AirportModelMapper airportModelMapper) {
         this.airportRepository = airportRepository;
         this.messageService = messageService;
         this.airportDOTMapper = airportDOTMapper;
+        this.airportModelMapper = airportModelMapper;
     }
 
     @Override
@@ -65,14 +72,22 @@ public class AirportServiceImpl implements AirportService {
             List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("RP-001");
             return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
         } else {
-            Query query = em.createNativeQuery("SELECT a.contact_name, a.contact_job FROM airport a WHERE a.airport_name = :airportName");
+            Query query =
+                    em.createNativeQuery(
+                            "SELECT a.contact_name, a.contact_job FROM airport a WHERE a.airport_name = :airportName");
             query.setParameter("airportName", airportName);
             if (query.getSingleResult() == null) {
                 List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("RP-001");
                 return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
             } else {
-                String contactName = String.valueOf(query.getParameter("contact_name"));
-                String contactJob = String.valueOf(query.getParameter("contact_job"));
+                @SuppressWarnings("unchecked")
+                List<Object[]> list = query.getResultList();
+                String contactName = null;
+                String contactJob = null;
+                for (Object[] elem : list) {
+                    contactName = (String) elem[0];
+                    contactJob = (String) elem[1];
+                }
                 AirportContactDTO contactDTO = new AirportContactDTO(contactName, contactJob);
                 return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of(contactDTO)), HttpStatus.OK);
             }
@@ -81,6 +96,9 @@ public class AirportServiceImpl implements AirportService {
 
     @Override
     public ResponseEntity<ResponseDTO<AirportDTO>> saveAirportData(AirportDTO airportDTO) {
-        return null;
+        Airport airport = airportModelMapper.apply(airportDTO);
+        Airport savedAirport = airportRepository.save(airport);
+        AirportDTO savedAirportDTO = airportDOTMapper.apply(savedAirport);
+        return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of(savedAirportDTO)), HttpStatus.OK);
     }
 }

@@ -34,7 +34,7 @@ public class Airport implements Serializable {
     @Column(name = "airport_name")
     private String airportName;
 
-    @Column(name = "airport_address")
+    @Column(name = "address")
     private String airportAddress;
 
     @Column(name = "country")

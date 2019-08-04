@@ -2,6 +2,7 @@ package org.sergei.manager.rest.controller;
 
 import io.swagger.annotations.Api;
 import org.sergei.manager.rest.dto.AirportContactDTO;
+import org.sergei.manager.rest.dto.AirportDTO;
 import org.sergei.manager.rest.dto.request.AirportRequestDTO;
 import org.sergei.manager.rest.dto.response.ResponseDTO;
 import org.sergei.manager.service.AirportService;
@@ -26,8 +27,17 @@ public class AirportController {
     }
 
     @PostMapping(value = "/getAirportByName")
-    public ResponseEntity<ResponseDTO<AirportContactDTO>> getAirportByName(@RequestBody AirportRequestDTO request) {
+    public ResponseEntity<ResponseDTO<AirportDTO>> getAirportByName(@RequestBody AirportRequestDTO request) {
+        return airportService.getAirportByName(request);
+    }
+
+    @PostMapping(value = "/getAirportContactByAirportName")
+    public ResponseEntity<ResponseDTO<AirportContactDTO>> getAirportContactByAirportName(@RequestBody AirportRequestDTO request) {
         return airportService.getAirportContactByAirportName(request);
     }
 
+    @PostMapping(value = "/saveAirportData")
+    public ResponseEntity<ResponseDTO<AirportDTO>> saveAirportData(@RequestBody AirportDTO request) {
+        return airportService.saveAirportData(request);
+    }
 }
