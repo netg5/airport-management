@@ -34,16 +34,8 @@ eureka:
     instance-info-replication-interval-seconds: 10 # how often to replicate instance changes to be replicated to Eureka server
     serviceUrl:
       defaulZone: http://localhost:8761/eureka/
-security:
-  oauth2:
-    resource:
-      user-info-uri: http://localhost:8080/auth/users/authenticate
-    access-token-uri: http://localhost:8080/auth/oauth/token
-    user-authorization-uri: http://localhost:8080/auth/oauth/authorize
 management:
-  endpoint:
-    health:
-      show-details: always
+  endpoints.web.exposure.include: "info, health, metrics, configprops, env, prometheus"
 logging:
   file: C:/tmp/reservation.log
   level:
