@@ -7,3 +7,9 @@ spring:
       discovery:
         enabled: true
         service-id: config
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
