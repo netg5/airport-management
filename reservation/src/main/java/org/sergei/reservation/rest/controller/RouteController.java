@@ -17,43 +17,36 @@
 package org.sergei.reservation.rest.controller;
 
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import org.sergei.reservation.rest.controller.feign.RouteFeignClient;
 import org.sergei.reservation.rest.dto.RouteResponseDTO;
 import org.sergei.reservation.rest.dto.response.ResponseDTO;
-import org.sergei.reservation.service.RouteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author Sergei Visotsky
  */
 @RestController
-@RequestMapping("/routes")
 @Api(tags = {"getRouteData"})
 public class RouteController {
 
-    private final RouteService routeService;
+    private final RouteFeignClient routeFeignClient;
 
     @Autowired
-    public RouteController(RouteService routeService) {
-        this.routeService = routeService;
+    public RouteController(RouteFeignClient routeFeignClient) {
+        this.routeFeignClient = routeFeignClient;
     }
 
-    @ApiOperation("Get all existing routes")
     @GetMapping(value = "/getAllRoutes")
     public ResponseEntity<ResponseDTO<RouteResponseDTO>> getAllRoutes() {
-        return routeService.findAllRoutes();
+        return routeFeignClient.getAllRoutes();
     }
 
-    @ApiOperation("Get route by ID")
     @GetMapping(value = "/getRouteById/{routeId}")
-    public ResponseEntity<ResponseDTO<RouteResponseDTO>> getRouteById(@ApiParam(value = "Route ID which should be found", required = true)
-                                                                      @PathVariable("routeId") Long routeId) {
-        return routeService.findOneRoute(routeId);
+    public ResponseEntity<ResponseDTO<RouteResponseDTO>> getRouteById(@PathVariable("routeId") Long routeId) {
+        return routeFeignClient.getRouteById(routeId);
     }
 }

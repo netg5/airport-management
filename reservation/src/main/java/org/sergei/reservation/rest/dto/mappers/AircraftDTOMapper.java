@@ -15,7 +15,6 @@ public class AircraftDTOMapper implements IMapper<Aircraft, AircraftDTO> {
         AircraftDTO aircraftDTO = new AircraftDTO();
 
         aircraftDTO.setAircraftId(aircraft.getId());
-        aircraftDTO.setManufacturerCode(aircraft.getManufacturerCode());
         aircraftDTO.setRegistrationNumber(aircraft.getRegistrationNumber());
         aircraftDTO.setModelNumber(aircraft.getModelNumber());
         aircraftDTO.setAircraftName(aircraft.getAircraftName());

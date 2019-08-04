@@ -4,7 +4,7 @@ server:
 # Spring specific configuration
 spring:
   application:
-    name: reports
+    name: reservation
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
 
@@ -38,8 +38,6 @@ security:
   oauth2:
     resource:
       user-info-uri: http://localhost:8080/auth/users/authenticate
-    access-token-uri: http://localhost:8080/auth/oauth/token
-    user-authorization-uri: http://localhost:8080/auth/oauth/authorize
 management:
   endpoint:
     health:

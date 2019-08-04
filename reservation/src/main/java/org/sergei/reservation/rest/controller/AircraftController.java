@@ -1,26 +1,10 @@
-/*
- * Copyright 2018-2019 the original author.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.sergei.reservation.rest.controller;
 
 import io.swagger.annotations.Api;
+import org.sergei.reservation.rest.controller.feign.AircraftFeignClient;
 import org.sergei.reservation.rest.dto.AircraftDTO;
 import org.sergei.reservation.rest.dto.AircraftRequestDTO;
 import org.sergei.reservation.rest.dto.response.ResponseDTO;
-import org.sergei.reservation.service.AircraftService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,20 +19,20 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = {"getAircraftData"})
 public class AircraftController {
 
-    private final AircraftService aircraftService;
+    private final AircraftFeignClient aircraftFeignClient;
 
     @Autowired
-    public AircraftController(AircraftService aircraftService) {
-        this.aircraftService = aircraftService;
+    public AircraftController(AircraftFeignClient aircraftFeignClient) {
+        this.aircraftFeignClient = aircraftFeignClient;
     }
 
     @GetMapping(value = "/getAllAircrafts")
     public ResponseEntity<ResponseDTO<AircraftDTO>> getAllAircrafts() {
-        return aircraftService.findAll();
+        return aircraftFeignClient.getAllAircrafts();
     }
 
     @PostMapping(value = "/getAircraftById")
     public ResponseEntity<ResponseDTO<AircraftDTO>> getAircraftById(@RequestBody AircraftRequestDTO request) {
-        return aircraftService.findOne(request);
+        return aircraftFeignClient.getAircraftByModelNumber(request);
     }
 }
