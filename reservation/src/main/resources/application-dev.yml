@@ -8,10 +8,6 @@ spring:
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
 
-# Feign client properties
-feign:
-  route-url: http://localhost:8088/
-
 # DataSource configuration
 datasource:
   jdbc-url: jdbc:postgresql://localhost:5432/flight_reservation
@@ -38,14 +34,8 @@ eureka:
     instance-info-replication-interval-seconds: 10 # how often to replicate instance changes to be replicated to Eureka server
     serviceUrl:
       defaulZone: http://localhost:8761/eureka/
-security:
-  oauth2:
-    resource:
-      user-info-uri: http://localhost:8080/auth/users/authenticate
 management:
-  endpoint:
-    health:
-      show-details: always
+  endpoints.web.exposure.include: "info, health, metrics, configprops, env, prometheus"
 logging:
   file: C:/tmp/reservation.log
   level:
