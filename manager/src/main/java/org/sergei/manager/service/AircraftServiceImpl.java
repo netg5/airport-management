@@ -107,6 +107,23 @@ public class AircraftServiceImpl implements AircraftService {
         }
     }
 
+    @Override
+    public ResponseEntity<ResponseDTO<AircraftDTO>> findById(Long aircraftId) {
+        Optional<Aircraft> aircraft = aircraftRepository.findById(aircraftId);
+        if (aircraft.isEmpty()) {
+            List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("AIR-001");
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+        } else {
+            AircraftDTO aircraftDTO = aircraftDTOMapper.apply(aircraft.get());
+
+            ResponseDTO<AircraftDTO> response = new ResponseDTO<>();
+            response.setErrorList(List.of());
+            response.setResponse(List.of(aircraftDTO));
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+    }
+
     /**
      * Save aircraftId
      *
