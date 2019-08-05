@@ -16,7 +16,9 @@
 
 package org.sergei.reservation.config;
 
-import org.springframework.cloud.openfeign.EnableFeignClients;
+import feign.RequestInterceptor;
+import org.sergei.reservation.config.security.FeignClientInterceptor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
@@ -28,4 +30,15 @@ import org.springframework.context.annotation.Configuration;
         "org.sergei.reservation"
 })
 public class ApplicationConfig {
+
+    /**
+     * Bean to allow Feign client be used with oAuth2 enabled
+     *
+     * @return
+     */
+    @Bean
+    public RequestInterceptor getFeignClientInterceptor() {
+        return new FeignClientInterceptor();
+    }
+
 }
