@@ -8,16 +8,20 @@ spring:
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
 
-# Feign client properties
-feign:
-  route-url: http://localhost:8088/
-
 # DataSource configuration
 datasource:
   jdbc-url: jdbc:postgresql://localhost:5432/flight_reservation
   type: com.zaxxer.hikari.HikariDataSource
   username: flight
   password: flight
+
+# Remote service endpoints
+manager:
+  aircraft-uri: http://localhost:8088/getAircraftById
+
+# Feign client properties
+feign:
+  route-url: http://localhost:8088/
 
 # Eureka configuration
 eureka:

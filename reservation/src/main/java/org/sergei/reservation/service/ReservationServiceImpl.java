@@ -16,10 +16,12 @@
 
 package org.sergei.reservation.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.sergei.reservation.jpa.model.Aircraft;
 import org.sergei.reservation.jpa.model.Passenger;
 import org.sergei.reservation.jpa.model.Reservation;
-import org.sergei.reservation.jpa.repository.AircraftRepository;
 import org.sergei.reservation.jpa.repository.PassengerRepository;
 import org.sergei.reservation.jpa.repository.ReservationRepository;
 import org.sergei.reservation.rest.dto.AircraftDTO;
@@ -30,13 +32,17 @@ import org.sergei.reservation.rest.dto.mappers.ReservationDTOListMapper;
 import org.sergei.reservation.rest.dto.mappers.ReservationDTOMapper;
 import org.sergei.reservation.rest.dto.response.ResponseDTO;
 import org.sergei.reservation.rest.dto.response.ResponseErrorDTO;
+import org.sergei.reservation.rest.exceptions.FlightRuntimeException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -44,11 +50,14 @@ import java.util.Optional;
 /**
  * @author Sergei Visotsky
  */
+@Slf4j
 @Service
 public class ReservationServiceImpl implements ReservationService {
 
+    @Value("${manager.aircraft-uri}")
+    private String managerAircraftUri;
+
     private final PassengerRepository passengerRepository;
-    private final AircraftRepository aircraftRepository;
     private final ReservationRepository reservationRepository;
     private final ReservationDTOMapper reservationDTOMapper;
     private final ReservationDTOListMapper reservationDTOListMapper;
@@ -57,14 +66,12 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Autowired
     public ReservationServiceImpl(PassengerRepository passengerRepository,
-                                  AircraftRepository aircraftRepository,
                                   ReservationRepository reservationRepository,
                                   ReservationDTOMapper reservationDTOMapper,
                                   ReservationDTOListMapper reservationDTOListMapper,
                                   AircraftDTOMapper aircraftDTOMapper,
                                   ResponseMessageService responseMessageService) {
         this.passengerRepository = passengerRepository;
-        this.aircraftRepository = aircraftRepository;
         this.reservationRepository = reservationRepository;
         this.reservationDTOMapper = reservationDTOMapper;
         this.reservationDTOListMapper = reservationDTOListMapper;
@@ -83,33 +90,56 @@ public class ReservationServiceImpl implements ReservationService {
     public ResponseEntity<ResponseDTO<ReservationResponseDTO>> findOneForPassenger(Long passengerId, Long reservationId) {
         Optional<Passenger> passenger = passengerRepository.findById(passengerId);
 
-        if (passenger.isEmpty()) {
-            List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("PAS-001");
-            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
-        } else {
-            Optional<Reservation> reservation = reservationRepository.findOneForPassenger(passengerId, reservationId);
-            if (reservation.isEmpty()) {
-                List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("RES-001");
+        try {
+            if (passenger.isEmpty()) {
+                List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("PAS-001");
                 return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
             } else {
-                ReservationResponseDTO reservationResponseDTO = reservationDTOMapper.apply(reservation.get());
-                // Find aircraftId by ID
-                Optional<Aircraft> aircraft = aircraftRepository.findById(reservation.get().getAircraft().getId());
-
-                if (aircraft.isEmpty()) {
-                    List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("AIR-001");
+                Optional<Reservation> reservation = reservationRepository.findOneForPassenger(passengerId, reservationId);
+                if (reservation.isEmpty()) {
+                    List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("RES-001");
                     return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
                 } else {
-                    AircraftDTO aircraftResponseDTO = aircraftDTOMapper.apply(aircraft.get());
-                    reservationResponseDTO.setAircraftId(aircraftResponseDTO.getAircraftId());
+                    ReservationResponseDTO reservationResponseDTO = reservationDTOMapper.apply(reservation.get());
+                    // Find aircraftId by ID
+//                Optional<Aircraft> aircraft = aircraftRepository.findById(reservation.get().getAircraft().getId());
 
-                    ResponseDTO<ReservationResponseDTO> response = new ResponseDTO<>();
-                    response.setErrorList(List.of());
-                    response.setResponse(List.of(reservationResponseDTO));
+                    RestTemplate restTemplate = new RestTemplate();
+                    ResponseEntity<String> responseEntity = restTemplate.getForEntity(managerAircraftUri, String.class);
 
-                    return new ResponseEntity<>(response, HttpStatus.OK);
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    JsonNode rootNode = objectMapper.readTree(responseEntity.getBody());
+                    Map<String, LinkedHashMap<String, Object>> map = new LinkedHashMap<>();
+                    map = objectMapper.convertValue(rootNode, map.getClass());
+
+                    for (Map.Entry<String, LinkedHashMap<String, Object>> entry : map.entrySet()) {
+                        AircraftDTO aircraftDTO = new AircraftDTO();
+                        aircraftDTO.setAircraftId(Long.valueOf(String.valueOf(entry.getValue().get("aircraftId"))));
+//                        aircraftDTO.setAircraftName();
+//                        aircraftDTO.setCapacity();
+//                        aircraftDTO.setModelNumber();
+//                        aircraftDTO.setRegistrationNumber();
+//                        aircraftDTO.setWeight();
+//                        aircraftDTO.setHangar();
+//                        mapPair.put(entry.getKey(), murCalculatePair);
+                    }
+
+                    if (responseEntity.getStatusCode().value() == 404) {
+                        List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("AIR-001");
+                        return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+                    } else {
+                        reservationResponseDTO.setAircraftId(aircraftResponseDTO.getAircraftId());
+
+                        ResponseDTO<ReservationResponseDTO> response = new ResponseDTO<>();
+                        response.setErrorList(List.of());
+                        response.setResponse(List.of(reservationResponseDTO));
+
+                        return new ResponseEntity<>(response, HttpStatus.OK);
+                    }
                 }
             }
+        } catch (Exception e) {
+            throw new FlightRuntimeException(e);
         }
     }
 
