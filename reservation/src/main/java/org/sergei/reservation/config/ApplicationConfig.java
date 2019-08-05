@@ -30,15 +30,4 @@ import org.springframework.context.annotation.Configuration;
         "org.sergei.reservation"
 })
 public class ApplicationConfig {
-
-    /**
-     * Bean to allow Feign client be used with oAuth2 enabled
-     *
-     * @return
-     */
-    @Bean
-    public RequestInterceptor getFeignClientInterceptor() {
-        return new FeignClientInterceptor();
-    }
-
 }
