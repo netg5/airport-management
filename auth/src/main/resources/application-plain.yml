@@ -14,12 +14,6 @@ datasource:
   username: flight
   password: flight
 
-# security specific configuration
-security:
-  oauth2:
-    access-token-uri: http://localhost:8080/auth/oauth/token
-    user-authorization-uri: http://localhost:8080/auth/oauth/authorize
-
 management:
   endpoints.web.exposure.include: "info, health, metrics, configprops, env, prometheus"
 logging:
