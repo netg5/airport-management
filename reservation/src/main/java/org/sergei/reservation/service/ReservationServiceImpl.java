@@ -111,17 +111,21 @@ public class ReservationServiceImpl implements ReservationService {
                     JsonNode rootNode = objectMapper.readTree(responseEntity.getBody());
                     Map<String, LinkedHashMap<String, Object>> map = new LinkedHashMap<>();
                     map = objectMapper.convertValue(rootNode, map.getClass());
+                    AircraftDTO aircraftResponseDTO = new AircraftDTO();
 
                     for (Map.Entry<String, LinkedHashMap<String, Object>> entry : map.entrySet()) {
-                        AircraftDTO aircraftDTO = new AircraftDTO();
-                        aircraftDTO.setAircraftId(Long.valueOf(String.valueOf(entry.getValue().get("aircraftId"))));
-//                        aircraftDTO.setAircraftName();
-//                        aircraftDTO.setCapacity();
-//                        aircraftDTO.setModelNumber();
-//                        aircraftDTO.setRegistrationNumber();
-//                        aircraftDTO.setWeight();
+                        aircraftResponseDTO =
+                                AircraftDTO.builder()
+                                        .aircraftId(Long.valueOf(entry.getValue().get("aircraftId").toString()))
+                                        .registrationNumber(entry.getValue().get("registrationNumber").toString())
+                                        .modelNumber(entry.getValue().get("modelNumber").toString())
+                                        .aircraftName(entry.getValue().get("aircraftName").toString())
+                                        .capacity(Integer.valueOf(entry.getValue().get("capacity").toString()))
+                                        .weight(Double.valueOf(entry.getValue().get("weight").toString()))
+                                        .exploitationPeriod(Integer.valueOf(entry.getValue().get("exploitationPeriod").toString()))
+                                        .build();
 //                        aircraftDTO.setHangar();
-//                        mapPair.put(entry.getKey(), murCalculatePair);
+                        mapPair.put(entry.getKey(), murCalculatePair);
                     }
 
                     if (responseEntity.getStatusCode().value() == 404) {
