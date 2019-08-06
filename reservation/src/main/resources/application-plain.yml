@@ -22,6 +22,7 @@ datasource:
 
 management:
   endpoints.web.exposure.include: "info, health, metrics, configprops, env, prometheus"
+
 logging:
   file: C:/tmp/reservation.log
   level:
