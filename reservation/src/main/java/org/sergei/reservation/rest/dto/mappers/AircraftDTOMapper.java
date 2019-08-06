@@ -12,16 +12,14 @@ public class AircraftDTOMapper implements IMapper<Aircraft, AircraftDTO> {
 
     @Override
     public AircraftDTO apply(Aircraft aircraft) {
-        AircraftDTO aircraftDTO = new AircraftDTO();
-
-        aircraftDTO.setAircraftId(aircraft.getId());
-        aircraftDTO.setRegistrationNumber(aircraft.getRegistrationNumber());
-        aircraftDTO.setModelNumber(aircraft.getModelNumber());
-        aircraftDTO.setAircraftName(aircraft.getAircraftName());
-        aircraftDTO.setCapacity(aircraft.getCapacity());
-        aircraftDTO.setWeight(aircraft.getWeight());
-        aircraftDTO.setExploitationPeriod(aircraft.getExploitationPeriod());
-
-        return aircraftDTO;
+        return AircraftDTO.builder()
+                .aircraftId(aircraft.getId())
+                .registrationNumber(aircraft.getRegistrationNumber())
+                .modelNumber(aircraft.getModelNumber())
+                .aircraftName(aircraft.getAircraftName())
+                .capacity(aircraft.getCapacity())
+                .weight(aircraft.getWeight())
+                .exploitationPeriod(aircraft.getExploitationPeriod())
+                .build();
     }
 }

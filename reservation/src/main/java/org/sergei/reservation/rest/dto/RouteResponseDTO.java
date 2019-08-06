@@ -21,9 +21,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -34,7 +34,7 @@ import java.time.LocalDateTime;
  */
 @ApiModel(value = "Route", description = "Route meta data model")
 @Getter
-@Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class RouteResponseDTO implements Serializable {
