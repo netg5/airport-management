@@ -12,16 +12,13 @@ public class PassengerDTOMapper implements IMapper<Passenger, PassengerResponseD
 
     @Override
     public PassengerResponseDTO apply(Passenger passenger) {
-
-        PassengerResponseDTO passengerResponseDTO = new PassengerResponseDTO();
-
-        passengerResponseDTO.setPassengerId(passenger.getId());
-        passengerResponseDTO.setFirstName(passenger.getFirstName());
-        passengerResponseDTO.setLastName(passenger.getLastName());
-        passengerResponseDTO.setAge(passenger.getAge());
-        passengerResponseDTO.setGender(passenger.getGender());
-        passengerResponseDTO.setPhone(passenger.getPhone());
-
-        return passengerResponseDTO;
+        return PassengerResponseDTO.builder()
+                .passengerId(passenger.getId())
+                .firstName(passenger.getFirstName())
+                .lastName(passenger.getLastName())
+                .age(passenger.getAge())
+                .gender(passenger.getGender())
+                .phone(passenger.getPhone())
+                .build();
     }
 }

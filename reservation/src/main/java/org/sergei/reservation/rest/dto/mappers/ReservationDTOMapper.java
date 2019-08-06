@@ -12,15 +12,13 @@ public class ReservationDTOMapper implements IMapper<Reservation, ReservationRes
 
     @Override
     public ReservationResponseDTO apply(Reservation reservation) {
-        ReservationResponseDTO reservationResponseDTO = new ReservationResponseDTO();
-
-        reservationResponseDTO.setCustomerId(reservation.getId());
-        reservationResponseDTO.setDateOfFlying(reservation.getDateOfFlying());
-        reservationResponseDTO.setDepartureTime(reservation.getDepartureTime());
-        reservationResponseDTO.setArrivalTime(reservation.getArrivalTime());
-        reservationResponseDTO.setHoursFlying(reservation.getHoursFlying());
-        reservationResponseDTO.setAircraftId(reservation.getAircraft().getId());
-
-        return reservationResponseDTO;
+        return ReservationResponseDTO.builder()
+                .customerId(reservation.getId())
+                .dateOfFlying(reservation.getDateOfFlying())
+                .departureTime(reservation.getDepartureTime())
+                .arrivalTime(reservation.getArrivalTime())
+                .hoursFlying(reservation.getHoursFlying())
+                .aircraftId(reservation.getAircraft().getId())
+                .build();
     }
 }
