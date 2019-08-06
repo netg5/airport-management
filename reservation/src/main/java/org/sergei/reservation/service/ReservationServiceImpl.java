@@ -42,7 +42,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -109,42 +108,35 @@ public class ReservationServiceImpl implements ReservationService {
 
                     ObjectMapper objectMapper = new ObjectMapper();
                     JsonNode rootNode = objectMapper.readTree(responseEntity.getBody());
-                    Map<String, LinkedHashMap<String, Object>> map = new LinkedHashMap<>();
-                    map = objectMapper.convertValue(rootNode, map.getClass());
-                    AircraftDTO aircraftResponseDTO = new AircraftDTO();
+                    AircraftDTO aircraftResponseDTO = AircraftDTO.builder()
+                            .aircraftId(rootNode.path("aircraftId").asLong())
+                            .registrationNumber(rootNode.path("registrationNumber").asText())
+                            .modelNumber(rootNode.path("modelNumber").asText())
+                            .aircraftName(rootNode.path("aircraftName").asText())
+                            .capacity(rootNode.path("capacity").asInt())
+                            .weight(rootNode.path("weight").asDouble())
+                            .exploitationPeriod(rootNode.path("exploitationPeriod").asInt())
+                            .hangar(rootNode.path("hangar"))
+                            .build();
+                }
 
-                    for (Map.Entry<String, LinkedHashMap<String, Object>> entry : map.entrySet()) {
-                        aircraftResponseDTO =
-                                AircraftDTO.builder()
-                                        .aircraftId(Long.valueOf(entry.getValue().get("aircraftId").toString()))
-                                        .registrationNumber(entry.getValue().get("registrationNumber").toString())
-                                        .modelNumber(entry.getValue().get("modelNumber").toString())
-                                        .aircraftName(entry.getValue().get("aircraftName").toString())
-                                        .capacity(Integer.valueOf(entry.getValue().get("capacity").toString()))
-                                        .weight(Double.valueOf(entry.getValue().get("weight").toString()))
-                                        .exploitationPeriod(Integer.valueOf(entry.getValue().get("exploitationPeriod").toString()))
-                                        .build();
-//                        aircraftDTO.setHangar();
-                        mapPair.put(entry.getKey(), murCalculatePair);
-                    }
+                if (responseEntity.getStatusCode().value() == 404) {
+                    List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("AIR-001");
+                    return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+                } else {
+                    reservationResponseDTO.setAircraftId(aircraftResponseDTO.getAircraftId());
 
-                    if (responseEntity.getStatusCode().value() == 404) {
-                        List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("AIR-001");
-                        return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
-                    } else {
-                        reservationResponseDTO.setAircraftId(aircraftResponseDTO.getAircraftId());
+                    ResponseDTO<ReservationResponseDTO> response = new ResponseDTO<>();
+                    response.setErrorList(List.of());
+                    response.setResponse(List.of(reservationResponseDTO));
 
-                        ResponseDTO<ReservationResponseDTO> response = new ResponseDTO<>();
-                        response.setErrorList(List.of());
-                        response.setResponse(List.of(reservationResponseDTO));
-
-                        return new ResponseEntity<>(response, HttpStatus.OK);
-                    }
+                    return new ResponseEntity<>(response, HttpStatus.OK);
                 }
             }
         } catch (Exception e) {
             throw new FlightRuntimeException(e);
         }
+
     }
 
     /**
