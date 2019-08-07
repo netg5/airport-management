@@ -1,0 +1,32 @@
+server:
+  port: 8086
+
+# Spring specific configuration
+spring:
+  application:
+    name: reports
+  cloud:
+    config:
+      enabled: false
+    discovery:
+      enabled: true
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+
+# DataSource configuration
+datasource:
+  jdbc-url: jdbc:postgresql://localhost:5432/flight_reservation
+  type: com.zaxxer.hikari.HikariDataSource
+  username: flight
+  password: flight
+
+management:
+  endpoints.web.exposure.include: "info, health, metrics, configprops, env, prometheus"
+
+logging:
+  file: C:/tmp/tickets.log
+  level:
+    ROOT: INFO
+    org:
+      sergei:
+        tickets: DEBUG

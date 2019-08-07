@@ -1,9 +1,9 @@
 package org.sergei.reservation.jpa.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -12,8 +12,8 @@ import java.io.Serializable;
 /**
  * @author Sergei Visotsky
  */
+@Builder
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
