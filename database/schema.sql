@@ -70,7 +70,9 @@ CREATE TABLE IF NOT EXISTS route
     distance       DOUBLE PRECISION            NOT NULL,
     place          VARCHAR(45)                 NOT NULL,
     price          NUMERIC(19, 2)              NOT NULL,
-    CONSTRAINT route_pk PRIMARY KEY (id)
+    aircraft_id    BIGINT                      NOT NULL,
+    CONSTRAINT route_pk PRIMARY KEY (id),
+    CONSTRAINT aircraft_id_fk FOREIGN KEY(aircraft_id) REFERENCES aircraft(id)
 );
 
 CREATE TABLE IF NOT EXISTS airport
@@ -101,14 +103,14 @@ CREATE TABLE IF NOT EXISTS reservation
 (
     id             BIGINT    NOT NULL,
     passenger_id   BIGINT    NOT NULL,
-    aircraft_id    BIGINT    NOT NULL,
+    route_id       BIGINT    NOT NULL,
     date_of_flying DATE      NOT NULL,
     departure_time TIMESTAMP NOT NULL,
     arrival_time   TIMESTAMP NOT NULL,
     hours_flying   INTEGER   NOT NULL,
     CONSTRAINT reservation_pk PRIMARY KEY (id),
     CONSTRAINT passenger_id_fk FOREIGN KEY (passenger_id) REFERENCES passenger (id),
-    CONSTRAINT aircraft_id_fk FOREIGN KEY (aircraft_id) REFERENCES aircraft (id)
+    CONSTRAINT route_id_fk FOREIGN KEY(route_id) REFERENCES route(id)
 );
 
 CREATE TABLE IF NOT EXISTS manager
