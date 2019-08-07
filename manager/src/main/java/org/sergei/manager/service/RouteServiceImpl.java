@@ -73,6 +73,7 @@ public class RouteServiceImpl implements RouteService {
         } else {
             Optional<Route> route = routeRepository.findById(routeId);
             if (route.isEmpty()) {
+                log.debug("Route with ID: {} not found", routeId);
                 List<ResponseErrorDTO> errorMessageList = messageService.responseErrorListByCode("RT-001");
                 return new ResponseEntity<>(new ResponseDTO<>(errorMessageList, List.of()), HttpStatus.NOT_FOUND);
             } else {
@@ -145,6 +146,7 @@ public class RouteServiceImpl implements RouteService {
         } else {
             Optional<Route> route = routeRepository.findById(routeId);
             if (route.isEmpty()) {
+                log.debug("Route with ID: {} not found", routeId);
                 List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("RT-001");
                 return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
             } else {
@@ -170,6 +172,7 @@ public class RouteServiceImpl implements RouteService {
     public ResponseEntity<ResponseDTO<RouteDTO>> delete(Long routeId) {
         Optional<Route> route = routeRepository.findById(routeId);
         if (route.isEmpty()) {
+            log.debug("Route with ID: {} not found", routeId);
             List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("RT-001");
             return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
         } else {

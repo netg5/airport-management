@@ -1,5 +1,6 @@
 package org.sergei.manager.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.sergei.manager.jpa.model.Pilot;
 import org.sergei.manager.jpa.model.mappers.PilotModelMapper;
 import org.sergei.manager.jpa.repository.PilotRepository;
@@ -20,6 +21,7 @@ import java.util.Optional;
 /**
  * @author Sergei Visotsky
  */
+@Slf4j
 @Service
 public class PilotServiceImpl implements PilotService {
 
@@ -66,6 +68,7 @@ public class PilotServiceImpl implements PilotService {
         } else {
             Optional<Pilot> pilot = pilotRepository.findById(pilotId);
             if (pilot.isEmpty()) {
+                log.debug("Pilot with ID: {} not found", pilotId);
                 List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("PIL-001");
                 return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
             } else {
@@ -82,6 +85,7 @@ public class PilotServiceImpl implements PilotService {
     public ResponseEntity<ResponseDTO<PilotDTO>> save(PilotDTO pilotDTO) {
         Double pilotWeight = pilotDTO.getWeight();
         if (pilotWeight > 72) {
+            log.debug("Pilot weight should not be greater than 72 kg");
             List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("PIL-003");
             return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.OK);
         } else {
@@ -101,11 +105,13 @@ public class PilotServiceImpl implements PilotService {
             return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
         } else {
             if (pilotWeight > 72) {
+                log.debug("Pilot weight should not be greater than 72 kg");
                 List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("PIL-003");
                 return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.OK);
             } else {
                 Optional<Pilot> pilot = pilotRepository.findById(pilotId);
                 if (pilot.isEmpty()) {
+                    log.debug("Pilot with ID: {} not found", pilotId);
                     List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("PIL-001");
                     return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.OK);
                 } else {
@@ -126,6 +132,7 @@ public class PilotServiceImpl implements PilotService {
         } else {
             Optional<Pilot> pilot = pilotRepository.findById(pilotId);
             if (pilot.isEmpty()) {
+                log.debug("Pilot with ID: {} not found", pilotId);
                 List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("PIL-001");
                 return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.OK);
             } else {

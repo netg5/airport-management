@@ -1,5 +1,6 @@
 package org.sergei.manager.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.sergei.manager.jpa.model.Aircraft;
 import org.sergei.manager.jpa.model.Hangar;
 import org.sergei.manager.jpa.repository.HangarRepository;
@@ -20,6 +21,7 @@ import java.util.List;
 /**
  * @author Sergei Visotsky
  */
+@Slf4j
 @Service
 public class HangarServiceImpl implements HangarService {
 
@@ -47,6 +49,7 @@ public class HangarServiceImpl implements HangarService {
         } else {
             List<Hangar> hangar = hangarRepository.findHangarsByCapacity(capacity);
             if (hangar.isEmpty()) {
+                log.debug("Hangar with capacity: {} not found", hangar.get(0).getCapacity());
                 List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("HAN-001");
                 return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
             } else {
@@ -67,6 +70,7 @@ public class HangarServiceImpl implements HangarService {
         } else {
             Page<Hangar> hangarList = hangarRepository.findHangarsByCapacityWithAircrafts(capacity, PageRequest.of(page, size));
             if (hangarList.isEmpty()) {
+                log.debug("Hangar with capacity: {} not found", hangarList.getContent().get(0).getCapacity());
                 List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("HAN-001");
                 return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
             } else {
