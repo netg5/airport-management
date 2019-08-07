@@ -24,9 +24,7 @@ import org.sergei.reservation.jpa.model.Passenger;
 import org.sergei.reservation.jpa.model.Reservation;
 import org.sergei.reservation.jpa.repository.PassengerRepository;
 import org.sergei.reservation.jpa.repository.ReservationRepository;
-import org.sergei.reservation.rest.dto.AircraftDTO;
-import org.sergei.reservation.rest.dto.ReservationRequestDTO;
-import org.sergei.reservation.rest.dto.ReservationResponseDTO;
+import org.sergei.reservation.rest.dto.*;
 import org.sergei.reservation.rest.dto.mappers.AircraftDTOMapper;
 import org.sergei.reservation.rest.dto.mappers.ReservationDTOListMapper;
 import org.sergei.reservation.rest.dto.mappers.ReservationDTOMapper;
@@ -116,22 +114,33 @@ public class ReservationServiceImpl implements ReservationService {
                             .capacity(rootNode.path("capacity").asInt())
                             .weight(rootNode.path("weight").asDouble())
                             .exploitationPeriod(rootNode.path("exploitationPeriod").asInt())
-                            .hangar(rootNode.path("hangar"))
+                            .hangar(HangarDTO.builder()
+                                    .id(rootNode.get("hangarId").asLong())
+                                    .capacity(rootNode.get("capacity").asInt())
+                                    .hangarLocation(rootNode.get("location").asText())
+                                    .hangarNumber(rootNode.get("hangarNumber").asText())
+                                    .build())
+                            .manufacturer(ManufacturerDTO.builder()
+                                    .id(rootNode.get("manufacturerId").asLong())
+                                    .location(rootNode.get("location").asText())
+                                    .manufacturerCode(rootNode.get("manufacturerCode").asText())
+                                    .manufacturerName(rootNode.get("manufacturerName").asText())
+                                    .build())
                             .build();
+                    if (responseEntity.getStatusCode().value() == 404) {
+                        List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("AIR-001");
+                        return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+                    } else {
+//                        reservationResponseDTO.setAircraftId(aircraftResponseDTO.getAircraftId());
+
+                        ResponseDTO<ReservationResponseDTO> response = new ResponseDTO<>();
+                        response.setErrorList(List.of());
+                        response.setResponse(List.of(reservationResponseDTO));
+
+                        return new ResponseEntity<>(response, HttpStatus.OK);
+                    }
                 }
 
-                if (responseEntity.getStatusCode().value() == 404) {
-                    List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("AIR-001");
-                    return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
-                } else {
-                    reservationResponseDTO.setAircraftId(aircraftResponseDTO.getAircraftId());
-
-                    ResponseDTO<ReservationResponseDTO> response = new ResponseDTO<>();
-                    response.setErrorList(List.of());
-                    response.setResponse(List.of(reservationResponseDTO));
-
-                    return new ResponseEntity<>(response, HttpStatus.OK);
-                }
             }
         } catch (Exception e) {
             throw new FlightRuntimeException(e);
