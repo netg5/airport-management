@@ -51,10 +51,9 @@ public class ReservationController {
         return reservationService.findOneForPassenger(passengerId, reservationId);
     }
 
-    @PostMapping(value = "/makeReservation/{passengerId}")
-    public ResponseEntity<ResponseDTO<ReservationResponseDTO>> makeReservation(@PathVariable Long passengerId,
-                                                                               @RequestBody ReservationRequestDTO request) {
-        return reservationService.saveReservation(passengerId, request);
+    @PostMapping(value = "/makeReservation")
+    public ResponseEntity<ResponseDTO<ReservationResponseDTO>> makeReservation(@RequestBody ReservationRequestDTO request) {
+        return reservationService.saveReservation(request);
     }
 
     @ApiOperation("Delete reservation")
