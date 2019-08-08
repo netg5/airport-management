@@ -13,6 +13,15 @@ spring:
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
 
+# Remote service endpoints
+manager:
+  aircraft-uri: http://localhost:8088/getAircraftById
+  route-uri: http://localhost:8088/getRouteById
+
+# Feign client properties
+feign:
+  route-url: http://localhost:8088/
+
 # DataSource configuration
 datasource:
   jdbc-url: jdbc:postgresql://localhost:5432/flight_reservation

@@ -41,24 +41,24 @@ public class ReservationController {
     }
 
     @GetMapping(value = "/getAllReservationForPassenger/{passengerId}")
-    public ResponseEntity<ResponseDTO<ReservationResponseDTO>> getAllReservationForPassenger(@PathVariable("passengerId") Long passengerId) {
+    public ResponseEntity<ResponseDTO<ReservationDTO>> getAllReservationForPassenger(@PathVariable("passengerId") Long passengerId) {
         return reservationService.findAllForPassenger(passengerId);
     }
 
     @GetMapping(value = "/getOneReservationForPassenger/{passengerId}", produces = "application/json")
-    public ResponseEntity<ResponseDTO<ReservationResponseDTO>> getOneReservationForPassenger(@PathVariable("passengerId") Long passengerId,
-                                                                                             @RequestParam("reservationId") Long reservationId) {
+    public ResponseEntity<ResponseDTO<ReservationDTO>> getOneReservationForPassenger(@PathVariable("passengerId") Long passengerId,
+                                                                                     @RequestParam("reservationId") Long reservationId) {
         return reservationService.findOneForPassenger(passengerId, reservationId);
     }
 
     @PostMapping(value = "/makeReservation")
-    public ResponseEntity<ResponseDTO<ReservationResponseDTO>> makeReservation(@RequestBody ReservationDTO request) {
+    public ResponseEntity<ResponseDTO<ReservationDTO>> makeReservation(@RequestBody ReservationDTO request) {
         return reservationService.saveReservation(request);
     }
 
     @ApiOperation("Delete reservation")
     @DeleteMapping("/deleteReservation/{passengerId}")
-    public ResponseEntity<ResponseDTO<ReservationResponseDTO>> deleteReservation(@PathVariable("passengerId") Long passengerId,
+    public ResponseEntity<ResponseDTO<ReservationDTO>> deleteReservation(@PathVariable("passengerId") Long passengerId,
                                                                                  @RequestParam("reservationId") Long reservationId) {
         return reservationService.deleteReservation(passengerId, reservationId);
     }

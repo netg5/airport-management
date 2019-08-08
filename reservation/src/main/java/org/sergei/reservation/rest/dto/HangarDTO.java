@@ -11,6 +11,7 @@ import java.util.List;
  */
 @Builder
 @Getter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class HangarDTO implements Serializable {
