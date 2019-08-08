@@ -16,6 +16,8 @@
 
 package org.sergei.manager.service;
 
+import io.opentracing.Span;
+import io.opentracing.Tracer;
 import lombok.extern.slf4j.Slf4j;
 import org.sergei.manager.jpa.model.Route;
 import org.sergei.manager.jpa.model.mappers.RouteModelMapper;
@@ -45,18 +47,21 @@ public class RouteServiceImpl implements RouteService {
     private final RouteDTOMapper routeDTOMapper;
     private final RouteListDTOMapper routeDTOListMapper;
     private final MessageService messageService;
+    private final Tracer tracer;
 
     @Autowired
     public RouteServiceImpl(RouteRepository routeRepository,
                             RouteModelMapper routeModelMapper,
                             RouteDTOMapper routeDTOMapper,
                             RouteListDTOMapper routeDTOListMapper,
-                            MessageService messageService) {
+                            MessageService messageService,
+                            Tracer tracer) {
         this.routeRepository = routeRepository;
         this.routeModelMapper = routeModelMapper;
         this.routeDTOMapper = routeDTOMapper;
         this.routeDTOListMapper = routeDTOListMapper;
         this.messageService = messageService;
+        this.tracer = tracer;
     }
 
     /**
@@ -71,7 +76,10 @@ public class RouteServiceImpl implements RouteService {
             List<ResponseErrorDTO> errorMessageList = messageService.responseErrorListByCode("RP-001");
             return new ResponseEntity<>(new ResponseDTO<>(errorMessageList, List.of()), HttpStatus.NOT_FOUND);
         } else {
+            Span span = tracer.buildSpan("routeRepository.findById() started").start();
+            span.setTag("routeId", routeId);
             Optional<Route> route = routeRepository.findById(routeId);
+            span.finish();
             if (route.isEmpty()) {
                 log.debug("Route with ID: {} not found", routeId);
                 List<ResponseErrorDTO> errorMessageList = messageService.responseErrorListByCode("RT-001");
