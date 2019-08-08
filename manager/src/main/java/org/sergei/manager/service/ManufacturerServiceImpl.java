@@ -1,5 +1,6 @@
 package org.sergei.manager.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.sergei.manager.jpa.model.Manufacturer;
 import org.sergei.manager.jpa.model.mappers.ManufacturerModelMapper;
 import org.sergei.manager.jpa.repository.ManufacturerRepository;
@@ -20,8 +21,8 @@ import java.util.Optional;
 /**
  * @author Sergei Visotsky
  */
+@Slf4j
 @Service
-@SuppressWarnings({"unused", "FieldCanBeLocal"})
 public class ManufacturerServiceImpl implements ManufacturerService {
 
     private final ManufacturerRepository manufacturerRepository;
@@ -62,13 +63,14 @@ public class ManufacturerServiceImpl implements ManufacturerService {
 
     @Override
     public ResponseEntity<ResponseDTO<ManufacturerDTO>> findByCode(ManufacturerRequestDTO request) {
-        String manufacturerCode = request.getManufacturerCode();
-        if (manufacturerCode == null) {
+        String code = request.getManufacturerCode();
+        if (code == null) {
             List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("RP-001");
             return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
         } else {
-            Optional<Manufacturer> manufacturer = manufacturerRepository.findByCode(manufacturerCode);
+            Optional<Manufacturer> manufacturer = manufacturerRepository.findByCode(code);
             if (manufacturer.isEmpty()) {
+                log.debug("Manufacturer with code: {} not found", code);
                 List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("MAN-001");
                 return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
             } else {
@@ -101,6 +103,7 @@ public class ManufacturerServiceImpl implements ManufacturerService {
         } else {
             Optional<Manufacturer> manufacturer = manufacturerRepository.findByCode(code);
             if (manufacturer.isEmpty()) {
+                log.debug("Manufacturer with code: {} not found", code);
                 List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("MAN-001");
                 return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
             } else {
@@ -120,6 +123,7 @@ public class ManufacturerServiceImpl implements ManufacturerService {
         } else {
             Optional<Manufacturer> manufacturer = manufacturerRepository.findByCode(code);
             if (manufacturer.isEmpty()) {
+                log.debug("Manufacturer with code: {} not found", code);
                 List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("MAN-001");
                 return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
             } else {

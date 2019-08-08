@@ -1,21 +1,20 @@
 package org.sergei.reservation.rest.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * @author Sergei Visotsky
+ * @deprecated Should be removed after new business logic adoption
  */
 @Getter
 @Setter
 @NoArgsConstructor
+@Deprecated
 public class RouteRequestDTO {
     private Long routeId;
     private Double distance;

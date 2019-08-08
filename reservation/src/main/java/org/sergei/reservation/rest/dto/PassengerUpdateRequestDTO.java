@@ -6,11 +6,13 @@ import lombok.Setter;
 
 /**
  * @author Sergei Visotsky
+ * @deprecated Should be removed after new business logic adoption
  */
 @Getter
 @Setter
 @NoArgsConstructor
+@Deprecated(forRemoval = true)
 public class PassengerUpdateRequestDTO {
     private Long passengerId;
-    private PassengerResponseDTO customer;
+    private PassengerDTO customer;
 }

@@ -24,8 +24,8 @@ import java.util.Optional;
 /**
  * @author Sergei Visotsky
  */
-@Service
 @Slf4j
+@Service
 public class AirportServiceImpl implements AirportService {
 
     @PersistenceContext

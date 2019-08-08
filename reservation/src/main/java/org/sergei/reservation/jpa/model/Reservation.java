@@ -58,18 +58,24 @@ public class Reservation implements Serializable {
     @Column(name = "hours_flying")
     private Integer hoursFlying;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE}
+    )
     @JoinColumn(
             name = "passenger_id",
             referencedColumnName = "id"
     )
     private Passenger passenger;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.DETACH}
+    )
     @JoinColumn(
-            name = "aircraft_id",
+            name = "route_id",
             referencedColumnName = "id"
     )
-    private Aircraft aircraft;
+    private Route route;
 
 }

@@ -18,9 +18,9 @@ INSERT INTO aircraft VALUES (1, 1, 1, '123D', '777-300ER', 'Boeing', 3450, 1000,
 INSERT INTO aircraft VALUES (2, 2, 2, '12dc3', 'A220', 'Airbus', 43000, 5400, 6);
 INSERT INTO aircraft VALUES (3, 3, 3, '82497Df', 'B30', 'Airbus', 42007, 3200, 7);
 
-INSERT INTO route VALUES (2, '2019-07-02', '2019-07-01', 1000, 'Riga', 123);
-INSERT INTO route VALUES (3, '2019-08-23', '2019-08-22', 3600, 'Singapoore', 3400);
-INSERT INTO route VALUES (1, '2019-08-23', '2019-08-22', 3600, 'New-York', 3400);
+INSERT INTO route VALUES (2, '2019-07-02', '2019-07-01', 1000, 'Riga', 123, 1);
+INSERT INTO route VALUES (3, '2019-08-23', '2019-08-22', 3600, 'Singapoore', 3400, 2);
+INSERT INTO route VALUES (1, '2019-08-23', '2019-08-22', 3600, 'New-York', 3400, 3);
 
 INSERT INTO passenger VALUES (1, 'Arena', 'Kronfold', 45, 'female', '8923847');
 INSERT INTO passenger VALUES (2, 'Sergei', 'Visotsky', 21, 'male', '1234567');

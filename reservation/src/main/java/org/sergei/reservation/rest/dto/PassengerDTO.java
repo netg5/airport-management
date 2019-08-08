@@ -33,7 +33,7 @@ import java.io.Serializable;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PassengerResponseDTO implements Serializable {
+public class PassengerDTO implements Serializable {
 
     private static final long serialVersionUID = 1601177547641029786L;
 

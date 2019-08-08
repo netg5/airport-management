@@ -17,9 +17,7 @@
 package org.sergei.reservation.rest.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -32,36 +30,23 @@ import java.time.LocalDateTime;
 /**
  * @author Sergei Visotsky
  */
-@ApiModel(value = "Route", description = "Route meta data model")
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RouteResponseDTO implements Serializable {
+public class RouteDTO implements Serializable {
 
     private static final long serialVersionUID = -6688458044709501452L;
 
-    @ApiModelProperty("Route ID")
     private Long routeId;
-
-    @ApiModelProperty("Route distance")
     private Double distance;
 
-    @ApiModelProperty("Flight departure time")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime departureTime;
 
-    @ApiModelProperty("Flight arrival time")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime arrivalTime;
-
-    @ApiModelProperty("Flight price")
     private BigDecimal price;
-
-    @ApiModelProperty("Destination place")
     private String place;
-
-    @ApiModelProperty("Aircraft ID to fly with")
-    @JsonProperty("aircraftId")
-    private AircraftDTO aircraftDTO;
+    private AircraftDTO aircraft;
 }

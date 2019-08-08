@@ -28,6 +28,7 @@ import java.time.LocalDateTime;
 
 /**
  * @author Sergei Visotsky
+ * @deprecated Should be removed after new business logic adoption
  */
 @ApiModel(
         value = "Reservation",
@@ -37,6 +38,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated(forRemoval = true)
 public class ReservationResponseDTO implements Serializable {
 
     private static final long serialVersionUID = -2808793016869498675L;

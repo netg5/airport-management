@@ -63,4 +63,14 @@ public class Route implements Serializable {
 
     @Column(name = "place")
     private String place;
+
+    @OneToOne(
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.DETACH}
+    )
+    @JoinColumn(
+            name = "aircraft_id",
+            referencedColumnName = "id"
+    )
+    private Aircraft aircraft;
 }

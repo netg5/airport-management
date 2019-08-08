@@ -18,7 +18,7 @@ package org.sergei.reservation.rest.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.sergei.reservation.rest.dto.ReservationRequestDTO;
+import org.sergei.reservation.rest.dto.ReservationDTO;
 import org.sergei.reservation.rest.dto.ReservationResponseDTO;
 import org.sergei.reservation.rest.dto.response.ResponseDTO;
 import org.sergei.reservation.service.ReservationService;
@@ -51,10 +51,9 @@ public class ReservationController {
         return reservationService.findOneForPassenger(passengerId, reservationId);
     }
 
-    @PostMapping(value = "/makeReservation/{passengerId}")
-    public ResponseEntity<ResponseDTO<ReservationResponseDTO>> makeReservation(@PathVariable Long passengerId,
-                                                                               @RequestBody ReservationRequestDTO request) {
-        return reservationService.saveReservation(passengerId, request);
+    @PostMapping(value = "/makeReservation")
+    public ResponseEntity<ResponseDTO<ReservationResponseDTO>> makeReservation(@RequestBody ReservationDTO request) {
+        return reservationService.saveReservation(request);
     }
 
     @ApiOperation("Delete reservation")
