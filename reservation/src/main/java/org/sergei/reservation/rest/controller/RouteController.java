@@ -18,7 +18,7 @@ package org.sergei.reservation.rest.controller;
 
 import io.swagger.annotations.Api;
 import org.sergei.reservation.rest.controller.feign.RouteFeignClient;
-import org.sergei.reservation.rest.dto.RouteResponseDTO;
+import org.sergei.reservation.rest.dto.RouteDTO;
 import org.sergei.reservation.rest.dto.response.ResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -41,12 +41,12 @@ public class RouteController {
     }
 
     @GetMapping(value = "/getAllRoutes")
-    public ResponseEntity<ResponseDTO<RouteResponseDTO>> getAllRoutes() {
+    public ResponseEntity<ResponseDTO<RouteDTO>> getAllRoutes() {
         return routeFeignClient.getAllRoutes();
     }
 
     @GetMapping(value = "/getRouteById/{routeId}")
-    public ResponseEntity<ResponseDTO<RouteResponseDTO>> getRouteById(@PathVariable("routeId") Long routeId) {
+    public ResponseEntity<ResponseDTO<RouteDTO>> getRouteById(@PathVariable("routeId") Long routeId) {
         return routeFeignClient.getRouteById(routeId);
     }
 }

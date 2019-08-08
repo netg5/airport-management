@@ -1,18 +1,18 @@
 package org.sergei.reservation.rest.dto.mappers;
 
 import org.sergei.reservation.jpa.model.Passenger;
-import org.sergei.reservation.rest.dto.PassengerResponseDTO;
+import org.sergei.reservation.rest.dto.PassengerDTO;
 import org.springframework.stereotype.Component;
 
 /**
  * @author Sergei Visotsky
  */
 @Component
-public class PassengerDTOMapper implements IMapper<Passenger, PassengerResponseDTO> {
+public class PassengerDTOMapper implements IMapper<Passenger, PassengerDTO> {
 
     @Override
-    public PassengerResponseDTO apply(Passenger passenger) {
-        return PassengerResponseDTO.builder()
+    public PassengerDTO apply(Passenger passenger) {
+        return PassengerDTO.builder()
                 .passengerId(passenger.getId())
                 .firstName(passenger.getFirstName())
                 .lastName(passenger.getLastName())

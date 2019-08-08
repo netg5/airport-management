@@ -18,7 +18,7 @@ package org.sergei.reservation.rest.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.sergei.reservation.rest.dto.ReservationRequestDTO;
+import org.sergei.reservation.rest.dto.ReservationDTO;
 import org.sergei.reservation.rest.dto.ReservationResponseDTO;
 import org.sergei.reservation.rest.dto.response.ResponseDTO;
 import org.sergei.reservation.service.ReservationService;
@@ -52,7 +52,7 @@ public class ReservationController {
     }
 
     @PostMapping(value = "/makeReservation")
-    public ResponseEntity<ResponseDTO<ReservationResponseDTO>> makeReservation(@RequestBody ReservationRequestDTO request) {
+    public ResponseEntity<ResponseDTO<ReservationResponseDTO>> makeReservation(@RequestBody ReservationDTO request) {
         return reservationService.saveReservation(request);
     }
 

@@ -18,7 +18,7 @@ package org.sergei.reservation.service;
 
 import org.sergei.reservation.jpa.model.Passenger;
 import org.sergei.reservation.jpa.repository.PassengerRepository;
-import org.sergei.reservation.rest.dto.PassengerResponseDTO;
+import org.sergei.reservation.rest.dto.PassengerDTO;
 import org.sergei.reservation.rest.dto.PassengerUpdateRequestDTO;
 import org.sergei.reservation.rest.dto.mappers.PassengerDTOListMapper;
 import org.sergei.reservation.rest.dto.mappers.PassengerDTOMapper;
@@ -63,16 +63,16 @@ public class PassengerServiceImpl implements PassengerService {
      * @return passenger
      */
     @Override
-    public ResponseEntity<ResponseDTO<PassengerResponseDTO>> findOne(Long passengerId) {
+    public ResponseEntity<ResponseDTO<PassengerDTO>> findOne(Long passengerId) {
         Optional<Passenger> passenger = passengerRepository.findById(passengerId);
         if (passenger.isEmpty()) {
             List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("PAS-001");
             return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
         } else {
-            PassengerResponseDTO passengerResponseDTO = passengerDTOMapper.apply(passenger.get());
-            ResponseDTO<PassengerResponseDTO> response = new ResponseDTO<>();
+            PassengerDTO passengerDTO = passengerDTOMapper.apply(passenger.get());
+            ResponseDTO<PassengerDTO> response = new ResponseDTO<>();
             response.setErrorList(List.of());
-            response.setResponse(List.of(passengerResponseDTO));
+            response.setResponse(List.of(passengerDTO));
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
     }
@@ -85,16 +85,16 @@ public class PassengerServiceImpl implements PassengerService {
      * @return list with entities
      */
     @Override
-    public ResponseEntity<ResponseDTO<PassengerResponseDTO>> findAllPassengers(int page, int size) {
+    public ResponseEntity<ResponseDTO<PassengerDTO>> findAllPassengers(int page, int size) {
         Page<Passenger> passengersPage = passengerRepository.findAll(PageRequest.of(page, size));
         if (passengersPage.isEmpty()) {
             List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("PAS-001");
             return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
         } else {
-            List<PassengerResponseDTO> passengerResponseDTOList = passengerDTOListMapper.apply(passengersPage.getContent());
-            ResponseDTO<PassengerResponseDTO> response = new ResponseDTO<>();
+            List<PassengerDTO> passengerDTOList = passengerDTOListMapper.apply(passengersPage.getContent());
+            ResponseDTO<PassengerDTO> response = new ResponseDTO<>();
             response.setErrorList(List.of());
-            response.setResponse(passengerResponseDTOList);
+            response.setResponse(passengerDTOList);
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
     }
@@ -106,7 +106,7 @@ public class PassengerServiceImpl implements PassengerService {
      * @return response with passenger DTO
      */
     @Override
-    public ResponseEntity<ResponseDTO<PassengerResponseDTO>> update(PassengerUpdateRequestDTO request) {
+    public ResponseEntity<ResponseDTO<PassengerDTO>> update(PassengerUpdateRequestDTO request) {
 
         Optional<Passenger> passenger = passengerRepository.findById(request.getPassengerId());
         if (passenger.isEmpty()) {
@@ -118,10 +118,10 @@ public class PassengerServiceImpl implements PassengerService {
             passenger.get().setAge(request.getCustomer().getAge());
             Passenger updatedPassenger = passengerRepository.save(passenger.get());
 
-            PassengerResponseDTO passengerResponseDTOResp = passengerDTOMapper.apply(updatedPassenger);
-            ResponseDTO<PassengerResponseDTO> response = new ResponseDTO<>();
+            PassengerDTO passengerDTOResp = passengerDTOMapper.apply(updatedPassenger);
+            ResponseDTO<PassengerDTO> response = new ResponseDTO<>();
             response.setErrorList(List.of());
-            response.setResponse(List.of(passengerResponseDTOResp));
+            response.setResponse(List.of(passengerDTOResp));
 
             return new ResponseEntity<>(response, HttpStatus.CREATED);
         }
@@ -130,23 +130,23 @@ public class PassengerServiceImpl implements PassengerService {
     /**
      * Save passengerResponseDTO
      *
-     * @param passengerResponseDTO gets passengerResponseDTO DTO as a parameter
+     * @param passengerDTO gets passengerResponseDTO DTO as a parameter
      * @return passengerResponseDTO DTO as a response
      */
     @Override
-    public ResponseEntity<ResponseDTO<PassengerResponseDTO>> save(PassengerResponseDTO passengerResponseDTO) {
+    public ResponseEntity<ResponseDTO<PassengerDTO>> save(PassengerDTO passengerDTO) {
         Passenger passenger = new Passenger();
 
-        passenger.setId(passengerResponseDTO.getPassengerId());
-        passenger.setFirstName(passengerResponseDTO.getFirstName());
-        passenger.setLastName(passengerResponseDTO.getLastName());
-        passenger.setAge(passengerResponseDTO.getAge());
+        passenger.setId(passengerDTO.getPassengerId());
+        passenger.setFirstName(passengerDTO.getFirstName());
+        passenger.setLastName(passengerDTO.getLastName());
+        passenger.setAge(passengerDTO.getAge());
         Passenger savedPassenger = passengerRepository.save(passenger);
 
-        PassengerResponseDTO passengerResponseDTOResp = passengerDTOMapper.apply(savedPassenger);
-        ResponseDTO<PassengerResponseDTO> response = new ResponseDTO<>();
+        PassengerDTO passengerDTOResp = passengerDTOMapper.apply(savedPassenger);
+        ResponseDTO<PassengerDTO> response = new ResponseDTO<>();
         response.setErrorList(List.of());
-        response.setResponse(List.of(passengerResponseDTOResp));
+        response.setResponse(List.of(passengerDTOResp));
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
@@ -158,7 +158,7 @@ public class PassengerServiceImpl implements PassengerService {
      * @return passenger DTO as a response
      */
     @Override
-    public ResponseEntity<ResponseDTO<PassengerResponseDTO>> delete(Long passengerId) {
+    public ResponseEntity<ResponseDTO<PassengerDTO>> delete(Long passengerId) {
         Optional<Passenger> passenger = passengerRepository.findById(passengerId);
         if (passenger.isEmpty()) {
             List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("PAS-001");

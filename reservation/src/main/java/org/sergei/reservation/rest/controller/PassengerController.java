@@ -19,7 +19,7 @@ package org.sergei.reservation.rest.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.sergei.reservation.rest.dto.PassengerResponseDTO;
+import org.sergei.reservation.rest.dto.PassengerDTO;
 import org.sergei.reservation.rest.dto.PassengerUpdateRequestDTO;
 import org.sergei.reservation.rest.dto.response.ResponseDTO;
 import org.sergei.reservation.service.PassengerService;
@@ -43,14 +43,14 @@ public class PassengerController {
 
     @ApiOperation("Get all customers")
     @GetMapping(value = "/getAllCustomers")
-    public ResponseEntity<ResponseDTO<PassengerResponseDTO>> getAllCustomers(@RequestParam("page") int page,
-                                                                             @RequestParam("size") int size) {
+    public ResponseEntity<ResponseDTO<PassengerDTO>> getAllCustomers(@RequestParam("page") int page,
+                                                                     @RequestParam("size") int size) {
         return passengerService.findAllPassengers(page, size);
     }
 
     @ApiOperation("Get passenger by ID")
     @GetMapping(value = "/getPassengerById/{passengerId}")
-    public ResponseEntity<ResponseDTO<PassengerResponseDTO>> getPassengerById(@PathVariable("passengerId") Long passengerId) {
+    public ResponseEntity<ResponseDTO<PassengerDTO>> getPassengerById(@PathVariable("passengerId") Long passengerId) {
         return passengerService.findOne(passengerId);
     }
 
@@ -63,13 +63,13 @@ public class PassengerController {
     @Deprecated(forRemoval = true)
     @ApiOperation("Save passenger")
     @PostMapping(value = "/saveCustomer")
-    public ResponseEntity<ResponseDTO<PassengerResponseDTO>> savePassenger(@ApiParam(value = "Saved passenger", required = true)
-                                                                           @RequestBody PassengerResponseDTO request) {
+    public ResponseEntity<ResponseDTO<PassengerDTO>> savePassenger(@ApiParam(value = "Saved passenger", required = true)
+                                                                           @RequestBody PassengerDTO request) {
         return passengerService.save(request);
     }
 
     @PostMapping(value = "/updatePassenger")
-    public ResponseEntity<ResponseDTO<PassengerResponseDTO>> updatePassenger(@RequestBody PassengerUpdateRequestDTO request) {
+    public ResponseEntity<ResponseDTO<PassengerDTO>> updatePassenger(@RequestBody PassengerUpdateRequestDTO request) {
         return passengerService.update(request);
     }
 
@@ -81,7 +81,7 @@ public class PassengerController {
      */
     @Deprecated(forRemoval = true)
     @DeleteMapping(value = "/deletePassenger/{passengerId}")
-    public ResponseEntity<ResponseDTO<PassengerResponseDTO>> deletePassenger(@PathVariable("passengerId") Long passengerId) {
+    public ResponseEntity<ResponseDTO<PassengerDTO>> deletePassenger(@PathVariable("passengerId") Long passengerId) {
         return passengerService.delete(passengerId);
     }
 }
