@@ -16,27 +16,34 @@
 
 package org.sergei.reservation.service;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import io.opentracing.Span;
 import io.opentracing.Tracer;
 import lombok.extern.slf4j.Slf4j;
 import org.sergei.reservation.jpa.model.Passenger;
 import org.sergei.reservation.jpa.model.Reservation;
+import org.sergei.reservation.jpa.model.mapper.PassengerModelMapper;
+import org.sergei.reservation.jpa.model.mapper.RouteModelMapper;
 import org.sergei.reservation.jpa.repository.PassengerRepository;
 import org.sergei.reservation.jpa.repository.ReservationRepository;
+import org.sergei.reservation.rest.dto.PassengerDTO;
 import org.sergei.reservation.rest.dto.ReservationDTO;
 import org.sergei.reservation.rest.dto.RouteDTO;
 import org.sergei.reservation.rest.dto.mappers.AircraftDTOMapper;
+import org.sergei.reservation.rest.dto.mappers.PassengerDTOMapper;
 import org.sergei.reservation.rest.dto.mappers.ReservationDTOListMapper;
 import org.sergei.reservation.rest.dto.mappers.ReservationDTOMapper;
+import org.sergei.reservation.rest.dto.request.ReservationDTORequest;
 import org.sergei.reservation.rest.dto.response.ResponseDTO;
 import org.sergei.reservation.rest.dto.response.ResponseErrorDTO;
+import org.sergei.reservation.rest.dto.response.exchange.RouteDTOResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
@@ -49,6 +56,7 @@ import java.util.Optional;
  */
 @Slf4j
 @Service
+@Transactional
 public class ReservationServiceImpl implements ReservationService {
 
     @Value("${manager.aircraft-uri}")
@@ -62,6 +70,9 @@ public class ReservationServiceImpl implements ReservationService {
     private final ReservationDTOMapper reservationDTOMapper;
     private final ReservationDTOListMapper reservationDTOListMapper;
     private final AircraftDTOMapper aircraftDTOMapper;
+    private final RouteModelMapper routeModelMapper;
+    private final PassengerDTOMapper passengerDTOMapper;
+    private final PassengerModelMapper passengerModelMapper;
     private final ResponseMessageService responseMessageService;
     private final Tracer tracer;
 
@@ -71,13 +82,18 @@ public class ReservationServiceImpl implements ReservationService {
                                   ReservationDTOMapper reservationDTOMapper,
                                   ReservationDTOListMapper reservationDTOListMapper,
                                   AircraftDTOMapper aircraftDTOMapper,
-                                  ResponseMessageService responseMessageService,
+                                  RouteModelMapper routeModelMapper,
+                                  PassengerDTOMapper passengerDTOMapper,
+                                  PassengerModelMapper passengerModelMapper, ResponseMessageService responseMessageService,
                                   Tracer tracer) {
         this.passengerRepository = passengerRepository;
         this.reservationRepository = reservationRepository;
         this.reservationDTOMapper = reservationDTOMapper;
         this.reservationDTOListMapper = reservationDTOListMapper;
         this.aircraftDTOMapper = aircraftDTOMapper;
+        this.routeModelMapper = routeModelMapper;
+        this.passengerDTOMapper = passengerDTOMapper;
+        this.passengerModelMapper = passengerModelMapper;
         this.responseMessageService = responseMessageService;
         this.tracer = tracer;
     }
@@ -183,51 +199,48 @@ public class ReservationServiceImpl implements ReservationService {
      * @return flight reservation DTO as a response
      */
     @Override
-    public ResponseEntity<ResponseDTO<ReservationDTO>> saveReservation(ReservationDTO request) {
-        Long routeId = request.getRoute().getRouteId();
+    public ResponseEntity<ResponseDTO<ReservationDTO>> saveReservation(ReservationDTORequest request) {
+        Long routeId = request.getRouteId();
+        ResponseDTO<ReservationDTO> response = new ResponseDTO<>();
         try {
             RestTemplate restTemplate = new RestTemplate();
 
             Span span = tracer.buildSpan("restTemplate.getForEntity(managerRouteUri, String.class)").start();
             span.setTag("managerRouteUri", managerRouteUri);
-            ResponseEntity<String> responseEntity = restTemplate.getForEntity(managerRouteUri + "/" + routeId, String.class);
+            ResponseEntity<String> routeResponse = restTemplate.getForEntity(managerRouteUri + "/" + routeId, String.class);
             span.finish();
 
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode rootNode = objectMapper.readTree(responseEntity.getBody());
+            if (routeResponse.getStatusCode() == HttpStatus.NOT_FOUND) {
+                List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("RT-001");
+                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+            } else {
+                ObjectMapper objectMapper = new ObjectMapper();
+                objectMapper.registerModule(new JavaTimeModule());
+                RouteDTOResponse routeDTOResponse = objectMapper.readValue(routeResponse.getBody(), RouteDTOResponse.class);
+                RouteDTO routeDTO = routeDTOResponse.getResponse().get(0);
 
-            RouteDTO routeDTO = RouteDTO.builder()
-//                    .routeId()
-                    .build();
+                PassengerDTO passengerDTO = request.getPassenger();
 
-            // Find aircraftId by aircraftId ID
-//            Optional<Aircraft> aircraft = aircraftRepository.findById(request.getAircraftId());
-//            if (aircraft.isEmpty()) {
-//                List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("AIR-001");
-//                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
-//            } else {
-//                Reservation reservation = new Reservation();
-//
-//                reservation.setPassenger(passenger.get());
-//                reservation.setRoute(aircraft.get());
-//                reservation.setDateOfFlying(request.getDateOfFlying());
-//                reservation.setDepartureTime(request.getDepartureTime());
-//                reservation.setArrivalTime(request.getArrivalTime());
-//                reservation.setHoursFlying(request.getHoursFlying());
-//
-//                Reservation savedReservation = reservationRepository.save(reservation);
-//                ReservationDTO savedReservationDTO = reservationDTOMapper.apply(savedReservation);
-//
-//                ResponseDTO<ReservationResponseDTO> response = new ResponseDTO<>();
-//                response.setErrorList(List.of());
-//                response.setResponse(List.of(savedReservationDTO));
-//
-//                return new ResponseEntity<>(response, HttpStatus.OK);
-//            }
+                Reservation reservation = Reservation.builder()
+                        .departureTime(request.getDepartureTime())
+                        .arrivalTime(request.getArrivalTime())
+                        .dateOfFlying(request.getDateOfFlying())
+                        .hoursFlying(request.getHoursFlying())
+                        .passenger(passengerModelMapper.apply(passengerDTO))
+                        .route(routeModelMapper.apply(routeDTO))
+                        .build();
+                Reservation savedReservation = reservationRepository.save(reservation);
+
+                ReservationDTO savedReservationDTO = reservationDTOMapper.apply(savedReservation);
+
+                response.setErrorList(List.of());
+                response.setResponse(List.of(savedReservationDTO));
+
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     /**

@@ -2,6 +2,7 @@ package org.sergei.reservation.rest.dto.mappers;
 
 import org.sergei.reservation.jpa.model.Aircraft;
 import org.sergei.reservation.rest.dto.AircraftDTO;
+import org.sergei.reservation.utils.IMapper;
 import org.springframework.stereotype.Component;
 
 /**

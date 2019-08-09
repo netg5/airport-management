@@ -17,6 +17,8 @@
 package org.sergei.reservation.rest.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import io.swagger.annotations.ApiModel;
 import lombok.*;
 
@@ -46,5 +48,6 @@ public class RouteDTO implements Serializable {
     private LocalDateTime arrivalTime;
     private BigDecimal price;
     private String place;
+    @JsonProperty("aircraft")
     private AircraftDTO aircraft;
 }

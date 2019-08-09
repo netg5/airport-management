@@ -28,8 +28,8 @@ import java.io.Serializable;
 /**
  * @author Sergei Visotsky
  */
-@Builder
 @Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -46,9 +46,6 @@ public class Aircraft implements Serializable {
             sequenceName = "aircraft_id_seq", allocationSize = 1)
     @Column(name = "id")
     private Long id;
-
-    @Column(name = "manufacturer_code")
-    private String manufacturerCode;
 
     @Column(name = "registration_number")
     private String registrationNumber;
@@ -68,14 +65,23 @@ public class Aircraft implements Serializable {
     @Column(name = "exploitation_period")
     private Integer exploitationPeriod;
 
-    @ManyToOne(
+    @OneToOne(
             fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE}
     )
     @JoinColumn(
-            name = "owner_id",
+            name = "manufacturer_id",
             referencedColumnName = "id"
     )
-    private Owner owner;
+    private Manufacturer manufacturer;
 
+    @OneToOne(
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE}
+    )
+    @JoinColumn(
+            name = "hangar_id",
+            referencedColumnName = "id"
+    )
+    private Hangar hangar;
 }

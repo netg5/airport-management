@@ -1,4 +1,4 @@
-package org.sergei.reservation.rest.dto.mappers;
+package org.sergei.reservation.utils;
 
 import com.google.common.collect.ImmutableList;
 

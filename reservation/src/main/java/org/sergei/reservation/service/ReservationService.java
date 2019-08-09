@@ -1,6 +1,7 @@
 package org.sergei.reservation.service;
 
 import org.sergei.reservation.rest.dto.ReservationDTO;
+import org.sergei.reservation.rest.dto.request.ReservationDTORequest;
 import org.sergei.reservation.rest.dto.response.ResponseDTO;
 import org.springframework.http.ResponseEntity;
 
@@ -14,7 +15,7 @@ public interface ReservationService {
 
     ResponseEntity<ResponseDTO<ReservationDTO>> findAllForPassenger(Long passengerId);
 
-    ResponseEntity<ResponseDTO<ReservationDTO>> saveReservation(ReservationDTO request);
+    ResponseEntity<ResponseDTO<ReservationDTO>> saveReservation(ReservationDTORequest request);
 
     ResponseEntity<ResponseDTO<ReservationDTO>> updateReservation(Long passengerId, Long reservationId,
                                                                   Map<String, Object> params);

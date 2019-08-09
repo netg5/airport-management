@@ -2,7 +2,7 @@ package org.sergei.reservation.rest.dto.mappers;
 
 import org.sergei.reservation.jpa.model.Reservation;
 import org.sergei.reservation.rest.dto.ReservationDTO;
-import org.sergei.reservation.rest.dto.ReservationResponseDTO;
+import org.sergei.reservation.utils.IMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

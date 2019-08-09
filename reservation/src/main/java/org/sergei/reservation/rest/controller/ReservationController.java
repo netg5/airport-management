@@ -19,7 +19,7 @@ package org.sergei.reservation.rest.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.sergei.reservation.rest.dto.ReservationDTO;
-import org.sergei.reservation.rest.dto.ReservationResponseDTO;
+import org.sergei.reservation.rest.dto.request.ReservationDTORequest;
 import org.sergei.reservation.rest.dto.response.ResponseDTO;
 import org.sergei.reservation.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,14 +52,14 @@ public class ReservationController {
     }
 
     @PostMapping(value = "/makeReservation")
-    public ResponseEntity<ResponseDTO<ReservationDTO>> makeReservation(@RequestBody ReservationDTO request) {
+    public ResponseEntity<ResponseDTO<ReservationDTO>> makeReservation(@RequestBody ReservationDTORequest request) {
         return reservationService.saveReservation(request);
     }
 
     @ApiOperation("Delete reservation")
     @DeleteMapping("/deleteReservation/{passengerId}")
     public ResponseEntity<ResponseDTO<ReservationDTO>> deleteReservation(@PathVariable("passengerId") Long passengerId,
-                                                                                 @RequestParam("reservationId") Long reservationId) {
+                                                                         @RequestParam("reservationId") Long reservationId) {
         return reservationService.deleteReservation(passengerId, reservationId);
     }
 }

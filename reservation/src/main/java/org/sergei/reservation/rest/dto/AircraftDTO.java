@@ -17,6 +17,7 @@
 package org.sergei.reservation.rest.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import java.io.Serializable;
@@ -39,6 +40,8 @@ public class AircraftDTO implements Serializable {
     private Double weight;
     private Integer exploitationPeriod;
     @JsonIgnoreProperties(value = "aircraft")
+    @JsonProperty("hangar")
     private HangarDTO hangar;
+    @JsonProperty("manufacturer")
     private ManufacturerDTO manufacturer;
 }

@@ -2,6 +2,7 @@ package org.sergei.reservation.rest.dto.mappers;
 
 import org.sergei.reservation.jpa.model.Reservation;
 import org.sergei.reservation.rest.dto.ReservationDTO;
+import org.sergei.reservation.utils.IMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,10 +13,13 @@ import org.springframework.stereotype.Component;
 public class ReservationDTOMapper implements IMapper<Reservation, ReservationDTO> {
 
     private final RouteDTOMapper routeDTOMapper;
+    private final PassengerDTOMapper passengerDTOMapper;
 
     @Autowired
-    public ReservationDTOMapper(RouteDTOMapper routeDTOMapper) {
+    public ReservationDTOMapper(RouteDTOMapper routeDTOMapper,
+                                PassengerDTOMapper passengerDTOMapper) {
         this.routeDTOMapper = routeDTOMapper;
+        this.passengerDTOMapper = passengerDTOMapper;
     }
 
     @Override
@@ -26,6 +30,7 @@ public class ReservationDTOMapper implements IMapper<Reservation, ReservationDTO
                 .departureTime(reservation.getDepartureTime())
                 .arrivalTime(reservation.getArrivalTime())
                 .hoursFlying(reservation.getHoursFlying())
+                .passenger(passengerDTOMapper.apply(reservation.getPassenger()))
                 .route(routeDTOMapper.apply(reservation.getRoute()))
                 .build();
     }

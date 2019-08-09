@@ -4,7 +4,7 @@ server:
 # Spring specific configuration
 spring:
   application:
-    name: reports
+    name: reservation
   cloud:
     config:
       enabled: false

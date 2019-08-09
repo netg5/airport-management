@@ -70,7 +70,7 @@ public class Reservation implements Serializable {
 
     @ManyToOne(
             fetch = FetchType.LAZY,
-            cascade = {CascadeType.DETACH}
+            cascade = {CascadeType.ALL}
     )
     @JoinColumn(
             name = "route_id",
