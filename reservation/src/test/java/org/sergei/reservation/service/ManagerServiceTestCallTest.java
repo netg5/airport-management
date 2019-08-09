@@ -3,6 +3,8 @@ package org.sergei.reservation.service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sergei.reservation.rest.dto.AircraftDTO;
@@ -32,42 +34,43 @@ public class ManagerServiceTestCallTest {
     private String managerRouteUri;
 
     @Test
-    public void routeRestCallTest() throws IOException {
+    public void routeRestCallTest() throws IOException, JSONException {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> responseEntity = restTemplate.getForEntity(managerRouteUri + "/1", String.class);
 
         ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode rootNode = objectMapper.readTree(responseEntity.getBody());
-
+        JsonNode jsonNode = objectMapper.readTree(responseEntity.getBody());
+        JsonNode aircraftNode = objectMapper.readTree(responseEntity.getBody()).get("aircraft");
+        JSONArray jsonArray = new JSONArray(jsonNode.at("/aircraft"));
         RouteDTO routeDTO = RouteDTO.builder()
-                .routeId(rootNode.path("routeId").asLong())
-                .departureTime(LocalDateTime.parse(rootNode.path("departureTime").asText()))
-                .arrivalTime(LocalDateTime.parse(rootNode.path("arrivalTime").asText()))
-                .distance(rootNode.path("distance").asDouble())
-                .place(rootNode.path("place").asText())
-                .price(rootNode.path("price").decimalValue())
+                .routeId(jsonNode.path("routeId").asLong())
+//                .departureTime(LocalDateTime.parse(jsonNode.path("departureTime").asText()))
+//                .arrivalTime(LocalDateTime.parse(jsonNode.path("arrivalTime").asText()))
+                .distance(jsonNode.path("distance").asDouble())
+                .place(jsonNode.path("place").asText())
+                .price(jsonNode.path("price").decimalValue())
                 .aircraft(AircraftDTO.builder()
-                        .aircraftId(rootNode.path("aircraftId").asLong())
-                        .registrationNumber(rootNode.path("registrationNumber").asText())
-                        .modelNumber(rootNode.path("modelNumber").asText())
-                        .aircraftName(rootNode.path("aircraftName").asText())
-                        .capacity(rootNode.path("capacity").asInt())
-                        .weight(rootNode.path("weight").asDouble())
-                        .exploitationPeriod(rootNode.path("exploitationPeriod").asInt())
+                        .aircraftId(Long.valueOf(jsonArray.getJSONObject(0).get("/aircraftId").toString()))
+                        .registrationNumber(jsonNode.at("/aircraft/registrationNumber").asText())
+                        .modelNumber(jsonNode.at("/aircraft/modelNumber").asText())
+                        .aircraftName(jsonNode.at("/aircraft/aircraftName").asText())
+                        .capacity(jsonNode.at("/aircraft/capacity").asInt())
+                        .weight(jsonNode.at("/aircraft/weight").asDouble())
+                        .exploitationPeriod(jsonNode.at("/aircraft/exploitationPeriod").asInt())
                         .hangar(HangarDTO.builder()
-                                .id(rootNode.get("hangarId").asLong())
-                                .capacity(rootNode.get("capacity").asInt())
-                                .hangarLocation(rootNode.get("location").asText())
-                                .hangarNumber(rootNode.get("hangarNumber").asText())
+                                .id(jsonNode.at("/aircraft/hangar/hangarId").asLong())
+                                .capacity(jsonNode.at("/aircraft/hangar/capacity").asInt())
+                                .hangarLocation(jsonNode.at("/aircraft/hangar/location").asText())
+                                .hangarNumber(jsonNode.at("/aircraft/hangar/hangarNumber").asText())
                                 .build())
                         .manufacturer(ManufacturerDTO.builder()
-                                .id(rootNode.get("manufacturerId").asLong())
-                                .location(rootNode.get("location").asText())
-                                .manufacturerCode(rootNode.get("manufacturerCode").asText())
-                                .manufacturerName(rootNode.get("manufacturerName").asText())
+                                .id(jsonNode.at("/aircraft/manufacturer/manufacturerId").asLong())
+                                .location(jsonNode.at("/aircraft/manufacturer/location").asText())
+                                .manufacturerCode(jsonNode.at("/aircraft/manufacturer/manufacturerCode").asText())
+                                .manufacturerName(jsonNode.at("/aircraft/manufacturer/manufacturerName").asText())
                                 .build())
                         .build())
                 .build();
-        log.info("Route info is: {}", routeDTO);
+        log.info("Route info is: {}", routeDTO.getDistance());
     }
 }
