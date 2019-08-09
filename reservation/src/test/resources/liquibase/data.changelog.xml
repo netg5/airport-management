@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd">
+
+    <changeSet id="1" author="Sergei Visotsky">
+        <loadData tableName="aircraft"
+                  encoding="UTF-8"
+                  file="csv/aircraft.csv"
+                  separator=";"/>
+    </changeSet>
+
+    <changeSet id="2" author="Sergei Visotsky">
+        <loadData tableName="hangar"
+                  encoding="UTF-8"
+                  file="csv/hangar.csv"
+                  separator=";"/>
+    </changeSet>
+
+    <changeSet id="3" author="Sergei Visotsky">
+        <loadData tableName="reservation"
+                  encoding="UTF-8"
+                  file="csv/reservation.csv"
+                  separator=";"/>
+    </changeSet>
+
+    <changeSet id="4" author="Sergei Visotsky">
+        <loadData tableName="response_messages"
+                  encoding="UTF-8"
+                  file="csv/response_messages.csv"
+                  separator=";"/>
+    </changeSet>
+
+    <changeSet id="5" author="Sergei Visotsky">
+        <loadData tableName="route"
+                  encoding="UTF-8"
+                  file="csv/route.csv"
+                  separator=";"/>
+    </changeSet>
+
+</databaseChangeLog>
