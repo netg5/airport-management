@@ -1,7 +1,7 @@
 package org.sergei.reservation.service;
 
 import org.apache.tomcat.util.codec.binary.Base64;
-import org.sergei.reservation.rest.dto.AuthTokenInfo;
+import org.sergei.reservation.rest.dto.AuthTokenInfoDTO;
 import org.sergei.reservation.rest.exceptions.FlightRuntimeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -62,7 +62,7 @@ public class ExchangeAuthServiceImpl implements ExchangeAuthService {
 
     @SuppressWarnings("unchecked")
     @Override
-    public AuthTokenInfo sendTokenRequest() {
+    public AuthTokenInfoDTO sendTokenRequest() {
         HttpEntity<String> request = new HttpEntity<>(getHeadersWithClientCredentials());
         ResponseEntity<Object> response =
                 this.restTemplate.exchange(authServer + "?grant_type=password&username=" + user + "&password=" + password,
@@ -72,7 +72,7 @@ public class ExchangeAuthServiceImpl implements ExchangeAuthService {
         if (map == null) {
             throw new FlightRuntimeException("Exchange with data was not performed: UNAUTHORIZED");
         } else {
-            return AuthTokenInfo.builder()
+            return AuthTokenInfoDTO.builder()
                     .accessToken((String) map.get("access_token"))
                     .tokenType((String) map.get("token_type"))
                     .refreshToken((String) map.get("refresh_token"))

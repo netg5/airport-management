@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.sergei.reservation.rest.dto.PassengerDTO;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -15,7 +16,9 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReservationDTORequest {
+public class ReservationDTORequest implements Serializable {
+
+    private static final long serialVersionUID = -5502910005749994943L;
 
     private Long reservationId;
     private LocalDateTime dateOfFlying;

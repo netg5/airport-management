@@ -27,7 +27,7 @@ import org.sergei.reservation.jpa.model.mapper.PassengerModelMapper;
 import org.sergei.reservation.jpa.model.mapper.RouteModelMapper;
 import org.sergei.reservation.jpa.repository.PassengerRepository;
 import org.sergei.reservation.jpa.repository.ReservationRepository;
-import org.sergei.reservation.rest.dto.AuthTokenInfo;
+import org.sergei.reservation.rest.dto.AuthTokenInfoDTO;
 import org.sergei.reservation.rest.dto.PassengerDTO;
 import org.sergei.reservation.rest.dto.ReservationDTO;
 import org.sergei.reservation.rest.dto.RouteDTO;
@@ -167,7 +167,7 @@ public class ReservationServiceImpl implements ReservationService {
             Span span = tracer.buildSpan("restTemplate.getForEntity(managerRouteUri, String.class)").start();
             span.setTag("managerRouteUri", managerRouteUri);
 
-            AuthTokenInfo tokenInfo = exchangeAuthService.sendTokenRequest();
+            AuthTokenInfoDTO tokenInfo = exchangeAuthService.sendTokenRequest();
             HttpEntity<String> excRequest = new HttpEntity<>(exchangeAuthService.getHeaders());
 
             ResponseEntity<String> routeResponse =

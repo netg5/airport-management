@@ -6,8 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.sergei.reservation.rest.dto.RouteDTO;
-import org.sergei.reservation.rest.dto.response.ResponseErrorDTO;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -17,7 +17,9 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RouteDTOExchangeResponse {
+public class RouteDTOExchangeResponse implements Serializable {
+
+    private static final long serialVersionUID = 6472052003214476644L;
 
     @JsonProperty("errorList")
     private List<ResponseErrorDTO> errorList;

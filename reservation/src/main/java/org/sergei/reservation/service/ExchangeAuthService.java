@@ -1,6 +1,6 @@
 package org.sergei.reservation.service;
 
-import org.sergei.reservation.rest.dto.AuthTokenInfo;
+import org.sergei.reservation.rest.dto.AuthTokenInfoDTO;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
@@ -16,5 +16,5 @@ public interface ExchangeAuthService {
 
     HttpHeaders getHeadersWithClientCredentials();
 
-    AuthTokenInfo sendTokenRequest();
+    AuthTokenInfoDTO sendTokenRequest();
 }

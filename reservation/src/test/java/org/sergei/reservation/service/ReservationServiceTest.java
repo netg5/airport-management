@@ -3,7 +3,7 @@ package org.sergei.reservation.service;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.sergei.reservation.rest.dto.AuthTokenInfo;
+import org.sergei.reservation.rest.dto.AuthTokenInfoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -23,7 +23,7 @@ public class ReservationServiceTest {
 
     @Test
     public void getTokenInfoTest() {
-        AuthTokenInfo tokenInfo = exchangeAuthService.sendTokenRequest();
+        AuthTokenInfoDTO tokenInfo = exchangeAuthService.sendTokenRequest();
         log.info(tokenInfo.toString());
     }
 

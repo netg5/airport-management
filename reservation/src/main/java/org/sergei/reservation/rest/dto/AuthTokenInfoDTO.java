@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * @author Sergei Visotsky
  */
@@ -12,7 +14,10 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AuthTokenInfo {
+public class AuthTokenInfoDTO implements Serializable {
+
+    private static final long serialVersionUID = 3948552646788613194L;
+
     private String accessToken;
     private String tokenType;
     private String refreshToken;
