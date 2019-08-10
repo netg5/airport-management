@@ -17,7 +17,7 @@ datasource:
 
 # Remote service endpoints
 manager:
-  aircraft-uri: http://localhost:8088/getAircraftById
+  route-uri: http://localhost:8088/getRouteById
 
 # Feign client properties
 feign:

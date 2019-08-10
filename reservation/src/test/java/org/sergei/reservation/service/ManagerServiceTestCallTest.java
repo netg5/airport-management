@@ -12,7 +12,7 @@ import org.sergei.reservation.rest.dto.AircraftDTO;
 import org.sergei.reservation.rest.dto.HangarDTO;
 import org.sergei.reservation.rest.dto.ManufacturerDTO;
 import org.sergei.reservation.rest.dto.RouteDTO;
-import org.sergei.reservation.rest.dto.response.exchange.RouteDTOResponse;
+import org.sergei.reservation.rest.dto.response.RouteDTOExchangeResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -49,8 +49,8 @@ public class ManagerServiceTestCallTest {
 
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
-        RouteDTOResponse routeDTOResponse = objectMapper.readValue(responseEntity.getBody(), RouteDTOResponse.class);
-        log.info("JsonNode as String: {}", routeDTOResponse.getResponse().get(0).toString());
+        RouteDTOExchangeResponse routeDTOExchangeResponse = objectMapper.readValue(responseEntity.getBody(), RouteDTOExchangeResponse.class);
+        log.info("JsonNode as String: {}", routeDTOExchangeResponse.getResponse().get(0).toString());
 
     }
 

@@ -62,3 +62,4 @@ INSERT INTO response_messages VALUES(14, 'MAN-001', 'Manufacturer with this ID n
 INSERT INTO response_messages VALUES(15, 'HAN-001', 'Hangar not found');
 INSERT INTO response_messages VALUES(16, 'APT-001', 'Airport with this name not found');
 INSERT INTO response_messages VALUES(17, 'APT-002', 'No airport contact found by this parameter');
+INSERT INTO response_messages VALUES(18, 'RES-001', 'Reservatoion not found');

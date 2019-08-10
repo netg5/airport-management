@@ -57,9 +57,9 @@ public class ReservationController {
     }
 
     @ApiOperation("Delete reservation")
-    @DeleteMapping("/deleteReservation/{passengerId}")
-    public ResponseEntity<ResponseDTO<ReservationDTO>> deleteReservation(@PathVariable("passengerId") Long passengerId,
-                                                                         @RequestParam("reservationId") Long reservationId) {
-        return reservationService.deleteReservation(passengerId, reservationId);
+    @DeleteMapping("/discardReservation/{passengerId}")
+    public ResponseEntity<ResponseDTO<ReservationDTO>> discardReservation(@PathVariable("passengerId") Long passengerId,
+                                                                          @RequestParam("reservationId") Long reservationId) {
+        return reservationService.discardReservation(passengerId, reservationId);
     }
 }

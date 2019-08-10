@@ -1,4 +1,4 @@
-package org.sergei.reservation.rest.dto.response.exchange;
+package org.sergei.reservation.rest.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -17,7 +17,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RouteDTOResponse {
+public class RouteDTOExchangeResponse {
 
     @JsonProperty("errorList")
     private List<ResponseErrorDTO> errorList;
