@@ -14,7 +14,6 @@ import org.sergei.reservation.rest.dto.HangarDTO;
 import org.sergei.reservation.rest.dto.ManufacturerDTO;
 import org.sergei.reservation.rest.dto.RouteDTO;
 import org.sergei.reservation.rest.dto.response.RouteDTOExchangeResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
@@ -36,13 +35,10 @@ import java.util.Map;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
-public class ManagerServiceTestCallTest {
+public class ManagerServiceCallTest {
 
     @Value("${manager.route-uri}")
     private String managerRouteUri;
-
-    @Autowired
-    private ObjectMapper objectMapper;
 
     @Test
     public void routeRestCallJacksonReadValueTest() throws IOException {

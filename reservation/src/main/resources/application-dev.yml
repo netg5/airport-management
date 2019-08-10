@@ -5,8 +5,6 @@ server:
 spring:
   application:
     name: reservation
-  autoconfigure:
-    exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
 
 # DataSource configuration
 datasource:
@@ -42,8 +40,22 @@ eureka:
     instance-info-replication-interval-seconds: 10 # how often to replicate instance changes to be replicated to Eureka server
     serviceUrl:
       defaulZone: http://localhost:8761/eureka/
+
+# Authentication security details
+security:
+  oauth2:
+    resource:
+      user-info-uri: http://localhost:8080/auth/users/authenticate
+  exchange: # This one needs for data exchange between services
+    auth-server: http://localhost:8080/auth/oauth/token
+    client-id: system-client
+    client-secret: uCvtFPbxBEmVho9X
+    user: system_user
+    password: FjtdJSaqGlZhVAR8
+
 management:
   endpoints.web.exposure.include: "info, health, metrics, configprops, env, prometheus"
+
 logging:
   file: C:/tmp/reservation.log
   level:

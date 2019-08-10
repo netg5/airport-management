@@ -16,11 +16,10 @@
 
 package org.sergei.reservation.config;
 
-import feign.RequestInterceptor;
-import org.sergei.reservation.config.security.FeignClientInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * @author Sergei Visotsky
@@ -30,4 +29,10 @@ import org.springframework.context.annotation.Configuration;
         "org.sergei.reservation"
 })
 public class ApplicationConfig {
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
+
 }

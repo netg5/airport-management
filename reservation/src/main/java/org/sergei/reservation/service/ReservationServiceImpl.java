@@ -27,6 +27,7 @@ import org.sergei.reservation.jpa.model.mapper.PassengerModelMapper;
 import org.sergei.reservation.jpa.model.mapper.RouteModelMapper;
 import org.sergei.reservation.jpa.repository.PassengerRepository;
 import org.sergei.reservation.jpa.repository.ReservationRepository;
+import org.sergei.reservation.rest.dto.AuthTokenInfo;
 import org.sergei.reservation.rest.dto.PassengerDTO;
 import org.sergei.reservation.rest.dto.ReservationDTO;
 import org.sergei.reservation.rest.dto.RouteDTO;
@@ -39,10 +40,11 @@ import org.sergei.reservation.rest.dto.response.RouteDTOExchangeResponse;
 import org.sergei.reservation.rest.exceptions.FlightRuntimeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
@@ -54,7 +56,6 @@ import java.util.Optional;
  */
 @Slf4j
 @Service
-@Transactional
 public class ReservationServiceImpl implements ReservationService {
 
     @Value("${manager.route-uri}")
@@ -68,6 +69,8 @@ public class ReservationServiceImpl implements ReservationService {
     private final PassengerModelMapper passengerModelMapper;
     private final ResponseMessageService responseMessageService;
     private final Tracer tracer;
+    private final RestTemplate restTemplate;
+    private final ExchangeAuthService exchangeAuthService;
 
     @Autowired
     public ReservationServiceImpl(PassengerRepository passengerRepository,
@@ -77,7 +80,7 @@ public class ReservationServiceImpl implements ReservationService {
                                   RouteModelMapper routeModelMapper,
                                   PassengerModelMapper passengerModelMapper,
                                   ResponseMessageService responseMessageService,
-                                  Tracer tracer) {
+                                  Tracer tracer, RestTemplate restTemplate, ExchangeAuthService exchangeAuthService) {
         this.passengerRepository = passengerRepository;
         this.reservationRepository = reservationRepository;
         this.reservationDTOMapper = reservationDTOMapper;
@@ -86,6 +89,8 @@ public class ReservationServiceImpl implements ReservationService {
         this.passengerModelMapper = passengerModelMapper;
         this.responseMessageService = responseMessageService;
         this.tracer = tracer;
+        this.restTemplate = restTemplate;
+        this.exchangeAuthService = exchangeAuthService;
     }
 
     /**
@@ -159,11 +164,15 @@ public class ReservationServiceImpl implements ReservationService {
         Long routeId = request.getRouteId();
         ResponseDTO<ReservationDTO> response = new ResponseDTO<>();
         try {
-            RestTemplate restTemplate = new RestTemplate();
-
             Span span = tracer.buildSpan("restTemplate.getForEntity(managerRouteUri, String.class)").start();
             span.setTag("managerRouteUri", managerRouteUri);
-            ResponseEntity<String> routeResponse = restTemplate.getForEntity(managerRouteUri + "/" + routeId, String.class);
+
+            AuthTokenInfo tokenInfo = exchangeAuthService.sendTokenRequest();
+            HttpEntity<String> excRequest = new HttpEntity<>(exchangeAuthService.getHeaders());
+
+            ResponseEntity<String> routeResponse =
+                    this.restTemplate.exchange(managerRouteUri + "/" + routeId + "?access_token=" +
+                            tokenInfo.getAccessToken(), HttpMethod.GET, excRequest, String.class);
             span.finish();
 
             if (routeResponse.getStatusCode() == HttpStatus.NOT_FOUND) {

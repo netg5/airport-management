@@ -13,6 +13,15 @@ spring:
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
 
+# Authentication security details
+security:
+  exchange: # This one needs for data exchange between services
+    auth-server: http://localhost:8080/auth/oauth/token
+    client-id: system-client
+    client-secret: uCvtFPbxBEmVho9X
+    user: system_user
+    password: FjtdJSaqGlZhVAR8
+
 # Remote service endpoints
 manager:
   route-uri: http://localhost:8088/getRouteById

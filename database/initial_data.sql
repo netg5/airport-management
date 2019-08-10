@@ -37,12 +37,19 @@ INSERT INTO reservation VALUES(3, 3, '2019-08-09', '2019-08-09 17:28:30.183', '2
 INSERT INTO airport VALUES(1, 'Los Angeles International Airport', '1st Avenue, Los Angeles', 'USA', 'John Smith', 'Supervisor', 'jahn@example.com', '+124579');
 
 -- User service data - 1st user password: 123456
-INSERT INTO auth_user VALUES (1, 'admin', '$2a$10$sHzvSELmDqDxAI8GN.yyb.bRLDhWNB03zJfGWc9M5dQelX05GMACm');
 INSERT INTO auth_user_roles VALUES (1, 'USER');
 INSERT INTO auth_user_roles VALUES (2, 'ADMIN');
+INSERT INTO auth_user_roles VALUES (3, 'ROOT');
+
+INSERT INTO auth_user VALUES (1, 'admin', '$2a$10$sHzvSELmDqDxAI8GN.yyb.bRLDhWNB03zJfGWc9M5dQelX05GMACm');
 INSERT INTO auth_user_auth_user_roles VALUES (1, 1);
-INSERT INTO auth_user_auth_user_roles VALUES (1, 2) ;
+INSERT INTO auth_user_auth_user_roles VALUES (1, 2);
+
+INSERT INTO auth_user VALUES (2, 'system_user', '$2a$10$GHIEGUgKYlvPn6jkYnKeEOIMN8Tt4ZTK2/2KkQdFOwtCG.lTA3gCW');
+INSERT INTO auth_user_auth_user_roles VALUES (2, 3);
+
 INSERT INTO oauth_client_details VALUES('trusted-client', '', '$2a$10$K9.dtdouoTm1tlhQTTQu4OEV1HPlV0IpNjUsNu/8ZBiesIkSXafmK', 'read,write,trust', 'refresh_token,password', 'http://www.google.com', 'ROLE_CLIENT,ROLE_TRUSTED_CLIENT,ROLE_ADMIN', 3600, 86400, '', '');
+INSERT INTO oauth_client_details VALUES('system-client', '', '$2a$10$NR.ZeJ8mUIqT0b88RQCT2OMVDD5lXtzzxHF2YGHp8pRuCZx0IMgny', 'read,write,trust', 'refresh_token,password', '', 'ROLE_TRUSTED_CLIENT,ROLE_ROOT', 946080000, 946080000, '', '');
 
 -- Errors
 INSERT INTO response_messages VALUES(1, 'AIR-001', 'Aircraft with this ID not found');
