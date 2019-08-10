@@ -9,7 +9,7 @@ pipeline {
             steps {
                 withSonarQubeEnv('sonar') {
                     echo '-=- run code inspection & check quality gate -=-'
-                    sh "${SonarScanner 4.0}/bin/sonar-scanner"
+                    sh "${sonarqube}/bin/linux-x86-64/sonar.sh"
                 }
             }
         }
