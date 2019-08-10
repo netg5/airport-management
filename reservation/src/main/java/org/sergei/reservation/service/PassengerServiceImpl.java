@@ -1,6 +1,7 @@
 package org.sergei.reservation.service;
 
 import org.sergei.reservation.jpa.model.Passenger;
+import org.sergei.reservation.jpa.model.mapper.PassengerModelMapper;
 import org.sergei.reservation.jpa.repository.PassengerRepository;
 import org.sergei.reservation.rest.dto.PassengerDTO;
 import org.sergei.reservation.rest.dto.mappers.PassengerDTOListMapper;
@@ -26,16 +27,18 @@ public class PassengerServiceImpl implements PassengerService {
     private final PassengerRepository passengerRepository;
     private final PassengerDTOMapper passengerDTOMapper;
     private final PassengerDTOListMapper passengerDTOListMapper;
+    private final PassengerModelMapper passengerModelMapper;
     private final ResponseMessageService responseMessageService;
 
     @Autowired
     public PassengerServiceImpl(PassengerRepository passengerRepository,
                                 PassengerDTOMapper passengerDTOMapper,
                                 PassengerDTOListMapper passengerDTOListMapper,
-                                ResponseMessageService responseMessageService) {
+                                PassengerModelMapper passengerModelMapper, ResponseMessageService responseMessageService) {
         this.passengerRepository = passengerRepository;
         this.passengerDTOMapper = passengerDTOMapper;
         this.passengerDTOListMapper = passengerDTOListMapper;
+        this.passengerModelMapper = passengerModelMapper;
         this.responseMessageService = responseMessageService;
     }
 
@@ -96,12 +99,11 @@ public class PassengerServiceImpl implements PassengerService {
             List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("PAS-001");
             return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
         } else {
-            passenger.get().setFirstName(request.getCustomer().getFirstName());
-            passenger.get().setLastName(request.getCustomer().getLastName());
-            passenger.get().setAge(request.getCustomer().getAge());
-            Passenger updatedPassenger = passengerRepository.save(passenger.get());
+            Passenger updatedPassenger = passengerModelMapper.apply(request);
+            Passenger saveUpdatedPassenger = passengerRepository.save(updatedPassenger);
 
-            PassengerDTO passengerDTOResp = passengerDTOMapper.apply(updatedPassenger);
+            PassengerDTO passengerDTOResp = passengerDTOMapper.apply(saveUpdatedPassenger);
+
             ResponseDTO<PassengerDTO> response = new ResponseDTO<>();
             response.setErrorList(List.of());
             response.setResponse(List.of(passengerDTOResp));
