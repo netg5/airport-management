@@ -1,5 +1,7 @@
 package org.sergei.reservation.service;
 
+import io.opentracing.Span;
+import io.opentracing.Tracer;
 import org.sergei.reservation.jpa.model.Passenger;
 import org.sergei.reservation.jpa.model.mapper.PassengerModelMapper;
 import org.sergei.reservation.jpa.repository.PassengerRepository;
@@ -29,17 +31,21 @@ public class PassengerServiceImpl implements PassengerService {
     private final PassengerDTOListMapper passengerDTOListMapper;
     private final PassengerModelMapper passengerModelMapper;
     private final ResponseMessageService responseMessageService;
+    private final Tracer tracer;
 
     @Autowired
     public PassengerServiceImpl(PassengerRepository passengerRepository,
                                 PassengerDTOMapper passengerDTOMapper,
                                 PassengerDTOListMapper passengerDTOListMapper,
-                                PassengerModelMapper passengerModelMapper, ResponseMessageService responseMessageService) {
+                                PassengerModelMapper passengerModelMapper,
+                                ResponseMessageService responseMessageService,
+                                Tracer tracer) {
         this.passengerRepository = passengerRepository;
         this.passengerDTOMapper = passengerDTOMapper;
         this.passengerDTOListMapper = passengerDTOListMapper;
         this.passengerModelMapper = passengerModelMapper;
         this.responseMessageService = responseMessageService;
+        this.tracer = tracer;
     }
 
     /**
@@ -94,14 +100,23 @@ public class PassengerServiceImpl implements PassengerService {
     @Override
     public ResponseEntity<ResponseDTO<PassengerDTO>> update(PassengerDTO request) {
 
-        Optional<Passenger> passenger = passengerRepository.findById(request.getPassengerId());
+        Long passengerId = request.getPassengerId();
+
+        Span span = tracer.buildSpan("passengerRepository.findById() started").start();
+        span.setTag("passengerId", passengerId);
+
+        Optional<Passenger> passenger = passengerRepository.findById(passengerId);
+        span.finish();
         if (passenger.isEmpty()) {
             List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("PAS-001");
             return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
         } else {
             Passenger updatedPassenger = passengerModelMapper.apply(request);
-            Passenger saveUpdatedPassenger = passengerRepository.save(updatedPassenger);
 
+            Span span1 = tracer.buildSpan("passengerRepository.save() to update starting....").start();
+            Passenger saveUpdatedPassenger = passengerRepository.save(updatedPassenger);
+            span1.log("passengerRepository.save() to update completed");
+            span1.finish();
             PassengerDTO passengerDTOResp = passengerDTOMapper.apply(saveUpdatedPassenger);
 
             ResponseDTO<PassengerDTO> response = new ResponseDTO<>();
