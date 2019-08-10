@@ -6,11 +6,10 @@ pipeline {
     }
     stages {
         stage('Code inspection & quality gate') {
-            def scannerHome = tool 'SonarScanner 4.0';
             steps {
                 withSonarQubeEnv('sonar') {
                     echo '-=- run code inspection & check quality gate -=-'
-                    sh "${scannerHome}/bin/sonar-scanner"
+                    sh "${SonarScanner 4.0}/bin/sonar-scanner"
                 }
             }
         }
