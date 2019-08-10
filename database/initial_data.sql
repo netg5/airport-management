@@ -49,7 +49,7 @@ INSERT INTO auth_user VALUES (2, 'system_user', '$2a$10$GHIEGUgKYlvPn6jkYnKeEOIM
 INSERT INTO auth_user_auth_user_roles VALUES (2, 3);
 
 INSERT INTO oauth_client_details VALUES('trusted-client', '', '$2a$10$K9.dtdouoTm1tlhQTTQu4OEV1HPlV0IpNjUsNu/8ZBiesIkSXafmK', 'read,write,trust', 'refresh_token,password', 'http://www.google.com', 'ROLE_CLIENT,ROLE_TRUSTED_CLIENT,ROLE_ADMIN', 3600, 86400, '', '');
-INSERT INTO oauth_client_details VALUES('system-client', '', '$2a$10$NR.ZeJ8mUIqT0b88RQCT2OMVDD5lXtzzxHF2YGHp8pRuCZx0IMgny', 'read,write,trust', 'refresh_token,password', '', 'ROLE_TRUSTED_CLIENT,ROLE_ROOT', 946080000, 946080000, '', '');
+INSERT INTO oauth_client_details VALUES('system-client', '', '$2a$10$NR.ZeJ8mUIqT0b88RQCT2OMVDD5lXtzzxHF2YGHp8pRuCZx0IMgny', 'read,write,trust', 'refresh_token,password', '', 'ROLE_ROOT', 946080000, 946080000, '', '');
 
 -- Errors
 INSERT INTO response_messages VALUES(1, 'AIR-001', 'Aircraft with this ID not found');
