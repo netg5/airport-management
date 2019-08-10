@@ -1,4 +1,4 @@
-package org.sergei.processor.response;
+package org.sergei.processor.rest.dto.response;
 
 import lombok.*;
 
