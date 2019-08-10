@@ -15,7 +15,7 @@ public interface ReservationService {
 
     ResponseEntity<ResponseDTO<ReservationDTO>> saveReservation(ReservationDTORequest request);
 
-    ResponseEntity<ResponseDTO<ReservationDTO>> updateReservation(ReservationDTO reservationDTO);
+    ResponseEntity<ResponseDTO<ReservationDTO>> updateReservation(ReservationDTO request);
 
     ResponseEntity<ResponseDTO<ReservationDTO>> discardReservation(Long passengerId, Long reservationId);
 }

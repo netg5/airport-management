@@ -46,18 +46,23 @@ public class Reservation implements Serializable {
     @Column(name = "id")
     private Long id;
 
+    @NotNull
     @Column(name = "date_of_flying")
     private LocalDateTime dateOfFlying;
 
+    @NotNull
     @Column(name = "departure_time")
     private LocalDateTime departureTime;
 
+    @NotNull
     @Column(name = "arrival_time")
     private LocalDateTime arrivalTime;
 
+    @NotNull
     @Column(name = "hours_flying")
     private Integer hoursFlying;
 
+    @NotNull
     @ManyToOne(
             fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE}
@@ -68,6 +73,7 @@ public class Reservation implements Serializable {
     )
     private Passenger passenger;
 
+    @NotNull
     @ManyToOne(
             fetch = FetchType.LAZY,
             cascade = {CascadeType.ALL}
@@ -77,5 +83,4 @@ public class Reservation implements Serializable {
             referencedColumnName = "id"
     )
     private Route route;
-
 }

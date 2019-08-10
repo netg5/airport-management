@@ -124,7 +124,7 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public ResponseEntity<ResponseDTO<ReservationDTO>> findOneForPassenger(Long passengerId, Long reservationId) {
         if (passengerId == null) {
-            List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("PAS-001");
+            List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("RP-001");
             return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
         } else {
             if (reservationId == null) {
@@ -202,17 +202,33 @@ public class ReservationServiceImpl implements ReservationService {
     /**
      * Update reservation details
      *
-     * @param reservationDTO Payload with all the necessary data
+     * @param request Payload with all the necessary data
      * @return patched reservation
      */
     @Override
-    public ResponseEntity<ResponseDTO<ReservationDTO>> updateReservation(ReservationDTO reservationDTO) {
-        return null;
+    public ResponseEntity<ResponseDTO<ReservationDTO>> updateReservation(ReservationDTO request) {
+        Long reservationId = request.getReservationId();
+        if (reservationId == null) {
+            List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("RP-001");
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+        } else {
+            Optional<Reservation> reservation = reservationRepository.findById(reservationId);
+            if (reservation.isEmpty()) {
+                List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("RES-001");
+                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+            } else {
+                ReservationDTO reservationDTO = reservationDTOMapper.apply(reservation.get());
+                ResponseDTO<ReservationDTO> response = new ResponseDTO<>();
+                response.setErrorList(List.of());
+                response.setResponse(List.of(reservationDTO));
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
+        }
     }
 
 
     /**
-     * Delete reservation by ID and passenger ID
+     * Discard reservation by its ID and passenger ID
      *
      * @param passengerId   passenger who made reservation
      * @param reservationId reservation ID to be deleted

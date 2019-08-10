@@ -18,9 +18,7 @@ package org.sergei.reservation.rest.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import org.sergei.reservation.rest.dto.PassengerDTO;
-import org.sergei.reservation.rest.dto.PassengerUpdateRequestDTO;
 import org.sergei.reservation.rest.dto.response.ResponseDTO;
 import org.sergei.reservation.service.PassengerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,46 +40,20 @@ public class PassengerController {
     }
 
     @ApiOperation("Get all customers")
-    @GetMapping(value = "/getAllCustomers")
-    public ResponseEntity<ResponseDTO<PassengerDTO>> getAllCustomers(@RequestParam("page") int page,
-                                                                     @RequestParam("size") int size) {
+    @GetMapping(value = "/getAllPassengers")
+    public ResponseEntity<ResponseDTO<PassengerDTO>> getAllPassengers(@RequestParam("page") int page,
+                                                                      @RequestParam("size") int size) {
         return passengerService.findAllPassengers(page, size);
     }
 
     @ApiOperation("Get passenger by ID")
     @GetMapping(value = "/getPassengerById/{passengerId}")
     public ResponseEntity<ResponseDTO<PassengerDTO>> getPassengerById(@PathVariable("passengerId") Long passengerId) {
-        return passengerService.findOne(passengerId);
-    }
-
-    /**
-     * Should be done during the reservation
-     *
-     * @param request
-     * @return
-     */
-    @Deprecated(forRemoval = true)
-    @ApiOperation("Save passenger")
-    @PostMapping(value = "/saveCustomer")
-    public ResponseEntity<ResponseDTO<PassengerDTO>> savePassenger(@ApiParam(value = "Saved passenger", required = true)
-                                                                           @RequestBody PassengerDTO request) {
-        return passengerService.save(request);
+        return passengerService.findPassengerById(passengerId);
     }
 
     @PostMapping(value = "/updatePassenger")
-    public ResponseEntity<ResponseDTO<PassengerDTO>> updatePassenger(@RequestBody PassengerUpdateRequestDTO request) {
+    public ResponseEntity<ResponseDTO<PassengerDTO>> updatePassenger(@RequestBody PassengerDTO request) {
         return passengerService.update(request);
-    }
-
-    /**
-     * Should be done during the reservation deletion
-     *
-     * @param passengerId
-     * @return
-     */
-    @Deprecated(forRemoval = true)
-    @DeleteMapping(value = "/deletePassenger/{passengerId}")
-    public ResponseEntity<ResponseDTO<PassengerDTO>> deletePassenger(@PathVariable("passengerId") Long passengerId) {
-        return passengerService.delete(passengerId);
     }
 }
