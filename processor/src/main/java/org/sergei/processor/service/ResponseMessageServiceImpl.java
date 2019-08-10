@@ -1,8 +1,8 @@
 package org.sergei.processor.service;
 
-import org.sergei.template.jpa.model.ResponseMessage;
-import org.sergei.template.jpa.repository.ResponseMessageRepository;
-import org.sergei.template.rest.dto.response.ResponseErrorDTO;
+import org.sergei.processor.jpa.model.ResponseMessage;
+import org.sergei.processor.jpa.repository.ResponseMessageRepository;
+import org.sergei.processor.rest.dto.response.ResponseErrorDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

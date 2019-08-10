@@ -1,6 +1,6 @@
 package org.sergei.processor.jpa.repository;
 
-import org.sergei.template.jpa.model.ResponseMessage;
+import org.sergei.processor.jpa.model.ResponseMessage;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
