@@ -1,0 +1,42 @@
+server:
+  port: 8086
+
+# Spring specific configuration
+spring:
+  application:
+    name: processor
+  cloud:
+    config:
+      enabled: false
+    discovery:
+      enabled: false
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+
+# DataSource configuration
+datasource:
+  jdbc-url: jdbc:postgresql://localhost:5432/flight_reservation
+  type: com.zaxxer.hikari.HikariDataSource
+  username: flight
+  password: flight
+
+# Monitoring endpoints
+management:
+  endpoints.web.exposure.include: "info, health, metrics, configprops, env, prometheus"
+
+# Logging configuration
+logging:
+  file: C:/tmp/processor.log
+  level:
+    ROOT: INFO
+    org:
+      sergei:
+        template: DEBUG
+
+# Actuator info
+info:
+  app:
+    name: Processor
+    version: 1.0
+    profile: plain
+    descripton: Service to process reserved flights
