@@ -15,7 +15,6 @@ import static org.junit.Assert.assertTrue;
 /**
  * @author Sergei Visotsky
  */
-@Ignore
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")

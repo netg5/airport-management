@@ -1,4 +1,4 @@
-package org.sergei.manager;
+package org.sergei.manager.controller;
 
 import org.junit.Ignore;
 import org.junit.Test;
