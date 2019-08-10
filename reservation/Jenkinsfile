@@ -5,6 +5,14 @@ pipeline {
         maven 'maven_3_6_1'
     }
     stages {
+        stage('Code inspection & quality gate') {
+            steps {
+                withSonarQubeEnv('sonar') {
+                    echo '-=- run code inspection & check quality gate -=-'
+                    sh "${SonarScanner 4.0}/bin/sonar-scanner"
+                }
+            }
+        }
         stage('Compilation') {
             steps {
                 echo '-=- compiling project -=-'
@@ -29,13 +37,5 @@ pipeline {
                 sh "mvn ${POM_LOCATION} package -DskipTests=true"
             }
         }
-        /*stage('Code inspection & quality gate') {
-            steps {
-                withSonarQubeEnv('sonar') {
-                    echo '-=- run code inspection & check quality gate -=-'
-                    sh "${SonarScanner 4.0}/bin/sonar-scanner"
-                }
-            }
-        } */
     }
 }
