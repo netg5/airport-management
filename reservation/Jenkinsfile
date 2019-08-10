@@ -5,6 +5,15 @@ pipeline {
         maven 'maven_3_6_1'
     }
     stages {
+        stage('Code inspection & quality gate') {
+            def scannerHome = tool 'SonarScanner 4.0';
+            steps {
+                withSonarQubeEnv('sonar') {
+                    echo '-=- run code inspection & check quality gate -=-'
+                    sh "${scannerHome}/bin/sonar-scanner"
+                }
+            }
+        }
         stage('Compilation') {
             steps {
                 echo '-=- compiling project -=-'
@@ -29,15 +38,5 @@ pipeline {
                 sh "mvn ${POM_LOCATION} package -DskipTests=true"
             }
         }
-//        stage('Code inspection & quality gate') {
-//            steps {
-//                withSonarQubeEnv('sergei-sonar') {
-//                    echo '-=- run code inspection & check quality gate -=-'
-//                    sh "mvn ${POM_LOCATION} sonar:sonar " +
-//                            "-Dsonar.host.url=http://79.135.149.36:9000 " +
-//                            "-Dsonar.login=b18abeedf7353813275264a410d0acbc771219cd"
-//                }
-//            }
-//        }
     }
 }
