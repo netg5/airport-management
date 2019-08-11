@@ -9,7 +9,7 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/sergeivisotsky/flight-reservation-config
+          uri: https://github.com/sergeivisotsky/airport-management-config
           clone-on-start: true
           search-paths: "config/{application}" # application config file or directory name
 management:

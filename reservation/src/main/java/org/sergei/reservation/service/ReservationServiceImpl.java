@@ -16,18 +16,16 @@
 
 package org.sergei.reservation.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import io.opentracing.Span;
 import io.opentracing.Tracer;
 import lombok.extern.slf4j.Slf4j;
+import org.sergei.reservation.feign.RouteFeignClient;
 import org.sergei.reservation.jpa.model.Passenger;
 import org.sergei.reservation.jpa.model.Reservation;
 import org.sergei.reservation.jpa.model.mapper.PassengerModelMapper;
 import org.sergei.reservation.jpa.model.mapper.RouteModelMapper;
 import org.sergei.reservation.jpa.repository.PassengerRepository;
 import org.sergei.reservation.jpa.repository.ReservationRepository;
-import org.sergei.reservation.rest.dto.AuthTokenInfoDTO;
 import org.sergei.reservation.rest.dto.PassengerDTO;
 import org.sergei.reservation.rest.dto.ReservationDTO;
 import org.sergei.reservation.rest.dto.RouteDTO;
@@ -36,18 +34,12 @@ import org.sergei.reservation.rest.dto.mappers.ReservationDTOMapper;
 import org.sergei.reservation.rest.dto.request.ReservationDTORequest;
 import org.sergei.reservation.rest.dto.response.ResponseDTO;
 import org.sergei.reservation.rest.dto.response.ResponseErrorDTO;
-import org.sergei.reservation.rest.dto.response.RouteDTOExchangeResponse;
-import org.sergei.reservation.rest.exceptions.FlightRuntimeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -69,8 +61,7 @@ public class ReservationServiceImpl implements ReservationService {
     private final PassengerModelMapper passengerModelMapper;
     private final ResponseMessageService responseMessageService;
     private final Tracer tracer;
-    private final RestTemplate restTemplate;
-    private final ExchangeAuthService exchangeAuthService;
+    private final RouteFeignClient routeFeignClient;
 
     @Autowired
     public ReservationServiceImpl(PassengerRepository passengerRepository,
@@ -80,7 +71,7 @@ public class ReservationServiceImpl implements ReservationService {
                                   RouteModelMapper routeModelMapper,
                                   PassengerModelMapper passengerModelMapper,
                                   ResponseMessageService responseMessageService,
-                                  Tracer tracer, RestTemplate restTemplate, ExchangeAuthService exchangeAuthService) {
+                                  Tracer tracer, RouteFeignClient routeFeignClient) {
         this.passengerRepository = passengerRepository;
         this.reservationRepository = reservationRepository;
         this.reservationDTOMapper = reservationDTOMapper;
@@ -89,8 +80,7 @@ public class ReservationServiceImpl implements ReservationService {
         this.passengerModelMapper = passengerModelMapper;
         this.responseMessageService = responseMessageService;
         this.tracer = tracer;
-        this.restTemplate = restTemplate;
-        this.exchangeAuthService = exchangeAuthService;
+        this.routeFeignClient = routeFeignClient;
     }
 
     /**
@@ -163,47 +153,34 @@ public class ReservationServiceImpl implements ReservationService {
     public ResponseEntity<ResponseDTO<ReservationDTO>> saveReservation(ReservationDTORequest request) {
         Long routeId = request.getRouteId();
         ResponseDTO<ReservationDTO> response = new ResponseDTO<>();
-        try {
-            Span span = tracer.buildSpan("restTemplate.getForEntity(managerRouteUri, String.class)").start();
-            span.setTag("managerRouteUri", managerRouteUri);
+        Span span = tracer.buildSpan("restTemplate.getForEntity(managerRouteUri, String.class)").start();
+        span.setTag("managerRouteUri", managerRouteUri);
+        ResponseEntity<ResponseDTO<RouteDTO>> routeResponse = routeFeignClient.getRouteById(routeId);
+        span.finish();
 
-            AuthTokenInfoDTO tokenInfo = exchangeAuthService.sendTokenRequest();
-            HttpEntity<String> excRequest = new HttpEntity<>(exchangeAuthService.getHeaders());
+        if (routeResponse.getBody() == null) {
+            List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("RT-001");
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+        } else {
+            RouteDTO routeDTO = routeResponse.getBody().getResponse().get(0);
 
-            ResponseEntity<String> routeResponse =
-                    this.restTemplate.exchange(managerRouteUri + "/" + routeId + "?access_token=" +
-                            tokenInfo.getAccessToken(), HttpMethod.GET, excRequest, String.class);
-            span.finish();
+            PassengerDTO passengerDTO = request.getPassenger();
 
-            if (routeResponse.getStatusCode() == HttpStatus.NOT_FOUND) {
-                List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("RT-001");
-                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
-            } else {
-                ObjectMapper objectMapper = new ObjectMapper();
-                objectMapper.registerModule(new JavaTimeModule());
-                RouteDTOExchangeResponse routeDTOExchangeResponse = objectMapper.readValue(routeResponse.getBody(), RouteDTOExchangeResponse.class);
-                RouteDTO routeDTO = routeDTOExchangeResponse.getResponse().get(0);
+            Reservation reservation = Reservation.builder()
+                    .departureTime(request.getDepartureTime())
+                    .arrivalTime(request.getArrivalTime())
+                    .dateOfFlying(request.getDateOfFlying())
+                    .hoursFlying(request.getHoursFlying())
+                    .passenger(passengerModelMapper.apply(passengerDTO))
+                    .route(routeModelMapper.apply(routeDTO))
+                    .build();
+            Reservation savedReservation = reservationRepository.save(reservation);
 
-                PassengerDTO passengerDTO = request.getPassenger();
+            ReservationDTO savedReservationDTO = reservationDTOMapper.apply(savedReservation);
 
-                Reservation reservation = Reservation.builder()
-                        .departureTime(request.getDepartureTime())
-                        .arrivalTime(request.getArrivalTime())
-                        .dateOfFlying(request.getDateOfFlying())
-                        .hoursFlying(request.getHoursFlying())
-                        .passenger(passengerModelMapper.apply(passengerDTO))
-                        .route(routeModelMapper.apply(routeDTO))
-                        .build();
-                Reservation savedReservation = reservationRepository.save(reservation);
+            response.setErrorList(List.of());
+            response.setResponse(List.of(savedReservationDTO));
 
-                ReservationDTO savedReservationDTO = reservationDTOMapper.apply(savedReservation);
-
-                response.setErrorList(List.of());
-                response.setResponse(List.of(savedReservationDTO));
-
-            }
-        } catch (IOException e) {
-            throw new FlightRuntimeException(e);
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
