@@ -13,10 +13,6 @@ datasource:
   username: flight
   password: flight
 
-# Remote service endpoints
-manager:
-  route-uri: http://localhost:8088/getRouteById
-
 # Feign client properties
 feign:
   route-url: http://localhost:8088/
