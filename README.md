@@ -1,6 +1,5 @@
-# Flight reservation
-Flight reservation application based on the microservice architecture which allows to add passenger, aircraft and route, 
-reserve flight and see all tickets for a particular passenger.
+# Airport management
+Airport management application based on the microservice architecture which allows to prform airport administration, flight reservation and all the data processing.
 
 ## Technologies
 * Java 11
@@ -17,7 +16,7 @@ reserve flight and see all tickets for a particular passenger.
 
 ## Services
 * config - serivce which makes calls to the repository where all configurations are stored - 
-[https://github.com/sergeivisotsky/flight-reservation-config](https://github.com/sergeivisotsky/flight-reservation-config)
+[https://github.com/sergeivisotsky/airport-management-config](https://github.com/sergeivisotsky/airport-management-config)
 * auth - service responsible for authentication and authorization
 * registry - service registry where of all microservices can be observed
 * service-resource - service to experiment with the new features
@@ -78,50 +77,12 @@ _Response:_
 
 After authentication it is able to access any resource with an access token provided. As there is used JWT access and refresh tokens are pretty long.
 
-The next step is get an access to the resources. Example for the flight-api: `http://localhost:8080/reservation/passengers?access_token=ACCESS_TOKEN`
-
 In case if access token is expired refresh token should be used to renew access token.
 
 * URL: `http://localhost:8080/auth/oauth/token`
 * Method: `POST`
 * Content-Type: `application/x-www-form-urlencoded`
 * Content-Options: `grant_type=refresh_token&refresh_token=REFRESH_TOKEN`
-
-## Setup
-1. Checkout config service [https://github.com/sergeivisotsky/flight-reservation-config](https://github.com/sergeivisotsky/flight-reservation-config) 
-to clone all the necessary config files
-2. Copy all the property files into the config folder locally and replace property `spring.cloud.config.server.git.uri` 
-with `spring.cloud.config.server.native.searchLocations: file:///${user.home}/config-repo` in `bootstrap.yml` config 
-file in `config` or create another repository and change the path to it by changing 
-property `spring.cloud.config.server.git.uri`
-3. Change `server.port` for each service located in config repository mentioned in `1.` paragraph _(optional)_
-4. Change database driver for your database.
-
-_Example for PostgreSQL:_
-```xml
-<dependency>
-    <groupId>org.postgresql</groupId>
-    <artifactId>postgresql</artifactId>
-    <scope>runtime</scope>
-</dependency>
-```
-5. Change the value of database driver property `spring.datasource.driver-class-name` in config file located in repo 
-called `flight-reservation-config` for each service which communicates with database
-6. Change database url property: `spring.datasource.url`
-7. Change database url property: `spring.datasource.username`
-8. Change database url property: `spring.datasource.password`
-9. Change SQL dialect modifying this property: `spring.jpa.properties.hibernate.dialect`
-10. Open SQL file `oauth_schema.sql` script located in auth-service under `resources/sql` and change database name to yours
-11. Open directory `database` and execute all SQL located there
-12. Open `application-prod.yml` config file located in config repository for this services `reservation`, `tickets` 
-and `auth` and setup your database url and credentials or in each service `application-dev.yml` in case of _dev_ profile
-13. Application port and port in `security.oauth2.resource.accessTokenUri` property might be changed in your case
-14. Open `logback-spring.xml` for each microservice and setup directory where all your logging files are going to saved
-15. Each service has additional dev profile config file and in case you want to use it you should 
-change property `spring.profiles.active` value from _prod_ to _dev_ and you can use development profile
-16. Change port for each microservice in _docker-compose.yml_ for yours
-
-**__NOTE: If you change any port it should be changed in all places where it is used e.g. all depending microservices.__**
 
 ## Run
 #### 1 way - using maven or java command
