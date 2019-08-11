@@ -50,9 +50,6 @@ import java.util.Optional;
 @Service
 public class ReservationServiceImpl implements ReservationService {
 
-    @Value("${manager.route-uri}")
-    private String managerRouteUri;
-
     private final PassengerRepository passengerRepository;
     private final ReservationRepository reservationRepository;
     private final ReservationDTOMapper reservationDTOMapper;
@@ -154,7 +151,6 @@ public class ReservationServiceImpl implements ReservationService {
         Long routeId = request.getRouteId();
         ResponseDTO<ReservationDTO> response = new ResponseDTO<>();
         Span span = tracer.buildSpan("restTemplate.getForEntity(managerRouteUri, String.class)").start();
-        span.setTag("managerRouteUri", managerRouteUri);
         ResponseEntity<ResponseDTO<RouteDTO>> routeResponse = routeFeignClient.getRouteById(routeId);
         span.finish();
 
