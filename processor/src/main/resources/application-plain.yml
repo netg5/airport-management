@@ -24,6 +24,9 @@ datasource:
 feign:
   reservation-url: http://localhost:8083
 
+task:
+  rate: 5000
+
 # Monitoring endpoints
 management:
   endpoints.web.exposure.include: "info, health, metrics, configprops, env, prometheus"
