@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
  * @author Sergei Visotsky
  */
 @Component
-@Profile("!plain")
+@Profile({"!plain", "!test"})
 public class FeignClientInterceptor implements RequestInterceptor {
     private static final String AUTHORIZATION_HEADER = "Authorization";
     private static final String BEARER_TOKEN_TYPE = "Bearer";

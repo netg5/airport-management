@@ -6,6 +6,6 @@ import org.springframework.security.web.context.AbstractSecurityWebApplicationIn
 /**
  * @author Sergei Visotsky
  */
-@Profile("!plain")
+@Profile({"!plain", "!test"})
 public class SecurityWebApplicationInitializer extends AbstractSecurityWebApplicationInitializer {
 }

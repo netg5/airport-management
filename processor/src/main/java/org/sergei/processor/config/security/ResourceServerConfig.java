@@ -11,7 +11,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
  * @author Sergei Visotsky
  */
 @Configuration
-@Profile("!plain")
+@Profile({"!plain", "!test"})
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 }

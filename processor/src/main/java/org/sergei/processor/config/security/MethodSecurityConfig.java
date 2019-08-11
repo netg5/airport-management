@@ -14,7 +14,7 @@ import org.springframework.security.oauth2.provider.expression.OAuth2MethodSecur
  * @author Sergei Visotsky
  */
 @Configuration
-@Profile("!plain")
+@Profile({"!plain", "!test"})
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
 

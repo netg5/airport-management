@@ -9,7 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  * @author Sergei Visotsky
  */
 @Configuration
-@Profile("!plain")
+@Profile({"!plain", "!test"})
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) {
