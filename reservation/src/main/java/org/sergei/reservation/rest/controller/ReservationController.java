@@ -18,27 +18,19 @@ package org.sergei.reservation.rest.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import org.sergei.reservation.rest.dto.ReservationRequestDTO;
-import org.sergei.reservation.rest.dto.ReservationResponseDTO;
+import org.sergei.reservation.rest.dto.ReservationDTO;
+import org.sergei.reservation.rest.dto.request.ReservationDTORequest;
 import org.sergei.reservation.rest.dto.response.ResponseDTO;
 import org.sergei.reservation.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
-
 /**
  * @author Sergei Visotsky
  */
-@Api(
-        value = "/reservation/customers/{customerId}/reservations/",
-        produces = "application/json",
-        consumes = "application/json"
-)
 @RestController
-@RequestMapping(value = "/customers")
+@Api(tags = {"reservationCrudOperations"})
 public class ReservationController {
 
     private final ReservationService reservationService;
@@ -48,63 +40,26 @@ public class ReservationController {
         this.reservationService = reservationService;
     }
 
-    @ApiOperation("Get all reservations for customer")
-    @GetMapping(value = "/{customerId}/reservations", produces = "application/json")
-    public ResponseEntity<ResponseDTO<ReservationResponseDTO>>
-    getAllForCustomer(@ApiParam(value = "Customer ID whose reservations should be found", required = true)
-                      @PathVariable("customerId") Long customerId) {
-        return reservationService.findAllForCustomer(customerId);
+    @GetMapping(value = "/getAllReservationForPassenger/{passengerId}")
+    public ResponseEntity<ResponseDTO<ReservationDTO>> getAllReservationForPassenger(@PathVariable("passengerId") Long passengerId) {
+        return reservationService.findAllForPassenger(passengerId);
     }
 
-    @ApiOperation("Get all reservations for customer")
-    @GetMapping(value = "/{customerId}/reservations", params = {"page", "size"}, produces = "application/json")
-    public ResponseEntity<ResponseDTO<ReservationResponseDTO>>
-    getAllForCustomerPaginated(@ApiParam(value = "Customer ID whose reservations should be found", required = true)
-                               @PathVariable("customerId") Long customerId,
-                               @ApiParam("Number of the page")
-                               @RequestParam("page") int page,
-                               @ApiParam("Maximum number of content blocks on the page")
-                               @RequestParam("size") int size) {
-        return reservationService.findAllForCustomerPaginated(customerId, page, size);
+    @GetMapping(value = "/getOneReservationForPassenger/{passengerId}", produces = "application/json")
+    public ResponseEntity<ResponseDTO<ReservationDTO>> getOneReservationForPassenger(@PathVariable("passengerId") Long passengerId,
+                                                                                     @RequestParam("reservationId") Long reservationId) {
+        return reservationService.findOneForPassenger(passengerId, reservationId);
     }
 
-    @ApiOperation("Get one reservation by ID for the customer")
-    @GetMapping(value = "/{customerId}/reservations/{reservationId}", produces = "application/json")
-    public ResponseEntity<ResponseDTO<ReservationResponseDTO>>
-    getOneForCustomer(@ApiParam(value = "Customer ID who made a reservation", required = true)
-                      @PathVariable("customerId") Long customerId,
-                      @ApiParam(value = "Reservation ID which which was made", required = true)
-                      @PathVariable("reservationId") Long reservationId) {
-        return reservationService.findOneForCustomer(customerId, reservationId);
-    }
-
-    @ApiOperation("Create reservation for customer")
-    @PostMapping(value = "/{customerId}/reservation", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<ResponseDTO<ReservationResponseDTO>>
-    createReservation(@PathVariable Long customerId,
-                      @ApiParam(value = "Request to delete reservation", required = true)
-                      @RequestBody ReservationRequestDTO request) {
-        return reservationService.saveReservation(customerId, request);
-    }
-
-    @ApiOperation(value = "Update reservation by customer ID")
-    @PatchMapping(value = "/{customerId}/reservations/{reservationId}", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<ResponseDTO<ReservationResponseDTO>>
-    updateReservation(@ApiParam(value = "Customer ID who made reservation", required = true)
-                      @PathVariable("customerId") Long customerId,
-                      @ApiParam(value = "Reservation ID which should be updated", required = true)
-                      @PathVariable("reservationId") Long reservationId,
-                      @RequestBody Map<String, Object> params) {
-        return reservationService.updateReservation(customerId, reservationId, params);
+    @PostMapping(value = "/makeReservation")
+    public ResponseEntity<ResponseDTO<ReservationDTO>> makeReservation(@RequestBody ReservationDTORequest request) {
+        return reservationService.saveReservation(request);
     }
 
     @ApiOperation("Delete reservation")
-    @DeleteMapping("/{customerId}/reservations/{reservationId}")
-    public ResponseEntity<ResponseDTO<ReservationResponseDTO>>
-    deleteReservation(@ApiParam(value = "Customer ID who made reservation", required = true)
-                      @PathVariable("customerId") Long customerId,
-                      @ApiParam(value = "Reservation ID which should be deleted", required = true)
-                      @PathVariable("reservationId") Long reservationId) {
-        return reservationService.deleteReservation(customerId, reservationId);
+    @DeleteMapping("/discardReservation/{passengerId}")
+    public ResponseEntity<ResponseDTO<ReservationDTO>> discardReservation(@PathVariable("passengerId") Long passengerId,
+                                                                          @RequestParam("reservationId") Long reservationId) {
+        return reservationService.discardReservation(passengerId, reservationId);
     }
 }

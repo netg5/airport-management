@@ -1,5 +1,7 @@
 package org.sergei.reservation.config;
 
+import feign.RequestInterceptor;
+import org.sergei.reservation.config.security.FeignClientInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -19,6 +21,16 @@ import java.util.Collections;
 @Configuration
 @EnableWebMvc
 public class InterceptorConfig implements WebMvcConfigurer {
+
+    /**
+     * Bean to allow Feign client be used with oAuth2 enabled
+     *
+     * @return
+     */
+    @Bean
+    public RequestInterceptor getFeignClientInterceptor() {
+        return new FeignClientInterceptor();
+    }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

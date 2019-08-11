@@ -16,9 +16,7 @@
 
 package org.sergei.reservation.jpa.model;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -28,9 +26,11 @@ import java.time.LocalDateTime;
 /**
  * @author Sergei Visotsky
  */
+@Builder
 @Getter
-@Setter
+@Setter // Should be removed after business logic gonna be ready
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "reservation")
 public class Reservation implements Serializable {
@@ -40,25 +40,47 @@ public class Reservation implements Serializable {
     @Id
     @NotNull
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
-            generator = "reservation_seq")
-    @SequenceGenerator(name = "reservation_seq",
-            sequenceName = "reservation_seq", allocationSize = 1)
+            generator = "reservation_id_seq")
+    @SequenceGenerator(name = "reservation_id_seq",
+            sequenceName = "reservation_id_seq", allocationSize = 1)
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "reservation_date", nullable = false)
-    private LocalDateTime reservationDate;
+    @NotNull
+    @Column(name = "date_of_flying")
+    private LocalDateTime dateOfFlying;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = false)
-    private Customer customer;
+    @NotNull
+    @Column(name = "departure_time")
+    private LocalDateTime departureTime;
 
-    @ManyToOne
-    @JoinColumn(name = "route_id", nullable = false)
+    @NotNull
+    @Column(name = "arrival_time")
+    private LocalDateTime arrivalTime;
+
+    @NotNull
+    @Column(name = "hours_flying")
+    private Integer hoursFlying;
+
+    @NotNull
+    @ManyToOne(
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE}
+    )
+    @JoinColumn(
+            name = "passenger_id",
+            referencedColumnName = "id"
+    )
+    private Passenger passenger;
+
+    @NotNull
+    @ManyToOne(
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.ALL}
+    )
+    @JoinColumn(
+            name = "route_id",
+            referencedColumnName = "id"
+    )
     private Route route;
-
-    public Reservation(LocalDateTime reservationDate, Customer customer, Route route) {
-        this.reservationDate = reservationDate;
-        this.customer = customer;
-        this.route = route;
-    }
 }

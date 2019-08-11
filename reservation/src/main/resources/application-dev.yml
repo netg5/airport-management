@@ -1,43 +1,33 @@
 server:
   port: 8083
-  servlet:
-    context-path: /reservation
-  error:
-    whitelabel:
-      enabled: false
+
+# Spring specific configuration
 spring:
   application:
     name: reservation
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/flight_reservation
-    username: flight
-    password: flight
-    initialization-mode: embedded
-  jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-        show_sql: true
-        hbm2ddl:
-          auto: update
-        generate-ddl: true
-  gateway:
-    port: 9090
-  autoconfigure:
-    exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+
+# DataSource configuration
+datasource:
+  jdbc-url: jdbc:postgresql://localhost:5432/flight_reservation
+  type: com.zaxxer.hikari.HikariDataSource
+  username: flight
+  password: flight
+
+# Feign client properties
+feign:
+  route-url: http://localhost:8088/
+
+# Eureka configuration
 eureka:
   instance:
     non-secure-port-enabled: false
     secure-port-enabled: true
     secure-port: ${server.port}
-    status-page-url-path: http://localhost:${server.port}/${server.servlet.context-path}/actuator/info
-    health-check-url-path: http://localhost:${server.port}/${server.servlet.context-path}/actuator/health
+    status-page-url-path: http://localhost:${server.port}/actuator/info
+    health-check-url-path: http://localhost:${server.port}/actuator/health
     home-page-url: http://localhost:${server.port}
     lease-renewal-interval-in-seconds: 10 # intervalSeconds between subsequent heartbeats sent to Eureka server
     lease-expiration-duration-in-seconds: 20 # time that Eureka server waits since it received last heartbeat before it can evict this instance
-    metadata-map:
-      swagger_url: http://localhost:${server.port}/${server.servlet.context-path}/v2/rest-docs
   client:
     enabled: true
     register-with-eureka: true
@@ -46,13 +36,26 @@ eureka:
     instance-info-replication-interval-seconds: 10 # how often to replicate instance changes to be replicated to Eureka server
     serviceUrl:
       defaulZone: http://localhost:8761/eureka/
+
+# Authentication security details
 security:
   oauth2:
     resource:
       user-info-uri: http://localhost:8080/auth/users/authenticate
-    access-token-uri: http://localhost:8080/auth/oauth/token
-    user-authorization-uri: http://localhost:8080/auth/oauth/authorize
+  exchange: # This one needs for data exchange between services
+    auth-server: http://localhost:8080/auth/oauth/token
+    client-id: system-client
+    client-secret: uCvtFPbxBEmVho9X
+    user: system_user
+    password: FjtdJSaqGlZhVAR8
+
 management:
-  endpoint:
-    health:
-      show-details: always
+  endpoints.web.exposure.include: "info, health, metrics, configprops, env, prometheus"
+
+logging:
+  file: C:/tmp/reservation.log
+  level:
+    ROOT: INFO
+    org:
+      sergei:
+        reservation: DEBUG

@@ -1,9 +1,8 @@
+zuul:
+  ignoredServices: '*'
 spring:
   cloud:
     config:
       name: gateway
       uri: http://localhost:8888
       label: "master" # branch where config is located
-      discovery:
-        enabled: true
-        service-id: config

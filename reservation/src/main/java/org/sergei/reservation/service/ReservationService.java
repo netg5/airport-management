@@ -1,27 +1,23 @@
 package org.sergei.reservation.service;
 
-import org.sergei.reservation.rest.dto.ReservationRequestDTO;
-import org.sergei.reservation.rest.dto.ReservationResponseDTO;
+import org.sergei.reservation.rest.dto.ReservationDTO;
+import org.sergei.reservation.rest.dto.request.ReservationDTORequest;
 import org.sergei.reservation.rest.dto.response.ResponseDTO;
 import org.springframework.http.ResponseEntity;
-
-import java.util.Map;
+import org.springframework.stereotype.Service;
 
 /**
  * @author Sergei Visotsky
  */
+@Service
 public interface ReservationService {
-    ResponseEntity<ResponseDTO<ReservationResponseDTO>> findOneForCustomer(Long customerId, Long reservationId);
+    ResponseEntity<ResponseDTO<ReservationDTO>> findOneForPassenger(Long passengerId, Long reservationId);
 
-    ResponseEntity<ResponseDTO<ReservationResponseDTO>> findAllForCustomer(Long customerId);
+    ResponseEntity<ResponseDTO<ReservationDTO>> findAllForPassenger(Long passengerId);
 
-    ResponseEntity<ResponseDTO<ReservationResponseDTO>> findAllForCustomerPaginated(Long customerId,
-                                                                                    int page, int size);
+    ResponseEntity<ResponseDTO<ReservationDTO>> saveReservation(ReservationDTORequest request);
 
-    ResponseEntity<ResponseDTO<ReservationResponseDTO>> saveReservation(Long customerId, ReservationRequestDTO request);
+    ResponseEntity<ResponseDTO<ReservationDTO>> updateReservation(ReservationDTO request);
 
-    ResponseEntity<ResponseDTO<ReservationResponseDTO>> updateReservation(Long customerId, Long reservationId,
-                                                                          Map<String, Object> params);
-
-    ResponseEntity<ResponseDTO<ReservationResponseDTO>> deleteReservation(Long customerId, Long reservationId);
+    ResponseEntity<ResponseDTO<ReservationDTO>> discardReservation(Long passengerId, Long reservationId);
 }

@@ -4,6 +4,9 @@ spring:
       name: reservation
       uri: http://localhost:8888
       label: "master" # branch where config is located
-      discovery:
-        enabled: true
-        service-id: config
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true

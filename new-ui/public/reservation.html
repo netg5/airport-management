@@ -17,7 +17,7 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="/customers/1">Customer</a>
+                    <a class="nav-link" href="/passengers/1">Customer</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/aircrafts/1">Aircraft</a>
@@ -32,7 +32,7 @@
 <main role="main" class="flex-shrink-0">
     <div class="container">
 
-        <h1>Reservations for this customer:</h1>
+        <h1>Reservations for this passenger:</h1>
         <div class="row mb-3">
             <div th:each="reservation : ${reservations}" class="col-4 themed-grid-col margin-top-bigger">
                 <div>Reservation ID: [[${reservation.reservationId}]]</div>
@@ -60,7 +60,7 @@
         <!--<form th:action="@{/reservation/post}" th:object="${reservationPost}" method="post">
             <p>
                 <label>
-                    <input type="number" class="form-control" placeholder="Customer ID" th:field="*{customerId}">
+                    <input type="number" class="form-control" placeholder="Customer ID" th:field="*{passengerId}">
                 </label>
             </p>
             <p>
@@ -70,7 +70,7 @@
             </p>
             <p>
                 <label>
-                    <input type="datetime-local" class="form-control" placeholder="Date" th:field="*{reservationDate}">
+                    <input type="datetime-local" class="form-control" placeholder="Date" th:field="*{dateOfFlying}">
                 </label>
             </p>
             <button class="btn btn-primary">Submit</button>

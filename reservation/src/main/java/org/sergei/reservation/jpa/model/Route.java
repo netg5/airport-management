@@ -16,24 +16,24 @@
 
 package org.sergei.reservation.jpa.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * @author Sergei Visotsky
  */
+@Builder
 @Getter
-@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "route")
 public class Route implements Serializable {
@@ -43,46 +43,34 @@ public class Route implements Serializable {
     @Id
     @NotNull
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
-            generator = "route_seq")
-    @SequenceGenerator(name = "route_seq",
-            sequenceName = "route_seq", allocationSize = 1)
+            generator = "route_id_seq")
+    @SequenceGenerator(name = "route_id_seq",
+            sequenceName = "route_id_seq", allocationSize = 1)
+    @Column(name = "id")
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "distance")
     private Double distance;
 
-    @Column(name = "departure_time", nullable = false)
+    @Column(name = "departure_time")
     private LocalDateTime departureTime;
 
-    @Column(name = "arrival_time", nullable = false)
+    @Column(name = "arrival_time")
     private LocalDateTime arrivalTime;
 
-    @Column(nullable = false)
+    @Column(name = "price")
     private BigDecimal price;
 
-    @Column(nullable = false)
+    @Column(name = "place")
     private String place;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "aircraft_id")
-    private Aircraft aircraft;
-
-    @OneToMany(
+    @OneToOne(
             fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
+            cascade = {CascadeType.DETACH}
     )
-    @JoinColumn(name = "reservation_id")
-    private List<Reservation> reservationList = new LinkedList<>();
-
-    public Route(Double distance, LocalDateTime departureTime, LocalDateTime arrivalTime, BigDecimal price,
-                 String place, Aircraft aircraft, List<Reservation> reservationList) {
-        this.distance = distance;
-        this.departureTime = departureTime;
-        this.arrivalTime = arrivalTime;
-        this.price = price;
-        this.place = place;
-        this.aircraft = aircraft;
-        this.reservationList = reservationList;
-    }
+    @JoinColumn(
+            name = "aircraft_id",
+            referencedColumnName = "id"
+    )
+    private Aircraft aircraft;
 }

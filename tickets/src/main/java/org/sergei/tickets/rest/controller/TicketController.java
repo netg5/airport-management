@@ -17,27 +17,20 @@
 package org.sergei.tickets.rest.controller;
 
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import org.sergei.tickets.rest.dto.TicketDTO;
-import org.sergei.tickets.rest.dto.TicketRequestDTO;
 import org.sergei.tickets.rest.dto.response.ResponseDTO;
 import org.sergei.tickets.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author Sergei Visotsky
  */
-@Api(
-        value = "/ticket-rest/tickets",
-        produces = "application/json"
-)
 @RestController
+@Api(tags = {"findAllTicketsForPassenger"})
 public class TicketController {
 
     private final TicketService ticketService;
@@ -47,19 +40,8 @@ public class TicketController {
         this.ticketService = ticketService;
     }
 
-    @ApiOperation("Get ticket for customer by ID")
-    @PostMapping(produces = "application/json")
-    public ResponseEntity<ResponseDTO<TicketDTO>> findAllTickets(@RequestBody TicketRequestDTO request) {
-        return ticketService.findAllTickets(request);
-    }
-
-    @ApiOperation("Get ticket for customer by ID")
-    @PostMapping(params = {"page", "size"}, produces = "application/json")
-    public ResponseEntity<ResponseDTO<TicketDTO>> findAllTicketsPageable(@RequestBody TicketRequestDTO request,
-                                                                         @ApiParam("Number of page")
-                                                                         @RequestParam("page") int page,
-                                                                         @ApiParam("Number of elements per page")
-                                                                         @RequestParam("size") int size) {
-        return ticketService.findAllTicketsPageable(request, page, size);
+    @GetMapping(value = "/findAllTicketsForPassenger/{passengerId}")
+    public ResponseEntity<ResponseDTO<TicketDTO>> findAllTicketsForPassenger(@PathVariable("passengerId") Long passengerId) {
+        return ticketService.findAllTickets(passengerId);
     }
 }

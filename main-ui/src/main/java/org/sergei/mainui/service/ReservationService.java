@@ -48,7 +48,7 @@ public class ReservationService {
     private static final String RESERVATIONS_PATH = "/reservations";
     private static final String ACCESS_TOKEN_PARAM = "?access_token=";
     private static final String ROUTE_JSON_PATH = "reservedRoute";
-    private static final String AIRCRAFT_JSON_PATH = "aircraft";
+    private static final String AIRCRAFT_JSON_PATH = "aircraftId";
 
     private final RestTemplate restTemplate;
     private final TokenRetrievalService tokenRetrievalService;
@@ -60,10 +60,10 @@ public class ReservationService {
     }
 
     /**
-     * Get collection of reservations for a specific customer
+     * Get collection of reservations for a specific passenger
      *
      * @param customerId whose reservations should be found
-     * @return collection of customer reservations
+     * @return collection of passenger reservations
      * @throws IOException   IO exceptions and JSONException
      * @throws JSONException in case we have any JSON parsing problems
      */
@@ -92,9 +92,9 @@ public class ReservationService {
         // Puts each reservation to a collection
         for (int i = 0; i < jsonArray.length(); i++) {
             Long reservationId = Long.valueOf(jsonArray.getJSONObject(i).get("reservationId").toString());
-            Long customerIdParsed = Long.valueOf(jsonArray.getJSONObject(i).get("customerId").toString());
+            Long customerIdParsed = Long.valueOf(jsonArray.getJSONObject(i).get("passengerId").toString());
             LocalDateTime reservationDate = LocalDateTime.parse(
-                    jsonArray.getJSONObject(i).get("reservationDate").toString()
+                    jsonArray.getJSONObject(i).get("dateOfFlying").toString()
             );
 
             // Parsing fields of reserved route data JSON response
@@ -124,12 +124,12 @@ public class ReservationService {
             Double aircraftWeight =
                     Double.valueOf(
                             jsonArray.getJSONObject(i)
-                                    .getJSONObject(ROUTE_JSON_PATH).getJSONObject(AIRCRAFT_JSON_PATH).get("aircraftWeight").toString()
+                                    .getJSONObject(ROUTE_JSON_PATH).getJSONObject(AIRCRAFT_JSON_PATH).get("weight").toString()
                     );
             Integer maxPassengers =
                     Integer.valueOf(
                             jsonArray.getJSONObject(i)
-                                    .getJSONObject(ROUTE_JSON_PATH).getJSONObject(AIRCRAFT_JSON_PATH).get("maxPassengers").toString()
+                                    .getJSONObject(ROUTE_JSON_PATH).getJSONObject(AIRCRAFT_JSON_PATH).get("capacity").toString()
                     );
             Aircraft aircraft = new Aircraft(aircraftId, model, aircraftName, aircraftWeight, maxPassengers);
             Route route = new Route(routeId, distance, departureTime, arrivalTime, price, place, aircraft);
@@ -141,7 +141,7 @@ public class ReservationService {
     }
 
     /**
-     * Method to make reservation for customer
+     * Method to make reservation for passenger
      *
      * @param reservationPost reservation model to be saved
      * @return saved reservation

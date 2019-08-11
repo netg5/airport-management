@@ -17,15 +17,13 @@
 package org.sergei.tickets.service;
 
 import org.sergei.tickets.jpa.model.Ticket;
-import org.sergei.tickets.jpa.repository.CustomerRepository;
+import org.sergei.tickets.jpa.repository.PassengerRepository;
 import org.sergei.tickets.jpa.repository.TicketRepository;
 import org.sergei.tickets.rest.dto.TicketDTO;
-import org.sergei.tickets.rest.dto.TicketRequestDTO;
 import org.sergei.tickets.rest.dto.mappers.TicketDTOListMapper;
 import org.sergei.tickets.rest.dto.response.ResponseDTO;
+import org.sergei.tickets.rest.dto.response.ResponseErrorDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -39,67 +37,39 @@ import java.util.List;
 public class TicketServiceImpl implements TicketService {
 
     private final TicketRepository ticketRepository;
-    private final CustomerRepository customerRepository;
+    private final PassengerRepository passengerRepository;
     private final TicketDTOListMapper ticketDTOListMapper;
+    private final ResponseMessageService responseMessageService;
 
     @Autowired
     public TicketServiceImpl(TicketRepository ticketRepository,
-                             CustomerRepository customerRepository,
-                             TicketDTOListMapper ticketDTOListMapper) {
+                             PassengerRepository passengerRepository,
+                             TicketDTOListMapper ticketDTOListMapper,
+                             ResponseMessageService responseMessageService) {
         this.ticketRepository = ticketRepository;
-        this.customerRepository = customerRepository;
+        this.passengerRepository = passengerRepository;
         this.ticketDTOListMapper = ticketDTOListMapper;
+        this.responseMessageService = responseMessageService;
     }
 
     /**
-     * Method to find tickets for customer
+     * Method to find tickets for passenger
      *
-     * @param request Request payload with params to find tickets
+     * @param passengerId Request payload with params to find tickets
      * @return collection of tickets
      */
     @Override
-    public ResponseEntity<ResponseDTO<TicketDTO>> findAllTickets(TicketRequestDTO request) {
-        Long customerId = request.getCustomerId();
-        String place = request.getPlace();
-        Double distance = request.getDistance();
-        if (customerRepository.findById(customerId).isEmpty()) {
-            return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+    public ResponseEntity<ResponseDTO<TicketDTO>> findAllTickets(Long passengerId) {
+        if (passengerRepository.findById(passengerId).isEmpty()) {
+            List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("AIR-001");
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
         } else {
-            List<Ticket> ticketList = ticketRepository.findAllTickets(customerId, place, distance);
+            List<Ticket> ticketList = ticketRepository.findAllTickets(passengerId);
             if (ticketList.isEmpty()) {
-                return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
+                List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("PAS-001");
+                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
             } else {
                 List<TicketDTO> ticketDTOList = ticketDTOListMapper.apply(ticketList);
-                ResponseDTO<TicketDTO> response = new ResponseDTO<>();
-                response.setErrorList(List.of());
-                response.setResponse(ticketDTOList);
-                return new ResponseEntity<>(response, HttpStatus.OK);
-            }
-        }
-    }
-
-    /**
-     * Method to find tickets for customer paginated
-     *
-     * @param request request Request payload with params to find tickets
-     * @param page    number of page to show
-     * @param size    element quantity per page
-     * @return Collection of tickets
-     */
-    @Override
-    public ResponseEntity<ResponseDTO<TicketDTO>> findAllTicketsPageable(TicketRequestDTO request, int page, int size) {
-        Long customerId = request.getCustomerId();
-        String place = request.getPlace();
-        Double distance = request.getDistance();
-        if (customerRepository.findById(customerId).isEmpty()) {
-            return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
-        } else {
-            Page<Ticket> ticketList = ticketRepository
-                    .findAllTicketsPageable(customerId, place, distance, PageRequest.of(page, size));
-            if (ticketList.isEmpty()) {
-                return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.NOT_FOUND);
-            } else {
-                List<TicketDTO> ticketDTOList = ticketDTOListMapper.apply(ticketList.getContent());
                 ResponseDTO<TicketDTO> response = new ResponseDTO<>();
                 response.setErrorList(List.of());
                 response.setResponse(ticketDTOList);

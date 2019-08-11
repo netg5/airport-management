@@ -6,34 +6,30 @@ spring:
 zuul:
   ssl-hostname-validation-enabled: false # No recommended in real production applications
   routes:
-    service-resource:
-      path: /service/**
-      service-id: service-resource
-      url: http://localhost:8084
-      sensitive-headers: true
     auth:
       path: /auth/**
       service-id: auth
       url: http://localhost:8082
-      strip-prefix: false
       sensitive-headers: true
     reservation:
       path: /reservation/**
       service-id: reservation
       url: http://localhost:8083
-      strip-prefix: false
       sensitive-headers: true
     tickets:
       path: /tickets/**
       service-id: tickets
       url: http://localhost:8086
-      strip-prefix: false
       sensitive-headers: true
     reports:
       path: /reports/**
       service-id: reports
       url: http://localhost:8089
-      strip-prefix: false
+      sensitive-headers: true
+    manager:
+      path: /manager/**
+      service-id: manager
+      url: http://localhost:8088
       sensitive-headers: true
 eureka:
   instance:
@@ -57,3 +53,10 @@ management:
   endpoint:
     health:
       show-details: always
+logging:
+  file: C:/tmp/gateway.log
+  level:
+    ROOT: INFO
+    org:
+      sergei:
+        gateway: DEBUG

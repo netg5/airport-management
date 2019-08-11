@@ -53,7 +53,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class TicketControllerTest {
 
     private static final String BASE_URL = "http://localhost/tickets";
-    private static final String CUSTOMER_ID_PARAM = "?customerId=";
+    private static final String CUSTOMER_ID_PARAM = "?passengerId=";
 
     @Autowired
     private MockMvc mvc;
@@ -73,6 +73,6 @@ public class TicketControllerTest {
                 .andExpect(jsonPath("$._embedded.ticketList[0].price").value(2500))
                 .andExpect(jsonPath("$._embedded.ticketList[0].aircraftName").value("Boeing"))
                 .andExpect(jsonPath("$._links.self.href").value(BASE_URL + CUSTOMER_ID_PARAM + 1))
-                .andExpect(jsonPath("$._links.customer.href").value("https://127.0.0.1:8080/flight-api/customers/1"));
+                .andExpect(jsonPath("$._links.passenger.href").value("https://127.0.0.1:8080/flight-api/customers/1"));
     }
 }

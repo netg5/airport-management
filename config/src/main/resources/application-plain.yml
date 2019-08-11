@@ -1,0 +1,27 @@
+server:
+  port: 8888
+spring:
+  application:
+    name: config
+  config:
+    name: config
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/sergeivisotsky/airport-management-config
+          clone-on-start: true
+          search-paths: "config/{application}" # application config file or directory name
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+logging:
+  file: C:/tmp/config.log
+  level:
+    ROOT: INFO
+    org:
+      sergei:
+        config: DEBUG

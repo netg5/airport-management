@@ -48,10 +48,10 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
                     "FROM\n" +
                     "    reservation r\n" +
                     "        LEFT JOIN\n" +
-                    "    customer c ON r.customer_id = c.id\n" +
+                    "    passenger p ON r.passenger_id = p.id\n" +
                     "WHERE\n" +
-                    "    r.customer_id = ?1",
+                    "    r.passenger_id = ?1",
             nativeQuery = true
     )
-    List<Reservation> findAllByCustomerId(Long customerId);
+    List<Reservation> findAllByPassengerId(Long passengerId);
 }

@@ -49,6 +49,7 @@ public class AuthUser implements Serializable {
     private String username;
 
     private String password;
+
     @Column(name = "roles")
     @OneToMany(
             fetch = FetchType.EAGER,

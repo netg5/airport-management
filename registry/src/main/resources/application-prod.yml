@@ -15,3 +15,5 @@ eureka:
     fetch-registry: false
     serviceUrl:
       defaulZone: http://localhost:8761/eureka/
+logging:
+  file: /tmp/registry.log

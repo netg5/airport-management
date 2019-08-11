@@ -16,9 +16,10 @@
 
 package org.sergei.reservation.jpa.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -28,8 +29,9 @@ import java.io.Serializable;
  * @author Sergei Visotsky
  */
 @Getter
-@Setter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "aircraft")
 public class Aircraft implements Serializable {
@@ -39,26 +41,47 @@ public class Aircraft implements Serializable {
     @Id
     @NotNull
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
-            generator = "aircraft_seq")
-    @SequenceGenerator(name = "aircraft_seq",
-            sequenceName = "aircraft_seq", allocationSize = 1)
+            generator = "aircraft_id_seq")
+    @SequenceGenerator(name = "aircraft_id_seq",
+            sequenceName = "aircraft_id_seq", allocationSize = 1)
+    @Column(name = "id")
     private Long id;
 
-    private String model;
+    @Column(name = "registration_number")
+    private String registrationNumber;
 
-    @Column(name = "aircraft_name", nullable = false)
+    @Column(name = "model_number")
+    private String modelNumber;
+
+    @Column(name = "aircraft_name")
     private String aircraftName;
 
-    @Column(name = "weight", nullable = false)
-    private Double aircraftWeight;
+    @Column(name = "capacity")
+    private Integer capacity;
 
-    @Column(name = "max_passengers", nullable = false)
-    private Integer maxPassengers;
+    @Column(name = "weight")
+    private Double weight;
 
-    public Aircraft(String model, String aircraftName, Double aircraftWeight, Integer maxPassengers) {
-        this.model = model;
-        this.aircraftName = aircraftName;
-        this.aircraftWeight = aircraftWeight;
-        this.maxPassengers = maxPassengers;
-    }
+    @Column(name = "exploitation_period")
+    private Integer exploitationPeriod;
+
+    @OneToOne(
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE}
+    )
+    @JoinColumn(
+            name = "manufacturer_id",
+            referencedColumnName = "id"
+    )
+    private Manufacturer manufacturer;
+
+    @OneToOne(
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE}
+    )
+    @JoinColumn(
+            name = "hangar_id",
+            referencedColumnName = "id"
+    )
+    private Hangar hangar;
 }

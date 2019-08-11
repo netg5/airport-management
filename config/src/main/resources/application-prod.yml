@@ -9,7 +9,7 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/sergeivisotsky/flight-reservation-config
+          uri: https://github.com/sergeivisotsky/airport-management-config
           clone-on-start: true
           search-paths: "config/{application}" # application config file or directory name
 management:
@@ -32,3 +32,5 @@ eureka:
     instance-info-replication-interval-seconds: 10 # how often to replicate instance changes to be replicated to Eureka server
     serviceUrl:
       defaulZone: http://localhost:8761/eureka/
+logging:
+  file: /tmp/config.log

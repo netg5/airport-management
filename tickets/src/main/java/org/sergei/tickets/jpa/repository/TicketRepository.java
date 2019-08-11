@@ -17,10 +17,9 @@
 package org.sergei.tickets.jpa.repository;
 
 import org.sergei.tickets.jpa.model.Ticket;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -32,11 +31,9 @@ import java.util.List;
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
     /**
-     * Find ticket by customer ID, place or/and distance
+     * Find ticket by passenger ID, place or/and distance
      *
-     * @param customerId whose ticket should be found
-     * @param place      by which ticket should be found for a customer
-     * @param distance   distance by which ticket should be found
+     * @param passengerId whose ticket should be found
      * @return list of the found tickets
      */
     @Query("SELECT \n" +
@@ -44,28 +41,6 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
             "FROM\n" +
             "    Ticket t\n" +
             "WHERE\n" +
-            "    t.customerId = ?1\n" +
-            "        AND (?2 IS NULL OR t.place = ?2)\n" +
-            "        AND (?3 IS NULL OR t.distance = ?3)")
-    List<Ticket> findAllTickets(Long customerId, String place, Double distance);
-
-    /**
-     * Find ticket by customer ID, place or/and distance with pagination
-     *
-     * @param customerId whose ticket should be found
-     * @param place      by which ticket should be found for a customer
-     * @param distance   distance by which ticket should be found
-     * @param pageable   page number and element quantity per page
-     * @return list of found tickets
-     */
-    @Query("SELECT \n" +
-            "    t\n" +
-            "FROM\n" +
-            "    Ticket t\n" +
-            "WHERE\n" +
-            "    t.customerId = ?1\n" +
-            "        AND (?2 IS NULL OR t.place = ?2)\n" +
-            "        AND (?3 IS NULL OR t.distance = ?3)")
-    Page<Ticket> findAllTicketsPageable(Long customerId, String place,
-                                        Double distance, Pageable pageable);
+            "    t.passengerId = :passengerId")
+    List<Ticket> findAllTickets(@Param("passengerId") Long passengerId);
 }

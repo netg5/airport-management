@@ -1,0 +1,35 @@
+#!groovy
+
+def  POM_LOCATION = '-f config/pom.xml'
+pipeline {
+    agent any
+    tools {
+        maven 'maven_3_6_1'
+    }
+    stages {
+        stage('Compilation') {
+            steps {
+                echo '-=- compiling project -=-'
+                sh "mvn ${POM_LOCATION} clean compile -DskipTests=true"
+            }
+        }
+        stage('Testing') {
+            steps {
+                echo '-=- execute unit tests -=-'
+                sh "mvn ${POM_LOCATION} test"
+            }
+        }
+        stage('Installation') {
+            steps {
+                echo '-=- installing project -=-'
+                sh "mvn ${POM_LOCATION} clean install -DskipTests=true"
+            }
+        }
+        stage('Packaging') {
+            steps {
+                echo '-=- packaging project -=-'
+                sh "mvn ${POM_LOCATION} package -DskipTests=true"
+            }
+        }
+    }
+}
