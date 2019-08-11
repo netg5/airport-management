@@ -1,5 +1,6 @@
 package org.sergei.processor.service;
 
+import io.opentracing.Span;
 import io.opentracing.Tracer;
 import lombok.extern.slf4j.Slf4j;
 import org.sergei.processor.feign.ReservationFeignClient;
@@ -53,10 +54,10 @@ public class ActualFlightServiceImpl implements ActualFlightService {
 
     @Override
     public List<ActualFlightDTO> processFlights() {
+        Span span = tracer.buildSpan("reservationFeignClient.getAllReservations() started").start();
         ResponseEntity<ResponseDTO<ReservationDTO>> reservationResponse = reservationFeignClient.getAllReservations();
-
         log.info("Reservation response is: {}", reservationResponse.getBody().getResponse().toString());
-
+        span.finish();
         return null;
     }
 
