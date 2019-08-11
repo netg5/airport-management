@@ -11,9 +11,12 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public interface ReservationService {
-    ResponseEntity<ResponseDTO<ReservationDTO>> findOneForPassenger(Long passengerId, Long reservationId);
+
+    ResponseEntity<ResponseDTO<ReservationDTO>> findAll();
 
     ResponseEntity<ResponseDTO<ReservationDTO>> findAllForPassenger(Long passengerId);
+
+    ResponseEntity<ResponseDTO<ReservationDTO>> findOneForPassenger(Long passengerId, Long reservationId);
 
     ResponseEntity<ResponseDTO<ReservationDTO>> saveReservation(ReservationDTORequest request);
 

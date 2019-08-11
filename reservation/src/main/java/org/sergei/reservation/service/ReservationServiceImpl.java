@@ -84,6 +84,28 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     /**
+     * Get all existing reservations just only for FeignClients
+     *
+     * @return all existing reservations
+     */
+    @Override
+    public ResponseEntity<ResponseDTO<ReservationDTO>> findAll() {
+        List<Reservation> reservationList = reservationRepository.findAll();
+        if (reservationList.isEmpty()) {
+            List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("RES-001");
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+        } else {
+            List<ReservationDTO> reservationDTOList = reservationDTOListMapper.apply(reservationList);
+
+            ResponseDTO<ReservationDTO> response = new ResponseDTO<>();
+            response.setErrorList(List.of());
+            response.setResponse(reservationDTOList);
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+    }
+
+    /**
      * Method to get all flight reservations for the passenger
      *
      * @param passengerId gets passenger ID

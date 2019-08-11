@@ -40,6 +40,11 @@ public class ReservationController {
         this.reservationService = reservationService;
     }
 
+    @GetMapping(value = "/getAllReservations")
+    public ResponseEntity<ResponseDTO<ReservationDTO>> getAllReservations() {
+        return reservationService.findAll();
+    }
+
     @GetMapping(value = "/getAllReservationForPassenger/{passengerId}")
     public ResponseEntity<ResponseDTO<ReservationDTO>> getAllReservationForPassenger(@PathVariable("passengerId") Long passengerId) {
         return reservationService.findAllForPassenger(passengerId);
