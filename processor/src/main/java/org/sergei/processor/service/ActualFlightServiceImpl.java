@@ -23,7 +23,7 @@ import java.util.List;
 @Service
 public class ActualFlightServiceImpl implements ActualFlightService {
 
-    @Value("${task.value}")
+    @Value("${task.rate}")
     private int taskRate;
 
     private final TaskScheduler scheduler;

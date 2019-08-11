@@ -1,10 +1,7 @@
 package org.sergei.processor.rest.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 
@@ -13,6 +10,7 @@ import java.io.Serializable;
  */
 @Getter
 @Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class AircraftDTO implements Serializable {

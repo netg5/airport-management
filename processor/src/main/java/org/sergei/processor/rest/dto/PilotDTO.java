@@ -1,10 +1,7 @@
 package org.sergei.processor.rest.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 import java.sql.Date;
@@ -14,6 +11,7 @@ import java.sql.Date;
  */
 @Builder
 @Getter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class PilotDTO implements Serializable {
