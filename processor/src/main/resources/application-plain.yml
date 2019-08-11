@@ -20,6 +20,10 @@ datasource:
   username: flight
   password: flight
 
+# FeignClient properties
+feign:
+  reservation-url: http://localhost:8083
+
 # Monitoring endpoints
 management:
   endpoints.web.exposure.include: "info, health, metrics, configprops, env, prometheus"
