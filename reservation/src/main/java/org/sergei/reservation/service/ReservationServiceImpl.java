@@ -19,6 +19,7 @@ package org.sergei.reservation.service;
 import io.opentracing.Span;
 import io.opentracing.Tracer;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.clients.producer.ProducerRecord;
 import org.sergei.reservation.feign.RouteFeignClient;
 import org.sergei.reservation.jpa.model.Passenger;
 import org.sergei.reservation.jpa.model.Reservation;
@@ -35,9 +36,9 @@ import org.sergei.reservation.rest.dto.request.ReservationDTORequest;
 import org.sergei.reservation.rest.dto.response.ResponseDTO;
 import org.sergei.reservation.rest.dto.response.ResponseErrorDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -59,6 +60,7 @@ public class ReservationServiceImpl implements ReservationService {
     private final ResponseMessageService responseMessageService;
     private final Tracer tracer;
     private final RouteFeignClient routeFeignClient;
+    private final KafkaTemplate<String, Object> kafkaTemplate;
 
     @Autowired
     public ReservationServiceImpl(PassengerRepository passengerRepository,
@@ -68,7 +70,7 @@ public class ReservationServiceImpl implements ReservationService {
                                   RouteModelMapper routeModelMapper,
                                   PassengerModelMapper passengerModelMapper,
                                   ResponseMessageService responseMessageService,
-                                  Tracer tracer, RouteFeignClient routeFeignClient) {
+                                  Tracer tracer, RouteFeignClient routeFeignClient, KafkaTemplate<String, Object> kafkaTemplate) {
         this.passengerRepository = passengerRepository;
         this.reservationRepository = reservationRepository;
         this.reservationDTOMapper = reservationDTOMapper;
@@ -78,6 +80,7 @@ public class ReservationServiceImpl implements ReservationService {
         this.responseMessageService = responseMessageService;
         this.tracer = tracer;
         this.routeFeignClient = routeFeignClient;
+        this.kafkaTemplate = kafkaTemplate;
     }
 
     /**
@@ -199,6 +202,7 @@ public class ReservationServiceImpl implements ReservationService {
             response.setErrorList(List.of());
             response.setResponse(List.of(savedReservationDTO));
 
+            this.kafkaTemplate.send(new ProducerRecord<>("RESERVATION", response));
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

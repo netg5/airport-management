@@ -12,6 +12,13 @@ spring:
       enabled: true
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: org.serei.processor
+      auto-offset-reset: earliest
+    producer:
+      bootstrap-servers: localhost:9092
 
 # Authentication security details
 security:
