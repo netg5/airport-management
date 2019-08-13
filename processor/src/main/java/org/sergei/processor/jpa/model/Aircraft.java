@@ -49,6 +49,9 @@ public class Aircraft implements Serializable {
     @Column(name = "exploitation_period")
     private Integer exploitationPeriod;
 
+    @Column(name = "available")
+    private Integer available;
+
     @OneToOne(
             fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE}

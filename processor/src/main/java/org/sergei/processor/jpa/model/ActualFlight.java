@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.sql.Date;
 import java.time.LocalDateTime;
 
 /**
@@ -34,7 +33,7 @@ public class ActualFlight implements Serializable {
     private Long actualFlightId;
 
     @Column(name = "date_of_flying")
-    private Date dateOfFlying;
+    private LocalDateTime dateOfFlying;
 
     @Column(name = "departure_time")
     private LocalDateTime departureTime;

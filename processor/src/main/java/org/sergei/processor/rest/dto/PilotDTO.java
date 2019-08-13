@@ -30,4 +30,5 @@ public class PilotDTO implements Serializable {
     private String country;
     private String email;
     private String phone;
+    private Boolean available;
 }
