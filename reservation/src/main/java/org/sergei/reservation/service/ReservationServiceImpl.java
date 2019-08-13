@@ -19,7 +19,6 @@ package org.sergei.reservation.service;
 import io.opentracing.Span;
 import io.opentracing.Tracer;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.kafka.clients.producer.ProducerRecord;
 import org.sergei.reservation.feign.RouteFeignClient;
 import org.sergei.reservation.jpa.model.Passenger;
 import org.sergei.reservation.jpa.model.Reservation;
@@ -60,7 +59,7 @@ public class ReservationServiceImpl implements ReservationService {
     private final ResponseMessageService responseMessageService;
     private final Tracer tracer;
     private final RouteFeignClient routeFeignClient;
-    private final KafkaTemplate<String, Object> kafkaTemplate;
+    private final KafkaTemplate<String, String> kafkaTemplate;
 
     @Autowired
     public ReservationServiceImpl(PassengerRepository passengerRepository,
@@ -70,7 +69,7 @@ public class ReservationServiceImpl implements ReservationService {
                                   RouteModelMapper routeModelMapper,
                                   PassengerModelMapper passengerModelMapper,
                                   ResponseMessageService responseMessageService,
-                                  Tracer tracer, RouteFeignClient routeFeignClient, KafkaTemplate<String, Object> kafkaTemplate) {
+                                  Tracer tracer, RouteFeignClient routeFeignClient, KafkaTemplate<String, String> kafkaTemplate) {
         this.passengerRepository = passengerRepository;
         this.reservationRepository = reservationRepository;
         this.reservationDTOMapper = reservationDTOMapper;
@@ -202,7 +201,7 @@ public class ReservationServiceImpl implements ReservationService {
             response.setErrorList(List.of());
             response.setResponse(List.of(savedReservationDTO));
 
-            this.kafkaTemplate.send(new ProducerRecord<>("RESERVATION", response));
+            this.kafkaTemplate.send("RESERVATION", response.toString());
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

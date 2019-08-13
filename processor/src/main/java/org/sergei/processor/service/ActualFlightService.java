@@ -9,8 +9,8 @@ import java.util.List;
  * @author Sergei Visotsky
  */
 @Service
-public interface ActualFlightService extends Runnable {
+public interface ActualFlightService /*extends Runnable*/ {
 
-    List<ActualFlightDTO> processFlights();
+    List<ActualFlightDTO> processFlights(String message);
 
 }
