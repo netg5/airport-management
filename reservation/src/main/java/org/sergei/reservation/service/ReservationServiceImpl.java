@@ -37,7 +37,6 @@ import org.sergei.reservation.rest.dto.response.ResponseErrorDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -59,7 +58,6 @@ public class ReservationServiceImpl implements ReservationService {
     private final ResponseMessageService responseMessageService;
     private final Tracer tracer;
     private final RouteFeignClient routeFeignClient;
-    private final KafkaTemplate<String, String> kafkaTemplate;
 
     @Autowired
     public ReservationServiceImpl(PassengerRepository passengerRepository,
@@ -69,7 +67,7 @@ public class ReservationServiceImpl implements ReservationService {
                                   RouteModelMapper routeModelMapper,
                                   PassengerModelMapper passengerModelMapper,
                                   ResponseMessageService responseMessageService,
-                                  Tracer tracer, RouteFeignClient routeFeignClient, KafkaTemplate<String, String> kafkaTemplate) {
+                                  Tracer tracer, RouteFeignClient routeFeignClient) {
         this.passengerRepository = passengerRepository;
         this.reservationRepository = reservationRepository;
         this.reservationDTOMapper = reservationDTOMapper;
@@ -79,7 +77,6 @@ public class ReservationServiceImpl implements ReservationService {
         this.responseMessageService = responseMessageService;
         this.tracer = tracer;
         this.routeFeignClient = routeFeignClient;
-        this.kafkaTemplate = kafkaTemplate;
     }
 
     /**
@@ -200,8 +197,6 @@ public class ReservationServiceImpl implements ReservationService {
 
             response.setErrorList(List.of());
             response.setResponse(List.of(savedReservationDTO));
-
-            this.kafkaTemplate.send("RESERVATION", response.toString());
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
