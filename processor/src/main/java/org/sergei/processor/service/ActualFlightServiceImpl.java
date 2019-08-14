@@ -84,7 +84,7 @@ public class ActualFlightServiceImpl implements ActualFlightService {
                             .aircraft(aircraftService.getAvailableAircraft())
                             .pilot(pilotService.getAvailablePilot())
                             .build();
-                    actualFlightRepository.save(actualFlight);
+                    actualFlightDAO.saveActualFlight();
                 }
             });
             span.finish();

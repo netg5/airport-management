@@ -1,9 +1,6 @@
 package org.sergei.processor.jdbc.dao;
 
-import org.sergei.processor.jdbc.model.ActualFlight;
-import org.sergei.processor.jdbc.model.Aircraft;
-import org.sergei.processor.jdbc.model.Reservation;
-import org.sergei.processor.jdbc.model.Route;
+import org.sergei.processor.jdbc.model.*;
 import org.sergei.processor.rest.exceptions.FlightRuntimeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -31,16 +28,48 @@ public class ActualFlightDAOImpl implements ActualFlightDAO {
     @Override
     public List<Reservation> findAll() {
         NamedParameterJdbcTemplate jdbc = new NamedParameterJdbcTemplate(dataSource);
-        return jdbc.query("SELECT * FROM reservation", (rs, rowNum) ->
-                Reservation.builder()
-                        .id(rs.getLong("id"))
-                        .departureTime(LocalDateTime.parse(String.valueOf(rs.getTimestamp("departure_time"))))
-                        .arrivalTime(LocalDateTime.parse(String.valueOf(rs.getTimestamp("arrival_time"))))
-                        .dateOfFlying(LocalDateTime.parse(String.valueOf(rs.getDate("date_of_flying"))))
-                        .hoursFlying(rs.getInt("hours_flying"))
-                        .passengerId(rs.getLong("passenger_id"))
-                        .routeId(rs.getLong("route_id"))
-                        .build());
+        return jdbc.query(
+                "SELECT p.first_name,\r\n" +
+                        " p.last_name,\r\n" +
+                        " p.age,\r\n" +
+                        " p.gender,\r\n" +
+                        " p.phone,\r\n" +
+                        " rt.departure_time,\r\n" +
+                        " rt.arrival_time,\r\n" +
+                        " rt.distance,\r\n" +
+                        " rt.place,\r\n" +
+                        " rt.price,\r\n" +
+                        " r.date_of_flying,\r\n" +
+                        " r.departure_time,\r\n" +
+                        " r.arrival_time,\r\n" +
+                        " r.hours_flying\r\n" +
+                        "FROM reservation r\r\n" +
+                        "JOIN passenger p \r\n" +
+                        "    ON p.id = r.passenger_id\r\n" +
+                        "JOIN route rt\r\n" +
+                        "    ON rt.id = r.route_id",
+                (rs, rowNum) ->
+                        Reservation.builder()
+                                .id(rs.getLong("id"))
+                                .departureTime(LocalDateTime.parse(String.valueOf(rs.getTimestamp("departure_time"))))
+                                .arrivalTime(LocalDateTime.parse(String.valueOf(rs.getTimestamp("arrival_time"))))
+                                .dateOfFlying(LocalDateTime.parse(String.valueOf(rs.getDate("date_of_flying"))))
+                                .hoursFlying(rs.getInt("hours_flying"))
+                                .passenger(Passenger.builder()
+                                        .firstName(rs.getString("first_name"))
+                                        .lastName(rs.getString("last_name"))
+                                        .age(rs.getInt("age"))
+                                        .gender(rs.getString("gender"))
+                                        .phone(rs.getString("phone"))
+                                        .build())
+                                .route(Route.builder()
+                                        .departureTime(LocalDateTime.parse(String.valueOf(rs.getTimestamp("departure_time"))))
+                                        .arrivalTime(LocalDateTime.parse(String.valueOf(rs.getTimestamp("arrival_time"))))
+                                        .place(rs.getString("place"))
+                                        .price(rs.getBigDecimal("price"))
+                                        .distance(rs.getDouble("distance"))
+                                        .build())
+                                .build());
     }
 
     @Override
@@ -75,6 +104,30 @@ public class ActualFlightDAOImpl implements ActualFlightDAO {
 
     @Override
     public ActualFlight saveActualFlight() {
-        return null;
+        NamedParameterJdbcTemplate jdbc = new NamedParameterJdbcTemplate(dataSource);
+        List<Reservation> reservationList = findAll();
+        reservationList.forEach(reservation -> {
+            if (reservation.getDepartureTime().equals(LocalDateTime.now())) {
+                Passenger passenger = reservation.getPassenger();
+                ActualFlight actualFlight = ActualFlight.builder()
+                        .firstName(passenger.getFirstName())
+                        .lastName(passenger.getLastName())
+                        .gender(passenger.getGender())
+                        .country("USA")
+                        .email("test email")
+                        .phone(passenger.getPhone())
+                        .dateOfFlying(reservation.getDateOfFlying())
+                        .departureTime(reservation.getDepartureTime())
+                        .arrivalTime(reservation.getArrivalTime())
+                        .hoursFlying(reservation.getHoursFlying())
+                        .route(routeModelMapper.apply(routeDTO))
+                        .aircraft(aircraftService.getAvailableAircraft())
+                        .pilot(pilotService.getAvailablePilot())
+                        .build();
+                return jdbc.execute("INSERT INTO actual_flight VALUES " +
+                        "(:dateOfFlying, :departureTime :arrivalTime, :hoursFlying, :firstName, :lastName, " +
+                        ":gender, :address, :country, :email, :phone)");
+            }
+        });
     }
 }

@@ -71,7 +71,7 @@ public class Reservation implements Serializable {
             name = "passenger_id",
             referencedColumnName = "id"
     )
-    private Long passengerId;
+    private Passenger passenger;
 
     @NotNull
     @ManyToOne(
@@ -82,5 +82,5 @@ public class Reservation implements Serializable {
             name = "route_id",
             referencedColumnName = "id"
     )
-    private Long routeId;
+    private Route route;
 }
