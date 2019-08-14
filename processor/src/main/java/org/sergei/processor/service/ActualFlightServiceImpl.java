@@ -80,9 +80,9 @@ public class ActualFlightServiceImpl implements ActualFlightService {
                             .departureTime(reservationDTO.getDepartureTime())
                             .arrivalTime(reservationDTO.getArrivalTime())
                             .hoursFlying(reservationDTO.getHoursFlying())
-                            .route(routeModelMapper.apply(routeDTO))
-                            .aircraft(aircraftService.getAvailableAircraft())
-                            .pilot(pilotService.getAvailablePilot())
+//                            .route(routeModelMapper.apply(routeDTO))
+//                            .aircraftId(aircraftService.getAvailableAircraft())
+//                            .pilot(pilotService.getAvailablePilot())
                             .build();
                     actualFlightDAO.saveActualFlight();
                 }

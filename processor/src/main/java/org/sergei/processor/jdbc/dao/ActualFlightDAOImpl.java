@@ -120,9 +120,9 @@ public class ActualFlightDAOImpl implements ActualFlightDAO {
                         .departureTime(reservation.getDepartureTime())
                         .arrivalTime(reservation.getArrivalTime())
                         .hoursFlying(reservation.getHoursFlying())
-                        .route(routeModelMapper.apply(routeDTO))
-                        .aircraft(aircraftService.getAvailableAircraft())
-                        .pilot(pilotService.getAvailablePilot())
+                        .routeId(routeModelMapper.apply(routeDTO))
+                        .aircraftId(aircraftService.getAvailableAircraft())
+                        .pilotid(pilotService.getAvailablePilot())
                         .build();
                 return jdbc.execute("INSERT INTO actual_flight VALUES " +
                         "(:dateOfFlying, :departureTime :arrivalTime, :hoursFlying, :firstName, :lastName, " +

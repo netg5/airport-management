@@ -73,7 +73,7 @@ public class ActualFlight implements Serializable {
             name = "aircraft_id",
             referencedColumnName = "id"
     )
-    private Aircraft aircraft;
+    private Long aircraftId;
 
     @OneToOne(
             fetch = FetchType.LAZY,
@@ -83,7 +83,7 @@ public class ActualFlight implements Serializable {
             name = "pilot_id",
             referencedColumnName = "id"
     )
-    private Pilot pilot;
+    private Long pilotId;
 
     @OneToOne(
             fetch = FetchType.LAZY,
@@ -93,5 +93,5 @@ public class ActualFlight implements Serializable {
             name = "route_id",
             referencedColumnName = "id"
     )
-    private Route route;
+    private Long routeId;
 }
