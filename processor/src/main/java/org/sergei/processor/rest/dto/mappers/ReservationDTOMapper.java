@@ -30,8 +30,8 @@ public class ReservationDTOMapper implements IMapper<Reservation, ReservationDTO
                 .departureTime(reservation.getDepartureTime())
                 .arrivalTime(reservation.getArrivalTime())
                 .hoursFlying(reservation.getHoursFlying())
-                .passenger(passengerDTOMapper.apply(reservation.getPassenger()))
-                .route(routeDTOMapper.apply(reservation.getRoute()))
+//                .passenger(passengerDTOMapper.apply(reservation.getPassenger()))
+//                .route(routeDTOMapper.apply(reservation.getRoute()))
                 .build();
     }
 }

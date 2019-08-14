@@ -1,7 +1,9 @@
 package org.sergei.processor.jdbc.dao;
 
+import org.sergei.processor.jdbc.model.ActualFlight;
 import org.sergei.processor.jdbc.model.Aircraft;
 import org.sergei.processor.jdbc.model.Reservation;
+import org.sergei.processor.jdbc.model.Route;
 import org.sergei.processor.rest.exceptions.FlightRuntimeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -45,7 +47,7 @@ public class ActualFlightDAOImpl implements ActualFlightDAO {
     public Long getAvailableAircraft() {
         NamedParameterJdbcTemplate jdbc = new NamedParameterJdbcTemplate(dataSource);
         List<Aircraft> availableAircrafts = jdbc.query("SELECT * FROM reservation", (rs, rowNum) ->
-                Aircraft.builder().build();
+                Aircraft.builder().build());
         if (availableAircrafts.isEmpty()) {
             throw new FlightRuntimeException("No available aircrafts found");
         } else {
@@ -58,6 +60,21 @@ public class ActualFlightDAOImpl implements ActualFlightDAO {
 
     @Override
     public Long getAvailableRoute() {
+        NamedParameterJdbcTemplate jdbc = new NamedParameterJdbcTemplate(dataSource);
+        List<Route> availableRoutes = jdbc.query("SELECT * FROM route", (rs, rowNum) ->
+                Route.builder().build());
+        if (availableRoutes.isEmpty()) {
+            throw new FlightRuntimeException("No available routes found");
+        } else {
+            Map<String, Object> params = new HashMap<>();
+            params.put("availableRouteId", availableRoutes.get(0).getId());
+            jdbc.update("UPDATE route rt SET rt.available = 0 WHERE rt.id = :routeId", params);
+            return (Long) params.get("availableRouteId");
+        }
+    }
+
+    @Override
+    public ActualFlight saveActualFlight() {
         return null;
     }
 }

@@ -3,6 +3,7 @@ package org.sergei.processor.service;
 import io.opentracing.Span;
 import io.opentracing.Tracer;
 import lombok.extern.slf4j.Slf4j;
+import org.sergei.processor.jdbc.dao.ActualFlightDAO;
 import org.sergei.processor.jdbc.model.ActualFlight;
 import org.sergei.processor.jdbc.model.Reservation;
 import org.sergei.processor.jdbc.model.mappers.RouteModelMapper;
@@ -28,6 +29,7 @@ import java.util.List;
 @EnableScheduling
 public class ActualFlightServiceImpl implements ActualFlightService {
 
+    private final ActualFlightDAO actualFlightDAO;
     private final ActualFlightRepository actualFlightRepository;
     private final Tracer tracer;
     private final RouteModelMapper routeModelMapper;
@@ -37,13 +39,14 @@ public class ActualFlightServiceImpl implements ActualFlightService {
     private final ReservationDTOListMapper reservationDTOListMapper;
 
     @Autowired
-    public ActualFlightServiceImpl(ActualFlightRepository actualFlightRepository,
+    public ActualFlightServiceImpl(ActualFlightDAO actualFlightDAO, ActualFlightRepository actualFlightRepository,
                                    Tracer tracer,
                                    RouteModelMapper routeModelMapper,
                                    PilotService pilotService,
                                    AircraftService aircraftService,
                                    ReservationRepository reservationRepository,
                                    ReservationDTOListMapper reservationDTOListMapper) {
+        this.actualFlightDAO = actualFlightDAO;
         this.actualFlightRepository = actualFlightRepository;
         this.tracer = tracer;
         this.routeModelMapper = routeModelMapper;
@@ -56,7 +59,7 @@ public class ActualFlightServiceImpl implements ActualFlightService {
     @Scheduled(cron = "${cron.expression}")
     @Override
     public void processFlights() {
-        List<Reservation> reservationList = reservationRepository.findAll();
+        List<Reservation> reservationList = actualFlightDAO.findAll();
         List<ReservationDTO> reservationDTOList = reservationDTOListMapper.apply(reservationList);
         if (reservationList.isEmpty()) {
             log.info("Reservation list is empty");
