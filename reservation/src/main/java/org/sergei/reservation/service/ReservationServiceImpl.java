@@ -23,6 +23,7 @@ import org.sergei.reservation.feign.RouteFeignClient;
 import org.sergei.reservation.jpa.model.Passenger;
 import org.sergei.reservation.jpa.model.Reservation;
 import org.sergei.reservation.jpa.model.mapper.PassengerModelMapper;
+import org.sergei.reservation.jpa.model.mapper.ReservationModelMapper;
 import org.sergei.reservation.jpa.model.mapper.RouteModelMapper;
 import org.sergei.reservation.jpa.repository.PassengerRepository;
 import org.sergei.reservation.jpa.repository.ReservationRepository;
@@ -55,6 +56,7 @@ public class ReservationServiceImpl implements ReservationService {
     private final ReservationDTOListMapper reservationDTOListMapper;
     private final RouteModelMapper routeModelMapper;
     private final PassengerModelMapper passengerModelMapper;
+    private final ReservationModelMapper reservationModelMapper;
     private final ResponseMessageService responseMessageService;
     private final Tracer tracer;
     private final RouteFeignClient routeFeignClient;
@@ -66,6 +68,7 @@ public class ReservationServiceImpl implements ReservationService {
                                   ReservationDTOListMapper reservationDTOListMapper,
                                   RouteModelMapper routeModelMapper,
                                   PassengerModelMapper passengerModelMapper,
+                                  ReservationModelMapper reservationModelMapper,
                                   ResponseMessageService responseMessageService,
                                   Tracer tracer, RouteFeignClient routeFeignClient) {
         this.passengerRepository = passengerRepository;
@@ -74,6 +77,7 @@ public class ReservationServiceImpl implements ReservationService {
         this.reservationDTOListMapper = reservationDTOListMapper;
         this.routeModelMapper = routeModelMapper;
         this.passengerModelMapper = passengerModelMapper;
+        this.reservationModelMapper = reservationModelMapper;
         this.responseMessageService = responseMessageService;
         this.tracer = tracer;
         this.routeFeignClient = routeFeignClient;
@@ -219,10 +223,13 @@ public class ReservationServiceImpl implements ReservationService {
                 List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("RES-001");
                 return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
             } else {
-                ReservationDTO reservationDTO = reservationDTOMapper.apply(reservation.get());
+                Reservation savedReservation = reservationRepository.save(reservationModelMapper.apply(request));
+                ReservationDTO savedReservationDTO = reservationDTOMapper.apply(savedReservation);
+
                 ResponseDTO<ReservationDTO> response = new ResponseDTO<>();
                 response.setErrorList(List.of());
-                response.setResponse(List.of(reservationDTO));
+                response.setResponse(List.of(savedReservationDTO));
+
                 return new ResponseEntity<>(response, HttpStatus.OK);
             }
         }
