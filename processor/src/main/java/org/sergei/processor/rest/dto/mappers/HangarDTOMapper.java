@@ -1,6 +1,6 @@
 package org.sergei.processor.rest.dto.mappers;
 
-import org.sergei.processor.jpa.model.Hangar;
+import org.sergei.processor.jdbc.model.Hangar;
 import org.sergei.processor.rest.dto.HangarDTO;
 import org.sergei.processor.utils.IMapper;
 import org.springframework.stereotype.Component;

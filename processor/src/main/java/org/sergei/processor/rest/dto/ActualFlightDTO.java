@@ -4,11 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.sergei.processor.jpa.model.Aircraft;
-import org.sergei.processor.jpa.model.Pilot;
-import org.sergei.processor.jpa.model.Route;
+import org.sergei.processor.jdbc.model.Aircraft;
+import org.sergei.processor.jdbc.model.Pilot;
+import org.sergei.processor.jdbc.model.Route;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
 import java.time.LocalDateTime;

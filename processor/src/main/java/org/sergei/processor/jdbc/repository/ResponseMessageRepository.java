@@ -1,6 +1,6 @@
-package org.sergei.processor.jpa.repository;
+package org.sergei.processor.jdbc.repository;
 
-import org.sergei.processor.jpa.model.ResponseMessage;
+import org.sergei.processor.jdbc.model.ResponseMessage;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

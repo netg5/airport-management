@@ -1,4 +1,4 @@
-package org.sergei.processor.jpa.model;
+package org.sergei.processor.jdbc.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

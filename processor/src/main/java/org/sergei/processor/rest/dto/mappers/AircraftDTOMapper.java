@@ -1,6 +1,6 @@
 package org.sergei.processor.rest.dto.mappers;
 
-import org.sergei.processor.jpa.model.Aircraft;
+import org.sergei.processor.jdbc.model.Aircraft;
 import org.sergei.processor.rest.dto.AircraftDTO;
 import org.sergei.processor.utils.IMapper;
 import org.springframework.beans.factory.annotation.Autowired;

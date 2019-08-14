@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
  * @author Sergei Visotsky
  */
 @Service
-public interface ActualFlightService extends Runnable {
+public interface ActualFlightService /*extends Runnable*/ {
 
     void processFlights();
 

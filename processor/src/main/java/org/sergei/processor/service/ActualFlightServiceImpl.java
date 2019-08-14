@@ -3,22 +3,20 @@ package org.sergei.processor.service;
 import io.opentracing.Span;
 import io.opentracing.Tracer;
 import lombok.extern.slf4j.Slf4j;
-import org.sergei.processor.jpa.model.ActualFlight;
-import org.sergei.processor.jpa.model.Reservation;
-import org.sergei.processor.jpa.model.mappers.RouteModelMapper;
-import org.sergei.processor.jpa.repository.ActualFlightRepository;
-import org.sergei.processor.jpa.repository.ReservationRepository;
+import org.sergei.processor.jdbc.model.ActualFlight;
+import org.sergei.processor.jdbc.model.Reservation;
+import org.sergei.processor.jdbc.model.mappers.RouteModelMapper;
+import org.sergei.processor.jdbc.repository.ActualFlightRepository;
+import org.sergei.processor.jdbc.repository.ReservationRepository;
 import org.sergei.processor.rest.dto.PassengerDTO;
 import org.sergei.processor.rest.dto.ReservationDTO;
 import org.sergei.processor.rest.dto.RouteDTO;
 import org.sergei.processor.rest.dto.mappers.ReservationDTOListMapper;
-import org.sergei.processor.rest.exceptions.FailedHttpRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.TaskScheduler;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -27,12 +25,9 @@ import java.util.List;
  */
 @Slf4j
 @Service
+@EnableScheduling
 public class ActualFlightServiceImpl implements ActualFlightService {
 
-    @Value("${task.rate}")
-    private int taskRate;
-
-    private final TaskScheduler scheduler;
     private final ActualFlightRepository actualFlightRepository;
     private final Tracer tracer;
     private final RouteModelMapper routeModelMapper;
@@ -42,15 +37,13 @@ public class ActualFlightServiceImpl implements ActualFlightService {
     private final ReservationDTOListMapper reservationDTOListMapper;
 
     @Autowired
-    public ActualFlightServiceImpl(TaskScheduler scheduler,
-                                   ActualFlightRepository actualFlightRepository,
+    public ActualFlightServiceImpl(ActualFlightRepository actualFlightRepository,
                                    Tracer tracer,
                                    RouteModelMapper routeModelMapper,
                                    PilotService pilotService,
                                    AircraftService aircraftService,
                                    ReservationRepository reservationRepository,
                                    ReservationDTOListMapper reservationDTOListMapper) {
-        this.scheduler = scheduler;
         this.actualFlightRepository = actualFlightRepository;
         this.tracer = tracer;
         this.routeModelMapper = routeModelMapper;
@@ -58,15 +51,9 @@ public class ActualFlightServiceImpl implements ActualFlightService {
         this.aircraftService = aircraftService;
         this.reservationRepository = reservationRepository;
         this.reservationDTOListMapper = reservationDTOListMapper;
-        scheduler.schedule(this, Instant.now().plusMillis(taskRate));
     }
 
-    @Override
-    public void run() {
-        processFlights();
-        scheduler.schedule(this, Instant.now().plusMillis(taskRate));
-    }
-
+    @Scheduled(cron = "${cron.expression}")
     @Override
     public void processFlights() {
         List<Reservation> reservationList = reservationRepository.findAll();

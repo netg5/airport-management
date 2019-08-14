@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.sergei.processor.jpa.model;
+package org.sergei.processor.jdbc.model;
 
 import lombok.*;
 
@@ -71,7 +71,7 @@ public class Reservation implements Serializable {
             name = "passenger_id",
             referencedColumnName = "id"
     )
-    private Passenger passenger;
+    private Long passengerId;
 
     @NotNull
     @ManyToOne(
@@ -82,5 +82,5 @@ public class Reservation implements Serializable {
             name = "route_id",
             referencedColumnName = "id"
     )
-    private Route route;
+    private Long routeId;
 }

@@ -1,4 +1,4 @@
-package org.sergei.processor.jpa.model;
+package org.sergei.processor.jdbc.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;

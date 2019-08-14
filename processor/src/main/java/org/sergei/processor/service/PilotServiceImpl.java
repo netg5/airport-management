@@ -1,7 +1,7 @@
 package org.sergei.processor.service;
 
-import org.sergei.processor.jpa.model.Pilot;
-import org.sergei.processor.jpa.repository.PilotRepository;
+import org.sergei.processor.jdbc.model.Pilot;
+import org.sergei.processor.jdbc.repository.PilotRepository;
 import org.sergei.processor.rest.exceptions.FlightRuntimeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

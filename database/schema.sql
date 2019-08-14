@@ -67,8 +67,8 @@ CREATE TABLE IF NOT EXISTS aircraft
 CREATE TABLE IF NOT EXISTS route
 (
     id             BIGINT                      NOT NULL,
-    arrival_time   TIMESTAMP                   NOT NULL,
     departure_time TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+    arrival_time   TIMESTAMP                   NOT NULL,
     distance       DOUBLE PRECISION            NOT NULL,
     place          VARCHAR(45)                 NOT NULL,
     price          NUMERIC(19, 2)              NOT NULL,

@@ -1,6 +1,6 @@
 package org.sergei.processor.service;
 
-import org.sergei.processor.jpa.model.Pilot;
+import org.sergei.processor.jdbc.model.Pilot;
 import org.springframework.stereotype.Service;
 
 /**

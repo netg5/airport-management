@@ -1,6 +1,6 @@
-package org.sergei.processor.jpa.model.mappers;
+package org.sergei.processor.jdbc.model.mappers;
 
-import org.sergei.processor.jpa.model.Passenger;
+import org.sergei.processor.jdbc.model.Passenger;
 import org.sergei.processor.rest.dto.PassengerDTO;
 import org.sergei.processor.utils.IMapper;
 import org.springframework.stereotype.Component;

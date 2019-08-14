@@ -1,6 +1,6 @@
 package org.sergei.processor.rest.dto.mappers;
 
-import org.sergei.processor.jpa.model.Route;
+import org.sergei.processor.jdbc.model.Route;
 import org.sergei.processor.rest.dto.RouteDTO;
 import org.sergei.processor.utils.IMapper;
 import org.springframework.beans.factory.annotation.Autowired;

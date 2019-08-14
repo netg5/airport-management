@@ -31,8 +31,8 @@ datasource:
 feign:
   reservation-url: http://localhost:8083
 
-task:
-  rate: 5000
+cron:
+  expression: "*/5 * * * * *"
 
 # Monitoring endpoints
 management:

@@ -1,6 +1,6 @@
 package org.sergei.processor.rest.dto.mappers;
 
-import org.sergei.processor.jpa.model.Reservation;
+import org.sergei.processor.jdbc.model.Reservation;
 import org.sergei.processor.rest.dto.ReservationDTO;
 import org.sergei.processor.utils.IMapper;
 import org.springframework.beans.factory.annotation.Autowired;
