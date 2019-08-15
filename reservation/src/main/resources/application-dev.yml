@@ -1,11 +1,6 @@
 server:
   port: 8083
 
-# Spring specific configuration
-spring:
-  application:
-    name: reservation
-
 # DataSource configuration
 datasource:
   jdbc-url: jdbc:postgresql://localhost:5432/flight_reservation
@@ -48,9 +43,6 @@ security:
     client-secret: uCvtFPbxBEmVho9X
     user: system_user
     password: FjtdJSaqGlZhVAR8
-
-management:
-  endpoints.web.exposure.include: "info, health, metrics, configprops, env, prometheus"
 
 logging:
   file: C:/tmp/reservation.log

@@ -1,11 +1,6 @@
 server:
   port: 8088
 
-# Spring specific configuration
-spring:
-  application:
-    name: manager
-
 # DataSource configuration
 datasource:
   jdbc-url: jdbc:postgresql://localhost:5432/flight_reservation
@@ -38,9 +33,6 @@ security:
   oauth2:
     resource:
       user-info-uri: http://localhost:8080/auth/users/authenticate
-
-management:
-  endpoints.web.exposure.include: "info, health, metrics, configprops, env, prometheus"
 
 logging:
   file: C:/tmp/manager.log
