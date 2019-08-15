@@ -1,3 +1,4 @@
+CREATE SEQUENCE IF NOT EXISTS processor_insert_id_seq;
 CREATE OR REPLACE PROCEDURE flight_processor()
  LANGUAGE plpgsql AS
 $$
@@ -31,7 +32,7 @@ BEGIN
 	JOIN route rt
 		ON rt.id = r.route_id;
 	
-	IF res_rec.departure_time = curr_time THEN
+	IF res_rec.departure_time >= curr_time THEN
 		SELECT INTO aircraft_rec * FROM aircraft a WHERE a.available = 1;
 		IF aircraft_rec != NULL THEN
 			UPDATE aircraft a SET a.available = 0 WHERE a.id = aircraft_rec.id;
@@ -44,10 +45,10 @@ BEGIN
 		INSERT INTO 
 			actual_flight 
 		VALUES (
+                nextval('processor_insert_id_seq'),
 				aircraft_rec.id, 
                 pilot_rec.id, 
                 res_rec.route_id, 
-                res_rec.reserv_id, 
                 res_rec.date_of_flying, 
                 res_rec.departure_time, 
                 res_rec.arrival_time, 
@@ -55,9 +56,9 @@ BEGIN
                 res_rec.first_name, 
                 res_rec.last_name,
                 res_rec.gender, 
-                res_rec.address, 
-                res_rec.country, 
-                res_rec.email, 
+                'Test', 
+                'Test', 
+                'Test', 
                 res_rec.phone
 	   );
 	END IF;
