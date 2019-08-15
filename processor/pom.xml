@@ -19,7 +19,6 @@
     <description>Service to process reserved flights</description>
 
     <properties>
-        <io.swagger.version>2.9.1</io.swagger.version>
         <java.version>11</java.version>
         <spring-cloud.version>Greenwich.SR2</spring-cloud.version>
     </properties>
@@ -29,18 +28,9 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-        <!-- JPA should be fully removed from this service due to the performance first approach -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
             <groupId>org.liquibase</groupId>
@@ -54,19 +44,6 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-oauth2</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-security</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-jwt</artifactId>
-            <version>1.0.9.RELEASE</version>
         </dependency>
 
         <dependency>
@@ -85,41 +62,11 @@
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
-
-        <!-- Openfeign for HTTP communication between services -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-        </dependency>
-
-        <!-- Guava library dependency -->
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>27.1-jre</version>
-        </dependency>
-
-        <!-- Swagger -->
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>${io.swagger.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>${io.swagger.version}</version>
         </dependency>
 
         <!-- Micrometer prometheus dependency -->
@@ -129,11 +76,13 @@
         </dependency>
 
         <!-- Needs for Jaeger opentrace -->
+<!--
         <dependency>
             <groupId>io.opentracing.contrib</groupId>
             <artifactId>opentracing-spring-jaeger-web-starter</artifactId>
             <version>2.0.0</version>
         </dependency>
+-->
 
     </dependencies>
 

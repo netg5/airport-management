@@ -28,12 +28,6 @@ eureka:
     serviceUrl:
       defaulZone: http://localhost:8761/eureka/
 
-# Authentication security details
-security:
-  oauth2:
-    resource:
-      user-info-uri: http://localhost:8080/auth/users/authenticate
-
 management:
   endpoints.web.exposure.include: "info, health, metrics, configprops, env, prometheus"
 

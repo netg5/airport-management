@@ -1,4 +1,4 @@
-package org.sergei.processor.config;
+package org.sergei.processor;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.jdbc.DataSourceBuilder;
