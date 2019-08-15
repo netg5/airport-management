@@ -19,7 +19,7 @@ package org.sergei.reservation.rest.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.sergei.reservation.rest.dto.ReservationDTO;
-import org.sergei.reservation.rest.dto.request.ReservationDTORequest;
+import org.sergei.reservation.rest.dto.request.ReservationRequestDTO;
 import org.sergei.reservation.rest.dto.response.ResponseDTO;
 import org.sergei.reservation.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,14 +50,14 @@ public class ReservationController {
         return reservationService.findAllForPassenger(passengerId);
     }
 
-    @GetMapping(value = "/getOneReservationForPassenger/{passengerId}", produces = "application/json")
+    @GetMapping(value = "/getOneReservationForPassenger/{passengerId}")
     public ResponseEntity<ResponseDTO<ReservationDTO>> getOneReservationForPassenger(@PathVariable("passengerId") Long passengerId,
                                                                                      @RequestParam("reservationId") Long reservationId) {
         return reservationService.findOneForPassenger(passengerId, reservationId);
     }
 
     @PostMapping(value = "/makeReservation")
-    public ResponseEntity<ResponseDTO<ReservationDTO>> makeReservation(@RequestBody ReservationDTORequest request) {
+    public ResponseEntity<ResponseDTO<ReservationDTO>> makeReservation(@RequestBody ReservationRequestDTO request) {
         return reservationService.saveReservation(request);
     }
 

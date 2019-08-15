@@ -14,17 +14,15 @@
  * limitations under the License.
  */
 
-package org.sergei.reservation.config;
+package org.sergei.reservation.jpa.repository;
 
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.sergei.reservation.jpa.model.Route;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author Sergei Visotsky
  */
-@Configuration
-@ComponentScan({
-        "org.sergei.reservation"
-})
-public class ApplicationConfig {
+@Repository
+public interface RouteRepository extends JpaRepository<Route, Long> {
 }

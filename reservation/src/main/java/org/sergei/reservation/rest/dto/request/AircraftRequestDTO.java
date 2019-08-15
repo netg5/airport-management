@@ -1,4 +1,4 @@
-package org.sergei.reservation.rest.dto;
+package org.sergei.reservation.rest.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

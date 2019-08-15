@@ -7,5 +7,6 @@ spring:
         jdbc:
           lob:
             non_contextual_creation: true
+
 management:
   endpoints.web.exposure.include: "info, health, metrics, configprops, env, prometheus"

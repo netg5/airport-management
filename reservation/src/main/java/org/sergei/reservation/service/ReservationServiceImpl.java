@@ -19,20 +19,22 @@ package org.sergei.reservation.service;
 import io.opentracing.Span;
 import io.opentracing.Tracer;
 import lombok.extern.slf4j.Slf4j;
-import org.sergei.reservation.feign.RouteFeignClient;
 import org.sergei.reservation.jpa.model.Passenger;
 import org.sergei.reservation.jpa.model.Reservation;
+import org.sergei.reservation.jpa.model.Route;
 import org.sergei.reservation.jpa.model.mapper.PassengerModelMapper;
 import org.sergei.reservation.jpa.model.mapper.ReservationModelMapper;
 import org.sergei.reservation.jpa.model.mapper.RouteModelMapper;
 import org.sergei.reservation.jpa.repository.PassengerRepository;
 import org.sergei.reservation.jpa.repository.ReservationRepository;
+import org.sergei.reservation.jpa.repository.RouteRepository;
 import org.sergei.reservation.rest.dto.PassengerDTO;
 import org.sergei.reservation.rest.dto.ReservationDTO;
 import org.sergei.reservation.rest.dto.RouteDTO;
 import org.sergei.reservation.rest.dto.mappers.ReservationDTOListMapper;
 import org.sergei.reservation.rest.dto.mappers.ReservationDTOMapper;
-import org.sergei.reservation.rest.dto.request.ReservationDTORequest;
+import org.sergei.reservation.rest.dto.mappers.RouteDTOMapper;
+import org.sergei.reservation.rest.dto.request.ReservationRequestDTO;
 import org.sergei.reservation.rest.dto.response.ResponseDTO;
 import org.sergei.reservation.rest.dto.response.ResponseErrorDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,8 +60,9 @@ public class ReservationServiceImpl implements ReservationService {
     private final PassengerModelMapper passengerModelMapper;
     private final ReservationModelMapper reservationModelMapper;
     private final ResponseMessageService responseMessageService;
+    private final RouteRepository routeRepository;
     private final Tracer tracer;
-    private final RouteFeignClient routeFeignClient;
+    private final RouteDTOMapper routeDTOMapper;
 
     @Autowired
     public ReservationServiceImpl(PassengerRepository passengerRepository,
@@ -70,7 +73,8 @@ public class ReservationServiceImpl implements ReservationService {
                                   PassengerModelMapper passengerModelMapper,
                                   ReservationModelMapper reservationModelMapper,
                                   ResponseMessageService responseMessageService,
-                                  Tracer tracer, RouteFeignClient routeFeignClient) {
+                                  RouteRepository routeRepository, Tracer tracer,
+                                  RouteDTOMapper routeDTOMapper) {
         this.passengerRepository = passengerRepository;
         this.reservationRepository = reservationRepository;
         this.reservationDTOMapper = reservationDTOMapper;
@@ -79,8 +83,9 @@ public class ReservationServiceImpl implements ReservationService {
         this.passengerModelMapper = passengerModelMapper;
         this.reservationModelMapper = reservationModelMapper;
         this.responseMessageService = responseMessageService;
+        this.routeRepository = routeRepository;
         this.tracer = tracer;
-        this.routeFeignClient = routeFeignClient;
+        this.routeDTOMapper = routeDTOMapper;
     }
 
     /**
@@ -172,19 +177,14 @@ public class ReservationServiceImpl implements ReservationService {
      * @return flight reservation DTO as a response
      */
     @Override
-    public ResponseEntity<ResponseDTO<ReservationDTO>> saveReservation(ReservationDTORequest request) {
+    public ResponseEntity<ResponseDTO<ReservationDTO>> saveReservation(ReservationRequestDTO request) {
         Long routeId = request.getRouteId();
-        ResponseDTO<ReservationDTO> response = new ResponseDTO<>();
-        Span span = tracer.buildSpan("restTemplate.getForEntity(managerRouteUri, String.class)").start();
-        ResponseEntity<ResponseDTO<RouteDTO>> routeResponse = routeFeignClient.getRouteById(routeId);
-        span.finish();
-
-        if (routeResponse.getBody() == null) {
+        Optional<Route> route = routeRepository.findById(routeId);
+        if (route.isEmpty()) {
             List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("RT-001");
             return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
         } else {
-            RouteDTO routeDTO = routeResponse.getBody().getResponse().get(0);
-
+            RouteDTO routeDTO = routeDTOMapper.apply(route.get());
             PassengerDTO passengerDTO = request.getPassenger();
 
             Reservation reservation = Reservation.builder()
@@ -195,14 +195,20 @@ public class ReservationServiceImpl implements ReservationService {
                     .passenger(passengerModelMapper.apply(passengerDTO))
                     .route(routeModelMapper.apply(routeDTO))
                     .build();
+            Span span = tracer.buildSpan("reservationRepository.save()").start();
+            span.setTag("reservation", reservation.toString());
+
             Reservation savedReservation = reservationRepository.save(reservation);
 
+            span.finish();
             ReservationDTO savedReservationDTO = reservationDTOMapper.apply(savedReservation);
 
+            ResponseDTO<ReservationDTO> response = new ResponseDTO<>();
             response.setErrorList(List.of());
             response.setResponse(List.of(savedReservationDTO));
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
         }
-        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     /**

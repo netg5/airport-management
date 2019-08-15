@@ -8,10 +8,6 @@ datasource:
   username: flight
   password: flight
 
-# Feign client properties
-feign:
-  route-url: http://localhost:8088/
-
 # Eureka configuration
 eureka:
   instance:
@@ -37,12 +33,6 @@ security:
   oauth2:
     resource:
       user-info-uri: http://localhost:8080/auth/users/authenticate
-  exchange: # This one needs for data exchange between services
-    auth-server: http://localhost:8080/auth/oauth/token
-    client-id: system-client
-    client-secret: uCvtFPbxBEmVho9X
-    user: system_user
-    password: FjtdJSaqGlZhVAR8
 
 logging:
   file: C:/tmp/reservation.log

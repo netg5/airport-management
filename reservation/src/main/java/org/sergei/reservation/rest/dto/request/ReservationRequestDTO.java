@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReservationDTORequest implements Serializable {
+public class ReservationRequestDTO implements Serializable {
 
     private static final long serialVersionUID = -5502910005749994943L;
 
