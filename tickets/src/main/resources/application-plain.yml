@@ -3,8 +3,6 @@ server:
 
 # Spring specific configuration
 spring:
-  application:
-    name: reports
   cloud:
     config:
       enabled: false

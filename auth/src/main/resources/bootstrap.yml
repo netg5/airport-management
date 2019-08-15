@@ -4,9 +4,3 @@ spring:
       name: auth
       uri: http://localhost:8888
       label: "master" # branch where config is located
-  jpa:
-    properties:
-      hibernate:
-        jdbc:
-          lob:
-            non_contextual_creation: true

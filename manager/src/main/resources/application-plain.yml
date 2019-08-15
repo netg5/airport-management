@@ -3,8 +3,6 @@ server:
 
 # Spring specific configuration
 spring:
-  application:
-    name: manager
   cloud:
     config:
       enabled: false
@@ -19,9 +17,6 @@ datasource:
   type: com.zaxxer.hikari.HikariDataSource
   username: flight
   password: flight
-
-management:
-  endpoints.web.exposure.include: "info, health, metrics, configprops, env, prometheus"
 
 logging:
   file: C:/tmp/manager.log
