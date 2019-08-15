@@ -1,7 +1,9 @@
 package org.sergei.processor.jdbc.dao;
 
-import org.sergei.processor.jdbc.model.*;
-import org.sergei.processor.rest.exceptions.FlightRuntimeException;
+import org.sergei.processor.jdbc.model.ActualFlight;
+import org.sergei.processor.jdbc.model.Passenger;
+import org.sergei.processor.jdbc.model.Reservation;
+import org.sergei.processor.jdbc.model.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -75,31 +77,23 @@ public class ActualFlightDAOImpl implements ActualFlightDAO {
     @Override
     public Long getAvailableAircraft() {
         NamedParameterJdbcTemplate jdbc = new NamedParameterJdbcTemplate(dataSource);
-        List<Aircraft> availableAircrafts = jdbc.query("SELECT * FROM reservation", (rs, rowNum) ->
-                Aircraft.builder().build());
-        if (availableAircrafts.isEmpty()) {
-            throw new FlightRuntimeException("No available aircrafts found");
-        } else {
-            Map<String, Object> params = new HashMap<>();
-            params.put("availableAircraftId", availableAircrafts.get(0).getId());
-            jdbc.update("UPDATE aircraft a SET a.available = 0 WHERE a.id = :aircraftId", params);
-            return (Long) params.get("availableAircraftId");
-        }
+        List<Long> availableAircraftIds = jdbc.query("SELECT * FROM aircraft a WHERE a.available = 1",
+                (rs, rowNum) -> rs.getLong("aircraft_id"));
+        Map<String, Object> params = new HashMap<>();
+        params.put("aircraftId", availableAircraftIds.get(0));
+        jdbc.update("UPDATE aircraft a SET a.available = 0 WHERE a.id = :aircraftId", params);
+        return (Long) params.get("aircraftId");
     }
 
     @Override
-    public Long getAvailableRoute() {
+    public Long getAvailablePilot() {
         NamedParameterJdbcTemplate jdbc = new NamedParameterJdbcTemplate(dataSource);
-        List<Route> availableRoutes = jdbc.query("SELECT * FROM route", (rs, rowNum) ->
-                Route.builder().build());
-        if (availableRoutes.isEmpty()) {
-            throw new FlightRuntimeException("No available routes found");
-        } else {
-            Map<String, Object> params = new HashMap<>();
-            params.put("availableRouteId", availableRoutes.get(0).getId());
-            jdbc.update("UPDATE route rt SET rt.available = 0 WHERE rt.id = :routeId", params);
-            return (Long) params.get("availableRouteId");
-        }
+        List<Long> availablePilotIds = jdbc.query("SELECT * FROM pilot p WHERE p.available = 1",
+                (rs, rowNum) -> rs.getLong("pilot_id"));
+        Map<String, Object> params = new HashMap<>();
+        params.put("pilotId", availablePilotIds.get(0));
+        jdbc.update("UPDATE pilot p SET p.available = 0 WHERE p.id = :pilotId", params);
+        return (Long) params.get("aircraftId");
     }
 
     @Override
@@ -108,6 +102,8 @@ public class ActualFlightDAOImpl implements ActualFlightDAO {
         List<Reservation> reservationList = findAll();
         reservationList.forEach(reservation -> {
             if (reservation.getDepartureTime().equals(LocalDateTime.now())) {
+                Long availableAircraftId = getAvailableAircraft();
+                Long availablePilotId = getAvailablePilot();
                 Passenger passenger = reservation.getPassenger();
                 ActualFlight actualFlight = ActualFlight.builder()
                         .firstName(passenger.getFirstName())
@@ -120,9 +116,9 @@ public class ActualFlightDAOImpl implements ActualFlightDAO {
                         .departureTime(reservation.getDepartureTime())
                         .arrivalTime(reservation.getArrivalTime())
                         .hoursFlying(reservation.getHoursFlying())
-                        .routeId(routeModelMapper.apply(routeDTO))
-                        .aircraftId(aircraftService.getAvailableAircraft())
-                        .pilotid(pilotService.getAvailablePilot())
+                        .routeId(reservation.getRoute().getId())
+                        .aircraftId(availableAircraftId)
+                        .pilotId(availablePilotId)
                         .build();
                 return jdbc.execute("INSERT INTO actual_flight VALUES " +
                         "(:dateOfFlying, :departureTime :arrivalTime, :hoursFlying, :firstName, :lastName, " +

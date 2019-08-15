@@ -17,7 +17,7 @@ public interface ActualFlightDAO {
 
     Long getAvailableAircraft();
 
-    Long getAvailableRoute();
+    Long getAvailablePilot();
 
     ActualFlight saveActualFlight();
 }

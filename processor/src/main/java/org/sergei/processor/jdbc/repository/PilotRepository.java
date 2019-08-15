@@ -18,6 +18,6 @@ public interface PilotRepository extends JpaRepository<Pilot, Long> {
     List<Pilot> getAllAvailablePilots();
 
     @Query("UPDATE Pilot p SET p.available = 0 WHERE p.id = :pilotId")
-    Pilot updatePilotStatusById(@Param("pilotId") Long pilotId);
+    Pilot updatePilotStatusById(@Param("aircraftId") Long pilotId);
 
 }
