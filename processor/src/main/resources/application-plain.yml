@@ -16,10 +16,6 @@ datasource:
   username: flight
   password: flight
 
-# FeignClient properties
-feign:
-  reservation-url: http://localhost:8083
-
 cron:
   expression: "*/5 * * * * *"
 
