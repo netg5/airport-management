@@ -14,11 +14,13 @@ BEGIN
 		p.age,
 		p.gender,
 		p.phone,
+        rt.id               AS route_id,
 		rt.departure_time,
 		rt.arrival_time,
 		rt.distance,
 		rt.place,
 		rt.price,
+        r.id                AS reserv_id,
 		r.date_of_flying,
 		r.departure_time,
 		r.arrival_time,
@@ -42,10 +44,21 @@ BEGIN
 		INSERT INTO 
 			actual_flight 
 		VALUES (
-				res_rec.date_of_flying, res_rec.departure_time, 
-				res_rec.arrival_time, res_rec.hours_flying, res_rec.first_name, 
-				res_rec.last_name, res_rec.gender, res_rec.address, res_rec.country, 
-				res_rec.email, res_rec.phone
+				aircraft_rec.id, 
+                pilot_rec.id, 
+                res_rec.route_id, 
+                res_rec.reserv_id, 
+                res_rec.date_of_flying, 
+                res_rec.departure_time, 
+                res_rec.arrival_time, 
+                res_rec.hours_flying, 
+                res_rec.first_name, 
+                res_rec.last_name,
+                res_rec.gender, 
+                res_rec.address, 
+                res_rec.country, 
+                res_rec.email, 
+                res_rec.phone
 	   );
 	END IF;
 END;
