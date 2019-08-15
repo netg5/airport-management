@@ -3,8 +3,6 @@ server:
 
 # Spring specific configuration
 spring:
-  application:
-    name: processor
   cloud:
     config:
       enabled: false
@@ -12,13 +10,6 @@ spring:
       enabled: false
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
-  kafka:
-    consumer:
-      bootstrap-servers: localhost:9092
-      group-id: org.sergei.processing
-      auto-offset-reset: earliest
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
 
 # DataSource configuration
 datasource:

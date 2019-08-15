@@ -1,11 +1,6 @@
 server:
   port: 8086
 
-# Spring specific configuration
-spring:
-  application:
-    name: processor
-
 # DataSource configuration
 datasource:
   jdbc-url: jdbc:postgresql://localhost:5432/flight_reservation
