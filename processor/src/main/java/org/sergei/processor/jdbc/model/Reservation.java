@@ -18,8 +18,6 @@ package org.sergei.processor.jdbc.model;
 
 import lombok.*;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -31,56 +29,15 @@ import java.time.LocalDateTime;
 @Setter // Should be removed after business logic gonna be ready
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "reservation")
 public class Reservation implements Serializable {
 
     private static final long serialVersionUID = -5534420368605880140L;
 
-    @Id
-    @NotNull
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,
-            generator = "reservation_id_seq")
-    @SequenceGenerator(name = "reservation_id_seq",
-            sequenceName = "reservation_id_seq", allocationSize = 1)
-    @Column(name = "id")
     private Long id;
-
-    @NotNull
-    @Column(name = "date_of_flying")
     private LocalDateTime dateOfFlying;
-
-    @NotNull
-    @Column(name = "departure_time")
     private LocalDateTime departureTime;
-
-    @NotNull
-    @Column(name = "arrival_time")
     private LocalDateTime arrivalTime;
-
-    @NotNull
-    @Column(name = "hours_flying")
     private Integer hoursFlying;
-
-    @NotNull
-    @ManyToOne(
-            fetch = FetchType.LAZY,
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE}
-    )
-    @JoinColumn(
-            name = "passenger_id",
-            referencedColumnName = "id"
-    )
     private Passenger passenger;
-
-    @NotNull
-    @ManyToOne(
-            fetch = FetchType.LAZY,
-            cascade = {CascadeType.ALL}
-    )
-    @JoinColumn(
-            name = "route_id",
-            referencedColumnName = "id"
-    )
     private Route route;
 }

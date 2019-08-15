@@ -1,5 +1,8 @@
 package org.sergei.processor.jdbc.dao;
 
+import io.opentracing.Span;
+import io.opentracing.Tracer;
+import lombok.extern.slf4j.Slf4j;
 import org.sergei.processor.jdbc.model.ActualFlight;
 import org.sergei.processor.jdbc.model.Passenger;
 import org.sergei.processor.jdbc.model.Reservation;
@@ -17,14 +20,17 @@ import java.util.Map;
 /**
  * @author Sergei Visotsky
  */
+@Slf4j
 @Repository
 public class ActualFlightDAOImpl implements ActualFlightDAO {
 
     private final DataSource dataSource;
+    private final Tracer tracer;
 
     @Autowired
-    public ActualFlightDAOImpl(DataSource dataSource) {
+    public ActualFlightDAOImpl(DataSource dataSource, Tracer tracer) {
         this.dataSource = dataSource;
+        this.tracer = tracer;
     }
 
     @Override
@@ -52,7 +58,6 @@ public class ActualFlightDAOImpl implements ActualFlightDAO {
                         "    ON rt.id = r.route_id",
                 (rs, rowNum) ->
                         Reservation.builder()
-                                .id(rs.getLong("id"))
                                 .departureTime(LocalDateTime.parse(String.valueOf(rs.getTimestamp("departure_time"))))
                                 .arrivalTime(LocalDateTime.parse(String.valueOf(rs.getTimestamp("arrival_time"))))
                                 .dateOfFlying(LocalDateTime.parse(String.valueOf(rs.getDate("date_of_flying"))))
@@ -97,7 +102,7 @@ public class ActualFlightDAOImpl implements ActualFlightDAO {
     }
 
     @Override
-    public ActualFlight saveActualFlight() {
+    public void saveActualFlight() {
         NamedParameterJdbcTemplate jdbc = new NamedParameterJdbcTemplate(dataSource);
         List<Reservation> reservationList = findAll();
         reservationList.forEach(reservation -> {
@@ -120,9 +125,29 @@ public class ActualFlightDAOImpl implements ActualFlightDAO {
                         .aircraftId(availableAircraftId)
                         .pilotId(availablePilotId)
                         .build();
-                return jdbc.execute("INSERT INTO actual_flight VALUES " +
+                Map<String, Object> params = new HashMap<>();
+                params.put("dateOfFlying", actualFlight.getDateOfFlying());
+                params.put("departureTime", actualFlight.getDepartureTime());
+                params.put("arrivalTime", actualFlight.getArrivalTime());
+                params.put("hoursFlying", actualFlight.getHoursFlying());
+                params.put("firstName", actualFlight.getFirstName());
+                params.put("lastName", actualFlight.getLastName());
+                params.put("gender", actualFlight.getGender());
+                params.put("address", actualFlight.getAddress());
+                params.put("country", actualFlight.getCountry());
+                params.put("email", actualFlight.getEmail());
+                params.put("phone", actualFlight.getPhone());
+                params.put("routeId", actualFlight.getRouteId());
+                params.put("aircraftId", actualFlight.getAircraftId());
+                params.put("pilotId", actualFlight.getPilotId());
+
+                Span span = tracer.buildSpan("executing update of actual_flight table").start();
+
+                jdbc.update("INSERT INTO actual_flight VALUES " +
                         "(:dateOfFlying, :departureTime :arrivalTime, :hoursFlying, :firstName, :lastName, " +
-                        ":gender, :address, :country, :email, :phone)");
+                        ":gender, :address, :country, :email, :phone)", params);
+                log.debug("actual_flight table updated");
+                span.finish();
             }
         });
     }

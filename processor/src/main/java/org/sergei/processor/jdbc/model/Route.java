@@ -18,43 +18,15 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "route")
 public class Route implements Serializable {
 
     private static final long serialVersionUID = -5365925665500006894L;
 
-    @Id
-    @NotNull
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,
-            generator = "route_id_seq")
-    @SequenceGenerator(name = "route_id_seq",
-            sequenceName = "route_id_seq", allocationSize = 1)
-    @Column(name = "id")
     private Long id;
-
-    @Column(name = "distance")
     private Double distance;
-
-    @Column(name = "departure_time")
     private LocalDateTime departureTime;
-
-    @Column(name = "arrival_time")
     private LocalDateTime arrivalTime;
-
-    @Column(name = "price")
     private BigDecimal price;
-
-    @Column(name = "place")
     private String place;
-
-    @OneToOne(
-            fetch = FetchType.LAZY,
-            cascade = {CascadeType.DETACH}
-    )
-    @JoinColumn(
-            name = "aircraft_id",
-            referencedColumnName = "id"
-    )
     private Aircraft aircraft;
 }
