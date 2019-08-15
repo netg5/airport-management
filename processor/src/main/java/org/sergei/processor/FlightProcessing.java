@@ -20,16 +20,21 @@ public class FlightProcessing {
     private static final Logger log = LoggerFactory.getLogger(FlightProcessing.class);
 
     private final DataSource dataSource;
+//    private final Tracer tracer;
 
     @Autowired
-    public FlightProcessing(DataSource dataSource) {
+    public FlightProcessing(DataSource dataSource/*,
+                            Tracer tracer*/) {
         this.dataSource = dataSource;
+//        this.tracer = tracer;
     }
 
     @Scheduled(cron = "${cron.expression}")
     public void processFlight() {
         JdbcTemplate jdbc = new JdbcTemplate(dataSource);
+//        Span span = tracer.buildSpan("call flight_processor() started").start();
         jdbc.execute("call flight_processor()");
-        log.info("Procedure executed");
+//        span.finish();
+        log.info("Procedure call flight_processor() executed...");
     }
 }
