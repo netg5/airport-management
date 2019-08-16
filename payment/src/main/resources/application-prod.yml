@@ -1,0 +1,54 @@
+##
+# Should be placed into the config service
+##
+
+server:
+  port: 8080
+
+# DataSource configuration
+datasource:
+  jdbc-url: jdbc:postgresql://localhost:5432/flight_reservation
+  type: com.zaxxer.hikari.HikariDataSource
+  username: flight
+  password: flight
+
+# Eureka configuration
+eureka:
+  instance:
+    non-secure-port-enabled: false
+    secure-port-enabled: true
+    secure-port: ${server.port}
+    status-page-url-path: http://localhost:${server.port}/actuator/info
+    health-check-url-path: http://localhost:${server.port}/actuator/health
+    home-page-url: http://localhost:${server.port}
+    lease-renewal-interval-in-seconds: 10 # intervalSeconds between subsequent heartbeats sent to Eureka server
+    lease-expiration-duration-in-seconds: 20 # time that Eureka server waits since it received last heartbeat before it can evict this instance
+  client:
+    enabled: true
+    register-with-eureka: true
+    fetch-registry: true
+    registry-fetch-interval-seconds: 10 # how often to fetch the registry from Eureka server
+    instance-info-replication-interval-seconds: 10 # how often to replicate instance changes to be replicated to Eureka server
+    serviceUrl:
+      defaulZone: http://localhost:8761/eureka/
+
+security:
+  oauth2:
+    resource:
+      user-info-uri: http://localhost:8080/auth/users/authenticate
+
+logging:
+  file: /tmp/payment.log
+  level:
+    ROOT: INFO
+    org:
+      sergei:
+        manager: DEBUG
+
+# Actuator info
+info:
+  app:
+    name: Payment
+    version: 1.0
+    profile: prod
+    descripton: Service to perform scheduled flight payment
