@@ -32,7 +32,7 @@ BEGIN
 	JOIN route rt
 		ON rt.id = r.route_id;
 	
-	IF res_rec.departure_time >= curr_time THEN
+	IF res_rec.departure_time <= curr_time THEN
 		SELECT INTO aircraft_rec * FROM aircraft a WHERE a.available = 1;
 		IF aircraft_rec != NULL THEN
 			UPDATE aircraft a SET a.available = 0 WHERE a.id = aircraft_rec.id;
@@ -61,6 +61,7 @@ BEGIN
                 'Test', 
                 res_rec.phone
 	   );
+	   DELETE FROM reservation r WHERE r.id = res_rec.reserv_id;
 	END IF;
 END;
 $$;

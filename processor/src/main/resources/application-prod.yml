@@ -12,6 +12,9 @@ datasource:
   username: flight
   password: flight
 
+cron:
+  expression: "*/5 * * * * *"
+
 # Eureka configuration
 eureka:
   instance:
