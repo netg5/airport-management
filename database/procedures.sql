@@ -34,11 +34,11 @@ BEGIN
 	
 	IF res_rec.departure_time <= curr_time THEN
 		SELECT INTO aircraft_rec * FROM aircraft a WHERE a.available = 1;
-		IF aircraft_rec != NULL THEN
+		IF aircraft_rec IS NOT NULL THEN
 			UPDATE aircraft a SET a.available = 0 WHERE a.id = aircraft_rec.id;
 		END IF;
 		SELECT INTO pilot_rec * FROM pilot p WHERE p.available = 1;
-		IF pilot_rec != NULL THEN
+		IF pilot_rec IS NOT NULL THEN
 			UPDATE pilot p SET p.available = 0 WHERE p.id = pilot_rec.id;
 		END IF;
 		
