@@ -27,4 +27,5 @@ public class ReservationDTO implements Serializable {
     private Integer hoursFlying;
     private PassengerDTO passenger;
     private RouteDTO route;
+    private FlyModeDTO flyMode;
 }

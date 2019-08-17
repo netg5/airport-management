@@ -14,12 +14,15 @@ public class ReservationDTOMapper implements IMapper<Reservation, ReservationDTO
 
     private final RouteDTOMapper routeDTOMapper;
     private final PassengerDTOMapper passengerDTOMapper;
+    private final FlyModeDTOMapper flyModeDTOMapper;
 
     @Autowired
     public ReservationDTOMapper(RouteDTOMapper routeDTOMapper,
-                                PassengerDTOMapper passengerDTOMapper) {
+                                PassengerDTOMapper passengerDTOMapper,
+                                FlyModeDTOMapper flyModeDTOMapper) {
         this.routeDTOMapper = routeDTOMapper;
         this.passengerDTOMapper = passengerDTOMapper;
+        this.flyModeDTOMapper = flyModeDTOMapper;
     }
 
     @Override
@@ -32,6 +35,7 @@ public class ReservationDTOMapper implements IMapper<Reservation, ReservationDTO
                 .hoursFlying(reservation.getHoursFlying())
                 .passenger(passengerDTOMapper.apply(reservation.getPassenger()))
                 .route(routeDTOMapper.apply(reservation.getRoute()))
+                .flyMode(flyModeDTOMapper.apply(reservation.getFlyMode()))
                 .build();
     }
 }

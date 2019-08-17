@@ -34,7 +34,6 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "reservation")
 public class Reservation implements Serializable {
-
     private static final long serialVersionUID = -5534420368605880140L;
 
     @Id
@@ -63,24 +62,22 @@ public class Reservation implements Serializable {
     private Integer hoursFlying;
 
     @NotNull
-    @ManyToOne(
-            fetch = FetchType.LAZY,
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE}
-    )
-    @JoinColumn(
-            name = "passenger_id",
-            referencedColumnName = "id"
-    )
+    @OneToOne(fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "passenger_id",
+            referencedColumnName = "id")
     private Passenger passenger;
 
     @NotNull
-    @ManyToOne(
-            fetch = FetchType.LAZY,
-            cascade = {CascadeType.ALL}
-    )
-    @JoinColumn(
-            name = "route_id",
-            referencedColumnName = "id"
-    )
+    @OneToOne(fetch = FetchType.LAZY,
+            cascade = {CascadeType.ALL})
+    @JoinColumn(name = "route_id",
+            referencedColumnName = "id")
     private Route route;
+
+    @NotNull
+    @JoinColumn(name = "fly_mode_code",
+            referencedColumnName = "code")
+    @OneToOne(fetch = FetchType.LAZY)
+    private FlyMode flyMode;
 }
