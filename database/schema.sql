@@ -135,21 +135,16 @@ CREATE TABLE IF NOT EXISTS actual_flight
     aircraft_id    BIGINT       NOT NULL,
     pilot_id       BIGINT       NOT NULL,
     route_id       BIGINT       NOT NULL,
+    passenger_id   BIGINT       NOT NULL,
     date_of_flying DATE         NOT NULL,
     departure_time TIMESTAMP    NOT NULL,
     arrival_time   TIMESTAMP    NOT NULL,
     hours_flying   INTEGER      NOT NULL,
-    first_name     VARCHAR(45)  NOT NULL,
-    last_name      VARCHAR(45)  NOT NULL,
-    gender         VARCHAR(6)   NOT NULL,
-    address        VARCHAR(100) NOT NULL,
-    country        VARCHAR(45)  NOT NULL,
-    email          VARCHAR(45)  NOT NULL,
-    phone          VARCHAR(45)  NOT NULL,
     CONSTRAINT actual_flight_pk PRIMARY KEY (id),
     CONSTRAINT aircraft_fk FOREIGN KEY (aircraft_id) REFERENCES aircraft (id),
     CONSTRAINT pilot_id_fk FOREIGN KEY (pilot_id) REFERENCES pilot (id),
-    CONSTRAINT route_id_fk FOREIGN KEY (route_id) REFERENCES route (id)
+    CONSTRAINT route_id_fk FOREIGN KEY (route_id) REFERENCES route (id),
+    CONSTRAINT passenger_id_fk FOREIGN KEY (passenger_id) REFERENCES passenger (id)
 );
 
 CREATE TABLE IF NOT EXISTS calendar_entry
