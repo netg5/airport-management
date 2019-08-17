@@ -30,6 +30,24 @@ INSERT INTO manager VALUES (1, '12-34-56', 'John', 'Smith', 'male', '3rd Kennedy
 INSERT INTO manager VALUES (2, '90-A1-9K', 'Janis', 'Priede', 'male', '5th Barona str, Riga', 'Latvia','someowner@somewhere.com', '34534625');
 INSERT INTO manager VALUES (3, '1Q-3B-23', 'Fiona', 'Pridaine', 'female', '1st Amerino str, Berlin', 'Germany','someowner@somewhere.com', '437372342');
 
+INSERT INTO fly_modes VALUES(1, 'BUS_001', 'Business class', 'Business class, everything included');
+INSERT INTO fly_modes VALUES(2, 'MID_001', 'Mid class', 'Middle class should');
+INSERT INTO fly_modes VALUES(3, 'ECO_001', 'Econom class', 'Econom class, Terribly budget');
+
+INSERT INTO prices VALUES(1, 'EUR_001', 1000, 'EUR');
+INSERT INTO prices VALUES(2, 'USD_001', 1050, 'USD');
+INSERT INTO prices VALUES(3, 'EUR_002', 500, 'EUR');
+INSERT INTO prices VALUES(4, 'USD_002', 550, 'USD');
+INSERT INTO prices VALUES(5, 'EUR_003', 100, 'EUR');
+INSERT INTO prices VALUES(6, 'USD_003', 150, 'USD');
+
+INSERT INTO fly_modes_prices_relation VALUES(1, 1);
+INSERT INTO fly_modes_prices_relation VALUES(1, 2);
+INSERT INTO fly_modes_prices_relation VALUES(2, 1);
+INSERT INTO fly_modes_prices_relation VALUES(2, 2);
+INSERT INTO fly_modes_prices_relation VALUES(3, 1);
+INSERT INTO fly_modes_prices_relation VALUES(3, 2);
+
 INSERT INTO reservation VALUES(1, 1, 1, '2019-08-09', '2019-08-09 17:28:30.183', '2019-08-09 17:28:30.183', 1);
 INSERT INTO reservation VALUES(2, 2, 2, '2019-08-09', '2019-08-09 17:28:30.183', '2019-08-09 17:28:30.183', 1);
 INSERT INTO reservation VALUES(3, 3, 3, '2019-08-09', '2019-08-09 17:28:30.183', '2019-08-09 17:28:30.183', 1);

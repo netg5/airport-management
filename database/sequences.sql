@@ -14,3 +14,5 @@ CREATE SEQUENCE IF NOT EXISTS calendar_entry_id_seq;
 CREATE SEQUENCE IF NOT EXISTS airport_management_facts_id_seq;
 CREATE SEQUENCE IF NOT EXISTS auth_user_id_seq;
 CREATE SEQUENCE IF NOT EXISTS auth_user_auth_user_roles_id_seq;
+CREATE SEQUENCE IF NOT EXISTS prices_id_seq;
+CREATE SEQUENCE IF NOT EXISTS fly_modes_id_seq;
