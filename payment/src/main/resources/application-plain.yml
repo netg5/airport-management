@@ -25,12 +25,4 @@ logging:
     ROOT: INFO
     org:
       sergei:
-        template: DEBUG
-
-# Actuator info
-info:
-  app:
-    name: Payment
-    version: 1.0
-    profile: plain
-    descripton: Service to perform scheduled flight payment
+        payment: DEBUG

@@ -11,3 +11,10 @@ spring:
 # Monitoring endpoints
 management:
   endpoints.web.exposure.include: "info, health, metrics, configprops, env, prometheus"
+
+# Adds some information into the Actuator info page
+info:
+  app:
+    name: Payment
+    version: 1.0
+    descripton: Service to perform scheduled flight payment
