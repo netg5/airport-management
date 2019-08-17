@@ -19,18 +19,20 @@ package org.sergei.reservation.service;
 import io.opentracing.Span;
 import io.opentracing.Tracer;
 import lombok.extern.slf4j.Slf4j;
+import org.sergei.reservation.jpa.model.FlyMode;
 import org.sergei.reservation.jpa.model.Passenger;
 import org.sergei.reservation.jpa.model.Reservation;
 import org.sergei.reservation.jpa.model.Route;
 import org.sergei.reservation.jpa.model.mapper.PassengerModelMapper;
 import org.sergei.reservation.jpa.model.mapper.ReservationModelMapper;
 import org.sergei.reservation.jpa.model.mapper.RouteModelMapper;
+import org.sergei.reservation.jpa.repository.FlyModeRepository;
 import org.sergei.reservation.jpa.repository.PassengerRepository;
 import org.sergei.reservation.jpa.repository.ReservationRepository;
 import org.sergei.reservation.jpa.repository.RouteRepository;
 import org.sergei.reservation.rest.dto.PassengerDTO;
 import org.sergei.reservation.rest.dto.ReservationDTO;
-import org.sergei.reservation.rest.dto.RouteDTO;
+import org.sergei.reservation.rest.dto.mappers.FlyModeDTOMapper;
 import org.sergei.reservation.rest.dto.mappers.ReservationDTOListMapper;
 import org.sergei.reservation.rest.dto.mappers.ReservationDTOMapper;
 import org.sergei.reservation.rest.dto.mappers.RouteDTOMapper;
@@ -56,13 +58,15 @@ public class ReservationServiceImpl implements ReservationService {
     private final ReservationRepository reservationRepository;
     private final ReservationDTOMapper reservationDTOMapper;
     private final ReservationDTOListMapper reservationDTOListMapper;
+    private final RouteDTOMapper routeDTOMapper;
+    private final FlyModeDTOMapper flyModeDTOMapper;
     private final RouteModelMapper routeModelMapper;
     private final PassengerModelMapper passengerModelMapper;
     private final ReservationModelMapper reservationModelMapper;
     private final ResponseMessageService responseMessageService;
     private final RouteRepository routeRepository;
+    private final FlyModeRepository flyModeRepository;
     private final Tracer tracer;
-    private final RouteDTOMapper routeDTOMapper;
 
     @Autowired
     public ReservationServiceImpl(PassengerRepository passengerRepository,
@@ -73,8 +77,9 @@ public class ReservationServiceImpl implements ReservationService {
                                   PassengerModelMapper passengerModelMapper,
                                   ReservationModelMapper reservationModelMapper,
                                   ResponseMessageService responseMessageService,
-                                  RouteRepository routeRepository, Tracer tracer,
-                                  RouteDTOMapper routeDTOMapper) {
+                                  RouteRepository routeRepository,
+                                  FlyModeRepository flyModeRepository, Tracer tracer,
+                                  RouteDTOMapper routeDTOMapper, FlyModeDTOMapper flyModeDTOMapper) {
         this.passengerRepository = passengerRepository;
         this.reservationRepository = reservationRepository;
         this.reservationDTOMapper = reservationDTOMapper;
@@ -84,8 +89,10 @@ public class ReservationServiceImpl implements ReservationService {
         this.reservationModelMapper = reservationModelMapper;
         this.responseMessageService = responseMessageService;
         this.routeRepository = routeRepository;
+        this.flyModeRepository = flyModeRepository;
         this.tracer = tracer;
         this.routeDTOMapper = routeDTOMapper;
+        this.flyModeDTOMapper = flyModeDTOMapper;
     }
 
     /**
@@ -180,26 +187,28 @@ public class ReservationServiceImpl implements ReservationService {
     public ResponseEntity<ResponseDTO<ReservationDTO>> saveReservation(ReservationRequestDTO request) {
         Long routeId = request.getRouteId();
         Optional<Route> route = routeRepository.findById(routeId);
+        Optional<FlyMode> flyMode = flyModeRepository.findFlyModeByCode(request.getFlyModeCode());
+
         if (route.isEmpty()) {
             List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("RT-001");
             return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+        } else if (flyMode.isEmpty()) {
+            List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("FLY_001");
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
         } else {
-            RouteDTO routeDTO = routeDTOMapper.apply(route.get());
             PassengerDTO passengerDTO = request.getPassenger();
-
             Reservation reservation = Reservation.builder()
                     .departureTime(request.getDepartureTime())
                     .arrivalTime(request.getArrivalTime())
                     .dateOfFlying(request.getDateOfFlying())
                     .hoursFlying(request.getHoursFlying())
                     .passenger(passengerModelMapper.apply(passengerDTO))
-                    .route(routeModelMapper.apply(routeDTO))
+                    .route(route.get())
+                    .flyMode(flyMode.get())
                     .build();
             Span span = tracer.buildSpan("reservationRepository.save()").start();
             span.setTag("reservation", reservation.toString());
-
             Reservation savedReservation = reservationRepository.save(reservation);
-
             span.finish();
             ReservationDTO savedReservationDTO = reservationDTOMapper.apply(savedReservation);
 
