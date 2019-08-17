@@ -42,11 +42,8 @@ public class Hangar implements Serializable {
     @Column(name = "hangar_location")
     private String hangarLocation;
 
-    @OneToMany(
-            fetch = FetchType.LAZY,
-            mappedBy = "hangar",
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE}
-    )
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "hangar",
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JsonIgnoreProperties(value = "hangar")
     private List<Aircraft> aircrafts;
 }

@@ -65,23 +65,15 @@ public class Aircraft implements Serializable {
     @Column(name = "exploitation_period")
     private Integer exploitationPeriod;
 
-    @OneToOne(
-            fetch = FetchType.LAZY,
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE}
-    )
-    @JoinColumn(
-            name = "manufacturer_id",
-            referencedColumnName = "id"
-    )
+    @OneToOne(fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "manufacturer_id",
+            referencedColumnName = "id")
     private Manufacturer manufacturer;
 
-    @OneToOne(
-            fetch = FetchType.LAZY,
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE}
-    )
-    @JoinColumn(
-            name = "hangar_id",
-            referencedColumnName = "id"
-    )
+    @OneToOne(fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "hangar_id",
+            referencedColumnName = "id")
     private Hangar hangar;
 }

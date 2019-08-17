@@ -14,12 +14,15 @@ public class ReservationModelMapper implements IMapper<ReservationDTO, Reservati
 
     private final PassengerModelMapper passengerModelMapper;
     private final RouteModelMapper routeModelMapper;
+    private final FlyModeModelMapper flyModeModelMapper;
 
     @Autowired
     public ReservationModelMapper(PassengerModelMapper passengerModelMapper,
-                                  RouteModelMapper routeModelMapper) {
+                                  RouteModelMapper routeModelMapper,
+                                  FlyModeModelMapper flyModeModelMapper) {
         this.passengerModelMapper = passengerModelMapper;
         this.routeModelMapper = routeModelMapper;
+        this.flyModeModelMapper = flyModeModelMapper;
     }
 
     @Override
@@ -31,6 +34,7 @@ public class ReservationModelMapper implements IMapper<ReservationDTO, Reservati
                 .hoursFlying(reservationDTO.getHoursFlying())
                 .passenger(passengerModelMapper.apply(reservationDTO.getPassenger()))
                 .route(routeModelMapper.apply(reservationDTO.getRoute()))
+                .flyMode(flyModeModelMapper.apply(reservationDTO.getFlyMode()))
                 .build();
     }
 }
