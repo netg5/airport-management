@@ -10,11 +10,6 @@ DECLARE
 BEGIN
     SET timezone TO 'UTC +3';
 	SELECT INTO res_rec
-		p.first_name,
-		p.last_name,
-		p.age,
-		p.gender,
-		p.phone,
         rt.id               AS route_id,
 		rt.departure_time,
 		rt.arrival_time,
@@ -25,10 +20,9 @@ BEGIN
 		r.date_of_flying,
 		r.departure_time,
 		r.arrival_time,
-		r.hours_flying
+		r.hours_flying,
+		r.passenger_id
 	FROM reservation r
-	JOIN passenger p 
-		ON p.id = r.passenger_id
 	JOIN route rt
 		ON rt.id = r.route_id;
 	
@@ -48,18 +42,12 @@ BEGIN
                 nextval('processor_insert_id_seq'),
 				aircraft_rec.id, 
                 pilot_rec.id, 
-                res_rec.route_id, 
+                res_rec.route_id,
+				res_rec.passenger_id, 
                 res_rec.date_of_flying, 
                 res_rec.departure_time, 
                 res_rec.arrival_time, 
-                res_rec.hours_flying, 
-                res_rec.first_name, 
-                res_rec.last_name,
-                res_rec.gender, 
-                'Test', 
-                'Test', 
-                'Test', 
-                res_rec.phone
+                res_rec.hours_flying
 	   );
 	   DELETE FROM reservation r WHERE r.id = res_rec.reserv_id;
 	END IF;
