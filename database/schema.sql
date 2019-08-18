@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS aircraft
     CONSTRAINT hangar_fk FOREIGN KEY (hangar_id) REFERENCES hangar (id)
 );
 
-CREATE TABLE IF NOT EXISTS route
+CREATE TABLE IF NOT EXISTS flight
 (
     id             BIGINT                      NOT NULL,
     departure_time TIMESTAMP WITHOUT TIME ZONE NOT NULL,
@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS route
     place          VARCHAR(45)                 NOT NULL,
     price          NUMERIC(19, 2)              NOT NULL,
     aircraft_id    BIGINT                      NOT NULL,
-    CONSTRAINT route_pk PRIMARY KEY (id),
+    CONSTRAINT flight_pk PRIMARY KEY (id),
     CONSTRAINT aircraft_id_fk FOREIGN KEY(aircraft_id) REFERENCES aircraft(id)
 );
 
@@ -122,11 +122,11 @@ CREATE TABLE IF NOT EXISTS fly_modes_prices_relation (
     CONSTRAINT prices_code_fk    FOREIGN KEY (prices_code)    REFERENCES prices(code)
 );
 
-CREATE TABLE IF NOT EXISTS reservation
+CREATE TABLE IF NOT EXISTS booking
 (
     id             BIGINT       NOT NULL,
     passenger_id   BIGINT       NOT NULL,
-    route_id       BIGINT       NOT NULL,
+    flight_id      BIGINT       NOT NULL,
     fly_mode_code  VARCHAR(7)   NOT NULL,
     date_of_flying DATE         NOT NULL,
     departure_time TIMESTAMP    NOT NULL,
@@ -134,7 +134,7 @@ CREATE TABLE IF NOT EXISTS reservation
     hours_flying   INTEGER      NOT NULL,
     CONSTRAINT reservation_pk   PRIMARY KEY (id),
     CONSTRAINT passenger_id_fk  FOREIGN KEY (passenger_id) REFERENCES passenger (id),
-    CONSTRAINT route_id_fk      FOREIGN KEY(route_id)      REFERENCES route(id),
+    CONSTRAINT flight_id_fk     FOREIGN KEY(flight_id)      REFERENCES flight(id),
     CONSTRAINT fly_mode_code_fk FOREIGN KEY(fly_mode_code) REFERENCES fly_modes(code)
 );
 
@@ -157,7 +157,7 @@ CREATE TABLE IF NOT EXISTS actual_flight
     id             BIGINT       NOT NULL,
     aircraft_id    BIGINT       NOT NULL,
     pilot_id       BIGINT       NOT NULL,
-    route_id       BIGINT       NOT NULL,
+    flight_id      BIGINT       NOT NULL,
     passenger_id   BIGINT       NOT NULL,
     date_of_flying DATE         NOT NULL,
     departure_time TIMESTAMP    NOT NULL,
@@ -166,7 +166,7 @@ CREATE TABLE IF NOT EXISTS actual_flight
     CONSTRAINT actual_flight_pk PRIMARY KEY (id),
     CONSTRAINT aircraft_fk FOREIGN KEY (aircraft_id) REFERENCES aircraft (id),
     CONSTRAINT pilot_id_fk FOREIGN KEY (pilot_id) REFERENCES pilot (id),
-    CONSTRAINT route_id_fk FOREIGN KEY (route_id) REFERENCES route (id),
+    CONSTRAINT flight_id_fk FOREIGN KEY (flight_id) REFERENCES flight (id),
     CONSTRAINT passenger_id_fk FOREIGN KEY (passenger_id) REFERENCES passenger (id)
 );
 

@@ -1,5 +1,5 @@
 # Airport management
-Airport management application based on the microservice architecture which allows to prform airport administration, flight reservation and all the data processing.
+Airport management application based on the microservice architecture which allows to prform airport administration, flight booking and all the data processing.
 
 ## Technologies
 * Java 11
@@ -20,7 +20,7 @@ Airport management application based on the microservice architecture which allo
 * auth - service responsible for authentication and authorization
 * registry - service registry where of all microservices can be observed
 * gateway - entry point of the all services
-* reservation - service which allows to reserve flight
+* booking - service which allows to reserve flight
 * management - airport management service
 * tickets - service where all passenger tickets can be seen
 

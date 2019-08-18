@@ -430,7 +430,7 @@
         </createTable>
     </changeSet>
     <changeSet author="Sergei Visotsky (generated)" id="1565376598517-31">
-        <createTable tableName="reservation">
+        <createTable tableName="booking">
             <column name="id" type="BIGINT">
                 <constraints primaryKey="true" primaryKeyName="reservation_pk"/>
             </column>
@@ -573,7 +573,7 @@
                                  referencedTableName="owner" />
     </changeSet>
     <changeSet author="Sergei Visotsky (generated)" id="1565376598517-48">
-        <addForeignKeyConstraint baseColumnNames="passenger_id" baseTableName="reservation"
+        <addForeignKeyConstraint baseColumnNames="passenger_id" baseTableName="booking"
                                  constraintName="passenger_id_fk" deferrable="false" initiallyDeferred="false"
                                  onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id"
                                  referencedTableName="passenger" />
@@ -590,7 +590,7 @@
                                  referencedColumnNames="id" referencedTableName="pilot" />
     </changeSet>
     <changeSet author="Sergei Visotsky (generated)" id="1565376598517-51">
-        <addForeignKeyConstraint baseColumnNames="route_id" baseTableName="reservation" constraintName="route_id_fk"
+        <addForeignKeyConstraint baseColumnNames="route_id" baseTableName="booking" constraintName="route_id_fk"
                                  deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
                                  referencedColumnNames="id" referencedTableName="flight" />
     </changeSet>
