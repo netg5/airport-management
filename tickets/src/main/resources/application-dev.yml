@@ -27,8 +27,10 @@ eureka:
     instance-info-replication-interval-seconds: 10 # how often to replicate instance changes to be replicated to Eureka server
     serviceUrl:
       defaulZone: http://localhost:8761/eureka/
+
 management:
   endpoints.web.exposure.include: "info, health, metrics, configprops, env, prometheus"
+
 logging:
   file: C:/tmp/tickets.log
   level:

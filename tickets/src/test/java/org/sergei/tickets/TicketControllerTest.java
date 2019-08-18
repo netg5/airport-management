@@ -14,33 +14,24 @@
  * limitations under the License.
  */
 
-package org.sergei.tickets.jpa.model;
+package org.sergei.tickets;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.data.annotation.Immutable;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.io.Serializable;
+import org.junit.Ignore;
+import org.junit.runner.RunWith;
+import org.sergei.tickets.rest.controller.TicketController;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringRunner;
 
 /**
+ * Test for {@link TicketController}
+ *
  * @author Sergei Visotsky
  */
-@Getter
-@Setter
-@NoArgsConstructor
-@Immutable
-@Entity
-@Table(name = "passenger")
-public class BasePassenger implements Serializable {
-
-    private static final long serialVersionUID = 6973333612898495544L;
-
-    @Id
-    @Column(name = "id")
-    private Long id;
+@Ignore
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ActiveProfiles("test")
+public class TicketControllerTest {
+    // TODO
 }

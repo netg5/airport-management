@@ -16,7 +16,7 @@
 
 package org.sergei.tickets.jpa.repository;
 
-import org.sergei.tickets.jpa.model.BasePassenger;
+import org.sergei.tickets.jpa.model.Passenger;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -24,5 +24,5 @@ import org.springframework.stereotype.Repository;
  * @author Sergei Visotsky
  */
 @Repository
-public interface PassengerRepository extends JpaRepository<BasePassenger, Long> {
+public interface PassengerRepository extends JpaRepository<Passenger, Long> {
 }
