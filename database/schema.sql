@@ -179,37 +179,6 @@ CREATE TABLE IF NOT EXISTS calendar_entry
     CONSTRAINT calendar_entry_pk PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS airport_management_facts
-(
-    id                BIGINT      NOT NULL,
-    actual_flight_id  BIGINT      NOT NULL,
-    aircraft_id       BIGINT      NOT NULL,
-    airport_id        BIGINT      NOT NULL,
-    calendar_entry_id BIGINT      NOT NULL,
-    hangar_id         BIGINT      NOT NULL,
-    manager_id        BIGINT      NOT NULL,
-    manufacturer_id   BIGINT      NOT NULL,
-    owner_id          BIGINT      NOT NULL,
-    pilot_id          BIGINT      NOT NULL,
-    date_of_flying    DATE        NOT NULL,
-    departure_time    TIMESTAMP   NOT NULL,
-    arrival_time      TIMESTAMP   NOT NULL,
-    hours_flying      INTEGER     NOT NULL,
-    average           INTEGER     NOT NULL,
-    count             INTEGER     NOT NULL,
-    kpi               VARCHAR(45) NOT NULL,
-    CONSTRAINT calendar_pk PRIMARY KEY (id),
-    CONSTRAINT actual_flight_fk FOREIGN KEY (actual_flight_id) REFERENCES actual_flight (id),
-    CONSTRAINT aircraft_fk FOREIGN KEY (aircraft_id) REFERENCES aircraft (id),
-    CONSTRAINT airport_fk FOREIGN KEY (airport_id) REFERENCES airport (id),
-    CONSTRAINT calendar_entry_fk FOREIGN KEY (calendar_entry_id) REFERENCES calendar_entry (id),
-    CONSTRAINT hanger_fk FOREIGN KEY (hangar_id) REFERENCES hangar (id),
-    CONSTRAINT manager_fk FOREIGN KEY (manager_id) REFERENCES manager (id),
-    CONSTRAINT manufacturer_fd FOREIGN KEY (manufacturer_id) REFERENCES manufacturer (id),
-    CONSTRAINT owner_fk FOREIGN KEY (owner_id) REFERENCES OWNER (id),
-    CONSTRAINT pilot_fk FOREIGN KEY (pilot_id) REFERENCES pilot (id)
-);
-
 -- Response message storage
 CREATE TABLE IF NOT EXISTS response_messages
 (
