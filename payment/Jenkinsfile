@@ -1,3 +1,5 @@
+#!groovy
+
 def POM_LOCATION = '-f payment/pom.xml'
 pipeline {
     agent any
