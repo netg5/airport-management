@@ -1,18 +1,17 @@
 server:
   port: 8082
 
+spring:
+  cloud:
+    config:
+      enabled: false
+
 # DataSource configuration
 datasource:
   jdbc-url: jdbc:postgresql://localhost:5432/flight_reservation
   type: com.zaxxer.hikari.HikariDataSource
   username: flight
   password: flight
-
-# security specific configuration
-security:
-  oauth2:
-    access-token-uri: http://localhost:8080/auth/oauth/token
-    user-authorization-uri: http://localhost:8080/auth/oauth/authorize
 
 # Eureka configuration
 eureka:

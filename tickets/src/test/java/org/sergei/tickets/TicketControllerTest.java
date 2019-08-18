@@ -14,22 +14,24 @@
  * limitations under the License.
  */
 
-package org.sergei.tickets.service;
+package org.sergei.tickets;
 
-import org.sergei.tickets.rest.dto.TicketDTO;
-import org.sergei.tickets.rest.dto.response.ResponseDTO;
-import org.springframework.http.ResponseEntity;
+import org.junit.Ignore;
+import org.junit.runner.RunWith;
+import org.sergei.tickets.rest.controller.TicketController;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringRunner;
 
 /**
+ * Test for {@link TicketController}
+ *
  * @author Sergei Visotsky
  */
-public interface TicketService {
-
-    /**
-     * Method to find tickets for passenger
-     *
-     * @param passengerId Request payload with params to find tickets
-     * @return collection of tickets
-     */
-    ResponseEntity<ResponseDTO<TicketDTO>> findAllTickets(Long passengerId, String currency);
+@Ignore
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ActiveProfiles("test")
+public class TicketControllerTest {
+    // TODO
 }

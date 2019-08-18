@@ -7,7 +7,7 @@ spring:
     config:
       enabled: false
     discovery:
-      enabled: true
+      enabled: false
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
 

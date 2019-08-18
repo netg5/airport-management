@@ -34,13 +34,12 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
      * Find ticket by passenger ID, place or/and distance
      *
      * @param passengerId whose ticket should be found
+     * @param currency    currency (EUR/USD)
      * @return list of the found tickets
      */
-    @Query("SELECT \n" +
-            "    t\n" +
-            "FROM\n" +
-            "    Ticket t\n" +
-            "WHERE\n" +
-            "    t.passengerId = :passengerId")
-    List<Ticket> findAllTickets(@Param("passengerId") Long passengerId);
+    @Query("SELECT t FROM Ticket t" +
+            " WHERE t.passengerId = :passengerId" +
+            " AND t.currency = :currency")
+    List<Ticket> findAllTickets(@Param("passengerId") Long passengerId,
+                                @Param("currency") String currency);
 }
