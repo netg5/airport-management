@@ -9,7 +9,9 @@ pipeline {
             steps {
                 withSonarQubeEnv('sonar') {
                     echo '-=- run code inspection & check quality gate -=-'
-                    sh "${sonarqube}/bin/linux-x86-64/sonar.sh"
+                    sh "mvn ${POM_LOCATION} sonar:sonar " +
+                        "-Dsonar.host.url=http://79.135.149.36:9000 " +
+                       "-Dsonar.login=883ca9e31d4e87c49e5557f72865a91094d35eca"
                 }
             }
         }
