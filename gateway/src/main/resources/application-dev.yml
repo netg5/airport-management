@@ -1,6 +1,11 @@
 server:
   port: 8080
 
+spring:
+  cloud:
+    config:
+      enabled: false
+
 zuul:
   ssl-hostname-validation-enabled: false # No recommended in real production applications
   routes:

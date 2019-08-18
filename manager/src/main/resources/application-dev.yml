@@ -1,6 +1,11 @@
 server:
   port: 8088
 
+spring:
+  cloud:
+    config:
+      enabled: false
+
 # DataSource configuration
 datasource:
   jdbc-url: jdbc:postgresql://localhost:5432/flight_reservation
