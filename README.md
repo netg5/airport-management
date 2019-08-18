@@ -23,7 +23,8 @@ Airport management application based on the microservice architecture which allo
 * reservation - service which allows to reserve flight
 * management - airport management service
 * tickets - service where all passenger tickets can be seen
-* To be continued after implementation...
+
+To be continued after implementation...
 
 ## Authentication
 To access any resource authentication should be performed. By performing this request with such a parameters access_token is retrieved.
