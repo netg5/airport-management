@@ -1,8 +1,8 @@
 package org.sergei.payment.service;
 
-import org.sergei.template.jpa.model.ResponseMessage;
-import org.sergei.template.jpa.repository.ResponseMessageRepository;
-import org.sergei.template.rest.dto.response.ResponseErrorDTO;
+import org.sergei.payment.jpa.model.ResponseMessage;
+import org.sergei.payment.jpa.repository.ResponseMessageRepository;
+import org.sergei.payment.rest.dto.response.ResponseErrorDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
