@@ -1,0 +1,17 @@
+1,AIR-001,Aircraft with this ID not found
+2,AIR-002,Aircraft exploitation period is greater than 10 required years
+3,AIR-003,Aircraft with this model number not found
+4,PAS-001,Passenger with this ID not found
+5,PAS-002,This passenger has no bookings made
+6,RT-001,Route with this ID not found
+7,RES-001,Reservation with this ID not found
+8,PT-001,Passenger has no tickets
+9,PIL-001,Pilot with this ID not found
+10,PIL-002,Pilot table is empty
+11,RP-001,Required parameter is not present
+12,PIL-003,Pilot weight is greater than expected
+13,OW-001,Owner with this ID not found
+14,MAN-001,Manufacturer with this ID not found
+15,HAN-001,Hangar not found
+16,APT-001,Airport with this name not found
+17,APT-002,No airport contact found by this parameter

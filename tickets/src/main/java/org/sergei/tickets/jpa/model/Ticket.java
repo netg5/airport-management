@@ -34,8 +34,8 @@ public class Ticket implements Serializable {
     private String lastName;
 
     @Id
-    @Column(name = "reservation_id")
-    private Long reservationId;
+    @Column(name = "booking_id")
+    private Long bookingId;
 
     @Column(name = "date_of_flying")
     private LocalDateTime dateOfFlying;

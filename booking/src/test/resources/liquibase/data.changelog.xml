@@ -7,49 +7,35 @@
     <changeSet id="1" author="Sergei Visotsky">
         <loadData tableName="aircraft"
                   encoding="UTF-8"
-                  file="./liquibase/csv/aircraft.csv"
+                  file="csv/aircraft.csv"
                   separator=";"/>
     </changeSet>
 
     <changeSet id="2" author="Sergei Visotsky">
         <loadData tableName="hangar"
                   encoding="UTF-8"
-                  file="./liquibase/csv/hangar.csv"
+                  file="csv/hangar.csv"
                   separator=";"/>
     </changeSet>
 
     <changeSet id="3" author="Sergei Visotsky">
-        <loadData tableName="manufacturer"
+        <loadData tableName="booking"
                   encoding="UTF-8"
-                  file="./liquibase/csv/manufacturer.csv"
+                  file="csv/booking.csv"
                   separator=";"/>
     </changeSet>
 
     <changeSet id="4" author="Sergei Visotsky">
-        <loadData tableName="owner"
+        <loadData tableName="response_messages"
                   encoding="UTF-8"
-                  file="./liquibase/csv/owner.csv"
+                  file="csv/response_messages.csv"
                   separator=";"/>
     </changeSet>
 
     <changeSet id="5" author="Sergei Visotsky">
-        <loadData tableName="pilot"
-                  encoding="UTF-8"
-                  file="./liquibase/csv/pilot.csv"
-                  separator=";"/>
-    </changeSet>
-
-    <changeSet id="6" author="Sergei Visotsky">
-        <loadData tableName="response_messages"
-                  encoding="UTF-8"
-                  file="./liquibase/csv/response_messages.csv"
-                  separator=";"/>
-    </changeSet>
-
-    <changeSet id="7" author="Sergei Visotsky">
         <loadData tableName="flight"
                   encoding="UTF-8"
-                  file="./liquibase/csv/flight.csv"
+                  file="csv/flight.csv"
                   separator=";"/>
     </changeSet>
 

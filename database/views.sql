@@ -24,22 +24,22 @@ SELECT DISTINCT
     p.id AS passenger_id,
 	p.first_name,
 	p.last_name,
-    r.id AS reservation_id,
-	r.date_of_flying,
-	r.departure_time,
-	r.arrival_time,
-	rt.distance,
-	rt.place,
+    b.id AS booking_id,
+	b.date_of_flying,
+	b.departure_time,
+	b.arrival_time,
+	f.distance,
+	f.place,
 	fm.title,
 	pr.amount,
 	pr.currency
 FROM passenger p
-LEFT JOIN reservation r 
-	ON p.id = r.passenger_id
-LEFT JOIN route rt
-	ON rt.id = r.route_id
+LEFT JOIN booking b 
+	ON p.id = b.passenger_id
+LEFT JOIN flight f
+	ON f.id = b.flight_id
 LEFT JOIN fly_modes fm
-	ON fm.code = r.fly_mode_code
+	ON fm.code = b.fly_mode_code
 LEFT JOIN fly_modes_prices_relation fmpr
 	ON fm.code = fmpr.fly_modes_code
 LEFT JOIN prices pr
