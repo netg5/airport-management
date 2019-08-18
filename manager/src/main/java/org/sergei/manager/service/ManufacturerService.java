@@ -19,6 +19,4 @@ public interface ManufacturerService {
     ResponseEntity<ResponseDTO<ManufacturerDTO>> saveManufacturer(ManufacturerDTO request);
 
     ResponseEntity<ResponseDTO<ManufacturerDTO>> updateManufacturer(ManufacturerDTO request);
-
-    ResponseEntity<ResponseDTO<ManufacturerDTO>> deleteManufacturer(String code);
 }
