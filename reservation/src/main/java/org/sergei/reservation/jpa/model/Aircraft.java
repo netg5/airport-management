@@ -17,9 +17,9 @@
 package org.sergei.reservation.jpa.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -29,7 +29,7 @@ import java.io.Serializable;
  * @author Sergei Visotsky
  */
 @Getter
-@Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -46,9 +46,6 @@ public class Aircraft implements Serializable {
             sequenceName = "aircraft_id_seq", allocationSize = 1)
     @Column(name = "id")
     private Long id;
-
-    @Column(name = "manufacturer_code")
-    private String manufacturerCode;
 
     @Column(name = "registration_number")
     private String registrationNumber;
@@ -68,14 +65,15 @@ public class Aircraft implements Serializable {
     @Column(name = "exploitation_period")
     private Integer exploitationPeriod;
 
-    @ManyToOne(
-            fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL
-    )
-    @JoinColumn(
-            name = "owner_id",
-            referencedColumnName = "id"
-    )
-    private Owner owner;
+    @OneToOne(fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "manufacturer_id",
+            referencedColumnName = "id")
+    private Manufacturer manufacturer;
 
+    @OneToOne(fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "hangar_id",
+            referencedColumnName = "id")
+    private Hangar hangar;
 }

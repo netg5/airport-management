@@ -16,30 +16,32 @@
 
 package org.sergei.reservation.rest.dto;
 
-import io.swagger.annotations.ApiModel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 
 import java.io.Serializable;
 
 /**
  * @author Sergei Visotsky
  */
-@ApiModel(value = "Aircraft", description = "Aircraft model")
+@Builder
 @Getter
-@Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class AircraftDTO implements Serializable {
     private static final long serialVersionUID = -8398761845885572454L;
     private Long aircraftId;
-    private String manufacturerCode;
     private String registrationNumber;
     private String modelNumber;
     private String aircraftName;
     private Integer capacity;
     private Double weight;
     private Integer exploitationPeriod;
+    @JsonIgnoreProperties(value = "aircraft")
+    @JsonProperty("hangar")
+    private HangarDTO hangar;
+    @JsonProperty("manufacturer")
+    private ManufacturerDTO manufacturer;
 }

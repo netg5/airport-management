@@ -1,6 +1,5 @@
 package org.sergei.manager.jpa.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -43,11 +42,8 @@ public class Hangar implements Serializable {
     @Column(name = "hangar_location")
     private String hangarLocation;
 
-    @OneToMany(
-            fetch = FetchType.LAZY,
-            mappedBy = "hangar",
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE}
-    )
-    @JsonIgnoreProperties(value = "hangar")
+        @OneToMany(fetch = FetchType.LAZY, mappedBy = "hangar",
+                cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+        @JsonIgnoreProperties(value = "hangar")
     private List<Aircraft> aircrafts;
 }

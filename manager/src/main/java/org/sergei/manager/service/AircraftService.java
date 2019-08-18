@@ -12,6 +12,8 @@ public interface AircraftService {
 
     ResponseEntity<ResponseDTO<AircraftDTO>> findAll();
 
+    ResponseEntity<ResponseDTO<AircraftDTO>> findById(Long aircraftId);
+
     ResponseEntity<ResponseDTO<AircraftDTO>> findByModelNumber(AircraftRequestDTO request);
 
     ResponseEntity<ResponseDTO<AircraftDTO>> save(AircraftDTO aircraftDTO);

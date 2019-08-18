@@ -14,7 +14,7 @@ public interface AirportService {
     ResponseEntity<ResponseDTO<AirportDTO>> getAirportByName(AirportRequestDTO request);
 
     /**
-     * Method to get airport contact name and contact job by airport name
+     * Method to get airport facility's contact name and contact job by airport name
      *
      * @param request with single field - airportName
      * @return

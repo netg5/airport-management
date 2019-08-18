@@ -18,8 +18,8 @@ package org.sergei.reservation.rest.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.sergei.reservation.rest.dto.ReservationRequestDTO;
-import org.sergei.reservation.rest.dto.ReservationResponseDTO;
+import org.sergei.reservation.rest.dto.ReservationDTO;
+import org.sergei.reservation.rest.dto.request.ReservationRequestDTO;
 import org.sergei.reservation.rest.dto.response.ResponseDTO;
 import org.sergei.reservation.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,27 +40,31 @@ public class ReservationController {
         this.reservationService = reservationService;
     }
 
+    @GetMapping(value = "/getAllReservations")
+    public ResponseEntity<ResponseDTO<ReservationDTO>> getAllReservations() {
+        return reservationService.findAll();
+    }
+
     @GetMapping(value = "/getAllReservationForPassenger/{passengerId}")
-    public ResponseEntity<ResponseDTO<ReservationResponseDTO>> getAllReservationForPassenger(@PathVariable("passengerId") Long passengerId) {
+    public ResponseEntity<ResponseDTO<ReservationDTO>> getAllReservationForPassenger(@PathVariable("passengerId") Long passengerId) {
         return reservationService.findAllForPassenger(passengerId);
     }
 
-    @GetMapping(value = "/getOneReservationForPassenger/{passengerId}", produces = "application/json")
-    public ResponseEntity<ResponseDTO<ReservationResponseDTO>> getOneReservationForPassenger(@PathVariable("passengerId") Long passengerId,
-                                                                                             @RequestParam("reservationId") Long reservationId) {
+    @GetMapping(value = "/getOneReservationForPassenger/{passengerId}")
+    public ResponseEntity<ResponseDTO<ReservationDTO>> getOneReservationForPassenger(@PathVariable("passengerId") Long passengerId,
+                                                                                     @RequestParam("reservationId") Long reservationId) {
         return reservationService.findOneForPassenger(passengerId, reservationId);
     }
 
-    @PostMapping(value = "/makeReservation/{passengerId}")
-    public ResponseEntity<ResponseDTO<ReservationResponseDTO>> makeReservation(@PathVariable Long passengerId,
-                                                                               @RequestBody ReservationRequestDTO request) {
-        return reservationService.saveReservation(passengerId, request);
+    @PostMapping(value = "/makeReservation")
+    public ResponseEntity<ResponseDTO<ReservationDTO>> makeReservation(@RequestBody ReservationRequestDTO request) {
+        return reservationService.saveReservation(request);
     }
 
     @ApiOperation("Delete reservation")
-    @DeleteMapping("/deleteReservation/{passengerId}")
-    public ResponseEntity<ResponseDTO<ReservationResponseDTO>> deleteReservation(@PathVariable("passengerId") Long passengerId,
-                                                                                 @RequestParam("reservationId") Long reservationId) {
-        return reservationService.deleteReservation(passengerId, reservationId);
+    @DeleteMapping("/discardReservation/{passengerId}")
+    public ResponseEntity<ResponseDTO<ReservationDTO>> discardReservation(@PathVariable("passengerId") Long passengerId,
+                                                                          @RequestParam("reservationId") Long reservationId) {
+        return reservationService.discardReservation(passengerId, reservationId);
     }
 }

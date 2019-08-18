@@ -1,12 +1,10 @@
 server:
   port: 8088
 
-# Spring specific configuration
 spring:
-  application:
-    name: manager
-  autoconfigure:
-    exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+  cloud:
+    config:
+      enabled: false
 
 # DataSource configuration
 datasource:
@@ -35,8 +33,11 @@ eureka:
     serviceUrl:
       defaulZone: http://localhost:8761/eureka/
 
-management:
-  endpoints.web.exposure.include: "info, health, metrics, configprops, env, prometheus"
+# Authentication security details
+security:
+  oauth2:
+    resource:
+      user-info-uri: http://localhost:8080/auth/users/authenticate
 
 logging:
   file: C:/tmp/manager.log

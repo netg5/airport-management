@@ -16,6 +16,7 @@
 
 package org.sergei.manager.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.sergei.manager.jpa.model.Aircraft;
 import org.sergei.manager.jpa.model.mappers.AircraftModelMapper;
 import org.sergei.manager.jpa.repository.AircraftRepository;
@@ -36,6 +37,7 @@ import java.util.Optional;
 /**
  * @author Sergei Visotsky
  */
+@Slf4j
 @Service
 public class AircraftServiceImpl implements AircraftService {
 
@@ -73,6 +75,7 @@ public class AircraftServiceImpl implements AircraftService {
         } else {
             Optional<Aircraft> aircraft = aircraftRepository.findByModelNumber(modelNumber);
             if (aircraft.isEmpty()) {
+                log.debug("Aircraft with this model number: {} not found", aircraft.get().getId());
                 List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("AIR-003");
                 return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
             } else {
@@ -107,6 +110,24 @@ public class AircraftServiceImpl implements AircraftService {
         }
     }
 
+    @Override
+    public ResponseEntity<ResponseDTO<AircraftDTO>> findById(Long aircraftId) {
+        Optional<Aircraft> aircraft = aircraftRepository.findById(aircraftId);
+        if (aircraft.isEmpty()) {
+            log.debug("Aircraft with this ID: {} not found", aircraftId);
+            List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("AIR-001");
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+        } else {
+            AircraftDTO aircraftDTO = aircraftDTOMapper.apply(aircraft.get());
+
+            ResponseDTO<AircraftDTO> response = new ResponseDTO<>();
+            response.setErrorList(List.of());
+            response.setResponse(List.of(aircraftDTO));
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+    }
+
     /**
      * Save aircraftId
      *
@@ -117,6 +138,7 @@ public class AircraftServiceImpl implements AircraftService {
     public ResponseEntity<ResponseDTO<AircraftDTO>> save(AircraftDTO request) {
         Integer exploitationPeriod = request.getExploitationPeriod();
         if (exploitationPeriod >= 10) {
+            log.debug("Aircraft exploitation period should not be greater than 10");
             List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("AIR-001");
             return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.OK);
         } else {

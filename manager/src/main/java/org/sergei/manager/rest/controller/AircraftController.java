@@ -23,10 +23,7 @@ import org.sergei.manager.rest.dto.response.ResponseDTO;
 import org.sergei.manager.service.AircraftService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Sergei Visotsky
@@ -45,6 +42,11 @@ public class AircraftController {
     @GetMapping(value = "/getAllAircrafts")
     public ResponseEntity<ResponseDTO<AircraftDTO>> getAllAircraft() {
         return aircraftService.findAll();
+    }
+
+    @GetMapping(value = "/getAircraftById/{aircraftId}")
+    public ResponseEntity<ResponseDTO<AircraftDTO>> getAircraftById(@PathVariable Long aircraftId) {
+        return aircraftService.findById(aircraftId);
     }
 
     @PostMapping(value = "/getAircraftByModelNumber")

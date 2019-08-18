@@ -1,23 +1,19 @@
 package org.sergei.reservation.service;
 
-import org.sergei.reservation.rest.dto.PassengerResponseDTO;
-import org.sergei.reservation.rest.dto.PassengerUpdateRequestDTO;
+import org.sergei.reservation.rest.dto.PassengerDTO;
 import org.sergei.reservation.rest.dto.response.ResponseDTO;
 import org.springframework.http.ResponseEntity;
-
-import java.util.Map;
+import org.springframework.stereotype.Service;
 
 /**
  * @author Sergei Visotsky
  */
+@Service
 public interface PassengerService {
-    ResponseEntity<ResponseDTO<PassengerResponseDTO>> findOne(Long passengerId);
+    ResponseEntity<ResponseDTO<PassengerDTO>> findPassengerById(Long passengerId);
 
-    ResponseEntity<ResponseDTO<PassengerResponseDTO>> findAllPassengers(int page, int size);
+    ResponseEntity<ResponseDTO<PassengerDTO>> findAllPassengers(int page, int size);
 
-    ResponseEntity<ResponseDTO<PassengerResponseDTO>> save(PassengerResponseDTO passengerResponseDTO);
+    ResponseEntity<ResponseDTO<PassengerDTO>> update(PassengerDTO request);
 
-    ResponseEntity<ResponseDTO<PassengerResponseDTO>> update(PassengerUpdateRequestDTO request);
-
-    ResponseEntity<ResponseDTO<PassengerResponseDTO>> delete(Long passengerId);
 }

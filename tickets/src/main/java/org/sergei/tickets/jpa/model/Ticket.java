@@ -1,19 +1,3 @@
-/*
- * Copyright 2018-2019 the original author.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.sergei.tickets.jpa.model;
 
 import lombok.Getter;
@@ -29,8 +13,6 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * Takes data from ticket_view located in MySQL server
- *
  * @author Sergei Visotsky
  */
 @Getter
@@ -40,10 +22,9 @@ import java.time.LocalDateTime;
 @Immutable
 @Table(name = "ticket_view")
 public class Ticket implements Serializable {
-
     private static final long serialVersionUID = 1213518846387676066L;
 
-    @Column(updatable = false, nullable = false)
+    @Column(name = "passenger_id")
     private Long passengerId;
 
     @Column(name = "first_name")
@@ -53,21 +34,30 @@ public class Ticket implements Serializable {
     private String lastName;
 
     @Id
-    @Column(name = "aircraft_id")
-    private Long aircraftId;
+    @Column(name = "reservation_id")
+    private Long reservationId;
 
     @Column(name = "date_of_flying")
     private LocalDateTime dateOfFlying;
 
+    @Column(name = "departure_time")
+    private LocalDateTime departureTime;
+
     @Column(name = "arrival_time")
     private LocalDateTime arrivalTime;
 
-    @Column(name = "hours_flying")
-    private Integer hoursFlying;
+    @Column(name = "distance")
+    private Integer distance;
 
-    @Column(name = "aircraft_name")
-    private String aircraftName;
+    @Column(name = "place")
+    private String place;
 
-    @Column(name = "model_number")
-    private String model_number;
+    @Column(name = "title")
+    private String title;
+
+    @Column(name = "amount")
+    private Double amount;
+
+    @Column(name = "currency")
+    private String currency;
 }

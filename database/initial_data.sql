@@ -18,9 +18,9 @@ INSERT INTO aircraft VALUES (1, 1, 1, '123D', '777-300ER', 'Boeing', 3450, 1000,
 INSERT INTO aircraft VALUES (2, 2, 2, '12dc3', 'A220', 'Airbus', 43000, 5400, 6);
 INSERT INTO aircraft VALUES (3, 3, 3, '82497Df', 'B30', 'Airbus', 42007, 3200, 7);
 
-INSERT INTO route VALUES (2, '2019-07-02', '2019-07-01', 1000, 'Riga', 123);
-INSERT INTO route VALUES (3, '2019-08-23', '2019-08-22', 3600, 'Singapoore', 3400);
-INSERT INTO route VALUES (1, '2019-08-23', '2019-08-22', 3600, 'New-York', 3400);
+INSERT INTO route VALUES (2, '2019-07-02', '2019-07-01', 1000, 'Riga', 123, 1);
+INSERT INTO route VALUES (3, '2019-08-23', '2019-08-22', 3600, 'Singapoore', 3400, 2);
+INSERT INTO route VALUES (1, '2019-08-23', '2019-08-22', 3600, 'New-York', 3400, 3);
 
 INSERT INTO passenger VALUES (1, 'Arena', 'Kronfold', 45, 'female', '8923847');
 INSERT INTO passenger VALUES (2, 'Sergei', 'Visotsky', 21, 'male', '1234567');
@@ -30,15 +30,44 @@ INSERT INTO manager VALUES (1, '12-34-56', 'John', 'Smith', 'male', '3rd Kennedy
 INSERT INTO manager VALUES (2, '90-A1-9K', 'Janis', 'Priede', 'male', '5th Barona str, Riga', 'Latvia','someowner@somewhere.com', '34534625');
 INSERT INTO manager VALUES (3, '1Q-3B-23', 'Fiona', 'Pridaine', 'female', '1st Amerino str, Berlin', 'Germany','someowner@somewhere.com', '437372342');
 
+INSERT INTO fly_modes VALUES('BUS_001', 'Business class', 'Business class, everything included');
+INSERT INTO fly_modes VALUES('MID_001', 'Mid class', 'Middle class should');
+INSERT INTO fly_modes VALUES('ECO_001', 'Econom class', 'Econom class, Terribly budget');
+
+INSERT INTO prices VALUES('EUR_001', 1000, 'EUR');
+INSERT INTO prices VALUES('USD_001', 1050, 'USD');
+INSERT INTO prices VALUES('EUR_002', 500, 'EUR');
+INSERT INTO prices VALUES('USD_002', 550, 'USD');
+INSERT INTO prices VALUES('EUR_003', 100, 'EUR');
+INSERT INTO prices VALUES('USD_003', 150, 'USD');
+
+INSERT INTO fly_modes_prices_relation VALUES('BUS_001', 'EUR_001');
+INSERT INTO fly_modes_prices_relation VALUES('BUS_001', 'USD_001');
+INSERT INTO fly_modes_prices_relation VALUES('MID_001', 'EUR_002');
+INSERT INTO fly_modes_prices_relation VALUES('MID_001', 'USD_002');
+INSERT INTO fly_modes_prices_relation VALUES('ECO_001', 'EUR_003');
+INSERT INTO fly_modes_prices_relation VALUES('ECO_001', 'USD_003');
+
+INSERT INTO reservation VALUES(1, 1, 1, '2019-08-09', '2019-08-09 17:28:30.183', '2019-08-09 17:28:30.183', 1);
+INSERT INTO reservation VALUES(2, 2, 2, '2019-08-09', '2019-08-09 17:28:30.183', '2019-08-09 17:28:30.183', 1);
+INSERT INTO reservation VALUES(3, 3, 3, '2019-08-09', '2019-08-09 17:28:30.183', '2019-08-09 17:28:30.183', 1);
+
 INSERT INTO airport VALUES(1, 'Los Angeles International Airport', '1st Avenue, Los Angeles', 'USA', 'John Smith', 'Supervisor', 'jahn@example.com', '+124579');
 
 -- User service data - 1st user password: 123456
-INSERT INTO auth_user VALUES (1, 'admin', '$2a$10$sHzvSELmDqDxAI8GN.yyb.bRLDhWNB03zJfGWc9M5dQelX05GMACm');
 INSERT INTO auth_user_roles VALUES (1, 'USER');
 INSERT INTO auth_user_roles VALUES (2, 'ADMIN');
+INSERT INTO auth_user_roles VALUES (3, 'ROOT');
+
+INSERT INTO auth_user VALUES (1, 'admin', '$2a$10$sHzvSELmDqDxAI8GN.yyb.bRLDhWNB03zJfGWc9M5dQelX05GMACm');
 INSERT INTO auth_user_auth_user_roles VALUES (1, 1);
-INSERT INTO auth_user_auth_user_roles VALUES (1, 2) ;
+INSERT INTO auth_user_auth_user_roles VALUES (1, 2);
+
+INSERT INTO auth_user VALUES (2, 'system_user', '$2a$10$GHIEGUgKYlvPn6jkYnKeEOIMN8Tt4ZTK2/2KkQdFOwtCG.lTA3gCW');
+INSERT INTO auth_user_auth_user_roles VALUES (2, 3);
+
 INSERT INTO oauth_client_details VALUES('trusted-client', '', '$2a$10$K9.dtdouoTm1tlhQTTQu4OEV1HPlV0IpNjUsNu/8ZBiesIkSXafmK', 'read,write,trust', 'refresh_token,password', 'http://www.google.com', 'ROLE_CLIENT,ROLE_TRUSTED_CLIENT,ROLE_ADMIN', 3600, 86400, '', '');
+INSERT INTO oauth_client_details VALUES('system-client', '', '$2a$10$NR.ZeJ8mUIqT0b88RQCT2OMVDD5lXtzzxHF2YGHp8pRuCZx0IMgny', 'read,write,trust', 'refresh_token,password', '', 'ROLE_ROOT', 946080000, 946080000, '', '');
 
 -- Errors
 INSERT INTO response_messages VALUES(1, 'AIR-001', 'Aircraft with this ID not found');
@@ -58,3 +87,5 @@ INSERT INTO response_messages VALUES(14, 'MAN-001', 'Manufacturer with this ID n
 INSERT INTO response_messages VALUES(15, 'HAN-001', 'Hangar not found');
 INSERT INTO response_messages VALUES(16, 'APT-001', 'Airport with this name not found');
 INSERT INTO response_messages VALUES(17, 'APT-002', 'No airport contact found by this parameter');
+INSERT INTO response_messages VALUES(18, 'RES-001', 'Reservatoion not found');
+INSERT INTO response_messages VALUES(19, 'FLY_001', 'Fly mode not found');

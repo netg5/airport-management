@@ -20,19 +20,27 @@ FROM passenger p;
 
 -- Ticket view
 CREATE VIEW ticket_view AS
-SELECT p.id             AS passenger_id,
-       p.first_name     AS first_name,
-       p.last_name      AS last_name,
-       r.aircraft_id    AS aircraft_id,
-       r.date_of_flying AS date_of_flying,
-       r.arrival_time   AS arrival_time,
-       r.hours_flying   AS hours_flying,
-       a.aircraft_name  AS aircraft_name,
-       a.model_number   AS model_number
+SELECT DISTINCT
+    p.id AS passenger_id,
+	p.first_name,
+	p.last_name,
+    r.id AS reservation_id,
+	r.date_of_flying,
+	r.departure_time,
+	r.arrival_time,
+	rt.distance,
+	rt.place,
+	fm.title,
+	pr.amount,
+	pr.currency
 FROM passenger p
-         JOIN
-     reservation r ON p.id = r.passenger_id
-         JOIN
-     route rt ON r.id = rt.id
-         JOIN
-     aircraft a ON r.aircraft_id = a.id;
+LEFT JOIN reservation r 
+	ON p.id = r.passenger_id
+LEFT JOIN route rt
+	ON rt.id = r.route_id
+LEFT JOIN fly_modes fm
+	ON fm.code = r.fly_mode_code
+LEFT JOIN fly_modes_prices_relation fmpr
+	ON fm.code = fmpr.fly_modes_code
+LEFT JOIN prices pr
+	ON pr.code = fmpr.prices_code;

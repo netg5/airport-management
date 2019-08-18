@@ -3,13 +3,11 @@ server:
 
 # Spring specific configuration
 spring:
-  application:
-    name: reports
   cloud:
     config:
       enabled: false
     discovery:
-      enabled: true
+      enabled: false
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
 
@@ -20,8 +18,6 @@ datasource:
   username: flight
   password: flight
 
-management:
-  endpoints.web.exposure.include: "info, health, metrics, configprops, env, prometheus"
 logging:
   file: C:/tmp/reservation.log
   level:

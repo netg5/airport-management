@@ -16,10 +16,7 @@
 
 package org.sergei.reservation.jpa.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -29,14 +26,14 @@ import java.time.LocalDateTime;
 /**
  * @author Sergei Visotsky
  */
+@Builder
 @Getter
-@Setter
+@Setter // Should be removed after business logic gonna be ready
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "reservation")
 public class Reservation implements Serializable {
-
     private static final long serialVersionUID = -5534420368605880140L;
 
     @Id
@@ -48,30 +45,39 @@ public class Reservation implements Serializable {
     @Column(name = "id")
     private Long id;
 
+    @NotNull
     @Column(name = "date_of_flying")
     private LocalDateTime dateOfFlying;
 
+    @NotNull
     @Column(name = "departure_time")
     private LocalDateTime departureTime;
 
+    @NotNull
     @Column(name = "arrival_time")
     private LocalDateTime arrivalTime;
 
+    @NotNull
     @Column(name = "hours_flying")
     private Integer hoursFlying;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(
-            name = "passenger_id",
-            referencedColumnName = "id"
-    )
+    @NotNull
+    @OneToOne(fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "passenger_id",
+            referencedColumnName = "id")
     private Passenger passenger;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(
-            name = "aircraft_id",
-            referencedColumnName = "id"
-    )
-    private Aircraft aircraft;
+    @NotNull
+    @OneToOne(fetch = FetchType.LAZY,
+            cascade = {CascadeType.ALL})
+    @JoinColumn(name = "route_id",
+            referencedColumnName = "id")
+    private Route route;
 
+    @NotNull
+    @JoinColumn(name = "fly_mode_code",
+            referencedColumnName = "code")
+    @OneToOne(fetch = FetchType.LAZY)
+    private FlyMode flyMode;
 }

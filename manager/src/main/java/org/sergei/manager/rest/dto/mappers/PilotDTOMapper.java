@@ -13,6 +13,7 @@ public class PilotDTOMapper implements IMapper<Pilot, PilotDTO> {
 
     @Override
     public PilotDTO apply(Pilot pilot) {
+        boolean available = pilot.getAvailable() == 1;
         return PilotDTO.builder()
                 .id(pilot.getId())
                 .licenseNumber(pilot.getLicenseNumber())
@@ -26,6 +27,7 @@ public class PilotDTOMapper implements IMapper<Pilot, PilotDTO> {
                 .country(pilot.getCountry())
                 .email(pilot.getEmail())
                 .phone(pilot.getPhone())
+                .available(available)
                 .build();
     }
 }

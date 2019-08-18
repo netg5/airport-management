@@ -1,5 +1,6 @@
 package org.sergei.manager.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.sergei.manager.jpa.model.Owner;
 import org.sergei.manager.jpa.model.mappers.OwnerModelMapper;
 import org.sergei.manager.jpa.repository.OwnerRepository;
@@ -20,6 +21,7 @@ import java.util.Optional;
 /**
  * @author Sergei Visotsky
  */
+@Slf4j
 @Service
 public class OwnerServiceImpl implements OwnerService {
 
@@ -69,6 +71,7 @@ public class OwnerServiceImpl implements OwnerService {
 
         Optional<Owner> owner = ownerRepository.findById(ownerId);
         if (owner.isEmpty()) {
+            log.debug("Owner with ID: {} not found", ownerId);
             List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("AIR-001");
             return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
         } else {

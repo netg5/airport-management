@@ -76,5 +76,5 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     @Transactional
     @Modifying
     @Query("DELETE FROM Reservation r WHERE r.passenger = ?1 AND r = ?2")
-    void deleteByPassengerIdAndReservationId(Passenger passenger, Reservation reservation);
+    void discardByPassengerIdAndReservationId(Passenger passenger, Reservation reservation);
 }

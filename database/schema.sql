@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS pilot
     country        VARCHAR(45)      NOT NULL,
     email          VARCHAR(45)      NOT NULL,
     phone          VARCHAR(45)      NOT NULL,
+    available      NUMERIC(1)       NOT NULL,
     CONSTRAINT pilot_pk PRIMARY KEY (id)
 );
 
@@ -57,6 +58,7 @@ CREATE TABLE IF NOT EXISTS aircraft
     capacity            INTEGER          NOT NULL,
     weight              DOUBLE PRECISION NOT NULL,
     exploitation_period INTEGER          NOT NULL,
+    available           NUMERIC(1)       NOT NULL,
     CONSTRAINT aircraft_pk PRIMARY KEY (id),
     CONSTRAINT manufacturer_fk FOREIGN KEY (manufacturer_id) REFERENCES manufacturer (id),
     CONSTRAINT hangar_fk FOREIGN KEY (hangar_id) REFERENCES hangar (id)
@@ -65,12 +67,14 @@ CREATE TABLE IF NOT EXISTS aircraft
 CREATE TABLE IF NOT EXISTS route
 (
     id             BIGINT                      NOT NULL,
-    arrival_time   TIMESTAMP                   NOT NULL,
     departure_time TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+    arrival_time   TIMESTAMP                   NOT NULL,
     distance       DOUBLE PRECISION            NOT NULL,
     place          VARCHAR(45)                 NOT NULL,
     price          NUMERIC(19, 2)              NOT NULL,
-    CONSTRAINT route_pk PRIMARY KEY (id)
+    aircraft_id    BIGINT                      NOT NULL,
+    CONSTRAINT route_pk PRIMARY KEY (id),
+    CONSTRAINT aircraft_id_fk FOREIGN KEY(aircraft_id) REFERENCES aircraft(id)
 );
 
 CREATE TABLE IF NOT EXISTS airport
@@ -97,18 +101,41 @@ CREATE TABLE IF NOT EXISTS passenger
     CONSTRAINT passenger_pk PRIMARY KEY (id)
 );
 
+CREATE TABLE IF NOT EXISTS prices (
+    code        VARCHAR(7)    NOT NULL,
+    amount      NUMERIC(5)    NOT NULL,
+    currency    VARCHAR(3)    NOT NULL,
+    CONSTRAINT  prices_pk     PRIMARY KEY(code)
+);
+
+CREATE TABLE IF NOT EXISTS fly_modes (
+    code        VARCHAR(7)    NOT NULL,
+    title       VARCHAR(45)   NOT NULL,
+    description VARCHAR(200)  NOT NULL,
+    CONSTRAINT  fly_modes_pk  PRIMARY KEY(code)
+);
+
+CREATE TABLE IF NOT EXISTS fly_modes_prices_relation (
+    fly_modes_code VARCHAR(7)    NOT NULL,
+    prices_code    VARCHAR(7)    NOT NULL,
+    CONSTRAINT fly_modes_code_fk FOREIGN KEY (fly_modes_code) REFERENCES fly_modes(code),
+    CONSTRAINT prices_code_fk    FOREIGN KEY (prices_code)    REFERENCES prices(code)
+);
+
 CREATE TABLE IF NOT EXISTS reservation
 (
-    id             BIGINT    NOT NULL,
-    passenger_id   BIGINT    NOT NULL,
-    aircraft_id    BIGINT    NOT NULL,
-    date_of_flying DATE      NOT NULL,
-    departure_time TIMESTAMP NOT NULL,
-    arrival_time   TIMESTAMP NOT NULL,
-    hours_flying   INTEGER   NOT NULL,
-    CONSTRAINT reservation_pk PRIMARY KEY (id),
-    CONSTRAINT passenger_id_fk FOREIGN KEY (passenger_id) REFERENCES passenger (id),
-    CONSTRAINT aircraft_id_fk FOREIGN KEY (aircraft_id) REFERENCES aircraft (id)
+    id             BIGINT       NOT NULL,
+    passenger_id   BIGINT       NOT NULL,
+    route_id       BIGINT       NOT NULL,
+    fly_mode_code  VARCHAR(7)   NOT NULL,
+    date_of_flying DATE         NOT NULL,
+    departure_time TIMESTAMP    NOT NULL,
+    arrival_time   TIMESTAMP    NOT NULL,
+    hours_flying   INTEGER      NOT NULL,
+    CONSTRAINT reservation_pk   PRIMARY KEY (id),
+    CONSTRAINT passenger_id_fk  FOREIGN KEY (passenger_id) REFERENCES passenger (id),
+    CONSTRAINT route_id_fk      FOREIGN KEY(route_id)      REFERENCES route(id),
+    CONSTRAINT fly_mode_code_fk FOREIGN KEY(fly_mode_code) REFERENCES fly_modes(code)
 );
 
 CREATE TABLE IF NOT EXISTS manager
@@ -131,21 +158,16 @@ CREATE TABLE IF NOT EXISTS actual_flight
     aircraft_id    BIGINT       NOT NULL,
     pilot_id       BIGINT       NOT NULL,
     route_id       BIGINT       NOT NULL,
+    passenger_id   BIGINT       NOT NULL,
     date_of_flying DATE         NOT NULL,
     departure_time TIMESTAMP    NOT NULL,
     arrival_time   TIMESTAMP    NOT NULL,
     hours_flying   INTEGER      NOT NULL,
-    first_name     VARCHAR(45)  NOT NULL,
-    last_name      VARCHAR(45)  NOT NULL,
-    gender         VARCHAR(6)   NOT NULL,
-    address        VARCHAR(100) NOT NULL,
-    country        VARCHAR(45)  NOT NULL,
-    email          VARCHAR(45)  NOT NULL,
-    phone          VARCHAR(45)  NOT NULL,
     CONSTRAINT actual_flight_pk PRIMARY KEY (id),
     CONSTRAINT aircraft_fk FOREIGN KEY (aircraft_id) REFERENCES aircraft (id),
     CONSTRAINT pilot_id_fk FOREIGN KEY (pilot_id) REFERENCES pilot (id),
-    CONSTRAINT route_id_fk FOREIGN KEY (route_id) REFERENCES route (id)
+    CONSTRAINT route_id_fk FOREIGN KEY (route_id) REFERENCES route (id),
+    CONSTRAINT passenger_id_fk FOREIGN KEY (passenger_id) REFERENCES passenger (id)
 );
 
 CREATE TABLE IF NOT EXISTS calendar_entry
@@ -155,37 +177,6 @@ CREATE TABLE IF NOT EXISTS calendar_entry
     day_date      INTEGER   NOT NULL,
     time_in_hours TIMESTAMP NOT NULL,
     CONSTRAINT calendar_entry_pk PRIMARY KEY (id)
-);
-
-CREATE TABLE IF NOT EXISTS airport_management_facts
-(
-    id                BIGINT      NOT NULL,
-    actual_flight_id  BIGINT      NOT NULL,
-    aircraft_id       BIGINT      NOT NULL,
-    airport_id        BIGINT      NOT NULL,
-    calendar_entry_id BIGINT      NOT NULL,
-    hangar_id         BIGINT      NOT NULL,
-    manager_id        BIGINT      NOT NULL,
-    manufacturer_id   BIGINT      NOT NULL,
-    owner_id          BIGINT      NOT NULL,
-    pilot_id          BIGINT      NOT NULL,
-    date_of_flying    DATE        NOT NULL,
-    departure_time    TIMESTAMP   NOT NULL,
-    arrival_time      TIMESTAMP   NOT NULL,
-    hours_flying      INTEGER     NOT NULL,
-    average           INTEGER     NOT NULL,
-    count             INTEGER     NOT NULL,
-    kpi               VARCHAR(45) NOT NULL,
-    CONSTRAINT calendar_pk PRIMARY KEY (id),
-    CONSTRAINT actual_flight_fk FOREIGN KEY (actual_flight_id) REFERENCES actual_flight (id),
-    CONSTRAINT aircraft_fk FOREIGN KEY (aircraft_id) REFERENCES aircraft (id),
-    CONSTRAINT airport_fk FOREIGN KEY (airport_id) REFERENCES airport (id),
-    CONSTRAINT calendar_entry_fk FOREIGN KEY (calendar_entry_id) REFERENCES calendar_entry (id),
-    CONSTRAINT hanger_fk FOREIGN KEY (hangar_id) REFERENCES hangar (id),
-    CONSTRAINT manager_fk FOREIGN KEY (manager_id) REFERENCES manager (id),
-    CONSTRAINT manufacturer_fd FOREIGN KEY (manufacturer_id) REFERENCES manufacturer (id),
-    CONSTRAINT owner_fk FOREIGN KEY (owner_id) REFERENCES OWNER (id),
-    CONSTRAINT pilot_fk FOREIGN KEY (pilot_id) REFERENCES pilot (id)
 );
 
 -- Response message storage

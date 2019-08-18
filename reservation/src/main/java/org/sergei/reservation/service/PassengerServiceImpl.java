@@ -1,25 +1,11 @@
-/*
- * Copyright 2018-2019 the original author.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.sergei.reservation.service;
 
+import io.opentracing.Span;
+import io.opentracing.Tracer;
 import org.sergei.reservation.jpa.model.Passenger;
+import org.sergei.reservation.jpa.model.mapper.PassengerModelMapper;
 import org.sergei.reservation.jpa.repository.PassengerRepository;
-import org.sergei.reservation.rest.dto.PassengerResponseDTO;
-import org.sergei.reservation.rest.dto.PassengerUpdateRequestDTO;
+import org.sergei.reservation.rest.dto.PassengerDTO;
 import org.sergei.reservation.rest.dto.mappers.PassengerDTOListMapper;
 import org.sergei.reservation.rest.dto.mappers.PassengerDTOMapper;
 import org.sergei.reservation.rest.dto.response.ResponseDTO;
@@ -43,38 +29,23 @@ public class PassengerServiceImpl implements PassengerService {
     private final PassengerRepository passengerRepository;
     private final PassengerDTOMapper passengerDTOMapper;
     private final PassengerDTOListMapper passengerDTOListMapper;
+    private final PassengerModelMapper passengerModelMapper;
     private final ResponseMessageService responseMessageService;
+    private final Tracer tracer;
 
     @Autowired
     public PassengerServiceImpl(PassengerRepository passengerRepository,
                                 PassengerDTOMapper passengerDTOMapper,
                                 PassengerDTOListMapper passengerDTOListMapper,
-                                ResponseMessageService responseMessageService) {
+                                PassengerModelMapper passengerModelMapper,
+                                ResponseMessageService responseMessageService,
+                                Tracer tracer) {
         this.passengerRepository = passengerRepository;
         this.passengerDTOMapper = passengerDTOMapper;
         this.passengerDTOListMapper = passengerDTOListMapper;
+        this.passengerModelMapper = passengerModelMapper;
         this.responseMessageService = responseMessageService;
-    }
-
-    /**
-     * Find passenger by ID
-     *
-     * @param passengerId get passenger ID as a parameter
-     * @return passenger
-     */
-    @Override
-    public ResponseEntity<ResponseDTO<PassengerResponseDTO>> findOne(Long passengerId) {
-        Optional<Passenger> passenger = passengerRepository.findById(passengerId);
-        if (passenger.isEmpty()) {
-            List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("PAS-001");
-            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
-        } else {
-            PassengerResponseDTO passengerResponseDTO = passengerDTOMapper.apply(passenger.get());
-            ResponseDTO<PassengerResponseDTO> response = new ResponseDTO<>();
-            response.setErrorList(List.of());
-            response.setResponse(List.of(passengerResponseDTO));
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        }
+        this.tracer = tracer;
     }
 
     /**
@@ -85,16 +56,37 @@ public class PassengerServiceImpl implements PassengerService {
      * @return list with entities
      */
     @Override
-    public ResponseEntity<ResponseDTO<PassengerResponseDTO>> findAllPassengers(int page, int size) {
+    public ResponseEntity<ResponseDTO<PassengerDTO>> findAllPassengers(int page, int size) {
         Page<Passenger> passengersPage = passengerRepository.findAll(PageRequest.of(page, size));
         if (passengersPage.isEmpty()) {
             List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("PAS-001");
             return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
         } else {
-            List<PassengerResponseDTO> passengerResponseDTOList = passengerDTOListMapper.apply(passengersPage.getContent());
-            ResponseDTO<PassengerResponseDTO> response = new ResponseDTO<>();
+            List<PassengerDTO> passengerDTOList = passengerDTOListMapper.apply(passengersPage.getContent());
+            ResponseDTO<PassengerDTO> response = new ResponseDTO<>();
             response.setErrorList(List.of());
-            response.setResponse(passengerResponseDTOList);
+            response.setResponse(passengerDTOList);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+    }
+
+    /**
+     * Find passenger by ID
+     *
+     * @param passengerId get passenger ID as a parameter
+     * @return passenger
+     */
+    @Override
+    public ResponseEntity<ResponseDTO<PassengerDTO>> findPassengerById(Long passengerId) {
+        Optional<Passenger> passenger = passengerRepository.findById(passengerId);
+        if (passenger.isEmpty()) {
+            List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("PAS-001");
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+        } else {
+            PassengerDTO passengerDTO = passengerDTOMapper.apply(passenger.get());
+            ResponseDTO<PassengerDTO> response = new ResponseDTO<>();
+            response.setErrorList(List.of());
+            response.setResponse(List.of(passengerDTO));
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
     }
@@ -106,66 +98,32 @@ public class PassengerServiceImpl implements PassengerService {
      * @return response with passenger DTO
      */
     @Override
-    public ResponseEntity<ResponseDTO<PassengerResponseDTO>> update(PassengerUpdateRequestDTO request) {
+    public ResponseEntity<ResponseDTO<PassengerDTO>> update(PassengerDTO request) {
 
-        Optional<Passenger> passenger = passengerRepository.findById(request.getPassengerId());
+        Long passengerId = request.getPassengerId();
+
+        Span span = tracer.buildSpan("passengerRepository.findById() started").start();
+        span.setTag("passengerId", passengerId);
+
+        Optional<Passenger> passenger = passengerRepository.findById(passengerId);
+        span.finish();
         if (passenger.isEmpty()) {
             List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("PAS-001");
             return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
         } else {
-            passenger.get().setFirstName(request.getCustomer().getFirstName());
-            passenger.get().setLastName(request.getCustomer().getLastName());
-            passenger.get().setAge(request.getCustomer().getAge());
-            Passenger updatedPassenger = passengerRepository.save(passenger.get());
+            Passenger updatedPassenger = passengerModelMapper.apply(request);
 
-            PassengerResponseDTO passengerResponseDTOResp = passengerDTOMapper.apply(updatedPassenger);
-            ResponseDTO<PassengerResponseDTO> response = new ResponseDTO<>();
+            Span span1 = tracer.buildSpan("passengerRepository.save() to update starting....").start();
+            Passenger saveUpdatedPassenger = passengerRepository.save(updatedPassenger);
+            span1.log("passengerRepository.save() to update completed");
+            span1.finish();
+            PassengerDTO passengerDTOResp = passengerDTOMapper.apply(saveUpdatedPassenger);
+
+            ResponseDTO<PassengerDTO> response = new ResponseDTO<>();
             response.setErrorList(List.of());
-            response.setResponse(List.of(passengerResponseDTOResp));
+            response.setResponse(List.of(passengerDTOResp));
 
             return new ResponseEntity<>(response, HttpStatus.CREATED);
-        }
-    }
-
-    /**
-     * Save passengerResponseDTO
-     *
-     * @param passengerResponseDTO gets passengerResponseDTO DTO as a parameter
-     * @return passengerResponseDTO DTO as a response
-     */
-    @Override
-    public ResponseEntity<ResponseDTO<PassengerResponseDTO>> save(PassengerResponseDTO passengerResponseDTO) {
-        Passenger passenger = new Passenger();
-
-        passenger.setId(passengerResponseDTO.getPassengerId());
-        passenger.setFirstName(passengerResponseDTO.getFirstName());
-        passenger.setLastName(passengerResponseDTO.getLastName());
-        passenger.setAge(passengerResponseDTO.getAge());
-        Passenger savedPassenger = passengerRepository.save(passenger);
-
-        PassengerResponseDTO passengerResponseDTOResp = passengerDTOMapper.apply(savedPassenger);
-        ResponseDTO<PassengerResponseDTO> response = new ResponseDTO<>();
-        response.setErrorList(List.of());
-        response.setResponse(List.of(passengerResponseDTOResp));
-
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
-    }
-
-    /**
-     * Delete passenger
-     *
-     * @param passengerId get passenger ID as a parameter
-     * @return passenger DTO as a response
-     */
-    @Override
-    public ResponseEntity<ResponseDTO<PassengerResponseDTO>> delete(Long passengerId) {
-        Optional<Passenger> passenger = passengerRepository.findById(passengerId);
-        if (passenger.isEmpty()) {
-            List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("PAS-001");
-            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
-        } else {
-            passengerRepository.delete(passenger.get());
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
 }

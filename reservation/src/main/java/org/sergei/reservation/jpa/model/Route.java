@@ -17,9 +17,9 @@
 package org.sergei.reservation.jpa.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -30,8 +30,8 @@ import java.time.LocalDateTime;
 /**
  * @author Sergei Visotsky
  */
+@Builder
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -49,7 +49,7 @@ public class Route implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "distance")
     private Double distance;
 
     @Column(name = "departure_time")
@@ -58,13 +58,19 @@ public class Route implements Serializable {
     @Column(name = "arrival_time")
     private LocalDateTime arrivalTime;
 
-    @Column(nullable = false)
+    @Column(name = "price")
     private BigDecimal price;
 
-    @Column(nullable = false)
+    @Column(name = "place")
     private String place;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id")
+    @OneToOne(
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.DETACH}
+    )
+    @JoinColumn(
+            name = "aircraft_id",
+            referencedColumnName = "id"
+    )
     private Aircraft aircraft;
 }
