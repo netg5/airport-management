@@ -31,9 +31,7 @@ BEGIN
 		INSERT INTO 
 			actual_flight 
 		VALUES (
-                nextval('processor_insert_id_seq'),
-				aircraft_rec.id, 
-                pilot_rec.id, 
+                nextval('processor_insert_id_seq'), 
                 booking_rec.route_id,
 				booking_rec.passenger_id, 
                 booking_rec.date_of_flying, 

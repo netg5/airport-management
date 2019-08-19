@@ -30,9 +30,27 @@ INSERT INTO manager VALUES (1, '12-34-56', 'John', 'Smith', 'male', '3rd Kennedy
 INSERT INTO manager VALUES (2, '90-A1-9K', 'Janis', 'Priede', 'male', '5th Barona str, Riga', 'Latvia','someowner@somewhere.com', '34534625');
 INSERT INTO manager VALUES (3, '1Q-3B-23', 'Fiona', 'Pridaine', 'female', '1st Amerino str, Berlin', 'Germany','someowner@somewhere.com', '437372342');
 
-INSERT INTO booking VALUES(1, 1, 1, '2019-08-09', '2019-08-09 17:28:30.183', '2019-08-09 17:28:30.183', 1);
-INSERT INTO booking VALUES(2, 2, 2, '2019-08-09', '2019-08-09 17:28:30.183', '2019-08-09 17:28:30.183', 1);
-INSERT INTO booking VALUES(3, 3, 3, '2019-08-09', '2019-08-09 17:28:30.183', '2019-08-09 17:28:30.183', 1);
+INSERT INTO fly_modes VALUES('BUS_001', 'Business class', 'Business class, everything included');
+INSERT INTO fly_modes VALUES('MID_001', 'Mid class', 'Middle class should');
+INSERT INTO fly_modes VALUES('ECO_001', 'Econom class', 'Econom class, Terribly budget');
+
+INSERT INTO prices VALUES('EUR_001', 1000, 'EUR');
+INSERT INTO prices VALUES('USD_001', 1050, 'USD');
+INSERT INTO prices VALUES('EUR_002', 500, 'EUR');
+INSERT INTO prices VALUES('USD_002', 550, 'USD');
+INSERT INTO prices VALUES('EUR_003', 100, 'EUR');
+INSERT INTO prices VALUES('USD_003', 150, 'USD');
+
+INSERT INTO fly_modes_prices_relation VALUES('BUS_001', 'EUR_001');
+INSERT INTO fly_modes_prices_relation VALUES('BUS_001', 'USD_001');
+INSERT INTO fly_modes_prices_relation VALUES('MID_001', 'EUR_002');
+INSERT INTO fly_modes_prices_relation VALUES('MID_001', 'USD_002');
+INSERT INTO fly_modes_prices_relation VALUES('ECO_001', 'EUR_003');
+INSERT INTO fly_modes_prices_relation VALUES('ECO_001', 'USD_003');
+
+INSERT INTO booking VALUES(1, 1, 1, 'BUS_001', '2019-08-09', '2019-08-09 17:28:30.183', '2019-08-09 17:28:30.183', 1);
+INSERT INTO booking VALUES(2, 2, 2, 'MID_001', '2019-08-09', '2019-08-09 17:28:30.183', '2019-08-09 17:28:30.183', 1);
+INSERT INTO booking VALUES(3, 3, 3, 'ECO_001', '2019-08-09', '2019-08-09 17:28:30.183', '2019-08-09 17:28:30.183', 1);
 
 INSERT INTO airport VALUES(1, 'Los Angeles International Airport', '1st Avenue, Los Angeles', 'USA', 'John Smith', 'Supervisor', 'jahn@example.com', '+124579');
 
@@ -70,3 +88,4 @@ INSERT INTO response_messages VALUES(15, 'HAN-001', 'Hangar not found');
 INSERT INTO response_messages VALUES(16, 'APT-001', 'Airport with this name not found');
 INSERT INTO response_messages VALUES(17, 'APT-002', 'No airport contact found by this parameter');
 INSERT INTO response_messages VALUES(18, 'RES-001', 'Reservatoion not found');
+INSERT INTO response_messages VALUES(19, 'FLY_001', 'Fly mode not found');
