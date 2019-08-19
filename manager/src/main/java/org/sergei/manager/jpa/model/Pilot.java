@@ -64,7 +64,4 @@ public class Pilot implements Serializable {
 
     @Column(name = "phone")
     private String phone;
-
-    @Column(name = "available")
-    private Integer available;
 }
