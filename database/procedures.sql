@@ -9,7 +9,7 @@ DECLARE
 	curr_time DATE = now();
 BEGIN
     SET timezone TO 'UTC +3';
-	SELECT INTO res_rec
+	SELECT INTO booking_rec
         f.id               AS flight_id,
 		f.departure_time,
 		f.arrival_time,
@@ -28,20 +28,10 @@ BEGIN
 	
 	IF booking_rec.departure_time <= curr_time THEN
 		SELECT INTO aircraft_rec * FROM aircraft a WHERE a.available = 1;
-		IF aircraft_rec IS NOT NULL THEN
-			UPDATE aircraft a SET a.available = 0 WHERE a.id = aircraft_rec.id;
-		END IF;
-		SELECT INTO pilot_rec * FROM pilot p WHERE p.available = 1;
-		IF pilot_rec IS NOT NULL THEN
-			UPDATE pilot p SET p.available = 0 WHERE p.id = pilot_rec.id;
-		END IF;
-		
 		INSERT INTO 
 			actual_flight 
 		VALUES (
-                nextval('processor_insert_id_seq'),
-				aircraft_rec.id, 
-                pilot_rec.id, 
+                nextval('processor_insert_id_seq'), 
                 booking_rec.route_id,
 				booking_rec.passenger_id, 
                 booking_rec.date_of_flying, 
