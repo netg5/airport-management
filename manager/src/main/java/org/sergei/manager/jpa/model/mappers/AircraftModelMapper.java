@@ -24,12 +24,6 @@ public class AircraftModelMapper implements IMapper<AircraftDTO, Aircraft> {
 
     @Override
     public Aircraft apply(AircraftDTO aircraftDTO) {
-        int available;
-        if (aircraftDTO.getAvailable()) {
-            available = 1;
-        } else {
-            available = 0;
-        }
         return Aircraft.builder()
                 .id(aircraftDTO.getAircraftId())
                 .registrationNumber(aircraftDTO.getRegistrationNumber())
@@ -38,7 +32,6 @@ public class AircraftModelMapper implements IMapper<AircraftDTO, Aircraft> {
                 .capacity(aircraftDTO.getCapacity())
                 .weight(aircraftDTO.getWeight())
                 .exploitationPeriod(aircraftDTO.getExploitationPeriod())
-                .available(available)
                 .hangar(hangarModelMapper.apply(aircraftDTO.getHangar()))
                 .manufacturer(manufacturerModelMapper.apply(aircraftDTO.getManufacturer()))
                 .build();
