@@ -1,6 +1,6 @@
 package org.sergei.reports.service;
 
-import org.sergei.template.rest.dto.response.ResponseErrorDTO;
+import org.sergei.reports.rest.dto.response.ResponseErrorDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

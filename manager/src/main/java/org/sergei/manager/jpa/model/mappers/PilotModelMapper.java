@@ -12,12 +12,6 @@ import org.springframework.stereotype.Component;
 public class PilotModelMapper implements IMapper<PilotDTO, Pilot> {
     @Override
     public Pilot apply(PilotDTO pilotDTO) {
-        int available;
-        if (pilotDTO.getAvailable()) {
-            available = 1;
-        } else {
-            available = 0;
-        }
         return Pilot.builder()
                 .licenseNumber(pilotDTO.getLicenseNumber())
                 .ssn(pilotDTO.getSsn())
@@ -30,7 +24,6 @@ public class PilotModelMapper implements IMapper<PilotDTO, Pilot> {
                 .country(pilotDTO.getCountry())
                 .email(pilotDTO.getEmail())
                 .phone(pilotDTO.getPhone())
-                .available(available)
                 .build();
     }
 }
