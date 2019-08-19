@@ -12,7 +12,6 @@ CREATE TABLE IF NOT EXISTS pilot
     country        VARCHAR(45)      NOT NULL,
     email          VARCHAR(45)      NOT NULL,
     phone          VARCHAR(45)      NOT NULL,
-    available      NUMERIC(1)       NOT NULL,
     CONSTRAINT pilot_pk PRIMARY KEY (id)
 );
 
@@ -58,7 +57,6 @@ CREATE TABLE IF NOT EXISTS aircraft
     capacity            INTEGER          NOT NULL,
     weight              DOUBLE PRECISION NOT NULL,
     exploitation_period INTEGER          NOT NULL,
-    available           NUMERIC(1)       NOT NULL,
     CONSTRAINT aircraft_pk PRIMARY KEY (id),
     CONSTRAINT manufacturer_fk FOREIGN KEY (manufacturer_id) REFERENCES manufacturer (id),
     CONSTRAINT hangar_fk FOREIGN KEY (hangar_id) REFERENCES hangar (id)
