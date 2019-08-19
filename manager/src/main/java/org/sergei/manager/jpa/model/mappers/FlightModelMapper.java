@@ -22,7 +22,7 @@ public class FlightModelMapper implements IMapper<FlightDTO, Flight> {
     @Override
     public Flight apply(FlightDTO flightDTO) {
         return Flight.builder()
-                .id(flightDTO.getRouteId())
+                .id(flightDTO.getFlightId())
                 .departureTime(flightDTO.getDepartureTime())
                 .arrivalTime(flightDTO.getArrivalTime())
                 .distance(flightDTO.getDistance())
