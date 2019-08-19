@@ -1,23 +1,3 @@
--- Aircraft report view
-CREATE VIEW aircraft_report_view AS
-SELECT a.id            AS aircraft_id,
-       a.aircraft_name AS aircraft_name,
-       a.model_number  AS model,
-       o.first_name    AS first_name,
-       o.last_name     AS last_name,
-       o.address       AS adress,
-       o.email         AS email
-FROM aircraft a
-         LEFT OUTER JOIN
-     owner o ON a.owner_id = o.id;
-
--- Passenger report view
-CREATE VIEW passenger_report_view AS
-SELECT p.id         AS passenger_id,
-       p.first_name AS first_name,
-       p.last_name  AS last_name
-FROM passenger p;
-
 -- Ticket view
 CREATE VIEW ticket_view AS
 SELECT DISTINCT
@@ -44,3 +24,31 @@ LEFT JOIN fly_modes_prices_relation fmpr
 	ON fm.code = fmpr.fly_modes_code
 LEFT JOIN prices pr
 	ON pr.code = fmpr.prices_code;
+
+-- Flight report view
+SELECT
+	f.id AS flight_id,
+	f.departure_time,
+	f.arrival_time,
+	f.distance,
+	f.place,
+	f.price,
+	a.registration_number,
+	a.model_number,
+	a.aircraft_name,
+	a.capacity,
+	a.weight,
+	a.exploitation_period,
+	m.manufacturer_code,
+	m.manufacturer_name,
+	m.location,
+	h.hangar_number,
+	h.hangar_capacity,
+	h.hangar_location
+FROM flight f
+LEFT JOIN aircraft a 
+	on aircraft_id = a.id
+LEFT JOIN manufacturer m
+	ON m.id = a.manufacturer_id
+LEFT JOIN hangar h
+	ON h.id = a.hangar_id;
