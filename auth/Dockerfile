@@ -1,8 +1,6 @@
 FROM openjdk:8-jdk-alpine
-VOLUME /tmp
-ARG DEPENDENCY=target/dependency
-COPY ${DEPENDENCY}/BOOT-INF/lib /app/lib
-COPY ${DEPENDENCY}/META-INF /app/META-INF
-COPY ${DEPENDENCY}/BOOT-INF/classes /app
-EXPOSE 9094
-ENTRYPOINT ["java","-cp","app:app/lib/*","org.sergei.auth.AuthServiceApplication"]
+ENV TZ=Europe/Riga
+ADD target/auth.jar /home/auth.jar
+EXPOSE 8082:8082
+ENV JAVA_OPTIONS="-Dspring.profiles.active=prod"
+CMD java $JAVA_OPTIONS -jar /home/auth.jar

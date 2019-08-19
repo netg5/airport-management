@@ -47,9 +47,9 @@
     </changeSet>
 
     <changeSet id="7" author="Sergei Visotsky">
-        <loadData tableName="route"
+        <loadData tableName="flight"
                   encoding="UTF-8"
-                  file="./liquibase/csv/route.csv"
+                  file="./liquibase/csv/flight.csv"
                   separator=";"/>
     </changeSet>
 

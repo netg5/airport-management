@@ -3,36 +3,30 @@ CREATE OR REPLACE PROCEDURE flight_processor()
  LANGUAGE plpgsql AS
 $$
 DECLARE
-	res_rec RECORD;
+	booking_rec RECORD;
 	pilot_rec RECORD;
 	aircraft_rec RECORD;
 	curr_time DATE = now();
 BEGIN
     SET timezone TO 'UTC +3';
 	SELECT INTO res_rec
-		p.first_name,
-		p.last_name,
-		p.age,
-		p.gender,
-		p.phone,
-        rt.id               AS route_id,
-		rt.departure_time,
-		rt.arrival_time,
-		rt.distance,
-		rt.place,
-		rt.price,
-        r.id                AS reserv_id,
-		r.date_of_flying,
-		r.departure_time,
-		r.arrival_time,
-		r.hours_flying
-	FROM reservation r
-	JOIN passenger p 
-		ON p.id = r.passenger_id
-	JOIN route rt
-		ON rt.id = r.route_id;
+        f.id               AS flight_id,
+		f.departure_time,
+		f.arrival_time,
+		f.distance,
+		f.place,
+		f.price,
+        b.id                AS booking_id,
+		b.date_of_flying,
+		b.departure_time,
+		b.arrival_time,
+		b.hours_flying,
+		b.passenger_id
+	FROM booking b
+	JOIN flight f
+		ON f.id = b.flight_id;
 	
-	IF res_rec.departure_time <= curr_time THEN
+	IF booking_rec.departure_time <= curr_time THEN
 		SELECT INTO aircraft_rec * FROM aircraft a WHERE a.available = 1;
 		IF aircraft_rec IS NOT NULL THEN
 			UPDATE aircraft a SET a.available = 0 WHERE a.id = aircraft_rec.id;
@@ -48,20 +42,14 @@ BEGIN
                 nextval('processor_insert_id_seq'),
 				aircraft_rec.id, 
                 pilot_rec.id, 
-                res_rec.route_id, 
-                res_rec.date_of_flying, 
-                res_rec.departure_time, 
-                res_rec.arrival_time, 
-                res_rec.hours_flying, 
-                res_rec.first_name, 
-                res_rec.last_name,
-                res_rec.gender, 
-                'Test', 
-                'Test', 
-                'Test', 
-                res_rec.phone
+                booking_rec.route_id,
+				booking_rec.passenger_id, 
+                booking_rec.date_of_flying, 
+                booking_rec.departure_time, 
+                booking_rec.arrival_time, 
+                booking_rec.hours_flying
 	   );
-	   DELETE FROM reservation r WHERE r.id = res_rec.reserv_id;
+	   DELETE FROM booking b WHERE b.id = booking_rec.booking_id;
 	END IF;
 END;
 $$;

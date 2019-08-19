@@ -114,22 +114,4 @@ public class ManufacturerServiceImpl implements ManufacturerService {
             }
         }
     }
-
-    @Override
-    public ResponseEntity<ResponseDTO<ManufacturerDTO>> deleteManufacturer(String code) {
-        if (code == null) {
-            List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("RP-001");
-            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
-        } else {
-            Optional<Manufacturer> manufacturer = manufacturerRepository.findByCode(code);
-            if (manufacturer.isEmpty()) {
-                log.debug("Manufacturer with code: {} not found", code);
-                List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("MAN-001");
-                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
-            } else {
-                manufacturerRepository.delete(manufacturer.get());
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-        }
-    }
 }
