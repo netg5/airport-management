@@ -26,6 +26,7 @@ LEFT JOIN prices pr
 	ON pr.code = fmpr.prices_code;
 
 -- Flight report view
+CREATE VIEW flight_report AS
 SELECT
 	f.id AS flight_id,
 	f.departure_time,
