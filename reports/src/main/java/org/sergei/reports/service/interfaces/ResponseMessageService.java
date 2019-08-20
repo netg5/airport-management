@@ -1,4 +1,4 @@
-package org.sergei.reports.service;
+package org.sergei.reports.service.interfaces;
 
 import org.sergei.reports.rest.dto.response.ResponseErrorDTO;
 import org.springframework.stereotype.Service;

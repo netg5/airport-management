@@ -22,7 +22,6 @@ public class AircraftDTO implements Serializable {
     private Integer capacity;
     private Double weight;
     private Integer exploitationPeriod;
-    private Boolean available;
     @JsonIgnoreProperties(value = "aircraft")
     private HangarDTO hangar;
     private ManufacturerDTO manufacturer;

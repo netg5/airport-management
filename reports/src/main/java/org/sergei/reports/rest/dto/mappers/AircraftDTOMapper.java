@@ -1,8 +1,8 @@
-package org.sergei.booking.rest.dto.mappers;
+package org.sergei.reports.rest.dto.mappers;
 
-import org.sergei.booking.jpa.model.Aircraft;
-import org.sergei.booking.rest.dto.AircraftDTO;
-import org.sergei.booking.utils.IMapper;
+import org.sergei.reports.jpa.model.Aircraft;
+import org.sergei.reports.rest.dto.AircraftDTO;
+import org.sergei.reports.utils.IMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

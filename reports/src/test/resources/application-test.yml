@@ -11,8 +11,8 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQL9Dialect
     show_sql: true
   liquibase:
-    enabled: true
-    change-log: "classpath:liquibase/db.changelog-master.xml"
+    enabled: false
+#    change-log: "classpath:liquibase/db.changelog-master.xml"
   h2:
     console:
       enabled: true
