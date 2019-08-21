@@ -1,0 +1,604 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-1">
+        <createSequence sequenceName="actual_flight_id_seq"/>
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-2">
+        <createSequence sequenceName="aircraft_id_seq"/>
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-3">
+        <createSequence sequenceName="airport_id_seq"/>
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-4">
+        <createSequence sequenceName="airport_management_facts_id_seq"/>
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-5">
+        <createSequence sequenceName="auth_user_auth_user_roles_id_seq"/>
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-6">
+        <createSequence sequenceName="auth_user_id_seq"/>
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-7">
+        <createSequence sequenceName="calendar_entry_id_seq"/>
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-8">
+        <createSequence sequenceName="hangar_id_seq"/>
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-9">
+        <createSequence sequenceName="manager_id_seq"/>
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-10">
+        <createSequence sequenceName="manufacturer_id_seq"/>
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-11">
+        <createSequence sequenceName="owner_id_seq"/>
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-12">
+        <createSequence sequenceName="passenger_id_seq"/>
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-13">
+        <createSequence sequenceName="pilot_id_seq"/>
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-14">
+        <createSequence sequenceName="reservation_id_seq"/>
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-15">
+        <createSequence sequenceName="route_id_seq"/>
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-16">
+        <createTable tableName="actual_flight">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="actual_flight_pk"/>
+            </column>
+            <column name="aircraft_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pilot_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="route_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_of_flying" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="departure_time" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="arrival_time" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hours_flying" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="gender" type="VARCHAR(6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="country" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="phone" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-17">
+        <createTable tableName="aircraft">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="aircraft_pk"/>
+            </column>
+            <column name="manufacturer_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hangar_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="registration_number" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="model_number" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="aircraft_name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="capacity" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="weight" type="FLOAT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="exploitation_period" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-18">
+        <createTable tableName="airport">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="airport_pk"/>
+            </column>
+            <column name="airport_name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="country" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="contact_name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="contact_job" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="phone" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-19">
+        <createTable tableName="airport_management_facts">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="calendar_pk"/>
+            </column>
+            <column name="actual_flight_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="aircraft_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="airport_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="calendar_entry_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hangar_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="manager_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="manufacturer_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="owner_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pilot_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_of_flying" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="departure_time" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="arrival_time" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hours_flying" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="average" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="count" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="kpi" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-20">
+        <createTable tableName="auth_user">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="auth_user_pk"/>
+            </column>
+            <column name="username" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(300)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-21">
+        <createTable tableName="auth_user_auth_user_roles">
+            <column name="auth_user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="auth_user_roles_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-22">
+        <createTable tableName="auth_user_roles">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="auth_user_role_pk"/>
+            </column>
+            <column name="role_name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-23">
+        <createTable tableName="calendar_entry">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="calendar_entry_pk"/>
+            </column>
+            <column name="day_number" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="day_date" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="time_in_hours" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-24">
+        <createTable tableName="hangar">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="hangar_pk"/>
+            </column>
+            <column name="hangar_number" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hangar_capacity" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hangar_location" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-25">
+        <createTable tableName="manager">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="manager_pk"/>
+            </column>
+            <column name="ssn" type="VARCHAR(15)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="gender" type="VARCHAR(6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="country" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="phone" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-26">
+        <createTable tableName="manufacturer">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="manufacturer_pk"/>
+            </column>
+            <column name="manufacturer_code" type="VARCHAR(60)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="manufacturer_name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="location" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-27">
+        <createTable tableName="oauth_client_details">
+            <column name="client_id" type="VARCHAR(256)">
+                <constraints primaryKey="true" primaryKeyName="oauth_client_details_pk"/>
+            </column>
+            <column name="resource_ids" type="VARCHAR(256)"/>
+            <column name="client_secret" type="VARCHAR(256)"/>
+            <column name="scope" type="VARCHAR(256)"/>
+            <column name="authorized_grant_types" type="VARCHAR(256)"/>
+            <column name="web_server_redirect_uri" type="VARCHAR(256)"/>
+            <column name="authorities" type="VARCHAR(256)"/>
+            <column name="access_token_validity" type="INTEGER"/>
+            <column name="refresh_token_validity" type="INTEGER"/>
+            <column name="additional_information" type="VARCHAR(4096)"/>
+            <column name="autoapprove" type="VARCHAR(256)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-28">
+        <createTable tableName="owner">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="owner_pk"/>
+            </column>
+            <column name="first_name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="gender" type="VARCHAR(6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="country" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="phone" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-29">
+        <createTable tableName="passenger">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="passenger_pk"/>
+            </column>
+            <column name="first_name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="age" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="gender" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="phone" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-30">
+        <createTable tableName="pilot">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="pilot_pk"/>
+            </column>
+            <column name="license_number" type="VARCHAR(150)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ssn" type="VARCHAR(15)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="gender" type="VARCHAR(6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="weight" type="FLOAT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_of_birth" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="country" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="phone" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-31">
+        <createTable tableName="booking">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="reservation_pk"/>
+            </column>
+            <column name="passenger_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_of_flying" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="departure_time" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="arrival_time" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hours_flying" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="route_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-32">
+        <createTable tableName="response_messages">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="response_msg_pk"/>
+            </column>
+            <column name="code" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(1000)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-33">
+        <createTable tableName="flight">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="route_pk"/>
+            </column>
+            <column name="arrival_time" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="departure_time" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="distance" type="FLOAT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="place" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="numeric(19, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="aircraft_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-34">
+        <addForeignKeyConstraint baseColumnNames="actual_flight_id" baseTableName="airport_management_facts"
+                                 constraintName="actual_flight_fk" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id"
+                                 referencedTableName="actual_flight" />
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-35">
+        <addForeignKeyConstraint baseColumnNames="aircraft_id" baseTableName="airport_management_facts"
+                                 constraintName="aircraft_fk" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id"
+                                 referencedTableName="aircraft" />
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-36">
+        <addForeignKeyConstraint baseColumnNames="aircraft_id" baseTableName="actual_flight"
+                                 constraintName="aircraft_ft" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id"
+                                 referencedTableName="aircraft" />
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-37">
+        <addForeignKeyConstraint baseColumnNames="aircraft_id" baseTableName="flight" constraintName="aircraft_id_fk"
+                                 deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="aircraft" />
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-38">
+        <addForeignKeyConstraint baseColumnNames="airport_id" baseTableName="airport_management_facts"
+                                 constraintName="airport_fk" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id"
+                                 referencedTableName="airport" />
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-39">
+        <addForeignKeyConstraint baseColumnNames="auth_user_id" baseTableName="auth_user_auth_user_roles"
+                                 constraintName="auth_user_fk" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id"
+                                 referencedTableName="auth_user" />
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-40">
+        <addForeignKeyConstraint baseColumnNames="auth_user_roles_id" baseTableName="auth_user_auth_user_roles"
+                                 constraintName="auth_user_roles_fk" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id"
+                                 referencedTableName="auth_user_roles" />
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-41">
+        <addForeignKeyConstraint baseColumnNames="calendar_entry_id" baseTableName="airport_management_facts"
+                                 constraintName="calendar_entry_fk" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id"
+                                 referencedTableName="calendar_entry" />
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-42">
+        <addForeignKeyConstraint baseColumnNames="hangar_id" baseTableName="aircraft" constraintName="hangar_fk"
+                                 deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="hangar" />
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-43">
+        <addForeignKeyConstraint baseColumnNames="hangar_id" baseTableName="airport_management_facts"
+                                 constraintName="hanger_fk" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id"
+                                 referencedTableName="hangar" />
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-44">
+        <addForeignKeyConstraint baseColumnNames="manager_id" baseTableName="airport_management_facts"
+                                 constraintName="manager_fk" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id"
+                                 referencedTableName="manager" />
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-45">
+        <addForeignKeyConstraint baseColumnNames="manufacturer_id" baseTableName="airport_management_facts"
+                                 constraintName="manufacturer_fd" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id"
+                                 referencedTableName="manufacturer" />
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-46">
+        <addForeignKeyConstraint baseColumnNames="manufacturer_id" baseTableName="aircraft"
+                                 constraintName="manufacturer_fk" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id"
+                                 referencedTableName="manufacturer" />
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-47">
+        <addForeignKeyConstraint baseColumnNames="owner_id" baseTableName="airport_management_facts"
+                                 constraintName="owner_fk" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id"
+                                 referencedTableName="owner" />
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-48">
+        <addForeignKeyConstraint baseColumnNames="passenger_id" baseTableName="booking"
+                                 constraintName="passenger_id_fk" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id"
+                                 referencedTableName="passenger" />
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-49">
+        <addForeignKeyConstraint baseColumnNames="pilot_id" baseTableName="airport_management_facts"
+                                 constraintName="pilot_fk" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id"
+                                 referencedTableName="pilot" />
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-50">
+        <addForeignKeyConstraint baseColumnNames="pilot_id" baseTableName="actual_flight" constraintName="pilot_id_fk"
+                                 deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="pilot" />
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-51">
+        <addForeignKeyConstraint baseColumnNames="route_id" baseTableName="booking" constraintName="route_id_fk"
+                                 deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="flight" />
+    </changeSet>
+    <changeSet author="Sergei Visotsky (generated)" id="1565376598517-52">
+        <createView viewName="passenger_report_view">SELECT p.id AS passenger_id,
+            p.first_name,
+            p.last_name
+            FROM passenger p;
+        </createView>
+    </changeSet>
+</databaseChangeLog>

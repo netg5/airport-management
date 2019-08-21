@@ -1,0 +1,37 @@
+server:
+  port: 8086
+
+# Spring specific configuration
+spring:
+  cloud:
+    config:
+      enabled: false
+    discovery:
+      enabled: false
+
+# DataSource configuration
+datasource:
+  jdbc-url: jdbc:postgresql://localhost:5432/flight_reservation
+  type: com.zaxxer.hikari.HikariDataSource
+  username: flight
+  password: flight
+
+cron:
+  expression: "*/5 * * * * *"
+
+# Logging configuration
+logging:
+  file: C:/tmp/processor.log
+  level:
+    ROOT: INFO
+    org:
+      sergei:
+        template: DEBUG
+
+# Actuator info
+info:
+  app:
+    name: Processor
+    version: 1.0
+    profile: plain
+    descripton: Service to process reserved flights

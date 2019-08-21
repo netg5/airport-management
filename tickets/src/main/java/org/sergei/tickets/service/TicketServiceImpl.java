@@ -16,6 +16,7 @@
 
 package org.sergei.tickets.service;
 
+import org.sergei.tickets.jpa.model.Passenger;
 import org.sergei.tickets.jpa.model.Ticket;
 import org.sergei.tickets.jpa.repository.PassengerRepository;
 import org.sergei.tickets.jpa.repository.TicketRepository;
@@ -29,6 +30,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Sergei Visotsky
@@ -59,12 +61,13 @@ public class TicketServiceImpl implements TicketService {
      * @return collection of tickets
      */
     @Override
-    public ResponseEntity<ResponseDTO<TicketDTO>> findAllTickets(Long passengerId) {
-        if (passengerRepository.findById(passengerId).isEmpty()) {
-            List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("AIR-001");
+    public ResponseEntity<ResponseDTO<TicketDTO>> findAllTickets(Long passengerId, String currency) {
+        Optional<Passenger> passenger = passengerRepository.findById(passengerId);
+        if (passenger.isEmpty()) {
+            List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("PAS-001");
             return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
         } else {
-            List<Ticket> ticketList = ticketRepository.findAllTickets(passengerId);
+            List<Ticket> ticketList = ticketRepository.findAllTickets(passengerId, currency);
             if (ticketList.isEmpty()) {
                 List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("PAS-001");
                 return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);

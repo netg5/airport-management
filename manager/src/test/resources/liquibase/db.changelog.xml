@@ -468,7 +468,7 @@
         </createTable>
     </changeSet>
     <changeSet author="Sergei Visotsky (generated)" id="1565376598517-33">
-        <createTable tableName="route">
+        <createTable tableName="flight">
             <column name="id" type="BIGINT">
                 <constraints primaryKey="true" primaryKeyName="route_pk"/>
             </column>
@@ -509,7 +509,7 @@
                                  referencedTableName="aircraft" />
     </changeSet>
     <changeSet author="Sergei Visotsky (generated)" id="1565376598517-37">
-        <addForeignKeyConstraint baseColumnNames="aircraft_id" baseTableName="route" constraintName="aircraft_id_fk"
+        <addForeignKeyConstraint baseColumnNames="aircraft_id" baseTableName="flight" constraintName="aircraft_id_fk"
                                  deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
                                  referencedColumnNames="id" referencedTableName="aircraft" />
     </changeSet>
@@ -592,7 +592,7 @@
     <changeSet author="Sergei Visotsky (generated)" id="1565376598517-51">
         <addForeignKeyConstraint baseColumnNames="route_id" baseTableName="reservation" constraintName="route_id_fk"
                                  deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
-                                 referencedColumnNames="id" referencedTableName="route" />
+                                 referencedColumnNames="id" referencedTableName="flight" />
     </changeSet>
     <changeSet author="Sergei Visotsky (generated)" id="1565376598517-52">
         <createView viewName="passenger_report_view">SELECT p.id AS passenger_id,

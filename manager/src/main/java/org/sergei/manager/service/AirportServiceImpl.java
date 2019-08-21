@@ -33,17 +33,17 @@ public class AirportServiceImpl implements AirportService {
 
     private final AirportRepository airportRepository;
     private final MessageService messageService;
-    private final AirportDOTMapper airportDOTMapper;
+    private final AirportDOTMapper airportDTOMapper;
     private final AirportModelMapper airportModelMapper;
 
     @Autowired
     public AirportServiceImpl(AirportRepository airportRepository,
                               MessageService messageService,
-                              AirportDOTMapper airportDOTMapper,
+                              AirportDOTMapper airportDTOMapper,
                               AirportModelMapper airportModelMapper) {
         this.airportRepository = airportRepository;
         this.messageService = messageService;
-        this.airportDOTMapper = airportDOTMapper;
+        this.airportDTOMapper = airportDTOMapper;
         this.airportModelMapper = airportModelMapper;
     }
 
@@ -59,12 +59,18 @@ public class AirportServiceImpl implements AirportService {
                 List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("APT-001");
                 return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
             } else {
-                AirportDTO airportDTO = airportDOTMapper.apply(airport.get());
+                AirportDTO airportDTO = airportDTOMapper.apply(airport.get());
                 return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of(airportDTO)), HttpStatus.OK);
             }
         }
     }
 
+    /**
+     * Method to get airport facility's contact name and contact job by airport name
+     *
+     * @param request with single field - airportName
+     * @return
+     */
     @Override
     public ResponseEntity<ResponseDTO<AirportContactDTO>> getAirportContactByAirportName(AirportRequestDTO request) {
         String airportName = request.getAirportName();
@@ -98,7 +104,7 @@ public class AirportServiceImpl implements AirportService {
     public ResponseEntity<ResponseDTO<AirportDTO>> saveAirportData(AirportDTO airportDTO) {
         Airport airport = airportModelMapper.apply(airportDTO);
         Airport savedAirport = airportRepository.save(airport);
-        AirportDTO savedAirportDTO = airportDOTMapper.apply(savedAirport);
+        AirportDTO savedAirportDTO = airportDTOMapper.apply(savedAirport);
         return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of(savedAirportDTO)), HttpStatus.OK);
     }
 }

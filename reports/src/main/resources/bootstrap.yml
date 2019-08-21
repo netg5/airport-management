@@ -1,7 +1,7 @@
 spring:
   cloud:
     config:
-      name: reports
+      name: template
       uri: http://localhost:8888
       label: "master" # branch where config is located
   jpa:
