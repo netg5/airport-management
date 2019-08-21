@@ -29,6 +29,11 @@ zuul:
       service-id: manager
       url: http://localhost:8088
       sensitive-headers: true
+    reports:
+      path: /reports/**
+      service-id: reports
+      url: http://localhost:8745
+      sensitive-headers: true
 
 eureka:
   instance:
