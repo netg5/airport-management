@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: cargo
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+
+# Monitoring endpoints
+management:
+  endpoints.web.exposure.include: "info, health, metrics, configprops, env, prometheus"
+
+# Adds some information into the Actuator info page
+info:
+  app:
+    name: Cargo
+    version: 1.0
+    descripton: Cargo transfer management system, receive, validate and proceed
