@@ -185,3 +185,22 @@ CREATE TABLE IF NOT EXISTS response_messages
     description VARCHAR(1000) NOT NULL,
     CONSTRAINT response_msg_pk PRIMARY KEY (id)
 );
+
+-- Cargo specific domain
+CREATE TABLE sales_agents_and_reservations (
+    id             BIGINT        NOT NULL,
+    country        VARCHAR(45)   NOT NULL,
+    city           VARCHAR(45)   NOT NULL,
+    representative VARCHAR (100) NOT NULL,
+    email          VARCHAR(45)   NOT NULL,
+    phone          VARCHAR(45)   NOT NULL  
+    CONSTRAINT agent_pk PRIMARY KEY(id)
+);
+
+CREATE TABLE handling_agents (
+    id BIGINT NOT NULL,
+    country        VARCHAR(45)   NOT NULL,
+    city           VARCHAR(45)   NOT NULL,
+    warehouse_handling VARCHAR(100) NOT NULL
+    -- heavy_cargo
+);
