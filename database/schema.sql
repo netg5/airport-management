@@ -1,6 +1,29 @@
+-- Sequences
+CREATE SEQUENCE IF NOT EXISTS pilot_id_seq;
+CREATE SEQUENCE IF NOT EXISTS owner_id_seq;
+CREATE SEQUENCE IF NOT EXISTS aircraft_id_seq;
+CREATE SEQUENCE IF NOT EXISTS flight_id_seq;
+CREATE SEQUENCE IF NOT EXISTS manufacturer_id_seq;
+CREATE SEQUENCE IF NOT EXISTS airport_id_seq;
+CREATE SEQUENCE IF NOT EXISTS hangar_id_seq;
+CREATE SEQUENCE IF NOT EXISTS passenger_id_seq;
+CREATE SEQUENCE IF NOT EXISTS booking_id_seq;
+CREATE SEQUENCE IF NOT EXISTS manager_id_seq;
+CREATE SEQUENCE IF NOT EXISTS response_messages_id_seq;
+CREATE SEQUENCE IF NOT EXISTS actual_flight_id_seq;
+CREATE SEQUENCE IF NOT EXISTS calendar_entry_id_seq;
+CREATE SEQUENCE IF NOT EXISTS airport_management_facts_id_seq;
+CREATE SEQUENCE IF NOT EXISTS auth_user_id_seq;
+CREATE SEQUENCE IF NOT EXISTS auth_user_auth_user_roles_id_seq;
+CREATE SEQUENCE IF NOT EXISTS prices_id_seq;
+CREATE SEQUENCE IF NOT EXISTS fly_modes_id_seq;
+CREATE SEQUENCE IF NOT EXISTS sales_agents_and_reservations_id_seq;
+CREATE SEQUENCE IF NOT EXISTS handling_agents_id_seq;
+
+-- Tables
 CREATE TABLE IF NOT EXISTS pilot
 (
-    id             BIGINT           NOT NULL,
+    id             BIGINT           NOT NULL DEFAULT nextval('pilot_id_seq'),
     license_number VARCHAR(150)     NOT NULL,
     ssn            VARCHAR(15)      NOT NULL,
     first_name     VARCHAR(45)      NOT NULL,
@@ -17,7 +40,7 @@ CREATE TABLE IF NOT EXISTS pilot
 
 CREATE TABLE IF NOT EXISTS owner
 (
-    id         BIGINT       NOT NULL,
+    id         BIGINT       NOT NULL DEFAULT nextval('owner_id_seq'),
     first_name VARCHAR(45)  NOT NULL,
     last_name  VARCHAR(45)  NOT NULL,
     gender     VARCHAR(6)   NOT NULL,
@@ -30,7 +53,7 @@ CREATE TABLE IF NOT EXISTS owner
 
 CREATE TABLE IF NOT EXISTS manufacturer
 (
-    id                BIGINT      NOT NULL,
+    id                BIGINT      NOT NULL DEFAULT nextval('manufacturer_id_seq'),
     manufacturer_code VARCHAR(60) NOT NULL,
     manufacturer_name VARCHAR(45) NOT NULL,
     location          VARCHAR(45) NOT NULL,
@@ -39,7 +62,7 @@ CREATE TABLE IF NOT EXISTS manufacturer
 
 CREATE TABLE IF NOT EXISTS hangar
 (
-    id              BIGINT      NOT NULL,
+    id              BIGINT      NOT NULL DEFAULT nextval('hangar_id_seq'),
     hangar_number   VARCHAR(45) NOT NULL,
     hangar_capacity INTEGER     NOT NULL,
     hangar_location VARCHAR(45) NOT NULL,
@@ -48,7 +71,7 @@ CREATE TABLE IF NOT EXISTS hangar
 
 CREATE TABLE IF NOT EXISTS aircraft
 (
-    id                  BIGINT           NOT NULL,
+    id                  BIGINT           NOT NULL DEFAULT nextval('aircraft_id_seq'),
     manufacturer_id     BIGINT           NOT NULL,
     hangar_id           BIGINT           NOT NULL,
     registration_number VARCHAR(45)      NOT NULL,
@@ -64,7 +87,7 @@ CREATE TABLE IF NOT EXISTS aircraft
 
 CREATE TABLE IF NOT EXISTS flight
 (
-    id             BIGINT                      NOT NULL,
+    id             BIGINT                      NOT NULL DEFAULT nextval('flight_id_seq'),
     departure_time TIMESTAMP WITHOUT TIME ZONE NOT NULL,
     arrival_time   TIMESTAMP                   NOT NULL,
     distance       DOUBLE PRECISION            NOT NULL,
@@ -77,7 +100,7 @@ CREATE TABLE IF NOT EXISTS flight
 
 CREATE TABLE IF NOT EXISTS airport
 (
-    id           BIGINT      NOT NULL,
+    id           BIGINT      NOT NULL DEFAULT nextval('airport_id_seq'),
     airport_name VARCHAR(45) NOT NULL,
     address      VARCHAR(45) NOT NULL,
     country      VARCHAR(45) NOT NULL,
@@ -90,7 +113,7 @@ CREATE TABLE IF NOT EXISTS airport
 
 CREATE TABLE IF NOT EXISTS passenger
 (
-    id         BIGINT      NOT NULL,
+    id         BIGINT      NOT NULL DEFAULT nextval('passenger_id_seq'),
     first_name VARCHAR(45) NOT NULL,
     last_name  VARCHAR(45) NOT NULL,
     age        INTEGER     NOT NULL,
@@ -122,7 +145,7 @@ CREATE TABLE IF NOT EXISTS fly_modes_prices_relation (
 
 CREATE TABLE IF NOT EXISTS booking
 (
-    id             BIGINT       NOT NULL,
+    id             BIGINT       NOT NULL DEFAULT nextval('booking_id_seq'),
     passenger_id   BIGINT       NOT NULL,
     flight_id      BIGINT       NOT NULL,
     fly_mode_code  VARCHAR(7)   NOT NULL,
@@ -138,7 +161,7 @@ CREATE TABLE IF NOT EXISTS booking
 
 CREATE TABLE IF NOT EXISTS manager
 (
-    id         BIGINT       NOT NULL,
+    id         BIGINT       NOT NULL DEFAULT nextval('manager_id_seq'),
     ssn        VARCHAR(15)  NOT NULL,
     first_name VARCHAR(45)  NOT NULL,
     last_name  VARCHAR(45)  NOT NULL,
@@ -152,7 +175,7 @@ CREATE TABLE IF NOT EXISTS manager
 
 CREATE TABLE IF NOT EXISTS actual_flight
 (
-    id             BIGINT       NOT NULL,
+    id             BIGINT       NOT NULL DEFAULT nextval('actual_flight_id_seq'),
     aircraft_id    BIGINT       NOT NULL,
     pilot_id       BIGINT       NOT NULL,
     flight_id      BIGINT       NOT NULL,
@@ -170,7 +193,7 @@ CREATE TABLE IF NOT EXISTS actual_flight
 
 CREATE TABLE IF NOT EXISTS calendar_entry
 (
-    id            BIGINT    NOT NULL,
+    id            BIGINT    NOT NULL DEFAULT nextval('calendar_entry_id_seq'),
     day_number    INTEGER   NOT NULL,
     day_date      INTEGER   NOT NULL,
     time_in_hours TIMESTAMP NOT NULL,
@@ -180,7 +203,7 @@ CREATE TABLE IF NOT EXISTS calendar_entry
 -- Response message storage
 CREATE TABLE IF NOT EXISTS response_messages
 (
-    id          BIGINT        NOT NULL,
+    id          BIGINT        NOT NULL DEFAULT nextval('response_messages_id_seq'),
     code        VARCHAR(10)   NOT NULL,
     description VARCHAR(1000) NOT NULL,
     CONSTRAINT response_msg_pk PRIMARY KEY (id)
@@ -188,7 +211,7 @@ CREATE TABLE IF NOT EXISTS response_messages
 
 -- Cargo specific domain
 CREATE TABLE sales_agents_and_reservations (
-    id             BIGINT        NOT NULL,
+    id             BIGINT        NOT NULL DEFAULT nextval('sales_agents_and_reservations_id_seq'),
     country        VARCHAR(45)   NOT NULL,
     city           VARCHAR(45)   NOT NULL,
     representative VARCHAR (100) NOT NULL,
@@ -198,7 +221,7 @@ CREATE TABLE sales_agents_and_reservations (
 );
 
 CREATE TABLE handling_agents (
-    id                 BIGINT NOT NULL,
+    id                 BIGINT NOT NULL DEFAULT nextval('handling_agents_id_seq'),
     country            VARCHAR(45)      NOT NULL,
     city               VARCHAR(45)      NOT NULL,
     warehouse_handling VARCHAR(100)     NOT NULL,
