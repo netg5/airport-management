@@ -216,7 +216,7 @@ CREATE TABLE sales_agents_and_reservations (
     city           VARCHAR(45)   NOT NULL,
     representative VARCHAR (100) NOT NULL,
     email          VARCHAR(45)   NOT NULL,
-    phone          VARCHAR(45)   NOT NULL  
+    phone          VARCHAR(45)   NOT NULL,  
     CONSTRAINT agent_pk PRIMARY KEY(id)
 );
 
