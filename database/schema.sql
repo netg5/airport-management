@@ -198,9 +198,14 @@ CREATE TABLE sales_agents_and_reservations (
 );
 
 CREATE TABLE handling_agents (
-    id BIGINT NOT NULL,
-    country        VARCHAR(45)   NOT NULL,
-    city           VARCHAR(45)   NOT NULL,
-    warehouse_handling VARCHAR(100) NOT NULL
-    -- heavy_cargo
+    id                 BIGINT NOT NULL,
+    country            VARCHAR(45)      NOT NULL,
+    city               VARCHAR(45)      NOT NULL,
+    warehouse_handling VARCHAR(100)     NOT NULL,
+    heavy_cargo        DOUBLE PRECISION NOT NULL,
+    dangerous          VARCHAR(12)      NOT NULL,
+    keep_cool_service  VARCHAR(12)      NOT NULL,
+    live_animals       VARCHAR(12)      NOT NULL,
+    valuable_cargo     VARCHAR(12)      NOT NULL,
+    CONSTRAINT handling_agents_pk PRIMARY KEY(id)
 );
