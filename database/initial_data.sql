@@ -89,3 +89,12 @@ INSERT INTO response_messages VALUES(16, 'APT-001', 'Airport with this name not 
 INSERT INTO response_messages VALUES(17, 'APT-002', 'No airport contact found by this parameter');
 INSERT INTO response_messages VALUES(18, 'RES-001', 'Reservatoion not found');
 INSERT INTO response_messages VALUES(19, 'FLY_001', 'Fly mode not found');
+
+-- Cargo management initial data
+INSERT INTO sales_agents_and_reservations VALUES(1, 'Austria', 'Vienna (VIE)', 'Kales Airline Services', 'info.vie@kales.com', '431700735181');
+INSERT INTO sales_agents_and_reservations VALUES(2, 'Azerbaijan', 'Baku (GYD)', 'Silkway', 'sales@swgh.az', '994124374747');
+INSERT INTO sales_agents_and_reservations VALUES(3, 'Banlgadesh', 'Tower Aviation', 'Kales Airline Services', 'stushish@toweraviation.com', '88028861024');
+
+INSERT INTO warehouses VALUES(1, 'United Kingdom', 'Aberdeen (ABZ)', 'Swissport GB LTD', 149, 'Accepted', 'Accepted', 'Not accepted', 'Accepted');
+INSERT INTO warehouses VALUES(2, 'United Arab Emirates', 'Abu Dhabi (AUH)', 'Etihad Airport Services', 200, 'Accepted', 'Accepted', 'Accepted', 'Accepted');
+INSERT INTO warehouses VALUES(3, 'Kazakhstan', 'Almaty (ALA)', 'Almaty Interantional Airport', 400, 'Accepted', 'Accepted', 'Accepted', 'Accepted');
