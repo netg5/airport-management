@@ -18,7 +18,7 @@ CREATE SEQUENCE IF NOT EXISTS auth_user_auth_user_roles_id_seq;
 CREATE SEQUENCE IF NOT EXISTS prices_id_seq;
 CREATE SEQUENCE IF NOT EXISTS fly_modes_id_seq;
 CREATE SEQUENCE IF NOT EXISTS sales_agents_and_reservations_id_seq;
-CREATE SEQUENCE IF NOT EXISTS handling_agents_id_seq;
+CREATE SEQUENCE IF NOT EXISTS warehouses_id_seq;
 
 -- Tables
 CREATE TABLE IF NOT EXISTS pilot
@@ -220,8 +220,8 @@ CREATE TABLE sales_agents_and_reservations (
     CONSTRAINT agent_pk PRIMARY KEY(id)
 );
 
-CREATE TABLE handling_agents (
-    id                 BIGINT NOT NULL DEFAULT nextval('handling_agents_id_seq'),
+CREATE TABLE warehouses (
+    id                 BIGINT NOT NULL DEFAULT nextval('warehouse_id_seq'),
     country            VARCHAR(45)      NOT NULL,
     city               VARCHAR(45)      NOT NULL,
     warehouse_handling VARCHAR(100)     NOT NULL,

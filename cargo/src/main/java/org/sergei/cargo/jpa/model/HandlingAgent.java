@@ -17,7 +17,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "handling_agents")
+@Table(name = "warehouses")
 public class HandlingAgent implements Serializable {
 
     private static final long serialVersionUID = -5323994921297876387L;
@@ -25,9 +25,9 @@ public class HandlingAgent implements Serializable {
     @Id
     @NotNull
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
-            generator = "handling_agents_id_seq")
-    @SequenceGenerator(name = "handling_agents_id_seq",
-            sequenceName = "handling_agents_id_seq", allocationSize = 1)
+            generator = "warehouses_id_seq")
+    @SequenceGenerator(name = "warehouses_id_seq",
+            sequenceName = "warehouses_id_seq", allocationSize = 1)
     @Column(name = "id")
     private Long id;
 
