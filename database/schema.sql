@@ -20,6 +20,11 @@ CREATE SEQUENCE IF NOT EXISTS fly_modes_id_seq;
 CREATE SEQUENCE IF NOT EXISTS sales_agents_and_reservations_id_seq;
 CREATE SEQUENCE IF NOT EXISTS warehouses_id_seq;
 
+
+CREATE SEQUENCE IF NOT EXISTS cargo_transfer_flight_id_seq;
+CREATE SEQUENCE IF NOT EXISTS cargo_transfer_booking_id_seq;
+CREATE SEQUENCE IF NOT EXISTS cargo_transfer_actual_flights_id_seq;
+
 -- Tables
 CREATE TABLE IF NOT EXISTS pilot
 (
@@ -231,4 +236,19 @@ CREATE TABLE warehouses (
     live_animals       VARCHAR(12)      NOT NULL,
     valuable_cargo     VARCHAR(12)      NOT NULL,
     CONSTRAINT handling_agents_pk PRIMARY KEY(id)
+);
+
+CREATE TABLE cargo_transfer_flights (
+    id BIGINT NOT NULL DEFAULT nextval('cargo_transfer_flight_id_seq')
+    -- ....... --
+);
+
+CREATE TABLE cargo_transfer_bookings (
+    id BIGINT NOT NULL DEFAULT nextval('cargo_transfer_booking_id_seq')
+    -- ....... --
+);
+
+CREATE TABLE cargo_transfer_actual_flights (
+    id BIGINT NOT NULL DEFAULT nextval('cargo_transfer_actual_flights_id_seq')
+    -- ....... --
 );
