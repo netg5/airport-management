@@ -18,7 +18,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Entity
 @Table(name = "warehouses")
-public class HandlingAgent implements Serializable {
+public class Warehouse implements Serializable {
 
     private static final long serialVersionUID = -5323994921297876387L;
 
