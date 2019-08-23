@@ -16,7 +16,7 @@
     <version>0.0.1-SNAPSHOT</version>
 
     <name>cargo</name>
-    <description>Cargo transfer management system, receive, validate and proceed</description>
+    <description>Cargo movement management service, receive, validate and proceed</description>
 
     <properties>
         <io.swagger.version>2.9.2</io.swagger.version>
