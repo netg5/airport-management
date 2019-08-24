@@ -1,4 +1,4 @@
-package org.sergei.cargo.service;
+package org.sergei.cargo.service.interfaces;
 
 import org.sergei.cargo.rest.dto.response.ResponseErrorDTO;
 import org.springframework.stereotype.Service;

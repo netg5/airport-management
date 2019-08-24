@@ -3,6 +3,7 @@ package org.sergei.cargo.service;
 import org.sergei.cargo.jpa.model.ResponseMessage;
 import org.sergei.cargo.jpa.repository.ResponseMessageRepository;
 import org.sergei.cargo.rest.dto.response.ResponseErrorDTO;
+import org.sergei.cargo.service.interfaces.ResponseMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
