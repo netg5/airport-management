@@ -11,13 +11,18 @@ import java.util.Properties;
  *
  * @author Sergei Visotsky
  */
-public class ActuatorHealthCheck {
+class ActuatorHealthCheck {
 
-    public static ActuatorHealthCheckResponse getAppInfo() {
+    /**
+     * Gets application health information from the file
+     *
+     * @return pojo with application information
+     */
+    static ActuatorHealthCheckResponse getAppInfo() {
         Properties properties = new Properties();
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 
-        try(InputStream inputStream = classLoader.getResourceAsStream("info.properties")) {
+        try (InputStream inputStream = classLoader.getResourceAsStream("info.properties")) {
 
             properties.load(inputStream);
 
