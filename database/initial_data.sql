@@ -98,3 +98,15 @@ INSERT INTO sales_agents_and_reservations VALUES(3, 'Banlgadesh', 'Tower Aviatio
 INSERT INTO warehouses VALUES(1, 'United Kingdom', 'Aberdeen (ABZ)', 'Swissport GB LTD', 149, 'Accepted', 'Accepted', 'Not accepted', 'Accepted');
 INSERT INTO warehouses VALUES(2, 'United Arab Emirates', 'Abu Dhabi (AUH)', 'Etihad Airport Services', 200, 'Accepted', 'Accepted', 'Accepted', 'Accepted');
 INSERT INTO warehouses VALUES(3, 'Kazakhstan', 'Almaty (ALA)', 'Almaty Interantional Airport', 400, 'Accepted', 'Accepted', 'Accepted', 'Accepted');
+
+INSERT INTO cargo_transfer_flights VALUES (1, '2019-07-02', '2019-07-09', 1000, 'Riga', 123, 1);
+INSERT INTO cargo_transfer_flights VALUES (2, '2019-07-03', '2019-07-04', 1090, 'New-York', 145, 2);
+INSERT INTO cargo_transfer_flights VALUES (3, '2019-07-05', '2019-07-07', 1034, 'Moscow', 190, 3);
+
+INSERT INTO cargo VALUES(1, 'TAP/0101', 120, 150, 130, 230, 150, 123);
+INSERT INTO cargo VALUES(2, 'GAP/0401', 120, 150, 130, 230, 150, 125);
+INSERT INTO cargo VALUES(3, 'BAP/0107', 128, 132, 154, 239, 151, 158);
+
+INSERT INTO cargo_transfer_bookings VALUES(1, 1, 1, '2019-08-09', '2019-08-09 17:28:30.183', '2019-08-09 17:28:30.183', 3);
+INSERT INTO cargo_transfer_bookings VALUES(2, 2, 2, '2019-08-09', '2019-08-09 17:28:30.183', '2019-08-09 17:28:30.183', 4);
+INSERT INTO cargo_transfer_bookings VALUES(3, 3, 3, '2019-08-09', '2019-08-09 17:28:30.183', '2019-08-09 17:28:30.183', 9);

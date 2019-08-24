@@ -1,30 +1,3 @@
--- Sequences
-CREATE SEQUENCE IF NOT EXISTS pilot_id_seq;
-CREATE SEQUENCE IF NOT EXISTS owner_id_seq;
-CREATE SEQUENCE IF NOT EXISTS aircraft_id_seq;
-CREATE SEQUENCE IF NOT EXISTS flight_id_seq;
-CREATE SEQUENCE IF NOT EXISTS manufacturer_id_seq;
-CREATE SEQUENCE IF NOT EXISTS airport_id_seq;
-CREATE SEQUENCE IF NOT EXISTS hangar_id_seq;
-CREATE SEQUENCE IF NOT EXISTS passenger_id_seq;
-CREATE SEQUENCE IF NOT EXISTS booking_id_seq;
-CREATE SEQUENCE IF NOT EXISTS manager_id_seq;
-CREATE SEQUENCE IF NOT EXISTS response_messages_id_seq;
-CREATE SEQUENCE IF NOT EXISTS actual_flight_id_seq;
-CREATE SEQUENCE IF NOT EXISTS calendar_entry_id_seq;
-CREATE SEQUENCE IF NOT EXISTS airport_management_facts_id_seq;
-CREATE SEQUENCE IF NOT EXISTS auth_user_id_seq;
-CREATE SEQUENCE IF NOT EXISTS auth_user_auth_user_roles_id_seq;
-CREATE SEQUENCE IF NOT EXISTS prices_id_seq;
-CREATE SEQUENCE IF NOT EXISTS fly_modes_id_seq;
-CREATE SEQUENCE IF NOT EXISTS sales_agents_and_reservations_id_seq;
-CREATE SEQUENCE IF NOT EXISTS warehouses_id_seq;
-
-
-CREATE SEQUENCE IF NOT EXISTS cargo_transfer_flight_id_seq;
-CREATE SEQUENCE IF NOT EXISTS cargo_transfer_booking_id_seq;
-CREATE SEQUENCE IF NOT EXISTS cargo_transfer_actual_flights_id_seq;
-
 -- Tables
 CREATE TABLE IF NOT EXISTS pilot
 (
@@ -93,7 +66,7 @@ CREATE TABLE IF NOT EXISTS aircraft
 CREATE TABLE IF NOT EXISTS flight
 (
     id             BIGINT                      NOT NULL DEFAULT nextval('flight_id_seq'),
-    departure_time TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+    departure_time TIMESTAMP                   NOT NULL,
     arrival_time   TIMESTAMP                   NOT NULL,
     distance       DOUBLE PRECISION            NOT NULL,
     place          VARCHAR(45)                 NOT NULL,
@@ -158,9 +131,9 @@ CREATE TABLE IF NOT EXISTS booking
     departure_time TIMESTAMP    NOT NULL,
     arrival_time   TIMESTAMP    NOT NULL,
     hours_flying   INTEGER      NOT NULL,
-    CONSTRAINT reservation_pk   PRIMARY KEY (id),
+    CONSTRAINT booking_pk       PRIMARY KEY (id),
     CONSTRAINT passenger_id_fk  FOREIGN KEY (passenger_id) REFERENCES passenger (id),
-    CONSTRAINT flight_id_fk     FOREIGN KEY(flight_id)      REFERENCES flight(id),
+    CONSTRAINT flight_id_fk     FOREIGN KEY(flight_id)     REFERENCES flight(id),
     CONSTRAINT fly_mode_code_fk FOREIGN KEY(fly_mode_code) REFERENCES fly_modes(code)
 );
 
@@ -212,43 +185,4 @@ CREATE TABLE IF NOT EXISTS response_messages
     code        VARCHAR(10)   NOT NULL,
     description VARCHAR(1000) NOT NULL,
     CONSTRAINT response_msg_pk PRIMARY KEY (id)
-);
-
--- Cargo specific domain
-CREATE TABLE sales_agents_and_reservations (
-    id             BIGINT        NOT NULL DEFAULT nextval('sales_agents_and_reservations_id_seq'),
-    country        VARCHAR(45)   NOT NULL,
-    city           VARCHAR(45)   NOT NULL,
-    representative VARCHAR (100) NOT NULL,
-    email          VARCHAR(45)   NOT NULL,
-    phone          VARCHAR(45)   NOT NULL,  
-    CONSTRAINT agent_pk PRIMARY KEY(id)
-);
-
-CREATE TABLE warehouses (
-    id                 BIGINT NOT NULL DEFAULT nextval('warehouse_id_seq'),
-    country            VARCHAR(45)      NOT NULL,
-    city               VARCHAR(45)      NOT NULL,
-    warehouse_handling VARCHAR(100)     NOT NULL,
-    heavy_cargo        DOUBLE PRECISION NOT NULL,
-    dangerous          VARCHAR(12)      NOT NULL,
-    keep_cool_service  VARCHAR(12)      NOT NULL,
-    live_animals       VARCHAR(12)      NOT NULL,
-    valuable_cargo     VARCHAR(12)      NOT NULL,
-    CONSTRAINT handling_agents_pk PRIMARY KEY(id)
-);
-
-CREATE TABLE cargo_transfer_flights (
-    id BIGINT NOT NULL DEFAULT nextval('cargo_transfer_flight_id_seq')
-    -- ....... --
-);
-
-CREATE TABLE cargo_transfer_bookings (
-    id BIGINT NOT NULL DEFAULT nextval('cargo_transfer_booking_id_seq')
-    -- ....... --
-);
-
-CREATE TABLE cargo_transfer_actual_flights (
-    id BIGINT NOT NULL DEFAULT nextval('cargo_transfer_actual_flights_id_seq')
-    -- ....... --
 );
