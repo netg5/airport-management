@@ -25,10 +25,3 @@ logging:
     org:
       sergei:
         manager: DEBUG
-
-info:
-  app:
-    name: Management service
-    version: 1.0
-    profile: plain
-    descripton: Service to perform airport management operations e.g. save aircraft, pilot, calendar and other administrative data
