@@ -47,16 +47,16 @@ CREATE TABLE cargo (
 );
 
 CREATE TABLE cargo_transfer_bookings (
-    id                 BIGINT    NOT NULL DEFAULT nextval('cargo_transfer_booking_id_seq'),
-    cargo_id           BIGINT    NOT NULL, 
-    transfer_flight_id BIGINT    NOT NULL,
-    date_of_flying     DATE      NOT NULL,
-    departure_time     TIMESTAMP NOT NULL,
-    arrival_time       TIMESTAMP NOT NULL,
-    hours_flying       INTEGER   NOT NULL,
+    id                       BIGINT    NOT NULL DEFAULT nextval('cargo_transfer_booking_id_seq'),
+    cargo_id                 BIGINT    NOT NULL, 
+    cargo_transfer_flight_id BIGINT    NOT NULL,
+    date_of_flying           DATE      NOT NULL,
+    departure_time           TIMESTAMP NOT NULL,
+    arrival_time             TIMESTAMP NOT NULL,
+    hours_flying             INTEGER   NOT NULL,
     CONSTRAINT cargo_transfer_booking_pk PRIMARY KEY(id),
     CONSTRAINT cargo_id_fk FOREIGN KEY(cargo_id) REFERENCES cargo(id),
-    CONSTRAINT cargo_transfer_flights_id_fk FOREIGN KEY(transfer_flight_id) REFERENCES cargo_transfer_flights(id)
+    CONSTRAINT cargo_transfer_flights_id_fk FOREIGN KEY(cargo_transfer_flight_id) REFERENCES cargo_transfer_flights(id)
 );
 
 CREATE TABLE cargo_transfer_actual_flights (
