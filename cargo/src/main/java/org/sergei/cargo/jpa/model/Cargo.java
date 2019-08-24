@@ -50,4 +50,16 @@ public class Cargo implements Serializable {
 
     @Column(name = "tare_weight")
     private Integer tareWeight;
+
+    @OneToOne(fetch = FetchType.LAZY,
+            cascade = {CascadeType.DETACH})
+    @JoinColumn(name = "warehouse_id",
+            referencedColumnName = "id")
+    private Warehouse warehouse;
+
+    @OneToOne(fetch = FetchType.LAZY,
+            cascade = {CascadeType.DETACH})
+    @JoinColumn(name = "sales_agent_id",
+            referencedColumnName = "id")
+    private SalesAgentAndReservation salesAgentAndReservation;
 }

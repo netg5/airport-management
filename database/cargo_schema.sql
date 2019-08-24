@@ -36,6 +36,8 @@ CREATE TABLE cargo_transfer_flights (
 
 CREATE TABLE cargo (
     id               BIGINT           NOT NULL DEFAULT nextval('cargo_id_seq'),
+    warehouse_id     BIGINT           NOT NULL,
+    sales_agent_id   BIGINT           NOT NULL,
     unit_type        VARCHAR(10)      NOT NULL,
     internal_volume  DOUBLE PRECISION NOT NULL,
     length           DOUBLE PRECISION NOT NULL,
@@ -43,7 +45,9 @@ CREATE TABLE cargo (
     height           DOUBLE PRECISION NOT NULL,
     max_gross_weight INTEGER          NOT NULL,
     tare_weight      INTEGER          NOT NULL,
-    CONSTRAINT cargo_pk PRIMARY KEY(id)
+    CONSTRAINT cargo_pk PRIMARY KEY(id),
+    CONSTRAINT warehouses_id_fk FOREIGN KEY(warehouse_id) REFERENCES warehouses(id),
+    CONSTRAINT sales_agents_and_reservations_id_fk FOREIGN KEY(sales_agent_id) REFERENCES sales_agents_and_reservations(id)
 );
 
 CREATE TABLE cargo_transfer_bookings (
