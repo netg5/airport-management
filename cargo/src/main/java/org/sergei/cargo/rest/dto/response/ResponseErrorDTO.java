@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author Sergei Visotsky
  */
 @Getter
-@Setter
+@Builder
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor

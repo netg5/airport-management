@@ -26,12 +26,15 @@ public class ResponseMessageServiceImpl implements ResponseMessageService {
     @Override
     public List<ResponseErrorDTO> responseErrorListByCode(String code) {
         List<ResponseMessage> responseMessageList = responseMessageRepository.findResponseMessageByCode(code);
-
         List<ResponseErrorDTO> responseErrorList = new ArrayList<>();
         for (ResponseMessage responseMessage : responseMessageList) {
-            responseErrorList.add(new ResponseErrorDTO(responseMessage.getCode(), responseMessage.getDescription(), "ERROR"));
+            ResponseErrorDTO responseErrorDTO = ResponseErrorDTO.builder()
+                    .errorCode(responseMessage.getCode())
+                    .errorDescription(responseMessage.getDescription())
+                    .errorType("ERROR")
+                    .build();
+            responseErrorList.add(responseErrorDTO);
         }
-
         return responseErrorList;
     }
 
