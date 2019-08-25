@@ -5,6 +5,8 @@ package org.sergei.booking.rest.exceptions;
  */
 public class FlightRuntimeException extends RuntimeException {
 
+    private static final long serialVersionUID = -6122185357930236352L;
+
     public FlightRuntimeException() {
         super();
     }

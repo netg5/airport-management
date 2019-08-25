@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  */
 @ResponseStatus(HttpStatus.NOT_FOUND)
 public class ResourceNotFoundException extends RuntimeException {
+    private static final long serialVersionUID = 769377758136851118L;
+
     public ResourceNotFoundException() {
         super();
     }
