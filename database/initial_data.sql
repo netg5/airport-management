@@ -69,27 +69,6 @@ INSERT INTO auth_user_auth_user_roles VALUES (2, 3);
 INSERT INTO oauth_client_details VALUES('trusted-client', '', '$2a$10$K9.dtdouoTm1tlhQTTQu4OEV1HPlV0IpNjUsNu/8ZBiesIkSXafmK', 'read,write,trust', 'refresh_token,password', 'http://www.google.com', 'ROLE_CLIENT,ROLE_TRUSTED_CLIENT,ROLE_ADMIN', 3600, 86400, '', '');
 INSERT INTO oauth_client_details VALUES('system-client', '', '$2a$10$NR.ZeJ8mUIqT0b88RQCT2OMVDD5lXtzzxHF2YGHp8pRuCZx0IMgny', 'read,write,trust', 'refresh_token,password', '', 'ROLE_ROOT', 946080000, 946080000, '', '');
 
--- Errors
-INSERT INTO response_messages VALUES(1, 'AIR-001', 'Aircraft with this ID not found');
-INSERT INTO response_messages VALUES(2, 'AIR-002', 'Aircraft exploitation period is greater than 10 required years');
-INSERT INTO response_messages VALUES(3, 'AIR-003', 'Aircraft with this model number not found');
-INSERT INTO response_messages VALUES(4, 'PAS-001', 'Passenger with this ID not found');
-INSERT INTO response_messages VALUES(5, 'PAS-002', 'This passenger has no reservations made');
-INSERT INTO response_messages VALUES(6, 'RT-001', 'Route with this ID not found');
-INSERT INTO response_messages VALUES(7, 'RES-001', 'Reservation with this ID not found');
-INSERT INTO response_messages VALUES(8, 'PT-001', 'Passenger has no tickets');
-INSERT INTO response_messages VALUES(9, 'PIL-001', 'Pilot with this ID not found');
-INSERT INTO response_messages VALUES(10, 'PIL-002', 'Pilot table is empty');
-INSERT INTO response_messages VALUES(11, 'RP-001', 'Required parameter is not present');
-INSERT INTO response_messages VALUES(12, 'PIL-003', 'Pilot weight is greater than expected');
-INSERT INTO response_messages VALUES(13, 'OW-001', 'Owner with this ID not found');
-INSERT INTO response_messages VALUES(14, 'MAN-001', 'Manufacturer with this ID not found');
-INSERT INTO response_messages VALUES(15, 'HAN-001', 'Hangar not found');
-INSERT INTO response_messages VALUES(16, 'APT-001', 'Airport with this name not found');
-INSERT INTO response_messages VALUES(17, 'APT-002', 'No airport contact found by this parameter');
-INSERT INTO response_messages VALUES(18, 'RES-001', 'Reservatoion not found');
-INSERT INTO response_messages VALUES(19, 'FLY_001', 'Fly mode not found');
-
 -- Cargo management initial data
 INSERT INTO sales_agents_and_reservations VALUES(1, 'Austria', 'Vienna (VIE)', 'Kales Airline Services', 'info.vie@kales.com', '431700735181');
 INSERT INTO sales_agents_and_reservations VALUES(2, 'Azerbaijan', 'Baku (GYD)', 'Silkway', 'sales@swgh.az', '994124374747');
@@ -110,3 +89,26 @@ INSERT INTO cargo VALUES(3, 3, 3, 'BAP/0107', 128, 132, 154, 239, 151, 158);
 INSERT INTO cargo_transfer_bookings VALUES(1, 1, 1, '2019-08-09', '2019-08-09 17:28:30.183', '2019-08-09 17:28:30.183', 3);
 INSERT INTO cargo_transfer_bookings VALUES(2, 2, 2, '2019-08-09', '2019-08-09 17:28:30.183', '2019-08-09 17:28:30.183', 4);
 INSERT INTO cargo_transfer_bookings VALUES(3, 3, 3, '2019-08-09', '2019-08-09 17:28:30.183', '2019-08-09 17:28:30.183', 9);
+
+-- Errors
+INSERT INTO response_messages VALUES(1, 'AIR-001', 'Aircraft with this ID not found');
+INSERT INTO response_messages VALUES(2, 'AIR-002', 'Aircraft exploitation period is greater than 10 required years');
+INSERT INTO response_messages VALUES(3, 'AIR-003', 'Aircraft with this model number not found');
+INSERT INTO response_messages VALUES(4, 'PAS-001', 'Passenger with this ID not found');
+INSERT INTO response_messages VALUES(5, 'PAS-002', 'This passenger has no reservations made');
+INSERT INTO response_messages VALUES(6, 'RT-001', 'Route with this ID not found');
+INSERT INTO response_messages VALUES(7, 'RES-001', 'Reservation with this ID not found');
+INSERT INTO response_messages VALUES(8, 'PT-001', 'Passenger has no tickets');
+INSERT INTO response_messages VALUES(9, 'PIL-001', 'Pilot with this ID not found');
+INSERT INTO response_messages VALUES(10, 'PIL-002', 'Pilot table is empty');
+INSERT INTO response_messages VALUES(11, 'RP-001', 'Required parameter is not present');
+INSERT INTO response_messages VALUES(12, 'PIL-003', 'Pilot weight is greater than expected');
+INSERT INTO response_messages VALUES(13, 'OW-001', 'Owner with this ID not found');
+INSERT INTO response_messages VALUES(14, 'MAN-001', 'Manufacturer with this ID not found');
+INSERT INTO response_messages VALUES(15, 'HAN-001', 'Hangar not found');
+INSERT INTO response_messages VALUES(16, 'APT-001', 'Airport with this name not found');
+INSERT INTO response_messages VALUES(17, 'APT-002', 'No airport contact found by this parameter');
+INSERT INTO response_messages VALUES(18, 'RES-001', 'Reservatoion not found');
+INSERT INTO response_messages VALUES(19, 'FLY_001', 'Fly mode not found');
+INSERT INTO response_messages VALUES(20, 'CRG_001', 'Cargo net weight should not be greater than maximum gross weight');
+INSERT INTO response_messages VALUES(21, 'CRG_002', 'Cargo products are too high');

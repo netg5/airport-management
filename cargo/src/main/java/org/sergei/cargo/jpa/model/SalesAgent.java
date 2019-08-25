@@ -18,7 +18,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Entity
 @Table(name = "sales_agents_and_reservations")
-public class SalesAgentAndReservation implements Serializable {
+public class SalesAgent implements Serializable {
 
     private static final long serialVersionUID = -5084008929629749866L;
 

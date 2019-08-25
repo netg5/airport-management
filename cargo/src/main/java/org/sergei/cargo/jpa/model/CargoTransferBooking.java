@@ -56,7 +56,7 @@ public class CargoTransferBooking implements Serializable {
 
     @NotNull
     @OneToOne(fetch = FetchType.LAZY,
-            cascade = {CascadeType.ALL})
+            cascade = {CascadeType.DETACH})
     @JoinColumn(name = "cargo_transfer_flight_id",
             referencedColumnName = "id")
     private CargoTransferFlight cargoTransferFlight;

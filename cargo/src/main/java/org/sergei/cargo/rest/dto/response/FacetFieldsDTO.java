@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * @author Sergei Visotsky
@@ -15,10 +14,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ResponseDTO<T> implements Serializable {
-
-    private static final long serialVersionUID = 8436537119496286158L;
-
-    private List<ResponseErrorDTO> errorList;
-    private List<T> response;
+public class FacetFieldsDTO implements Serializable {
+    private static final long serialVersionUID = -7883273212016506692L;
+    private Long resNum;
 }

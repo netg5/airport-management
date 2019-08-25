@@ -14,15 +14,12 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class WarehouseDTO implements Serializable {
-    private static final long serialVersionUID = 1391130563395767796L;
+public class SalesAgentDTO implements Serializable {
+    private static final long serialVersionUID = 5824168125775769325L;
 
     private String country;
     private String city;
-    private String warehouseHanding;
-    private Double heavyCargo;
-    private String dangerous;
-    private String keepCoolService;
-    private String liveAnimals;
-    private String valuableCargo;
+    private String representative;
+    private String email;
+    private String phone;
 }

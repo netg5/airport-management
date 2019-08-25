@@ -61,5 +61,5 @@ public class Cargo implements Serializable {
             cascade = {CascadeType.DETACH})
     @JoinColumn(name = "sales_agent_id",
             referencedColumnName = "id")
-    private SalesAgentAndReservation salesAgentAndReservation;
+    private SalesAgent salesAgent;
 }
