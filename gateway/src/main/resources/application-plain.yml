@@ -36,6 +36,11 @@ zuul:
       service-id: reports
       url: http://localhost:8745
       sensitive-headers: true
+    cargo:
+      path: /cargo/**
+      service-id: cargo
+      url: http://localhost:8098
+      sensitive-headers: true
 
 logging:
   file: C:/tmp/gateway.log
