@@ -38,9 +38,9 @@ security:
       user-info-uri: http://localhost:8080/auth/users/authenticate
 
 logging:
-  file: /tmp/template.log
+  file: /tmp/cargo.log
   level:
     ROOT: INFO
     org:
       sergei:
-        manager: DEBUG
+        cargo: DEBUG

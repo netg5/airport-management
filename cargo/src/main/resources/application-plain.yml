@@ -20,9 +20,9 @@ datasource:
 
 # Logging configuration
 logging:
-  file: C:/tmp/template.log
+  file: C:/tmp/cargo.log
   level:
     ROOT: INFO
     org:
       sergei:
-        template: DEBUG
+        cargo: DEBUG
