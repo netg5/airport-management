@@ -53,13 +53,13 @@ public class Cargo implements Serializable {
 
     @OneToOne(fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "warehouse_id",
-            referencedColumnName = "id")
+    @JoinColumn(name = "warehouse_id", referencedColumnName = "id",
+            updatable = false, insertable = false)
     private Warehouse warehouse;
 
     @OneToOne(fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "sales_agent_id",
-            referencedColumnName = "id")
+    @JoinColumn(name = "sales_agent_id", referencedColumnName = "id",
+            updatable = false, insertable = false)
     private SalesAgent salesAgent;
 }

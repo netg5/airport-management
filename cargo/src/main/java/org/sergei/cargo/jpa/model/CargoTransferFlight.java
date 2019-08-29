@@ -49,7 +49,7 @@ public class CargoTransferFlight implements Serializable {
 
     @OneToOne(fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "aircraft_id",
-            referencedColumnName = "id")
+    @JoinColumn(name = "aircraft_id", referencedColumnName = "id",
+            updatable = false, insertable = false)
     private Aircraft aircraft;
 }
