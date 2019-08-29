@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS oauth_client_details
 
 CREATE TABLE IF NOT EXISTS auth_user
 (
-    id       BIGINT       NOT NULL,
+    id       BIGINT       NOT NULL DEFAULT nextval('auth_user_id_seq'),
     username VARCHAR(45)  NOT NULL,
     password VARCHAR(300) NOT NULL,
     CONSTRAINT auth_user_pk PRIMARY KEY (id)
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS auth_user
 
 CREATE TABLE IF NOT EXISTS auth_user_roles
 (
-    id        BIGINT      NOT NULL,
+    id        BIGINT      NOT NULL DEFAULT nextval('auth_user_auth_user_roles_id_seq'),
     role_name VARCHAR(45) NOT NULL,
     CONSTRAINT auth_user_role_pk PRIMARY KEY (id)
 );

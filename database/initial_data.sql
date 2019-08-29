@@ -69,6 +69,27 @@ INSERT INTO auth_user_auth_user_roles VALUES (2, 3);
 INSERT INTO oauth_client_details VALUES('trusted-client', '', '$2a$10$K9.dtdouoTm1tlhQTTQu4OEV1HPlV0IpNjUsNu/8ZBiesIkSXafmK', 'read,write,trust', 'refresh_token,password', 'http://www.google.com', 'ROLE_CLIENT,ROLE_TRUSTED_CLIENT,ROLE_ADMIN', 3600, 86400, '', '');
 INSERT INTO oauth_client_details VALUES('system-client', '', '$2a$10$NR.ZeJ8mUIqT0b88RQCT2OMVDD5lXtzzxHF2YGHp8pRuCZx0IMgny', 'read,write,trust', 'refresh_token,password', '', 'ROLE_ROOT', 946080000, 946080000, '', '');
 
+-- Cargo management initial data
+INSERT INTO sales_agents_and_reservations VALUES(1, 'Austria', 'Vienna (VIE)', 'Kales Airline Services', 'info.vie@kales.com', '431700735181');
+INSERT INTO sales_agents_and_reservations VALUES(2, 'Azerbaijan', 'Baku (GYD)', 'Silkway', 'sales@swgh.az', '994124374747');
+INSERT INTO sales_agents_and_reservations VALUES(3, 'Banlgadesh', 'Tower Aviation', 'Kales Airline Services', 'stushish@toweraviation.com', '88028861024');
+
+INSERT INTO warehouses VALUES(1, 'United Kingdom', 'Aberdeen (ABZ)', 'Swissport GB LTD', 149, 'Accepted', 'Accepted', 'Not accepted', 'Accepted');
+INSERT INTO warehouses VALUES(2, 'United Arab Emirates', 'Abu Dhabi (AUH)', 'Etihad Airport Services', 200, 'Accepted', 'Accepted', 'Accepted', 'Accepted');
+INSERT INTO warehouses VALUES(3, 'Kazakhstan', 'Almaty (ALA)', 'Almaty Interantional Airport', 400, 'Accepted', 'Accepted', 'Accepted', 'Accepted');
+
+INSERT INTO cargo_transfer_flights VALUES (1, '2019-07-02', '2019-07-09', 1000, 'Riga', 123, 1);
+INSERT INTO cargo_transfer_flights VALUES (2, '2019-07-03', '2019-07-04', 1090, 'New-York', 145, 2);
+INSERT INTO cargo_transfer_flights VALUES (3, '2019-07-05', '2019-07-07', 1034, 'Moscow', 190, 3);
+
+INSERT INTO cargo VALUES(1, 1, 1, 'TAP/0101', 120, 150, 130, 230, 150, 123);
+INSERT INTO cargo VALUES(2, 2, 2, 'GAP/0401', 120, 150, 130, 230, 150, 125);
+INSERT INTO cargo VALUES(3, 3, 3, 'BAP/0107', 128, 132, 154, 239, 151, 158);
+
+INSERT INTO cargo_transfer_bookings VALUES(1, 1, 1, '2019-08-09', '2019-08-09 17:28:30.183', '2019-08-09 17:28:30.183', 3);
+INSERT INTO cargo_transfer_bookings VALUES(2, 2, 2, '2019-08-09', '2019-08-09 17:28:30.183', '2019-08-09 17:28:30.183', 4);
+INSERT INTO cargo_transfer_bookings VALUES(3, 3, 3, '2019-08-09', '2019-08-09 17:28:30.183', '2019-08-09 17:28:30.183', 9);
+
 -- Errors
 INSERT INTO response_messages VALUES(1, 'AIR-001', 'Aircraft with this ID not found');
 INSERT INTO response_messages VALUES(2, 'AIR-002', 'Aircraft exploitation period is greater than 10 required years');
@@ -89,3 +110,5 @@ INSERT INTO response_messages VALUES(16, 'APT-001', 'Airport with this name not 
 INSERT INTO response_messages VALUES(17, 'APT-002', 'No airport contact found by this parameter');
 INSERT INTO response_messages VALUES(18, 'RES-001', 'Reservatoion not found');
 INSERT INTO response_messages VALUES(19, 'FLY_001', 'Fly mode not found');
+INSERT INTO response_messages VALUES(20, 'CRG_001', 'Cargo net weight should not be greater than maximum gross weight');
+INSERT INTO response_messages VALUES(21, 'CRG_002', 'Cargo products are too high');
