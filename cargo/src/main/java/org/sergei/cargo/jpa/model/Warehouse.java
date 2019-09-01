@@ -31,6 +31,9 @@ public class Warehouse implements Serializable {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "code")
+    private String warehouseCode;
+
     @Column(name = "country")
     private String country;
 

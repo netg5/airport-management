@@ -1,13 +1,14 @@
-package org.sergei.cargo.rest.dto;
+package org.sergei.cargo.rest.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.sergei.cargo.rest.dto.CargoDTO;
+import org.sergei.cargo.rest.dto.CargoTransferFlightDTO;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
@@ -17,16 +18,16 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CargoTransferFlightDTO implements Serializable {
-    private static final long serialVersionUID = -6488771862427250781L;
+public class CargoTransferBookingResponseDTO implements Serializable {
+    private static final long serialVersionUID = 3219151122855842040L;
 
-    private Double distance;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime dateOfFlying;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime departureTime;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime arrivalTime;
-    private BigDecimal price;
-    private String place;
-    private AircraftDTO aircraft;
-
+    private Integer hoursFlying;
+    private CargoDTO cargo;
+    private CargoTransferFlightDTO cargoTransferFlight;
 }

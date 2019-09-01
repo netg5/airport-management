@@ -1,6 +1,7 @@
 -- Cargo specific domain
 CREATE TABLE sales_agents_and_reservations (
     id             BIGINT        NOT NULL DEFAULT nextval('sales_agents_and_reservations_id_seq'),
+    code           VARCHAR(7)    NOT NULL, 
     country        VARCHAR(45)   NOT NULL,
     city           VARCHAR(45)   NOT NULL,
     representative VARCHAR (100) NOT NULL,
@@ -10,7 +11,8 @@ CREATE TABLE sales_agents_and_reservations (
 );
 
 CREATE TABLE warehouses (
-    id                 BIGINT NOT NULL DEFAULT nextval('warehouses_id_seq'),
+    id                 BIGINT           NOT NULL DEFAULT nextval('warehouses_id_seq'),
+    code               VARCHAR(7)       NOT NULL, 
     country            VARCHAR(45)      NOT NULL,
     city               VARCHAR(45)      NOT NULL,
     warehouse_handling VARCHAR(100)     NOT NULL,
@@ -24,6 +26,7 @@ CREATE TABLE warehouses (
 
 CREATE TABLE cargo_transfer_flights (
     id             BIGINT           NOT NULL DEFAULT nextval('cargo_transfer_flight_id_seq'),
+    code           VARCHAR(7)       NOT NULL, 
     departure_time TIMESTAMP        NOT NULL,
     arrival_time   TIMESTAMP        NOT NULL,
     distance       DOUBLE PRECISION NOT NULL,

@@ -1,4 +1,4 @@
-package org.sergei.cargo.rest.dto;
+package org.sergei.cargo.rest.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,13 +15,13 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CargoTransferBookingDTO implements Serializable {
-    private static final long serialVersionUID = 3219151122855842040L;
+public class CargoTransferBookingRequestDTO implements Serializable {
+    private static final long serialVersionUID = 5251906944740203347L;
 
     private LocalDateTime dateOfFlying;
     private LocalDateTime departureTime;
     private LocalDateTime arrivalTime;
     private Integer hoursFlying;
-    private CargoDTO cargo;
-    private CargoTransferFlightDTO cargoTransferFlight;
+    private String transferFlightCode;
+    private CargoRequestDTO cargo;
 }

@@ -1,7 +1,8 @@
 package org.sergei.cargo.rest.dto.mappers;
 
 import org.sergei.cargo.jpa.model.CargoTransferBooking;
-import org.sergei.cargo.rest.dto.CargoTransferBookingDTO;
+import org.sergei.cargo.rest.dto.response.CargoTransferBookingResponseDTO;
+import org.sergei.cargo.rest.dto.response.FacetFieldsDTO;
 import org.sergei.cargo.utils.IMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Component;
  * @author Sergei Visotsky
  */
 @Component
-public class CargoTransferBookingDTOMapper implements IMapper<CargoTransferBooking, CargoTransferBookingDTO> {
+public class CargoTransferBookingDTOMapper implements IMapper<CargoTransferBooking, CargoTransferBookingResponseDTO> {
 
     private final CargoTransferFlightDTOMapper cargoTransferFlightDTOMapper;
     private final CargoDTOMapper cargoDTOMapper;
@@ -23,8 +24,8 @@ public class CargoTransferBookingDTOMapper implements IMapper<CargoTransferBooki
     }
 
     @Override
-    public CargoTransferBookingDTO apply(CargoTransferBooking cargoTransferBooking) {
-        return CargoTransferBookingDTO.builder()
+    public CargoTransferBookingResponseDTO apply(CargoTransferBooking cargoTransferBooking) {
+        return CargoTransferBookingResponseDTO.builder()
                 .arrivalTime(cargoTransferBooking.getArrivalTime())
                 .departureTime(cargoTransferBooking.getDepartureTime())
                 .dateOfFlying(cargoTransferBooking.getDateOfFlying())

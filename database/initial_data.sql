@@ -70,17 +70,17 @@ INSERT INTO oauth_client_details VALUES('trusted-client', '', '$2a$10$K9.dtdouoT
 INSERT INTO oauth_client_details VALUES('system-client', '', '$2a$10$NR.ZeJ8mUIqT0b88RQCT2OMVDD5lXtzzxHF2YGHp8pRuCZx0IMgny', 'read,write,trust', 'refresh_token,password', '', 'ROLE_ROOT', 946080000, 946080000, '', '');
 
 -- Cargo management initial data
-INSERT INTO sales_agents_and_reservations VALUES(1, 'Austria', 'Vienna (VIE)', 'Kales Airline Services', 'info.vie@kales.com', '431700735181');
-INSERT INTO sales_agents_and_reservations VALUES(2, 'Azerbaijan', 'Baku (GYD)', 'Silkway', 'sales@swgh.az', '994124374747');
-INSERT INTO sales_agents_and_reservations VALUES(3, 'Banlgadesh', 'Tower Aviation', 'Kales Airline Services', 'stushish@toweraviation.com', '88028861024');
+INSERT INTO sales_agents_and_reservations VALUES(1, 'SAR_001', 'Austria', 'Vienna (VIE)', 'Kales Airline Services', 'info.vie@kales.com', '431700735181');
+INSERT INTO sales_agents_and_reservations VALUES(2, 'SAR_002', 'Azerbaijan', 'Baku (GYD)', 'Silkway', 'sales@swgh.az', '994124374747');
+INSERT INTO sales_agents_and_reservations VALUES(3, 'SAR_003', 'Banlgadesh', 'Tower Aviation', 'Kales Airline Services', 'stushish@toweraviation.com', '88028861024');
 
-INSERT INTO warehouses VALUES(1, 'United Kingdom', 'Aberdeen (ABZ)', 'Swissport GB LTD', 149, 'Accepted', 'Accepted', 'Not accepted', 'Accepted');
-INSERT INTO warehouses VALUES(2, 'United Arab Emirates', 'Abu Dhabi (AUH)', 'Etihad Airport Services', 200, 'Accepted', 'Accepted', 'Accepted', 'Accepted');
-INSERT INTO warehouses VALUES(3, 'Kazakhstan', 'Almaty (ALA)', 'Almaty Interantional Airport', 400, 'Accepted', 'Accepted', 'Accepted', 'Accepted');
+INSERT INTO warehouses VALUES(1, 'WRS_001', 'United Kingdom', 'Aberdeen (ABZ)', 'Swissport GB LTD', 149, 'Accepted', 'Accepted', 'Not accepted', 'Accepted');
+INSERT INTO warehouses VALUES(2, 'WRS_002', 'United Arab Emirates', 'Abu Dhabi (AUH)', 'Etihad Airport Services', 200, 'Accepted', 'Accepted', 'Accepted', 'Accepted');
+INSERT INTO warehouses VALUES(3, 'WRS_003', 'Kazakhstan', 'Almaty (ALA)', 'Almaty Interantional Airport', 400, 'Accepted', 'Accepted', 'Accepted', 'Accepted');
 
-INSERT INTO cargo_transfer_flights VALUES (1, '2019-07-02', '2019-07-09', 1000, 'Riga', 123, 1);
-INSERT INTO cargo_transfer_flights VALUES (2, '2019-07-03', '2019-07-04', 1090, 'New-York', 145, 2);
-INSERT INTO cargo_transfer_flights VALUES (3, '2019-07-05', '2019-07-07', 1034, 'Moscow', 190, 3);
+INSERT INTO cargo_transfer_flights VALUES (1, 'CTF_001', '2019-07-02', '2019-07-09', 1000, 'Riga', 123, 1);
+INSERT INTO cargo_transfer_flights VALUES (2, 'CTF_002', '2019-07-03', '2019-07-04', 1090, 'New-York', 145, 2);
+INSERT INTO cargo_transfer_flights VALUES (3, 'CTF_003', '2019-07-05', '2019-07-07', 1034, 'Moscow', 190, 3);
 
 INSERT INTO cargo VALUES(1, 1, 1, 'TAP/0101', 120, 150, 130, 230, 150, 123);
 INSERT INTO cargo VALUES(2, 2, 2, 'GAP/0401', 120, 150, 130, 230, 150, 125);

@@ -1,6 +1,5 @@
 package org.sergei.cargo.jpa.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -44,6 +43,5 @@ public class Hangar implements Serializable {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "hangar",
             cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JsonIgnoreProperties(value = "hangar")
     private List<Aircraft> aircrafts;
 }
