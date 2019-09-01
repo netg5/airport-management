@@ -112,3 +112,6 @@ INSERT INTO response_messages VALUES(18, 'RES-001', 'Reservatoion not found');
 INSERT INTO response_messages VALUES(19, 'FLY_001', 'Fly mode not found');
 INSERT INTO response_messages VALUES(20, 'CRG_001', 'Cargo net weight should not be greater than maximum gross weight');
 INSERT INTO response_messages VALUES(21, 'CRG_002', 'Cargo products are too high');
+INSERT INTO response_messages VALUES(22, 'CRG_003', 'Cargo tramsfer flight with this code not found');
+INSERT INTO response_messages VALUES(23, 'WHE_001', 'Warehouse with this code not found');
+INSERT INTO response_messages VALUES(24, 'SAT_001', 'Sales agent with this code not found');
