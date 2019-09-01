@@ -9,9 +9,11 @@ class App extends Component {
         return (
             <Router>
                 <Header/>
-                <div>
-                    {/*<Route path="/" exact component={Header}/>*/}
-                </div>
+                <main>
+                    <div>
+                        {/*<Route path="/" exact component={Header}/>*/}
+                    </div>
+                </main>
                 <Footer/>
             </Router>
         );

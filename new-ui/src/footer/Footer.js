@@ -1,11 +1,19 @@
 import React, {Component} from "react";
 
 class Footer extends Component {
+    constructor(props) {
+        super(props);
+
+        this.year = new Date().getFullYear();
+    }
+
     render() {
         return (
             <footer className="footer mt-auto py-3">
                 <div className="container">
-                    <span className="text-muted">Copyright &#169; 2018-2019 Sergei Visotsky</span>
+                    <div className="row">
+                        <span className="text-muted">Copyright &#169; 2018-${this.year} Sergei Visotsky</span>
+                    </div>
                 </div>
             </footer>
         );
