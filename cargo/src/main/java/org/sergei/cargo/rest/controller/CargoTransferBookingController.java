@@ -1,7 +1,8 @@
 package org.sergei.cargo.rest.controller;
 
 import io.swagger.annotations.Api;
-import org.sergei.cargo.rest.dto.CargoTransferBookingDTO;
+import org.sergei.cargo.rest.dto.request.CargoTransferBookingRequestDTO;
+import org.sergei.cargo.rest.dto.response.CargoTransferBookingResponseDTO;
 import org.sergei.cargo.rest.dto.response.ResponseDTO;
 import org.sergei.cargo.service.interfaces.CargoTransferBookingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,8 @@ public class CargoTransferBookingController {
     }
 
     @PostMapping(value = "/bookCargoTransferFlight")
-    public ResponseEntity<ResponseDTO<CargoTransferBookingDTO>> bookCargoTransferFlight(@RequestBody CargoTransferBookingDTO request) {
+    public ResponseEntity<ResponseDTO<CargoTransferBookingResponseDTO>>
+    bookCargoTransferFlight(@RequestBody CargoTransferBookingRequestDTO request) {
         return cargoTransferBookingService.makeBooking(request);
     }
 

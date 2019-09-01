@@ -31,6 +31,9 @@ public class SalesAgent implements Serializable {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "code")
+    private String agentCode;
+
     @Column(name = "country")
     private String country;
 
