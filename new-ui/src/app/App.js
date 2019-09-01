@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Router} from "react-router-dom";
+import {Route, Router} from "react-router-dom";
 import "./App.css";
 import Header from "../header/Header";
 
@@ -8,6 +8,7 @@ class App extends Component {
         return (
             <Router>
                 <Header/>
+                <Route path="/" exact component={Header}/>
             </Router>
         );
     }
