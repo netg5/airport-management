@@ -1,5 +1,6 @@
 package org.sergei.cargo.rest.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,8 +21,11 @@ import java.time.LocalDateTime;
 public class CargoTransferBookingResponseDTO implements Serializable {
     private static final long serialVersionUID = 3219151122855842040L;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime dateOfFlying;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime departureTime;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime arrivalTime;
     private Integer hoursFlying;
     private CargoDTO cargo;
