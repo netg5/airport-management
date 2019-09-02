@@ -24,18 +24,3 @@ code {
 main > .container {
     padding: 60px 15px 50px;
 }
-
-.footer {
-    background-color: #f5f5f5;
-    padding-top: 26px;
-    box-sizing: border-box;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    right: 0;
-}
-
-.footer > .container {
-    padding-right: 15px;
-    padding-left: 15px;
-}
