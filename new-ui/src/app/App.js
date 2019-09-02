@@ -11,7 +11,7 @@ class App extends Component {
                 <Header/>
                 <main>
                     <div>
-                        {/*<Route path="/" exact component={Header}/>*/}
+
                     </div>
                 </main>
                 <Footer/>

@@ -12,7 +12,7 @@ class Footer extends Component {
             <footer className="footer mt-auto py-3">
                 <div className="container">
                     <div className="row">
-                        <span className="text-muted">Copyright &#169; 2018-${this.year} Sergei Visotsky</span>
+                        <span className="text-muted">Copyright &#169; 2018-{this.year} Sergei Visotsky</span>
                     </div>
                 </div>
             </footer>
