@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import {NavLink} from "react-router-dom";
 
 class Header extends Component {
     render() {
@@ -10,13 +11,13 @@ class Header extends Component {
                         <div className="collapse navbar-collapse" id="navbarCollapse">
                             <ul className="navbar-nav mr-auto">
                                 <li className="nav-item">
-                                    <a className="nav-link" href="/passengers/1">Customer</a>
+                                    <NavLink className="nav-link" to="/passenger/1">Passenger</NavLink>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="/aircrafts/1">Aircraft</a>
+                                    <NavLink className="nav-link" to="/aircrafts/1">Aircraft</NavLink>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="/routes/31">Route</a>
+                                    <NavLink className="nav-link" to="/routes/31">Route</NavLink>
                                 </li>
                             </ul>
                         </div>
