@@ -65,6 +65,8 @@ public class CargoTransferBookingServiceImpl implements CargoTransferBookingServ
         Double cargoWeight = cargoRequest.getWeight();
         Integer maxWeight = cargoRequest.getMaxGrossWeight();
         Double cargoHeight = cargoRequest.getHeight();
+
+        ResponseDTO<CargoTransferBookingResponseDTO> response = null;
         List<ResponseErrorDTO> errorList = new ArrayList<>();
         if (cargoWeight >= maxWeight) {
             List<ResponseErrorDTO> weightError = responseMessageService.responseErrorListByCode("CRG_001");
@@ -80,48 +82,75 @@ public class CargoTransferBookingServiceImpl implements CargoTransferBookingServ
                     .errorDescription(weightError.get(0).getErrorDescription())
                     .errorType("ERROR")
                     .build());
+        } else {
+
+            // Save cargo data----------------------------------------
+            SalesAgent salesAgent = salesAgentRepository.findSalesAgentByCode(cargoRequest.getSalesAgentCode());
+            if (salesAgent == null) {
+                List<ResponseErrorDTO> weightError = responseMessageService.responseErrorListByCode("SAT_001");
+                errorList.add(ResponseErrorDTO.builder()
+                        .errorCode(weightError.get(0).getErrorCode())
+                        .errorDescription(weightError.get(0).getErrorDescription())
+                        .errorType("ERROR")
+                        .build());
+            } else {
+                Warehouse warehouse = warehouseRepository.findWarehouseByCode(cargoRequest.getWarehouseCode());
+                if (warehouse == null) {
+                    List<ResponseErrorDTO> weightError = responseMessageService.responseErrorListByCode("WHE_001");
+                    errorList.add(ResponseErrorDTO.builder()
+                            .errorCode(weightError.get(0).getErrorCode())
+                            .errorDescription(weightError.get(0).getErrorDescription())
+                            .errorType("ERROR")
+                            .build());
+                } else {
+                    Cargo cargo = Cargo.builder()
+                            .weight(cargoRequest.getWeight())
+                            .unitType(cargoRequest.getUnitType())
+                            .tareWeight(cargoRequest.getTareWeight())
+                            .maxGrossWeight(cargoRequest.getMaxGrossWeight())
+                            .internalVolume(cargoRequest.getInternalVolume())
+                            .length(cargoRequest.getLength())
+                            .height(cargoRequest.getHeight())
+                            .salesAgent(salesAgent)
+                            .warehouse(warehouse)
+                            .build();
+                    Cargo savedCargo = cargoRepository.save(cargo);
+
+                    // Save transfer flight data----------------------------------------------------------
+                    CargoTransferFlight transferFlight =
+                            cargoTransferFlightRepository.getCargoTransferByCode(request.getTransferFlightCode());
+                    if (transferFlight == null) {
+                        List<ResponseErrorDTO> weightError = responseMessageService.responseErrorListByCode("CRG_003");
+                        errorList.add(ResponseErrorDTO.builder()
+                                .errorCode(weightError.get(0).getErrorCode())
+                                .errorDescription(weightError.get(0).getErrorDescription())
+                                .errorType("ERROR")
+                                .build());
+                    } else {
+
+                        CargoTransferBooking cargoTransferBooking = CargoTransferBooking.builder()
+                                .hoursFlying(request.getHoursFlying())
+                                .dateOfFlying(request.getDateOfFlying())
+                                .departureTime(request.getDepartureTime())
+                                .arrivalTime(request.getArrivalTime())
+                                .arrivalTime(request.getArrivalTime())
+                                .cargoTransferFlight(transferFlight)
+                                .cargo(savedCargo)
+                                .build();
+
+                        CargoTransferBooking savedCargoTransferBooking = cargoTransferBookingRepository.save(cargoTransferBooking);
+
+                        // Create response message -------------------------------------------
+                        CargoTransferBookingResponseDTO cargoTransferBookingResponseDTO =
+                                cargoTransferBookingDTOMapper.apply(savedCargoTransferBooking);
+                        response = ResponseDTO.<CargoTransferBookingResponseDTO>builder()
+                                .errorList(errorList)
+                                .response(List.of(cargoTransferBookingResponseDTO))
+                                .build();
+                    }
+                }
+            }
         }
-
-        // Save cargo data----------------------------------------
-        SalesAgent salesAgent = salesAgentRepository.findSalesAgentByCode(cargoRequest.getSalesAgentCode());
-        Warehouse warehouse = warehouseRepository.findWarehouseByCode(cargoRequest.getWarehouseCode());
-        Cargo cargo = Cargo.builder()
-                .weight(cargoRequest.getWeight())
-                .unitType(cargoRequest.getUnitType())
-                .tareWeight(cargoRequest.getTareWeight())
-                .maxGrossWeight(cargoRequest.getMaxGrossWeight())
-                .internalVolume(cargoRequest.getInternalVolume())
-                .length(cargoRequest.getLength())
-                .height(cargoRequest.getHeight())
-                .salesAgent(salesAgent)
-                .warehouse(warehouse)
-                .build();
-        Cargo savedCargo = cargoRepository.save(cargo);
-
-        // Save transfer flight data----------------------------------------------------------
-        CargoTransferFlight transferFlight =
-                cargoTransferFlightRepository.getCargoTransferByCode(request.getTransferFlightCode());
-
-        CargoTransferBooking cargoTransferBooking = CargoTransferBooking.builder()
-                .hoursFlying(request.getHoursFlying())
-                .dateOfFlying(request.getDateOfFlying())
-                .departureTime(request.getDepartureTime())
-                .arrivalTime(request.getArrivalTime())
-                .arrivalTime(request.getArrivalTime())
-                .cargoTransferFlight(transferFlight)
-                .cargo(savedCargo)
-                .build();
-
-        CargoTransferBooking savedCargoTransferBooking = cargoTransferBookingRepository.save(cargoTransferBooking);
-
-        // Create response message -------------------------------------------
-        CargoTransferBookingResponseDTO cargoTransferBookingResponseDTO =
-                cargoTransferBookingDTOMapper.apply(savedCargoTransferBooking);
-        ResponseDTO<CargoTransferBookingResponseDTO> response = ResponseDTO.<CargoTransferBookingResponseDTO>builder()
-                .errorList(errorList)
-                .response(List.of(cargoTransferBookingResponseDTO))
-                .build();
-
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
