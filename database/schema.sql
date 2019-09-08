@@ -7,26 +7,13 @@ CREATE TABLE IF NOT EXISTS pilot
     first_name     VARCHAR(45)      NOT NULL,
     last_name      VARCHAR(45)      NOT NULL,
     gender         VARCHAR(6)       NOT NULL,
-    weight         DOUBLE PRECISION NOT NULL,
+    "weight"       DOUBLE PRECISION NOT NULL,
     date_of_birth  DATE             NOT NULL,
-    address        VARCHAR(100)     NOT NULL,
+    "address"      VARCHAR(100)     NOT NULL,
     country        VARCHAR(45)      NOT NULL,
     email          VARCHAR(45)      NOT NULL,
     phone          VARCHAR(45)      NOT NULL,
     CONSTRAINT pilot_pk PRIMARY KEY (id)
-);
-
-CREATE TABLE IF NOT EXISTS owner
-(
-    id         BIGINT       NOT NULL DEFAULT nextval('owner_id_seq'),
-    first_name VARCHAR(45)  NOT NULL,
-    last_name  VARCHAR(45)  NOT NULL,
-    gender     VARCHAR(6)   NOT NULL,
-    address    VARCHAR(100) NOT NULL,
-    country    VARCHAR(45)  NOT NULL,
-    email      VARCHAR(45)  NOT NULL,
-    phone      VARCHAR(45)  NOT NULL,
-    CONSTRAINT owner_pk PRIMARY KEY (id)
 );
 
 CREATE TABLE IF NOT EXISTS manufacturer
@@ -34,7 +21,7 @@ CREATE TABLE IF NOT EXISTS manufacturer
     id                BIGINT      NOT NULL DEFAULT nextval('manufacturer_id_seq'),
     manufacturer_code VARCHAR(60) NOT NULL,
     manufacturer_name VARCHAR(45) NOT NULL,
-    location          VARCHAR(45) NOT NULL,
+    "location"        VARCHAR(45) NOT NULL,
     CONSTRAINT manufacturer_pk PRIMARY KEY (id)
 );
 
@@ -56,7 +43,7 @@ CREATE TABLE IF NOT EXISTS aircraft
     model_number        VARCHAR(10)      NOT NULL,
     aircraft_name       VARCHAR(45)      NOT NULL,
     capacity            INTEGER          NOT NULL,
-    weight              DOUBLE PRECISION NOT NULL,
+    "weight"            DOUBLE PRECISION NOT NULL,
     exploitation_period INTEGER          NOT NULL,
     CONSTRAINT aircraft_pk PRIMARY KEY (id),
     CONSTRAINT manufacturer_fk FOREIGN KEY (manufacturer_id) REFERENCES manufacturer (id),
@@ -80,7 +67,7 @@ CREATE TABLE IF NOT EXISTS airport
 (
     id           BIGINT      NOT NULL DEFAULT nextval('airport_id_seq'),
     airport_name VARCHAR(45) NOT NULL,
-    address      VARCHAR(45) NOT NULL,
+    "address"    VARCHAR(45) NOT NULL,
     country      VARCHAR(45) NOT NULL,
     contact_name VARCHAR(45) NOT NULL,
     contact_job  VARCHAR(45) NOT NULL,
@@ -108,9 +95,9 @@ CREATE TABLE IF NOT EXISTS prices (
 );
 
 CREATE TABLE IF NOT EXISTS fly_modes (
-    code        VARCHAR(7)    NOT NULL,
-    title       VARCHAR(45)   NOT NULL,
-    description VARCHAR(200)  NOT NULL,
+    code          VARCHAR(7)    NOT NULL,
+    title         VARCHAR(45)   NOT NULL,
+    "description" VARCHAR(200)  NOT NULL,
     CONSTRAINT  fly_modes_pk  PRIMARY KEY(code)
 );
 
@@ -144,7 +131,7 @@ CREATE TABLE IF NOT EXISTS manager
     first_name VARCHAR(45)  NOT NULL,
     last_name  VARCHAR(45)  NOT NULL,
     gender     VARCHAR(6)   NOT NULL,
-    address    VARCHAR(100) NOT NULL,
+    "address"  VARCHAR(100) NOT NULL,
     country    VARCHAR(45)  NOT NULL,
     email      VARCHAR(45)  NOT NULL,
     phone      VARCHAR(45)  NOT NULL,
@@ -169,6 +156,7 @@ CREATE TABLE IF NOT EXISTS actual_flight
     CONSTRAINT passenger_id_fk FOREIGN KEY (passenger_id) REFERENCES passenger (id)
 );
 
+-- NB: Decide if this table should be present
 CREATE TABLE IF NOT EXISTS calendar_entry
 (
     id            BIGINT    NOT NULL DEFAULT nextval('calendar_entry_id_seq'),
@@ -181,8 +169,8 @@ CREATE TABLE IF NOT EXISTS calendar_entry
 -- Response message storage
 CREATE TABLE IF NOT EXISTS response_messages
 (
-    id          BIGINT        NOT NULL DEFAULT nextval('response_messages_id_seq'),
-    code        VARCHAR(10)   NOT NULL,
-    description VARCHAR(1000) NOT NULL,
+    id            BIGINT        NOT NULL DEFAULT nextval('response_messages_id_seq'),
+    code          VARCHAR(10)   NOT NULL,
+    "description" VARCHAR(1000) NOT NULL,
     CONSTRAINT response_msg_pk PRIMARY KEY (id)
 );

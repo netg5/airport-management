@@ -43,8 +43,8 @@ CREATE TABLE cargo (
     sales_agent_id   BIGINT           NOT NULL,
     unit_type        VARCHAR(10)      NOT NULL,
     internal_volume  DOUBLE PRECISION NOT NULL,
-    length           DOUBLE PRECISION NOT NULL,
-    weight           DOUBLE PRECISION NOT NULL,
+    "length"         DOUBLE PRECISION NOT NULL,
+    "weight"         DOUBLE PRECISION NOT NULL,
     height           DOUBLE PRECISION NOT NULL,
     max_gross_weight INTEGER          NOT NULL,
     tare_weight      INTEGER          NOT NULL,
@@ -67,7 +67,7 @@ CREATE TABLE cargo_transfer_bookings (
 );
 
 CREATE TABLE cargo_transfer_actual_flights (
-    id                 BIGINT NOT NULL DEFAULT nextval('cargo_transfer_actual_flights_id_seq'),
+    id                 BIGINT    NOT NULL DEFAULT nextval('cargo_transfer_actual_flights_id_seq'),
     aircraft_id        BIGINT    NOT NULL,
     pilot_id           BIGINT    NOT NULL,
     cargo_id           BIGINT    NOT NULL,
