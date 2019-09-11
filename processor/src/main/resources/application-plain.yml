@@ -27,11 +27,3 @@ logging:
     org:
       sergei:
         template: DEBUG
-
-# Actuator info
-info:
-  app:
-    name: Processor
-    version: 1.0
-    profile: plain
-    descripton: Service to process reserved flights
