@@ -166,6 +166,17 @@ CREATE TABLE IF NOT EXISTS calendar_entry
     CONSTRAINT calendar_entry_pk PRIMARY KEY (id)
 );
 
+CREATE TABLE IF NOT EXISTS timetable (
+    id             BIGINT       NOT NULL DEFAULT nextval('timetable_id_seq'),
+    scheduled_time TIME         NOT NULL,
+    flight_number  VARCHAR(6)   NOT NULL,
+    destination    VARCHAR(100) NOT NULL,
+    hours_flying   INTEGER      NOT NULL,
+    departure_time TIMESTAMP    NOT NULL,
+    arrival_time   TIMESTAMP    NOT NULL,
+    CONSTRAINT timetable_pk PRIMARY KEY(id)
+);
+
 -- Response message storage
 CREATE TABLE IF NOT EXISTS response_messages
 (

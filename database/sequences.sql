@@ -23,3 +23,4 @@ CREATE SEQUENCE IF NOT EXISTS cargo_transfer_flight_id_seq;
 CREATE SEQUENCE IF NOT EXISTS cargo_transfer_booking_id_seq;
 CREATE SEQUENCE IF NOT EXISTS cargo_transfer_actual_flights_id_seq;
 CREATE SEQUENCE IF NOT EXISTS cargo_id_seq;
+CREATE SEQUENCE IF NOT EXISTS timetable_id_seq;

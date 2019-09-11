@@ -90,6 +90,10 @@ INSERT INTO cargo_transfer_bookings VALUES(1, 1, 1, '2019-08-09', '2019-08-09 17
 INSERT INTO cargo_transfer_bookings VALUES(2, 2, 2, '2019-08-09', '2019-08-09 17:28:30.183', '2019-08-09 17:28:30.183', 4);
 INSERT INTO cargo_transfer_bookings VALUES(3, 3, 3, '2019-08-09', '2019-08-09 17:28:30.183', '2019-08-09 17:28:30.183', 9);
 
+INSERT INTO timetable VALUES(1, '24:00:00', 'AB0952', 'New-York/USA', 4, '2019-08-09 17:28:30.183', '2019-08-09 17:28:30.183');
+INSERT INTO timetable VALUES(2, '03:00:00', 'AB0952', 'Moscow/Russia', 6, '2019-08-09 17:28:30.183', '2019-08-09 17:28:30.183');
+INSERT INTO timetable VALUES(3, '13:00:00', 'AB0952', 'Hong-Kong', 9, '2019-08-09 17:28:30.183', '2019-08-09 17:28:30.183');
+
 -- Errors
 INSERT INTO response_messages VALUES(1, 'AIR-001', 'Aircraft with this ID not found');
 INSERT INTO response_messages VALUES(2, 'AIR-002', 'Aircraft exploitation period is greater than 10 required years');
