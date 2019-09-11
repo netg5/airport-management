@@ -41,10 +41,3 @@ logging:
     org:
       sergei:
         manager: DEBUG
-
-info:
-  app:
-    name: Processor
-    version: 1.0
-    profile: dev
-    descripton: Service to process reserved flights
