@@ -6,7 +6,16 @@ class Home extends Component {
     };
 
     componentDidMount() {
-        fetch("http://localhost:8080/manager/getAllFlights")
+        const hardcodedToken = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE" +
+            "1NjgzODQwMTYsInVzZXJfbmFtZSI6ImFkbWluIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9VU" +
+            "0VSIiwiUk9MRV9BRE1JTiJdLCJqdGkiOiJkNzA2OTBmMS01M2ZjLTRhNDktOTQ1ZC01YjQ5YWI2" +
+            "ZWZkNjYiLCJjbGllbnRfaWQiOiJ0cnVzdGVkLWNsaWVudCIsInNjb3BlIjpbInJlYWQiLCJ0cnVzdCI" +
+            "sIndyaXRlIl19.G7_A9E2xS3nS1UMD1RK2DKsRLC7YNN81puunHML-0QlGa1c5M4Aqr8joOjryp0g2" +
+            "mTcS-t7lSJnlCnDbsNwQQXOoEEI9R9YROxPGB-GTc5yeQEmwzGQ1_QG4hOVYT17u7k2dTCOFDhAUfy7TMT0A" +
+            "27YDMhQIg3MAsBRkuDCxvyCeADJ_CL1BVCOXwmJKbLfTVRcugVzhg3pPX6Mq70Gc7reekw0UQ6LZI3kzCLCKl" +
+            "1NBuietdg19C4wuaEF7ZEKU8D4ECygTcHfMMq-caBIvmjPG84AynkBxXh3MwpxPBhJxmRGf_8j79zv" +
+            "lubMvfNTm66sk-Ssfb3j7fhvgnrXdaw";
+        fetch("http://localhost:8080/manager/getAllFlights?access_token=" + hardcodedToken)
             .then(res => res.json())
             .then((data) => {
                 this.setState({
