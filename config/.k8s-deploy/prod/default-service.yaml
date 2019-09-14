@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: config
+  namespace: prod
+spec:
+  ports:
+    - name: "http-default"
+      port: 8888        # external port
+      targetPort: 8888  # container port
+  selector:
+    app: config
