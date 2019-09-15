@@ -1,5 +1,5 @@
 server:
-  port: 8086
+  port: 8080
 
 # DataSource configuration
 datasource:
@@ -7,9 +7,6 @@ datasource:
   type: com.zaxxer.hikari.HikariDataSource
   username: flight
   password: flight
-
-cron:
-  expression: "*/5 * * * * *"
 
 # Eureka configuration
 eureka:
@@ -31,13 +28,16 @@ eureka:
     serviceUrl:
       defaulZone: http://localhost:8761/eureka/
 
-management:
-  endpoints.web.exposure.include: "info, health, metrics, configprops, env, prometheus"
+# Authentication security details
+security:
+  oauth2:
+    resource:
+      user-info-uri: http://localhost:8080/auth/users/authenticate
 
 logging:
-  file: C:/tmp/processor.log
+  file: C:/tmp/timetable.log
   level:
     ROOT: INFO
     org:
       sergei:
-        manager: DEBUG
+        timetable: DEBUG

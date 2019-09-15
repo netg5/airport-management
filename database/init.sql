@@ -1,5 +1,4 @@
 CREATE USER flight WITH ENCRYPTED PASSWORD 'flight';
-GRANT ALL PRIVILEGES ON DATABASE flight_reservation TO flight;
 
 CREATE DATABASE flight_reservation
     WITH 
@@ -9,3 +8,5 @@ CREATE DATABASE flight_reservation
     LC_CTYPE = 'English_United States.1252'
     TABLESPACE = pg_default
     CONNECTION LIMIT = -1;
+	
+GRANT ALL PRIVILEGES ON DATABASE flight_reservation TO flight;

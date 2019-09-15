@@ -2,10 +2,6 @@ INSERT INTO pilot VALUES (1, 'DAS124', '12-34-56', 'John', 'Smith', 'male', 50.0
 INSERT INTO pilot VALUES (2, 'BD9051', '90-A1-9K', 'Janis', 'Priede', 'male', 60.0, '1985-08-20', '5th Barona str, Riga', 'Latvia','someowner@somewhere.com', '34534625');
 INSERT INTO pilot VALUES (3, 'LK4562', '1Q-3B-23', 'Fiona', 'Pridaine', 'female', 85.0, '1995-05-29', '1st Amerino str, Berlin', 'Germany','someowner@somewhere.com', '437372342');
 
-INSERT INTO owner VALUES (1, 'Alexey', 'Vishnyakov', 'male', '3rd Kennedy str, New-York', 'USA', 'someowner@somewhere.com', '1234567');
-INSERT INTO owner VALUES (2, 'John', 'Denny', 'male', '5rd Avenue str, New-York', 'USA', 'someowner@somewhere.com', '1234567');
-INSERT INTO owner VALUES (3, 'Jane', 'Smith', 'female', '12th Elizabeth str, London', 'England', 'someowner@somewhere.com', '1234567');
-
 INSERT INTO manufacturer values(1, '213213d', 'Airbus Corporate Jets', 'New-zeland');
 INSERT INTO manufacturer values(2, 'fsdf32', 'Boeing Business Jets', 'USA');
 INSERT INTO manufacturer values(3, 'd3r35v', 'Embraer-Empresa Brasileira DR AeronÁutica', 'Arab-Emirants');
@@ -89,6 +85,10 @@ INSERT INTO cargo VALUES(3, 3, 3, 'BAP/0107', 128, 132, 154, 239, 151, 158);
 INSERT INTO cargo_transfer_bookings VALUES(1, 1, 1, '2019-08-09', '2019-08-09 17:28:30.183', '2019-08-09 17:28:30.183', 3);
 INSERT INTO cargo_transfer_bookings VALUES(2, 2, 2, '2019-08-09', '2019-08-09 17:28:30.183', '2019-08-09 17:28:30.183', 4);
 INSERT INTO cargo_transfer_bookings VALUES(3, 3, 3, '2019-08-09', '2019-08-09 17:28:30.183', '2019-08-09 17:28:30.183', 9);
+
+INSERT INTO timetable VALUES(1, '24:00:00', 'AB0952', 'New-York/USA', 4, '2019-08-09 17:28:30.183', '2019-08-09 17:28:30.183');
+INSERT INTO timetable VALUES(2, '03:00:00', 'AB0952', 'Moscow/Russia', 6, '2019-08-09 17:28:30.183', '2019-08-09 17:28:30.183');
+INSERT INTO timetable VALUES(3, '13:00:00', 'AB0952', 'Hong-Kong', 9, '2019-08-09 17:28:30.183', '2019-08-09 17:28:30.183');
 
 -- Errors
 INSERT INTO response_messages VALUES(1, 'AIR-001', 'Aircraft with this ID not found');

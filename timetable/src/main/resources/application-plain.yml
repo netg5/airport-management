@@ -1,5 +1,5 @@
 server:
-  port: 8086
+  port: 8082
 
 # Spring specific configuration
 spring:
@@ -8,6 +8,8 @@ spring:
       enabled: false
     discovery:
       enabled: false
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
 
 # DataSource configuration
 datasource:
@@ -16,14 +18,11 @@ datasource:
   username: flight
   password: flight
 
-cron:
-  expression: "*/5 * * * * *"
-
 # Logging configuration
 logging:
-  file: C:/tmp/processor.log
+  file: C:/tmp/timetable.log
   level:
     ROOT: INFO
     org:
       sergei:
-        template: DEBUG
+        timetable: DEBUG
