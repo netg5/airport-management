@@ -9,7 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.sql.Time;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 /**
  * @author Sergei Visotsky
@@ -45,8 +45,8 @@ public class Timetable implements Serializable {
     private Integer hoursFlying;
 
     @Column(name = "departure_time")
-    private Timestamp departureTime;
+    private LocalDateTime departureTime;
 
     @Column(name = "arrival_time")
-    private Timestamp arrivalTime;
+    private LocalDateTime arrivalTime;
 }
