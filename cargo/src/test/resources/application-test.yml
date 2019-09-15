@@ -1,0 +1,19 @@
+spring:
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+  datasource:
+    driver-class-name: org.h2.Driver
+    hikari:
+      jdbc-url: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1
+    username: sa
+    password: sa
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+    show_sql: true
+  liquibase:
+    enabled: false
+#    change-log: "classpath:liquibase/db.changelog-master.xml"
+  h2:
+    console:
+      enabled: true
+      path: "/h2-console"

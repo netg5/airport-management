@@ -1,12 +1,5 @@
 server:
-  port: 8089
-
-# Spring specific configuration
-spring:
-  application:
-    name: reports
-  autoconfigure:
-    exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+  port: 8745
 
 # DataSource configuration
 datasource:
@@ -34,8 +27,13 @@ eureka:
     instance-info-replication-interval-seconds: 10 # how often to replicate instance changes to be replicated to Eureka server
     serviceUrl:
       defaulZone: http://localhost:8761/eureka/
-management:
-  endpoints.web.exposure.include: "info, health, metrics, configprops, env, prometheus"
+
+# Authentication security details
+security:
+  oauth2:
+    resource:
+      user-info-uri: http://localhost:8080/auth/users/authenticate
+
 logging:
   file: C:/tmp/reports.log
   level:

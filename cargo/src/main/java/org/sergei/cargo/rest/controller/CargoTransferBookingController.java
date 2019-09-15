@@ -1,0 +1,34 @@
+package org.sergei.cargo.rest.controller;
+
+import io.swagger.annotations.Api;
+import org.sergei.cargo.rest.dto.request.CargoTransferBookingRequestDTO;
+import org.sergei.cargo.rest.dto.response.CargoTransferBookingResponseDTO;
+import org.sergei.cargo.rest.dto.response.ResponseDTO;
+import org.sergei.cargo.service.interfaces.CargoTransferBookingService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * @author Sergei Visotsky
+ */
+@RestController
+@Api(tags = {"cargoTransferBooking"})
+public class CargoTransferBookingController {
+
+    private final CargoTransferBookingService cargoTransferBookingService;
+
+    @Autowired
+    public CargoTransferBookingController(CargoTransferBookingService cargoTransferBookingService) {
+        this.cargoTransferBookingService = cargoTransferBookingService;
+    }
+
+    @PostMapping(value = "/bookCargoTransferFlight")
+    public ResponseEntity<ResponseDTO<CargoTransferBookingResponseDTO>>
+    bookCargoTransferFlight(@RequestBody CargoTransferBookingRequestDTO request) {
+        return cargoTransferBookingService.makeBooking(request);
+    }
+
+}

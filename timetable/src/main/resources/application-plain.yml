@@ -1,0 +1,28 @@
+server:
+  port: 8082
+
+# Spring specific configuration
+spring:
+  cloud:
+    config:
+      enabled: false
+    discovery:
+      enabled: false
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+
+# DataSource configuration
+datasource:
+  jdbc-url: jdbc:postgresql://localhost:5432/flight_reservation
+  type: com.zaxxer.hikari.HikariDataSource
+  username: flight
+  password: flight
+
+# Logging configuration
+logging:
+  file: C:/tmp/timetable.log
+  level:
+    ROOT: INFO
+    org:
+      sergei:
+        timetable: DEBUG

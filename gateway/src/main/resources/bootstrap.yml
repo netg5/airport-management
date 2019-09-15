@@ -1,5 +1,3 @@
-zuul:
-  ignoredServices: '*'
 spring:
   cloud:
     config:

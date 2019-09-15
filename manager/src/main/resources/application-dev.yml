@@ -1,10 +1,10 @@
 server:
   port: 8088
 
-# Spring specific configuration
 spring:
-  application:
-    name: manager
+  cloud:
+    config:
+      enabled: false
 
 # DataSource configuration
 datasource:
@@ -39,9 +39,6 @@ security:
     resource:
       user-info-uri: http://localhost:8080/auth/users/authenticate
 
-management:
-  endpoints.web.exposure.include: "info, health, metrics, configprops, env, prometheus"
-
 logging:
   file: C:/tmp/manager.log
   level:
@@ -49,10 +46,3 @@ logging:
     org:
       sergei:
         manager: DEBUG
-
-info:
-  app:
-    name: Management service
-    version: 1.0
-    profile: dev
-    descripton: Service to perform airport management operations e.g. save aircraft, pilot, calendar and other administrative data

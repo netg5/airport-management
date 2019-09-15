@@ -1,10 +1,8 @@
 server:
-  port: 8089
+  port: 8745
 
 # Spring specific configuration
 spring:
-  application:
-    name: reports
   cloud:
     config:
       enabled: false
@@ -20,8 +18,7 @@ datasource:
   username: flight
   password: flight
 
-management:
-  endpoints.web.exposure.include: "info, health, metrics, configprops, env, prometheus"
+# Logging configuration
 logging:
   file: C:/tmp/reports.log
   level:

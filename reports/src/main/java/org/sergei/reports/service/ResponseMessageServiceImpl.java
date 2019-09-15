@@ -3,6 +3,7 @@ package org.sergei.reports.service;
 import org.sergei.reports.jpa.model.ResponseMessage;
 import org.sergei.reports.jpa.repository.ResponseMessageRepository;
 import org.sergei.reports.rest.dto.response.ResponseErrorDTO;
+import org.sergei.reports.service.interfaces.ResponseMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

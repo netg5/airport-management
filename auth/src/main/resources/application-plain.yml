@@ -1,11 +1,12 @@
 server:
   port: 8082
+
 spring:
-  application:
-    name: auth
   cloud:
+    config:
+      enabled: false
     discovery:
-      enabled: true
+      enabled: false
 
 # DataSource configuration
 datasource:
@@ -14,8 +15,6 @@ datasource:
   username: flight
   password: flight
 
-management:
-  endpoints.web.exposure.include: "info, health, metrics, configprops, env, prometheus"
 logging:
   file: C:/tmp/auth.log
   level:

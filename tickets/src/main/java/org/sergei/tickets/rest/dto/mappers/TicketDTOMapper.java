@@ -12,18 +12,17 @@ public class TicketDTOMapper implements IMapper<Ticket, TicketDTO> {
 
     @Override
     public TicketDTO apply(Ticket ticket) {
-        TicketDTO ticketDTO = new TicketDTO();
-
-        ticketDTO.setPassengerId(ticket.getPassengerId());
-        ticketDTO.setAircraftName(ticket.getAircraftName());
-        ticketDTO.setFirstName(ticket.getFirstName());
-        ticketDTO.setLastName(ticket.getLastName());
-        ticketDTO.setDateOfFlying(ticket.getDateOfFlying());
-        ticketDTO.setArrivalTime(ticket.getArrivalTime());
-        ticketDTO.setHoursFlying(ticket.getHoursFlying());
-        ticketDTO.setAircraftName(ticket.getAircraftName());
-        ticketDTO.setModelNumber(ticket.getModel_number());
-
-        return ticketDTO;
+        return TicketDTO.builder()
+                .firstName(ticket.getFirstName())
+                .lastName(ticket.getLastName())
+                .dateOfFlying(ticket.getDateOfFlying())
+                .departureTime(ticket.getDepartureTime())
+                .arrivalTime(ticket.getArrivalTime())
+                .distance(ticket.getDistance())
+                .place(ticket.getPlace())
+                .title(ticket.getTitle())
+                .amount(ticket.getAmount())
+                .currency(ticket.getCurrency())
+                .build();
     }
 }

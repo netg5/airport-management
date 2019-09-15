@@ -31,5 +31,5 @@ public interface TicketService {
      * @param passengerId Request payload with params to find tickets
      * @return collection of tickets
      */
-    ResponseEntity<ResponseDTO<TicketDTO>> findAllTickets(Long passengerId);
+    ResponseEntity<ResponseDTO<TicketDTO>> findAllTickets(Long passengerId, String currency);
 }

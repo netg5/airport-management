@@ -1,5 +1,5 @@
 # Airport management
-Airport management application based on the microservice architecture which allows to prform airport administration, flight reservation and all the data processing.
+Airport management application based on the microservice architecture which allows to prform airport administration, flight booking and all the data processing.
 
 ## Technologies
 * Java 11
@@ -10,8 +10,7 @@ Airport management application based on the microservice architecture which allo
 * MySQL
 * Jackson
 * Swagger
-* Thymeleaf
-* Twitter Bootstrap
+* React
 * Jaeger
 
 ## Services
@@ -19,12 +18,12 @@ Airport management application based on the microservice architecture which allo
 [https://github.com/sergeivisotsky/airport-management-config](https://github.com/sergeivisotsky/airport-management-config)
 * auth - service responsible for authentication and authorization
 * registry - service registry where of all microservices can be observed
-* service-resource - service to experiment with the new features
 * gateway - entry point of the all services
-* reservation - service which allows to reserve flight
+* booking - service which allows to reserve flight
+* management - airport management service
 * tickets - service where all passenger tickets can be seen
-* reports - service to get all reports for a specific purpose (e.g. route report)
-* main-ui - user interface service (Thymeleaf + Twitter Bootstrap)
+
+To be continued after implementation...
 
 ## Authentication
 To access any resource authentication should be performed. By performing this request with such a parameters access_token is retrieved.
