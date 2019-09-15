@@ -7,7 +7,7 @@ class Header extends Component {
             <header>
                 <div className="container">
                     <nav className="navbar navbar-expand-md fixed-top navbar-dark bg-dark flex-row">
-                        <a className="navbar-brand" href="/">Flight reservation</a>
+                        <a className="navbar-brand" href="/">Airport management</a>
                         <div className="collapse navbar-collapse" id="navbarCollapse">
                             <ul className="navbar-nav mr-auto">
                                 <li className="nav-item">
