@@ -2,10 +2,6 @@ INSERT INTO pilot VALUES (1, 'DAS124', '12-34-56', 'John', 'Smith', 'male', 50.0
 INSERT INTO pilot VALUES (2, 'BD9051', '90-A1-9K', 'Janis', 'Priede', 'male', 60.0, '1985-08-20', '5th Barona str, Riga', 'Latvia','someowner@somewhere.com', '34534625');
 INSERT INTO pilot VALUES (3, 'LK4562', '1Q-3B-23', 'Fiona', 'Pridaine', 'female', 85.0, '1995-05-29', '1st Amerino str, Berlin', 'Germany','someowner@somewhere.com', '437372342');
 
-INSERT INTO owner VALUES (1, 'Alexey', 'Vishnyakov', 'male', '3rd Kennedy str, New-York', 'USA', 'someowner@somewhere.com', '1234567');
-INSERT INTO owner VALUES (2, 'John', 'Denny', 'male', '5rd Avenue str, New-York', 'USA', 'someowner@somewhere.com', '1234567');
-INSERT INTO owner VALUES (3, 'Jane', 'Smith', 'female', '12th Elizabeth str, London', 'England', 'someowner@somewhere.com', '1234567');
-
 INSERT INTO manufacturer values(1, '213213d', 'Airbus Corporate Jets', 'New-zeland');
 INSERT INTO manufacturer values(2, 'fsdf32', 'Boeing Business Jets', 'USA');
 INSERT INTO manufacturer values(3, 'd3r35v', 'Embraer-Empresa Brasileira DR AeronÁutica', 'Arab-Emirants');
