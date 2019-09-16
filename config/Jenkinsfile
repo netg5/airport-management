@@ -27,7 +27,7 @@ pipeline {
         }
         stage('Docker Build & Push') {
             steps {
-                withDockerRegistry(credentialsId: 'dockerhub-id', toolName: 'docker', url: 'https://index.docker.io/v1/') {
+                withDockerRegistry(credentialsId: 'dockerhub-id', url: 'https://index.docker.io/v1/') {
                       sh "docker build -t sergeivisotsky/airport-management:config-v2 ."
                       sh "docker push sergeivisotsky/airport-management:config-v2"
                 }
