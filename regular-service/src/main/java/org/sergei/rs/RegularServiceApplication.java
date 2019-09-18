@@ -1,4 +1,4 @@
-package org.sergei.processor;
+package org.sergei.rs;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,10 +6,10 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-public class ProcessorApplication {
+public class RegularServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ProcessorApplication.class, args);
+        SpringApplication.run(RegularServiceApplication.class, args);
     }
 
 }

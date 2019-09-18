@@ -1,4 +1,4 @@
-package org.sergei.processor.config;
+package org.sergei.rs.config;
 
 import io.opentracing.contrib.spring.web.starter.WebTracingProperties;
 import org.springframework.context.annotation.Bean;

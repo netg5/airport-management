@@ -1,4 +1,4 @@
-package org.sergei.processor;
+package org.sergei.rs;
 
 import io.opentracing.Span;
 import io.opentracing.Tracer;

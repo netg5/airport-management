@@ -1,6 +1,6 @@
 spring:
   application:
-    name: processor
+    name: regular-service
   jpa:
     properties:
       hibernate:
