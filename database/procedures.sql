@@ -6,7 +6,7 @@ DECLARE
 	booking_rec RECORD;
 	pilot_rec RECORD;
 	aircraft_rec RECORD;
-	curr_time DATE = now();
+	curr_time TIMESTAMP = now();
 BEGIN
     SET timezone TO 'UTC +3';
 	SELECT INTO booking_rec
@@ -26,7 +26,7 @@ BEGIN
 	JOIN flight f
 		ON f.id = b.flight_id;
 	
-	IF booking_rec.departure_time == curr_time THEN
+	IF booking_rec.departure_time = date_trunc('hours', curr_time) THEN
 		SELECT INTO aircraft_rec * FROM aircraft a WHERE a.available = 1;
 		INSERT INTO 
 			actual_flight 
