@@ -21,9 +21,9 @@ cron:
 
 # Logging configuration
 logging:
-  file: C:/tmp/processor.log
+  file: C:/tmp/regular-service.log
   level:
     ROOT: INFO
     org:
       sergei:
-        template: DEBUG
+        rs: DEBUG
