@@ -1,4 +1,4 @@
-package org.sergei.processor;
+package org.sergei.rs;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -11,7 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles("test")
-public class ProcessorApplicationTests {
+public class RegularServiceApplicationTests {
 
     @Test
     public void contextLoads() {
