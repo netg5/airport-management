@@ -11,12 +11,12 @@
     </parent>
 
     <groupId>org.sergei</groupId>
-    <artifactId>processor</artifactId>
+    <artifactId>regular-service</artifactId>
     <packaging>jar</packaging>
     <version>0.0.1-SNAPSHOT</version>
 
-    <name>Processor</name>
-    <description>Service to process reserved flights</description>
+    <name>Regular service</name>
+    <description>Service for regular processes e.g. cron, queue, etc.</description>
 
     <properties>
         <java.version>11</java.version>

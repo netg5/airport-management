@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public interface TimetableService {
 
-    List<ResponseDTO<TimetableDTO>> showTimetable(int page, int size);
+    ResponseDTO<TimetableDTO> showTimetable(int page, int size);
 
-    TimetableDTO saveTimetable(TimetableDTO request);
+    ResponseDTO<TimetableDTO> saveTimetable(TimetableDTO request);
 }

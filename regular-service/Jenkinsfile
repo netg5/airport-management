@@ -1,18 +1,12 @@
 #!groovy
 
-def POM_LOCATION = '-f processor/pom.xml'
+def POM_LOCATION = '-f regular-service/pom.xml'
 pipeline {
     agent any
     tools {
         maven 'maven_3_6_1'
     }
     stages {
-        stage('Compilation') {
-            steps {
-                echo '-=- compiling project -=-'
-                sh "mvn ${POM_LOCATION} clean compile -DskipTests=true"
-            }
-        }
         stage('Testing') {
             steps {
                 echo '-=- execute unit tests -=-'
@@ -22,13 +16,13 @@ pipeline {
         stage('Installation') {
             steps {
                 echo '-=- installing project -=-'
-                sh "mvn ${POM_LOCATION} clean install -DskipTests=true"
+                sh "mvn ${POM_LOCATION} clean install -DskipTests"
             }
         }
         stage('Packaging') {
             steps {
                 echo '-=- packaging project -=-'
-                sh "mvn ${POM_LOCATION} package -DskipTests=true"
+                sh "mvn ${POM_LOCATION} package -DskipTests"
             }
         }
         stage('Code inspection & quality gate') {

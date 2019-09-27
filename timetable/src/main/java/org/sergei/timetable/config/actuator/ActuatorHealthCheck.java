@@ -1,6 +1,6 @@
 package org.sergei.timetable.config.actuator;
 
-import org.sergei.template.rest.exceptions.FlightRuntimeException;
+import org.sergei.timetable.rest.exceptions.FlightRuntimeException;
 
 import java.io.IOException;
 import java.io.InputStream;

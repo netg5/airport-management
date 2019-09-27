@@ -26,7 +26,7 @@ BEGIN
 	JOIN flight f
 		ON f.id = b.flight_id;
 	
-	IF booking_rec.departure_time <= curr_time THEN
+	IF booking_rec.departure_time == curr_time THEN
 		SELECT INTO aircraft_rec * FROM aircraft a WHERE a.available = 1;
 		INSERT INTO 
 			actual_flight 

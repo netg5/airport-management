@@ -35,9 +35,9 @@ management:
   endpoints.web.exposure.include: "info, health, metrics, configprops, env, prometheus"
 
 logging:
-  file: C:/tmp/processor.log
+  file: C:/tmp/regular-service.log
   level:
     ROOT: INFO
     org:
       sergei:
-        manager: DEBUG
+        rs: DEBUG
