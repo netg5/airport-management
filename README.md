@@ -10,7 +10,7 @@ Airport management application based on the microservice architecture which allo
 * MySQL
 * Jackson
 * Swagger
-* React
+* Angular
 * Jaeger
 
 ## Services
