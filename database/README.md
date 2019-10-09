@@ -15,8 +15,7 @@ To create application database SQL scripts should be run in the following order:
 3. schema.sql
 4. cargo_schema.sql
 5. auth_schema.sql
-7. procedures.sql
-8. initial_data.sql
+6. initial_data.sql
 
 ## Liquibase usage
 Use the following Maven goals to perform liquibase changelog generation as well as change tracking.
