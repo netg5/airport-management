@@ -1,6 +1,4 @@
 -- Sequences
-CREATE SEQUENCE IF NOT EXISTS passenger_id_seq;
-CREATE SEQUENCE IF NOT EXISTS booking_id_seq;
 CREATE SEQUENCE IF NOT EXISTS manager_id_seq;
 CREATE SEQUENCE IF NOT EXISTS response_messages_id_seq;
 CREATE SEQUENCE IF NOT EXISTS actual_flight_id_seq;

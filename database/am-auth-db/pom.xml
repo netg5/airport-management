@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>database</artifactId>
+        <artifactId>am-database-parent</artifactId>
         <groupId>org.sergei</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
@@ -18,7 +18,6 @@
 
     <properties>
         <liquibase.propertyFile>src/main/resources/liquibase/liquibase.properties</liquibase.propertyFile>
-        <liquibase.version>3.5.1</liquibase.version>
     </properties>
     <dependencies>
         <dependency>
@@ -40,7 +39,7 @@
             <plugin>
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-maven-plugin</artifactId>
-                <version>${liquibase.version}</version>
+                <version>3.5.1</version>
                 <configuration>
                     <propertyFile>${liquibase.propertyFile}</propertyFile>
                     <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>

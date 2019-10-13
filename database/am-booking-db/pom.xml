@@ -10,16 +10,15 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>am-manager-db</artifactId>
+    <artifactId>am-booking-db</artifactId>
     <packaging>jar</packaging>
 
-    <name>Manager service database</name>
-    <description>Database to hold manager service data</description>
+    <name>Booking database</name>
+    <description>Database to hold flight booking data</description>
 
     <properties>
         <liquibase.propertyFile>src/main/resources/liquibase/liquibase.properties</liquibase.propertyFile>
     </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.liquibase</groupId>
