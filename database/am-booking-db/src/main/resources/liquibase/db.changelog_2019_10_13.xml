@@ -9,60 +9,66 @@
              endDelimiter="\n;"
              splitStatements="true"
              stripComments="true">
-            CREATE SEQUENCE IF NOT EXISTS passenger_id_seq;
-            CREATE SEQUENCE IF NOT EXISTS booking_id_seq;
-            CREATE SEQUENCE IF NOT EXISTS response_messages_id_seq;
+            <![CDATA[
+                    CREATE SEQUENCE IF NOT EXISTS passenger_id_seq;
+                    CREATE SEQUENCE IF NOT EXISTS booking_id_seq;
+                    CREATE SEQUENCE IF NOT EXISTS response_messages_id_seq;
+                ]]>
         </sql>
         <sql dbms="postgresql"
              endDelimiter="\n;"
              splitStatements="true"
              stripComments="true">
-                CREATE TABLE IF NOT EXISTS passenger
-                (
-                    id         BIGINT      NOT NULL DEFAULT nextval('passenger_id_seq'),
-                    first_name VARCHAR(45) NOT NULL,
-                    last_name  VARCHAR(45) NOT NULL,
-                    age        INTEGER     NOT NULL,
-                    gender     VARCHAR(10) NOT NULL,
-                    phone      VARCHAR(45) NOT NULL,
-                    CONSTRAINT passenger_pk PRIMARY KEY (id)
-                );
+            <![CDATA[
+                    CREATE TABLE IF NOT EXISTS passenger
+                    (
+                        id         BIGINT      NOT NULL DEFAULT nextval('passenger_id_seq'),
+                        first_name VARCHAR(45) NOT NULL,
+                        last_name  VARCHAR(45) NOT NULL,
+                        age        INTEGER     NOT NULL,
+                        gender     VARCHAR(10) NOT NULL,
+                        phone      VARCHAR(45) NOT NULL,
+                        CONSTRAINT passenger_pk PRIMARY KEY (id)
+                    );
 
-                CREATE TABLE IF NOT EXISTS booking
-                (
-                    id             BIGINT       NOT NULL DEFAULT nextval('booking_id_seq'),
-                    passenger_id   BIGINT       NOT NULL,
-                    flight_id      BIGINT       NOT NULL,
-                    fly_mode_code  VARCHAR(7)   NOT NULL,
-                    date_of_flying DATE         NOT NULL,
-                    departure_time TIMESTAMP    NOT NULL,
-                    arrival_time   TIMESTAMP    NOT NULL,
-                    hours_flying   INTEGER      NOT NULL,
-                    CONSTRAINT booking_pk       PRIMARY KEY (id)
-                );
+                    CREATE TABLE IF NOT EXISTS booking
+                    (
+                        id             BIGINT       NOT NULL DEFAULT nextval('booking_id_seq'),
+                        passenger_id   BIGINT       NOT NULL,
+                        flight_id      BIGINT       NOT NULL,
+                        fly_mode_code  VARCHAR(7)   NOT NULL,
+                        date_of_flying DATE         NOT NULL,
+                        departure_time TIMESTAMP    NOT NULL,
+                        arrival_time   TIMESTAMP    NOT NULL,
+                        hours_flying   INTEGER      NOT NULL,
+                        CONSTRAINT booking_pk       PRIMARY KEY (id)
+                    );
 
-                -- Response message storage
-                CREATE TABLE IF NOT EXISTS response_messages
-                (
-                    id            BIGINT        NOT NULL DEFAULT nextval('response_messages_id_seq'),
-                    code          VARCHAR(10)   NOT NULL,
-                    "description" VARCHAR(1000) NOT NULL,
-                    CONSTRAINT response_msg_pk PRIMARY KEY (id)
-                );
+                    -- Response message storage
+                    CREATE TABLE IF NOT EXISTS response_messages
+                    (
+                        id            BIGINT        NOT NULL DEFAULT nextval('response_messages_id_seq'),
+                        code          VARCHAR(10)   NOT NULL,
+                        "description" VARCHAR(1000) NOT NULL,
+                        CONSTRAINT response_msg_pk PRIMARY KEY (id)
+                    );
+                ]]>
         </sql>
         <sql dbms="postgresql"
              endDelimiter="\n;"
              splitStatements="true"
              stripComments="true">
-                INSERT INTO passenger VALUES (1, 'Arena', 'Kronfold', 45, 'female', '8923847');
-                INSERT INTO passenger VALUES (2, 'Sergei', 'Visotsky', 21, 'male', '1234567');
-                INSERT INTO passenger VALUES (3, 'Krist', 'Kronfold', 29, 'male', '9204');
-                INSERT INTO booking VALUES(1, 1, 1, 'BUS_001', '2019-08-09', '2019-08-09 17:28:30.183', '2019-08-09 17:28:30.183', 1);
-                INSERT INTO booking VALUES(2, 2, 2, 'MID_001', '2019-08-09', '2019-08-09 17:28:30.183', '2019-08-09 17:28:30.183', 1);
-                INSERT INTO booking VALUES(3, 3, 3, 'ECO_001', '2019-08-09', '2019-08-09 17:28:30.183', '2019-08-09 17:28:30.183', 1);
-                INSERT INTO response_messages VALUES(4, 'PAS-001', 'Passenger with this ID not found');
-                INSERT INTO response_messages VALUES(5, 'PAS-002', 'This passenger has no reservations made');
-                INSERT INTO response_messages VALUES(11, 'RP-001', 'Required parameter is not present');
+            <![CDATA[
+                        INSERT INTO passenger VALUES (1, 'Arena', 'Kronfold', 45, 'female', '8923847');
+                        INSERT INTO passenger VALUES (2, 'Sergei', 'Visotsky', 21, 'male', '1234567');
+                        INSERT INTO passenger VALUES (3, 'Krist', 'Kronfold', 29, 'male', '9204');
+                        INSERT INTO booking VALUES(1, 1, 1, 'BUS_001', '2019-08-09', '2019-08-09 17:28:30.183', '2019-08-09 17:28:30.183', 1);
+                        INSERT INTO booking VALUES(2, 2, 2, 'MID_001', '2019-08-09', '2019-08-09 17:28:30.183', '2019-08-09 17:28:30.183', 1);
+                        INSERT INTO booking VALUES(3, 3, 3, 'ECO_001', '2019-08-09', '2019-08-09 17:28:30.183', '2019-08-09 17:28:30.183', 1);
+                        INSERT INTO response_messages VALUES(4, 'PAS-001', 'Passenger with this ID not found');
+                        INSERT INTO response_messages VALUES(5, 'PAS-002', 'This passenger has no reservations made');
+                        INSERT INTO response_messages VALUES(11, 'RP-001', 'Required parameter is not present');
+                    ]]>
         </sql>
     </changeSet>
 </databaseChangeLog>
