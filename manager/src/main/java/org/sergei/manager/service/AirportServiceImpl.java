@@ -1,5 +1,6 @@
 package org.sergei.manager.service;
 
+import com.google.common.collect.ImmutableList;
 import lombok.extern.slf4j.Slf4j;
 import org.sergei.manager.jpa.model.Airport;
 import org.sergei.manager.jpa.model.mappers.AirportModelMapper;
@@ -52,15 +53,15 @@ public class AirportServiceImpl implements AirportService {
         String airportName = request.getAirportName();
         if (airportName == null) {
             List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("RP-001");
-            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, ImmutableList.of()), HttpStatus.NOT_FOUND);
         } else {
             Optional<Airport> airport = airportRepository.getAirportByName(airportName);
             if (airport.isEmpty()) {
                 List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("APT-001");
-                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, ImmutableList.of()), HttpStatus.NOT_FOUND);
             } else {
                 AirportDTO airportDTO = airportDTOMapper.apply(airport.get());
-                return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of(airportDTO)), HttpStatus.OK);
+                return new ResponseEntity<>(new ResponseDTO<>(ImmutableList.of(), List.of(airportDTO)), HttpStatus.OK);
             }
         }
     }
@@ -76,7 +77,7 @@ public class AirportServiceImpl implements AirportService {
         String airportName = request.getAirportName();
         if (airportName == null) {
             List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("RP-001");
-            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, ImmutableList.of()), HttpStatus.NOT_FOUND);
         } else {
             Query query =
                     em.createNativeQuery(
@@ -84,7 +85,7 @@ public class AirportServiceImpl implements AirportService {
             query.setParameter("airportName", airportName);
             if (query.getSingleResult() == null) {
                 List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("RP-001");
-                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, ImmutableList.of()), HttpStatus.NOT_FOUND);
             } else {
                 @SuppressWarnings("unchecked")
                 List<Object[]> list = query.getResultList();
@@ -95,7 +96,7 @@ public class AirportServiceImpl implements AirportService {
                     contactJob = (String) elem[1];
                 }
                 AirportContactDTO contactDTO = new AirportContactDTO(contactName, contactJob);
-                return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of(contactDTO)), HttpStatus.OK);
+                return new ResponseEntity<>(new ResponseDTO<>(ImmutableList.of(), List.of(contactDTO)), HttpStatus.OK);
             }
         }
     }
@@ -105,6 +106,6 @@ public class AirportServiceImpl implements AirportService {
         Airport airport = airportModelMapper.apply(airportDTO);
         Airport savedAirport = airportRepository.save(airport);
         AirportDTO savedAirportDTO = airportDTOMapper.apply(savedAirport);
-        return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of(savedAirportDTO)), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseDTO<>(ImmutableList.of(), List.of(savedAirportDTO)), HttpStatus.OK);
     }
 }
