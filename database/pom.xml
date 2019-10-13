@@ -14,7 +14,28 @@
 
     <modules>
         <module>database-old</module>
-        <module>am-auth</module>
+        <module>am-auth-db</module>
+        <module>am-manager-db</module>
     </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-core</artifactId>
+                <version>3.5.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>3.5.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>9.4.1209.jre7</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
 </project>

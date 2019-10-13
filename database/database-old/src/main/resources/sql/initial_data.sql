@@ -1,23 +1,3 @@
-INSERT INTO pilot VALUES (1, 'DAS124', '12-34-56', 'John', 'Smith', 'male', 50.0, '1970-08-29', '3rd Kennedy str, New-York', 'USA','someowner@somewhere.com', '1234567');
-INSERT INTO pilot VALUES (2, 'BD9051', '90-A1-9K', 'Janis', 'Priede', 'male', 60.0, '1985-08-20', '5th Barona str, Riga', 'Latvia','someowner@somewhere.com', '34534625');
-INSERT INTO pilot VALUES (3, 'LK4562', '1Q-3B-23', 'Fiona', 'Pridaine', 'female', 85.0, '1995-05-29', '1st Amerino str, Berlin', 'Germany','someowner@somewhere.com', '437372342');
-
-INSERT INTO manufacturer values(1, '213213d', 'Airbus Corporate Jets', 'New-zeland');
-INSERT INTO manufacturer values(2, 'fsdf32', 'Boeing Business Jets', 'USA');
-INSERT INTO manufacturer values(3, 'd3r35v', 'Embraer-Empresa Brasileira DR AeronÁutica', 'Arab-Emirants');
-
-INSERT INTO hangar VALUES(1, '2131234', 3, 'New-York');
-INSERT INTO hangar VALUES(2, 'fsaf33522', 1, 'Riga');
-INSERT INTO hangar VALUES(3, 'f341tg', 3, 'London');
-
-INSERT INTO aircraft VALUES (1, 1, 1, '123D', '777-300ER', 'Boeing', 3450, 1000, 3);
-INSERT INTO aircraft VALUES (2, 2, 2, '12dc3', 'A220', 'Airbus', 43000, 5400, 6);
-INSERT INTO aircraft VALUES (3, 3, 3, '82497Df', 'B30', 'Airbus', 42007, 3200, 7);
-
-INSERT INTO flight VALUES (2, '2019-07-02', '2019-07-01', 1000, 'Riga', 123, 1);
-INSERT INTO flight VALUES (3, '2019-08-23', '2019-08-22', 3600, 'Singapoore', 3400, 2);
-INSERT INTO flight VALUES (1, '2019-08-23', '2019-08-22', 3600, 'New-York', 3400, 3);
-
 INSERT INTO passenger VALUES (1, 'Arena', 'Kronfold', 45, 'female', '8923847');
 INSERT INTO passenger VALUES (2, 'Sergei', 'Visotsky', 21, 'male', '1234567');
 INSERT INTO passenger VALUES (3, 'Krist', 'Kronfold', 29, 'male', '9204');
@@ -49,21 +29,6 @@ INSERT INTO booking VALUES(2, 2, 2, 'MID_001', '2019-08-09', '2019-08-09 17:28:3
 INSERT INTO booking VALUES(3, 3, 3, 'ECO_001', '2019-08-09', '2019-08-09 17:28:30.183', '2019-08-09 17:28:30.183', 1);
 
 INSERT INTO airport VALUES(1, 'Los Angeles International Airport', '1st Avenue, Los Angeles', 'USA', 'John Smith', 'Supervisor', 'jahn@example.com', '+124579');
-
--- User service data - 1st user password: 123456
-INSERT INTO auth_user_roles VALUES (1, 'USER');
-INSERT INTO auth_user_roles VALUES (2, 'ADMIN');
-INSERT INTO auth_user_roles VALUES (3, 'ROOT');
-
-INSERT INTO auth_user VALUES (1, 'admin', '$2a$10$sHzvSELmDqDxAI8GN.yyb.bRLDhWNB03zJfGWc9M5dQelX05GMACm');
-INSERT INTO auth_user_auth_user_roles VALUES (1, 1);
-INSERT INTO auth_user_auth_user_roles VALUES (1, 2);
-
-INSERT INTO auth_user VALUES (2, 'system_user', '$2a$10$GHIEGUgKYlvPn6jkYnKeEOIMN8Tt4ZTK2/2KkQdFOwtCG.lTA3gCW');
-INSERT INTO auth_user_auth_user_roles VALUES (2, 3);
-
-INSERT INTO oauth_client_details VALUES('trusted-client', '', '$2a$10$K9.dtdouoTm1tlhQTTQu4OEV1HPlV0IpNjUsNu/8ZBiesIkSXafmK', 'read,write,trust', 'refresh_token,password', 'http://www.google.com', 'ROLE_CLIENT,ROLE_TRUSTED_CLIENT,ROLE_ADMIN', 3600, 86400, '', '');
-INSERT INTO oauth_client_details VALUES('system-client', '', '$2a$10$NR.ZeJ8mUIqT0b88RQCT2OMVDD5lXtzzxHF2YGHp8pRuCZx0IMgny', 'read,write,trust', 'refresh_token,password', '', 'ROLE_ROOT', 946080000, 946080000, '', '');
 
 -- Cargo management initial data
 INSERT INTO sales_agents_and_reservations VALUES(1, 'SAR_001', 'Austria', 'Vienna (VIE)', 'Kales Airline Services', 'info.vie@kales.com', '431700735181');

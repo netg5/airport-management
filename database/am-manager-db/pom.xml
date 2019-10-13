@@ -10,16 +10,16 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>am-auth-db</artifactId>
+    <artifactId>am-manager-db</artifactId>
     <packaging>jar</packaging>
 
-    <name>Authentication database</name>
-    <description>Database to hold authentication data</description>
+    <name>Manager service database</name>
+    <description>Database to hold manager service data</description>
 
     <properties>
         <liquibase.propertyFile>src/main/resources/liquibase/liquibase.properties</liquibase.propertyFile>
-        <liquibase.version>3.5.1</liquibase.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.liquibase</groupId>
@@ -40,7 +40,7 @@
             <plugin>
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-maven-plugin</artifactId>
-                <version>${liquibase.version}</version>
+                <version>3.5.1</version>
                 <configuration>
                     <propertyFile>${liquibase.propertyFile}</propertyFile>
                     <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
