@@ -16,6 +16,7 @@
 
 package org.sergei.tickets.service;
 
+import com.google.common.collect.ImmutableList;
 import org.sergei.tickets.jpa.model.Passenger;
 import org.sergei.tickets.jpa.model.Ticket;
 import org.sergei.tickets.jpa.repository.PassengerRepository;
@@ -65,16 +66,16 @@ public class TicketServiceImpl implements TicketService {
         Optional<Passenger> passenger = passengerRepository.findById(passengerId);
         if (passenger.isEmpty()) {
             List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("PAS-001");
-            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, ImmutableList.of()), HttpStatus.NOT_FOUND);
         } else {
             List<Ticket> ticketList = ticketRepository.findAllTickets(passengerId, currency);
             if (ticketList.isEmpty()) {
                 List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("PAS-001");
-                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, ImmutableList.of()), HttpStatus.NOT_FOUND);
             } else {
                 List<TicketDTO> ticketDTOList = ticketDTOListMapper.apply(ticketList);
                 ResponseDTO<TicketDTO> response = new ResponseDTO<>();
-                response.setErrorList(List.of());
+                response.setErrorList(ImmutableList.of());
                 response.setResponse(ticketDTOList);
                 return new ResponseEntity<>(response, HttpStatus.OK);
             }

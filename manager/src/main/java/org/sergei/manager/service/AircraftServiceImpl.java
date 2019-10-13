@@ -16,6 +16,7 @@
 
 package org.sergei.manager.service;
 
+import com.google.common.collect.ImmutableList;
 import lombok.extern.slf4j.Slf4j;
 import org.sergei.manager.jpa.model.Aircraft;
 import org.sergei.manager.jpa.model.mappers.AircraftModelMapper;
@@ -71,17 +72,17 @@ public class AircraftServiceImpl implements AircraftService {
         String modelNumber = request.getModelNumber();
         if (modelNumber == null) {
             List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("RP-001");
-            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, ImmutableList.of()), HttpStatus.NOT_FOUND);
         } else {
             Optional<Aircraft> aircraft = aircraftRepository.findByModelNumber(modelNumber);
             if (aircraft.isEmpty()) {
                 log.debug("Aircraft with this model number: {} not found", aircraft.get().getId());
                 List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("AIR-003");
-                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, ImmutableList.of()), HttpStatus.NOT_FOUND);
             } else {
                 AircraftDTO aircraftDTO = aircraftDTOMapper.apply(aircraft.get());
                 ResponseDTO<AircraftDTO> response = new ResponseDTO<>();
-                response.setErrorList(List.of());
+                response.setErrorList(ImmutableList.of());
                 response.setResponse(List.of(aircraftDTO));
                 return new ResponseEntity<>(response, HttpStatus.OK);
             }
@@ -98,12 +99,12 @@ public class AircraftServiceImpl implements AircraftService {
         List<Aircraft> aircraftList = aircraftRepository.findAll();
         if (aircraftList.isEmpty()) {
             List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("AIR-001");
-            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, ImmutableList.of()), HttpStatus.NOT_FOUND);
         } else {
             List<AircraftDTO> aircraftDTOList = aircraftDTOListMapper.apply(aircraftList);
 
             ResponseDTO<AircraftDTO> response = new ResponseDTO<>();
-            response.setErrorList(List.of());
+            response.setErrorList(ImmutableList.of());
             response.setResponse(aircraftDTOList);
 
             return new ResponseEntity<>(response, HttpStatus.OK);
@@ -116,12 +117,12 @@ public class AircraftServiceImpl implements AircraftService {
         if (aircraft.isEmpty()) {
             log.debug("Aircraft with this ID: {} not found", aircraftId);
             List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("AIR-001");
-            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, ImmutableList.of()), HttpStatus.NOT_FOUND);
         } else {
             AircraftDTO aircraftDTO = aircraftDTOMapper.apply(aircraft.get());
 
             ResponseDTO<AircraftDTO> response = new ResponseDTO<>();
-            response.setErrorList(List.of());
+            response.setErrorList(ImmutableList.of());
             response.setResponse(List.of(aircraftDTO));
 
             return new ResponseEntity<>(response, HttpStatus.OK);
@@ -140,12 +141,12 @@ public class AircraftServiceImpl implements AircraftService {
         if (exploitationPeriod >= 10) {
             log.debug("Aircraft exploitation period should not be greater than 10");
             List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("AIR-001");
-            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.OK);
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, ImmutableList.of()), HttpStatus.OK);
         } else {
             Aircraft aircraft = aircraftModelMapper.apply(request);
             Aircraft savedAircraft = aircraftRepository.save(aircraft);
             AircraftDTO aircraftDTOResponse = aircraftDTOMapper.apply(savedAircraft);
-            return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of(aircraftDTOResponse)), HttpStatus.CREATED);
+            return new ResponseEntity<>(new ResponseDTO<>(ImmutableList.of(), List.of(aircraftDTOResponse)), HttpStatus.CREATED);
         }
     }
 }
