@@ -62,22 +62,14 @@ public class Booking implements Serializable {
     private Integer hoursFlying;
 
     @NotNull
-    @OneToOne(fetch = FetchType.LAZY,
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "passenger_id",
-            referencedColumnName = "id")
-    private Passenger passenger;
+    @Column(name = "passenger_id")
+    private Long passengerId;
 
     @NotNull
-    @OneToOne(fetch = FetchType.LAZY,
-            cascade = {CascadeType.ALL})
-    @JoinColumn(name = "flight_id",
-            referencedColumnName = "id")
-    private Flight flight;
+    @Column(name = "flight_id")
+    private Long flightId;
 
     @NotNull
-    @JoinColumn(name = "fly_mode_code",
-            referencedColumnName = "code")
-    @OneToOne(fetch = FetchType.LAZY)
-    private FlyMode flyMode;
+    @Column(name = "fly_mode_code")
+    private String flyModeCode;
 }

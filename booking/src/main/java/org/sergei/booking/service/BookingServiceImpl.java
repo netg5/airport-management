@@ -20,18 +20,17 @@ import com.google.common.collect.ImmutableList;
 import io.opentracing.Span;
 import io.opentracing.Tracer;
 import lombok.extern.slf4j.Slf4j;
+import org.sergei.booking.feign.FlightFeignClient;
 import org.sergei.booking.jpa.model.Booking;
-import org.sergei.booking.jpa.model.Flight;
 import org.sergei.booking.jpa.model.FlyMode;
 import org.sergei.booking.jpa.model.Passenger;
 import org.sergei.booking.jpa.model.mapper.BookingModelMapper;
 import org.sergei.booking.jpa.model.mapper.PassengerModelMapper;
 import org.sergei.booking.jpa.repository.BookingRepository;
-import org.sergei.booking.jpa.repository.FlightRepository;
 import org.sergei.booking.jpa.repository.FlyModeRepository;
 import org.sergei.booking.jpa.repository.PassengerRepository;
 import org.sergei.booking.rest.dto.BookingDTO;
-import org.sergei.booking.rest.dto.PassengerDTO;
+import org.sergei.booking.rest.dto.FlightDTO;
 import org.sergei.booking.rest.dto.mappers.BookingDTOListMapper;
 import org.sergei.booking.rest.dto.mappers.BookingDTOMapper;
 import org.sergei.booking.rest.dto.request.BookingRequestDTO;
@@ -59,8 +58,9 @@ public class BookingServiceImpl implements BookingService {
     private final PassengerModelMapper passengerModelMapper;
     private final BookingModelMapper bookingModelMapper;
     private final ResponseMessageService responseMessageService;
-    private final FlightRepository flightRepository;
+//    private final FlightRepository flightRepository;
     private final FlyModeRepository flyModeRepository;
+    private final FlightFeignClient flightFeignClient;
     private final Tracer tracer;
 
     @Autowired
@@ -71,8 +71,8 @@ public class BookingServiceImpl implements BookingService {
                               PassengerModelMapper passengerModelMapper,
                               BookingModelMapper bookingModelMapper,
                               ResponseMessageService responseMessageService,
-                              FlightRepository flightRepository,
-                              FlyModeRepository flyModeRepository, Tracer tracer) {
+//                              FlightRepository flightRepository,
+                              FlyModeRepository flyModeRepository, FlightFeignClient flightFeignClient, Tracer tracer) {
         this.passengerRepository = passengerRepository;
         this.bookingRepository = bookingRepository;
         this.bookingDTOMapper = bookingDTOMapper;
@@ -80,8 +80,9 @@ public class BookingServiceImpl implements BookingService {
         this.passengerModelMapper = passengerModelMapper;
         this.bookingModelMapper = bookingModelMapper;
         this.responseMessageService = responseMessageService;
-        this.flightRepository = flightRepository;
+//        this.flightRepository = flightRepository;
         this.flyModeRepository = flyModeRepository;
+        this.flightFeignClient = flightFeignClient;
         this.tracer = tracer;
     }
 
@@ -176,25 +177,27 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public ResponseEntity<ResponseDTO<BookingDTO>> saveBooking(BookingRequestDTO request) {
         Long flightId = request.getFlightId();
-        Optional<Flight> flight = flightRepository.findById(flightId);
+//        Optional<Flight> flight = flightRepository.findById(flightId);
+        ResponseEntity<ResponseDTO<FlightDTO>> flightResponse = flightFeignClient.getFlightById(flightId);
+
         Optional<FlyMode> flyMode = flyModeRepository.findFlyModeByCode(request.getFlyModeCode());
 
-        if (flight.isEmpty()) {
-            List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("RT-001");
-            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, ImmutableList.of()), HttpStatus.NOT_FOUND);
-        } else if (flyMode.isEmpty()) {
-            List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("FLY_001");
-            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, ImmutableList.of()), HttpStatus.NOT_FOUND);
-        } else {
-            PassengerDTO passengerDTO = request.getPassenger();
+//        if (flightResponse.) {
+//            List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("RT-001");
+//            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, ImmutableList.of()), HttpStatus.NOT_FOUND);
+//        } else if (flyMode.isEmpty()) {
+//            List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("FLY_001");
+//            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, ImmutableList.of()), HttpStatus.NOT_FOUND);
+//        } else {
+            Long passengerId = request.getPassenger().getPassengerId();
             Booking booking = Booking.builder()
                     .departureTime(request.getDepartureTime())
                     .arrivalTime(request.getArrivalTime())
                     .dateOfFlying(request.getDateOfFlying())
                     .hoursFlying(request.getHoursFlying())
-                    .passenger(passengerModelMapper.apply(passengerDTO))
-                    .flight(flight.get())
-                    .flyMode(flyMode.get())
+                    .passengerId(passengerId)
+                    .flightId(null)
+                    .flyModeCode(null)
                     .build();
             Span span = tracer.buildSpan("bookingRepository.save()").start();
             span.setTag("booking", booking.toString());
@@ -207,7 +210,7 @@ public class BookingServiceImpl implements BookingService {
             response.setResponse(List.of(savedBookingDTO));
 
             return new ResponseEntity<>(response, HttpStatus.OK);
-        }
+//        }
     }
 
     /**
