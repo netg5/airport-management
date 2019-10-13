@@ -13,8 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 @Component
 public class GatewayFilter extends ZuulFilter {
 
-    private static final String AUTHORIZATION_HEADER = "Authorization";
-
     @Override
     public Object run() {
         RequestContext ctx = RequestContext.getCurrentContext();
