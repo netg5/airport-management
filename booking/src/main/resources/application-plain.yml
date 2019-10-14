@@ -18,6 +18,9 @@ datasource:
   username: flight
   password: flight
 
+feign:
+  manager-url: http://localhost:8088
+
 logging:
   file: C:/tmp/booking.log
   level:

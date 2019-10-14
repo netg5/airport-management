@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 /**
  * @author Sergei Visotsky
  */
-@FeignClient(value = "flight", url = "${feign.flight-url}")
 @Component
+@FeignClient(value = "flight", url = "${feign.manager-url}")
 public interface FlightFeignClient {
 
     @GetMapping(value = "/getFlightById/{flightId}")

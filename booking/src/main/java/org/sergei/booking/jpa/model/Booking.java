@@ -62,8 +62,11 @@ public class Booking implements Serializable {
     private Integer hoursFlying;
 
     @NotNull
-    @Column(name = "passenger_id")
-    private Long passengerId;
+    @OneToOne(fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "passenger_id",
+            referencedColumnName = "id")
+    private Passenger passenger;
 
     @NotNull
     @Column(name = "flight_id")
