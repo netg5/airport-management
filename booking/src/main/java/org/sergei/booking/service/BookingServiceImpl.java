@@ -180,30 +180,12 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public ResponseEntity<ResponseDTO<BookingDTO>> saveBooking(BookingRequestDTO request) {
         Long flightId = request.getFlightId();
-//        Optional<Flight> flight = flightRepository.findById(flightId);
-//        ObjectMapper objectMapper = new ObjectMapper();
+
         ResponseEntity<ResponseDTO<FlightDTO>> flightResponse = flightFeignClient.getFlightById(flightId);
         ResponseEntity<ResponseDTO<FlyModeDTO>> flyModeResponse = flyModeFeignClient.getFlyModeByCode(request.getFlyModeCode());
 
         FlightDTO flightDTO = flightResponse.getBody().getResponse().get(0);
         FlyModeDTO flyModeDTO = flyModeResponse.getBody().getResponse().get(0);
-//        JsonNode parent = null;
-//        try {
-//            parent = objectMapper.readTree(flightDTO.getFlightId());
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
-//        Optional<FlyMode> flyMode = flyModeRepository.findFlyModeByCode(request.getFlyModeCode());
-
-//        if (flightResponse.) {
-//            List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("RT-001");
-//            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, ImmutableList.of()), HttpStatus.NOT_FOUND);
-//        } else if (flyMode.isEmpty()) {
-//            List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("FLY_001");
-//            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, ImmutableList.of()), HttpStatus.NOT_FOUND);
-//        } else {
-
 
         Booking booking = Booking.builder()
                 .departureTime(request.getDepartureTime())
@@ -225,7 +207,6 @@ public class BookingServiceImpl implements BookingService {
         response.setResponse(List.of(savedBookingDTO));
 
         return new ResponseEntity<>(response, HttpStatus.OK);
-//        }
     }
 
     /**
