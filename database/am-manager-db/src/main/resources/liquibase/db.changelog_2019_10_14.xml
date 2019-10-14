@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+    <changeSet id="AM-01" author="Sergei Visotsky">
+        <sql dbms="postgresql"
+             endDelimiter="\n;"
+             splitStatements="true"
+             stripComments="true">
+            <![CDATA[
+                    CREATE SEQUENCE IF NOT EXISTS prices_id_seq;
+                    CREATE SEQUENCE IF NOT EXISTS fly_modes_id_seq;
+                ]]>
+        </sql>
+        <sql dbms="postgresql"
+             endDelimiter="\n;"
+             splitStatements="true"
+             stripComments="true">
+            <![CDATA[
+                    CREATE TABLE IF NOT EXISTS prices (
+                        code        VARCHAR(7)    NOT NULL,
+                        amount      NUMERIC(5)    NOT NULL,
+                        currency    VARCHAR(3)    NOT NULL,
+                        CONSTRAINT  prices_pk     PRIMARY KEY(code)
+                    );
+
+                    CREATE TABLE IF NOT EXISTS fly_modes (
+                        code          VARCHAR(7)    NOT NULL,
+                        title         VARCHAR(45)   NOT NULL,
+                        "description" VARCHAR(200)  NOT NULL,
+                        CONSTRAINT  fly_modes_pk  PRIMARY KEY(code)
+                    );
+
+                    CREATE TABLE IF NOT EXISTS fly_modes_prices_relation (
+                        fly_modes_code VARCHAR(7)    NOT NULL,
+                        prices_code    VARCHAR(7)    NOT NULL,
+                        CONSTRAINT fly_modes_code_fk FOREIGN KEY (fly_modes_code) REFERENCES fly_modes(code),
+                        CONSTRAINT prices_code_fk    FOREIGN KEY (prices_code)    REFERENCES prices(code)
+                    );
+                ]]>
+        </sql>
+    </changeSet>
+    <changeSet id="AM-02" author="Sergei Visotsky">
+        <sql dbms="postgresql"
+             endDelimiter="\n;"
+             splitStatements="true"
+             stripComments="true">
+            <![CDATA[
+                    INSERT INTO fly_modes VALUES('BUS_001', 'Business class', 'Business class, everything included');
+                    INSERT INTO fly_modes VALUES('MID_001', 'Mid class', 'Middle class should');
+                    INSERT INTO fly_modes VALUES('ECO_001', 'Econom class', 'Econom class, Terribly budget');
+
+                    INSERT INTO prices VALUES('EUR_001', 1000, 'EUR');
+                    INSERT INTO prices VALUES('USD_001', 1050, 'USD');
+                    INSERT INTO prices VALUES('EUR_002', 500, 'EUR');
+                    INSERT INTO prices VALUES('USD_002', 550, 'USD');
+                    INSERT INTO prices VALUES('EUR_003', 100, 'EUR');
+                    INSERT INTO prices VALUES('USD_003', 150, 'USD');
+
+                    INSERT INTO fly_modes_prices_relation VALUES('BUS_001', 'EUR_001');
+                    INSERT INTO fly_modes_prices_relation VALUES('BUS_001', 'USD_001');
+                    INSERT INTO fly_modes_prices_relation VALUES('MID_001', 'EUR_002');
+                    INSERT INTO fly_modes_prices_relation VALUES('MID_001', 'USD_002');
+                    INSERT INTO fly_modes_prices_relation VALUES('ECO_001', 'EUR_003');
+                    INSERT INTO fly_modes_prices_relation VALUES('ECO_001', 'USD_003');
+                ]]>
+        </sql>
+    </changeSet>
+    <changeSet id="AM-03" author="Sergei Visotsky">
+        <sql dbms="postgresql"
+             endDelimiter="\n;"
+             splitStatements="true"
+             stripComments="true">
+            <![CDATA[
+                    INSERT INTO response_messages VALUES(19, 'FLY_001', 'Fly mode not found');
+                ]]>
+        </sql>
+    </changeSet>
+</databaseChangeLog>
