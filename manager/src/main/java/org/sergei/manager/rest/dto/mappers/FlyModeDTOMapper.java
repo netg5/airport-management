@@ -1,8 +1,8 @@
-package org.sergei.booking.rest.dto.mappers;
+package org.sergei.manager.rest.dto.mappers;
 
-import org.sergei.booking.jpa.model.FlyMode;
-import org.sergei.booking.rest.dto.FlyModeDTO;
-import org.sergei.booking.utils.IMapper;
+import org.sergei.manager.jpa.model.FlyMode;
+import org.sergei.manager.rest.dto.FlyModeDTO;
+import org.sergei.manager.utils.IMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

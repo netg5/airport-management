@@ -1,4 +1,4 @@
-package org.sergei.booking.jpa.model;
+package org.sergei.manager.jpa.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

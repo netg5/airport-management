@@ -1,6 +1,6 @@
-package org.sergei.booking.jpa.repository;
+package org.sergei.manager.jpa.repository;
 
-import org.sergei.booking.jpa.model.FlyMode;
+import org.sergei.manager.jpa.model.FlyMode;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -20,7 +20,7 @@ public interface FlyModeRepository extends JpaRepository<FlyMode, Long> {
      * @param code by which should be found
      * @return Fly mode
      */
-    @Query("SELECT f FROM FlyMode f WHERE f.code = :code")
+    @Query("SELECT fm FROM FlyMode fm WHERE fm.code = :code")
     Optional<FlyMode> findFlyModeByCode(@Param("code") String code);
 
 }
