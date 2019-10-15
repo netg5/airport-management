@@ -128,4 +128,42 @@
                 ]]>
         </sql>
     </changeSet>
+    <changeSet id="AM-02" author="Sergei Visotsky">
+        <comment>Response messages</comment>
+        <sql dbms="postgresql"
+             endDelimiter="\n;"
+             splitStatements="true"
+             stripComments="true">
+            <![CDATA[
+                    CREATE SEQUENCE IF NOT EXISTS response_messages_id_seq;
+                ]]>
+        </sql>
+        <sql dbms="postgresql"
+             endDelimiter="\n;"
+             splitStatements="true"
+             stripComments="true">
+            <![CDATA[
+                    -- Response message storage
+                    CREATE TABLE IF NOT EXISTS response_messages
+                    (
+                        id            BIGINT        NOT NULL DEFAULT nextval('response_messages_id_seq'),
+                        code          VARCHAR(10)   NOT NULL,
+                        "description" VARCHAR(1000) NOT NULL,
+                        CONSTRAINT response_msg_pk PRIMARY KEY (id)
+                    );
+                ]]>
+        </sql>
+        <sql dbms="postgresql"
+             endDelimiter="\n;"
+             splitStatements="true"
+             stripComments="true">
+            <![CDATA[
+                    INSERT INTO response_messages VALUES(20, 'CRG_001', 'Cargo net weight should not be greater than maximum gross weight');
+                    INSERT INTO response_messages VALUES(21, 'CRG_002', 'Cargo products are too high');
+                    INSERT INTO response_messages VALUES(22, 'CRG_003', 'Cargo tramsfer flight with this code not found');
+                    INSERT INTO response_messages VALUES(23, 'WHE_001', 'Warehouse with this code not found');
+                    INSERT INTO response_messages VALUES(24, 'SAT_001', 'Sales agent with this code not found');
+                ]]>
+        </sql>
+    </changeSet>
 </databaseChangeLog>
