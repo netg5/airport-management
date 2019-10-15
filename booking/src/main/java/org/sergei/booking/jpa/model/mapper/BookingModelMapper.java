@@ -13,13 +13,10 @@ import org.springframework.stereotype.Component;
 public class BookingModelMapper implements IMapper<BookingDTO, Booking> {
 
     private final PassengerModelMapper passengerModelMapper;
-    private final FlightModelMapper flightModelMapper;
 
     @Autowired
-    public BookingModelMapper(PassengerModelMapper passengerModelMapper,
-                              FlightModelMapper flightModelMapper) {
+    public BookingModelMapper(PassengerModelMapper passengerModelMapper) {
         this.passengerModelMapper = passengerModelMapper;
-        this.flightModelMapper = flightModelMapper;
     }
 
     @Override
@@ -29,9 +26,9 @@ public class BookingModelMapper implements IMapper<BookingDTO, Booking> {
                 .arrivalTime(bookingDTO.getArrivalTime())
                 .dateOfFlying(bookingDTO.getDateOfFlying())
                 .hoursFlying(bookingDTO.getHoursFlying())
-//                .passenger(passengerModelMapper.apply(bookingDTO.getPassenger()))
-//                .flight(flightModelMapper.apply(bookingDTO.getFlight()))
-//                .flyMode(flyModeModelMapper.apply(bookingDTO.getFlyMode()))
+                .passenger(passengerModelMapper.apply(bookingDTO.getPassenger()))
+                .flightId(bookingDTO.getFlight().getFlightId())
+                .flyModeCode(bookingDTO.getFlyMode().getCode())
                 .build();
     }
 }

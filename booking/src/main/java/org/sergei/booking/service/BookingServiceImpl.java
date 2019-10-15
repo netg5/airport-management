@@ -58,8 +58,6 @@ public class BookingServiceImpl implements BookingService {
     private final PassengerModelMapper passengerModelMapper;
     private final BookingModelMapper bookingModelMapper;
     private final ResponseMessageService responseMessageService;
-    //    private final FlightRepository flightRepository;
-//    private final FlyModeRepository flyModeRepository;
     private final FlightFeignClient flightFeignClient;
     private final FlyModeFeignClient flyModeFeignClient;
     private final Tracer tracer;
@@ -72,9 +70,9 @@ public class BookingServiceImpl implements BookingService {
                               PassengerModelMapper passengerModelMapper,
                               BookingModelMapper bookingModelMapper,
                               ResponseMessageService responseMessageService,
-//                              FlightRepository flightRepository,
-//                              FlyModeRepository flyModeRepository,
-                              FlightFeignClient flightFeignClient, FlyModeFeignClient flyModeFeignClient, Tracer tracer) {
+                              FlightFeignClient flightFeignClient,
+                              FlyModeFeignClient flyModeFeignClient,
+                              Tracer tracer) {
         this.passengerRepository = passengerRepository;
         this.bookingRepository = bookingRepository;
         this.bookingDTOMapper = bookingDTOMapper;
@@ -82,8 +80,6 @@ public class BookingServiceImpl implements BookingService {
         this.passengerModelMapper = passengerModelMapper;
         this.bookingModelMapper = bookingModelMapper;
         this.responseMessageService = responseMessageService;
-//        this.flightRepository = flightRepository;
-//        this.flyModeRepository = flyModeRepository;
         this.flightFeignClient = flightFeignClient;
         this.flyModeFeignClient = flyModeFeignClient;
         this.tracer = tracer;
