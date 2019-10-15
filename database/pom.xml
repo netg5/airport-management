@@ -17,6 +17,7 @@
         <module>am-auth-db</module>
         <module>am-manager-db</module>
         <module>am-booking-db</module>
+        <module>am-cargo-db</module>
     </modules>
 
     <dependencyManagement>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+    <changeSet id="AM-01" author="Sergei Visotsky">
+        <comment>Create cargo transfer sequences</comment>
+        <sql dbms="postgresql"
+             endDelimiter="\n;"
+             splitStatements="true"
+             stripComments="true">
+            <![CDATA[
+                    CREATE SEQUENCE IF NOT EXISTS sales_agents_and_reservations_id_seq;
+                        CREATE SEQUENCE IF NOT EXISTS warehouses_id_seq;
+                        CREATE SEQUENCE IF NOT EXISTS cargo_transfer_flight_id_seq;
+                        CREATE SEQUENCE IF NOT EXISTS cargo_transfer_booking_id_seq;
+                        CREATE SEQUENCE IF NOT EXISTS cargo_transfer_actual_flights_id_seq;
+                        CREATE SEQUENCE IF NOT EXISTS cargo_id_seq;
+                ]]>
+        </sql>
+        <sql dbms="postgresql"
+             endDelimiter="\n;"
+             splitStatements="true"
+             stripComments="true">
+            <![CDATA[
+                    -- Cargo specific domain
+                    CREATE TABLE sales_agents_and_reservations (
+                        id             BIGINT        NOT NULL DEFAULT nextval('sales_agents_and_reservations_id_seq'),
+                        code           VARCHAR(7)    NOT NULL,
+                        country        VARCHAR(45)   NOT NULL,
+                        city           VARCHAR(45)   NOT NULL,
+                        representative VARCHAR(100)  NOT NULL,
+                        email          VARCHAR(45)   NOT NULL,
+                        phone          VARCHAR(45)   NOT NULL,
+                        CONSTRAINT agent_pk PRIMARY KEY(id)
+                    );
+
+                    CREATE TABLE warehouses (
+                        id                 BIGINT           NOT NULL DEFAULT nextval('warehouses_id_seq'),
+                        code               VARCHAR(7)       NOT NULL,
+                        country            VARCHAR(45)      NOT NULL,
+                        city               VARCHAR(45)      NOT NULL,
+                        warehouse_handling VARCHAR(100)     NOT NULL,
+                        heavy_cargo        DOUBLE PRECISION NOT NULL,
+                        dangerous          VARCHAR(12)      NOT NULL,
+                        keep_cool_service  VARCHAR(12)      NOT NULL,
+                        live_animals       VARCHAR(12)      NOT NULL,
+                        valuable_cargo     VARCHAR(12)      NOT NULL,
+                        CONSTRAINT handling_agents_pk PRIMARY KEY(id)
+                    );
+
+                    CREATE TABLE cargo_transfer_flights (
+                        id             BIGINT           NOT NULL DEFAULT nextval('cargo_transfer_flight_id_seq'),
+                        code           VARCHAR(7)       NOT NULL,
+                        departure_time TIMESTAMP        NOT NULL,
+                        arrival_time   TIMESTAMP        NOT NULL,
+                        distance       DOUBLE PRECISION NOT NULL,
+                        place          VARCHAR(45)      NOT NULL,
+                        price          NUMERIC(19, 2)   NOT NULL,
+                        aircraft_id    BIGINT           NOT NULL,
+                        CONSTRAINT cargo_transfer_flight_pk PRIMARY KEY(id)
+                    );
+
+                    CREATE TABLE cargo (
+                        id               BIGINT           NOT NULL DEFAULT nextval('cargo_id_seq'),
+                        unit_type        VARCHAR(10)      NOT NULL,
+                        internal_volume  DOUBLE PRECISION NOT NULL,
+                        "length"         DOUBLE PRECISION NOT NULL,
+                        "weight"         DOUBLE PRECISION NOT NULL,
+                        height           DOUBLE PRECISION NOT NULL,
+                        max_gross_weight INTEGER          NOT NULL,
+                        tare_weight      INTEGER          NOT NULL,
+                        warehouse_id     BIGINT           NOT NULL,
+                        sales_agent_id   BIGINT           NOT NULL,
+                        CONSTRAINT cargo_pk PRIMARY KEY(id)
+                    );
+
+                    CREATE TABLE cargo_transfer_bookings (
+                        id                       BIGINT    NOT NULL DEFAULT nextval('cargo_transfer_booking_id_seq'),
+                        date_of_flying           DATE      NOT NULL,
+                        departure_time           TIMESTAMP NOT NULL,
+                        arrival_time             TIMESTAMP NOT NULL,
+                        hours_flying             INTEGER   NOT NULL,
+                        cargo_id                 BIGINT    NOT NULL,
+                        cargo_transfer_flight_id BIGINT    NOT NULL,
+                        CONSTRAINT cargo_transfer_bookings_pk PRIMARY KEY(id)
+                    );
+
+                    CREATE TABLE cargo_transfer_actual_flights (
+                        id                 BIGINT    NOT NULL DEFAULT nextval('cargo_transfer_actual_flights_id_seq'),
+                        transfer_flight_id BIGINT    NOT NULL,
+                        date_of_flying     DATE      NOT NULL,
+                        departure_time     TIMESTAMP NOT NULL,
+                        arrival_time       TIMESTAMP NOT NULL,
+                        hours_flying       INTEGER   NOT NULL,
+                        aircraft_id        BIGINT    NOT NULL,
+                        pilot_id           BIGINT    NOT NULL,
+                        cargo_id           BIGINT    NOT NULL,
+                        CONSTRAINT cargo_transfer_actual_flight_pk PRIMARY KEY(id)
+                    );
+                ]]>
+        </sql>
+        <sql dbms="postgresql"
+             endDelimiter="\n;"
+             splitStatements="true"
+             stripComments="true">
+            <![CDATA[
+                    -- Cargo management initial data
+                    INSERT INTO sales_agents_and_reservations VALUES(1, 'SAR_001', 'Austria', 'Vienna (VIE)', 'Kales Airline Services', 'info.vie@kales.com', '431700735181');
+                    INSERT INTO sales_agents_and_reservations VALUES(2, 'SAR_002', 'Azerbaijan', 'Baku (GYD)', 'Silkway', 'sales@swgh.az', '994124374747');
+                    INSERT INTO sales_agents_and_reservations VALUES(3, 'SAR_003', 'Bangladesh', 'Tower Aviation', 'Kales Airline Services', 'stushish@toweraviation.com', '88028861024');
+
+                    INSERT INTO warehouses VALUES(1, 'WRS_001', 'United Kingdom', 'Aberdeen (ABZ)', 'Swissport GB LTD', 149.0, 'Accepted', 'Accepted', 'Not accepted', 'Accepted');
+                    INSERT INTO warehouses VALUES(2, 'WRS_002', 'United Arab Emirates', 'Abu Dhabi (AUH)', 'Etihad Airport Services', 200.0, 'Accepted', 'Accepted', 'Accepted', 'Accepted');
+                    INSERT INTO warehouses VALUES(3, 'WRS_003', 'Kazakhstan', 'Almaty (ALA)', 'Almaty Interantional Airport', 400.0, 'Accepted', 'Accepted', 'Accepted', 'Accepted');
+
+                    INSERT INTO cargo_transfer_flights VALUES (1, 'CTF_001', '2019-07-02', '2019-07-09', 1000.0, 'Riga', 123, 1);
+                    INSERT INTO cargo_transfer_flights VALUES (2, 'CTF_002', '2019-07-03', '2019-07-04', 1090.0, 'New-York', 145, 2);
+                    INSERT INTO cargo_transfer_flights VALUES (3, 'CTF_003', '2019-07-05', '2019-07-07', 1034.0, 'Moscow', 190, 3);
+
+                    INSERT INTO cargo VALUES(1, 'TAP/0101', 120.0, 150.0, 130.0, 230.0, 150, 123, 1, 1);
+                    INSERT INTO cargo VALUES(2, 'GAP/0401', 120.0, 150.0, 130.0, 230.0, 150, 125, 2, 2);
+                    INSERT INTO cargo VALUES(3, 'BAP/0107', 128.0, 132.0, 154.0, 239.0, 151, 158, 3, 3);
+
+                    INSERT INTO cargo_transfer_bookings VALUES(1, '2019-08-09', '2019-08-09 17:28:30.183', '2019-08-09 17:28:30.183', 3, 1, 1);
+                    INSERT INTO cargo_transfer_bookings VALUES(2, '2019-08-09', '2019-08-09 17:28:30.183', '2019-08-09 17:28:30.183', 4, 2, 2);
+                    INSERT INTO cargo_transfer_bookings VALUES(3, '2019-08-09', '2019-08-09 17:28:30.183', '2019-08-09 17:28:30.183', 9, 3, 3);
+                ]]>
+        </sql>
+    </changeSet>
+</databaseChangeLog>

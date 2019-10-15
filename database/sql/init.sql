@@ -35,3 +35,15 @@ CREATE DATABASE am_booking
     CONNECTION LIMIT = -1;
 
 GRANT ALL PRIVILEGES ON DATABASE am_booking TO flight;
+
+-- Create cargo database
+CREATE DATABASE am_cargo
+    WITH
+    OWNER = flight
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'English_United States.1252'
+    LC_CTYPE = 'English_United States.1252'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1;
+
+GRANT ALL PRIVILEGES ON DATABASE am_cargo TO flight
