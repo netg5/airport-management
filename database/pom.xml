@@ -13,7 +13,6 @@
     <description>Airport management database SQL and liquibase scripts</description>
 
     <modules>
-        <module>database-old</module>
         <module>am-auth-db</module>
         <module>am-manager-db</module>
         <module>am-booking-db</module>
