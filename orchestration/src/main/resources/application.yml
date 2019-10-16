@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: orchestration
+
+# Monitoring endpoints
+management:
+  endpoints.web.exposure.include: "info, health, metrics, configprops, env, prometheus"
