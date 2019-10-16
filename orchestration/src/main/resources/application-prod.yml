@@ -30,6 +30,10 @@ security:
     resource:
       user-info-uri: http://localhost:8080/auth/users/authenticate
 
+feign:
+  manager-url: http://localhost:8088
+  booking-url: http://localhost:8083
+
 logging:
   file: /tmp/orchestration.log
   level:

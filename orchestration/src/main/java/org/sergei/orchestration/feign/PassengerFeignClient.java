@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
  * @author Sergei Visotsky
  */
 @Component
-@FeignClient(value = "passenger", url = "dummy")
+@FeignClient(value = "passenger", url = "${feign.booking-url}")
 public interface PassengerFeignClient {
     // TODO
 }

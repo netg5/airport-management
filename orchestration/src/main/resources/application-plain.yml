@@ -11,6 +11,10 @@ spring:
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
 
+feign:
+  manager-url: http://localhost:8088
+  booking-url: http://localhost:8083
+
 # Logging configuration
 logging:
   file: C:/tmp/orchestration.log
