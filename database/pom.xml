@@ -18,6 +18,7 @@
         <module>am-manager-db</module>
         <module>am-booking-db</module>
         <module>am-cargo-db</module>
+        <module>am-timetable-db</module>
     </modules>
 
     <dependencyManagement>

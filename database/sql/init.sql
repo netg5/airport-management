@@ -46,4 +46,16 @@ CREATE DATABASE am_cargo
     TABLESPACE = pg_default
     CONNECTION LIMIT = -1;
 
-GRANT ALL PRIVILEGES ON DATABASE am_cargo TO flight
+GRANT ALL PRIVILEGES ON DATABASE am_cargo TO flight;
+
+-- Create timetable database
+CREATE DATABASE am_timetable
+    WITH
+    OWNER = flight
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'English_United States.1252'
+    LC_CTYPE = 'English_United States.1252'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1;
+
+GRANT ALL PRIVILEGES ON DATABASE am_timetable TO flight;
