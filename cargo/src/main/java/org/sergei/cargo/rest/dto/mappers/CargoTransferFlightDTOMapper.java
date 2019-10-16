@@ -3,7 +3,6 @@ package org.sergei.cargo.rest.dto.mappers;
 import org.sergei.cargo.jpa.model.CargoTransferFlight;
 import org.sergei.cargo.rest.dto.CargoTransferFlightDTO;
 import org.sergei.cargo.utils.IMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -11,13 +10,6 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class CargoTransferFlightDTOMapper implements IMapper<CargoTransferFlight, CargoTransferFlightDTO> {
-
-//    private final AircraftDTOMapper aircraftDTOMapper;
-
-//    @Autowired
-//    public CargoTransferFlightDTOMapper(AircraftDTOMapper aircraftDTOMapper) {
-//        this.aircraftDTOMapper = aircraftDTOMapper;
-//    }
 
     @Override
     public CargoTransferFlightDTO apply(CargoTransferFlight cargoTransferFlight) {
@@ -27,7 +19,7 @@ public class CargoTransferFlightDTOMapper implements IMapper<CargoTransferFlight
                 .distance(cargoTransferFlight.getDistance())
                 .place(cargoTransferFlight.getPlace())
                 .price(cargoTransferFlight.getPrice())
-//                .aircraft(cargoTransferFlight.getAircraftId())
+                .aircraftId(cargoTransferFlight.getAircraftId())
                 .build();
     }
 }
