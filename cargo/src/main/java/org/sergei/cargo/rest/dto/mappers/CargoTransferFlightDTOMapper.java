@@ -12,12 +12,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class CargoTransferFlightDTOMapper implements IMapper<CargoTransferFlight, CargoTransferFlightDTO> {
 
-    private final AircraftDTOMapper aircraftDTOMapper;
+//    private final AircraftDTOMapper aircraftDTOMapper;
 
-    @Autowired
-    public CargoTransferFlightDTOMapper(AircraftDTOMapper aircraftDTOMapper) {
-        this.aircraftDTOMapper = aircraftDTOMapper;
-    }
+//    @Autowired
+//    public CargoTransferFlightDTOMapper(AircraftDTOMapper aircraftDTOMapper) {
+//        this.aircraftDTOMapper = aircraftDTOMapper;
+//    }
 
     @Override
     public CargoTransferFlightDTO apply(CargoTransferFlight cargoTransferFlight) {
@@ -27,7 +27,7 @@ public class CargoTransferFlightDTOMapper implements IMapper<CargoTransferFlight
                 .distance(cargoTransferFlight.getDistance())
                 .place(cargoTransferFlight.getPlace())
                 .price(cargoTransferFlight.getPrice())
-                .aircraft(aircraftDTOMapper.apply(cargoTransferFlight.getAircraft()))
+//                .aircraft(cargoTransferFlight.getAircraftId())
                 .build();
     }
 }
