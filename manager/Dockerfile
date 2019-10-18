@@ -1,4 +1,4 @@
-FROM openjdk:8-jdk-alpine
+FROM openjdk:11-jdk
 ENV TZ=Europe/Riga
 ADD target/manager.jar /home/manager.jar
 EXPOSE 8088:8088

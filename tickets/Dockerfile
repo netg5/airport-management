@@ -1,4 +1,4 @@
-FROM openjdk:8-jdk-alpine
+FROM openjdk:11-jdk
 ENV TZ=Europe/Riga
 ADD target/tickets.jar /home/tickets.jar
 EXPOSE 9093:9093
