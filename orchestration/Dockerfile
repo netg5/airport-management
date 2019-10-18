@@ -1,4 +1,4 @@
-FROM openjdk:8-jdk-alpine
+FROM openjdk:11-jdk
 ENV TZ=Europe/Riga
 ADD target/orchestration.jar /home/orchestration.jar
 EXPOSE 9093:9093
