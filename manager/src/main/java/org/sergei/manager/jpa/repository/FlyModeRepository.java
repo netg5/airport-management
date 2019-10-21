@@ -23,4 +23,13 @@ public interface FlyModeRepository extends JpaRepository<FlyMode, Long> {
     @Query("SELECT fm FROM FlyMode fm WHERE fm.code = :code")
     Optional<FlyMode> findFlyModeByCode(@Param("code") String code);
 
+    @Query(value =
+            "SELECT * FROM fly_modes fm " +
+            "   LEFT JOIN fly_modes_prices_relation fmpr " +
+            "       ON fm.code = fmpr.fly_modes_code " +
+            "   LEFT JOIN prices pr " +
+            "       ON pr.code = fmpr.prices_code " +
+            " WHERE fm.code = :code AND pr.currency = :currency", nativeQuery = true)
+    Optional<FlyMode> findFlyModeByCodeAndCurrency(@Param("code") String code,
+                                                   @Param("currency") String currency);
 }

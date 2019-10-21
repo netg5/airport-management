@@ -37,4 +37,11 @@ public class FlyModeController {
         return flyModeService.findFlyModeByCode(code);
     }
 
+    @ApiOperation(value = "Get dly mode by code and currency")
+    @GetMapping(value = "/getFlyModeByCodeAndCurrency")
+    public ResponseEntity<ResponseDTO<FlyModeDTO>> getFlyModeByCodeAndCurrency(@RequestParam("code") String code,
+                                                                               @RequestParam("currency") String currency) {
+        return flyModeService.findFlyModeByCodeAndCurrency(code, currency);
+    }
+
 }

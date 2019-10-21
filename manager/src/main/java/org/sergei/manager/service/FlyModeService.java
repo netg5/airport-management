@@ -15,4 +15,5 @@ public interface FlyModeService {
 
     ResponseEntity<ResponseDTO<FlyModeDTO>> findFlyModeByCode(String code);
 
+    ResponseEntity<ResponseDTO<FlyModeDTO>> findFlyModeByCodeAndCurrency(String code, String currency);
 }
