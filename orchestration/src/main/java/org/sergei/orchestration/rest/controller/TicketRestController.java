@@ -1,7 +1,6 @@
 package org.sergei.orchestration.rest.controller;
 
 import io.swagger.annotations.Api;
-import jdk.jshell.spi.ExecutionControl.NotImplementedException;
 import org.sergei.orchestration.rest.dto.TicketDTO;
 import org.sergei.orchestration.rest.dto.response.ResponseDTO;
 import org.sergei.orchestration.service.TicketService;
@@ -11,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * @author Sergei Visotsky
@@ -27,8 +28,8 @@ public class TicketRestController {
     }
 
     @GetMapping(value = "/findAllTicketsForPassenger/{passengerId}")
-    public ResponseEntity<ResponseDTO<TicketDTO>> findAllTicketsForPassenger(@PathVariable("passengerId") Long passengerId,
-                                                                             @RequestParam("currency") String currency) throws NotImplementedException {
+    public ResponseEntity<ResponseDTO<List<TicketDTO>>> findAllTicketsForPassenger(@PathVariable("passengerId") Long passengerId,
+                                                                                   @RequestParam("currency") String currency) {
         return ticketService.findAllTickets(passengerId, currency);
     }
 

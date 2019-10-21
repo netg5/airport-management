@@ -1,6 +1,8 @@
 package org.sergei.orchestration.service;
 
-import com.google.common.collect.ImmutableList;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.sergei.orchestration.feign.BookingFeignClient;
 import org.sergei.orchestration.feign.FlightFeignClient;
 import org.sergei.orchestration.feign.FlyModeFeignClient;
@@ -12,9 +14,9 @@ import org.sergei.orchestration.rest.dto.TicketDTO;
 import org.sergei.orchestration.rest.dto.response.ResponseDTO;
 import org.sergei.orchestration.rest.dto.response.ResponseErrorDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,40 +24,36 @@ import java.util.List;
 /**
  * @author Sergei Visotsky
  */
-@Service
-public class TicketServiceImpl implements TicketService {
-
-    private final PassengerFeignClient passengerFeignClient;
-    private final BookingFeignClient bookingFeignClient;
-    private final FlightFeignClient flightFeignClient;
-    private final FlyModeFeignClient flyModeFeignClient;
+@Slf4j
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class TicketServiceTest {
 
     @Autowired
-    public TicketServiceImpl(PassengerFeignClient passengerFeignClient,
-                             BookingFeignClient bookingFeignClient,
-                             FlightFeignClient flightFeignClient,
-                             FlyModeFeignClient flyModeFeignClient) {
-        this.passengerFeignClient = passengerFeignClient;
-        this.bookingFeignClient = bookingFeignClient;
-        this.flightFeignClient = flightFeignClient;
-        this.flyModeFeignClient = flyModeFeignClient;
-    }
+    private PassengerFeignClient passengerFeignClient;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public ResponseEntity<ResponseDTO<List<TicketDTO>>> findAllTickets(Long passengerId, String currency) {
+    @Autowired
+    private BookingFeignClient bookingFeignClient;
+
+    @Autowired
+    private FlightFeignClient flightFeignClient;
+
+    @Autowired
+    private FlyModeFeignClient flyModeFeignClient;
+
+    @Test
+    public void findAllTicketsTest() {
+        final long passengerId = 1L;
         List<TicketDTO> tickets = new ArrayList<>();
-            ResponseEntity<ResponseDTO<PassengerDTO>> passengerResponse =
+        ResponseEntity<ResponseDTO<PassengerDTO>> passengerResponse =
                 passengerFeignClient.getPassengerById(passengerId);
         List<ResponseErrorDTO> errors = new ArrayList<>();
-        if (!passengerResponse.getBody().getErrorList().isEmpty()) {
+        if (passengerResponse.getBody().getErrorList() != null) {
             errors.addAll(passengerResponse.getBody().getErrorList());
         } else {
             ResponseEntity<ResponseDTO<List<BookingDTO>>> bookingResponse =
                     bookingFeignClient.getAllBookingsForPassenger(passengerId);
-            if (!bookingResponse.getBody().getErrorList().isEmpty()) {
+            if (bookingResponse.getBody().getErrorList() != null) {
                 errors.addAll(bookingResponse.getBody().getErrorList());
             } else {
                 List<List<BookingDTO>> bookings = bookingResponse.getBody().getResponse();
@@ -65,17 +63,16 @@ public class TicketServiceImpl implements TicketService {
                             flightFeignClient.getFlightById(bookingDTO.get(index).getFlightId());
                     flyModeFeignClient.getFlyModeByCode(bookingDTO.get(index).getFlyModeCode());
                     index++;
-                    List<FlightDTO> flightResponseBody = flightResponse.getBody().getResponse();
                     TicketDTO ticketDTO = TicketDTO.builder()
-                            .amount(flightResponseBody.get(index).getPrice().doubleValue())
-                            .departureTime(flightResponseBody.get(index).getDepartureTime())
-                            .arrivalTime(flightResponseBody.get(index).getArrivalTime())
+                            .amount(flightResponse.getBody().getResponse().get(index).getPrice().doubleValue())
+                            .departureTime(flightResponse.getBody().getResponse().get(index).getDepartureTime())
+                            .arrivalTime(flightResponse.getBody().getResponse().get(index).getArrivalTime())
 //                            .currency(bookingDTO)
                             .build();
                     tickets.add(ticketDTO);
                 }
             }
         }
-        return new ResponseEntity<>(new ResponseDTO<>(ImmutableList.of(), ImmutableList.of(tickets)), HttpStatus.OK);
+        tickets.forEach(ticketDTO -> log.info(ticketDTO.toString()));
     }
 }
