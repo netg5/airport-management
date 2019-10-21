@@ -71,7 +71,7 @@ public class HangarServiceImpl implements HangarService {
         } else {
             Page<Hangar> hangarList = hangarRepository.findHangarsByCapacityWithAircrafts(capacity, PageRequest.of(page, size));
             if (hangarList.isEmpty()) {
-                log.debug("Hangar with capacity: {} not found", hangarList.getContent().get(0).getCapacity());
+                log.debug("Hangar with capacity: {} not found", capacity);
                 List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("HAN-001");
                 return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, ImmutableList.of()), HttpStatus.NOT_FOUND);
             } else {

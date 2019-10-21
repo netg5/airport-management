@@ -19,13 +19,8 @@ public interface HangarRepository extends JpaRepository<Hangar, Long> {
     @Query("SELECT h FROM Hangar h WHERE h.capacity = :capacity")
     List<Hangar> findHangarsByCapacity(@Param("capacity") Integer capacity);
 
-    @Query("SELECT " +
-            " h " +
-            " FROM Hangar h" +
-            " LEFT JOIN " +
-            " h.aircrafts air ON h.id = air.id" +
-            " WHERE h.capacity = :capacity"
-
-    )
-    Page<Hangar> findHangarsByCapacityWithAircrafts(@Param("capacity") Integer capacity, Pageable var1);
+    @Query("SELECT h FROM Hangar h "
+            + " LEFT JOIN h.aircrafts air ON h.id = air.hangar.id "
+            + " WHERE h.capacity = :capacity ")
+    Page<Hangar> findHangarsByCapacityWithAircrafts(@Param("capacity") Integer capacity, Pageable pages);
 }
