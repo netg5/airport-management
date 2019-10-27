@@ -5,15 +5,8 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
     <changeSet id="AM-01" author="Sergei Visotsky">
         <comment>Timetable database schema</comment>
-        <sql dbms="postgresql"
-             endDelimiter="\n;"
-             splitStatements="true"
-             stripComments="true">
-            <![CDATA[
-                    CREATE SEQUENCE IF NOT EXISTS timetable_id_seq;
-                    CREATE SEQUENCE IF NOT EXISTS response_messages_id_seq;
-                ]]>
-        </sql>
+        <createSequence sequenceName="timetable_id_seq" startValue="1" incrementBy="1"/>
+        <createSequence sequenceName="response_messages_id_seq" startValue="1" incrementBy="1"/>
         <sql dbms="postgresql"
              endDelimiter="\n;"
              splitStatements="true"

@@ -5,19 +5,12 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
     <changeSet id="AM-01" author="Sergei Visotsky">
         <comment>Create cargo transfer sequences</comment>
-        <sql dbms="postgresql"
-             endDelimiter="\n;"
-             splitStatements="true"
-             stripComments="true">
-            <![CDATA[
-                    CREATE SEQUENCE IF NOT EXISTS sales_agents_and_reservations_id_seq;
-                    CREATE SEQUENCE IF NOT EXISTS warehouses_id_seq;
-                    CREATE SEQUENCE IF NOT EXISTS cargo_transfer_flight_id_seq;
-                    CREATE SEQUENCE IF NOT EXISTS cargo_transfer_booking_id_seq;
-                    CREATE SEQUENCE IF NOT EXISTS cargo_transfer_actual_flights_id_seq;
-                    CREATE SEQUENCE IF NOT EXISTS cargo_id_seq;
-                ]]>
-        </sql>
+        <createSequence sequenceName="sales_agents_and_reservations_id_seq" startValue="1" incrementBy="1"/>
+        <createSequence sequenceName="warehouses_id_seq" startValue="1" incrementBy="1"/>
+        <createSequence sequenceName="cargo_transfer_flight_id_seq" startValue="1" incrementBy="1"/>
+        <createSequence sequenceName="cargo_transfer_booking_id_seq" startValue="1" incrementBy="1"/>
+        <createSequence sequenceName="cargo_transfer_actual_flights_id_seq" startValue="1" incrementBy="1"/>
+        <createSequence sequenceName="cargo_id_seq" startValue="1" incrementBy="1"/>
         <sql dbms="postgresql"
              endDelimiter="\n;"
              splitStatements="true"

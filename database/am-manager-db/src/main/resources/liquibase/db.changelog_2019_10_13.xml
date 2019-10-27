@@ -5,19 +5,12 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
     <changeSet id="AM-01" author="Sergei Visotsky">
         <comment>Manager database schema</comment>
-        <sql dbms="postgresql"
-             endDelimiter="\n;"
-             splitStatements="true"
-             stripComments="true">
-            <![CDATA[
-                    CREATE SEQUENCE IF NOT EXISTS pilot_id_seq;
-                    CREATE SEQUENCE IF NOT EXISTS aircraft_id_seq;
-                    CREATE SEQUENCE IF NOT EXISTS flight_id_seq;
-                    CREATE SEQUENCE IF NOT EXISTS manufacturer_id_seq;
-                    CREATE SEQUENCE IF NOT EXISTS airport_id_seq;
-                    CREATE SEQUENCE IF NOT EXISTS hangar_id_seq;
-                ]]>
-        </sql>
+        <createSequence sequenceName="pilot_id_seq" startValue="1" incrementBy="1"/>
+        <createSequence sequenceName="aircraft_id_seq" startValue="1" incrementBy="1"/>
+        <createSequence sequenceName="flight_id_seq" startValue="1" incrementBy="1"/>
+        <createSequence sequenceName="manufacturer_id_seq" startValue="1" incrementBy="1"/>
+        <createSequence sequenceName="airport_id_seq" startValue="1" incrementBy="1"/>
+        <createSequence sequenceName="hangar_id_seq" startValue="1" incrementBy="1"/>
         <sql dbms="postgresql"
              endDelimiter="\n;"
              splitStatements="true"
