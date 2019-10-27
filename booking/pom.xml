@@ -12,7 +12,7 @@
 
     <artifactId>booking</artifactId>
     <packaging>jar</packaging>
-    <version>2.3.4-SNAPSHOT</version>
+    <version>0.0.1-SNAPSHOT</version>
 
     <name>booking</name>
     <description>Service to perform flight booking</description>
