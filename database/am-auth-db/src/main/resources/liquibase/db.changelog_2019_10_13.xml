@@ -5,15 +5,8 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
     <changeSet id="AM-01" author="Sergei Visotsky">
         <comment>Auth database schema</comment>
-        <sql dbms="postgresql"
-             endDelimiter="\n;"
-             splitStatements="true"
-             stripComments="true">
-            <![CDATA[
-                    CREATE SEQUENCE IF NOT EXISTS auth_user_id_seq;
-                    CREATE SEQUENCE IF NOT EXISTS auth_user_auth_user_roles_id_seq;
-                ]]>
-        </sql>
+        <createSequence sequenceName="auth_user_id_seq" startValue="1" incrementBy="1"/>
+        <createSequence sequenceName="auth_user_auth_user_roles_id_seq" startValue="1" incrementBy="1"/>
         <sql dbms="postgresql"
              endDelimiter="\n;"
              splitStatements="true"

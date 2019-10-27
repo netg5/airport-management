@@ -4,15 +4,8 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
     <changeSet id="AM-01" author="Sergei Visotsky">
-        <sql dbms="postgresql"
-             endDelimiter="\n;"
-             splitStatements="true"
-             stripComments="true">
-            <![CDATA[
-                    CREATE SEQUENCE IF NOT EXISTS prices_id_seq;
-                    CREATE SEQUENCE IF NOT EXISTS fly_modes_id_seq;
-                ]]>
-        </sql>
+        <createSequence sequenceName="prices_id_seq" startValue="1" incrementBy="1"/>
+        <createSequence sequenceName="fly_modes_id_seq" startValue="1" incrementBy="1"/>
         <sql dbms="postgresql"
              endDelimiter="\n;"
              splitStatements="true"

@@ -10,15 +10,18 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <artifactId>auth</artifactId>
+    <artifactId>tickets</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>2.3.4-SNAPSHOT</version>
 
-    <name>Authentication</name>
-    <description>Authentication service</description>
+    <name>Tickets</name>
+    <description>Ticket microservice</description>
 
     <properties>
+        <jackson.version>2.9.6</jackson.version>
         <io.swagger.version>2.9.1</io.swagger.version>
+        <liquibase.version>3.6.2</liquibase.version>
+        <java.version>11</java.version>
         <spring-cloud.version>Hoxton.M3</spring-cloud.version>
     </properties>
 
@@ -26,6 +29,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- Custom error handling -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
 
         <!-- For DEV purposes -->
@@ -39,22 +48,17 @@
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-config</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-security</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-oauth2</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-security</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
@@ -97,11 +101,21 @@
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
 
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.11.1</version>
         </dependency>
 
         <!-- Swagger -->
@@ -116,6 +130,13 @@
             <version>${io.swagger.version}</version>
         </dependency>
 
+        <!-- Guava library dependency -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>27.1-jre</version>
+        </dependency>
+
         <!-- Micrometer prometheus dependency -->
         <dependency>
             <groupId>io.micrometer</groupId>
@@ -128,7 +149,6 @@
             <artifactId>opentracing-spring-jaeger-web-starter</artifactId>
             <version>2.0.0</version>
         </dependency>
-
     </dependencies>
 
     <dependencyManagement>
@@ -171,14 +191,6 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>11</source>
-                    <target>11</target>
-                </configuration>
             </plugin>
         </plugins>
     </build>
