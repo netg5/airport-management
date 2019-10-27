@@ -40,5 +40,5 @@ public class FlyMode implements Serializable {
             joinColumns = @JoinColumn(name = "fly_modes_code"),
             inverseJoinColumns = @JoinColumn(name = "prices_code"))
     @ManyToMany(fetch = FetchType.LAZY)
-    private List<Price> price;
+    private List<Price> prices;
 }

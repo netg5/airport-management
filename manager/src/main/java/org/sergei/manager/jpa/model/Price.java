@@ -5,12 +5,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author Sergei Visotsky
@@ -36,4 +34,9 @@ public class Price implements Serializable {
     @NotNull
     @Column(name = "currency")
     private String currency;
+
+    @NotNull
+    @ManyToMany(mappedBy = "prices",
+            fetch = FetchType.LAZY)
+    private List<FlyMode> flyModes;
 }

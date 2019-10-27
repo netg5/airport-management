@@ -5,9 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.sergei.manager.jpa.model.FlyMode;
 import org.sergei.manager.jpa.model.Price;
 import org.sergei.manager.jpa.repository.FlyModeRepository;
+import org.sergei.manager.jpa.repository.PriceRepository;
 import org.sergei.manager.rest.dto.FlyModeDTO;
 import org.sergei.manager.rest.dto.mappers.FlyModeDTOListMapper;
 import org.sergei.manager.rest.dto.mappers.FlyModeDTOMapper;
+import org.sergei.manager.rest.dto.mappers.PriceDTOListMapper;
 import org.sergei.manager.rest.dto.response.ResponseDTO;
 import org.sergei.manager.rest.dto.response.ResponseErrorDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +19,6 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,8 +30,10 @@ import java.util.Optional;
 public class FlyModeServiceImpl implements FlyModeService {
 
     private final FlyModeRepository flyModeRepository;
+    private final PriceRepository priceRepository;
     private final FlyModeDTOMapper flyModeDTOMapper;
     private final FlyModeDTOListMapper flyModeDTOListMapper;
+    private final PriceDTOListMapper priceDTOListMapper;
     private final MessageService messageService;
 
     @PersistenceContext
@@ -38,11 +41,13 @@ public class FlyModeServiceImpl implements FlyModeService {
 
     @Autowired
     public FlyModeServiceImpl(FlyModeRepository flyModeRepository,
-                              FlyModeDTOMapper flyModeDTOMapper,
-                              FlyModeDTOListMapper flyModeDTOListMapper, MessageService messageService) {
+                              PriceRepository priceRepository, FlyModeDTOMapper flyModeDTOMapper,
+                              FlyModeDTOListMapper flyModeDTOListMapper, PriceDTOListMapper priceDTOListMapper, MessageService messageService) {
         this.flyModeRepository = flyModeRepository;
+        this.priceRepository = priceRepository;
         this.flyModeDTOMapper = flyModeDTOMapper;
         this.flyModeDTOListMapper = flyModeDTOListMapper;
+        this.priceDTOListMapper = priceDTOListMapper;
         this.messageService = messageService;
     }
 
@@ -82,36 +87,44 @@ public class FlyModeServiceImpl implements FlyModeService {
     @Override
     public ResponseEntity<ResponseDTO<FlyModeDTO>> findFlyModeByCodeAndCurrency(String code, String currency) {
         if (code != null || currency != null) {
-            Query query = em.createNativeQuery(
-                    "SELECT " +
-                            "   fm.code as fm_code, " +
-                            "   fm.title as fm_title, " +
-                            "   fm.description as fm_descr, " +
-                            "   pr.code AS pr_code, " +
-                            "   pr.amount as pr_amount, " +
-                            "   pr.currency as pr_currency " +
-                            " FROM fly_modes fm " +
-                            " LEFT JOIN fly_modes_prices_relation fmpr " +
-                            "     ON fm.code = fmpr.fly_modes_code " +
-                            " LEFT JOIN prices pr " +
-                            "     ON pr.code = fmpr.prices_code " +
-                            " WHERE fm.code = :code AND pr.currency = :currency");
-            query.setParameter("code", code);
-            query.setParameter("currency", currency);
-            FlyMode flyMode = FlyMode.builder()
-                    .code(query.getParameterValue("fm_code").toString())
-                    .title(query.getParameterValue("fm_title").toString())
-                    .description(query.getParameterValue("fm_description").toString())
-                    .price(ImmutableList.of(
-                            Price.builder()
-                                    .code(query.getParameterValue("pr_code").toString())
-                                    .amount(Double.valueOf(query.getParameterValue("pr_amount").toString()))
-                                    .currency(query.getParameterValue("pr_currency").toString())
-                                    .build()
-                    ))
-                    .build();
-            if (flyMode != null) {
-                FlyModeDTO flyModeDTO = flyModeDTOMapper.apply(flyMode);
+//            Query query = em.createNativeQuery(
+//                    "SELECT " +
+//                            "   fm.code as fm_code, " +
+//                            "   fm.title as fm_title, " +
+//                            "   fm.description as fm_descr, " +
+//                            "   pr.code AS pr_code, " +
+//                            "   pr.amount as pr_amount, " +
+//                            "   pr.currency as pr_currency " +
+//                            " FROM fly_modes fm " +
+//                            " LEFT JOIN fly_modes_prices_relation fmpr " +
+//                            "     ON fm.code = fmpr.fly_modes_code " +
+//                            " LEFT JOIN prices pr " +
+//                            "     ON pr.code = fmpr.prices_code " +
+//                            " WHERE fm.code = :code AND pr.currency = :currency");
+//            query.setParameter("code", code);
+//            query.setParameter("currency", currency);
+//            FlyMode flyMode = FlyMode.builder()
+//                    .code(query.getParameterValue("fm_code").toString())
+//                    .title(query.getParameterValue("fm_title").toString())
+//                    .description(query.getParameterValue("fm_description").toString())
+//                    .price(ImmutableList.of(
+//                            Price.builder()
+//                                    .code(query.getParameterValue("pr_code").toString())
+//                                    .amount(Double.valueOf(query.getParameterValue("pr_amount").toString()))
+//                                    .currency(query.getParameterValue("pr_currency").toString())
+//                                    .build()
+//                    ))
+//                    .build();
+            Optional<FlyMode> flyMode = flyModeRepository.findFlyModeByCodeAndCurrency(code, currency);
+//            List<Price> price = priceRepository.findFlyModesPriceByCurrency(currency);
+            if (flyMode.isPresent()) {
+                FlyModeDTO flyModeDTO = flyModeDTOMapper.apply(flyMode.get());
+//                FlyModeDTO flyModeDTO = FlyModeDTO.builder()
+//                        .code(flyMode.get().getCode())
+//                        .title(flyMode.get().getTitle())
+//                        .description(flyMode.get().getDescription())
+//                        .price(priceDTOListMapper.apply(price))
+//                        .build();
                 ResponseDTO<FlyModeDTO> response = new ResponseDTO<>();
                 response.setErrorList(ImmutableList.of());
                 response.setResponse(ImmutableList.of(flyModeDTO));

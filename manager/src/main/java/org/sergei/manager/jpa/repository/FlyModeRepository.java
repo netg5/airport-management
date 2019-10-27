@@ -1,6 +1,7 @@
 package org.sergei.manager.jpa.repository;
 
 import org.sergei.manager.jpa.model.FlyMode;
+import org.sergei.manager.jpa.model.Price;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -23,13 +24,11 @@ public interface FlyModeRepository extends JpaRepository<FlyMode, Long> {
     @Query("SELECT fm FROM FlyMode fm WHERE fm.code = :code")
     Optional<FlyMode> findFlyModeByCode(@Param("code") String code);
 
-    @Query(value =
-            "SELECT * FROM fly_modes fm " +
-            "   LEFT JOIN fly_modes_prices_relation fmpr " +
-            "       ON fm.code = fmpr.fly_modes_code " +
-            "   LEFT JOIN prices pr " +
-            "       ON pr.code = fmpr.prices_code " +
-            " WHERE fm.code = :code AND pr.currency = :currency", nativeQuery = true)
+    @Query("SELECT fm FROM FlyMode fm "
+            + " JOIN fm.prices pr "
+            + " JOIN pr.flyModes fmp ON fm.code = fmp.code "
+            + " WHERE fm.code = :code "
+            + " AND pr.currency = :currency")
     Optional<FlyMode> findFlyModeByCodeAndCurrency(@Param("code") String code,
                                                    @Param("currency") String currency);
 }

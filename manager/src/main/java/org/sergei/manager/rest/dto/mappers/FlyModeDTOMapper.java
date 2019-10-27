@@ -25,7 +25,7 @@ public class FlyModeDTOMapper implements IMapper<FlyMode, FlyModeDTO> {
                 .code(flyMode.getCode())
                 .title(flyMode.getTitle())
                 .description(flyMode.getDescription())
-                .price(priceDTOListMapper.apply(flyMode.getPrice()))
+                .price(priceDTOListMapper.apply(flyMode.getPrices()))
                 .build();
     }
 }
