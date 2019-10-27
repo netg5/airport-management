@@ -1,8 +1,7 @@
 package org.sergei.orchestration.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.sergei.orchestration.feign.BookingFeignClient;
 import org.sergei.orchestration.feign.FlightFeignClient;
 import org.sergei.orchestration.feign.FlyModeFeignClient;
@@ -16,7 +15,6 @@ import org.sergei.orchestration.rest.dto.response.ResponseErrorDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +23,6 @@ import java.util.List;
  * @author Sergei Visotsky
  */
 @Slf4j
-@RunWith(SpringRunner.class)
 @SpringBootTest
 public class TicketServiceTest {
 
