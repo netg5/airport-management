@@ -18,7 +18,7 @@
     <description>Authentication service</description>
 
     <properties>
-        <io.swagger.version>2.9.1</io.swagger.version>
+        <io.swagger.version>2.9.2</io.swagger.version>
         <spring-cloud.version>Hoxton.M3</spring-cloud.version>
     </properties>
 
