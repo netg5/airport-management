@@ -29,3 +29,8 @@ Update Liquibase changelog and track database changes:
 ```
 mvn org.liquibase:liquibase-maven-plugin:update
 ```
+
+Liquibase clear chesk sums:
+```
+mvn org.liquibase:liquibase-maven-plugin:clearCheckSums
+```
