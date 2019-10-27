@@ -27,8 +27,8 @@ public class BookingModelMapper implements IMapper<BookingDTO, Booking> {
                 .dateOfFlying(bookingDTO.getDateOfFlying())
                 .hoursFlying(bookingDTO.getHoursFlying())
                 .passenger(passengerModelMapper.apply(bookingDTO.getPassenger()))
-                .flightId(bookingDTO.getFlight().getFlightId())
-                .flyModeCode(bookingDTO.getFlyMode().getCode())
+                .flightId(bookingDTO.getFlightId())
+                .flyModeCode(bookingDTO.getFlyModeCode())
                 .build();
     }
 }

@@ -33,8 +33,6 @@ public class BookingDTOMapper implements IMapper<Booking, BookingDTO> {
                 .passenger(passengerDTOMapper.apply(booking.getPassenger()))
                 .flightId(booking.getFlightId())
                 .flyModeCode(booking.getFlyModeCode())
-//                .flight(flightDTOMapper.apply(booking.getFlight()))
-//                .flyMode(flyModeDTOMapper.apply(booking.getFlyMode()))
                 .build();
     }
 }
