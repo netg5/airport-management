@@ -40,7 +40,7 @@ public class Booking implements Serializable {
     @NotNull
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
             generator = "booking_id_seq")
-    @SequenceGenerator(name = "booing_id_seq",
+    @SequenceGenerator(name = "booking_id_seq",
             sequenceName = "booking_id_seq", allocationSize = 1)
     @Column(name = "id")
     private Long id;
