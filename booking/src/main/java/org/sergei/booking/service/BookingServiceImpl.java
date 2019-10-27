@@ -16,21 +16,21 @@
 
 package org.sergei.booking.service;
 
+import com.google.common.collect.ImmutableList;
 import io.opentracing.Span;
 import io.opentracing.Tracer;
 import lombok.extern.slf4j.Slf4j;
+import org.sergei.booking.feign.FlightFeignClient;
+import org.sergei.booking.feign.FlyModeFeignClient;
 import org.sergei.booking.jpa.model.Booking;
-import org.sergei.booking.jpa.model.Flight;
-import org.sergei.booking.jpa.model.FlyMode;
 import org.sergei.booking.jpa.model.Passenger;
 import org.sergei.booking.jpa.model.mapper.BookingModelMapper;
 import org.sergei.booking.jpa.model.mapper.PassengerModelMapper;
 import org.sergei.booking.jpa.repository.BookingRepository;
-import org.sergei.booking.jpa.repository.FlightRepository;
-import org.sergei.booking.jpa.repository.FlyModeRepository;
 import org.sergei.booking.jpa.repository.PassengerRepository;
 import org.sergei.booking.rest.dto.BookingDTO;
-import org.sergei.booking.rest.dto.PassengerDTO;
+import org.sergei.booking.rest.dto.FlightDTO;
+import org.sergei.booking.rest.dto.FlyModeDTO;
 import org.sergei.booking.rest.dto.mappers.BookingDTOListMapper;
 import org.sergei.booking.rest.dto.mappers.BookingDTOMapper;
 import org.sergei.booking.rest.dto.request.BookingRequestDTO;
@@ -58,8 +58,8 @@ public class BookingServiceImpl implements BookingService {
     private final PassengerModelMapper passengerModelMapper;
     private final BookingModelMapper bookingModelMapper;
     private final ResponseMessageService responseMessageService;
-    private final FlightRepository flightRepository;
-    private final FlyModeRepository flyModeRepository;
+    private final FlightFeignClient flightFeignClient;
+    private final FlyModeFeignClient flyModeFeignClient;
     private final Tracer tracer;
 
     @Autowired
@@ -70,8 +70,9 @@ public class BookingServiceImpl implements BookingService {
                               PassengerModelMapper passengerModelMapper,
                               BookingModelMapper bookingModelMapper,
                               ResponseMessageService responseMessageService,
-                              FlightRepository flightRepository,
-                              FlyModeRepository flyModeRepository, Tracer tracer) {
+                              FlightFeignClient flightFeignClient,
+                              FlyModeFeignClient flyModeFeignClient,
+                              Tracer tracer) {
         this.passengerRepository = passengerRepository;
         this.bookingRepository = bookingRepository;
         this.bookingDTOMapper = bookingDTOMapper;
@@ -79,8 +80,8 @@ public class BookingServiceImpl implements BookingService {
         this.passengerModelMapper = passengerModelMapper;
         this.bookingModelMapper = bookingModelMapper;
         this.responseMessageService = responseMessageService;
-        this.flightRepository = flightRepository;
-        this.flyModeRepository = flyModeRepository;
+        this.flightFeignClient = flightFeignClient;
+        this.flyModeFeignClient = flyModeFeignClient;
         this.tracer = tracer;
     }
 
@@ -94,12 +95,12 @@ public class BookingServiceImpl implements BookingService {
         List<Booking> bookingList = bookingRepository.findAll();
         if (bookingList.isEmpty()) {
             List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("RES-001");
-            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, ImmutableList.of()), HttpStatus.NOT_FOUND);
         } else {
             List<BookingDTO> bookingDTOList = bookingDTOListMapper.apply(bookingList);
 
             ResponseDTO<BookingDTO> response = new ResponseDTO<>();
-            response.setErrorList(List.of());
+            response.setErrorList(ImmutableList.of());
             response.setResponse(bookingDTOList);
 
             return new ResponseEntity<>(response, HttpStatus.OK);
@@ -118,14 +119,14 @@ public class BookingServiceImpl implements BookingService {
         Optional<Passenger> passenger = passengerRepository.findById(passengerId);
         if (passenger.isEmpty()) {
             List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("PAS-001");
-            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, ImmutableList.of()), HttpStatus.NOT_FOUND);
         } else {
             // Find all flight booking for the passenger
             List<Booking> booking = bookingRepository.findAllForPassenger(passengerId);
             List<BookingDTO> bookingDTOList = bookingDTOListMapper.apply(booking);
 
             ResponseDTO<BookingDTO> response = new ResponseDTO<>();
-            response.setErrorList(List.of());
+            response.setErrorList(ImmutableList.of());
             response.setResponse(bookingDTOList);
 
             return new ResponseEntity<>(response, HttpStatus.OK);
@@ -143,21 +144,21 @@ public class BookingServiceImpl implements BookingService {
     public ResponseEntity<ResponseDTO<BookingDTO>> findOneForPassenger(Long passengerId, Long bookingId) {
         if (passengerId == null) {
             List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("RP-001");
-            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, ImmutableList.of()), HttpStatus.NOT_FOUND);
         } else {
             if (bookingId == null) {
                 List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("RES-001");
-                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, ImmutableList.of()), HttpStatus.NOT_FOUND);
             } else {
                 Optional<Booking> booking = bookingRepository.findById(bookingId);
                 if (booking.isEmpty()) {
                     List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("RES-001");
-                    return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+                    return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, ImmutableList.of()), HttpStatus.NOT_FOUND);
                 } else {
                     BookingDTO bookingDTO = bookingDTOMapper.apply(booking.get());
 
                     ResponseDTO<BookingDTO> response = new ResponseDTO<>();
-                    response.setErrorList(List.of());
+                    response.setErrorList(ImmutableList.of());
                     response.setResponse(List.of(bookingDTO));
 
                     return new ResponseEntity<>(response, HttpStatus.OK);
@@ -175,38 +176,33 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public ResponseEntity<ResponseDTO<BookingDTO>> saveBooking(BookingRequestDTO request) {
         Long flightId = request.getFlightId();
-        Optional<Flight> flight = flightRepository.findById(flightId);
-        Optional<FlyMode> flyMode = flyModeRepository.findFlyModeByCode(request.getFlyModeCode());
 
-        if (flight.isEmpty()) {
-            List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("RT-001");
-            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
-        } else if (flyMode.isEmpty()) {
-            List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("FLY_001");
-            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
-        } else {
-            PassengerDTO passengerDTO = request.getPassenger();
-            Booking booking = Booking.builder()
-                    .departureTime(request.getDepartureTime())
-                    .arrivalTime(request.getArrivalTime())
-                    .dateOfFlying(request.getDateOfFlying())
-                    .hoursFlying(request.getHoursFlying())
-                    .passenger(passengerModelMapper.apply(passengerDTO))
-                    .flight(flight.get())
-                    .flyMode(flyMode.get())
-                    .build();
-            Span span = tracer.buildSpan("bookingRepository.save()").start();
-            span.setTag("booking", booking.toString());
-            Booking savedBooking = bookingRepository.save(booking);
-            span.finish();
-            BookingDTO savedBookingDTO = bookingDTOMapper.apply(savedBooking);
+        ResponseEntity<ResponseDTO<FlightDTO>> flightResponse = flightFeignClient.getFlightById(flightId);
+        ResponseEntity<ResponseDTO<FlyModeDTO>> flyModeResponse = flyModeFeignClient.getFlyModeByCode(request.getFlyModeCode());
 
-            ResponseDTO<BookingDTO> response = new ResponseDTO<>();
-            response.setErrorList(List.of());
-            response.setResponse(List.of(savedBookingDTO));
+        FlightDTO flightDTO = flightResponse.getBody().getResponse().get(0);
+        FlyModeDTO flyModeDTO = flyModeResponse.getBody().getResponse().get(0);
 
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        }
+        Booking booking = Booking.builder()
+                .departureTime(request.getDepartureTime())
+                .arrivalTime(request.getArrivalTime())
+                .dateOfFlying(request.getDateOfFlying())
+                .hoursFlying(request.getHoursFlying())
+                .passenger(passengerModelMapper.apply(request.getPassenger()))
+                .flightId(flightDTO.getFlightId())
+                .flyModeCode(flyModeDTO.getCode())
+                .build();
+        Span span = tracer.buildSpan("bookingRepository.save()").start();
+        span.setTag("booking", booking.toString());
+        Booking savedBooking = bookingRepository.save(booking);
+        span.finish();
+        BookingDTO savedBookingDTO = bookingDTOMapper.apply(savedBooking);
+
+        ResponseDTO<BookingDTO> response = new ResponseDTO<>();
+        response.setErrorList(ImmutableList.of());
+        response.setResponse(List.of(savedBookingDTO));
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     /**
@@ -220,18 +216,18 @@ public class BookingServiceImpl implements BookingService {
         Long bookingId = request.getBookingId();
         if (bookingId == null) {
             List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("RP-001");
-            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, ImmutableList.of()), HttpStatus.NOT_FOUND);
         } else {
             Optional<Booking> booking = bookingRepository.findById(bookingId);
             if (booking.isEmpty()) {
                 List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("RES-001");
-                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, ImmutableList.of()), HttpStatus.NOT_FOUND);
             } else {
                 Booking savedBooking = bookingRepository.save(bookingModelMapper.apply(request));
                 BookingDTO savedBookingDTO = bookingDTOMapper.apply(savedBooking);
 
                 ResponseDTO<BookingDTO> response = new ResponseDTO<>();
-                response.setErrorList(List.of());
+                response.setErrorList(ImmutableList.of());
                 response.setResponse(List.of(savedBookingDTO));
 
                 return new ResponseEntity<>(response, HttpStatus.OK);
@@ -253,12 +249,12 @@ public class BookingServiceImpl implements BookingService {
 
         if (passenger.isEmpty()) {
             List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("PAS-001");
-            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, ImmutableList.of()), HttpStatus.NOT_FOUND);
         } else {
             Optional<Booking> booking = bookingRepository.findById(bookingId);
             if (booking.isEmpty()) {
                 List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("RES-001");
-                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, ImmutableList.of()), HttpStatus.NOT_FOUND);
             } else {
                 bookingRepository.discardByPassengerIdAndBookingId(passenger.get(), booking.get());
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);

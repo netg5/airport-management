@@ -1,4 +1,4 @@
-FROM openjdk:8-jdk-alpine
+FROM openjdk:11-jdk
 ENV TZ=Europe/Riga
 ADD target/cargo.jar /home/cargo.jar
 EXPOSE 8098:8098

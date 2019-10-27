@@ -1,5 +1,6 @@
 package org.sergei.manager.service;
 
+import com.google.common.collect.ImmutableList;
 import lombok.extern.slf4j.Slf4j;
 import org.sergei.manager.jpa.model.Aircraft;
 import org.sergei.manager.jpa.model.Hangar;
@@ -45,17 +46,17 @@ public class HangarServiceImpl implements HangarService {
     public ResponseEntity<ResponseDTO<HangarDTO>> findHangarsByCapacity(Integer capacity) {
         if (capacity == null) {
             List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("RP-001");
-            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, ImmutableList.of()), HttpStatus.NOT_FOUND);
         } else {
             List<Hangar> hangar = hangarRepository.findHangarsByCapacity(capacity);
             if (hangar.isEmpty()) {
                 log.debug("Hangar with capacity: {} not found", hangar.get(0).getCapacity());
                 List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("HAN-001");
-                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, ImmutableList.of()), HttpStatus.NOT_FOUND);
             } else {
                 List<HangarDTO> hangarDTOList = hangarDTOListMapper.apply(hangar);
                 ResponseDTO<HangarDTO> response = new ResponseDTO<>();
-                response.setErrorList(List.of());
+                response.setErrorList(ImmutableList.of());
                 response.setResponse(hangarDTOList);
                 return new ResponseEntity<>(response, HttpStatus.OK);
             }
@@ -66,13 +67,13 @@ public class HangarServiceImpl implements HangarService {
     public ResponseEntity<ResponseDTO<HangarDTO>> findHangarsByCapacityWithAircrafts(Integer capacity, int page, int size) {
         if (capacity == null) {
             List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("RP-001");
-            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, ImmutableList.of()), HttpStatus.NOT_FOUND);
         } else {
             Page<Hangar> hangarList = hangarRepository.findHangarsByCapacityWithAircrafts(capacity, PageRequest.of(page, size));
             if (hangarList.isEmpty()) {
-                log.debug("Hangar with capacity: {} not found", hangarList.getContent().get(0).getCapacity());
+                log.debug("Hangar with capacity: {} not found", capacity);
                 List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("HAN-001");
-                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, ImmutableList.of()), HttpStatus.NOT_FOUND);
             } else {
                 List<HangarDTO> hangarDTOList = hangarDTOListMapper.apply(hangarList.getContent());
                 hangarList.forEach(
@@ -82,7 +83,7 @@ public class HangarServiceImpl implements HangarService {
                         }
                 );
                 ResponseDTO<HangarDTO> response = new ResponseDTO<>();
-                response.setErrorList(List.of());
+                response.setErrorList(ImmutableList.of());
                 response.setResponse(hangarDTOList);
 
                 return new ResponseEntity<>(response, HttpStatus.OK);

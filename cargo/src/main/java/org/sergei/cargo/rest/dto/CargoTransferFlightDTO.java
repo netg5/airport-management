@@ -27,6 +27,6 @@ public class CargoTransferFlightDTO implements Serializable {
     private LocalDateTime arrivalTime;
     private BigDecimal price;
     private String place;
-    private AircraftDTO aircraft;
+    private Long aircraftId;
 
 }

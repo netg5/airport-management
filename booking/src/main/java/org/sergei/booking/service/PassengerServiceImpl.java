@@ -1,5 +1,6 @@
 package org.sergei.booking.service;
 
+import com.google.common.collect.ImmutableList;
 import io.opentracing.Span;
 import io.opentracing.Tracer;
 import org.sergei.booking.jpa.model.Passenger;
@@ -60,11 +61,11 @@ public class PassengerServiceImpl implements PassengerService {
         Page<Passenger> passengersPage = passengerRepository.findAll(PageRequest.of(page, size));
         if (passengersPage.isEmpty()) {
             List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("PAS-001");
-            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, ImmutableList.of()), HttpStatus.NOT_FOUND);
         } else {
             List<PassengerDTO> passengerDTOList = passengerDTOListMapper.apply(passengersPage.getContent());
             ResponseDTO<PassengerDTO> response = new ResponseDTO<>();
-            response.setErrorList(List.of());
+            response.setErrorList(ImmutableList.of());
             response.setResponse(passengerDTOList);
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
@@ -81,11 +82,11 @@ public class PassengerServiceImpl implements PassengerService {
         Optional<Passenger> passenger = passengerRepository.findById(passengerId);
         if (passenger.isEmpty()) {
             List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("PAS-001");
-            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, ImmutableList.of()), HttpStatus.NOT_FOUND);
         } else {
             PassengerDTO passengerDTO = passengerDTOMapper.apply(passenger.get());
             ResponseDTO<PassengerDTO> response = new ResponseDTO<>();
-            response.setErrorList(List.of());
+            response.setErrorList(ImmutableList.of());
             response.setResponse(List.of(passengerDTO));
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
@@ -109,7 +110,7 @@ public class PassengerServiceImpl implements PassengerService {
         span.finish();
         if (passenger.isEmpty()) {
             List<ResponseErrorDTO> responseErrorList = responseMessageService.responseErrorListByCode("PAS-001");
-            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, ImmutableList.of()), HttpStatus.NOT_FOUND);
         } else {
             Passenger updatedPassenger = passengerModelMapper.apply(request);
 
@@ -120,7 +121,7 @@ public class PassengerServiceImpl implements PassengerService {
             PassengerDTO passengerDTOResp = passengerDTOMapper.apply(saveUpdatedPassenger);
 
             ResponseDTO<PassengerDTO> response = new ResponseDTO<>();
-            response.setErrorList(List.of());
+            response.setErrorList(ImmutableList.of());
             response.setResponse(List.of(passengerDTOResp));
 
             return new ResponseEntity<>(response, HttpStatus.CREATED);

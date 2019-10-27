@@ -26,6 +26,8 @@ public class BookingDTO implements Serializable {
     private LocalDateTime arrivalTime;
     private Integer hoursFlying;
     private PassengerDTO passenger;
+    private Long flightId;
+    private String flyModeCode;
     private FlightDTO flight;
     private FlyModeDTO flyMode;
 }

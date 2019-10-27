@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+    <changeSet id="AM-01" author="Sergei Visotsky">
+        <comment>Manager database schema</comment>
+        <createSequence sequenceName="pilot_id_seq" startValue="1" incrementBy="1"/>
+        <createSequence sequenceName="aircraft_id_seq" startValue="1" incrementBy="1"/>
+        <createSequence sequenceName="flight_id_seq" startValue="1" incrementBy="1"/>
+        <createSequence sequenceName="manufacturer_id_seq" startValue="1" incrementBy="1"/>
+        <createSequence sequenceName="airport_id_seq" startValue="1" incrementBy="1"/>
+        <createSequence sequenceName="hangar_id_seq" startValue="1" incrementBy="1"/>
+        <sql dbms="postgresql"
+             endDelimiter="\n;"
+             splitStatements="true"
+             stripComments="true">
+            <![CDATA[
+                    CREATE TABLE IF NOT EXISTS pilot
+                    (
+                        id             BIGINT           NOT NULL DEFAULT nextval('pilot_id_seq'),
+                        license_number VARCHAR(150)     NOT NULL,
+                        ssn            VARCHAR(15)      NOT NULL,
+                        first_name     VARCHAR(45)      NOT NULL,
+                        last_name      VARCHAR(45)      NOT NULL,
+                        gender         VARCHAR(6)       NOT NULL,
+                        "weight"       DOUBLE PRECISION NOT NULL,
+                        date_of_birth  DATE             NOT NULL,
+                        "address"      VARCHAR(100)     NOT NULL,
+                        country        VARCHAR(45)      NOT NULL,
+                        email          VARCHAR(45)      NOT NULL,
+                        phone          VARCHAR(45)      NOT NULL,
+                        CONSTRAINT pilot_pk PRIMARY KEY (id)
+                    );
+
+                    CREATE TABLE IF NOT EXISTS manufacturer
+                    (
+                        id                BIGINT      NOT NULL DEFAULT nextval('manufacturer_id_seq'),
+                        manufacturer_code VARCHAR(60) NOT NULL,
+                        manufacturer_name VARCHAR(45) NOT NULL,
+                        "location"        VARCHAR(45) NOT NULL,
+                        CONSTRAINT manufacturer_pk PRIMARY KEY (id)
+                    );
+
+                    CREATE TABLE IF NOT EXISTS hangar
+                    (
+                        id              BIGINT      NOT NULL DEFAULT nextval('hangar_id_seq'),
+                        hangar_number   VARCHAR(45) NOT NULL,
+                        hangar_capacity INTEGER     NOT NULL,
+                        hangar_location VARCHAR(45) NOT NULL,
+                        CONSTRAINT hangar_pk PRIMARY KEY (id)
+                    );
+
+                    CREATE TABLE IF NOT EXISTS aircraft
+                    (
+                        id                  BIGINT           NOT NULL DEFAULT nextval('aircraft_id_seq'),
+                        manufacturer_id     BIGINT           NOT NULL,
+                        hangar_id           BIGINT           NOT NULL,
+                        registration_number VARCHAR(45)      NOT NULL,
+                        model_number        VARCHAR(10)      NOT NULL,
+                        aircraft_name       VARCHAR(45)      NOT NULL,
+                        capacity            INTEGER          NOT NULL,
+                        "weight"            DOUBLE PRECISION NOT NULL,
+                        exploitation_period INTEGER          NOT NULL,
+                        CONSTRAINT aircraft_pk PRIMARY KEY (id),
+                        CONSTRAINT manufacturer_fk FOREIGN KEY (manufacturer_id) REFERENCES manufacturer (id),
+                        CONSTRAINT hangar_fk FOREIGN KEY (hangar_id) REFERENCES hangar (id)
+                    );
+
+                    CREATE TABLE IF NOT EXISTS flight
+                    (
+                        id             BIGINT                      NOT NULL DEFAULT nextval('flight_id_seq'),
+                        departure_time TIMESTAMP                   NOT NULL,
+                        arrival_time   TIMESTAMP                   NOT NULL,
+                        distance       DOUBLE PRECISION            NOT NULL,
+                        place          VARCHAR(45)                 NOT NULL,
+                        price          NUMERIC(19, 2)              NOT NULL,
+                        aircraft_id    BIGINT                      NOT NULL,
+                        CONSTRAINT flight_pk PRIMARY KEY (id),
+                        CONSTRAINT aircraft_id_fk FOREIGN KEY(aircraft_id) REFERENCES aircraft(id)
+                    );
+
+                    CREATE TABLE IF NOT EXISTS airport
+                    (
+                        id           BIGINT      NOT NULL DEFAULT nextval('airport_id_seq'),
+                        airport_name VARCHAR(45) NOT NULL,
+                        "address"    VARCHAR(45) NOT NULL,
+                        country      VARCHAR(45) NOT NULL,
+                        contact_name VARCHAR(45) NOT NULL,
+                        contact_job  VARCHAR(45) NOT NULL,
+                        email        VARCHAR(45) NOT NULL,
+                        phone        VARCHAR(45) NOT NULL,
+                        CONSTRAINT airport_pk PRIMARY KEY (id)
+                    );
+                ]]>
+        </sql>
+    </changeSet>
+    <changeSet id="AM-02" author="Sergei Visotsky">
+        <comment>Manager database response messages</comment>
+        <sql dbms="postgresql"
+             endDelimiter="\n;"
+             splitStatements="true"
+             stripComments="true">
+            <![CDATA[
+                CREATE SEQUENCE IF NOT EXISTS response_messages_id_seq;
+            ]]>
+        </sql>
+        <sql dbms="postgresql"
+             endDelimiter="\n;"
+             splitStatements="true"
+             stripComments="true">
+            <![CDATA[
+                    -- Response message storage
+                    CREATE TABLE IF NOT EXISTS response_messages
+                    (
+                        id            BIGINT        NOT NULL DEFAULT nextval('response_messages_id_seq'),
+                        code          VARCHAR(10)   NOT NULL,
+                        "description" VARCHAR(1000) NOT NULL,
+                        CONSTRAINT response_msg_pk PRIMARY KEY (id)
+                    );
+                ]]>
+        </sql>
+        <sql dbms="postgresql"
+             endDelimiter="\n;"
+             splitStatements="true"
+             stripComments="true">
+            <![CDATA[
+                    INSERT INTO response_messages VALUES(1, 'AIR-001', 'Aircraft with this ID not found');
+                    INSERT INTO response_messages VALUES(2, 'AIR-002', 'Aircraft exploitation period is greater than 10 required years');
+                    INSERT INTO response_messages VALUES(3, 'AIR-003', 'Aircraft with this model number not found');
+                    INSERT INTO response_messages VALUES(4, 'PAS-001', 'Passenger with this ID not found');
+                    INSERT INTO response_messages VALUES(5, 'PAS-002', 'This passenger has no reservations made');
+                    INSERT INTO response_messages VALUES(6, 'RT-001', 'Route with this ID not found');
+                    INSERT INTO response_messages VALUES(9, 'PIL-001', 'Pilot with this ID not found');
+                    INSERT INTO response_messages VALUES(10, 'PIL-002', 'Pilot table is empty');
+                    INSERT INTO response_messages VALUES(11, 'RP-001', 'Required parameter is not present');
+                    INSERT INTO response_messages VALUES(12, 'PIL-003', 'Pilot weight is greater than expected');
+                    INSERT INTO response_messages VALUES(13, 'OW-001', 'Owner with this ID not found');
+                    INSERT INTO response_messages VALUES(14, 'MAN-001', 'Manufacturer with this ID not found');
+                    INSERT INTO response_messages VALUES(15, 'HAN-001', 'Hangar not found');
+                    INSERT INTO response_messages VALUES(16, 'APT-001', 'Airport with this name not found');
+                    INSERT INTO response_messages VALUES(17, 'APT-002', 'No airport contact found by this parameter');
+                ]]>
+        </sql>
+    </changeSet>
+    <changeSet id="AM-03" author="Sergei Visotsky">
+        <comment>Manager database response messages</comment>
+        <sql dbms="postgresql"
+             endDelimiter="\n;"
+             splitStatements="true"
+             stripComments="true">
+            <![CDATA[
+                    INSERT INTO pilot VALUES (1, 'DAS124', '12-34-56', 'John', 'Smith', 'male', 50.0, '1970-08-29', '3rd Kennedy str, New-York', 'USA','someowner@somewhere.com', '1234567');
+                    INSERT INTO pilot VALUES (2, 'BD9051', '90-A1-9K', 'Janis', 'Priede', 'male', 60.0, '1985-08-20', '5th Barona str, Riga', 'Latvia','someowner@somewhere.com', '34534625');
+                    INSERT INTO pilot VALUES (3, 'LK4562', '1Q-3B-23', 'Fiona', 'Pridaine', 'female', 85.0, '1995-05-29', '1st Amerino str, Berlin', 'Germany','someowner@somewhere.com', '437372342');
+                    INSERT INTO manufacturer values(1, '213213d', 'Airbus Corporate Jets', 'New-zeland');
+                    INSERT INTO manufacturer values(2, 'fsdf32', 'Boeing Business Jets', 'USA');
+                    INSERT INTO manufacturer values(3, 'd3r35v', 'Embraer-Empresa Brasileira DR AeronÁutica', 'Arab-Emirants');
+                    INSERT INTO hangar VALUES(1, '2131234', 3, 'New-York');
+                    INSERT INTO hangar VALUES(2, 'fsaf33522', 1, 'Riga');
+                    INSERT INTO hangar VALUES(3, 'f341tg', 3, 'London');
+                    INSERT INTO aircraft VALUES (1, 1, 1, '123D', '777-300ER', 'Boeing', 3450, 1000, 3);
+                    INSERT INTO aircraft VALUES (2, 2, 2, '12dc3', 'A220', 'Airbus', 43000, 5400, 6);
+                    INSERT INTO aircraft VALUES (3, 3, 3, '82497Df', 'B30', 'Airbus', 42007, 3200, 7);
+                    INSERT INTO flight VALUES (2, '2019-07-02', '2019-07-01', 1000, 'Riga', 123, 1);
+                    INSERT INTO flight VALUES (3, '2019-08-23', '2019-08-22', 3600, 'Singapoore', 3400, 2);
+                    INSERT INTO flight VALUES (1, '2019-08-23', '2019-08-22', 3600, 'New-York', 3400, 3);
+                ]]>
+        </sql>
+    </changeSet>
+</databaseChangeLog>

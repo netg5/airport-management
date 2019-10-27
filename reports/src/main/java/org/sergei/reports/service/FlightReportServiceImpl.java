@@ -1,5 +1,6 @@
 package org.sergei.reports.service;
 
+import com.google.common.collect.ImmutableList;
 import lombok.extern.slf4j.Slf4j;
 import org.sergei.reports.jpa.model.Flight;
 import org.sergei.reports.jpa.repository.FlightReportRepository;
@@ -42,11 +43,11 @@ public class FlightReportServiceImpl implements FlightReportService {
         Optional<Flight> flight = flightReportRepository.makeFlightReportByFlightId(flightId);
         if (flight.isEmpty()) {
             List<ResponseErrorDTO> errorList = responseMessageService.responseErrorListByCode("AIR-001");
-            return new ResponseEntity<>(new ResponseDTO<>(errorList, List.of()), HttpStatus.OK);
+            return new ResponseEntity<>(new ResponseDTO<>(errorList, ImmutableList.of()), HttpStatus.OK);
         } else {
             FlightDTO flightDTO = flightDTOMapper.apply(flight.get());
             FlightReportDTO flightReportDTO = new FlightReportDTO(flightDTO);
-            return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of(flightReportDTO)), HttpStatus.OK);
+            return new ResponseEntity<>(new ResponseDTO<>(ImmutableList.of(), List.of(flightReportDTO)), HttpStatus.OK);
         }
     }
 }

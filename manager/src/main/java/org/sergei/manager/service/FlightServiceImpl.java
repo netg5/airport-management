@@ -16,6 +16,7 @@
 
 package org.sergei.manager.service;
 
+import com.google.common.collect.ImmutableList;
 import io.opentracing.Span;
 import io.opentracing.Tracer;
 import lombok.extern.slf4j.Slf4j;
@@ -74,7 +75,7 @@ public class FlightServiceImpl implements FlightService {
     public ResponseEntity<ResponseDTO<FlightDTO>> findOneFlight(Long flightId) {
         if (flightId == null) {
             List<ResponseErrorDTO> errorMessageList = messageService.responseErrorListByCode("RP-001");
-            return new ResponseEntity<>(new ResponseDTO<>(errorMessageList, List.of()), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ResponseDTO<>(errorMessageList, ImmutableList.of()), HttpStatus.NOT_FOUND);
         } else {
             Span span = tracer.buildSpan("flightRepository.findById() started").start();
             span.setTag("flightId", flightId);
@@ -83,12 +84,12 @@ public class FlightServiceImpl implements FlightService {
             if (flight.isEmpty()) {
                 log.debug("Flight with ID: {} not found", flightId);
                 List<ResponseErrorDTO> errorMessageList = messageService.responseErrorListByCode("RT-001");
-                return new ResponseEntity<>(new ResponseDTO<>(errorMessageList, List.of()), HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(new ResponseDTO<>(errorMessageList, ImmutableList.of()), HttpStatus.NOT_FOUND);
             } else {
                 FlightDTO flightDTO = flightDTOMapper.apply(flight.get());
 
                 ResponseDTO<FlightDTO> response = new ResponseDTO<>();
-                response.setErrorList(List.of());
+                response.setErrorList(ImmutableList.of());
                 response.setResponse(List.of(flightDTO));
 
                 return new ResponseEntity<>(response, HttpStatus.OK);
@@ -107,12 +108,12 @@ public class FlightServiceImpl implements FlightService {
 
         if (flightList.isEmpty()) {
             List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("RT-001");
-            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, ImmutableList.of()), HttpStatus.NOT_FOUND);
         } else {
             List<FlightDTO> flightDTOList = flightDTOListMapper.apply(flightList);
 
             ResponseDTO<FlightDTO> response = new ResponseDTO<>();
-            response.setErrorList(List.of());
+            response.setErrorList(ImmutableList.of());
             response.setResponse(flightDTOList);
 
             return new ResponseEntity<>(response, HttpStatus.OK);
@@ -133,7 +134,7 @@ public class FlightServiceImpl implements FlightService {
         FlightDTO savedFlightDTO = flightDTOMapper.apply(savedFlight);
 
         ResponseDTO<FlightDTO> response = new ResponseDTO<>();
-        response.setErrorList(List.of());
+        response.setErrorList(ImmutableList.of());
         response.setResponse(List.of(savedFlightDTO));
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
@@ -150,19 +151,19 @@ public class FlightServiceImpl implements FlightService {
         Long flightId = request.getFlightId();
         if (flightId == null) {
             List<ResponseErrorDTO> errorMessageList = messageService.responseErrorListByCode("RP-001");
-            return new ResponseEntity<>(new ResponseDTO<>(errorMessageList, List.of()), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ResponseDTO<>(errorMessageList, ImmutableList.of()), HttpStatus.NOT_FOUND);
         } else {
             Optional<Flight> flight = flightRepository.findById(flightId);
             if (flight.isEmpty()) {
                 log.debug("Route with ID: {} not found", flightId);
                 List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("RT-001");
-                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, ImmutableList.of()), HttpStatus.NOT_FOUND);
             } else {
                 Flight savedFlight = flightRepository.save(flight.get());
                 FlightDTO flightDTO = flightDTOMapper.apply(savedFlight);
 
                 ResponseDTO<FlightDTO> response = new ResponseDTO<>();
-                response.setErrorList(List.of());
+                response.setErrorList(ImmutableList.of());
                 response.setResponse(List.of(flightDTO));
 
                 return new ResponseEntity<>(response, HttpStatus.OK);
@@ -182,10 +183,10 @@ public class FlightServiceImpl implements FlightService {
         if (flight.isEmpty()) {
             log.debug("Flight with ID: {} not found", flightId);
             List<ResponseErrorDTO> responseErrorList = messageService.responseErrorListByCode("RT-001");
-            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, List.of()), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ResponseDTO<>(responseErrorList, ImmutableList.of()), HttpStatus.NOT_FOUND);
         } else {
             flightRepository.delete(flight.get());
-            return new ResponseEntity<>(new ResponseDTO<>(List.of(), List.of()), HttpStatus.OK);
+            return new ResponseEntity<>(new ResponseDTO<>(ImmutableList.of(), ImmutableList.of()), HttpStatus.OK);
         }
     }
 }

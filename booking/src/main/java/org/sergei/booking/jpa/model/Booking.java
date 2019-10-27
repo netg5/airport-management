@@ -40,7 +40,7 @@ public class Booking implements Serializable {
     @NotNull
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
             generator = "booking_id_seq")
-    @SequenceGenerator(name = "booing_id_seq",
+    @SequenceGenerator(name = "booking_id_seq",
             sequenceName = "booking_id_seq", allocationSize = 1)
     @Column(name = "id")
     private Long id;
@@ -69,15 +69,10 @@ public class Booking implements Serializable {
     private Passenger passenger;
 
     @NotNull
-    @OneToOne(fetch = FetchType.LAZY,
-            cascade = {CascadeType.ALL})
-    @JoinColumn(name = "flight_id",
-            referencedColumnName = "id")
-    private Flight flight;
+    @Column(name = "flight_id")
+    private Long flightId;
 
     @NotNull
-    @JoinColumn(name = "fly_mode_code",
-            referencedColumnName = "code")
-    @OneToOne(fetch = FetchType.LAZY)
-    private FlyMode flyMode;
+    @Column(name = "fly_mode_code")
+    private String flyModeCode;
 }

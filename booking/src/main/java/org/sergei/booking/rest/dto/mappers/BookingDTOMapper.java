@@ -14,15 +14,12 @@ public class BookingDTOMapper implements IMapper<Booking, BookingDTO> {
 
     private final FlightDTOMapper flightDTOMapper;
     private final PassengerDTOMapper passengerDTOMapper;
-    private final FlyModeDTOMapper flyModeDTOMapper;
 
     @Autowired
     public BookingDTOMapper(FlightDTOMapper flightDTOMapper,
-                            PassengerDTOMapper passengerDTOMapper,
-                            FlyModeDTOMapper flyModeDTOMapper) {
+                            PassengerDTOMapper passengerDTOMapper) {
         this.flightDTOMapper = flightDTOMapper;
         this.passengerDTOMapper = passengerDTOMapper;
-        this.flyModeDTOMapper = flyModeDTOMapper;
     }
 
     @Override
@@ -34,8 +31,8 @@ public class BookingDTOMapper implements IMapper<Booking, BookingDTO> {
                 .arrivalTime(booking.getArrivalTime())
                 .hoursFlying(booking.getHoursFlying())
                 .passenger(passengerDTOMapper.apply(booking.getPassenger()))
-                .flight(flightDTOMapper.apply(booking.getFlight()))
-                .flyMode(flyModeDTOMapper.apply(booking.getFlyMode()))
+                .flightId(booking.getFlightId())
+                .flyModeCode(booking.getFlyModeCode())
                 .build();
     }
 }

@@ -11,7 +11,7 @@ spring:
         git:
           uri: https://github.com/sergeivisotsky/airport-management-config
           clone-on-start: true
-          search-paths: "config/{application}" # application config file or directory name
+          search-paths: "{application}" # application config file or directory name
 management:
   endpoints:
     web:

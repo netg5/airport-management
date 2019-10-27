@@ -1,4 +1,4 @@
-FROM openjdk:8-jdk-alpine
+FROM openjdk:11-jdk
 ENV TZ=Europe/Riga
 ADD target/config.jar /home/config.jar
 EXPOSE 8888:8888
